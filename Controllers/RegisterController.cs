@@ -115,6 +115,7 @@ namespace Pegasus_backend.Controllers
                         result.ErrorCode = "401";
                         result.IsSuccess = false;
                         result.ErrorMessage = "Day Of Week List must be length 7.";
+                        return result;
                     }
                     
                     details.DayOfWeek.ForEach(s =>
