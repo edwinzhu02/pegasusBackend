@@ -35,13 +35,13 @@ namespace Pegasus_backend.Controllers
         //GET: http://localhost:5000/api/payment/payInvoice
         [HttpPost]
         [Route("payInvoice")]
-        public ActionResult<string> SavePaymentDetails([FromBody] InvoicePay details)
+        public IActionResult SavePaymentDetails([FromBody] InvoicePay details)
         {
             var invoiceItem = _pegasusContext.Invoice.
                 FirstOrDefault(s => s.InvoiceId == details.InvoiceId & s.LearnerId == details.LearnerId);
             if (invoiceItem==null)
             {
-                return "Failed";
+                return BadRequest("Invoice does not found.");
             }
             else
             {
@@ -76,7 +76,7 @@ namespace Pegasus_backend.Controllers
                 }
                 catch (Exception ex)
                 {
-                    return ex.Message;
+                    return BadRequest(ex.Message);
                 }
                 
                 //initialize fund item in fund table
@@ -99,7 +99,7 @@ namespace Pegasus_backend.Controllers
                 }
                 catch (Exception ex)
                 {
-                    return ex.Message;
+                    return BadRequest(ex.Message);
                 }
                 
 
@@ -115,14 +115,17 @@ namespace Pegasus_backend.Controllers
                     _pegasusContext.Update(invoiceItem);
                     _pegasusContext.Update(fundItem);
                     _pegasusContext.SaveChanges();
-                    return Ok("success");
+                    
                 }
                 catch (Exception ex)
                 {
-                    return ex.Message;
+                    return BadRequest(ex.Message);
                 }
                 
-                
+                return Ok("success");
+
+
+
             }
             
         }
