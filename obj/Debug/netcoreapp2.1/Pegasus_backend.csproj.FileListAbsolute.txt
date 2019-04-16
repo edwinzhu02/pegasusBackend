@@ -1,0 +1,14 @@
+/Users/oliver/Desktop/Pegasus_backend/Pegasus_backend/bin/Debug/netcoreapp2.1/Pegasus_backend.deps.json
+/Users/oliver/Desktop/Pegasus_backend/Pegasus_backend/bin/Debug/netcoreapp2.1/Pegasus_backend.runtimeconfig.json
+/Users/oliver/Desktop/Pegasus_backend/Pegasus_backend/bin/Debug/netcoreapp2.1/Pegasus_backend.runtimeconfig.dev.json
+/Users/oliver/Desktop/Pegasus_backend/Pegasus_backend/bin/Debug/netcoreapp2.1/Pegasus_backend.dll
+/Users/oliver/Desktop/Pegasus_backend/Pegasus_backend/bin/Debug/netcoreapp2.1/Pegasus_backend.pdb
+/Users/oliver/Desktop/Pegasus_backend/Pegasus_backend/obj/Debug/netcoreapp2.1/Pegasus_backend.csprojAssemblyReference.cache
+/Users/oliver/Desktop/Pegasus_backend/Pegasus_backend/obj/Debug/netcoreapp2.1/Pegasus_backend.csproj.CoreCompileInputs.cache
+/Users/oliver/Desktop/Pegasus_backend/Pegasus_backend/obj/Debug/netcoreapp2.1/Pegasus_backend.RazorAssemblyInfo.cache
+/Users/oliver/Desktop/Pegasus_backend/Pegasus_backend/obj/Debug/netcoreapp2.1/Pegasus_backend.RazorAssemblyInfo.cs
+/Users/oliver/Desktop/Pegasus_backend/Pegasus_backend/obj/Debug/netcoreapp2.1/Pegasus_backend.AssemblyInfoInputs.cache
+/Users/oliver/Desktop/Pegasus_backend/Pegasus_backend/obj/Debug/netcoreapp2.1/Pegasus_backend.AssemblyInfo.cs
+/Users/oliver/Desktop/Pegasus_backend/Pegasus_backend/obj/Debug/netcoreapp2.1/Pegasus_backend.RazorTargetAssemblyInfo.cache
+/Users/oliver/Desktop/Pegasus_backend/Pegasus_backend/obj/Debug/netcoreapp2.1/Pegasus_backend.dll
+/Users/oliver/Desktop/Pegasus_backend/Pegasus_backend/obj/Debug/netcoreapp2.1/Pegasus_backend.pdb
