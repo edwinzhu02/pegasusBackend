@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
 
 namespace Pegasus_backend.pegasusContext
 {
@@ -17,7 +16,6 @@ namespace Pegasus_backend.pegasusContext
 
         public short UserId { get; set; }
         public string UserName { get; set; }
-        [JsonIgnore]
         public string Password { get; set; }
         public DateTime? CreatedAt { get; set; }
         public short? RoleId { get; set; }

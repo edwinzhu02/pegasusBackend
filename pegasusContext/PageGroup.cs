@@ -13,6 +13,7 @@ namespace Pegasus_backend.pegasusContext
         public short PageGroupId { get; set; }
         public string PageGroupName { get; set; }
         public int? DisplayOrder { get; set; }
+        public string Icon { get; set; }
 
         public ICollection<Page> Page { get; set; }
     }

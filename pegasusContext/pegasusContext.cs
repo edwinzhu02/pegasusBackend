@@ -27,6 +27,7 @@ namespace Pegasus_backend.pegasusContext
         public virtual DbSet<Language> Language { get; set; }
         public virtual DbSet<Learner> Learner { get; set; }
         public virtual DbSet<LearnerAppForm> LearnerAppForm { get; set; }
+        public virtual DbSet<LearnerGroupCourse> LearnerGroupCourse { get; set; }
         public virtual DbSet<LearnerTransaction> LearnerTransaction { get; set; }
         public virtual DbSet<Lesson> Lesson { get; set; }
         public virtual DbSet<LessonRemain> LessonRemain { get; set; }
@@ -222,8 +223,7 @@ namespace Pegasus_backend.pegasusContext
 
                 entity.Property(e => e.AvailableDaysId)
                     .HasColumnName("available_days_id")
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedNever();
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.CreatedAt).HasColumnName("created_at");
 
@@ -742,6 +742,45 @@ namespace Pegasus_backend.pegasusContext
                     .HasColumnType("int(11)");
             });
 
+            modelBuilder.Entity<LearnerGroupCourse>(entity =>
+            {
+                entity.ToTable("learner_group_course", "pegasus");
+
+                entity.HasIndex(e => e.GroupCourseInstanceId)
+                    .HasName("R_87");
+
+                entity.HasIndex(e => e.LearnerId)
+                    .HasName("R_86");
+
+                entity.Property(e => e.LearnerGroupCourseId)
+                    .HasColumnName("learner_group_course_id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.CreatedAt).HasColumnName("created_at");
+
+                entity.Property(e => e.GroupCourseInstanceId)
+                    .HasColumnName("group_course_instance_id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.IsActivate)
+                    .HasColumnName("is_activate")
+                    .HasColumnType("bit(1)");
+
+                entity.Property(e => e.LearnerId)
+                    .HasColumnName("learner_id")
+                    .HasColumnType("int(11)");
+
+                entity.HasOne(d => d.GroupCourseInstance)
+                    .WithMany(p => p.LearnerGroupCourse)
+                    .HasForeignKey(d => d.GroupCourseInstanceId)
+                    .HasConstraintName("R_87");
+
+                entity.HasOne(d => d.Learner)
+                    .WithMany(p => p.LearnerGroupCourse)
+                    .HasForeignKey(d => d.LearnerId)
+                    .HasConstraintName("R_86");
+            });
+
             modelBuilder.Entity<LearnerTransaction>(entity =>
             {
                 entity.HasKey(e => e.TranId);
@@ -1204,6 +1243,11 @@ namespace Pegasus_backend.pegasusContext
                 entity.Property(e => e.DisplayOrder)
                     .HasColumnName("display_order")
                     .HasColumnType("int(11)");
+
+                entity.Property(e => e.Icon)
+                    .HasColumnName("icon")
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.PageGroupName)
                     .HasColumnName("page_group_name")

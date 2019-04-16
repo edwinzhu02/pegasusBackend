@@ -8,6 +8,7 @@ namespace Pegasus_backend.pegasusContext
         public GroupCourseInstance()
         {
             Invoice = new HashSet<Invoice>();
+            LearnerGroupCourse = new HashSet<LearnerGroupCourse>();
             Lesson = new HashSet<Lesson>();
             LessonRemain = new HashSet<LessonRemain>();
         }
@@ -28,6 +29,7 @@ namespace Pegasus_backend.pegasusContext
         public Room Room { get; set; }
         public Teacher Teacher { get; set; }
         public ICollection<Invoice> Invoice { get; set; }
+        public ICollection<LearnerGroupCourse> LearnerGroupCourse { get; set; }
         public ICollection<Lesson> Lesson { get; set; }
         public ICollection<LessonRemain> LessonRemain { get; set; }
     }
