@@ -49,6 +49,8 @@ namespace Pegasus_backend.Controllers
         {
             return _pegasusContext.Org.ToList();
         }
+        
+        
 
 
 
@@ -155,6 +157,17 @@ namespace Pegasus_backend.Controllers
             }
 
             return result;
+        }
+        
+        
+        //GET: http://localhost:5000/api/register/student
+        [HttpPost]
+        [Route("student")]
+        public IActionResult StudentRegister([FromForm] StudentRegister details)
+        {
+            var requestForm = Request.Form;
+            Result<string> result = new Result<string>();
+            return Ok(result);
         }
     }
 }

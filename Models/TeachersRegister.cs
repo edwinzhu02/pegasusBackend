@@ -19,5 +19,6 @@ namespace Pegasus_backend.Models
         public string Email { get; set; }
         public List<string> Language { get; set; }
         public List<List<string>> DayOfWeek { get; set; } 
+        
     }
 }
