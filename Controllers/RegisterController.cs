@@ -242,6 +242,7 @@ namespace Pegasus_backend.Controllers
                             stream.Close();
 
                             newLearner.Photo = $"images/LearnerImages/{fileName}";
+                            newLearner.IsAbrsmG5 = 0;
                             _pegasusContext.Update(newLearner);
                             _pegasusContext.SaveChanges();
                         }
