@@ -31,6 +31,8 @@ namespace Pegasus_backend.Controllers
         
         //only one image case
         private IFormFile file;
+        
+        
         public RegisterController(pegasusContext.pegasusContext pegasusContext)
         {
             _pegasusContext = pegasusContext;

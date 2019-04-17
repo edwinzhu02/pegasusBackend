@@ -22,13 +22,23 @@ namespace Pegasus_backend.Controllers
             _pegasusContext = pegasusContext;
         }
         
-        //GET: http://localhost:5000/api/payment/invoice/:id
+        //GET: http://localhost:5000/api/payment/invoice/:studentId
         [HttpGet]
         [Route("invoice/{id}")]
         public ActionResult<List<Invoice>> GetInvoice(int id)
         {
-            return _pegasusContext.Invoice.Where(s => s.LearnerId == id).Include(s=>s.Term)
-                .ToList();
+            Result<string> result = new Result<string>();
+            try
+            {
+                return _pegasusContext.Invoice.Where(s => s.LearnerId == id).Include(s => s.Term)
+                    .ToList();
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return NotFound(result);
+            }
         }
         
         
@@ -39,9 +49,12 @@ namespace Pegasus_backend.Controllers
         {
             var invoiceItem = _pegasusContext.Invoice.
                 FirstOrDefault(s => s.InvoiceId == details.InvoiceId & s.LearnerId == details.LearnerId);
+            Result<string> result = new Result<string>();
             if (invoiceItem==null)
             {
-                return BadRequest("Invoice does not found.");
+                result.IsSuccess = false;
+                result.ErrorMessage = "Invoice does not found.";
+                return BadRequest(result);
             }
             else
             {
@@ -76,7 +89,9 @@ namespace Pegasus_backend.Controllers
                 }
                 catch (Exception ex)
                 {
-                    return BadRequest(ex.Message);
+                    result.IsSuccess = false;
+                    result.ErrorMessage = ex.Message;
+                    return BadRequest(result);
                 }
                 
                 //initialize fund item in fund table
@@ -99,7 +114,9 @@ namespace Pegasus_backend.Controllers
                 }
                 catch (Exception ex)
                 {
-                    return BadRequest(ex.Message);
+                    result.IsSuccess = false;
+                    result.ErrorMessage = ex.Message;
+                    return BadRequest(result);
                 }
                 
 
@@ -119,10 +136,14 @@ namespace Pegasus_backend.Controllers
                 }
                 catch (Exception ex)
                 {
-                    return BadRequest(ex.Message);
+                    result.IsSuccess = false;
+                    result.ErrorMessage = ex.Message;
+                    return BadRequest(result);
                 }
-                
-                return Ok("success");
+
+                result.IsSuccess = true;
+                result.Data = "success";
+                return Ok(result);
 
 
 
