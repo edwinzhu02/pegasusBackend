@@ -20,7 +20,7 @@ namespace Pegasus_backend.Models
         public IFormFile image { get; set; }
         public string GuardianFirstName { get; set; }
         public string GuardianLastName { get; set; }
-        public string GuardianRelationship { get; set; }
+        public byte GuardianRelationship { get; set; }
         public string GuardianPhone { get; set; }
         public string GuardianEmail { get; set; }
         /*public List<GroupCourse> GroupCourses { get; set; }

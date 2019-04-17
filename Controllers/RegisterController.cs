@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Google.Protobuf.WellKnownTypes;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Pegasus_backend.pegasusContext;
@@ -19,7 +22,15 @@ namespace Pegasus_backend.Controllers
         private TeacherQualificatiion newTeacherQualification;
         private TeacherLanguage newTeacherLanguage;
         private AvailableDays DayList;
+        private Learner newLearner;
         
+        //image for learner
+        private IFormFile image;
+        //image for ABRSM
+        private IFormFile ABRSM;
+        
+        //only one image case
+        private IFormFile file;
         public RegisterController(pegasusContext.pegasusContext pegasusContext)
         {
             _pegasusContext = pegasusContext;
@@ -66,10 +77,9 @@ namespace Pegasus_backend.Controllers
                 {
                     if (_pegasusContext.Teacher.FirstOrDefault(s=>s.IdNumber == details.IDNumber) != null)
                     {
-                        result.ErrorCode = "401";
                         result.IsSuccess = false;
                         result.ErrorMessage = "Teacher has exist.";
-                        return result;
+                        return BadRequest(result);
                     }
                     var newTeacher = new Teacher()
                     {
@@ -114,10 +124,9 @@ namespace Pegasus_backend.Controllers
 
                     if (details.DayOfWeek.Count != 7)
                     {
-                        result.ErrorCode = "401";
                         result.IsSuccess = false;
                         result.ErrorMessage = "Day Of Week List must be length 7.";
-                        return result;
+                        return BadRequest(result);
                     }
                     
                     details.DayOfWeek.ForEach(s =>
@@ -150,13 +159,13 @@ namespace Pegasus_backend.Controllers
                 }
                 catch (Exception ex)
                 {
-                    result.ErrorCode = "401";
                     result.IsSuccess = false;
                     result.ErrorMessage = ex.ToString();
+                    return BadRequest(result);
                 }
             }
 
-            return result;
+            return Ok(result);
         }
         
         
@@ -165,8 +174,189 @@ namespace Pegasus_backend.Controllers
         [Route("student")]
         public IActionResult StudentRegister([FromForm] StudentRegister details)
         {
-            var requestForm = Request.Form;
             Result<string> result = new Result<string>();
+            
+            //Handle upload Data
+            using (var dbContextTransaction = _pegasusContext.Database.BeginTransaction())
+            {
+                try
+                {
+                    newLearner = new Learner()
+                    {
+                        FirstName = details.FirstName,
+                        MiddleName = details.MiddleName,
+                        LastName = details.LastName,
+                        Gender = details.Gender,
+                        Dob = details.dob,
+                        EnrollDate = details.DateOfEnrollment,
+                        ContactNum = details.ContactPhone,
+                        Email = details.Email,
+                        Address = details.Address,
+                        CreatedAt = DateTime.Now
+                    };
+
+                    _pegasusContext.Add(newLearner);
+                    _pegasusContext.SaveChanges();
+                    
+                    Parent newParent = new Parent()
+                    {
+                        FirstName = details.GuardianFirstName,
+                        LastName = details.GuardianLastName,
+                        Email = details.GuardianEmail,
+                        ContactNum = details.GuardianPhone,
+                        LearnerId = newLearner.LearnerId,
+                        Relationship = details.GuardianRelationship,
+                        CreatedAt = DateTime.Now
+                    };
+                    _pegasusContext.Add(newParent);
+                    _pegasusContext.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    result.ErrorMessage = ex.Message;
+                    return BadRequest(result);
+                }
+
+
+                //Handle uploading image
+                var requestForm = Request.Form;
+                //Case1 : no image upload when student account created
+                if (requestForm.Files.Count == 0)
+                {
+                    newLearner.IsAbrsmG5 = 0;
+                    //Case2: only one image upload(this may be learner image or ABRSM level5 certificate)
+                }
+                else if (requestForm.Files.Count == 1)
+                {
+                    if (requestForm.Files[0].Name == "image")
+                    {
+                        file = requestForm.Files[0];
+                        var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                        try
+                        {
+                            var folderName = Path.Combine("wwwroot", "images", "LearnerImages");
+                            var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+                            var path = Path.Combine(pathToSave, fileName);
+                            var stream = new FileStream(path, FileMode.Create);
+                            file.CopyTo(stream);
+                            stream.Close();
+
+                            newLearner.Photo = $"images/LearnerImages/{fileName}";
+                            _pegasusContext.Update(newLearner);
+                            _pegasusContext.SaveChanges();
+                        }
+                        catch (Exception ex)
+                        {
+                            result.ErrorMessage = ex.Message;
+                            return BadRequest(result);
+                        }
+                    }
+                    else if (requestForm.Files[0].Name == "ABRSM")
+                    {
+                        file = requestForm.Files[0];
+                        var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                        try
+                        {
+                            var folderName = Path.Combine("wwwroot", "images", "ABRSM_Grade5_Certificate");
+                            var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+                            var path = Path.Combine(pathToSave, fileName);
+                            var stream = new FileStream(path, FileMode.Create);
+                            file.CopyTo(stream);
+                            stream.Close();
+                            
+                            newLearner.G5Certification = $"images/ABRSM_Grade5_Certificate/{fileName}";
+                            newLearner.IsAbrsmG5 = 1;
+                            _pegasusContext.Update(newLearner);
+                            _pegasusContext.SaveChanges();
+                        }
+                        catch (Exception ex)
+                        {
+                            result.ErrorMessage = ex.Message;
+                            return BadRequest(result);
+                        }
+
+                    }
+                    else
+                    {
+                        result.ErrorMessage = "The post key name of images must be image or ABRSM";
+                        return BadRequest(result);
+                    }
+
+                    //Case 3: both learner image and ABRSM image upload when student account created
+                }
+                else if (requestForm.Files.Count == 2)
+                {
+                    if (requestForm.Files[0].Name == "image" && requestForm.Files[1].Name == "ABRSM")
+                    {
+                        image = requestForm.Files[0];
+                        ABRSM = requestForm.Files[1];
+                    }
+                    else if (requestForm.Files[1].Name == "image" && requestForm.Files[0].Name == "ABRSM")
+                    {
+                        image = requestForm.Files[1];
+                        ABRSM = requestForm.Files[0];
+                    }
+                    else
+                    {
+                        result.ErrorMessage = "These two post key name of images must be image and ABRSM";
+                        return BadRequest(result);
+                    }
+
+
+                    var imageFileName = ContentDispositionHeaderValue.Parse(image.ContentDisposition).FileName
+                        .Trim('"');
+                    var ABRSM_FileName = ContentDispositionHeaderValue.Parse(ABRSM.ContentDisposition).FileName
+                        .Trim('"');
+
+                    try
+                    {
+                        //ABRSM image folder location
+                        var ABRSM_FolderName = Path.Combine("wwwroot", "images", "ABRSM_Grade5_Certificate");
+                        //Learner image folder location
+                        var LearnerImagesFolderName = Path.Combine("wwwroot", "images", "LearnerImages");
+
+                        //Point to this two folder location
+                        var ABRSM_pathToSave = Path.Combine(Directory.GetCurrentDirectory(), ABRSM_FolderName);
+                        var LearnerImage_pathToSave =
+                            Path.Combine(Directory.GetCurrentDirectory(), LearnerImagesFolderName);
+
+                        var ABRSM_path = Path.Combine(ABRSM_pathToSave, ABRSM_FileName);
+                        var Learner_path = Path.Combine(LearnerImage_pathToSave, imageFileName);
+
+                        //Copy ABRSM image to local server by IO stream
+                        var ABRSM_stream = new FileStream(ABRSM_path, FileMode.Create);
+                        ABRSM.CopyTo(ABRSM_stream);
+                        ABRSM_stream.Close();
+
+                        //Copy Learner image to local server by IO stream
+                        var image_stream = new FileStream(Learner_path, FileMode.Create);
+                        image.CopyTo(image_stream);
+                        image_stream.Close();
+                        
+                        newLearner.G5Certification = $"images/ABRSM_Grade5_Certificate/{ABRSM_FileName}";
+                        newLearner.Photo = $"images/LearnerImages/{imageFileName}";
+                        newLearner.IsAbrsmG5 = 1;
+                        _pegasusContext.Update(newLearner);
+                        _pegasusContext.SaveChanges();
+                        
+                    }
+                    catch (Exception ex)
+                    {
+                        result.ErrorMessage = ex.Message;
+                        return BadRequest(result);
+                    }
+                }
+                //Case 4: no more than 2 image upload
+                else
+                {
+                    result.ErrorMessage = "No more than 2 images.";
+                    return BadRequest(result);
+                }
+                
+                dbContextTransaction.Commit();
+            }
+
+            result.Data = "Student successfully added";
             return Ok(result);
         }
     }
