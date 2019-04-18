@@ -8,6 +8,7 @@ using Google.Protobuf.WellKnownTypes;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Pegasus_backend.ActionFilter;
 using Pegasus_backend.pegasusContext;
 using Pegasus_backend.Models;
 
@@ -175,6 +176,7 @@ namespace Pegasus_backend.Controllers
         //GET: http://localhost:5000/api/register/student
         [HttpPost]
         [Route("student")]
+        [CheckModelFilter]
         public IActionResult StudentRegister([FromForm] StudentRegister details)
         {
             Result<string> result = new Result<string>();
