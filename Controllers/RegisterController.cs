@@ -107,7 +107,7 @@ namespace Pegasus_backend.Controllers
                     {
                         newTeacherQualification = new TeacherQualificatiion()
                         {
-                            TeacherId = _pegasusContext.Teacher.FirstOrDefault(s=>s.IdNumber == details.IDNumber).TeacherId,
+                            TeacherId = newTeacher.TeacherId,
                             QualiId = _pegasusContext.Qualification.FirstOrDefault(s=>s.QualiName==quali).QualiId
                         };
                         _pegasusContext.Add(newTeacherQualification);
@@ -119,7 +119,7 @@ namespace Pegasus_backend.Controllers
                     {
                         newTeacherLanguage = new TeacherLanguage()
                         {
-                            TeacherId = _pegasusContext.Teacher.FirstOrDefault(s=>s.IdNumber == details.IDNumber).TeacherId,
+                            TeacherId = newTeacher.TeacherId,
                             LangId = _pegasusContext.Language.FirstOrDefault(s=>s.LangName == lan).LangId
                         };
                         _pegasusContext.Add(newTeacherLanguage);
@@ -133,16 +133,17 @@ namespace Pegasus_backend.Controllers
                         return BadRequest(result);
                     }
                     
+                    byte i = 1;
                     details.DayOfWeek.ForEach(s =>
                     {
-                        byte i = 1;
+                        
                         if (s.Count != 0)
                         {
                             s.ForEach(w =>
                             {
                                 DayList = new AvailableDays()
                                 {
-                                    TeacherId = _pegasusContext.Teacher.FirstOrDefault(a=>a.IdNumber == details.IDNumber).TeacherId,
+                                    TeacherId = newTeacher.TeacherId,
                                     DayOfWeek = i,
                                     CreatedAt = DateTime.Now,
                                     OrgId = _pegasusContext.Org.FirstOrDefault(a=>a.OrgName == w).OrgId

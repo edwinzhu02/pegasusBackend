@@ -33,7 +33,6 @@ namespace Pegasus_backend.Controllers
             return await _pegasusContext.Product.Include(x => x.ProdType.ProdCat).ToListAsync();
         }
 
-
         //GET: http://localhost:5000/api/product/{id}
         [HttpGet]
         [Route("{id}")]
