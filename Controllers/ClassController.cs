@@ -31,16 +31,6 @@ namespace Pegasus_backend.Controllers
                 .ToList();
         }
         
-        //GET: http://localhost:5000/api/class/OnetoOneCourse
-        [HttpGet]
-        [Route("OnetoOneCourse")]
-        public ActionResult<List<One2oneCourseInstance>> GetOnetoOneClassDetails()
-        {
-            return _pegasusContext.One2oneCourseInstance.
-                Include(s => s.Course).
-                Include(s=>s.Org).
-                ToList();
-        }
         
     }
 }
