@@ -32,7 +32,7 @@ namespace Pegasus_backend.Controllers
         
         //only one image case
         private IFormFile file;
-        
+        private LearnerGroupCourse newLearnerGroupCourse;
         
         
         public RegisterController(pegasusContext.pegasusContext pegasusContext)
@@ -221,6 +221,33 @@ namespace Pegasus_backend.Controllers
                     result.ErrorMessage = ex.Message;
                     return BadRequest(result);
                 }
+
+                try
+                {
+                    details.GroupCourses.ForEach(s =>
+                    {
+                        var check = _pegasusContext.GroupCourseInstance.FirstOrDefault(a => a.GroupCourseInstanceId == s);
+                        
+                        
+                            newLearnerGroupCourse = new LearnerGroupCourse()
+                            {
+                                LearnerId = newLearner.LearnerId,
+                                GroupCourseInstanceId = s,
+                                CreatedAt = DateTime.Now
+                            };
+                        
+
+                        _pegasusContext.Add(newLearnerGroupCourse);
+                    });
+
+                    _pegasusContext.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    result.ErrorMessage = ex.Message;
+                    return BadRequest(result);
+                }
+                
 
 
                 //Handle uploading image

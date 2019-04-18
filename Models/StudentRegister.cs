@@ -36,8 +36,8 @@ namespace Pegasus_backend.Models
         public string GuardianPhone { get; set; }
         [Required(ErrorMessage = "Parent email is required")]
         public string GuardianEmail { get; set; }
-        /*public List<GroupCourse> GroupCourses { get; set; }
-        public List<OnetoOneCourse> OnetoOneCourses { get; set; }*/
+        public List<int> GroupCourses { get; set; }
+        //public List<OnetoOneCourse> OnetoOneCourses { get; set; }
         
     }
 }

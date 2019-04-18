@@ -42,6 +42,5 @@ namespace Pegasus_backend.Controllers
                 ToList();
         }
         
-        
     }
 }
