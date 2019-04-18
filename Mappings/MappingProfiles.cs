@@ -8,7 +8,6 @@ namespace jupiterCore.Mappings
     {
         public MappingProfiles()
         {
-            CreateMap<CoursecateModel, CourseCategory>();
             CreateMap<ProdCatModel, ProdCat>();
             CreateMap<ProdTypeModel, ProdType>();
         }
