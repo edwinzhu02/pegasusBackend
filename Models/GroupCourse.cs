@@ -1,4 +1,4 @@
-using Org.BouncyCastle.Asn1.Cms;
+/*using Org.BouncyCastle.Asn1.Cms;
 
 namespace Pegasus_backend.Models
 {
@@ -9,4 +9,7 @@ namespace Pegasus_backend.Models
         public Time CourseTime { get; set; }
         public string Location { get; set; }
     }
-}
+}*/
+
+
+//
