@@ -254,6 +254,9 @@ namespace Pegasus_backend.pegasusContext
             {
                 entity.ToTable("course", "pegasus");
 
+                entity.HasIndex(e => e.CourseCategoryId)
+                    .HasName("R_85");
+
                 entity.Property(e => e.CourseId)
                     .HasColumnName("course_id")
                     .HasColumnType("int(11)");
@@ -282,6 +285,11 @@ namespace Pegasus_backend.pegasusContext
                 entity.Property(e => e.Price)
                     .HasColumnName("price")
                     .HasColumnType("decimal(6,2)");
+
+                entity.HasOne(d => d.CourseCategory)
+                    .WithMany(p => p.Course)
+                    .HasForeignKey(d => d.CourseCategoryId)
+                    .HasConstraintName("R_85");
             });
 
             modelBuilder.Entity<CourseCategory>(entity =>
@@ -1440,22 +1448,31 @@ namespace Pegasus_backend.pegasusContext
             {
                 entity.ToTable("prod_type", "pegasus");
 
+                entity.HasIndex(e => e.ProdCatId)
+                    .HasName("R_88");
+
                 entity.Property(e => e.ProdTypeId)
                     .HasColumnName("prod_type_id")
+                    .HasColumnType("smallint(6)");
+
+                entity.Property(e => e.ProdCatId)
+                    .HasColumnName("prod_cat_id")
                     .HasColumnType("smallint(6)");
 
                 entity.Property(e => e.ProdTypeName)
                     .HasColumnName("prod_type_name")
                     .HasMaxLength(40)
                     .IsUnicode(false);
+
+                entity.HasOne(d => d.ProdCat)
+                    .WithMany(p => p.ProdType)
+                    .HasForeignKey(d => d.ProdCatId)
+                    .HasConstraintName("R_88");
             });
 
             modelBuilder.Entity<Product>(entity =>
             {
                 entity.ToTable("product", "pegasus");
-
-                entity.HasIndex(e => e.ProdCatId)
-                    .HasName("R_70");
 
                 entity.HasIndex(e => e.ProdTypeId)
                     .HasName("R_69");
@@ -1474,10 +1491,6 @@ namespace Pegasus_backend.pegasusContext
                     .HasMaxLength(30)
                     .IsUnicode(false);
 
-                entity.Property(e => e.ProdCatId)
-                    .HasColumnName("prod_cat_id")
-                    .HasColumnType("smallint(6)");
-
                 entity.Property(e => e.ProdTypeId)
                     .HasColumnName("prod_type_id")
                     .HasColumnType("smallint(6)");
@@ -1494,11 +1507,6 @@ namespace Pegasus_backend.pegasusContext
                 entity.Property(e => e.WholesalePrice)
                     .HasColumnName("wholesale_price")
                     .HasColumnType("decimal(8,2)");
-
-                entity.HasOne(d => d.ProdCat)
-                    .WithMany(p => p.Product)
-                    .HasForeignKey(d => d.ProdCatId)
-                    .HasConstraintName("R_70");
 
                 entity.HasOne(d => d.ProdType)
                     .WithMany(p => p.Product)

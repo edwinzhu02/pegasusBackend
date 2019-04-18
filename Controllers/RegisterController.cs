@@ -33,37 +33,38 @@ namespace Pegasus_backend.Controllers
         private IFormFile file;
         
         
+        
         public RegisterController(pegasusContext.pegasusContext pegasusContext)
         {
             _pegasusContext = pegasusContext;
         }
-        
-        //GET http://api/localhost:5000/register/getQualification
-        [HttpGet]
-        [Route("getQualification")]
-        public ActionResult<List<Qualification>> GetQualification()
-        {
-            return _pegasusContext.Qualification.ToList();
-        }
 
         
-        //GET http://api/localhost:5000/register/getLanguage
+        //GET: http://localhost:5000/api/register/teacher
         [HttpGet]
-        [Route("getLanguage")]
-        public ActionResult<List<Language>> GetLanguage()
+        [Route("teacher")]
+        public ActionResult<Result<DetailsForTeacherRegister>> GetDetailsForTeacher()
         {
-            return _pegasusContext.Language.ToList();
+            Result<DetailsForTeacherRegister> result = new Result<DetailsForTeacherRegister>();
+            try
+            {
+                DetailsForTeacherRegister details = new DetailsForTeacherRegister()
+                {
+                    qualifications = _pegasusContext.Qualification.ToList(),
+                    Languages = _pegasusContext.Language.ToList(),
+                    Orgs = _pegasusContext.Org.ToList()
+                };
+                result.Data = details;
+            }
+            catch (Exception ex)
+            {
+                result.ErrorMessage = ex.Message;
+                result.IsSuccess = false;
+                return BadRequest(result);
+            }
+            return Ok(result);
         }
-        
-        //GET http://api/localhost:5000/register/getOrg
-        [HttpGet]
-        [Route("getOrg")]
-        public ActionResult<List<pegasusContext.Org>> GetOrg()
-        {
-            return _pegasusContext.Org.ToList();
-        }
-        
-        
+
 
 
 

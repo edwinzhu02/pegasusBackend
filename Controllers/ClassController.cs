@@ -25,7 +25,10 @@ namespace Pegasus_backend.Controllers
         [Route("groupCourse")]
         public ActionResult<List<GroupCourseInstance>> GetGroupClassDetails()
         {
-            return _pegasusContext.GroupCourseInstance.Include(s=>s.Course).ToList();
+            return _pegasusContext.GroupCourseInstance.
+                Include(s=>s.Course).
+                Include(s=>s.Org)
+                .ToList();
         }
         
         //GET: http://localhost:5000/api/class/OnetoOneCourse
@@ -33,7 +36,12 @@ namespace Pegasus_backend.Controllers
         [Route("OnetoOneCourse")]
         public ActionResult<List<One2oneCourseInstance>> GetOnetoOneClassDetails()
         {
-            return _pegasusContext.One2oneCourseInstance.Include(s => s.Course).ToList();
+            return _pegasusContext.One2oneCourseInstance.
+                Include(s => s.Course).
+                Include(s=>s.Org).
+                ToList();
         }
+        
+        
     }
 }

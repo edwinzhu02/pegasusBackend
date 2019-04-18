@@ -19,9 +19,7 @@ namespace Pegasus_backend.pegasusContext
         public decimal? SellPrice { get; set; }
         public decimal? WholesalePrice { get; set; }
         public short? ProdTypeId { get; set; }
-        public short? ProdCatId { get; set; }
 
-        public ProdCat ProdCat { get; set; }
         public ProdType ProdType { get; set; }
         public ICollection<SoldTransaction> SoldTransaction { get; set; }
         public ICollection<Stock> Stock { get; set; }

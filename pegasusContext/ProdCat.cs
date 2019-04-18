@@ -7,12 +7,12 @@ namespace Pegasus_backend.pegasusContext
     {
         public ProdCat()
         {
-            Product = new HashSet<Product>();
+            ProdType = new HashSet<ProdType>();
         }
 
         public short ProdCatId { get; set; }
         public string ProdCatName { get; set; }
 
-        public ICollection<Product> Product { get; set; }
+        public ICollection<ProdType> ProdType { get; set; }
     }
 }
