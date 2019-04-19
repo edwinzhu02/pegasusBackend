@@ -72,7 +72,7 @@ namespace Pegasus_backend.Controllers
         //POST: http://api/localhost:5000/register/teacher
         [HttpPost]
         [Route("teacher")]
-        public ActionResult<Result<string>> TeacherRegister([FromBody] TeachersRegister details)
+        public ActionResult<Result<string>> TeacherRegister([FromForm] TeachersRegister details)
         {
             Result<string> result = new Result<string>();
             using (var dbContextTransaction = _pegasusContext.Database.BeginTransaction())
@@ -101,7 +101,10 @@ namespace Pegasus_backend.Controllers
                     };
                     _pegasusContext.Add(newTeacher);
                     _pegasusContext.SaveChanges();
-
+                    
+                    //process teacher id photo upload and id photo upload
+                    //here
+                    
                     
                     foreach (var quali in details.Qualification)
                     {
@@ -174,7 +177,7 @@ namespace Pegasus_backend.Controllers
         }
         
         
-        //GET: http://localhost:5000/api/register/student
+        //POST: http://localhost:5000/api/register/student
         [HttpPost]
         [Route("student")]
         [CheckModelFilter]

@@ -31,6 +31,7 @@ namespace Pegasus_backend.pegasusContext
         public Teacher Teacher { get; set; }
         [JsonIgnore]
         public ICollection<Invoice> Invoice { get; set; }
+        [JsonIgnore]
         public ICollection<LearnerGroupCourse> LearnerGroupCourse { get; set; }
         public ICollection<Lesson> Lesson { get; set; }
         public ICollection<LessonRemain> LessonRemain { get; set; }
