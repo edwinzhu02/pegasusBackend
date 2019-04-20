@@ -24,6 +24,7 @@ namespace Pegasus_backend.Controllers
         }
 
         //GET: http://localhost:5000/api/teacher
+        //this controller is for prepare for register custom one to one course
         [HttpGet]
         public async Task<ActionResult> GetTeacher()
         {

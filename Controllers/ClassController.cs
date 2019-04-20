@@ -20,6 +20,7 @@ namespace Pegasus_backend.Controllers
     public class ClassController: ControllerBase
     {
         private readonly pegasusContext.pegasusContext _pegasusContext;
+        private List<GroupCourseInstance> details;
         
         public ClassController(pegasusContext.pegasusContext pegasusContext)
         {
@@ -31,10 +32,24 @@ namespace Pegasus_backend.Controllers
         [Route("groupCourse")]
         public ActionResult GetGroupClassDetails()
         {
-            return Ok(_pegasusContext.GroupCourseInstance.
-                Include(s=>s.Course).
-                Include(s=>s.Org)
-                .ToList()); 
+            
+            Result<List<GroupCourseInstance>> result = new Result<List<GroupCourseInstance>>();
+            try
+            {
+                details = _pegasusContext.GroupCourseInstance
+                    .Include(s => s.Course)
+                    .Include(s => s.Org)
+                    .ToList();
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+
+            result.Data = details;
+            return Ok(result);
 
             /*var data = _pegasusContext.GroupCourseInstance
                 .Include(s => s.Course)
