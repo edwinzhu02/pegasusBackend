@@ -33,6 +33,8 @@ namespace Pegasus_backend.Controllers
         //only one image case
         private IFormFile file;
         private LearnerGroupCourse newLearnerGroupCourse;
+        private IFormFile teacherIdPhoto;
+        private IFormFile teacherPhoto;
         
         
         public RegisterController(pegasusContext.pegasusContext pegasusContext)
@@ -104,20 +106,127 @@ namespace Pegasus_backend.Controllers
                     
                     //process teacher id photo upload and id photo upload
                     //here
+                    var requestForm = Request.Form;
+                    if (requestForm.Files.Count == 0)
+                    {
+                        result.ErrorMessage = "Id photo required";
+                        result.IsSuccess = false;
+                        return BadRequest(result);
+
+                    }
                     
-                    
+                    if (requestForm.Files.Count == 1)
+                    {
+                        if (requestForm.Files[0].Name == "IdPhoto")
+                        {
+                            file = requestForm.Files[0];
+                            var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                            try
+                            {
+                                var folderName = Path.Combine("wwwroot", "images", "TeacherIdPhotos");
+                                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+                                var path = Path.Combine(pathToSave, fileName);
+                                var stream = new FileStream(path, FileMode.Create);
+                                file.CopyTo(stream);
+                                stream.Close();
+                                
+                                //add to db
+                                newTeacher.IdPhoto = $"images/TeacherIdPhotos/{fileName}";
+                                _pegasusContext.Update(newTeacher);
+                                _pegasusContext.SaveChanges();
+
+                            }
+                            catch (Exception ex)
+                            {
+                                result.ErrorMessage = ex.Message;
+                                result.IsSuccess = false;
+                                return BadRequest(result);
+                            }
+                            
+                        }
+                        else
+                        {
+                            result.ErrorMessage = "The id Photo must be uploaded firstly";
+                            result.IsSuccess = false;
+                            return BadRequest(result);
+                        }
+                    }else if (requestForm.Files.Count == 2)
+                    {
+                        if (requestForm.Files[0].Name == "IdPhoto" && requestForm.Files[1].Name == "Photo")
+                        {
+                            teacherIdPhoto = requestForm.Files[0];
+                            teacherPhoto = requestForm.Files[1];
+                        }else if (requestForm.Files[1].Name == "IdPhoto" && requestForm.Files[0].Name == "Photo")
+                        {
+                            teacherIdPhoto = requestForm.Files[1];
+                            teacherPhoto = requestForm.Files[0];
+                        }
+                        else
+                        {
+                            result.IsSuccess = false;
+                            result.ErrorMessage = "These two post key name of images must be IdPhoto and Photo";
+                        }
+
+                        try
+                        {
+                            var photoID = ContentDispositionHeaderValue.Parse(teacherIdPhoto.ContentDisposition).FileName.Trim('"');
+                        
+                            var photo = ContentDispositionHeaderValue.Parse(teacherPhoto.ContentDisposition).FileName.Trim('"');
+                            
+                            var photoIdFolderName = Path.Combine("wwwroot", "images", "TeacherIdPhotos");
+                            var photoFolderName = Path.Combine("wwwroot", "images", "TeacherImages");
+                        
+                            var photoIdPathToSave = Path.Combine(Directory.GetCurrentDirectory(), photoIdFolderName);
+                            var photoPathToSave = Path.Combine(Directory.GetCurrentDirectory(), photoFolderName);
+                        
+                            var photoIdPath = Path.Combine(photoIdPathToSave, photoID);
+                            var photoPath = Path.Combine(photoPathToSave, photo);
+                        
+                            var photoIdStream = new FileStream(photoIdPath,FileMode.Create);
+                            teacherIdPhoto.CopyTo(photoIdStream);
+                            photoIdStream.Close();
+
+                            var photoStream = new FileStream(photoPath, FileMode.Create);
+                            teacherPhoto.CopyTo(photoStream);
+                            photoStream.Close();
+
+                            newTeacher.IdPhoto = $"images/TeacherIdPhotos/{photoID}";
+                            newTeacher.Photo = $"images/TeacherImages/{photo}";
+
+                            _pegasusContext.Update(newTeacher);
+                            _pegasusContext.SaveChanges();
+                        }
+                        catch (Exception ex)
+                        {
+                            result.IsSuccess = false;
+                            result.ErrorMessage = ex.Message;
+                            return BadRequest(result);
+                        }
+
+                    }
+                    else
+                    {
+                        result.IsSuccess = false;
+                        result.ErrorMessage = "No more than 2 images.";
+                        return BadRequest(result);
+                    }
+
+
+
                     foreach (var quali in details.Qualification)
                     {
                         newTeacherQualification = new TeacherQualificatiion()
                         {
                             TeacherId = newTeacher.TeacherId,
-                            QualiId = _pegasusContext.Qualification.FirstOrDefault(s=>s.QualiName==quali).QualiId
+                            QualiId = _pegasusContext.Qualification.FirstOrDefault(s => s.QualiName == quali)
+                                .QualiId
                         };
                         _pegasusContext.Add(newTeacherQualification);
                     }
 
                     _pegasusContext.SaveChanges();
-
+                    
+                    
                     foreach (var lan in details.Language)
                     {
                         newTeacherLanguage = new TeacherLanguage()
@@ -127,6 +236,7 @@ namespace Pegasus_backend.Controllers
                         };
                         _pegasusContext.Add(newTeacherLanguage);
                     }
+                    
                     _pegasusContext.SaveChanges();
 
                     if (details.DayOfWeek.Count != 7)
@@ -160,7 +270,7 @@ namespace Pegasus_backend.Controllers
                     });
 
                     _pegasusContext.SaveChanges();
-                    
+
                     
                     dbContextTransaction.Commit();
 
@@ -173,6 +283,7 @@ namespace Pegasus_backend.Controllers
                 }
             }
 
+            result.Data = "teacher added successfully";
             return Ok(result);
         }
         

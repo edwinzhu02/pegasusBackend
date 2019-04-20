@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
 
 namespace Pegasus_backend.Models
 {
@@ -19,6 +21,8 @@ namespace Pegasus_backend.Models
         public string Email { get; set; }
         public List<string> Language { get; set; }
         public List<List<string>> DayOfWeek { get; set; } 
+        public IFormFile IdPhoto { get; set; }
+        public IFormFile Photo { get; set; }
         
     }
 }
