@@ -24,18 +24,10 @@ namespace Pegasus_backend.Models
         public string Email { get; set; }
         [Required(ErrorMessage = "Address is required")]
         public string Address { get; set; }
+        public Parents Parents { get; set; }
         public IFormFile ABRSM { get; set; }
         public IFormFile image { get; set; }
-        [Required(ErrorMessage = "Parent First Name is required")]
-        public string GuardianFirstName { get; set; }
-        [Required(ErrorMessage = "Parent Last Name is required")]
-        public string GuardianLastName { get; set; }
-        [Required(ErrorMessage = "Relationship is required")]
-        public byte GuardianRelationship { get; set; }
-        [Required(ErrorMessage = "Parent Phone is required")]
-        public string GuardianPhone { get; set; }
-        [Required(ErrorMessage = "Parent email is required")]
-        public string GuardianEmail { get; set; }
+        
         public List<int> GroupCourses { get; set; }
         //public List<OnetoOneCourse> OnetoOneCourses { get; set; }
         

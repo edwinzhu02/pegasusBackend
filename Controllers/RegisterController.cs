@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using AutoMapper;
 using Google.Protobuf.WellKnownTypes;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,7 +17,7 @@ namespace Pegasus_backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RegisterController: ControllerBase
+    public class RegisterController: BasicController
 
     {
         private readonly pegasusContext.pegasusContext _pegasusContext;
@@ -35,11 +36,13 @@ namespace Pegasus_backend.Controllers
         private LearnerGroupCourse newLearnerGroupCourse;
         private IFormFile teacherIdPhoto;
         private IFormFile teacherPhoto;
+        private readonly IMapper _mapper;
         
         
-        public RegisterController(pegasusContext.pegasusContext pegasusContext)
+        public RegisterController(pegasusContext.pegasusContext pegasusContext,IMapper mapper)
         {
             _pegasusContext = pegasusContext;
+            _mapper = mapper;
         }
 
         
@@ -74,6 +77,7 @@ namespace Pegasus_backend.Controllers
         //POST: http://api/localhost:5000/register/teacher
         [HttpPost]
         [Route("teacher")]
+        [CheckModelFilter]
         public ActionResult<Result<string>> TeacherRegister([FromForm] TeachersRegister details)
         {
             Result<string> result = new Result<string>();
@@ -87,20 +91,9 @@ namespace Pegasus_backend.Controllers
                         result.ErrorMessage = "Teacher has exist.";
                         return BadRequest(result);
                     }
-                    var newTeacher = new Teacher()
-                    {
-                        FirstName = details.FirstName,
-                        LastName =  details.LastName,
-                        Dob = details.Dob,
-                        Gender = details.Gender,
-                        IrdNumber = details.IRDNumber,
-                        IdType = details.IDType,
-                        IdNumber = details.IDNumber,
-                        HomePhone = details.HomePhone,
-                        MobilePhone = details.PhoneNumber,
-                        Email = details.Email,
-                        ExpiryDate = details.IDExpireDate,
-                    };
+                    
+                    var newTeacher = new Teacher();
+                    _mapper.Map(details,newTeacher );
                     _pegasusContext.Add(newTeacher);
                     _pegasusContext.SaveChanges();
                     
@@ -121,15 +114,11 @@ namespace Pegasus_backend.Controllers
                         {
                             file = requestForm.Files[0];
                             var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                            var folderName = Path.Combine("wwwroot", "images", "TeacherIdPhotos");
                             try
                             {
-                                var folderName = Path.Combine("wwwroot", "images", "TeacherIdPhotos");
-                                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
-                                var path = Path.Combine(pathToSave, fileName);
-                                var stream = new FileStream(path, FileMode.Create);
-                                file.CopyTo(stream);
-                                stream.Close();
-                                
+                                //call basic controller method
+                                UploadFile(fileName,file,folderName);
                                 //add to db
                                 newTeacher.IdPhoto = $"images/TeacherIdPhotos/{fileName}";
                                 _pegasusContext.Update(newTeacher);
@@ -175,20 +164,10 @@ namespace Pegasus_backend.Controllers
                             
                             var photoIdFolderName = Path.Combine("wwwroot", "images", "TeacherIdPhotos");
                             var photoFolderName = Path.Combine("wwwroot", "images", "TeacherImages");
-                        
-                            var photoIdPathToSave = Path.Combine(Directory.GetCurrentDirectory(), photoIdFolderName);
-                            var photoPathToSave = Path.Combine(Directory.GetCurrentDirectory(), photoFolderName);
-                        
-                            var photoIdPath = Path.Combine(photoIdPathToSave, photoID);
-                            var photoPath = Path.Combine(photoPathToSave, photo);
-                        
-                            var photoIdStream = new FileStream(photoIdPath,FileMode.Create);
-                            teacherIdPhoto.CopyTo(photoIdStream);
-                            photoIdStream.Close();
-
-                            var photoStream = new FileStream(photoPath, FileMode.Create);
-                            teacherPhoto.CopyTo(photoStream);
-                            photoStream.Close();
+                            
+                            //call upload file in basic controller
+                            UploadFile(photoID,teacherIdPhoto,photoIdFolderName);
+                            UploadFile(photo,teacherPhoto,photoFolderName);
 
                             newTeacher.IdPhoto = $"images/TeacherIdPhotos/{photoID}";
                             newTeacher.Photo = $"images/TeacherImages/{photo}";
@@ -301,33 +280,15 @@ namespace Pegasus_backend.Controllers
             {
                 try
                 {
-                    newLearner = new Learner()
-                    {
-                        FirstName = details.FirstName,
-                        MiddleName = details.MiddleName,
-                        LastName = details.LastName,
-                        Gender = details.Gender,
-                        Dob = details.dob,
-                        EnrollDate = details.DateOfEnrollment,
-                        ContactNum = details.ContactPhone,
-                        Email = details.Email,
-                        Address = details.Address,
-                        CreatedAt = DateTime.Now
-                    };
+                    newLearner = new Learner();
+                    _mapper.Map(details, newLearner);
 
                     _pegasusContext.Add(newLearner);
                     _pegasusContext.SaveChanges();
-                    
-                    Parent newParent = new Parent()
-                    {
-                        FirstName = details.GuardianFirstName,
-                        LastName = details.GuardianLastName,
-                        Email = details.GuardianEmail,
-                        ContactNum = details.GuardianPhone,
-                        LearnerId = newLearner.LearnerId,
-                        Relationship = details.GuardianRelationship,
-                        CreatedAt = DateTime.Now
-                    };
+                    Parent newParent = new Parent();
+                    _mapper.Map(details.Parents, newParent);
+                    newParent.CreatedAt = DateTime.Now;
+                    newParent.LearnerId = newLearner.LearnerId;
                     _pegasusContext.Add(newParent);
                     _pegasusContext.SaveChanges();
                 }
@@ -340,10 +301,7 @@ namespace Pegasus_backend.Controllers
                 try
                 {
                     details.GroupCourses.ForEach(s =>
-                    {
-                        var check = _pegasusContext.GroupCourseInstance.FirstOrDefault(a => a.GroupCourseInstanceId == s);
-                        
-                        
+                    {    
                             newLearnerGroupCourse = new LearnerGroupCourse()
                             {
                                 LearnerId = newLearner.LearnerId,
@@ -379,14 +337,11 @@ namespace Pegasus_backend.Controllers
                     {
                         file = requestForm.Files[0];
                         var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                        var folderName = Path.Combine("wwwroot", "images", "LearnerImages");
                         try
                         {
-                            var folderName = Path.Combine("wwwroot", "images", "LearnerImages");
-                            var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
-                            var path = Path.Combine(pathToSave, fileName);
-                            var stream = new FileStream(path, FileMode.Create);
-                            file.CopyTo(stream);
-                            stream.Close();
+                            
+                             UploadFile(fileName,file,folderName);
 
                             newLearner.Photo = $"images/LearnerImages/{fileName}";
                             newLearner.IsAbrsmG5 = 0;
@@ -403,14 +358,11 @@ namespace Pegasus_backend.Controllers
                     {
                         file = requestForm.Files[0];
                         var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                        var folderName = Path.Combine("wwwroot", "images", "ABRSM_Grade5_Certificate");
                         try
                         {
-                            var folderName = Path.Combine("wwwroot", "images", "ABRSM_Grade5_Certificate");
-                            var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
-                            var path = Path.Combine(pathToSave, fileName);
-                            var stream = new FileStream(path, FileMode.Create);
-                            file.CopyTo(stream);
-                            stream.Close();
+                            
+                            UploadFile(fileName,file,folderName);
                             
                             newLearner.G5Certification = $"images/ABRSM_Grade5_Certificate/{fileName}";
                             newLearner.IsAbrsmG5 = 1;
@@ -455,31 +407,14 @@ namespace Pegasus_backend.Controllers
                         .Trim('"');
                     var ABRSM_FileName = ContentDispositionHeaderValue.Parse(ABRSM.ContentDisposition).FileName
                         .Trim('"');
-
+                    //ABRSM image folder location
+                    var ABRSM_FolderName = Path.Combine("wwwroot", "images", "ABRSM_Grade5_Certificate");
+                    //Learner image folder location
+                    var LearnerImagesFolderName = Path.Combine("wwwroot", "images", "LearnerImages");
                     try
                     {
-                        //ABRSM image folder location
-                        var ABRSM_FolderName = Path.Combine("wwwroot", "images", "ABRSM_Grade5_Certificate");
-                        //Learner image folder location
-                        var LearnerImagesFolderName = Path.Combine("wwwroot", "images", "LearnerImages");
-
-                        //Point to this two folder location
-                        var ABRSM_pathToSave = Path.Combine(Directory.GetCurrentDirectory(), ABRSM_FolderName);
-                        var LearnerImage_pathToSave =
-                            Path.Combine(Directory.GetCurrentDirectory(), LearnerImagesFolderName);
-
-                        var ABRSM_path = Path.Combine(ABRSM_pathToSave, ABRSM_FileName);
-                        var Learner_path = Path.Combine(LearnerImage_pathToSave, imageFileName);
-
-                        //Copy ABRSM image to local server by IO stream
-                        var ABRSM_stream = new FileStream(ABRSM_path, FileMode.Create);
-                        ABRSM.CopyTo(ABRSM_stream);
-                        ABRSM_stream.Close();
-
-                        //Copy Learner image to local server by IO stream
-                        var image_stream = new FileStream(Learner_path, FileMode.Create);
-                        image.CopyTo(image_stream);
-                        image_stream.Close();
+                        UploadFile(imageFileName,image,LearnerImagesFolderName);
+                        UploadFile(ABRSM_FileName,ABRSM,ABRSM_FolderName);
                         
                         newLearner.G5Certification = $"images/ABRSM_Grade5_Certificate/{ABRSM_FileName}";
                         newLearner.Photo = $"images/LearnerImages/{imageFileName}";

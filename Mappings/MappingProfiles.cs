@@ -2,14 +2,15 @@ using AutoMapper;
 using Pegasus_backend.pegasusContext;
 using Pegasus_backend.Models;
 
-namespace jupiterCore.Mappings
+namespace Pegasus_backend.Mappings
 {
     public class MappingProfiles : Profile
     {
         public MappingProfiles()
         {
-            CreateMap<ProdCatModel, ProdCat>();
-            CreateMap<ProdTypeModel, ProdType>();
+            CreateMap<TeachersRegister, Teacher>();
+            CreateMap<StudentRegister, Learner>();
+            CreateMap<Parents,Parent>();
         }
     }
 }
