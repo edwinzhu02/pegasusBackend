@@ -93,7 +93,7 @@ namespace Pegasus_backend.Controllers
                     }
                     
                     var newTeacher = new Teacher();
-                    _mapper.Map(details,newTeacher );
+                    _mapper.Map(details,newTeacher);
                     _pegasusContext.Add(newTeacher);
                     _pegasusContext.SaveChanges();
                     
@@ -113,14 +113,12 @@ namespace Pegasus_backend.Controllers
                         if (requestForm.Files[0].Name == "IdPhoto")
                         {
                             file = requestForm.Files[0];
-                            var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
-                            var folderName = Path.Combine("wwwroot", "images", "TeacherIdPhotos");
                             try
                             {
                                 //call basic controller method
-                                UploadFile(fileName,file,folderName);
+                                UploadFile(file,requestForm.Files[0].Name);
                                 //add to db
-                                newTeacher.IdPhoto = $"images/TeacherIdPhotos/{fileName}";
+                                newTeacher.IdPhoto = $"images/TeacherIdPhotos/{ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"')}";
                                 _pegasusContext.Update(newTeacher);
                                 _pegasusContext.SaveChanges();
 
@@ -158,19 +156,13 @@ namespace Pegasus_backend.Controllers
 
                         try
                         {
-                            var photoID = ContentDispositionHeaderValue.Parse(teacherIdPhoto.ContentDisposition).FileName.Trim('"');
-                        
-                            var photo = ContentDispositionHeaderValue.Parse(teacherPhoto.ContentDisposition).FileName.Trim('"');
-                            
-                            var photoIdFolderName = Path.Combine("wwwroot", "images", "TeacherIdPhotos");
-                            var photoFolderName = Path.Combine("wwwroot", "images", "TeacherImages");
-                            
-                            //call upload file in basic controller
-                            UploadFile(photoID,teacherIdPhoto,photoIdFolderName);
-                            UploadFile(photo,teacherPhoto,photoFolderName);
 
-                            newTeacher.IdPhoto = $"images/TeacherIdPhotos/{photoID}";
-                            newTeacher.Photo = $"images/TeacherImages/{photo}";
+                            //call upload file in basic controller
+                            UploadFile(teacherPhoto,"Photo");
+                            UploadFile(teacherIdPhoto,"IdPhoto");
+
+                            newTeacher.IdPhoto = $"images/TeacherIdPhotos/{ContentDispositionHeaderValue.Parse(teacherIdPhoto.ContentDisposition).FileName.Trim('"')}";
+                            newTeacher.Photo = $"images/TeacherImages/{ContentDispositionHeaderValue.Parse(teacherPhoto.ContentDisposition).FileName.Trim('"')}";
 
                             _pegasusContext.Update(newTeacher);
                             _pegasusContext.SaveChanges();
@@ -336,14 +328,10 @@ namespace Pegasus_backend.Controllers
                     if (requestForm.Files[0].Name == "image")
                     {
                         file = requestForm.Files[0];
-                        var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
-                        var folderName = Path.Combine("wwwroot", "images", "LearnerImages");
                         try
                         {
-                            
-                             UploadFile(fileName,file,folderName);
-
-                            newLearner.Photo = $"images/LearnerImages/{fileName}";
+                            UploadFile(file,"image");
+                            newLearner.Photo = $"images/LearnerImages/{ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"')}";
                             newLearner.IsAbrsmG5 = 0;
                             _pegasusContext.Update(newLearner);
                             _pegasusContext.SaveChanges();
@@ -357,14 +345,10 @@ namespace Pegasus_backend.Controllers
                     else if (requestForm.Files[0].Name == "ABRSM")
                     {
                         file = requestForm.Files[0];
-                        var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
-                        var folderName = Path.Combine("wwwroot", "images", "ABRSM_Grade5_Certificate");
                         try
                         {
-                            
-                            UploadFile(fileName,file,folderName);
-                            
-                            newLearner.G5Certification = $"images/ABRSM_Grade5_Certificate/{fileName}";
+                            UploadFile(file,"ABRSM");
+                            newLearner.G5Certification = $"images/ABRSM_Grade5_Certificate/{ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"')}";
                             newLearner.IsAbrsmG5 = 1;
                             _pegasusContext.Update(newLearner);
                             _pegasusContext.SaveChanges();
@@ -401,23 +385,13 @@ namespace Pegasus_backend.Controllers
                         result.ErrorMessage = "These two post key name of images must be image and ABRSM";
                         return BadRequest(result);
                     }
-
-
-                    var imageFileName = ContentDispositionHeaderValue.Parse(image.ContentDisposition).FileName
-                        .Trim('"');
-                    var ABRSM_FileName = ContentDispositionHeaderValue.Parse(ABRSM.ContentDisposition).FileName
-                        .Trim('"');
-                    //ABRSM image folder location
-                    var ABRSM_FolderName = Path.Combine("wwwroot", "images", "ABRSM_Grade5_Certificate");
-                    //Learner image folder location
-                    var LearnerImagesFolderName = Path.Combine("wwwroot", "images", "LearnerImages");
                     try
                     {
-                        UploadFile(imageFileName,image,LearnerImagesFolderName);
-                        UploadFile(ABRSM_FileName,ABRSM,ABRSM_FolderName);
+                        UploadFile(image,"image");
+                        UploadFile(ABRSM,"ABRSM");
                         
-                        newLearner.G5Certification = $"images/ABRSM_Grade5_Certificate/{ABRSM_FileName}";
-                        newLearner.Photo = $"images/LearnerImages/{imageFileName}";
+                        newLearner.G5Certification = $"images/ABRSM_Grade5_Certificate/{ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"')}";
+                        newLearner.Photo = $"images/LearnerImages/{ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"')}";
                         newLearner.IsAbrsmG5 = 1;
                         _pegasusContext.Update(newLearner);
                         _pegasusContext.SaveChanges();
