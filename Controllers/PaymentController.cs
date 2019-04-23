@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Google.Protobuf.WellKnownTypes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -16,10 +17,11 @@ namespace Pegasus_backend.Controllers
         private readonly pegasusContext.pegasusContext _pegasusContext;
         private Payment paymentItem;
         private LessonRemain _lessonRemain;
-
-        public PaymentController(pegasusContext.pegasusContext pegasusContext)
+        private IMapper _mapper;
+        public PaymentController(pegasusContext.pegasusContext pegasusContext,IMapper mapper)
         {
             _pegasusContext = pegasusContext;
+            _mapper = mapper;
         }
         
         //GET: http://localhost:5000/api/payment/invoice/:studentId
@@ -37,7 +39,7 @@ namespace Pegasus_backend.Controllers
             {
                 result.IsSuccess = false;
                 result.ErrorMessage = ex.Message;
-                return NotFound(result);
+                return BadRequest(result);
             }
         }
         
@@ -86,6 +88,11 @@ namespace Pegasus_backend.Controllers
                         StaffId = details.StaffId
 
                     };
+                    
+                    /*paymentItem = new Payment();
+                    _mapper.Map(details,paymentItem);
+                    paymentItem.PaymentMethod = (byte) Models.PaymentMethod.GetPaymentMethod(details.PaymentMethod);
+                    paymentItem.CreatedAt = DateTime.Now;*/
                 }
                 catch (Exception ex)
                 {

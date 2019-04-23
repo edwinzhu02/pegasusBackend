@@ -10,7 +10,8 @@ namespace Pegasus_backend.Mappings
         {
             CreateMap<TeachersRegister, Teacher>();
             CreateMap<StudentRegister, Learner>();
-            CreateMap<Parents,Parent>();
+            CreateMap<Models.Parent,pegasusContext.Parent>();
+            CreateMap<InvoicePay,Payment>();
         }
     }
 }

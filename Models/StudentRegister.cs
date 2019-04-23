@@ -24,7 +24,8 @@ namespace Pegasus_backend.Models
         public string Email { get; set; }
         [Required(ErrorMessage = "Address is required")]
         public string Address { get; set; }
-        public Parents Parents { get; set; }
+        [Required(ErrorMessage = "Parent details is required")]
+        public Parent Parent { get; set; }
         public IFormFile ABRSM { get; set; }
         public IFormFile image { get; set; }
         
