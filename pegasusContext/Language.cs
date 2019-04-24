@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Pegasus_backend.pegasusContext
 {
@@ -12,7 +13,9 @@ namespace Pegasus_backend.pegasusContext
 
         public byte LangId { get; set; }
         public string LangName { get; set; }
-
+        
+        
+        [JsonIgnore]
         public ICollection<TeacherLanguage> TeacherLanguage { get; set; }
     }
 }

@@ -28,16 +28,16 @@ namespace Pegasus_backend.Controllers
         
         //GET: http://localhost:5000/api/qualificationslanguagesorgs
         [HttpGet]
-        public ActionResult GetDetailsForTeacher()
+        public async Task<IActionResult> GetDetailsForTeacher()
         {
             Result<DetailsForTeacherRegister> result = new Result<DetailsForTeacherRegister>();
             try
             {
                 DetailsForTeacherRegister details = new DetailsForTeacherRegister()
                 {
-                    qualifications = _pegasusContext.Qualification.ToList(),
-                    Languages = _pegasusContext.Language.ToList(),
-                    Orgs = _pegasusContext.Org.ToList()
+                    qualifications = await _pegasusContext.Qualification.ToListAsync(),
+                    Languages = await _pegasusContext.Language.ToListAsync(),
+                    Orgs = await _pegasusContext.Org.ToListAsync()
                 };
                 result.Data = details;
             }
