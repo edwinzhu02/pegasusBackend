@@ -19,5 +19,4 @@ namespace Pegasus_backend.Models
         [Required(ErrorMessage = "Parent email is required")]
         public string Email { get; set; }
     }
-    
 }

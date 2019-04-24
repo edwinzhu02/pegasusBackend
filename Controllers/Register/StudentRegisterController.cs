@@ -12,6 +12,8 @@ using Microsoft.EntityFrameworkCore;
 using Pegasus_backend.ActionFilter;
 using Pegasus_backend.pegasusContext;
 using Pegasus_backend.Models;
+using Parent = Pegasus_backend.Models.Parent;
+
 namespace Pegasus_backend.Controllers.Register
 {
     [Route("api/[controller]")]
@@ -35,14 +37,15 @@ namespace Pegasus_backend.Controllers.Register
         
         //POST: http://localhost:5000/api/studentregister
         [HttpPost]
-        [CheckModelFilter]
+        /*[CheckModelFilter]*/
         public IActionResult StudentRegister([FromForm] StudentRegister details)
         {
             Result<string> result = new Result<string>();
-            
+            var request = Request.Form;
             //Handle upload Data
             using (var dbContextTransaction = _pegasusContext.Database.BeginTransaction())
             {
+
                 try
                 {
                     //Student
@@ -53,10 +56,8 @@ namespace Pegasus_backend.Controllers.Register
                     _pegasusContext.SaveChanges();
                     
                     //Parent related to Student
-                    pegasusContext.Parent newParent = new pegasusContext.Parent();
-                    _mapper.Map(details.Parent, newParent);
-                    newParent.CreatedAt = DateTime.Now;
-                    newParent.LearnerId = newLearner.LearnerId;
+                   var newParent = new Parent();
+                   _mapper.Map(details.Parent, newParent);
                     _pegasusContext.Add(newParent);
                     _pegasusContext.SaveChanges();
                 }
@@ -65,8 +66,8 @@ namespace Pegasus_backend.Controllers.Register
                     result.ErrorMessage = ex.Message;
                     return BadRequest(result);
                 }
-
-                if (details.GroupCourses.Count != 0)
+                
+                /*if (details.GroupCourses.Count != 0)
                 {
                     try
                     {
@@ -90,7 +91,7 @@ namespace Pegasus_backend.Controllers.Register
                         result.ErrorMessage = ex.Message;
                         return BadRequest(result);
                     }
-                }
+                }*/
 
                 
 
