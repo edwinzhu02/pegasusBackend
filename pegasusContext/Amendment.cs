@@ -18,6 +18,7 @@ namespace Pegasus_backend.pegasusContext
         public DateTime? CreatedAt { get; set; }
         public string Reason { get; set; }
         public short? IsTemporary { get; set; }
+        public short? AmendType { get; set; }
 
         public One2oneCourseInstance CourseInstance { get; set; }
         public Learner Learner { get; set; }

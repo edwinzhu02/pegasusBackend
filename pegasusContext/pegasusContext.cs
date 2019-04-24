@@ -20,6 +20,7 @@ namespace Pegasus_backend.pegasusContext
         public virtual DbSet<AvailableDays> AvailableDays { get; set; }
         public virtual DbSet<Course> Course { get; set; }
         public virtual DbSet<CourseCategory> CourseCategory { get; set; }
+        public virtual DbSet<CourseSchedule> CourseSchedule { get; set; }
         public virtual DbSet<Fund> Fund { get; set; }
         public virtual DbSet<GroupCourseInstance> GroupCourseInstance { get; set; }
         public virtual DbSet<Holiday> Holiday { get; set; }
@@ -91,6 +92,10 @@ namespace Pegasus_backend.pegasusContext
                 entity.Property(e => e.AmendmentId)
                     .HasColumnName("amendment_id")
                     .HasColumnType("int(11)");
+
+                entity.Property(e => e.AmendType)
+                    .HasColumnName("amend_type")
+                    .HasColumnType("bit(1)");
 
                 entity.Property(e => e.BeginDate)
                     .HasColumnName("begin_date")
@@ -306,6 +311,47 @@ namespace Pegasus_backend.pegasusContext
                     .IsUnicode(false);
             });
 
+            modelBuilder.Entity<CourseSchedule>(entity =>
+            {
+                entity.ToTable("course_schedule", "pegasus");
+
+                entity.HasIndex(e => e.CourseInstanceId)
+                    .HasName("R_90");
+
+                entity.HasIndex(e => e.GroupCourseInstanceId)
+                    .HasName("R_91");
+
+                entity.Property(e => e.CourseScheduleId)
+                    .HasColumnName("course_schedule_id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.BeginTime).HasColumnName("begin_time");
+
+                entity.Property(e => e.CourseInstanceId)
+                    .HasColumnName("course_instance_id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.DayOfWeek)
+                    .HasColumnName("day_of_week")
+                    .HasColumnType("tinyint(4)");
+
+                entity.Property(e => e.EndTime).HasColumnName("end_time");
+
+                entity.Property(e => e.GroupCourseInstanceId)
+                    .HasColumnName("group_course_instance_id")
+                    .HasColumnType("int(11)");
+
+                entity.HasOne(d => d.CourseInstance)
+                    .WithMany(p => p.CourseSchedule)
+                    .HasForeignKey(d => d.CourseInstanceId)
+                    .HasConstraintName("R_90");
+
+                entity.HasOne(d => d.GroupCourseInstance)
+                    .WithMany(p => p.CourseSchedule)
+                    .HasForeignKey(d => d.GroupCourseInstanceId)
+                    .HasConstraintName("R_91");
+            });
+
             modelBuilder.Entity<Fund>(entity =>
             {
                 entity.HasKey(e => e.LearnerId);
@@ -348,21 +394,13 @@ namespace Pegasus_backend.pegasusContext
                     .HasColumnName("begin_date")
                     .HasColumnType("date");
 
-                entity.Property(e => e.BeginTime).HasColumnName("begin_time");
-
                 entity.Property(e => e.CourseId)
                     .HasColumnName("course_id")
                     .HasColumnType("int(11)");
 
-                entity.Property(e => e.DayOfWeek)
-                    .HasColumnName("day_of_week")
-                    .HasColumnType("tinyint(4)");
-
                 entity.Property(e => e.EndDate)
                     .HasColumnName("end_date")
                     .HasColumnType("date");
-
-                entity.Property(e => e.EndTime).HasColumnName("end_time");
 
                 entity.Property(e => e.OrgId)
                     .HasColumnName("org_id")
@@ -645,6 +683,10 @@ namespace Pegasus_backend.pegasusContext
                     .HasColumnName("last_name")
                     .HasMaxLength(30)
                     .IsUnicode(false);
+
+                entity.Property(e => e.LevelType)
+                    .HasColumnName("level_type")
+                    .HasColumnType("bit(1)");
 
                 entity.Property(e => e.MiddleName)
                     .HasColumnName("middle_name")
@@ -1065,21 +1107,13 @@ namespace Pegasus_backend.pegasusContext
                     .HasColumnName("begin_date")
                     .HasColumnType("date");
 
-                entity.Property(e => e.BeginTime).HasColumnName("begin_time");
-
                 entity.Property(e => e.CourseId)
                     .HasColumnName("course_id")
                     .HasColumnType("int(11)");
 
-                entity.Property(e => e.DayOfWeek)
-                    .HasColumnName("day_of_week")
-                    .HasColumnType("tinyint(4)");
-
                 entity.Property(e => e.EndDate)
                     .HasColumnName("end_date")
                     .HasColumnType("date");
-
-                entity.Property(e => e.EndTime).HasColumnName("end_time");
 
                 entity.Property(e => e.LearnerId)
                     .HasColumnName("learner_id")
@@ -1502,7 +1536,7 @@ namespace Pegasus_backend.pegasusContext
 
                 entity.Property(e => e.SellPrice)
                     .HasColumnName("sell_price")
-                    .HasColumnType("decimal(6,2)");
+                    .HasColumnType("decimal(8,2)");
 
                 entity.Property(e => e.WholesalePrice)
                     .HasColumnName("wholesale_price")
@@ -1527,7 +1561,7 @@ namespace Pegasus_backend.pegasusContext
 
                 entity.Property(e => e.QualiName)
                     .HasColumnName("quali_name")
-                    .HasMaxLength(20)
+                    .HasMaxLength(60)
                     .IsUnicode(false);
             });
 

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
 
 namespace Pegasus_backend.pegasusContext
 {
@@ -8,6 +7,7 @@ namespace Pegasus_backend.pegasusContext
     {
         public GroupCourseInstance()
         {
+            CourseSchedule = new HashSet<CourseSchedule>();
             Invoice = new HashSet<Invoice>();
             LearnerGroupCourse = new HashSet<LearnerGroupCourse>();
             Lesson = new HashSet<Lesson>();
@@ -18,9 +18,6 @@ namespace Pegasus_backend.pegasusContext
         public short? TeacherId { get; set; }
         public DateTime? BeginDate { get; set; }
         public DateTime? EndDate { get; set; }
-        public byte? DayOfWeek { get; set; }
-        public TimeSpan? BeginTime { get; set; }
-        public TimeSpan? EndTime { get; set; }
         public short? RoomId { get; set; }
         public short? OrgId { get; set; }
         public int GroupCourseInstanceId { get; set; }
@@ -29,9 +26,8 @@ namespace Pegasus_backend.pegasusContext
         public Org Org { get; set; }
         public Room Room { get; set; }
         public Teacher Teacher { get; set; }
-        [JsonIgnore]
+        public ICollection<CourseSchedule> CourseSchedule { get; set; }
         public ICollection<Invoice> Invoice { get; set; }
-        [JsonIgnore]
         public ICollection<LearnerGroupCourse> LearnerGroupCourse { get; set; }
         public ICollection<Lesson> Lesson { get; set; }
         public ICollection<LessonRemain> LessonRemain { get; set; }
