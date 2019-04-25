@@ -16,6 +16,26 @@ namespace Pegasus_backend.Controllers
 {
     public abstract class BasicController: ControllerBase
     {
+        protected void UpdateTable(object model, Type type, object tableRow)
+        {
+            var properties = model.GetType().GetProperties();
+            foreach (var prop in properties)
+            {
+                PropertyInfo piInstance = type.GetProperty(prop.Name);
+                if (piInstance != null && prop.GetValue(model) != null)
+                {
+                    piInstance.SetValue(tableRow, prop.GetValue(model));
+                }
+            }
+        }
+
+        protected Result<T> DataNotFound<T>(Result<T> tResult)
+        {
+            tResult.IsSuccess = false;
+            tResult.IsFound = false;
+            tResult.ErrorMessage = "Not Found";
+            return tResult;
+        }
         public void UploadFile(IFormFile file,string imageName)
         {
             try

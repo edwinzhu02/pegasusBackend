@@ -41,7 +41,7 @@ namespace Pegasus_backend.Controllers
             }
         }
         
-        //GET: http://localhost:5000/api/payment/payInvoice
+        //POST: http://localhost:5000/api/payment/payInvoice
         [HttpPost]
         [Route("payInvoice")]
         public async Task<IActionResult> SavePaymentDetails([FromBody] InvoicePay details)

@@ -25,17 +25,44 @@ namespace Pegasus_backend.Controllers
         //GET: http://localhost:5000/api/learner/:name
         [HttpGet]
         [Route("{name}")]
-        public ActionResult<List<Learner>> GetLearner(string name)
+        public async Task<IActionResult> GetLearner(string name)
         {
-            
-            return _pegasusContext.Learner.Where(s => s.FirstName.ToLower().Contains(name.ToLower())).ToList();
+            Result<List<Learner>> result = new Result<List<Learner>>();
+            try
+            {
+                var data = await _pegasusContext.Learner.Where(s => s.FirstName.ToLower().Contains(name.ToLower()))
+                    .ToListAsync();
+                result.Data = data;
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+
+            return Ok(result);
+
+
         }
         
         //GET: http://localhost:5000/api/learner
         [HttpGet]
         public async Task<ActionResult<List<Learner>>> GetLearners()
         {
-            return await _pegasusContext.Learner.ToListAsync();
+            Result<List<Learner>> result = new Result<List<Learner>>();
+            try
+            {
+                var data = await _pegasusContext.Learner.ToListAsync();
+                result.Data = data;
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+            return Ok(result);
         }
     }
 }

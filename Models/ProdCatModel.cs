@@ -1,5 +1,6 @@
 ﻿using Pegasus_backend.pegasusContext;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Pegasus_backend.Models
 {
@@ -7,7 +8,7 @@ namespace Pegasus_backend.Models
     {
         public short ProdCatId { get; set; }
         public string ProdCatName { get; set; }
-
+        [JsonIgnore]
         public IEnumerable<ProdType> ProdType { get; set; }
 
     }
