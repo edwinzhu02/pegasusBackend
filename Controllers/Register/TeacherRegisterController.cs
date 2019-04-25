@@ -55,7 +55,7 @@ namespace Pegasus_backend.Controllers.Register
 
                     if (IdPhoto.Count == 0)
                     {
-                        throw new Exception("Id photo required");
+                        throw new Exception("Photo Id required");
                     }
                     else
                     {

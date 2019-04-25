@@ -4,7 +4,7 @@ namespace Pegasus_backend.Models
     {
         public int InvoiceId { get; set; }
         public decimal Amount { get; set; }
-        public string PaymentMethod { get; set; }
+        public byte PaymentMethod { get; set; }
         public int LearnerId { get; set; }
         public short? StaffId { get; set; }
     }

@@ -6,16 +6,16 @@ namespace Pegasus_backend.Models
 {
     public class PaymentMethod
     {
-        public static int GetPaymentMethod(string stringPayment)
+        public static string GetPaymentMethod(byte num)
         {
-            switch (stringPayment)
+            switch (num)
             {
-                case "Cash":
-                    return 1;
-                case "Eftpos":
-                    return 2;
-                case "OnlineTransfer":
-                    return 3;
+                case 1:
+                    return "Cash";
+                case 2:
+                    return "Eftpos";
+                case 3:
+                    return "OnlineTransfer";
                 default:
                     throw new Exception("Payment method does not found.");
                     

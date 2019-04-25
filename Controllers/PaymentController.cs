@@ -15,8 +15,6 @@ namespace Pegasus_backend.Controllers
     public class PaymentController: ControllerBase
     {
         private readonly pegasusContext.pegasusContext _pegasusContext;
-        private Payment paymentItem;
-        private LessonRemain _lessonRemain;
         private IMapper _mapper;
         public PaymentController(pegasusContext.pegasusContext pegasusContext,IMapper mapper)
         {
@@ -43,119 +41,81 @@ namespace Pegasus_backend.Controllers
             }
         }
         
-        
         //GET: http://localhost:5000/api/payment/payInvoice
         [HttpPost]
         [Route("payInvoice")]
-        public IActionResult SavePaymentDetails([FromBody] InvoicePay details)
+        public async Task<IActionResult> SavePaymentDetails([FromBody] InvoicePay details)
         {
-            var invoiceItem = _pegasusContext.Invoice.
-                FirstOrDefault(s => s.InvoiceId == details.InvoiceId & s.LearnerId == details.LearnerId);
             Result<string> result = new Result<string>();
-            if (invoiceItem==null)
+            try
             {
-                result.IsSuccess = false;
-                result.ErrorMessage = "Invoice does not found.";
-                return BadRequest(result);
-            }
-            else
-            {
-                //Find updated item in Invoice table
-                invoiceItem.PaidFee = invoiceItem.PaidFee + details.Amount;
-                invoiceItem.OwingFee = invoiceItem.OwingFee - details.Amount;
-                
-                //business Logic
-                if (invoiceItem.OwingFee > 0)
+                using (var dbContextTransaction = _pegasusContext.Database.BeginTransaction())
                 {
-                    invoiceItem.IsPaid = 0;
-                }
-                else
-                {
-                    invoiceItem.IsPaid = 1;
-                }
-                
-                
-                //initialize the Payment Item which need to add to payment Table
-                try
-                {
-                    paymentItem = new Payment()
+                    var invoiceItem =
+                        await _pegasusContext.Invoice.FirstOrDefaultAsync(s => s.InvoiceId == details.InvoiceId);
+                    if (invoiceItem == null)
                     {
-                        PaymentMethod = (byte) Models.PaymentMethod.GetPaymentMethod(details.PaymentMethod),
-                        LearnerId = details.LearnerId,
-                        Amount = details.Amount,
-                        CreatedAt = DateTime.Now,
-                        InvoiceId = details.InvoiceId,
-                        StaffId = details.StaffId
+                        throw new Exception("Invoice does not found.");
+                    }
 
-                    };
-                    
-                    /*paymentItem = new Payment();
-                    _mapper.Map(details,paymentItem);
-                    paymentItem.PaymentMethod = (byte) Models.PaymentMethod.GetPaymentMethod(details.PaymentMethod);
-                    paymentItem.CreatedAt = DateTime.Now;*/
-                }
-                catch (Exception ex)
-                {
-                    result.IsSuccess = false;
-                    result.ErrorMessage = ex.Message;
-                    return BadRequest(result);
-                }
-                
-                //initialize fund item in fund table
-                var fundItem = _pegasusContext.Fund.FirstOrDefault(s => s.LearnerId == details.LearnerId);
-                fundItem.Balance = fundItem.Balance + details.Amount;
-                fundItem.UpdatedAt = DateTime.Now;
-                
-                //generate lesson_remain table
-                /*DateTime date1 = new invoiceItem.EndDate.*/
-                try
-                {
-                    _lessonRemain = new LessonRemain()
+                    //the owing fee for invoice cannot be negative.
+                    if (invoiceItem.OwingFee - details.Amount < 0)
                     {
-                        Quantity = invoiceItem.LessonQuantity,
-                        TermId = invoiceItem.TermId,
-                        ExpiryDate = invoiceItem.EndDate.Value.AddMonths(3),
-                        CourseInstanceId = invoiceItem.CourseInstanceId,
-                        LearnerId = invoiceItem.LearnerId
-                    };
-                }
-                catch (Exception ex)
-                {
-                    result.IsSuccess = false;
-                    result.ErrorMessage = ex.Message;
-                    return BadRequest(result);
-                }
-                
+                        throw new Exception("You only need to pay " + invoiceItem.OwingFee + " dollar. No more than it");
+                    }
 
-                
-                try
-                {
+                    invoiceItem.PaidFee = invoiceItem.PaidFee + details.Amount;
+                    invoiceItem.OwingFee = invoiceItem.OwingFee - details.Amount;
+                    if (invoiceItem.OwingFee > 0)
+                    {
+                        invoiceItem.IsPaid = 0;
+                    }
+
+                    if (invoiceItem.OwingFee == 0)
+                    {
+                        invoiceItem.IsPaid = 1;
+                    }
+                    _pegasusContext.Update(invoiceItem);
+                    await _pegasusContext.SaveChangesAsync();
+
+                    //save the Invoice payment to Payment table
+                    var paymentItem = new Payment();
+                    _mapper.Map(details, paymentItem);
+                    paymentItem.CreatedAt = DateTime.Now;
+                    _pegasusContext.Add(paymentItem);
+                    await _pegasusContext.SaveChangesAsync();
+
+                    var fundItem =
+                        await _pegasusContext.Fund.FirstOrDefaultAsync(s => s.LearnerId == details.LearnerId);
+                    fundItem.Balance = fundItem.Balance + details.Amount;
+                    fundItem.UpdatedAt = DateTime.Now;
+                    _pegasusContext.Update(fundItem);
+                    await _pegasusContext.SaveChangesAsync();
+
                     if (invoiceItem.IsPaid == 1)
                     {
-                        _pegasusContext.Add(_lessonRemain);
+                        var lessonRemain = new LessonRemain
+                        {
+                            Quantity = invoiceItem.LessonQuantity,
+                            TermId = invoiceItem.TermId,
+                            ExpiryDate = invoiceItem.EndDate.Value.AddMonths(3),
+                            CourseInstanceId = invoiceItem.CourseInstanceId,
+                            LearnerId = invoiceItem.LearnerId
+                        };
+                        _pegasusContext.Add(lessonRemain);
+                        await _pegasusContext.SaveChangesAsync();
                     }
-                    
-                    _pegasusContext.Add(paymentItem);
-                    _pegasusContext.Update(invoiceItem);
-                    _pegasusContext.Update(fundItem);
-                    _pegasusContext.SaveChanges();
-                    
+                    dbContextTransaction.Commit();
                 }
-                catch (Exception ex)
-                {
-                    result.IsSuccess = false;
-                    result.ErrorMessage = ex.Message;
-                    return BadRequest(result);
-                }
-
-                result.IsSuccess = true;
-                result.Data = "success";
-                return Ok(result);
-
-
-
             }
-            
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorCode = ex.Message;
+                return BadRequest(result);
+            }
+            result.Data = "Success!";
+            return Ok(result);
         }
     }
 }
