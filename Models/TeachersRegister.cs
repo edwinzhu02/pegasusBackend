@@ -7,33 +7,34 @@ using Newtonsoft.Json.Serialization;
 
 namespace Pegasus_backend.Models
 {
+    
     public class TeachersRegister
     {
         [JsonProperty(Required = Required.Always)]
         public string FirstName { get; set; }
-        [Required(ErrorMessage = "LastName is required")]
+        [JsonProperty(Required = Required.Always)]
         public string LastName { get; set; }
-        [Required(ErrorMessage = "Gender is required")]
+        [JsonProperty(Required = Required.Always)]
         public short Gender { get; set; }
-        [Required(ErrorMessage = "Dob is required")]
+        [JsonProperty(Required = Required.Always)]
         public DateTime Dob { get; set; }
-        [Required(ErrorMessage = "IDR number is required")]
+        [JsonProperty(Required = Required.Always)]
         public string IRDNumber { get; set; }
-        [Required(ErrorMessage = "Id type is required")]
+        [JsonProperty(Required = Required.Always)]
         public short IDType { get; set; }
-        [Required(ErrorMessage = "Id number is required")]
+        [JsonProperty(Required = Required.Always)]
         public string IDNumber { get; set; }
-        [Required(ErrorMessage = "ExpiryDate is required")]
+        [JsonProperty(Required = Required.Always)]
         public DateTime? ExpiryDate { get; set; }
         public List<byte> Qualificatiion { get; set; }
-        [Required(ErrorMessage = "Mobile phone number is required")]
+        [JsonProperty(Required = Required.Always)]
         public string MobilePhone { get; set; }
         public string HomePhone { get; set; }
-        [Required(ErrorMessage = "Email is required")]
+        [JsonProperty(Required = Required.Always)]
         public string Email { get; set; }
-        [Required(ErrorMessage = "Language is required")]
+        [JsonProperty(Required = Required.Always)]
         public List<byte> Language { get; set; }
-        [Required(ErrorMessage = "DayOfweek is required")]
+        [JsonProperty(Required = Required.Always)]
         public List<List<byte>> DayOfWeek { get; set; } 
         
     }

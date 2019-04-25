@@ -115,7 +115,7 @@ namespace Pegasus_backend.Controllers.Register
                     await _pegasusContext.SaveChangesAsync();
                     
                     dbContextTransaction.Commit();
-                    result.Data = "Sucess!";
+                    result.Data = "Success!";
                     return Ok(result);
                 }
             }
