@@ -34,7 +34,7 @@ namespace Pegasus_backend.Controllers.Register
 
         [HttpPost]
         [CheckModelFilter]
-        public async Task<IActionResult> TeacherRegister([FromForm] string details, [FromForm] IList<IFormFile> IdPhoto,[FromForm] IList<IFormFile> Photo )
+        public async Task<IActionResult> TeacherRegister([FromForm] string details, [FromForm(Name = "IdPhoto")] IFormFile IdPhoto,[FromForm(Name ="Photo" )] IFormFile Photo )
         {
             Result<string> result = new Result<string>();
             try
@@ -53,24 +53,24 @@ namespace Pegasus_backend.Controllers.Register
                     _pegasusContext.Add(newTeacher);
                     await _pegasusContext.SaveChangesAsync();
 
-                    if (IdPhoto.Count == 0)
+                    if (IdPhoto == null)
                     {
                         throw new Exception("Photo Id required");
                     }
                     else
                     {
-                        newTeacher.IdPhoto = $"images/TeacherIdPhotos/{ContentDispositionHeaderValue.Parse(IdPhoto[0].ContentDisposition).FileName.Trim('"')}";
+                        newTeacher.IdPhoto = $"images/TeacherIdPhotos/{ContentDispositionHeaderValue.Parse(IdPhoto.ContentDisposition).FileName.Trim('"')}";
                         _pegasusContext.Update(newTeacher);
                         await _pegasusContext.SaveChangesAsync();
-                        UploadFile(IdPhoto[0],"IdPhoto");
+                        UploadFile(IdPhoto,"IdPhoto");
                     }
 
-                    if (Photo.Count != 0)
+                    if (Photo != null)
                     {
-                        newTeacher.Photo = $"images/TeacherImages/{ContentDispositionHeaderValue.Parse(Photo[0].ContentDisposition).FileName.Trim('"')}";
+                        newTeacher.Photo = $"images/TeacherImages/{ContentDispositionHeaderValue.Parse(Photo.ContentDisposition).FileName.Trim('"')}";
                         _pegasusContext.Update(newTeacher);
                         await _pegasusContext.SaveChangesAsync();
-                        UploadFile(Photo[0],"Photo");
+                        UploadFile(Photo,"Photo");
                     }
                     
                     detailsJson.Language.ForEach(s =>

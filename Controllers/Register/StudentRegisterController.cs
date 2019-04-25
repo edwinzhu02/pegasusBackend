@@ -33,7 +33,7 @@ namespace Pegasus_backend.Controllers.Register
         //POST: http://localhost:5000/api/studentregister
         [HttpPost]
         [CheckModelFilter]
-        public async Task<IActionResult> StudentRegister([FromForm] IList<IFormFile> image, [FromForm] IList<IFormFile> ABRSM,[FromForm] string details)
+        public async Task<IActionResult> StudentRegister([FromForm(Name = "photo")] IFormFile image, [FromForm(Name = "ABRSM")] IFormFile ABRSM,[FromForm] string details)
         {
             Result<string> result = new Result<string>();
             try
@@ -47,21 +47,21 @@ namespace Pegasus_backend.Controllers.Register
                     _pegasusContext.Add(newLearner);
                     await _pegasusContext.SaveChangesAsync();
 
-                    if (image.Count != 0)
+                    if (image != null)
                     {
-                        newLearner.Photo = $"images/LearnerImages/{ContentDispositionHeaderValue.Parse(image[0].ContentDisposition).FileName.Trim('"')}";
+                        newLearner.Photo = $"images/LearnerImages/{ContentDispositionHeaderValue.Parse(image.ContentDisposition).FileName.Trim('"')}";
                         _pegasusContext.Update(newLearner);
                         await _pegasusContext.SaveChangesAsync();
-                        UploadFile(image[0],"image");
+                        UploadFile(image,"image");
                     }
 
-                    if (ABRSM.Count != 0)
+                    if (ABRSM != null)
                     {
-                        newLearner.G5Certification = $"images/ABRSM_Grade5_Certificate/{ContentDispositionHeaderValue.Parse(ABRSM[0].ContentDisposition).FileName.Trim('"')}";
+                        newLearner.G5Certification = $"images/ABRSM_Grade5_Certificate/{ContentDispositionHeaderValue.Parse(ABRSM.ContentDisposition).FileName.Trim('"')}";
                         newLearner.IsAbrsmG5 = 1;
                         _pegasusContext.Update(newLearner);
                         await _pegasusContext.SaveChangesAsync();
-                        UploadFile(ABRSM[0],"ABRSM");
+                        UploadFile(ABRSM,"ABRSM");
                     }
                     
                     dbContextTransaction.Commit();
