@@ -39,6 +39,7 @@ namespace Pegasus_backend.Controllers
                     .ThenInclude(s=>s.Quali)
                     .Include(s=>s.TeacherCourse)
                     .ThenInclude(s=>s.Course)
+                    .Include(s=>s.AvailableDays)
                     .ToListAsync();
                 return Ok(result);
             }

@@ -13,8 +13,6 @@ namespace Pegasus_backend.pegasusContext
 
         public byte LangId { get; set; }
         public string LangName { get; set; }
-        
-        
         [JsonIgnore]
         public ICollection<TeacherLanguage> TeacherLanguage { get; set; }
     }

@@ -51,6 +51,7 @@ namespace Pegasus_backend.pegasusContext
         public virtual DbSet<Room> Room { get; set; }
         public virtual DbSet<SoldTransaction> SoldTransaction { get; set; }
         public virtual DbSet<Staff> Staff { get; set; }
+        public virtual DbSet<StaffOrg> StaffOrg { get; set; }
         public virtual DbSet<Stock> Stock { get; set; }
         public virtual DbSet<StockOrder> StockOrder { get; set; }
         public virtual DbSet<Teacher> Teacher { get; set; }
@@ -902,13 +903,15 @@ namespace Pegasus_backend.pegasusContext
                     .HasColumnName("lesson_id")
                     .HasColumnType("int(11)");
 
-                entity.Property(e => e.BeginDate).HasColumnName("begin_date");
+                entity.Property(e => e.BeginTime).HasColumnName("begin_time");
 
                 entity.Property(e => e.CourseInstanceId)
                     .HasColumnName("course_instance_id")
                     .HasColumnType("int(11)");
 
                 entity.Property(e => e.CreatedAt).HasColumnName("created_at");
+
+                entity.Property(e => e.EndTime).HasColumnName("end_time");
 
                 entity.Property(e => e.GroupCourseInstanceId)
                     .HasColumnName("group_course_instance_id")
@@ -1864,6 +1867,43 @@ namespace Pegasus_backend.pegasusContext
                     .WithMany(p => p.Staff)
                     .HasForeignKey(d => d.UserId)
                     .HasConstraintName("R_79");
+            });
+
+            modelBuilder.Entity<StaffOrg>(entity =>
+            {
+                entity.ToTable("staff_org", "pegasus");
+
+                entity.HasIndex(e => e.OrgId)
+                    .HasName("R_93");
+
+                entity.HasIndex(e => e.StaffId)
+                    .HasName("R_92");
+
+                entity.Property(e => e.StaffOrgId)
+                    .HasColumnName("staff_org_id")
+                    .HasColumnType("smallint(6)");
+
+                entity.Property(e => e.IsActivate)
+                    .HasColumnName("is_activate")
+                    .HasColumnType("bit(1)");
+
+                entity.Property(e => e.OrgId)
+                    .HasColumnName("org_id")
+                    .HasColumnType("smallint(6)");
+
+                entity.Property(e => e.StaffId)
+                    .HasColumnName("staff_id")
+                    .HasColumnType("smallint(6)");
+
+                entity.HasOne(d => d.Org)
+                    .WithMany(p => p.StaffOrg)
+                    .HasForeignKey(d => d.OrgId)
+                    .HasConstraintName("R_93");
+
+                entity.HasOne(d => d.Staff)
+                    .WithMany(p => p.StaffOrg)
+                    .HasForeignKey(d => d.StaffId)
+                    .HasConstraintName("R_92");
             });
 
             modelBuilder.Entity<Stock>(entity =>

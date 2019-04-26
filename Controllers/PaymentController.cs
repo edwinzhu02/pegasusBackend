@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Pegasus_backend.pegasusContext;
 using Pegasus_backend.Models;
+using Pegasus_backend.ActionFilter;
+
 namespace Pegasus_backend.Controllers
 {
     [Route("api/[controller]")]
@@ -44,6 +46,7 @@ namespace Pegasus_backend.Controllers
         //POST: http://localhost:5000/api/payment/payInvoice
         [HttpPost]
         [Route("payInvoice")]
+        [CheckModelFilter]
         public async Task<IActionResult> SavePaymentDetails([FromBody] InvoicePay details)
         {
             Result<string> result = new Result<string>();

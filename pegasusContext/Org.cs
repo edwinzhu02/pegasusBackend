@@ -14,6 +14,7 @@ namespace Pegasus_backend.pegasusContext
             Lesson = new HashSet<Lesson>();
             One2oneCourseInstance = new HashSet<One2oneCourseInstance>();
             Room = new HashSet<Room>();
+            StaffOrg = new HashSet<StaffOrg>();
             Stock = new HashSet<Stock>();
             StockOrder = new HashSet<StockOrder>();
         }
@@ -26,21 +27,19 @@ namespace Pegasus_backend.pegasusContext
         public string Email { get; set; }
         public string Phone { get; set; }
 
-        [JsonIgnore]
         public ICollection<Amendment> Amendment { get; set; }
-        [JsonIgnore]
         public ICollection<AvailableDays> AvailableDays { get; set; }
         [JsonIgnore]
         public ICollection<GroupCourseInstance> GroupCourseInstance { get; set; }
-        [JsonIgnore]
         public ICollection<Lesson> Lesson { get; set; }
         [JsonIgnore]
         public ICollection<One2oneCourseInstance> One2oneCourseInstance { get; set; }
         [JsonIgnore]
         public ICollection<Room> Room { get; set; }
+        
         [JsonIgnore]
+        public ICollection<StaffOrg> StaffOrg { get; set; }
         public ICollection<Stock> Stock { get; set; }
-        [JsonIgnore]
         public ICollection<StockOrder> StockOrder { get; set; }
     }
 }

@@ -8,6 +8,7 @@ namespace Pegasus_backend.pegasusContext
         public Staff()
         {
             Payment = new HashSet<Payment>();
+            StaffOrg = new HashSet<StaffOrg>();
             StockOrder = new HashSet<StockOrder>();
         }
 
@@ -31,6 +32,7 @@ namespace Pegasus_backend.pegasusContext
 
         public User User { get; set; }
         public ICollection<Payment> Payment { get; set; }
+        public ICollection<StaffOrg> StaffOrg { get; set; }
         public ICollection<StockOrder> StockOrder { get; set; }
     }
 }
