@@ -27,12 +27,11 @@ namespace Pegasus_backend.Controllers
         [Route("{name}")]
         public async Task<IActionResult> GetLearner(string name)
         {
-            Result<List<Learner>> result = new Result<List<Learner>>();
+            Result<IEnumerable<Learner>> result = new Result<IEnumerable<Learner>>();
             try
             {
-                var data = await _pegasusContext.Learner.Where(s => s.FirstName.ToLower().Contains(name.ToLower()))
-                    .ToListAsync();
-                result.Data = data;
+                result.Data = await _pegasusContext.Learner.Where(s =>s.FirstName.Contains(name)).ToListAsync();
+
             }
             catch (Exception ex)
             {

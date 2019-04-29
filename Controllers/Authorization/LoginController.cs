@@ -70,7 +70,7 @@ namespace Pegasus_backend.Controllers.Authorization
                         new Claim("UserID", user.UserId.ToString()),
 
                     }),
-                    Expires = DateTime.UtcNow.AddMinutes(5),
+                    Expires = DateTime.UtcNow.AddMinutes(30),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_appSettings.JWT_Secret)),
                         SecurityAlgorithms.HmacSha256Signature)
 

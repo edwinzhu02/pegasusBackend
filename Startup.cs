@@ -50,7 +50,7 @@ namespace Pegasus_backend
             
             services.AddDirectoryBrowser();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddSingleton<pegasusContext.pegasusContext>();
+            services.AddTransient<pegasusContext.pegasusContext>();
             services.AddCors();
             
             //JWT Authentication

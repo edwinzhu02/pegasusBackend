@@ -25,7 +25,7 @@ namespace Pegasus_backend.Controllers
         [Route("forCalendar")]
         [Authorize]
         [HttpGet]
-        public IActionResult GetRoom()
+        public async Task<IActionResult> GetRoom()
         {
             
             Result<IEnumerable<Object>> result = new Result<IEnumerable<Object>>();
@@ -34,9 +34,9 @@ namespace Pegasus_backend.Controllers
                 var userId = int.Parse(User.Claims.First(s=>s.Type=="UserID").Value);
                 var staff = _pegasusContext.Staff.FirstOrDefault(s => s.UserId == userId);
                 var orgId = _pegasusContext.StaffOrg.FirstOrDefault(s => s.StaffId == staff.StaffId).OrgId;
-                var rooms = _pegasusContext.Room.Where(s => s.OrgId == orgId).ToList();
+                var rooms = _pegasusContext.Room.Where(s => s.OrgId == orgId);
                 var data = rooms.Select(s =>  new {id=s.RoomId, title=s.RoomName });
-                result.Data = data;
+                result.Data = await data.ToListAsync();
             }
             catch (Exception ex)
             {
@@ -50,14 +50,14 @@ namespace Pegasus_backend.Controllers
         
         //GET: http://localhost:5000/api/room
         [HttpGet]
-        public IActionResult Room()
+        public async Task<IActionResult> Room()
         {
             Result<List<Room>> result = new Result<List<Room>>();
             try
             {
-                result.Data = _pegasusContext.Room
+                result.Data = await _pegasusContext.Room
                     .Include(s=>s.Org)
-                    .ToList();
+                    .ToListAsync();
             }
             catch (Exception ex)
             {
