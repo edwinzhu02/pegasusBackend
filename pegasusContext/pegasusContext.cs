@@ -954,7 +954,6 @@ namespace Pegasus_backend.pegasusContext
                 entity.HasOne(d => d.GroupCourseInstance)
                     .WithMany(p => p.Lesson)
                     .HasForeignKey(d => d.GroupCourseInstanceId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("R_67");
 
                 entity.HasOne(d => d.Learner)
@@ -1708,6 +1707,9 @@ namespace Pegasus_backend.pegasusContext
                 entity.HasIndex(e => e.LearnerId)
                     .HasName("R_48");
 
+                entity.HasIndex(e => e.PaymentId)
+                    .HasName("R_94");
+
                 entity.HasIndex(e => e.ProductId)
                     .HasName("R_47");
 
@@ -1724,7 +1726,7 @@ namespace Pegasus_backend.pegasusContext
 
                 entity.Property(e => e.Amount)
                     .HasColumnName("amount")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("decimal(10,2)");
 
                 entity.Property(e => e.Balance)
                     .HasColumnName("balance")
@@ -1736,6 +1738,18 @@ namespace Pegasus_backend.pegasusContext
 
                 entity.Property(e => e.CreatedAt).HasColumnName("created_at");
 
+                entity.Property(e => e.DiscountAmount)
+                    .HasColumnName("discount_amount")
+                    .HasColumnType("decimal(10,2)");
+
+                entity.Property(e => e.DiscountRate)
+                    .HasColumnName("discount_rate")
+                    .HasColumnType("decimal(4,2)");
+
+                entity.Property(e => e.DiscountedAmount)
+                    .HasColumnName("discounted_amount")
+                    .HasColumnType("decimal(10,2)");
+
                 entity.Property(e => e.LearnerId)
                     .HasColumnName("learner_id")
                     .HasColumnType("int(11)");
@@ -1744,6 +1758,10 @@ namespace Pegasus_backend.pegasusContext
                     .HasColumnName("note")
                     .HasMaxLength(60)
                     .IsUnicode(false);
+
+                entity.Property(e => e.PaymentId)
+                    .HasColumnName("payment_id")
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.ProductId)
                     .HasColumnName("product_id")
@@ -1766,6 +1784,11 @@ namespace Pegasus_backend.pegasusContext
                     .WithMany(p => p.SoldTransaction)
                     .HasForeignKey(d => d.LearnerId)
                     .HasConstraintName("R_48");
+
+                entity.HasOne(d => d.Payment)
+                    .WithMany(p => p.SoldTransaction)
+                    .HasForeignKey(d => d.PaymentId)
+                    .HasConstraintName("R_94");
 
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.SoldTransaction)

@@ -31,12 +31,12 @@ namespace Pegasus_backend.pegasusContext
         public ICollection<AvailableDays> AvailableDays { get; set; }
         [JsonIgnore]
         public ICollection<GroupCourseInstance> GroupCourseInstance { get; set; }
+        [JsonIgnore]
         public ICollection<Lesson> Lesson { get; set; }
         [JsonIgnore]
         public ICollection<One2oneCourseInstance> One2oneCourseInstance { get; set; }
         [JsonIgnore]
         public ICollection<Room> Room { get; set; }
-        
         [JsonIgnore]
         public ICollection<StaffOrg> StaffOrg { get; set; }
         public ICollection<Stock> Stock { get; set; }

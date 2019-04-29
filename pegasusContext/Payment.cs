@@ -5,6 +5,11 @@ namespace Pegasus_backend.pegasusContext
 {
     public partial class Payment
     {
+        public Payment()
+        {
+            SoldTransaction = new HashSet<SoldTransaction>();
+        }
+
         public int PaymentId { get; set; }
         public byte? PaymentMethod { get; set; }
         public int? LearnerId { get; set; }
@@ -19,5 +24,6 @@ namespace Pegasus_backend.pegasusContext
         public Invoice Invoice { get; set; }
         public Learner Learner { get; set; }
         public Staff Staff { get; set; }
+        public ICollection<SoldTransaction> SoldTransaction { get; set; }
     }
 }

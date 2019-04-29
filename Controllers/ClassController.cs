@@ -50,18 +50,6 @@ namespace Pegasus_backend.Controllers
 
             result.Data = details;
             return Ok(result);
-
-            /*var data = _pegasusContext.GroupCourseInstance
-                .Include(s => s.Course)
-                .Include(s => s.Org)
-                .Include(s => s.Teacher)
-                .Select(n => new
-                {
-                    n.GroupCourseInstanceId, n.BeginDate, n.EndDate, n.BeginTime, n.EndTime,n.CourseId,
-                    n.Course.CourseName,n.OrgId, n.Org.OrgName,n.TeacherId, n.Teacher.FirstName, 
-                })
-                ;
-            return Ok(data);*/
         }
         
         

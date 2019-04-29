@@ -41,7 +41,7 @@ namespace Pegasus_backend.Controllers
                     .ThenInclude(s=>s.Course)
                     .Include(s=>s.AvailableDays)
                     .ToListAsync();
-                return Ok(result);
+                
             }
             catch (Exception ex)
             {
@@ -49,6 +49,7 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = ex.Message;
                 return BadRequest(result);
             }
+            return Ok(result);
         }
     }
 }

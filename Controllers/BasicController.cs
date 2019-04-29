@@ -16,6 +16,17 @@ namespace Pegasus_backend.Controllers
 {
     public abstract class BasicController: ControllerBase
     {
+
+        protected bool IsNull<T>(T item)
+        {
+            if (item == null)
+            {
+                return true;
+            }
+
+            return false;
+        }
+        
         protected void UpdateTable(object model, Type type, object tableRow)
         {
             var properties = model.GetType().GetProperties();
