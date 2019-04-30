@@ -50,14 +50,14 @@ namespace Pegasus_backend.Controllers.Authorization
             if (user == null)
             {
                 result.IsSuccess = false;
-                result.ErrorMessage = "The user does not exist.";
+                throw new Exception("The user does not exist.");
                 return BadRequest(result);
             }
             //Case when password is not correct
             if (user.Password != model.Password)
             {
                 result.IsSuccess = false;
-                result.ErrorMessage = "The password is incorrect.";
+                throw new Exception("The password is incorrect.");
                 return BadRequest(result);
             }
             //token Details
@@ -70,7 +70,7 @@ namespace Pegasus_backend.Controllers.Authorization
                         new Claim("UserID", user.UserId.ToString()),
 
                     }),
-                    Expires = DateTime.UtcNow.AddMinutes(30),
+                    Expires = DateTime.UtcNow.AddMinutes(60),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_appSettings.JWT_Secret)),
                         SecurityAlgorithms.HmacSha256Signature)
 
