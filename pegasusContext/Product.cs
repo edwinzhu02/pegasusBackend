@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using Newtonsoft.Json;
 namespace Pegasus_backend.pegasusContext
 {
     public partial class Product
@@ -19,7 +19,6 @@ namespace Pegasus_backend.pegasusContext
         public decimal? SellPrice { get; set; }
         public decimal? WholesalePrice { get; set; }
         public short? ProdTypeId { get; set; }
-
         public ProdType ProdType { get; set; }
         public ICollection<SoldTransaction> SoldTransaction { get; set; }
         public ICollection<Stock> Stock { get; set; }

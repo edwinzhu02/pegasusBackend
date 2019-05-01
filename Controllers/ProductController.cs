@@ -10,14 +10,15 @@ using Pegasus_backend.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Pegasus_backend.Controllers;
+using Pegasus_backend.ActionFilter;
 
 namespace Pegasus_backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductController: BasicController
+    public class ProductController : BasicController
     {
-        
+
         private readonly pegasusContext.pegasusContext _pegasusContext;
         private readonly IMapper _mapper;
 
@@ -50,7 +51,7 @@ namespace Pegasus_backend.Controllers
         //GET: http://localhost:5000/api/product/{id}
         [HttpGet]
         [Route("{id}")]
-        public ActionResult<List<Product>>GetProduct(int id)
+        public ActionResult<List<Product>> GetProduct(int id)
         {
             Result<List<Product>> result = new Result<List<Product>>();
             try
@@ -59,7 +60,7 @@ namespace Pegasus_backend.Controllers
                 result.Data = _pegasusContext.Product.Where(x => x.ProductId == id).Include(x => x.ProdType.ProdCat).ToList();
                 return Ok(result);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 result.IsSuccess = false;
                 result.ErrorMessage = ex.Message;
@@ -72,18 +73,17 @@ namespace Pegasus_backend.Controllers
         public async Task<ActionResult<IEnumerable<Product>>> GetProdByType(int typeid)
         {
             Result<List<Product>> result = new Result<List<Product>>();
-            try 
+            try
             {
                 result.IsSuccess = true;
                 result.Data = await _pegasusContext.Product
-                .Where(x => x.ProdTypeId == typeid)
-                .Include(x=>x.ProdType.ProdCat)
-                //.Select(x => x)
-                .ToListAsync();
+                    .Where(x => x.ProdTypeId == typeid)
+                    .Include(x => x.ProdType)
+                    .ToListAsync();
 
                 return Ok(result);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 result.IsSuccess = false;
                 result.ErrorMessage = ex.Message;
@@ -162,7 +162,10 @@ namespace Pegasus_backend.Controllers
             return Ok(result);
         }
 
+
+
         [HttpPost]
+        [CheckModelFilter]
         public async Task<ActionResult<Product>> PostProduct(ProductModel productModel)
         {
             Result<List<Product>> result = new Result<List<Product>>();
@@ -175,9 +178,9 @@ namespace Pegasus_backend.Controllers
                 await _pegasusContext.SaveChangesAsync();
 
                 //retrieve the new data with the ProductType and ProductCategory detail
-                result.Data= await _pegasusContext.Product
+                result.Data = await _pegasusContext.Product
                     .Include(x => x.ProdType.ProdCat)
-                    .Where(x=>x.ProductId==(int)product.ProductId)
+                    .Where(x => x.ProductId == (int)product.ProductId)
                     .ToListAsync();
 
             }
