@@ -17,6 +17,27 @@ namespace Pegasus_backend.Controllers
     public abstract class BasicController: ControllerBase
     {
 
+        protected IEnumerable<NavItem> GetNavItems(string roleName)
+        {
+            
+            switch (roleName)
+            {
+                case "Receptionist":
+                    return new List<NavItem>
+                    {
+                        new NavItem{pagename = "Home",pageicon = "fa-home",pagelink = "testcontent"},
+                        new NavItem{pagename = "Registration",pageicon = "fa-th",pagelink = "registration"},
+                        new NavItem{pagename = "Payment",pageicon = "fa-chart-bar",pagelink = "payment"},
+                        new NavItem{pagename = "Forms",pageicon = "fa-clipboard",pagelink = ""}
+                    };
+                    
+                //need to change later
+                default:
+                    return null;
+                    
+            }
+        }
+
         protected bool IsNull<T>(T item)
         {
             if (item == null)

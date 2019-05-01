@@ -45,29 +45,30 @@ namespace Pegasus_backend.Controllers.Authorization
         public async Task<IActionResult> Login([FromBody] UsrAndPass model)
         {
             Result<Object> result = new Result<object>();
-            var user = await _pegasusContext.User.FirstOrDefaultAsync(s=>s.UserName==model.UserName);
-            //Username is not be registered
-            if (user == null)
-            {
-                result.IsSuccess = false;
-                throw new Exception("The user does not exist.");
-            }
-            //Case when password is not correct
-            if (user.Password != model.Password)
-            {
-                result.IsSuccess = false;
-                throw new Exception("The password is incorrect.");
-            }
-            //token Details
+           
             try
             {
+                var user = await _pegasusContext.User.FirstOrDefaultAsync(s=>s.UserName==model.UserName);
+                //Username is not be registered
+                if (user == null)
+                {
+                    result.IsSuccess = false;
+                    throw new Exception("The user does not exist.");
+                }
+                //Case when password is not correct
+                if (user.Password != model.Password)
+                {
+                    result.IsSuccess = false;
+                    throw new Exception("The password is incorrect.");
+                }
+                //token Details
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
                     Subject = new ClaimsIdentity(new Claim[]
                     {
                         new Claim("UserID", user.UserId.ToString()),
                     }),
-                    Expires = DateTime.UtcNow.AddMinutes(60),
+                    Expires = DateTime.UtcNow.AddDays(14),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_appSettings.JWT_Secret)),
                         SecurityAlgorithms.HmacSha256Signature)
 
@@ -85,7 +86,7 @@ namespace Pegasus_backend.Controllers.Authorization
             {
                 result.IsSuccess = false;
                 result.ErrorMessage = ex.Message;
-                return BadRequest(result);
+                return StatusCode(401, result);
             }
             
             
