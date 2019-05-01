@@ -51,14 +51,12 @@ namespace Pegasus_backend.Controllers.Authorization
             {
                 result.IsSuccess = false;
                 throw new Exception("The user does not exist.");
-                return BadRequest(result);
             }
             //Case when password is not correct
             if (user.Password != model.Password)
             {
                 result.IsSuccess = false;
                 throw new Exception("The password is incorrect.");
-                return BadRequest(result);
             }
             //token Details
             try
@@ -68,7 +66,6 @@ namespace Pegasus_backend.Controllers.Authorization
                     Subject = new ClaimsIdentity(new Claim[]
                     {
                         new Claim("UserID", user.UserId.ToString()),
-
                     }),
                     Expires = DateTime.UtcNow.AddMinutes(60),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_appSettings.JWT_Secret)),

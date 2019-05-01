@@ -33,13 +33,17 @@ namespace Pegasus_backend.Controllers
                 var staff = _pegasusContext.Staff.FirstOrDefault(s => s.UserId == userId);
                 var orgId = _pegasusContext.StaffOrg.FirstOrDefault(s => s.StaffId == staff.StaffId).OrgId;
                 var details = _pegasusContext.Lesson.Where(w => w.OrgId == orgId)
+                    .Include(s=>s.Learner)
                     .Include(s => s.Teacher)
                     .Include(group => group.GroupCourseInstance)
                     .ThenInclude(learnerCourse => learnerCourse.LearnerGroupCourse)
-                    .ThenInclude(learner => learner.Learner);
-                    /*.Select(s =>new {id = s.LessonId, resourceId = s.RoomId, start = s.BeginTime,end=s.EndTime,
+                    .ThenInclude(learner => learner.Learner)
+                    .Select(s =>new {id = s.LessonId, resourceId = s.RoomId, start = s.BeginTime,end=s.EndTime,
                         title=IsNull(s.GroupCourseInstance)?"One to One":"Group Course",description="",
-                        teacher=s.Teacher.FirstName.ToString()});*/
+                        teacher=s.Teacher.FirstName.ToString(),
+                        student=IsNull(s.GroupCourseInstance)?new List<string>(){s.Learner.FirstName}:s.GroupCourseInstance.LearnerGroupCourse.Select(w=>w.Learner.FirstName),
+                        IsGroup=!IsNull(s.GroupCourseInstance)
+                    });
                     
                 
                 
