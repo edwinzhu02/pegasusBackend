@@ -19,8 +19,10 @@ namespace Pegasus_backend.pegasusContext
         public string Reason { get; set; }
         public short? IsTemporary { get; set; }
         public short? AmendType { get; set; }
+        public int? CourseScheduleId { get; set; }
 
         public One2oneCourseInstance CourseInstance { get; set; }
+        public CourseSchedule CourseSchedule { get; set; }
         public Learner Learner { get; set; }
         public Org Org { get; set; }
         public Room Room { get; set; }

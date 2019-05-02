@@ -8,6 +8,7 @@ namespace Pegasus_backend.pegasusContext
         public User()
         {
             AskOff = new HashSet<AskOff>();
+            Learner = new HashSet<Learner>();
             LoginLog = new HashSet<LoginLog>();
             Staff = new HashSet<Staff>();
             Teacher = new HashSet<Teacher>();
@@ -24,6 +25,7 @@ namespace Pegasus_backend.pegasusContext
         public Role Role { get; set; }
         public OnlineUser OnlineUser { get; set; }
         public ICollection<AskOff> AskOff { get; set; }
+        public ICollection<Learner> Learner { get; set; }
         public ICollection<LoginLog> LoginLog { get; set; }
         public ICollection<Staff> Staff { get; set; }
         public ICollection<Teacher> Teacher { get; set; }

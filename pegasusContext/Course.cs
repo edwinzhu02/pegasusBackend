@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
 
 namespace Pegasus_backend.pegasusContext
 {
@@ -20,13 +19,11 @@ namespace Pegasus_backend.pegasusContext
         public short? Duration { get; set; }
         public decimal? Price { get; set; }
         public short? CourseCategoryId { get; set; }
+        public byte? TeacherLevel { get; set; }
 
         public CourseCategory CourseCategory { get; set; }
-        [JsonIgnore]
         public ICollection<GroupCourseInstance> GroupCourseInstance { get; set; }
-        [JsonIgnore]
         public ICollection<One2oneCourseInstance> One2oneCourseInstance { get; set; }
-        [JsonIgnore]
         public ICollection<TeacherCourse> TeacherCourse { get; set; }
     }
 }

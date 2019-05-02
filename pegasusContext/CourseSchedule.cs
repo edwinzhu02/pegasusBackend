@@ -5,6 +5,11 @@ namespace Pegasus_backend.pegasusContext
 {
     public partial class CourseSchedule
     {
+        public CourseSchedule()
+        {
+            Amendment = new HashSet<Amendment>();
+        }
+
         public int CourseScheduleId { get; set; }
         public byte? DayOfWeek { get; set; }
         public int? CourseInstanceId { get; set; }
@@ -14,5 +19,6 @@ namespace Pegasus_backend.pegasusContext
 
         public One2oneCourseInstance CourseInstance { get; set; }
         public GroupCourseInstance GroupCourseInstance { get; set; }
+        public ICollection<Amendment> Amendment { get; set; }
     }
 }

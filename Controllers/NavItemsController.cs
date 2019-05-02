@@ -24,14 +24,19 @@ namespace Pegasus_backend.Controllers
         [HttpGet]
         public IActionResult GetNavItems()
         {
-            Result<IEnumerable<NavItem>> result = new Result<IEnumerable<NavItem>>();
+            Result<Object> result = new Result<Object>();
+            ;
             try
             {
                 var userId = int.Parse(User.Claims.First(s => s.Type == "UserID").Value);
-                var roleName = _pegasusContext.User.Include(s => s.Role).First(s => s.UserId == userId).Role
-                    .RoleName;
-                result.Data = GetNavItems(roleName);
+                var roleId = _pegasusContext.User.FirstOrDefault(s => s.UserId == userId).RoleId;
+                var pageList = _pegasusContext.RoleAccess.Where(s => s.RoleId == roleId).Select(s => s.PageId).ToList();
                 
+                pageList.ForEach(s =>
+                {
+                    
+                });
+                result.Data = "";
 
             }
             catch (Exception ex)

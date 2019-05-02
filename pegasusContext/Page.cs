@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Pegasus_backend.pegasusContext
 {
@@ -21,6 +22,7 @@ namespace Pegasus_backend.pegasusContext
         public string Icon { get; set; }
 
         public PageGroup PageGroup { get; set; }
+        [JsonIgnore]
         public ICollection<RoleAccess> RoleAccess { get; set; }
     }
 }

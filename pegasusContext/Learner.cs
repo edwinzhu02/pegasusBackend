@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
 
 namespace Pegasus_backend.pegasusContext
 {
@@ -38,9 +37,10 @@ namespace Pegasus_backend.pegasusContext
         public string Note { get; set; }
         public string MiddleName { get; set; }
         public short? LevelType { get; set; }
+        public short? UserId { get; set; }
 
+        public User User { get; set; }
         public ICollection<Amendment> Amendment { get; set; }
-        [JsonIgnore]
         public ICollection<Invoice> Invoice { get; set; }
         public ICollection<LearnerGroupCourse> LearnerGroupCourse { get; set; }
         public ICollection<Lesson> Lesson { get; set; }

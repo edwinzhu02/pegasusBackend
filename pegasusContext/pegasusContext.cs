@@ -81,6 +81,9 @@ namespace Pegasus_backend.pegasusContext
                 entity.HasIndex(e => e.CourseInstanceId)
                     .HasName("R_26");
 
+                entity.HasIndex(e => e.CourseScheduleId)
+                    .HasName("R_105");
+
                 entity.HasIndex(e => e.LearnerId)
                     .HasName("R_27");
 
@@ -106,6 +109,10 @@ namespace Pegasus_backend.pegasusContext
 
                 entity.Property(e => e.CourseInstanceId)
                     .HasColumnName("course_instance_id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.CourseScheduleId)
+                    .HasColumnName("course_schedule_id")
                     .HasColumnType("int(11)");
 
                 entity.Property(e => e.CreatedAt).HasColumnName("created_at");
@@ -145,6 +152,11 @@ namespace Pegasus_backend.pegasusContext
                     .WithMany(p => p.Amendment)
                     .HasForeignKey(d => d.CourseInstanceId)
                     .HasConstraintName("R_26");
+
+                entity.HasOne(d => d.CourseSchedule)
+                    .WithMany(p => p.Amendment)
+                    .HasForeignKey(d => d.CourseScheduleId)
+                    .HasConstraintName("R_105");
 
                 entity.HasOne(d => d.Learner)
                     .WithMany(p => p.Amendment)
@@ -291,6 +303,10 @@ namespace Pegasus_backend.pegasusContext
                 entity.Property(e => e.Price)
                     .HasColumnName("price")
                     .HasColumnType("decimal(6,2)");
+
+                entity.Property(e => e.TeacherLevel)
+                    .HasColumnName("teacher_level")
+                    .HasColumnType("tinyint(4)");
 
                 entity.HasOne(d => d.CourseCategory)
                     .WithMany(p => p.Course)
@@ -631,6 +647,9 @@ namespace Pegasus_backend.pegasusContext
             {
                 entity.ToTable("learner", "pegasus");
 
+                entity.HasIndex(e => e.UserId)
+                    .HasName("R_106");
+
                 entity.Property(e => e.LearnerId)
                     .HasColumnName("learner_id")
                     .HasColumnType("int(11)");
@@ -707,6 +726,15 @@ namespace Pegasus_backend.pegasusContext
                 entity.Property(e => e.ReferrerLearnerId)
                     .HasColumnName("referrer_learner_id")
                     .HasColumnType("int(11)");
+
+                entity.Property(e => e.UserId)
+                    .HasColumnName("user_id")
+                    .HasColumnType("smallint(6)");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Learner)
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("R_106");
             });
 
             modelBuilder.Entity<LearnerAppForm>(entity =>

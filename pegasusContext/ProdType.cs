@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
+
 namespace Pegasus_backend.pegasusContext
 {
     public partial class ProdType
@@ -15,7 +15,6 @@ namespace Pegasus_backend.pegasusContext
         public short? ProdCatId { get; set; }
 
         public ProdCat ProdCat { get; set; }
-        [JsonIgnore]
         public ICollection<Product> Product { get; set; }
     }
 }

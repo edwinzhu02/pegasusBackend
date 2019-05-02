@@ -48,7 +48,12 @@ namespace Pegasus_backend.Controllers.Authorization
            
             try
             {
-                var user = await _pegasusContext.User.FirstOrDefaultAsync(s=>s.UserName==model.UserName);
+                var user = await _pegasusContext.User.Include(s=>s.Learner)
+                    .Include(s=>s.Teacher)
+                    .Include(s=>s.Staff)
+                    .Include(s=>s.Role)
+                    .FirstOrDefaultAsync(s=>s.UserName==model.UserName);
+                
                 //Username is not be registered
                 if (user == null)
                 {
@@ -76,9 +81,8 @@ namespace Pegasus_backend.Controllers.Authorization
 
                 var tokenHandle = new JwtSecurityTokenHandler();
                 var securityToken = tokenHandle.CreateToken(tokenDescriptor);
-                var token = tokenHandle.WriteToken(securityToken);
-
-                result.Data = token;
+                var tokenToClient = tokenHandle.WriteToken(securityToken);
+                result.Data = new {token=tokenToClient,roleid = user.RoleId,userid=user.UserId,role=user.Role.RoleName,expires=DateTime.UtcNow.AddDays(14),userdetails= UserInfoFilter(user)};
                 result.IsSuccess = true;
                 return Ok(result);
             }
