@@ -25,16 +25,18 @@ namespace Pegasus_backend.Controllers
         public IActionResult GetNavItems()
         {
             Result<Object> result = new Result<Object>();
-            Object details;
+            PageGroup details;
             try
             {
                 var userId = int.Parse(User.Claims.First(s => s.Type == "UserID").Value);
                 var roleId = _pegasusContext.User.FirstOrDefault(s => s.UserId == userId).RoleId;
                 var pageList = _pegasusContext.RoleAccess.Where(s => s.RoleId == roleId).Select(s => s.PageId).ToList();
-                
                 pageList.ForEach(s =>
                 {
-                    
+                    _pegasusContext.PageGroup.ToList().ForEach(w =>
+                    {
+                        
+                    });
                 });
                 result.Data = "";
 
