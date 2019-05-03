@@ -1,10 +1,12 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using Pegasus_backend.Models;
 using Pegasus_backend.pegasusContext;
 namespace Pegasus_backend.Controllers
@@ -25,20 +27,32 @@ namespace Pegasus_backend.Controllers
         public IActionResult GetNavItems()
         {
             Result<Object> result = new Result<Object>();
-            PageGroup details;
+            List<PageGroup> details = new List<PageGroup>();
+            List<Page> detail;
             try
             {
                 var userId = int.Parse(User.Claims.First(s => s.Type == "UserID").Value);
                 var roleId = _pegasusContext.User.FirstOrDefault(s => s.UserId == userId).RoleId;
                 var pageList = _pegasusContext.RoleAccess.Where(s => s.RoleId == roleId).Select(s => s.PageId).ToList();
-                pageList.ForEach(s =>
+                var pageGroups = _pegasusContext.PageGroup.Include(s=>s.Page).ToList();
+                pageGroups.ForEach(pageGroup =>
                 {
-                    _pegasusContext.PageGroup.ToList().ForEach(w =>
+                    detail = new List<Page>();
+                    pageGroup.Page.ToList().ForEach(page =>
                     {
-                        
+                        if (pageList.Contains(page.PageId))
+                        {
+                            
+                            detail.Add(page);
+                        }
                     });
+
+                    pageGroup.Page = detail;
+                    
+                    details.Add(pageGroup);
+                    
                 });
-                result.Data = "";
+                result.Data = details;
 
             }
             catch (Exception ex)
