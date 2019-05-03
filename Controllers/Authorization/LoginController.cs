@@ -82,7 +82,7 @@ namespace Pegasus_backend.Controllers.Authorization
                 var tokenHandle = new JwtSecurityTokenHandler();
                 var securityToken = tokenHandle.CreateToken(tokenDescriptor);
                 var tokenToClient = tokenHandle.WriteToken(securityToken);
-                result.Data = new {token=tokenToClient,roleid = user.RoleId,userid=user.UserId,role=user.Role.RoleName,expires=DateTime.UtcNow.AddDays(14),userdetails= UserInfoFilter(user)};
+                result.Data = new {token=tokenToClient,roleid = user.RoleId,userid=user.UserId,position=user.Role.RoleName,expires=DateTime.UtcNow.AddDays(14),userdetails= UserInfoFilter(user)};
                 result.IsSuccess = true;
                 return Ok(result);
             }

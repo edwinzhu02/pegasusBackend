@@ -25,7 +25,7 @@ namespace Pegasus_backend.Controllers
         public IActionResult GetNavItems()
         {
             Result<Object> result = new Result<Object>();
-            ;
+            Object details;
             try
             {
                 var userId = int.Parse(User.Claims.First(s => s.Type == "UserID").Value);
