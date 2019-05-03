@@ -9,6 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using Pegasus_backend.pegasusContext;
 using Pegasus_backend.Models;
 using Pegasus_backend.ActionFilter;
+using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 
 namespace Pegasus_backend.Controllers
 {
@@ -120,5 +122,66 @@ namespace Pegasus_backend.Controllers
             result.Data = "Success!";
             return Ok(result);
         }
+
+
+        [HttpPost]
+        [Route("[action]")]
+        [CheckModelFilter]
+        public async Task<IActionResult> SaveProdPayment(IEnumerable <PaymentTranModel> paymentTranList )
+        {
+
+            var result = new Result<IEnumerable<SoldTransaction>>();
+            var tranDetails = paymentTranList.ToArray()[0].SoldTransaction.AsQueryable();
+
+            var paymentDetail = paymentTranList.ToArray()[0];
+            Payment payment = new Payment();
+            _mapper.Map(paymentDetail, payment);
+            payment.CreatedAt = DateTime.Now;
+            await _pegasusContext.Payment.AddAsync(payment);
+
+            foreach (var detail in tranDetails)
+            {
+                SoldTransaction tranDetail = new SoldTransaction();
+                _mapper.Map(detail, tranDetail);
+
+                 var stock = await _pegasusContext.Stock.FirstOrDefaultAsync(x => x.OrgId == paymentTranList.ToList()[0].OrgId && x.ProductId == detail.ProductId);
+                detail.BeforeQuantity = stock.Quantity;
+                detail.AflterQuantity = detail.BeforeQuantity - detail.SoldQuantity;
+                detail.LearnerId = paymentTranList.ToList()[0].LearnerId;
+                var name = await _pegasusContext.Product.FirstOrDefaultAsync(x => x.ProductId == detail.ProductId);
+                if (detail.AflterQuantity < 0)
+                {
+                    throw new Exception(name.ProductName + " has not enough stock, only " + stock.Quantity + " left");
+                }
+                detail.StockId = stock.StockId;
+                detail.CreatedAt = DateTime.Now;
+                if (detail.DiscountAmount != null)
+                {
+                    detail.DiscountedAmount = name.SellPrice * detail.SoldQuantity - detail.DiscountAmount;
+                }
+                if (detail.DiscountRate != null)
+                {
+                    detail.DiscountedAmount = name.SellPrice * detail.SoldQuantity * detail.DiscountRate;
+                }
+                stock.Quantity -= detail.SoldQuantity;
+                _pegasusContext.Update(stock);
+                await _pegasusContext.SoldTransaction.AddAsync(detail);
+
+            }
+            try
+            {
+                await _pegasusContext.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                result.ErrorMessage = e.Message;
+                result.IsFound = false;
+            }
+            //result.Data = list;
+
+            return Ok(result);
+        }
+
+
     }
 }
