@@ -52,7 +52,8 @@ namespace Pegasus_backend.Controllers
                     details.Add(pageGroup);
                     
                 });
-                result.Data = details;
+                var finaldata = details.Where(s => s.Page.Count != 0).ToList();
+                result.Data = finaldata;
 
             }
             catch (Exception ex)
