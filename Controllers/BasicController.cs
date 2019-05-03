@@ -30,21 +30,21 @@ namespace Pegasus_backend.Controllers
             return false;
         }
 
-        protected Object UserInfoFilter(User user)
+        protected Object UserInfoFilter(User user, string positionToClient)
         {
             if (user.Teacher.Count != 0)
             {
-               return new {firstname=user.Teacher.ToList()[0].FirstName,lastname=user.Teacher.ToList()[0].LastName};
+               return new {firstname=user.Teacher.ToList()[0].FirstName,lastname=user.Teacher.ToList()[0].LastName,position=positionToClient};
             }
 
             if (user.Staff.Count != 0)
             {
-                return new {firstname=user.Staff.ToList()[0].FirstName,lastname=user.Staff.ToList()[0].LastName};
+                return new {firstname=user.Staff.ToList()[0].FirstName,lastname=user.Staff.ToList()[0].LastName,position=positionToClient};
             }
 
             if (user.Learner.Count != 0)
             {
-                return new {firstname=user.Learner.ToList()[0].FirstName,lastname=user.Learner.ToList()[0].LastName};
+                return new {firstname=user.Learner.ToList()[0].FirstName,lastname=user.Learner.ToList()[0].LastName,position=positionToClient};
             }
 
             throw new Exception("User Not Found.");
