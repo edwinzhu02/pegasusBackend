@@ -15,17 +15,19 @@ namespace Pegasus_backend.Models
         [JsonProperty(Required = Required.Always)]
         public int ProductId { get; set; }
 
-        [JsonProperty(Required = Required.Always)]
-        public int LearnerId { get; set; }
+
+        public int? LearnerId { get; set; }
 
         public decimal? Balance { get; set; }
         public string Note { get; set; }
         public int? BeforeQuantity { get; set; }
         public int? AflterQuantity { get; set; }
-        [JsonProperty(Required = Required.Always)]
+
         public int? StockId { get; set; }
+
         [JsonProperty(Required = Required.Always)]
         public int SoldQuantity { get; set; }
+
         public int? PaymentId { get; set; }
         public decimal? DiscountAmount { get; set; }
         public decimal? DiscountRate { get; set; }

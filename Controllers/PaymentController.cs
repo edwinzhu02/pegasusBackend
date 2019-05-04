@@ -130,24 +130,23 @@ namespace Pegasus_backend.Controllers
         public async Task<IActionResult> SaveProdPayment(IEnumerable <PaymentTranModel> paymentTranList )
         {
 
-            var result = new Result<IEnumerable<SoldTransaction>>();
+            var result = new Result<IEnumerable<PaymentTranModel>>();
             var tranDetails = paymentTranList.ToArray()[0].SoldTransaction.AsQueryable();
 
             var paymentDetail = paymentTranList.ToArray()[0];
+
             Payment payment = new Payment();
             _mapper.Map(paymentDetail, payment);
             payment.CreatedAt = DateTime.Now;
-            await _pegasusContext.Payment.AddAsync(payment);
 
+            int i = 0;
             foreach (var detail in tranDetails)
             {
-                SoldTransaction tranDetail = new SoldTransaction();
-                _mapper.Map(detail, tranDetail);
-
-                 var stock = await _pegasusContext.Stock.FirstOrDefaultAsync(x => x.OrgId == paymentTranList.ToList()[0].OrgId && x.ProductId == detail.ProductId);
+                var stock = await _pegasusContext.Stock.FirstOrDefaultAsync(x => x.OrgId == paymentTranList.ToList()[0].OrgId && x.ProductId == detail.ProductId);
                 detail.BeforeQuantity = stock.Quantity;
                 detail.AflterQuantity = detail.BeforeQuantity - detail.SoldQuantity;
                 detail.LearnerId = paymentTranList.ToList()[0].LearnerId;
+                detail.PaymentId = payment.PaymentId;
                 var name = await _pegasusContext.Product.FirstOrDefaultAsync(x => x.ProductId == detail.ProductId);
                 if (detail.AflterQuantity < 0)
                 {
@@ -159,17 +158,19 @@ namespace Pegasus_backend.Controllers
                 {
                     detail.DiscountedAmount = name.SellPrice * detail.SoldQuantity - detail.DiscountAmount;
                 }
-                if (detail.DiscountRate != null)
+                else if (detail.DiscountRate != null)
                 {
                     detail.DiscountedAmount = name.SellPrice * detail.SoldQuantity * detail.DiscountRate;
                 }
                 stock.Quantity -= detail.SoldQuantity;
-                _pegasusContext.Update(stock);
-                await _pegasusContext.SoldTransaction.AddAsync(detail);
+                _pegasusContext.Stock.Update(stock);
+                _mapper.Map(detail, payment.SoldTransaction.ToArray()[i]);
+                i++;
 
             }
             try
             {
+                await _pegasusContext.Payment.AddAsync(payment);
                 await _pegasusContext.SaveChangesAsync();
             }
             catch (Exception e)
@@ -177,7 +178,7 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = e.Message;
                 result.IsFound = false;
             }
-            //result.Data = list;
+            //result.Data = paymentTranList;
 
             return Ok(result);
         }
