@@ -12,9 +12,12 @@ namespace Pegasus_backend.Mappings
             CreateMap<StudentRegister, Learner>();
             CreateMap<Models.Parent,pegasusContext.Parent>();
             CreateMap<InvoicePay,Payment>();
-            CreateMap<ProdCat, ProdCat>();
+            CreateMap<ProdCatModel, ProdCat>();
             CreateMap<ProdTypeModel, ProdType>();
             CreateMap<ProductModel, Product>();
+            CreateMap<PaymentTranModel, Payment>();
+            //CreateMap<PaymentTranModel, SoldTransaction>();
+            CreateMap<SoldTransactionModel, SoldTransaction>();
         }
     }
 }

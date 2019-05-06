@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using Newtonsoft.Json;
 namespace Pegasus_backend.pegasusContext
 {
     public partial class Payment
@@ -24,6 +24,7 @@ namespace Pegasus_backend.pegasusContext
         public Invoice Invoice { get; set; }
         public Learner Learner { get; set; }
         public Staff Staff { get; set; }
+        [JsonIgnore]
         public ICollection<SoldTransaction> SoldTransaction { get; set; }
     }
 }
