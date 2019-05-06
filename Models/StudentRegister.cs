@@ -28,8 +28,6 @@ namespace Pegasus_backend.Models
         public string Address { get; set; }
         /*[Required(ErrorMessage = "Parent details is required")]*/
         public List<Parent> Parent { get; set; }
-        public IFormFile ABRSM { get; set; }
-        public IFormFile image { get; set; }
         
         //public List<int> GroupCourses { get; set; }
         //public List<OnetoOneCourse> OnetoOneCourses { get; set; }
