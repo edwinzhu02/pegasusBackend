@@ -31,6 +31,11 @@ namespace Pegasus_backend.Controllers
             _pegasusContext = pegasusContext;
             _mapper = mapper;
         }
+        
+        
+        //DELETE http://localhost:5000/api/teacher
+        [HttpDelete]
+        //
 
         //GET: http://localhost:5000/api/teacher
         //this controller is for prepare for register custom one to one course

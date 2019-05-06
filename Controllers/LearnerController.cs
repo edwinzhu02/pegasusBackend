@@ -37,6 +37,11 @@ namespace Pegasus_backend.Controllers
             try
             {
                 result.Data = await _pegasusContext.Learner.Where(s =>s.FirstName.Contains(name)).ToListAsync();
+                if (result.Data.Count() == 0)
+                {
+                    return BadRequest(DataNotFound(result));
+                }
+                
 
             }
             catch (Exception ex)
