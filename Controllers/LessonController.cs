@@ -21,7 +21,7 @@ namespace Pegasus_backend.Controllers
         }
         
         
-        //http://localhost:5000/api/lesson
+        //GET: http://localhost:5000/api/lesson
         [HttpGet]
         [Authorize]
         public async Task<IActionResult> GetLesson()
