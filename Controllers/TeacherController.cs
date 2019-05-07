@@ -67,16 +67,15 @@ namespace Pegasus_backend.Controllers
             {
                 result.IsSuccess = true;
                 result.Data = await _pegasusContext.Teacher
-                    .Include(s=>s.TeacherLanguage)
-                    .ThenInclude(s=>s.Lang)
-                    .Include(s=>s.TeacherQualificatiion)
-                    .ThenInclude(s=>s.Quali)
-                    .Include(s=>s.TeacherCourse)
-                    .ThenInclude(s=>s.Course)
-                    .Include(s=>s.AvailableDays)
-                    .Where(s=>s.IsActivate==1)
-                    .ToListAsync();
-                
+                    .Include(s => s.TeacherLanguage)
+                    .ThenInclude(s => s.Lang)
+                    .Include(s => s.TeacherQualificatiion)
+                    .ThenInclude(s => s.Quali)
+                    .Include(s => s.TeacherCourse)
+                    .ThenInclude(s => s.Course)
+                    .Include(s => s.AvailableDays)
+                    .Where(s => s.IsActivate == 1).ToListAsync();
+
             }
             catch (Exception ex)
             {
