@@ -1,0 +1,39 @@
+﻿<Properties StartupConfiguration="{5ABF9E85-5D7C-41E0-A52D-FC75B8C49293}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Controllers/PaymentController.cs">
+    <Files>
+      <File FileName="Controllers/PaymentController.cs" Line="153" Column="52" />
+      <File FileName="Models/SoldTransactionModel.cs" Line="23" Column="41" />
+      <File FileName="Models/PaymentTranModel.cs" Line="16" Column="51" />
+      <File FileName="Models/ProductModel.cs" Line="7" Column="30" />
+      <File FileName="pegasusContext/Product.cs" Line="1" Column="1" />
+      <File FileName="Controllers/InvoiceController.cs" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Pegasus_backend" expanded="True">
+            <Node name="Pegasus_backend" expanded="True">
+              <Node name="ActionFilter" expanded="True" />
+              <Node name="Controllers" expanded="True">
+                <Node name="PaymentController.cs" selected="True" />
+              </Node>
+              <Node name="Mappings" expanded="True" />
+              <Node name="Models" expanded="True" />
+              <Node name="pegasusContext" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.Pegasus__backend PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

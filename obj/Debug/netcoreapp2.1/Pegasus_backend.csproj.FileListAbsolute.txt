@@ -12,6 +12,7 @@
 /Users/oliver/Desktop/Pegasus_backend/Pegasus_backend/obj/Debug/netcoreapp2.1/Pegasus_backend.RazorTargetAssemblyInfo.cache
 /Users/oliver/Desktop/Pegasus_backend/Pegasus_backend/obj/Debug/netcoreapp2.1/Pegasus_backend.dll
 /Users/oliver/Desktop/Pegasus_backend/Pegasus_backend/obj/Debug/netcoreapp2.1/Pegasus_backend.pdb
+<<<<<<< HEAD
 D:\Projects\NET\pegasusBackend\bin\Debug\netcoreapp2.1\Pegasus_backend.deps.json
 D:\Projects\NET\pegasusBackend\bin\Debug\netcoreapp2.1\Pegasus_backend.runtimeconfig.json
 D:\Projects\NET\pegasusBackend\bin\Debug\netcoreapp2.1\Pegasus_backend.runtimeconfig.dev.json
@@ -26,3 +27,7 @@ D:\Projects\NET\pegasusBackend\obj\Debug\netcoreapp2.1\Pegasus_backend.AssemblyI
 D:\Projects\NET\pegasusBackend\obj\Debug\netcoreapp2.1\Pegasus_backend.RazorTargetAssemblyInfo.cache
 D:\Projects\NET\pegasusBackend\obj\Debug\netcoreapp2.1\Pegasus_backend.dll
 D:\Projects\NET\pegasusBackend\obj\Debug\netcoreapp2.1\Pegasus_backend.pdb
+=======
+/Users/lyric/Desktop/pegasusBackend/obj/Debug/netcoreapp2.1/Pegasus_backend.dll
+/Users/lyric/Desktop/pegasusBackend/obj/Debug/netcoreapp2.1/Pegasus_backend.pdb
+>>>>>>> d7c59c3dce091bb853b7beae23e38ce359d6d842
