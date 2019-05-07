@@ -24,6 +24,7 @@ namespace Pegasus_backend.Models
         [JsonProperty(Required = Required.Always)]
         public int OrgId { get; set; }
 
+        public byte? PaymentType { get; set; }
 
         public ICollection<SoldTransactionModel> SoldTransaction { get; set; }
 
