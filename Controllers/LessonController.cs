@@ -21,10 +21,10 @@ namespace Pegasus_backend.Controllers
         }
         
         
-        //GET: http://localhost:5000/api/lesson
-        [HttpGet]
+        //GET: http://localhost:5000/api/lesson/:date
+        [HttpGet("{date}")]
         [Authorize]
-        public async Task<IActionResult> GetLesson()
+        public async Task<IActionResult> GetLesson(DateTime date)
         {
             Result<Object> result = new Result<object>();
             try
@@ -33,6 +33,7 @@ namespace Pegasus_backend.Controllers
                 var staff = _pegasusContext.Staff.FirstOrDefault(s => s.UserId == userId);
                 var orgId = _pegasusContext.StaffOrg.FirstOrDefault(s => s.StaffId == staff.StaffId).OrgId;
                 var details = _pegasusContext.Lesson.Where(w => w.OrgId == orgId)
+                    .Where(s=>s.BeginTime.Value.Year == date.Year && s.BeginTime.Value.Month == date.Month && s.BeginTime.Value.Day == date.Day)
                     .Include(s=>s.Learner)
                     .Include(s => s.Teacher)
                     .Include(group => group.GroupCourseInstance)
