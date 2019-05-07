@@ -22,6 +22,8 @@ namespace Pegasus_backend.Controllers
             _pegasusContext = pegasusContext;
         }
         
+        
+        //GET: http://localhost:5000/api/navitems
         [Authorize]
         [HttpGet]
         public IActionResult GetNavItems()

@@ -70,16 +70,19 @@ namespace Pegasus_backend.Controllers
             tResult.ErrorMessage = "Not Found";
             return tResult;
         }
-        protected void UploadFile(IFormFile file,string imageName)
+        protected void UploadFile(IFormFile file,string imageName, int id)
         {
+            var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName;
+            var Id = id.ToString() + ".jpg";
+            
             try
             {
                 if (imageName == "IdPhoto")
                 {
-                    var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                    
                     var folderName = Path.Combine("wwwroot", "images", "TeacherIdPhotos");
                     var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
-                    var path = Path.Combine(pathToSave, fileName);
+                    var path = Path.Combine(pathToSave, Id );
                     var stream = new FileStream(path, FileMode.Create);
                     file.CopyTo(stream);
                     stream.Close();
@@ -87,10 +90,9 @@ namespace Pegasus_backend.Controllers
 
                 if (imageName == "Photo")
                 {
-                    var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
                     var folderName = Path.Combine("wwwroot", "images", "TeacherImages");
                     var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
-                    var path = Path.Combine(pathToSave, fileName);
+                    var path = Path.Combine(pathToSave, Id);
                     var stream = new FileStream(path, FileMode.Create);
                     file.CopyTo(stream);
                     stream.Close();
@@ -99,10 +101,9 @@ namespace Pegasus_backend.Controllers
                 //student photo
                 if (imageName == "image")
                 {
-                    var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
                     var folderName = Path.Combine("wwwroot", "images", "LearnerImages");
                     var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
-                    var path = Path.Combine(pathToSave, fileName);
+                    var path = Path.Combine(pathToSave, Id);
                     var stream = new FileStream(path, FileMode.Create);
                     file.CopyTo(stream);
                     stream.Close();
@@ -110,10 +111,9 @@ namespace Pegasus_backend.Controllers
 
                 if (imageName == "ABRSM")
                 {
-                    var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
                     var folderName = Path.Combine("wwwroot", "images", "ABRSM_Grade5_Certificate");
                     var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
-                    var path = Path.Combine(pathToSave, fileName);
+                    var path = Path.Combine(pathToSave, Id);
                     var stream = new FileStream(path, FileMode.Create);
                     file.CopyTo(stream);
                     stream.Close();

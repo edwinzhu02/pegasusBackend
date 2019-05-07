@@ -12,3 +12,5 @@
 /Users/oliver/Desktop/Pegasus_backend/Pegasus_backend/obj/Debug/netcoreapp2.1/Pegasus_backend.RazorTargetAssemblyInfo.cache
 /Users/oliver/Desktop/Pegasus_backend/Pegasus_backend/obj/Debug/netcoreapp2.1/Pegasus_backend.dll
 /Users/oliver/Desktop/Pegasus_backend/Pegasus_backend/obj/Debug/netcoreapp2.1/Pegasus_backend.pdb
+/Users/lyric/Desktop/pegasusBackend/obj/Debug/netcoreapp2.1/Pegasus_backend.dll
+/Users/lyric/Desktop/pegasusBackend/obj/Debug/netcoreapp2.1/Pegasus_backend.pdb
