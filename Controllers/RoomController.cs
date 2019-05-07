@@ -52,11 +52,12 @@ namespace Pegasus_backend.Controllers
         [HttpGet]
         public async Task<IActionResult> Room()
         {
-            Result<List<Room>> result = new Result<List<Room>>();
+            Result<Object> result = new Result<Object>();
             try
             {
                 result.Data = await _pegasusContext.Room
                     .Include(s=>s.Org)
+                    .Select(s=> new {RoomId=s.RoomId,RoomName=s.RoomName,OrgId=s.OrgId,OrgName=s.Org.OrgName} )
                     .ToListAsync();
             }
             catch (Exception ex)
