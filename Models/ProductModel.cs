@@ -11,6 +11,8 @@ namespace Pegasus_backend.Models
         public string ProductName { get; set; }
         public string Model { get; set; }
         public string Brand { get; set; }
+
+        [Range(0.0, double.MaxValue, ErrorMessage = "Please enter a {0} value bigger than 0.")]
         public decimal? SellPrice { get; set; }
         public decimal? WholesalePrice { get; set; }
         public short? ProdTypeId { get; set; }

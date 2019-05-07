@@ -152,9 +152,10 @@ namespace Pegasus_backend.Controllers
                     }
                     detail.StockId = stock.StockId;
                     detail.CreatedAt = DateTime.Now;
+                    detail.DiscountedAmount = name.SellPrice * detail.SoldQuantity;
                     if (detail.DiscountAmount != 0)
                     {
-                        detail.DiscountedAmount = name.SellPrice * detail.SoldQuantity - detail.DiscountAmount;
+                        detail.DiscountedAmount -= detail.DiscountAmount;
                     }
                     else if (detail.DiscountRate != 0)
                     {
@@ -162,8 +163,9 @@ namespace Pegasus_backend.Controllers
                         {
                             throw new Exception("Discount Rate must less than 1");
                         }
-                        detail.DiscountedAmount = name.SellPrice * detail.SoldQuantity * detail.DiscountRate;
+                        detail.DiscountedAmount *= detail.DiscountRate;
                     }
+
                    
                     stock.Quantity -= detail.SoldQuantity;
                     _pegasusContext.Stock.Update(stock);
