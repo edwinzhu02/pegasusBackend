@@ -68,7 +68,7 @@ namespace Pegasus_backend.pegasusContext
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseMySQL("server=35.197.166.191;User Id=root;Password=qwer1234;Database=pegasus");
+                optionsBuilder.UseMySQL("Server=35.197.166.191;UserId=dbuser;Password=qwer1234;Database=pegasus");
             }
         }
 
@@ -1619,9 +1619,21 @@ namespace Pegasus_backend.pegasusContext
                     .HasMaxLength(40)
                     .IsUnicode(false);
 
+                entity.Property(e => e.EmailAt)
+                    .HasColumnName("email_at")
+                    .HasColumnType("date");
+
+                entity.Property(e => e.IsLearner)
+                    .HasColumnName("is_learner")
+                    .HasColumnType("bit(1)");
+
                 entity.Property(e => e.LearnerId)
                     .HasColumnName("learner_id")
                     .HasColumnType("int(11)");
+
+                entity.Property(e => e.ProcessFlag)
+                    .HasColumnName("process_flag")
+                    .HasColumnType("bit(1)");
 
                 entity.Property(e => e.RemindContent)
                     .HasColumnName("remind_content")
@@ -2363,6 +2375,10 @@ namespace Pegasus_backend.pegasusContext
                     .HasColumnType("bit(1)");
 
                 entity.Property(e => e.ProcessedAt).HasColumnName("processed_at");
+
+                entity.Property(e => e.TodoDate)
+                    .HasColumnName("todo_date")
+                    .HasColumnType("date");
 
                 entity.Property(e => e.UserId)
                     .HasColumnName("user_id")

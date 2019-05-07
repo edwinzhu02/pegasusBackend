@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
 
 namespace Pegasus_backend.pegasusContext
 {
@@ -12,7 +11,6 @@ namespace Pegasus_backend.pegasusContext
         public decimal? HourlyWage { get; set; }
 
         public Course Course { get; set; }
-        [JsonIgnore]
         public Teacher Teacher { get; set; }
     }
 }
