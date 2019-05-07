@@ -31,13 +31,30 @@ namespace Pegasus_backend.Controllers
 
         //GET: http://localhost:5000/api/product
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
+        public async Task<ActionResult> GetProducts()
         {
-            Result<List<Product>> result = new Result<List<Product>>();
+            Result<Object> result = new Result<object>();
             try
             {
                 result.IsSuccess = true;
-                result.Data = await _pegasusContext.Product.Include(x => x.ProdType.ProdCat).ToListAsync();
+                result.Data = await _pegasusContext.Product
+                    .Include(x => x.ProdType.ProdCat)
+                    .Select(x => new {
+                        x.ProductId,
+                        x.ProductName,
+                        x.Model,
+                        x.Brand,
+                        x.SellPrice,
+                        x.WholesalePrice,
+                        ProdType = new
+                        {
+                            x.ProdType.ProdTypeId,
+                            x.ProdType.ProdTypeName,
+                            x.ProdType.ProdCatId,
+                            PordCat = new { x.ProdType.ProdCat.ProdCatId, x.ProdType.ProdCat.ProdCatName }
+                        }
+                    })
+                    .ToListAsync();
                 return Ok(result);
             }
             catch (Exception ex)
@@ -51,13 +68,31 @@ namespace Pegasus_backend.Controllers
         //GET: http://localhost:5000/api/product/{id}
         [HttpGet]
         [Route("{id}")]
-        public ActionResult<List<Product>> GetProduct(int id)
+        public async Task<ActionResult> GetProduct(int id)
         {
-            Result<List<Product>> result = new Result<List<Product>>();
+            Result<Object> result = new Result<object>();
             try
             {
                 result.IsSuccess = true;
-                result.Data = _pegasusContext.Product.Where(x => x.ProductId == id).Include(x => x.ProdType.ProdCat).ToList();
+                result.Data = await _pegasusContext.Product
+                    .Where(x => x.ProductId == id)
+                    .Include(x => x.ProdType.ProdCat)
+                    .Select(x => new {
+                        x.ProductId,
+                        x.ProductName,
+                        x.Model,
+                        x.Brand,
+                        x.SellPrice,
+                        x.WholesalePrice,
+                        ProdType = new
+                        {
+                            x.ProdType.ProdTypeId,
+                            x.ProdType.ProdTypeName,
+                            x.ProdType.ProdCatId,
+                            PordCat = new { x.ProdType.ProdCat.ProdCatId, x.ProdType.ProdCat.ProdCatName }
+                        }
+                    })
+                    .ToListAsync();
                 return Ok(result);
             }
             catch (Exception ex)
@@ -70,15 +105,20 @@ namespace Pegasus_backend.Controllers
 
         [Route("[action]/{typeid}")]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProdByType(int typeid)
+        public async Task<ActionResult> GetProdByType(int typeid)
         {
-            Result<List<Product>> result = new Result<List<Product>>();
+            Result<Object> result = new Result<object>();
             try
             {
                 result.IsSuccess = true;
                 result.Data = await _pegasusContext.Product
                     .Where(x => x.ProdTypeId == typeid)
                     .Include(x => x.ProdType)
+                    .ThenInclude(cate=>cate.ProdCat)
+                    .Select(x=>new { x.ProductId, x.ProductName, x.Model, x.Brand, x.SellPrice, x.WholesalePrice, 
+                                        ProdType = new {x.ProdType.ProdTypeId, x.ProdType.ProdTypeName, x.ProdType.ProdCatId, 
+                                            PordCat = new {x.ProdType.ProdCat.ProdCatId, x.ProdType.ProdCat.ProdCatName }
+                                        }})
                     .ToListAsync();
 
                 return Ok(result);
@@ -94,16 +134,19 @@ namespace Pegasus_backend.Controllers
 
         [Route("[action]/{cateid}")]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ProdType>>> GetTypeByCat(int cateid)
+        public async Task<ActionResult> GetTypeByCat(int cateid)
         {
-            Result<List<ProdType>> result = new Result<List<ProdType>>();
+            Result<Object> result = new Result<object>();
             try
             {
+
                 result.IsSuccess = true;
-                result.Data = await _pegasusContext.ProdType
-                .Where(x => x.ProdCatId == cateid)
-                .Include(x => x.ProdCat)
-                .ToListAsync();
+
+                result.Data = await _pegasusContext.ProdCat
+                    .Where(x => x.ProdCatId == cateid)
+                    .Include(x => x.ProdType)
+                    .Select(x=>new { x.ProdCatId,x.ProdCatName, ProdType = x.ProdType.Select(s=> new { s.ProdTypeId,s.ProdTypeName })})
+                    .ToListAsync();
 
                 return Ok(result);
             }
@@ -118,13 +161,14 @@ namespace Pegasus_backend.Controllers
 
         [Route("[action]")]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ProdCat>>> GetCat()
+        public async Task<ActionResult> GetCat()
         {
-            Result<List<ProdCat>> result = new Result<List<ProdCat>>();
+            //Result<List<ProdCat>> result = new Result<List<ProdCat>>();
+            Result<Object> result = new Result<object>();
             try
             {
                 result.IsSuccess = true;
-                result.Data = await _pegasusContext.ProdCat.ToListAsync();
+                result.Data = await _pegasusContext.ProdCat.Select(x=>new { x.ProdCatId,x.ProdCatName }).ToListAsync();
 
                 return Ok(result);
             }

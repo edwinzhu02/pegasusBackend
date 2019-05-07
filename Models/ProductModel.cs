@@ -15,6 +15,8 @@ namespace Pegasus_backend.Models
         [Range(0.0, double.MaxValue, ErrorMessage = "Please enter a {0} value bigger than 0.")]
         public decimal? SellPrice { get; set; }
         public decimal? WholesalePrice { get; set; }
+
+        [Required(ErrorMessage ="Product Type is Required.")]
         public short? ProdTypeId { get; set; }
 
         public ProdType ProdType { get; set; }
