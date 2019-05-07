@@ -41,6 +41,7 @@ namespace Pegasus_backend.Controllers
                     .Include(s => s.Org)
                     .ToList();
             }
+            
             catch (Exception ex)
             {
                 result.IsSuccess = false;
