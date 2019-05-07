@@ -59,6 +59,7 @@ namespace Pegasus_backend.Controllers
                     .Include(s=>s.Org)
                     .Select(s=> new {RoomId=s.RoomId,RoomName=s.RoomName,OrgId=s.OrgId,OrgName=s.Org.OrgName} )
                     .ToListAsync();
+                
             }
             catch (Exception ex)
             {
