@@ -1,12 +1,13 @@
 ﻿using Pegasus_backend.pegasusContext;
 using System.Collections.Generic;
-
+using System.ComponentModel.DataAnnotations;
 
 namespace Pegasus_backend.Models
 {
     public class ProductModel
     {
         public int ProductId { get; set; }
+        [Required(ErrorMessage = "ProductName is Required.")]
         public string ProductName { get; set; }
         public string Model { get; set; }
         public string Brand { get; set; }

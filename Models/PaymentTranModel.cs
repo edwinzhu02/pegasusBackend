@@ -9,6 +9,7 @@ namespace Pegasus_backend.Models
     {
         public int? PaymentId { get; set; }
         public byte? PaymentMethod { get; set; }
+
         [JsonProperty(Required = Required.Always)]
         public int LearnerId { get; set; }
 

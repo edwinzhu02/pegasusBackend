@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json.Serialization;
 
 namespace Pegasus_backend.Models
 {
@@ -30,6 +31,7 @@ namespace Pegasus_backend.Models
 
         public int? PaymentId { get; set; }
         public decimal? DiscountAmount { get; set; }
+
         public decimal? DiscountRate { get; set; }
         public decimal? DiscountedAmount { get; set; }
 
