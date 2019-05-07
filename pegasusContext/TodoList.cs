@@ -12,6 +12,7 @@ namespace Pegasus_backend.pegasusContext
         public DateTime? ProcessedAt { get; set; }
         public short? ProcessFlag { get; set; }
         public short? UserId { get; set; }
+        public DateTime? TodoDate { get; set; }
 
         public User User { get; set; }
     }

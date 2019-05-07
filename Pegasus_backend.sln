@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.489
@@ -13,9 +11,7 @@ Global
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{DD35931A-B598-4341-9FE9-9F9AB766729D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DD35931A-B598-4341-9FE9-9F9AB766729D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD35931A-B598-4341-9FE9-9F9AB766729D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DD35931A-B598-4341-9FE9-9F9AB766729D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -24,22 +20,3 @@ Global
 		SolutionGuid = {D6BCE8B9-6000-4AB7-BC41-244C7BBC8EE3}
 	EndGlobalSection
 EndGlobal
-=======
-
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pegasus_backend", "Pegasus_backend.csproj", "{5ABF9E85-5D7C-41E0-A52D-FC75B8C49293}"
-EndProject
-Global
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5ABF9E85-5D7C-41E0-A52D-FC75B8C49293}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5ABF9E85-5D7C-41E0-A52D-FC75B8C49293}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5ABF9E85-5D7C-41E0-A52D-FC75B8C49293}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5ABF9E85-5D7C-41E0-A52D-FC75B8C49293}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
-EndGlobal
->>>>>>> d7c59c3dce091bb853b7beae23e38ce359d6d842
