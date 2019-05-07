@@ -67,6 +67,10 @@
           "version": "[2.1.0, )",
           "autoReferenced": true
         },
+        "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+          "target": "Package",
+          "version": "[2.1.1, )"
+        },
         "MySql.Data": {
           "target": "Package",
           "version": "[8.0.15, )"

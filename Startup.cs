@@ -37,6 +37,10 @@ namespace Pegasus_backend
         {
             //Inject AppSettings
             services.Configure<ApplicationSettings>(Configuration.GetSection("ApplicationSettings"));
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+            });
             
             services.AddMvc()
                 .AddJsonOptions(
@@ -45,7 +49,6 @@ namespace Pegasus_backend
                         options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                         options.SerializerSettings.ContractResolver = new DefaultContractResolver();
                     }
-                    
                 );
             
             services.AddDirectoryBrowser();
