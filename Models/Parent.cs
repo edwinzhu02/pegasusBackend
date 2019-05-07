@@ -4,19 +4,21 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
+
 namespace Pegasus_backend.Models
 {
     public class Parent
     {
-        [Required(ErrorMessage = "Parent First Name is required")]
+        [JsonProperty(Required = Required.Always)]
         public string FirstName { get; set; }
-        [Required(ErrorMessage = "Parent Last Name is required")]
+        [JsonProperty(Required = Required.Always)]
         public string LastName { get; set; }
-        [Required(ErrorMessage = "Relationship is required")]
+        [JsonProperty(Required = Required.Always)]
         public byte Relationship { get; set; }
-        [Required(ErrorMessage = "Parent Phone is required")]
+        [JsonProperty(Required = Required.Always)]
         public string ContactNum { get; set; }
-        [Required(ErrorMessage = "Parent email is required")]
+        [JsonProperty(Required = Required.Always)]
         public string Email { get; set; }
     }
 }

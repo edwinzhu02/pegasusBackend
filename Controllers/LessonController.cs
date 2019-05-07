@@ -45,8 +45,6 @@ namespace Pegasus_backend.Controllers
                         IsGroup=!IsNull(s.GroupCourseInstance)
                     });
                     
-                
-                
                 result.Data = await details.ToListAsync();
             }
             catch (Exception ex)

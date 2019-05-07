@@ -10,6 +10,7 @@ using Pegasus_backend.pegasusContext;
 using Pegasus_backend.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
+using MySqlX.XDevAPI.Common;
 using Newtonsoft.Json;
 using Pegasus_backend.ActionFilter;
 
@@ -34,8 +35,27 @@ namespace Pegasus_backend.Controllers
         
         
         //DELETE http://localhost:5000/api/teacher
-        [HttpDelete]
-        //
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteTeacher(int id)
+        {
+            Result<string> result = new Result<string>();
+            try
+            {
+                var item = _pegasusContext.Teacher.FirstOrDefault(s => s.TeacherId == id);
+                item.IsActivate = 0;
+                _pegasusContext.Update(item);
+                await _pegasusContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+
+            result.Data = "success!";
+            return Ok(result);
+        }
 
         //GET: http://localhost:5000/api/teacher
         //this controller is for prepare for register custom one to one course
@@ -54,6 +74,7 @@ namespace Pegasus_backend.Controllers
                     .Include(s=>s.TeacherCourse)
                     .ThenInclude(s=>s.Course)
                     .Include(s=>s.AvailableDays)
+                    .Where(s=>s.IsActivate==1)
                     .ToListAsync();
                 
             }

@@ -52,6 +52,5 @@ namespace Pegasus_backend.Controllers
             return Ok(result);
         }
         
-        
     }
 }
