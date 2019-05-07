@@ -1,17 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Web.Http;
-//using System.Web.Helpers;
-//using System.Web.Http.Controllers;
+﻿using System.Collections.Generic;
 using Pegasus_backend.Models;
-//using System.Web.Http.Filters;
-//using System.Web.Http.ModelBinding;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace Pegasus_backend.ActionFilter
 {
@@ -26,7 +17,7 @@ namespace Pegasus_backend.ActionFilter
 
             if (check.IsSuccess == false)
             {
-                filterContext.Result = new BadRequestObjectResult(filterContext.ModelState);
+                filterContext.Result = new BadRequestObjectResult(check);
             }
             else
             {

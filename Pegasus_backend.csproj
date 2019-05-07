@@ -21,6 +21,7 @@
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.2" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="2.1.2" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.1" />
+        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
         <PackageReference Include="MySql.Data" Version="8.0.15" />
         <PackageReference Include="MySql.Data.Entity" Version="7.0.7-m61" />
         <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.15" />
