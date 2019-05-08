@@ -139,6 +139,7 @@ namespace Pegasus_backend.Controllers
                 payment.CreatedAt = DateTime.Now;
                 payment.PaymentType = 2;
                 int i = 0;
+                decimal? amount = 0;
                 foreach (var detail in payment.SoldTransaction)
                 {
                     var stock = await _pegasusContext.Stock.FirstOrDefaultAsync(x => x.OrgId == paymentTranListJson.OrgId && x.ProductId == detail.ProductId);
@@ -158,9 +159,9 @@ namespace Pegasus_backend.Controllers
                     {
                         detail.DiscountedAmount -= detail.DiscountAmount;
                     }
-                    else if (detail.DiscountRate != 0)
+                    else if (detail.DiscountRate != 1)
                     {
-                        if(detail.DiscountRate >= 1)
+                        if(detail.DiscountRate > 1)
                         {
                             throw new Exception("Discount Rate must less than 1");
                         }
@@ -171,10 +172,15 @@ namespace Pegasus_backend.Controllers
                     _pegasusContext.Stock.Update(stock);
                     _mapper.Map(detail, payment.SoldTransaction.ToArray()[i]);
                     i++;
+                    amount += detail.DiscountedAmount;
 
                 }
                     await _pegasusContext.Payment.AddAsync(payment);
                     await _pegasusContext.SaveChangesAsync();
+                if(amount != payment.Amount)
+                {
+                    throw new Exception("Amount Error!");
+                }
                     
             }
             catch (Exception ex)
