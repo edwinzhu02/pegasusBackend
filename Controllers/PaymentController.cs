@@ -133,12 +133,11 @@ namespace Pegasus_backend.Controllers
         {
             Result<string> result = new Result<string>();
             try{
-                //return Ok(paymentTranList);
                 var paymentTranListJson = JsonConvert.DeserializeObject<PaymentTranModel>(paymentTranList);
                 Payment payment = new Payment();
                 _mapper.Map(paymentTranListJson, payment);
                 payment.CreatedAt = DateTime.Now;
-
+                payment.PaymentType = 2;
                 int i = 0;
                 foreach (var detail in payment.SoldTransaction)
                 {
@@ -167,8 +166,7 @@ namespace Pegasus_backend.Controllers
                         }
                         detail.DiscountedAmount *= detail.DiscountRate;
                     }
-
-                   
+                          
                     stock.Quantity -= detail.SoldQuantity;
                     _pegasusContext.Stock.Update(stock);
                     _mapper.Map(detail, payment.SoldTransaction.ToArray()[i]);
@@ -177,8 +175,7 @@ namespace Pegasus_backend.Controllers
                 }
                     await _pegasusContext.Payment.AddAsync(payment);
                     await _pegasusContext.SaveChangesAsync();
-
-
+                    
             }
             catch (Exception ex)
             {
