@@ -88,6 +88,7 @@ namespace Pegasus_backend.Controllers
                     var paymentItem = new Payment();
                     _mapper.Map(details, paymentItem);
                     paymentItem.CreatedAt = DateTime.Now;
+                    paymentItem.PaymentType = 1;
                     _pegasusContext.Add(paymentItem);
                     await _pegasusContext.SaveChangesAsync();
 
