@@ -136,7 +136,7 @@ namespace Pegasus_backend.Controllers
                 Payment payment = new Payment();
                 _mapper.Map(paymentTranListJson, payment);
                 payment.CreatedAt = DateTime.Now;
-
+                payment.PaymentType = 2;
                 int i = 0;
                 foreach (var detail in payment.SoldTransaction)
                 {
