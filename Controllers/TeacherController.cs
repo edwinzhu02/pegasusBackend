@@ -79,12 +79,14 @@ namespace Pegasus_backend.Controllers
                     .Select(q => new
                     {
                         q.TeacherId,q.FirstName,q.LastName,q.Dob,q.Gender,q.IrdNumber,q.IdType,q.IdPhoto,q.IdNumber,q.HomePhone,q.MobilePhone,q.Email,q.Photo,q.ExpiryDate,
-                        AvailableDays = q.AvailableDays.Select(w=> new {w.DayOfWeek,w.OrgId, w.Org.OrgName}),
+                        /*AvailableDays = q.AvailableDays.Select(w=> new {w.DayOfWeek,w.OrgId, w.Org.OrgName}),
                         TeacherLanguage = q.TeacherLanguage.Select(w=>new {w.LangId,w.Lang.LangName}),
                         TeacherQualificatiion = q.TeacherQualificatiion.Select(w=> new {w.QualiId,w.Quali.QualiName}),
-                        TeacherCourse = q.TeacherCourse.Select(w=> new {w.CourseId,w.TeacherCourseId,w.Course.CourseName,w.Course.Level})
+                        TeacherCourse = q.TeacherCourse.Select(w=> new {w.CourseId,w.TeacherCourseId,w.Course.CourseName,w.Course.Level})*/
+                        q.AvailableDays,q.TeacherLanguage,q.TeacherQualificatiion,q.TeacherCourse
                         
                     })
+                    
                     .ToListAsync();
                 
                 result.Data = teachers;

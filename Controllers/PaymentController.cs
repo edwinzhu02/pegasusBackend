@@ -46,10 +46,10 @@ namespace Pegasus_backend.Controllers
         }
         
         //POST: http://localhost:5000/api/payment/payInvoice
-
+        
+        [CheckModelFilter]
         [HttpPost]
         [Route("payInvoice")]
-        [CheckModelFilter]
         public async Task<IActionResult> SavePaymentDetails([FromBody] InvoicePay details)
         {
             Result<string> result = new Result<string>();

@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Org.BouncyCastle.Asn1.Crmf;
+using Pegasus_backend.ActionFilter;
 using Pegasus_backend.pegasusContext;
 using Pegasus_backend.Models;
 
@@ -41,6 +42,7 @@ namespace Pegasus_backend.Controllers.Authorization
         
         
         //POST: http://localhost:5000/api/login
+        [CheckModelFilter]
         [HttpPost]
         public async Task<IActionResult> Login([FromBody] UsrAndPass model)
         {
