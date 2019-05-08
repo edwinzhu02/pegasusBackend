@@ -115,10 +115,21 @@ namespace Pegasus_backend.Controllers
                     .Where(x => x.ProdTypeId == typeid)
                     .Include(x => x.ProdType)
                     .ThenInclude(cate=>cate.ProdCat)
-                    .Select(x=>new { x.ProductId, x.ProductName, x.Model, x.Brand, x.SellPrice, x.WholesalePrice, 
-                                        ProdType = new {x.ProdType.ProdTypeId, x.ProdType.ProdTypeName, x.ProdType.ProdCatId, 
-                                            PordCat = new {x.ProdType.ProdCat.ProdCatId, x.ProdType.ProdCat.ProdCatName }
-                                        }})
+                    .Select(x => new {
+                        x.ProductId,
+                        x.ProductName,
+                        x.Model,
+                        x.Brand,
+                        x.SellPrice,
+                        x.WholesalePrice,
+                        ProdType = new
+                        {
+                            x.ProdType.ProdTypeId,
+                            x.ProdType.ProdTypeName,
+                            x.ProdType.ProdCatId,
+                            PordCat = new { x.ProdType.ProdCat.ProdCatId, x.ProdType.ProdCat.ProdCatName }
+                        }
+                    })
                     .ToListAsync();
 
                 return Ok(result);
@@ -145,7 +156,15 @@ namespace Pegasus_backend.Controllers
                 result.Data = await _pegasusContext.ProdCat
                     .Where(x => x.ProdCatId == cateid)
                     .Include(x => x.ProdType)
-                    .Select(x=>new { x.ProdCatId,x.ProdCatName, ProdType = x.ProdType.Select(s=> new { s.ProdTypeId,s.ProdTypeName })})
+                    .Select(x => new {
+                        x.ProdCatId, 
+                        x.ProdCatName, 
+                        ProdType = x.ProdType
+                            .Select(s => new {
+                                s.ProdTypeId, 
+                                s.ProdTypeName 
+                            })
+                    })
                     .ToListAsync();
 
                 return Ok(result);
@@ -163,12 +182,17 @@ namespace Pegasus_backend.Controllers
         [HttpGet]
         public async Task<ActionResult> GetCat()
         {
-            //Result<List<ProdCat>> result = new Result<List<ProdCat>>();
             Result<Object> result = new Result<object>();
             try
             {
                 result.IsSuccess = true;
-                result.Data = await _pegasusContext.ProdCat.Select(x=>new { x.ProdCatId,x.ProdCatName }).ToListAsync();
+                result.Data = await _pegasusContext
+                    .ProdCat
+                    .Select(x => new {
+                        x.ProdCatId, 
+                        x.ProdCatName
+                    })
+                    .ToListAsync();
 
                 return Ok(result);
             }
@@ -187,7 +211,9 @@ namespace Pegasus_backend.Controllers
         {
             var result = new Result<string>();
             Type prodType = typeof(Product);
-            var updateProd = await _pegasusContext.Product.Where(x => x.ProductId == id).FirstOrDefaultAsync();
+            var updateProd = await _pegasusContext.Product
+                .Where(x => x.ProductId == id)
+                .FirstOrDefaultAsync();
             if (updateProd == null)
             {
                 return NotFound(DataNotFound(result));
