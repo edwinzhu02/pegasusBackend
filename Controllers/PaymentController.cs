@@ -142,12 +142,18 @@ namespace Pegasus_backend.Controllers
                 decimal? amount = 0;
                 foreach (var detail in payment.SoldTransaction)
                 {
-                    var stock = await _pegasusContext.Stock.FirstOrDefaultAsync(x => x.OrgId == paymentTranListJson.OrgId && x.ProductId == detail.ProductId);
+                    var stock =await _pegasusContext.Stock.FirstOrDefaultAsync(x => x.OrgId == paymentTranListJson.OrgId && x.ProductId == detail.ProductId);
+                    var name = await _pegasusContext.Product.FirstOrDefaultAsync(x => x.ProductId == detail.ProductId);
+                    //return Ok(stock);
+                    if (stock == null)
+                    {
+                        throw new Exception(name.ProductName + " is out of stock");
+                    }
                     detail.BeforeQuantity = stock.Quantity;
                     detail.AflterQuantity = detail.BeforeQuantity - detail.SoldQuantity;
                     detail.LearnerId = paymentTranListJson.LearnerId;
                     detail.PaymentId = payment.PaymentId;
-                    var name = await _pegasusContext.Product.FirstOrDefaultAsync(x => x.ProductId == detail.ProductId);
+
                     if (detail.AflterQuantity < 0)
                     {
                         throw new Exception(name.ProductName + " has not enough stock, only " + stock.Quantity + " left");
