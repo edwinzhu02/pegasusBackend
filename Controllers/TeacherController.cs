@@ -62,11 +62,11 @@ namespace Pegasus_backend.Controllers
         [HttpGet]
         public async Task<ActionResult> GetTeacher()
         {
-            Result<List<Teacher>> result = new Result<List<Teacher>>();
+            Result<Object> result = new Result<Object>();
             try
             {
                 result.IsSuccess = true;
-                result.Data = await _pegasusContext.Teacher
+                var teachers = await _pegasusContext.Teacher
                     .Include(s => s.TeacherLanguage)
                     .ThenInclude(s => s.Lang)
                     .Include(s => s.TeacherQualificatiion)
@@ -74,8 +74,20 @@ namespace Pegasus_backend.Controllers
                     .Include(s => s.TeacherCourse)
                     .ThenInclude(s => s.Course)
                     .Include(s => s.AvailableDays)
-                    .Where(s => s.IsActivate == 1).ToListAsync();
-
+                    .ThenInclude(s=>s.Org)
+                    .Where(s => s.IsActivate == 1)
+                    .Select(q => new
+                    {
+                        q.TeacherId,q.FirstName,q.LastName,q.Dob,q.Gender,q.IrdNumber,q.IdType,q.IdPhoto,q.IdNumber,q.HomePhone,q.MobilePhone,q.Email,q.Photo,q.ExpiryDate,
+                        AvailableDays = q.AvailableDays.Select(w=> new {w.DayOfWeek,w.OrgId, w.Org.OrgName}),
+                        TeacherLanguage = q.TeacherLanguage.Select(w=>new {w.LangId,w.Lang.LangName}),
+                        TeacherQualificatiion = q.TeacherQualificatiion.Select(w=> new {w.QualiId,w.Quali.QualiName}),
+                        TeacherCourse = q.TeacherCourse.Select(w=> new {w.CourseId,w.TeacherCourseId,w.Course.CourseName,w.Course.Level})
+                        
+                    })
+                    .ToListAsync();
+                
+                result.Data = teachers;
             }
             catch (Exception ex)
             {
@@ -83,6 +95,7 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = ex.Message;
                 return BadRequest(result);
             }
+            
             return Ok(result);
         }
         

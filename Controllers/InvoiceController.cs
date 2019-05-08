@@ -37,9 +37,8 @@ namespace Pegasus_backend.Controllers
 
             try
             {
-                result.IsSuccess = true;
                 result.Data = await _pegasusContext.Invoice.Include(x => x.Learner).Include(x => x.Term).Include(x => x.GroupCourseInstance).Include(x => x.CourseInstance).ToListAsync();
-                return Ok(result);
+                
             }
             catch (Exception ex)
             {
@@ -47,6 +46,8 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = ex.Message;
                 return BadRequest(result);
             }
+            result.IsSuccess = true;
+            return Ok(result);
         }
 
     }
