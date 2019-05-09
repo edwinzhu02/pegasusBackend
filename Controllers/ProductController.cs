@@ -209,16 +209,19 @@ namespace Pegasus_backend.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProduct(int id, ProductModel productModel)
         {
-            var result = new Result<string>();
-            Type prodType = typeof(Product);
+            var result = new Result<object>();
+            Type productType = typeof(Product);
+            Product product = new Product();
+            _mapper.Map(productModel, product);
             var updateProd = await _pegasusContext.Product
                 .Where(x => x.ProductId == id)
                 .FirstOrDefaultAsync();
+            product.ProductId = id;
             if (updateProd == null)
             {
                 return NotFound(DataNotFound(result));
             }
-            UpdateTable(productModel, prodType, updateProd);
+            UpdateTable(product, productType, updateProd);
             try
             {
                 await _pegasusContext.SaveChangesAsync();
@@ -229,7 +232,9 @@ namespace Pegasus_backend.Controllers
                 result.IsSuccess = false;
                 return BadRequest(result);
             }
+            result.Data = product;
             return Ok(result);
+
         }
 
 
@@ -238,7 +243,8 @@ namespace Pegasus_backend.Controllers
         [CheckModelFilter]
         public async Task<ActionResult<Product>> PostProduct(ProductModel productModel)
         {
-            Result<List<Product>> result = new Result<List<Product>>();
+            //Result<List<Product>> result = new Result<List<Product>>();
+            var result = new Result<object>();
             Product product = new Product();
             _mapper.Map(productModel, product);
 
@@ -251,6 +257,21 @@ namespace Pegasus_backend.Controllers
                 result.Data = await _pegasusContext.Product
                     .Include(x => x.ProdType.ProdCat)
                     .Where(x => x.ProductId == (int)product.ProductId)
+                    .Select(x => new {
+                        x.ProductId,
+                        x.ProductName,
+                        x.Model,
+                        x.Brand,
+                        x.SellPrice,
+                        x.WholesalePrice,
+                        ProdType = new
+                        {
+                            x.ProdType.ProdTypeId,
+                            x.ProdType.ProdTypeName,
+                            x.ProdType.ProdCatId,
+                            PordCat = new { x.ProdType.ProdCat.ProdCatId, x.ProdType.ProdCat.ProdCatName }
+                        }
+                    })
                     .ToListAsync();
 
             }
