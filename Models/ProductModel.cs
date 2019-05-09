@@ -13,10 +13,11 @@ namespace Pegasus_backend.Models
         public string Brand { get; set; }
 
         [Range(0.0, double.MaxValue, ErrorMessage = "Please enter a {0} value bigger than 0.")]
+        [Required(ErrorMessage = "SellPrice is Required.")]
         public decimal? SellPrice { get; set; }
         public decimal? WholesalePrice { get; set; }
 
-        [Required(ErrorMessage ="Product Type is Required.")]
+        [Required(ErrorMessage ="ProdType is Required.")]
         public short? ProdTypeId { get; set; }
 
         public ProdType ProdType { get; set; }
