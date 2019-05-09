@@ -101,6 +101,15 @@ namespace Pegasus_backend.Controllers
             return Ok(result);
         }
         
+        //PUT: http://localhost:5000/api/teacher
+        /*[HttpPut]
+        [CheckModelFilter]
+        public async Task<IActionResult> TeacherUpdate([FromForm] string details,
+            [FromForm(Name = "IdPhoto")] IFormFile IdPhoto, [FromForm(Name = "Photo")] IFormFile Photo)
+        {
+            
+        }*/
+        
         //POST: http://localhost:5000/api/teacher
         [HttpPost]
         [CheckModelFilter]

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Pegasus_backend.pegasusContext
 {
@@ -38,8 +39,9 @@ namespace Pegasus_backend.pegasusContext
         public string Other1FeeName { get; set; }
         public string Other2FeeName { get; set; }
         public string Other3FeeName { get; set; }
-
+        [JsonIgnore]
         public One2oneCourseInstance CourseInstance { get; set; }
+        [JsonIgnore]
         public GroupCourseInstance GroupCourseInstance { get; set; }
         public Learner Learner { get; set; }
         public Term Term { get; set; }

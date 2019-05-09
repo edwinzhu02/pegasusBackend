@@ -26,24 +26,6 @@ namespace Pegasus_backend.Controllers
             _mapper = mapper;
         }
         
-        //GET: http://localhost:5000/api/payment/invoice/:studentId
-        [HttpGet]
-        [Route("invoice/{id}")]
-        public ActionResult<List<Invoice>> GetInvoice(int id)
-        {
-            Result<string> result = new Result<string>();
-            try
-            {
-                return _pegasusContext.Invoice.Where(s => s.LearnerId == id).Include(s => s.Term)
-                    .ToList();
-            }
-            catch (Exception ex)
-            {
-                result.IsSuccess = false;
-                result.ErrorMessage = ex.Message;
-                return BadRequest(result);
-            }
-        }
         
         //POST: http://localhost:5000/api/payment/payInvoice
         
