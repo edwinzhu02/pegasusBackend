@@ -120,6 +120,7 @@ namespace Pegasus_backend.Controllers
                     
                     var newTeacher = new Teacher();
                     _mapper.Map(detailsJson,newTeacher);
+                    newTeacher.IsActivate = 1;
                     _pegasusContext.Add(newTeacher);
                     await _pegasusContext.SaveChangesAsync();
 
