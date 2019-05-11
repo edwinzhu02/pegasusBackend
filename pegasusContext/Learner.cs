@@ -18,6 +18,7 @@ namespace Pegasus_backend.pegasusContext
             Payment = new HashSet<Payment>();
             RemindLog = new HashSet<RemindLog>();
             SoldTransaction = new HashSet<SoldTransaction>();
+            TodoList = new HashSet<TodoList>();
         }
 
         public int LearnerId { get; set; }
@@ -54,5 +55,6 @@ namespace Pegasus_backend.pegasusContext
         public ICollection<Payment> Payment { get; set; }
         public ICollection<RemindLog> RemindLog { get; set; }
         public ICollection<SoldTransaction> SoldTransaction { get; set; }
+        public ICollection<TodoList> TodoList { get; set; }
     }
 }

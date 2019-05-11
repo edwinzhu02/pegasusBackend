@@ -1604,13 +1604,15 @@ namespace Pegasus_backend.pegasusContext
                 entity.HasIndex(e => e.LearnerId)
                     .HasName("R_77");
 
+                entity.HasIndex(e => e.LessonId)
+                    .HasName("R_107");
+
                 entity.HasIndex(e => e.TeacherId)
                     .HasName("R_78");
 
                 entity.Property(e => e.RemindId)
                     .HasColumnName("remind_id")
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedNever();
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.CreatedAt).HasColumnName("created_at");
 
@@ -1631,12 +1633,25 @@ namespace Pegasus_backend.pegasusContext
                     .HasColumnName("learner_id")
                     .HasColumnType("int(11)");
 
+                entity.Property(e => e.LessonId)
+                    .HasColumnName("lesson_id")
+                    .HasColumnType("int(11)");
+
                 entity.Property(e => e.ProcessFlag)
                     .HasColumnName("process_flag")
                     .HasColumnType("bit(1)");
 
+                entity.Property(e => e.ReceivedFlag)
+                    .HasColumnName("received_flag")
+                    .HasColumnType("bit(1)");
+
                 entity.Property(e => e.RemindContent)
                     .HasColumnName("remind_content")
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.RemindTitle)
+                    .HasColumnName("remind_title")
                     .HasMaxLength(200)
                     .IsUnicode(false);
 
@@ -1652,6 +1667,11 @@ namespace Pegasus_backend.pegasusContext
                     .WithMany(p => p.RemindLog)
                     .HasForeignKey(d => d.LearnerId)
                     .HasConstraintName("R_77");
+
+                entity.HasOne(d => d.Lesson)
+                    .WithMany(p => p.RemindLog)
+                    .HasForeignKey(d => d.LessonId)
+                    .HasConstraintName("R_107");
 
                 entity.HasOne(d => d.Teacher)
                     .WithMany(p => p.RemindLog)
@@ -2351,6 +2371,15 @@ namespace Pegasus_backend.pegasusContext
 
                 entity.ToTable("todo_list", "pegasus");
 
+                entity.HasIndex(e => e.LearnerId)
+                    .HasName("R_109");
+
+                entity.HasIndex(e => e.LessonId)
+                    .HasName("R_108");
+
+                entity.HasIndex(e => e.TeacherId)
+                    .HasName("R_110");
+
                 entity.HasIndex(e => e.UserId)
                     .HasName("R_64");
 
@@ -2359,6 +2388,14 @@ namespace Pegasus_backend.pegasusContext
                     .HasColumnType("int(11)");
 
                 entity.Property(e => e.CreatedAt).HasColumnName("created_at");
+
+                entity.Property(e => e.LearnerId)
+                    .HasColumnName("learner_id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.LessonId)
+                    .HasColumnName("lesson_id")
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.ListContent)
                     .HasColumnName("list_content")
@@ -2376,6 +2413,10 @@ namespace Pegasus_backend.pegasusContext
 
                 entity.Property(e => e.ProcessedAt).HasColumnName("processed_at");
 
+                entity.Property(e => e.TeacherId)
+                    .HasColumnName("teacher_id")
+                    .HasColumnType("smallint(6)");
+
                 entity.Property(e => e.TodoDate)
                     .HasColumnName("todo_date")
                     .HasColumnType("date");
@@ -2383,6 +2424,21 @@ namespace Pegasus_backend.pegasusContext
                 entity.Property(e => e.UserId)
                     .HasColumnName("user_id")
                     .HasColumnType("smallint(6)");
+
+                entity.HasOne(d => d.Learner)
+                    .WithMany(p => p.TodoList)
+                    .HasForeignKey(d => d.LearnerId)
+                    .HasConstraintName("R_109");
+
+                entity.HasOne(d => d.Lesson)
+                    .WithMany(p => p.TodoList)
+                    .HasForeignKey(d => d.LessonId)
+                    .HasConstraintName("R_108");
+
+                entity.HasOne(d => d.Teacher)
+                    .WithMany(p => p.TodoList)
+                    .HasForeignKey(d => d.TeacherId)
+                    .HasConstraintName("R_110");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.TodoList)

@@ -8,7 +8,9 @@ namespace Pegasus_backend.pegasusContext
         public Lesson()
         {
             LearnerTransaction = new HashSet<LearnerTransaction>();
+            RemindLog = new HashSet<RemindLog>();
             TeacherTransaction = new HashSet<TeacherTransaction>();
+            TodoList = new HashSet<TodoList>();
         }
 
         public int LessonId { get; set; }
@@ -32,6 +34,8 @@ namespace Pegasus_backend.pegasusContext
         public Room Room { get; set; }
         public Teacher Teacher { get; set; }
         public ICollection<LearnerTransaction> LearnerTransaction { get; set; }
+        public ICollection<RemindLog> RemindLog { get; set; }
         public ICollection<TeacherTransaction> TeacherTransaction { get; set; }
+        public ICollection<TodoList> TodoList { get; set; }
     }
 }
