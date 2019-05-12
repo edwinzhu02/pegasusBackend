@@ -6,6 +6,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Pegasus_backend.Models;
 using Pegasus_backend.pegasusContext;
 using Pegasus_backend.Services;
@@ -18,30 +19,13 @@ namespace Pegasus_backend.Controllers
     {
         private readonly pegasusContext.pegasusContext _pegasusContext;
         private readonly IMapper _mapper;
+        private readonly IConfiguration _configuration;
 
-        public SessionController(pegasusContext.pegasusContext pegasusContext, IMapper mapper)
+        public SessionController(pegasusContext.pegasusContext pegasusContext, IMapper mapper, IConfiguration configuration)
         {
             _pegasusContext = pegasusContext;
             _mapper = mapper;
-        }
-
-        // GET: api/Session
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Lesson>>> GetSession()
-        {
-            Result<List<Lesson>> result = new Result<List<Lesson>>();
-            try
-            {
-                result.IsSuccess = true;
-                result.Data = await _pegasusContext.Lesson.Include(x => x.CourseInstance).Include(x => x.GroupCourseInstance).Include(x => x.Learner).Include(x => x.Org).Include(x => x.Room).Include(x => x.Teacher).ToListAsync();
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                result.IsSuccess = false;
-                result.ErrorMessage = ex.Message;
-                return BadRequest(result);
-            }
+            _configuration = configuration;
         }
 
         [Route("sessionCancelConfirm/{listId}/{remindId}")]
@@ -49,8 +33,20 @@ namespace Pegasus_backend.Controllers
         public async Task<IActionResult> CancelConfirm(int listId, int remindId)
         {
             var result = new Result<string>();
-            var todoList = await _pegasusContext.TodoList.Where(t => t.ListId == listId).FirstOrDefaultAsync();
-            var remindLog = await _pegasusContext.RemindLog.Where(r => r.RemindId == remindId).FirstOrDefaultAsync();
+            TodoList todoList;
+            RemindLog remindLog;
+            try
+            {
+                todoList = await _pegasusContext.TodoList.Where(t => t.ListId == listId).FirstOrDefaultAsync();
+                remindLog = await _pegasusContext.RemindLog.Where(r => r.RemindId == remindId).FirstOrDefaultAsync();
+            }
+            catch(Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return NotFound(result);
+            }
+            
             if (todoList == null || remindLog == null)
             {
                 result.IsSuccess = false;
@@ -72,7 +68,7 @@ namespace Pegasus_backend.Controllers
                 return BadRequest(result);
             }
 
-            return Ok(result);  //Should return a view page
+            return Ok(result);  //Should redirect to a success page!
         }
 
         // PUT: api/Session/5
@@ -80,8 +76,18 @@ namespace Pegasus_backend.Controllers
         public async Task<IActionResult> PutSesson(int sessionId, string reason, short userId)
         {
             var result = new Result<string>();
-            Lesson lesson = await _pegasusContext.Lesson.Where(x => x.LessonId == sessionId).FirstOrDefaultAsync();
-
+            Lesson lesson;
+            try
+            {
+                lesson = await _pegasusContext.Lesson.Where(x => x.LessonId == sessionId).FirstOrDefaultAsync();
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return NotFound(result);
+            }
+             
             if (lesson == null)
             {
                 result.IsSuccess = false;
@@ -106,32 +112,45 @@ namespace Pegasus_backend.Controllers
             lesson.Reason = reason;
 
             bool isGroupCourse = lesson.LearnerId == null;
-            var teacher = await _pegasusContext.Teacher.FirstOrDefaultAsync(t => t.TeacherId == lesson.TeacherId);
-            var courses = isGroupCourse ? (from c in _pegasusContext.Course
-                                           join gc in _pegasusContext.GroupCourseInstance on c.CourseId equals gc.CourseId
-                                           where gc.GroupCourseInstanceId == lesson.GroupCourseInstanceId
-                                           select new Course
-                                           {
-                                               CourseId = c.CourseId,
-                                               CourseName = c.CourseName
-                                           }).ToList() :
-                                           (from c in _pegasusContext.Course
-                                            join oto in _pegasusContext.One2oneCourseInstance on c.CourseId equals oto.CourseId
-                                            where oto.CourseInstanceId == lesson.CourseInstanceId
-                                            select new Course
-                                            {
-                                                CourseId = c.CourseId,
-                                                CourseName = c.CourseName
-                                            }).ToList();
+            Teacher teacher;
+            List<Course> courses;
+            List<Holiday> holidays;
+            try
+            {
+                teacher = await _pegasusContext.Teacher.FirstOrDefaultAsync(t => t.TeacherId == lesson.TeacherId);
+                courses = isGroupCourse ? (from c in _pegasusContext.Course
+                                               join gc in _pegasusContext.GroupCourseInstance on c.CourseId equals gc.CourseId
+                                               where gc.GroupCourseInstanceId == lesson.GroupCourseInstanceId
+                                               select new Course
+                                               {
+                                                   CourseId = c.CourseId,
+                                                   CourseName = c.CourseName
+                                               }).ToList() :
+                                               (from c in _pegasusContext.Course
+                                                join oto in _pegasusContext.One2oneCourseInstance on c.CourseId equals oto.CourseId
+                                                where oto.CourseInstanceId == lesson.CourseInstanceId
+                                                select new Course
+                                                {
+                                                    CourseId = c.CourseId,
+                                                    CourseName = c.CourseName
+                                                }).ToList();
+                holidays = await _pegasusContext.Holiday.ToListAsync();
+            }
+            catch (Exception e)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = e.Message;
+                return NotFound(result);
+            }
+            
             if (courses.Count <= 0)
             {
                 result.IsSuccess = false;
                 result.ErrorMessage = "Fail to found course name under this lesson";
-                return NotFound(DataNotFound(result));
+                return NotFound(result);
             }
             string courseName = courses[0].CourseName;
 
-            List<Holiday> holidays = await _pegasusContext.Holiday.ToListAsync();
             DateTime todoDate = lesson.BeginTime.Value.AddDays(-1);
             foreach(var holiday in holidays)
             {
@@ -141,12 +160,23 @@ namespace Pegasus_backend.Controllers
                 }
             }
 
-            string userConfirmUrlPrefix = "https://localhost:44304/api/session/sessioncancelconfirm/"; //change it later
+            //string userConfirmUrlPrefix = "https://localhost:44304/api/session/sessioncancelconfirm/"; 
+            string userConfirmUrlPrefix = _configuration.GetSection("UrlPrefix").Value;
 
             if (!isGroupCourse)
                 // Case of one to one course
             {
-                var learner = await _pegasusContext.Learner.FirstOrDefaultAsync(l => l.LearnerId == lesson.LearnerId);
+                Learner learner;
+                try
+                {
+                    learner = await _pegasusContext.Learner.FirstOrDefaultAsync(l => l.LearnerId == lesson.LearnerId);
+                }
+                catch (Exception ex)
+                {
+                    result.IsSuccess = false;
+                    result.ErrorMessage = ex.Message;
+                    return NotFound(result);
+                }
                 
                 TodoList todolistForTeacher = TodoListForTeacherCreater(lesson, userId, teacher, reason, todoDate);
                 TodoList todolistForLearner = TodoListForLearnerCreater(lesson, userId, learner, reason, todoDate);
@@ -179,7 +209,10 @@ namespace Pegasus_backend.Controllers
             else
             //Case of group course
             {
-                var learners = (from lgc in _pegasusContext.LearnerGroupCourse
+                List<Learner> learners;
+                try
+                {
+                    learners = (from lgc in _pegasusContext.LearnerGroupCourse
                                 join l in _pegasusContext.Learner on lgc.LearnerId equals l.LearnerId
                                 where lgc.GroupCourseInstanceId == lesson.GroupCourseInstanceId
                                 select new Learner()
@@ -189,6 +222,13 @@ namespace Pegasus_backend.Controllers
                                     LastName = l.LastName,
                                     Email = l.Email
                                 }).ToList();
+                }
+                catch (Exception ex)
+                {
+                    result.IsSuccess = false;
+                    result.ErrorMessage = ex.Message;
+                    return NotFound(result);
+                }
 
                 TodoList todolistForTeacher = TodoListForTeacherCreater(lesson, userId, teacher, reason, todoDate);
                 List<TodoList> todolistForLearners = TodoListForLearnerCreater(lesson, userId, learners, reason, todoDate);
@@ -342,12 +382,5 @@ namespace Pegasus_backend.Controllers
             return mailContent;
         }
 
-        private void UpdateTableAfterSendingEmail(int remindLogId)
-        {
-            var remindLog = _pegasusContext.RemindLog.Where(r => r.RemindId == remindLogId).FirstOrDefault();
-            remindLog.EmailAt = DateTime.Now;
-            remindLog.ReceivedFlag = 1;
-            _pegasusContext.SaveChanges();
-        }
     }
 }
