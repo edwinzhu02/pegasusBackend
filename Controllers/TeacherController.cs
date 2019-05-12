@@ -34,35 +34,7 @@ namespace Pegasus_backend.Controllers
             _mapper = mapper;
         }
 
-        //need fix
-        [HttpGet("[action]/{id}")]
-        public IActionResult Photo(short id)
-        {
-            Result<string> result = new Result<string>();
-            try
-            {
-                var teacher = _pegasusContext.Teacher.FirstOrDefault(s => s.TeacherId == id);
-                if (teacher == null)
-                {
-                    return NotFound(DataNotFound(result));
-                }
-
-                if (teacher.Photo == null)
-                {
-                    result.IsFound = false;
-                    result.ErrorMessage = "teacher does not upload photo.";
-                    return NotFound(result);
-                }
-                return Redirect("localhost:5000/"+teacher.Photo);
-            }
-            catch (Exception ex)
-            {
-                result.IsSuccess = false;
-                result.ErrorMessage = ex.Message;
-                return BadRequest(result);
-            }
-            
-        }
+        
         
         
         //DELETE http://localhost:5000/api/teacher
@@ -109,7 +81,7 @@ namespace Pegasus_backend.Controllers
                     .Where(s => s.IsActivate == 1)
                     .Select(q => new
                     {
-                        q.TeacherId,q.FirstName,q.LastName,q.Dob,q.Gender,q.IrdNumber,q.IdType,q.IdPhoto,q.IdNumber,q.HomePhone,q.MobilePhone,q.Email,q.Photo,q.ExpiryDate,
+                        q.TeacherId,q.FirstName,q.LastName,q.Dob,Gender=Convert.ToBoolean(q.Gender)?"Male":"Female",q.IrdNumber,q.IdType,q.IdPhoto,q.IdNumber,q.HomePhone,q.MobilePhone,q.Email,q.Photo,q.ExpiryDate,
                         /*AvailableDays = q.AvailableDays.Select(w=> new {w.DayOfWeek,w.OrgId, w.Org.OrgName}),
                         TeacherLanguage = q.TeacherLanguage.Select(w=>new {w.LangId,w.Lang.LangName}),
                         TeacherQualificatiion = q.TeacherQualificatiion.Select(w=> new {w.QualiId,w.Quali.QualiName}),
