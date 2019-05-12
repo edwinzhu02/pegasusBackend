@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -31,6 +32,36 @@ namespace Pegasus_backend.Controllers
         {
             _pegasusContext = pegasusContext;
             _mapper = mapper;
+        }
+
+        //need fix
+        [HttpGet("[action]/{id}")]
+        public IActionResult Photo(short id)
+        {
+            Result<string> result = new Result<string>();
+            try
+            {
+                var teacher = _pegasusContext.Teacher.FirstOrDefault(s => s.TeacherId == id);
+                if (teacher == null)
+                {
+                    return NotFound(DataNotFound(result));
+                }
+
+                if (teacher.Photo == null)
+                {
+                    result.IsFound = false;
+                    result.ErrorMessage = "teacher does not upload photo.";
+                    return NotFound(result);
+                }
+                return Redirect("localhost:5000/"+teacher.Photo);
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+            
         }
         
         
@@ -101,14 +132,116 @@ namespace Pegasus_backend.Controllers
             return Ok(result);
         }
         
-        //PUT: http://localhost:5000/api/teacher
-        /*[HttpPut]
+        //PUT: http://localhost:5000/api/teacher/:teacherid
+        [HttpPut("{TeacherId}")]
         [CheckModelFilter]
-        public async Task<IActionResult> TeacherUpdate([FromForm] string details,
+        public async Task<IActionResult> TeacherUpdate([FromForm] string details,short TeacherId,
             [FromForm(Name = "IdPhoto")] IFormFile IdPhoto, [FromForm(Name = "Photo")] IFormFile Photo)
         {
-            
-        }*/
+            Result<string> result = new Result<string>();
+            try
+            {
+                using (var dbContextTransaction = _pegasusContext.Database.BeginTransaction())
+                {
+                    var detailsJson = JsonConvert.DeserializeObject<TeachersUpdate>(details);
+                    if (await _pegasusContext.Teacher.FirstOrDefaultAsync(s => s.TeacherId == TeacherId) == null)
+                    {
+                        return NotFound(DataNotFound(result));
+                    }
+                    var teacher = await _pegasusContext.Teacher.FirstOrDefaultAsync(s => s.TeacherId == TeacherId);
+                    _mapper.Map(detailsJson, teacher);
+
+                    
+                    //start update language
+                    var teacherLanguages = _pegasusContext.TeacherLanguage.Where(s => s.TeacherId == TeacherId);
+                    teacherLanguages.ToList().ForEach(s => { _pegasusContext.Remove(s); });
+                    await _pegasusContext.SaveChangesAsync();
+                    detailsJson.Language.ForEach(s =>
+                    {
+                        _pegasusContext.Add(new TeacherLanguage {TeacherId = teacher.TeacherId, LangId = s});
+                    });
+                    await _pegasusContext.SaveChangesAsync();
+                    //end
+                    
+                    //start update qualification
+                    var teacherqualifications = _pegasusContext.TeacherQualificatiion.Where(s => s.TeacherId == TeacherId);
+                    teacherqualifications.ToList().ForEach(s => { _pegasusContext.Remove(s);});
+                    await _pegasusContext.SaveChangesAsync();
+                    detailsJson.Qualificatiion.ForEach(s=>
+                    {
+                        _pegasusContext.Add(new TeacherQualificatiion{TeacherId = teacher.TeacherId, QualiId = s});
+                    });
+                    await _pegasusContext.SaveChangesAsync();
+                    //end
+                    
+                    //start update day of week
+                    if (detailsJson.DayOfWeek.Count != 7)
+                    {
+                        throw new Exception("Day Of Week List must be length 7.");
+                    }
+
+                    var teacherDayOfWeek = _pegasusContext.AvailableDays.Where(s => s.TeacherId == TeacherId);
+                    teacherDayOfWeek.ToList().ForEach(s => { _pegasusContext.Remove(s);});
+                    await _pegasusContext.SaveChangesAsync();
+                    byte i = 1;
+                    detailsJson.DayOfWeek.ForEach(s =>
+                    {
+                        if (s.Count != 0)
+                        {
+                            s.ForEach(w =>
+                            {
+                                _pegasusContext.Add(new AvailableDays{TeacherId = teacher.TeacherId, DayOfWeek = i, CreatedAt = DateTime.Now,OrgId = w});
+                            });
+                        }
+                        i++;
+                    });
+                    await _pegasusContext.SaveChangesAsync();
+                    //end
+                    
+                    //start uploading the images
+                    if (Photo != null && teacher.Photo == null)
+                    {
+                        teacher.Photo = $"images/TeacherImages/{teacher.TeacherId+Path.GetExtension(Photo.FileName)}";
+                        UploadFile(Photo,"Photo",teacher.TeacherId);
+                    }
+
+                    if (Photo != null && teacher.Photo != null)
+                    {
+                        DeleteFile(teacher.Photo);
+                        teacher.Photo = $"images/TeacherImages/{teacher.TeacherId+Path.GetExtension(Photo.FileName)}";
+                        UploadFile(Photo,"Photo", teacher.TeacherId);
+                    }
+
+                    if (IdPhoto != null && teacher.IdPhoto == null)
+                    {
+                        teacher.IdPhoto = $"images/TeacherIdPhotos/{teacher.TeacherId+Path.GetExtension(IdPhoto.FileName)}";
+                        UploadFile(IdPhoto,"IdPhoto",teacher.TeacherId);
+                    }
+
+                    if (IdPhoto != null && teacher.IdPhoto != null)
+                    {
+                        DeleteFile(teacher.IdPhoto);
+                        teacher.IdPhoto = $"images/TeacherIdPhotos/{teacher.TeacherId+Path.GetExtension(IdPhoto.FileName)}";
+                        UploadFile(IdPhoto,"IdPhoto",teacher.TeacherId);
+                    }
+                    _pegasusContext.Update(teacher);
+                    await _pegasusContext.SaveChangesAsync();
+                    //end uploading images
+                    
+                    dbContextTransaction.Commit();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.ToString();
+                return BadRequest(result);
+            }
+
+            result.Data = "success";
+            return Ok(result);
+        }
         
         //POST: http://localhost:5000/api/teacher
         [HttpPost]
@@ -133,27 +266,8 @@ namespace Pegasus_backend.Controllers
                     _pegasusContext.Add(newTeacher);
                     await _pegasusContext.SaveChangesAsync();
 
-                    if (IdPhoto != null)
-                    {
-                        newTeacher.IdPhoto = $"images/TeacherIdPhotos/{newTeacher.TeacherId}";
-                        _pegasusContext.Update(newTeacher);
-                        await _pegasusContext.SaveChangesAsync();
-                        UploadFile(IdPhoto,"IdPhoto",newTeacher.TeacherId);
-                    }
-
-                    if (Photo != null)
-                    {
-                        newTeacher.Photo = $"images/TeacherImages/{newTeacher.TeacherId}";
-                        _pegasusContext.Update(newTeacher);
-                        await _pegasusContext.SaveChangesAsync();
-                        UploadFile(Photo,"Photo", newTeacher.TeacherId);
-                    }
                     
-                    detailsJson.Language.ForEach(s =>
-                        {
-                            newTeacherLanguage = new TeacherLanguage {TeacherId = newTeacher.TeacherId, LangId = s};
-                            _pegasusContext.Add(newTeacherLanguage);
-                        });
+                    detailsJson.Language.ForEach(s =>{ _pegasusContext.Add(new TeacherLanguage {TeacherId = newTeacher.TeacherId, LangId = s});});
                     await _pegasusContext.SaveChangesAsync();
                     
                     detailsJson.Qualificatiion.ForEach(s=>
@@ -189,6 +303,23 @@ namespace Pegasus_backend.Controllers
                     });
 
                     await _pegasusContext.SaveChangesAsync();
+                    
+                    if (IdPhoto != null)
+                    {
+                        
+                        newTeacher.IdPhoto = $"images/TeacherIdPhotos/{newTeacher.TeacherId+Path.GetExtension(IdPhoto.FileName)}";
+                        _pegasusContext.Update(newTeacher);
+                        await _pegasusContext.SaveChangesAsync();
+                        UploadFile(IdPhoto,"IdPhoto",newTeacher.TeacherId);
+                    }
+
+                    if (Photo != null)
+                    {
+                        newTeacher.Photo = $"images/TeacherImages/{newTeacher.TeacherId+Path.GetExtension(Photo.FileName)}";
+                        _pegasusContext.Update(newTeacher);
+                        await _pegasusContext.SaveChangesAsync();
+                        UploadFile(Photo,"Photo", newTeacher.TeacherId);
+                    }
                     
                     dbContextTransaction.Commit();
                     result.Data = "Success!";

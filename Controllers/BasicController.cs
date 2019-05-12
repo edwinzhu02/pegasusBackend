@@ -18,7 +18,19 @@ namespace Pegasus_backend.Controllers
 {
     public abstract class BasicController: ControllerBase
     {
-
+        
+        protected void DeleteFile(string filePath)
+        {
+            var folderName = Path.Combine("wwwroot", filePath);
+            if (System.IO.File.Exists(folderName))
+            {
+                System.IO.File.Delete(folderName);
+            }
+            else
+            {
+                throw new Exception("Delete Fail");
+            }
+        }
 
         protected bool IsNull<T>(T item)
         {
@@ -72,8 +84,9 @@ namespace Pegasus_backend.Controllers
         }
         protected void UploadFile(IFormFile file,string imageName, int id)
         {
-            var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName;
-            var Id = id.ToString() + ".jpg";
+            var fileName = file.FileName;
+            var extension = Path.GetExtension(fileName);
+            var Id = id + extension;
             
             try
             {
