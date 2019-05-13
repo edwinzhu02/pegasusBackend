@@ -3,14 +3,9 @@ using System.Collections.Generic;
 
 namespace Pegasus_backend.pegasusContext
 {
-    public partial class Invoice
+    public partial class InvoiceWaitingConfirm
     {
-        public Invoice()
-        {
-            Payment = new HashSet<Payment>();
-        }
-
-        public int InvoiceId { get; set; }
+        public int WaitingId { get; set; }
         public string InvoiceNum { get; set; }
         public decimal? LessonFee { get; set; }
         public decimal? ConcertFee { get; set; }
@@ -38,6 +33,9 @@ namespace Pegasus_backend.pegasusContext
         public string Other1FeeName { get; set; }
         public string Other2FeeName { get; set; }
         public string Other3FeeName { get; set; }
+        public short? IsActivate { get; set; }
+        public short? IsEmailSent { get; set; }
+        public short? IsConfirmed { get; set; }
         public int? LessonId { get; set; }
 
         public One2oneCourseInstance CourseInstance { get; set; }
@@ -45,6 +43,5 @@ namespace Pegasus_backend.pegasusContext
         public Learner Learner { get; set; }
         public Lesson Lesson { get; set; }
         public Term Term { get; set; }
-        public ICollection<Payment> Payment { get; set; }
     }
 }

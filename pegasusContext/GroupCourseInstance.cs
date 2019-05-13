@@ -9,6 +9,7 @@ namespace Pegasus_backend.pegasusContext
         {
             CourseSchedule = new HashSet<CourseSchedule>();
             Invoice = new HashSet<Invoice>();
+            InvoiceWaitingConfirm = new HashSet<InvoiceWaitingConfirm>();
             LearnerGroupCourse = new HashSet<LearnerGroupCourse>();
             Lesson = new HashSet<Lesson>();
             LessonRemain = new HashSet<LessonRemain>();
@@ -28,6 +29,7 @@ namespace Pegasus_backend.pegasusContext
         public Teacher Teacher { get; set; }
         public ICollection<CourseSchedule> CourseSchedule { get; set; }
         public ICollection<Invoice> Invoice { get; set; }
+        public ICollection<InvoiceWaitingConfirm> InvoiceWaitingConfirm { get; set; }
         public ICollection<LearnerGroupCourse> LearnerGroupCourse { get; set; }
         public ICollection<Lesson> Lesson { get; set; }
         public ICollection<LessonRemain> LessonRemain { get; set; }

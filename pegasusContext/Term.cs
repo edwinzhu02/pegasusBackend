@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
 
 namespace Pegasus_backend.pegasusContext
 {
@@ -9,6 +8,7 @@ namespace Pegasus_backend.pegasusContext
         public Term()
         {
             Invoice = new HashSet<Invoice>();
+            InvoiceWaitingConfirm = new HashSet<InvoiceWaitingConfirm>();
             LessonRemain = new HashSet<LessonRemain>();
         }
 
@@ -17,8 +17,9 @@ namespace Pegasus_backend.pegasusContext
         public DateTime? EndDate { get; set; }
         public short? WeekQuantity { get; set; }
         public byte? TermType { get; set; }
-        [JsonIgnore]
+
         public ICollection<Invoice> Invoice { get; set; }
+        public ICollection<InvoiceWaitingConfirm> InvoiceWaitingConfirm { get; set; }
         public ICollection<LessonRemain> LessonRemain { get; set; }
     }
 }

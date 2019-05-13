@@ -15,8 +15,12 @@ namespace Pegasus_backend.pegasusContext
         public short? IsLearner { get; set; }
         public short? ProcessFlag { get; set; }
         public DateTime? EmailAt { get; set; }
+        public string RemindTitle { get; set; }
+        public short? ReceivedFlag { get; set; }
+        public int? LessonId { get; set; }
 
         public Learner Learner { get; set; }
+        public Lesson Lesson { get; set; }
         public Teacher Teacher { get; set; }
     }
 }

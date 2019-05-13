@@ -15,10 +15,10 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class CoursesController : BasicController
     {
-        private readonly pegasusContext.pegasusContext _pegasusContext;
+        private readonly pegasusContext.ablemusicContext _pegasusContext;
         private readonly IMapper _mapper;
 
-        public CoursesController(pegasusContext.pegasusContext pegasusContext, IMapper mapper)
+        public CoursesController(pegasusContext.ablemusicContext pegasusContext, IMapper mapper)
         {
             _pegasusContext = pegasusContext;
             _mapper = mapper;
@@ -32,7 +32,7 @@ namespace Pegasus_backend.Controllers
             try
             {
                 result.IsSuccess = true;
-                result.Data = await _pegasusContext.Course.Include(x => x.CourseCategory).ToListAsync();
+                result.Data = await _pegasusContext.Course.Include(c => c.CourseCategory).ToListAsync();
                 return Ok(result);
             }
             catch (Exception ex)
@@ -51,7 +51,7 @@ namespace Pegasus_backend.Controllers
             Type courseType = typeof(Course);
             Course course = new Course();
             _mapper.Map(courseViewModel, course);
-            var updateCourse = await _pegasusContext.Course.Where(x => x.CourseId == id).FirstOrDefaultAsync();
+            var updateCourse = await _pegasusContext.Course.Where(c => c.CourseId == id).FirstOrDefaultAsync();
             if (updateCourse == null)
             {
                 return NotFound(DataNotFound(result));
@@ -80,7 +80,7 @@ namespace Pegasus_backend.Controllers
             Course course = new Course();
             _mapper.Map(courseViewModel, course);
 
-            var courseExists = await _pegasusContext.Course.Where(x => x.CourseId == course.CourseId).FirstOrDefaultAsync();
+            var courseExists = await _pegasusContext.Course.Where(c => c.CourseId == course.CourseId).FirstOrDefaultAsync();
             if (courseExists != null)
             {
                 result.ErrorMessage = "The input id is already exists";

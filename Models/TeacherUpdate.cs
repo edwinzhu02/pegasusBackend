@@ -11,8 +11,6 @@ namespace Pegasus_backend.Models
     public class TeachersUpdate
     {
         [JsonProperty(Required = Required.Always)]
-        public short TeacherId { get; set; }
-        [JsonProperty(Required = Required.Always)]
         public string FirstName { get; set; }
         [JsonProperty(Required = Required.Always)]
         public string LastName { get; set; }

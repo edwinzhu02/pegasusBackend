@@ -18,9 +18,9 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class QualificationsLanguagesOrgsController: BasicController
     {
-        private readonly pegasusContext.pegasusContext _pegasusContext;
+        private readonly pegasusContext.ablemusicContext _pegasusContext;
 
-        public QualificationsLanguagesOrgsController(pegasusContext.pegasusContext pegasusContext)
+        public QualificationsLanguagesOrgsController(pegasusContext.ablemusicContext pegasusContext)
         {
             _pegasusContext = pegasusContext;
         }

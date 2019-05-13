@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
 
 namespace Pegasus_backend.pegasusContext
 {
@@ -10,6 +9,7 @@ namespace Pegasus_backend.pegasusContext
         {
             Amendment = new HashSet<Amendment>();
             Invoice = new HashSet<Invoice>();
+            InvoiceWaitingConfirm = new HashSet<InvoiceWaitingConfirm>();
             LearnerGroupCourse = new HashSet<LearnerGroupCourse>();
             Lesson = new HashSet<Lesson>();
             LessonRemain = new HashSet<LessonRemain>();
@@ -18,6 +18,7 @@ namespace Pegasus_backend.pegasusContext
             Payment = new HashSet<Payment>();
             RemindLog = new HashSet<RemindLog>();
             SoldTransaction = new HashSet<SoldTransaction>();
+            TodoList = new HashSet<TodoList>();
         }
 
         public int LearnerId { get; set; }
@@ -42,17 +43,16 @@ namespace Pegasus_backend.pegasusContext
 
         public User User { get; set; }
         public ICollection<Amendment> Amendment { get; set; }
-        [JsonIgnore]
         public ICollection<Invoice> Invoice { get; set; }
-        [JsonIgnore]
+        public ICollection<InvoiceWaitingConfirm> InvoiceWaitingConfirm { get; set; }
         public ICollection<LearnerGroupCourse> LearnerGroupCourse { get; set; }
         public ICollection<Lesson> Lesson { get; set; }
         public ICollection<LessonRemain> LessonRemain { get; set; }
-        [JsonIgnore]
         public ICollection<One2oneCourseInstance> One2oneCourseInstance { get; set; }
         public ICollection<Parent> Parent { get; set; }
         public ICollection<Payment> Payment { get; set; }
         public ICollection<RemindLog> RemindLog { get; set; }
         public ICollection<SoldTransaction> SoldTransaction { get; set; }
+        public ICollection<TodoList> TodoList { get; set; }
     }
 }

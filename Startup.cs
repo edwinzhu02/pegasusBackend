@@ -14,7 +14,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using Pegasus_backend.pegasusContext;
+using Pegasus_backend;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.FileProviders;
@@ -53,7 +53,7 @@ namespace Pegasus_backend
             
             services.AddDirectoryBrowser();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddTransient<pegasusContext.pegasusContext>();
+            services.AddTransient<pegasusContext.ablemusicContext>();
             services.AddCors();
             
             //JWT Authentication

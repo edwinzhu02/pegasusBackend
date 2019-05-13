@@ -7,8 +7,12 @@ namespace Pegasus_backend.pegasusContext
     {
         public Lesson()
         {
+            Invoice = new HashSet<Invoice>();
+            InvoiceWaitingConfirm = new HashSet<InvoiceWaitingConfirm>();
             LearnerTransaction = new HashSet<LearnerTransaction>();
+            RemindLog = new HashSet<RemindLog>();
             TeacherTransaction = new HashSet<TeacherTransaction>();
+            TodoList = new HashSet<TodoList>();
         }
 
         public int LessonId { get; set; }
@@ -31,7 +35,11 @@ namespace Pegasus_backend.pegasusContext
         public Org Org { get; set; }
         public Room Room { get; set; }
         public Teacher Teacher { get; set; }
+        public ICollection<Invoice> Invoice { get; set; }
+        public ICollection<InvoiceWaitingConfirm> InvoiceWaitingConfirm { get; set; }
         public ICollection<LearnerTransaction> LearnerTransaction { get; set; }
+        public ICollection<RemindLog> RemindLog { get; set; }
         public ICollection<TeacherTransaction> TeacherTransaction { get; set; }
+        public ICollection<TodoList> TodoList { get; set; }
     }
 }

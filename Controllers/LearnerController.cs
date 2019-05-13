@@ -20,9 +20,9 @@ namespace Pegasus_backend.Controllers
     public class LearnerController: BasicController
     {
         
-        private readonly pegasusContext.pegasusContext _pegasusContext;
+        private readonly pegasusContext.ablemusicContext _pegasusContext;
         private readonly IMapper _mapper;
-        public LearnerController(pegasusContext.pegasusContext pegasusContext,IMapper mapper)
+        public LearnerController(pegasusContext.ablemusicContext pegasusContext,IMapper mapper)
         {
             _pegasusContext = pegasusContext;
             _mapper = mapper;

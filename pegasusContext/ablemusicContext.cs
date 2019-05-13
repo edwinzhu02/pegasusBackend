@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Pegasus_backend.pegasusContext
 {
-    public partial class pegasusContext : DbContext
+    public partial class ablemusicContext : DbContext
     {
-        public pegasusContext()
+        public ablemusicContext()
         {
         }
 
-        public pegasusContext(DbContextOptions<pegasusContext> options)
+        public ablemusicContext(DbContextOptions<ablemusicContext> options)
             : base(options)
         {
         }
@@ -25,6 +25,7 @@ namespace Pegasus_backend.pegasusContext
         public virtual DbSet<GroupCourseInstance> GroupCourseInstance { get; set; }
         public virtual DbSet<Holiday> Holiday { get; set; }
         public virtual DbSet<Invoice> Invoice { get; set; }
+        public virtual DbSet<InvoiceWaitingConfirm> InvoiceWaitingConfirm { get; set; }
         public virtual DbSet<Language> Language { get; set; }
         public virtual DbSet<Learner> Learner { get; set; }
         public virtual DbSet<LearnerAppForm> LearnerAppForm { get; set; }
@@ -68,7 +69,7 @@ namespace Pegasus_backend.pegasusContext
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseMySQL("Server=35.197.166.191;UserId=dbuser;Password=qwer1234;Database=pegasus");
+                optionsBuilder.UseMySQL("server=gradspace.org;User Id=dbuser;Database=ablemusic");
             }
         }
 
@@ -76,7 +77,7 @@ namespace Pegasus_backend.pegasusContext
         {
             modelBuilder.Entity<Amendment>(entity =>
             {
-                entity.ToTable("amendment", "pegasus");
+                entity.ToTable("amendment", "ablemusic");
 
                 entity.HasIndex(e => e.CourseInstanceId)
                     .HasName("R_26");
@@ -178,7 +179,7 @@ namespace Pegasus_backend.pegasusContext
             {
                 entity.HasKey(e => e.AskId);
 
-                entity.ToTable("ask_off", "pegasus");
+                entity.ToTable("ask_off", "ablemusic");
 
                 entity.HasIndex(e => e.UserId)
                     .HasName("R_65");
@@ -231,7 +232,7 @@ namespace Pegasus_backend.pegasusContext
 
             modelBuilder.Entity<AvailableDays>(entity =>
             {
-                entity.ToTable("available_days", "pegasus");
+                entity.ToTable("available_days", "ablemusic");
 
                 entity.HasIndex(e => e.OrgId)
                     .HasName("R_81");
@@ -270,7 +271,7 @@ namespace Pegasus_backend.pegasusContext
 
             modelBuilder.Entity<Course>(entity =>
             {
-                entity.ToTable("course", "pegasus");
+                entity.ToTable("course", "ablemusic");
 
                 entity.HasIndex(e => e.CourseCategoryId)
                     .HasName("R_85");
@@ -316,7 +317,7 @@ namespace Pegasus_backend.pegasusContext
 
             modelBuilder.Entity<CourseCategory>(entity =>
             {
-                entity.ToTable("course_category", "pegasus");
+                entity.ToTable("course_category", "ablemusic");
 
                 entity.Property(e => e.CourseCategoryId)
                     .HasColumnName("course_category_id")
@@ -330,7 +331,7 @@ namespace Pegasus_backend.pegasusContext
 
             modelBuilder.Entity<CourseSchedule>(entity =>
             {
-                entity.ToTable("course_schedule", "pegasus");
+                entity.ToTable("course_schedule", "ablemusic");
 
                 entity.HasIndex(e => e.CourseInstanceId)
                     .HasName("R_90");
@@ -373,7 +374,7 @@ namespace Pegasus_backend.pegasusContext
             {
                 entity.HasKey(e => e.LearnerId);
 
-                entity.ToTable("fund", "pegasus");
+                entity.ToTable("fund", "ablemusic");
 
                 entity.Property(e => e.LearnerId)
                     .HasColumnName("learner_id")
@@ -389,7 +390,7 @@ namespace Pegasus_backend.pegasusContext
 
             modelBuilder.Entity<GroupCourseInstance>(entity =>
             {
-                entity.ToTable("group_course_instance", "pegasus");
+                entity.ToTable("group_course_instance", "ablemusic");
 
                 entity.HasIndex(e => e.CourseId)
                     .HasName("R_4");
@@ -455,7 +456,7 @@ namespace Pegasus_backend.pegasusContext
 
             modelBuilder.Entity<Holiday>(entity =>
             {
-                entity.ToTable("holiday", "pegasus");
+                entity.ToTable("holiday", "ablemusic");
 
                 entity.Property(e => e.HolidayId)
                     .HasColumnName("holiday_id")
@@ -473,7 +474,7 @@ namespace Pegasus_backend.pegasusContext
 
             modelBuilder.Entity<Invoice>(entity =>
             {
-                entity.ToTable("invoice", "pegasus");
+                entity.ToTable("invoice", "ablemusic");
 
                 entity.HasIndex(e => e.CourseInstanceId)
                     .HasName("R_74");
@@ -483,6 +484,9 @@ namespace Pegasus_backend.pegasusContext
 
                 entity.HasIndex(e => e.LearnerId)
                     .HasName("R_76");
+
+                entity.HasIndex(e => e.LessonId)
+                    .HasName("R_113");
 
                 entity.HasIndex(e => e.TermId)
                     .HasName("R_71");
@@ -548,6 +552,10 @@ namespace Pegasus_backend.pegasusContext
                 entity.Property(e => e.LessonFee)
                     .HasColumnName("lesson_fee")
                     .HasColumnType("decimal(8,2)");
+
+                entity.Property(e => e.LessonId)
+                    .HasColumnName("lesson_id")
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.LessonNoteFeeName)
                     .HasColumnName("lesson_note_fee_name")
@@ -620,17 +628,203 @@ namespace Pegasus_backend.pegasusContext
                     .HasForeignKey(d => d.LearnerId)
                     .HasConstraintName("R_76");
 
+                entity.HasOne(d => d.Lesson)
+                    .WithMany(p => p.Invoice)
+                    .HasForeignKey(d => d.LessonId)
+                    .HasConstraintName("R_113");
+
                 entity.HasOne(d => d.Term)
                     .WithMany(p => p.Invoice)
                     .HasForeignKey(d => d.TermId)
                     .HasConstraintName("R_71");
             });
 
+            modelBuilder.Entity<InvoiceWaitingConfirm>(entity =>
+            {
+                entity.HasKey(e => e.WaitingId);
+
+                entity.ToTable("invoice_waiting_confirm", "ablemusic");
+
+                entity.HasIndex(e => e.CourseInstanceId)
+                    .HasName("R_102");
+
+                entity.HasIndex(e => e.GroupCourseInstanceId)
+                    .HasName("R_103");
+
+                entity.HasIndex(e => e.LearnerId)
+                    .HasName("R_101");
+
+                entity.HasIndex(e => e.LessonId)
+                    .HasName("R_114");
+
+                entity.HasIndex(e => e.TermId)
+                    .HasName("R_104");
+
+                entity.Property(e => e.WaitingId)
+                    .HasColumnName("waiting_id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.BeginDate)
+                    .HasColumnName("begin_date")
+                    .HasColumnType("date");
+
+                entity.Property(e => e.ConcertFee)
+                    .HasColumnName("concert_fee")
+                    .HasColumnType("decimal(8,2)");
+
+                entity.Property(e => e.ConcertFeeName)
+                    .HasColumnName("concert_fee_name")
+                    .HasMaxLength(40)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CourseInstanceId)
+                    .HasColumnName("course_instance_id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.CourseName)
+                    .HasColumnName("course_name")
+                    .HasMaxLength(40)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CreatedAt).HasColumnName("created_at");
+
+                entity.Property(e => e.DueDate)
+                    .HasColumnName("due_date")
+                    .HasColumnType("date");
+
+                entity.Property(e => e.EndDate)
+                    .HasColumnName("end_date")
+                    .HasColumnType("date");
+
+                entity.Property(e => e.GroupCourseInstanceId)
+                    .HasColumnName("group_course_instance_id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.InvoiceNum)
+                    .HasColumnName("invoice_num")
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.IsActivate)
+                    .HasColumnName("is_activate")
+                    .HasColumnType("bit(1)");
+
+                entity.Property(e => e.IsConfirmed)
+                    .HasColumnName("is_confirmed")
+                    .HasColumnType("bit(1)");
+
+                entity.Property(e => e.IsEmailSent)
+                    .HasColumnName("is_email_sent")
+                    .HasColumnType("bit(1)");
+
+                entity.Property(e => e.IsPaid)
+                    .HasColumnName("is_paid")
+                    .HasColumnType("bit(1)");
+
+                entity.Property(e => e.LearnerId)
+                    .HasColumnName("learner_id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.LearnerName)
+                    .HasColumnName("learner_name")
+                    .HasMaxLength(40)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.LessonFee)
+                    .HasColumnName("lesson_fee")
+                    .HasColumnType("decimal(8,2)");
+
+                entity.Property(e => e.LessonId)
+                    .HasColumnName("lesson_id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.LessonNoteFeeName)
+                    .HasColumnName("lesson_note_fee_name")
+                    .HasMaxLength(40)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.LessonQuantity)
+                    .HasColumnName("lesson_quantity")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.NoteFee)
+                    .HasColumnName("note_fee")
+                    .HasColumnType("decimal(8,2)");
+
+                entity.Property(e => e.Other1Fee)
+                    .HasColumnName("other1_fee")
+                    .HasColumnType("decimal(8,2)");
+
+                entity.Property(e => e.Other1FeeName)
+                    .HasColumnName("other1_fee_name")
+                    .HasMaxLength(40)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Other2Fee)
+                    .HasColumnName("other2_fee")
+                    .HasColumnType("decimal(8,2)");
+
+                entity.Property(e => e.Other2FeeName)
+                    .HasColumnName("other2_fee_name")
+                    .HasMaxLength(40)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Other3Fee)
+                    .HasColumnName("other3_fee")
+                    .HasColumnType("decimal(8,2)");
+
+                entity.Property(e => e.Other3FeeName)
+                    .HasColumnName("other3_fee_name")
+                    .HasMaxLength(40)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.OwingFee)
+                    .HasColumnName("owing_fee")
+                    .HasColumnType("decimal(8,2)");
+
+                entity.Property(e => e.PaidFee)
+                    .HasColumnName("paid_fee")
+                    .HasColumnType("decimal(8,2)");
+
+                entity.Property(e => e.TermId)
+                    .HasColumnName("term_id")
+                    .HasColumnType("smallint(6)");
+
+                entity.Property(e => e.TotalFee)
+                    .HasColumnName("total_fee")
+                    .HasColumnType("decimal(8,2)");
+
+                entity.HasOne(d => d.CourseInstance)
+                    .WithMany(p => p.InvoiceWaitingConfirm)
+                    .HasForeignKey(d => d.CourseInstanceId)
+                    .HasConstraintName("R_102");
+
+                entity.HasOne(d => d.GroupCourseInstance)
+                    .WithMany(p => p.InvoiceWaitingConfirm)
+                    .HasForeignKey(d => d.GroupCourseInstanceId)
+                    .HasConstraintName("R_103");
+
+                entity.HasOne(d => d.Learner)
+                    .WithMany(p => p.InvoiceWaitingConfirm)
+                    .HasForeignKey(d => d.LearnerId)
+                    .HasConstraintName("R_101");
+
+                entity.HasOne(d => d.Lesson)
+                    .WithMany(p => p.InvoiceWaitingConfirm)
+                    .HasForeignKey(d => d.LessonId)
+                    .HasConstraintName("R_114");
+
+                entity.HasOne(d => d.Term)
+                    .WithMany(p => p.InvoiceWaitingConfirm)
+                    .HasForeignKey(d => d.TermId)
+                    .HasConstraintName("R_104");
+            });
+
             modelBuilder.Entity<Language>(entity =>
             {
                 entity.HasKey(e => e.LangId);
 
-                entity.ToTable("language", "pegasus");
+                entity.ToTable("language", "ablemusic");
 
                 entity.Property(e => e.LangId)
                     .HasColumnName("lang_id")
@@ -645,7 +839,7 @@ namespace Pegasus_backend.pegasusContext
 
             modelBuilder.Entity<Learner>(entity =>
             {
-                entity.ToTable("learner", "pegasus");
+                entity.ToTable("learner", "ablemusic");
 
                 entity.HasIndex(e => e.UserId)
                     .HasName("R_106");
@@ -741,7 +935,7 @@ namespace Pegasus_backend.pegasusContext
             {
                 entity.HasKey(e => e.AppFormId);
 
-                entity.ToTable("learner_app_form", "pegasus");
+                entity.ToTable("learner_app_form", "ablemusic");
 
                 entity.Property(e => e.AppFormId)
                     .HasColumnName("app_form_id")
@@ -823,7 +1017,7 @@ namespace Pegasus_backend.pegasusContext
 
             modelBuilder.Entity<LearnerGroupCourse>(entity =>
             {
-                entity.ToTable("learner_group_course", "pegasus");
+                entity.ToTable("learner_group_course", "ablemusic");
 
                 entity.HasIndex(e => e.GroupCourseInstanceId)
                     .HasName("R_87");
@@ -864,7 +1058,7 @@ namespace Pegasus_backend.pegasusContext
             {
                 entity.HasKey(e => e.TranId);
 
-                entity.ToTable("learner_transaction", "pegasus");
+                entity.ToTable("learner_transaction", "ablemusic");
 
                 entity.HasIndex(e => e.LearnerId)
                     .HasName("R_41");
@@ -907,7 +1101,7 @@ namespace Pegasus_backend.pegasusContext
 
             modelBuilder.Entity<Lesson>(entity =>
             {
-                entity.ToTable("lesson", "pegasus");
+                entity.ToTable("lesson", "ablemusic");
 
                 entity.HasIndex(e => e.CourseInstanceId)
                     .HasName("R_66");
@@ -1008,7 +1202,7 @@ namespace Pegasus_backend.pegasusContext
 
             modelBuilder.Entity<LessonRemain>(entity =>
             {
-                entity.ToTable("lesson_remain", "pegasus");
+                entity.ToTable("lesson_remain", "ablemusic");
 
                 entity.HasIndex(e => e.CourseInstanceId)
                     .HasName("R_73");
@@ -1073,7 +1267,7 @@ namespace Pegasus_backend.pegasusContext
 
             modelBuilder.Entity<LoginLog>(entity =>
             {
-                entity.ToTable("login_log", "pegasus");
+                entity.ToTable("login_log", "ablemusic");
 
                 entity.HasIndex(e => e.UserId)
                     .HasName("R_62");
@@ -1112,7 +1306,7 @@ namespace Pegasus_backend.pegasusContext
             {
                 entity.HasKey(e => e.CourseInstanceId);
 
-                entity.ToTable("one2one_course_instance", "pegasus");
+                entity.ToTable("one2one_course_instance", "ablemusic");
 
                 entity.HasIndex(e => e.CourseId)
                     .HasName("R_16");
@@ -1191,7 +1385,7 @@ namespace Pegasus_backend.pegasusContext
             {
                 entity.HasKey(e => e.UserId);
 
-                entity.ToTable("online_user", "pegasus");
+                entity.ToTable("online_user", "ablemusic");
 
                 entity.Property(e => e.UserId)
                     .HasColumnName("user_id")
@@ -1216,7 +1410,7 @@ namespace Pegasus_backend.pegasusContext
 
             modelBuilder.Entity<Org>(entity =>
             {
-                entity.ToTable("org", "pegasus");
+                entity.ToTable("org", "ablemusic");
 
                 entity.Property(e => e.OrgId)
                     .HasColumnName("org_id")
@@ -1253,7 +1447,7 @@ namespace Pegasus_backend.pegasusContext
 
             modelBuilder.Entity<Page>(entity =>
             {
-                entity.ToTable("page", "pegasus");
+                entity.ToTable("page", "ablemusic");
 
                 entity.HasIndex(e => e.PageGroupId)
                     .HasName("R_60");
@@ -1306,7 +1500,7 @@ namespace Pegasus_backend.pegasusContext
 
             modelBuilder.Entity<PageGroup>(entity =>
             {
-                entity.ToTable("page_group", "pegasus");
+                entity.ToTable("page_group", "ablemusic");
 
                 entity.Property(e => e.PageGroupId)
                     .HasColumnName("page_group_id")
@@ -1329,7 +1523,7 @@ namespace Pegasus_backend.pegasusContext
 
             modelBuilder.Entity<Parent>(entity =>
             {
-                entity.ToTable("parent", "pegasus");
+                entity.ToTable("parent", "ablemusic");
 
                 entity.HasIndex(e => e.LearnerId)
                     .HasName("R_1");
@@ -1378,7 +1572,7 @@ namespace Pegasus_backend.pegasusContext
             {
                 entity.HasKey(e => e.ParentFormId);
 
-                entity.ToTable("parent_app_form", "pegasus");
+                entity.ToTable("parent_app_form", "ablemusic");
 
                 entity.HasIndex(e => e.AppFormId)
                     .HasName("R_82");
@@ -1429,7 +1623,7 @@ namespace Pegasus_backend.pegasusContext
 
             modelBuilder.Entity<Payment>(entity =>
             {
-                entity.ToTable("payment", "pegasus");
+                entity.ToTable("payment", "ablemusic");
 
                 entity.HasIndex(e => e.InvoiceId)
                     .HasName("R_56");
@@ -1496,7 +1690,7 @@ namespace Pegasus_backend.pegasusContext
 
             modelBuilder.Entity<ProdCat>(entity =>
             {
-                entity.ToTable("prod_cat", "pegasus");
+                entity.ToTable("prod_cat", "ablemusic");
 
                 entity.Property(e => e.ProdCatId)
                     .HasColumnName("prod_cat_id")
@@ -1510,7 +1704,7 @@ namespace Pegasus_backend.pegasusContext
 
             modelBuilder.Entity<ProdType>(entity =>
             {
-                entity.ToTable("prod_type", "pegasus");
+                entity.ToTable("prod_type", "ablemusic");
 
                 entity.HasIndex(e => e.ProdCatId)
                     .HasName("R_88");
@@ -1536,7 +1730,7 @@ namespace Pegasus_backend.pegasusContext
 
             modelBuilder.Entity<Product>(entity =>
             {
-                entity.ToTable("product", "pegasus");
+                entity.ToTable("product", "ablemusic");
 
                 entity.HasIndex(e => e.ProdTypeId)
                     .HasName("R_69");
@@ -1582,7 +1776,7 @@ namespace Pegasus_backend.pegasusContext
             {
                 entity.HasKey(e => e.QualiId);
 
-                entity.ToTable("qualification", "pegasus");
+                entity.ToTable("qualification", "ablemusic");
 
                 entity.Property(e => e.QualiId)
                     .HasColumnName("quali_id")
@@ -1599,18 +1793,20 @@ namespace Pegasus_backend.pegasusContext
             {
                 entity.HasKey(e => e.RemindId);
 
-                entity.ToTable("remind_log", "pegasus");
+                entity.ToTable("remind_log", "ablemusic");
 
                 entity.HasIndex(e => e.LearnerId)
                     .HasName("R_77");
+
+                entity.HasIndex(e => e.LessonId)
+                    .HasName("R_107");
 
                 entity.HasIndex(e => e.TeacherId)
                     .HasName("R_78");
 
                 entity.Property(e => e.RemindId)
                     .HasColumnName("remind_id")
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedNever();
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.CreatedAt).HasColumnName("created_at");
 
@@ -1619,9 +1815,7 @@ namespace Pegasus_backend.pegasusContext
                     .HasMaxLength(40)
                     .IsUnicode(false);
 
-                entity.Property(e => e.EmailAt)
-                    .HasColumnName("email_at")
-                    .HasColumnType("date");
+                entity.Property(e => e.EmailAt).HasColumnName("email_at");
 
                 entity.Property(e => e.IsLearner)
                     .HasColumnName("is_learner")
@@ -1631,12 +1825,25 @@ namespace Pegasus_backend.pegasusContext
                     .HasColumnName("learner_id")
                     .HasColumnType("int(11)");
 
+                entity.Property(e => e.LessonId)
+                    .HasColumnName("lesson_id")
+                    .HasColumnType("int(11)");
+
                 entity.Property(e => e.ProcessFlag)
                     .HasColumnName("process_flag")
                     .HasColumnType("bit(1)");
 
+                entity.Property(e => e.ReceivedFlag)
+                    .HasColumnName("received_flag")
+                    .HasColumnType("bit(1)");
+
                 entity.Property(e => e.RemindContent)
                     .HasColumnName("remind_content")
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.RemindTitle)
+                    .HasColumnName("remind_title")
                     .HasMaxLength(200)
                     .IsUnicode(false);
 
@@ -1653,6 +1860,11 @@ namespace Pegasus_backend.pegasusContext
                     .HasForeignKey(d => d.LearnerId)
                     .HasConstraintName("R_77");
 
+                entity.HasOne(d => d.Lesson)
+                    .WithMany(p => p.RemindLog)
+                    .HasForeignKey(d => d.LessonId)
+                    .HasConstraintName("R_107");
+
                 entity.HasOne(d => d.Teacher)
                     .WithMany(p => p.RemindLog)
                     .HasForeignKey(d => d.TeacherId)
@@ -1661,7 +1873,7 @@ namespace Pegasus_backend.pegasusContext
 
             modelBuilder.Entity<Role>(entity =>
             {
-                entity.ToTable("role", "pegasus");
+                entity.ToTable("role", "ablemusic");
 
                 entity.Property(e => e.RoleId)
                     .HasColumnName("role_id")
@@ -1675,7 +1887,7 @@ namespace Pegasus_backend.pegasusContext
 
             modelBuilder.Entity<RoleAccess>(entity =>
             {
-                entity.ToTable("role_access", "pegasus");
+                entity.ToTable("role_access", "ablemusic");
 
                 entity.HasIndex(e => e.PageId)
                     .HasName("R_59");
@@ -1708,7 +1920,7 @@ namespace Pegasus_backend.pegasusContext
 
             modelBuilder.Entity<Room>(entity =>
             {
-                entity.ToTable("room", "pegasus");
+                entity.ToTable("room", "ablemusic");
 
                 entity.HasIndex(e => e.OrgId)
                     .HasName("R_21");
@@ -1742,7 +1954,7 @@ namespace Pegasus_backend.pegasusContext
             {
                 entity.HasKey(e => e.TranId);
 
-                entity.ToTable("sold_transaction", "pegasus");
+                entity.ToTable("sold_transaction", "ablemusic");
 
                 entity.HasIndex(e => e.LearnerId)
                     .HasName("R_48");
@@ -1843,7 +2055,7 @@ namespace Pegasus_backend.pegasusContext
 
             modelBuilder.Entity<Staff>(entity =>
             {
-                entity.ToTable("staff", "pegasus");
+                entity.ToTable("staff", "ablemusic");
 
                 entity.HasIndex(e => e.UserId)
                     .HasName("R_79");
@@ -1934,7 +2146,7 @@ namespace Pegasus_backend.pegasusContext
 
             modelBuilder.Entity<StaffOrg>(entity =>
             {
-                entity.ToTable("staff_org", "pegasus");
+                entity.ToTable("staff_org", "ablemusic");
 
                 entity.HasIndex(e => e.OrgId)
                     .HasName("R_93");
@@ -1971,7 +2183,7 @@ namespace Pegasus_backend.pegasusContext
 
             modelBuilder.Entity<Stock>(entity =>
             {
-                entity.ToTable("stock", "pegasus");
+                entity.ToTable("stock", "ablemusic");
 
                 entity.HasIndex(e => e.OrgId)
                     .HasName("R_45");
@@ -2010,7 +2222,7 @@ namespace Pegasus_backend.pegasusContext
             {
                 entity.HasKey(e => e.OrderId);
 
-                entity.ToTable("stock_order", "pegasus");
+                entity.ToTable("stock_order", "ablemusic");
 
                 entity.HasIndex(e => e.OrgId)
                     .HasName("R_51");
@@ -2086,7 +2298,7 @@ namespace Pegasus_backend.pegasusContext
 
             modelBuilder.Entity<Teacher>(entity =>
             {
-                entity.ToTable("teacher", "pegasus");
+                entity.ToTable("teacher", "ablemusic");
 
                 entity.HasIndex(e => e.UserId)
                     .HasName("R_12");
@@ -2181,7 +2393,7 @@ namespace Pegasus_backend.pegasusContext
 
             modelBuilder.Entity<TeacherCourse>(entity =>
             {
-                entity.ToTable("teacher_course", "pegasus");
+                entity.ToTable("teacher_course", "ablemusic");
 
                 entity.HasIndex(e => e.CourseId)
                     .HasName("R_24");
@@ -2220,7 +2432,7 @@ namespace Pegasus_backend.pegasusContext
             {
                 entity.HasKey(e => e.TeacherLangId);
 
-                entity.ToTable("teacher_language", "pegasus");
+                entity.ToTable("teacher_language", "ablemusic");
 
                 entity.HasIndex(e => e.LangId)
                     .HasName("R_7");
@@ -2255,7 +2467,7 @@ namespace Pegasus_backend.pegasusContext
             {
                 entity.HasKey(e => e.TeacherQualiId);
 
-                entity.ToTable("teacher_qualificatiion", "pegasus");
+                entity.ToTable("teacher_qualificatiion", "ablemusic");
 
                 entity.HasIndex(e => e.QualiId)
                     .HasName("R_8");
@@ -2295,7 +2507,7 @@ namespace Pegasus_backend.pegasusContext
             {
                 entity.HasKey(e => e.TranId);
 
-                entity.ToTable("teacher_transaction", "pegasus");
+                entity.ToTable("teacher_transaction", "ablemusic");
 
                 entity.HasIndex(e => e.LessonId)
                     .HasName("R_42");
@@ -2322,7 +2534,7 @@ namespace Pegasus_backend.pegasusContext
 
             modelBuilder.Entity<Term>(entity =>
             {
-                entity.ToTable("term", "pegasus");
+                entity.ToTable("term", "ablemusic");
 
                 entity.Property(e => e.TermId)
                     .HasColumnName("term_id")
@@ -2349,7 +2561,25 @@ namespace Pegasus_backend.pegasusContext
             {
                 entity.HasKey(e => e.ListId);
 
-                entity.ToTable("todo_list", "pegasus");
+                entity.ToTable("todo_list", "ablemusic");
+
+                entity.HasIndex(e => e.LearnerId)
+                    .HasName("R_109");
+
+                entity.HasIndex(e => e.LessonId)
+                    .HasName("R_108");
+
+                entity.HasIndex(e => e.TeacherId)
+                    .HasName("R_110");
+
+                entity.HasIndex(e => e.LearnerId)
+                    .HasName("R_109");
+
+                entity.HasIndex(e => e.LessonId)
+                    .HasName("R_108");
+
+                entity.HasIndex(e => e.TeacherId)
+                    .HasName("R_110");
 
                 entity.HasIndex(e => e.UserId)
                     .HasName("R_64");
@@ -2359,6 +2589,14 @@ namespace Pegasus_backend.pegasusContext
                     .HasColumnType("int(11)");
 
                 entity.Property(e => e.CreatedAt).HasColumnName("created_at");
+
+                entity.Property(e => e.LearnerId)
+                    .HasColumnName("learner_id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.LessonId)
+                    .HasColumnName("lesson_id")
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.ListContent)
                     .HasColumnName("list_content")
@@ -2376,6 +2614,10 @@ namespace Pegasus_backend.pegasusContext
 
                 entity.Property(e => e.ProcessedAt).HasColumnName("processed_at");
 
+                entity.Property(e => e.TeacherId)
+                    .HasColumnName("teacher_id")
+                    .HasColumnType("smallint(6)");
+
                 entity.Property(e => e.TodoDate)
                     .HasColumnName("todo_date")
                     .HasColumnType("date");
@@ -2383,6 +2625,21 @@ namespace Pegasus_backend.pegasusContext
                 entity.Property(e => e.UserId)
                     .HasColumnName("user_id")
                     .HasColumnType("smallint(6)");
+
+                entity.HasOne(d => d.Learner)
+                    .WithMany(p => p.TodoList)
+                    .HasForeignKey(d => d.LearnerId)
+                    .HasConstraintName("R_109");
+
+                entity.HasOne(d => d.Lesson)
+                    .WithMany(p => p.TodoList)
+                    .HasForeignKey(d => d.LessonId)
+                    .HasConstraintName("R_108");
+
+                entity.HasOne(d => d.Teacher)
+                    .WithMany(p => p.TodoList)
+                    .HasForeignKey(d => d.TeacherId)
+                    .HasConstraintName("R_110");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.TodoList)
@@ -2392,7 +2649,7 @@ namespace Pegasus_backend.pegasusContext
 
             modelBuilder.Entity<User>(entity =>
             {
-                entity.ToTable("user", "pegasus");
+                entity.ToTable("user", "ablemusic");
 
                 entity.HasIndex(e => e.RoleId)
                     .HasName("R_57");

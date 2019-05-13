@@ -26,7 +26,7 @@ namespace Pegasus_backend.Models
 
         public byte? PaymentType { get; set; }
 
-        public ICollection<SoldTransactionModel> SoldTransaction { get; set; }
+        public ICollection<SoldTransaction> SoldTransaction { get; set; }
 
         public Payment Payment { get; set; }
         public Product Product { get; set; }
