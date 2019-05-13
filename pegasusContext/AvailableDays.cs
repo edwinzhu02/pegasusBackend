@@ -11,7 +11,6 @@ namespace Pegasus_backend.pegasusContext
         public byte? DayOfWeek { get; set; }
         public DateTime? CreatedAt { get; set; }
         public short? OrgId { get; set; }
-        [JsonIgnore]
 
         public Org Org { get; set; }
         [JsonIgnore]
