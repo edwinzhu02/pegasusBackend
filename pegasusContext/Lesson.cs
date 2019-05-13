@@ -10,6 +10,7 @@ namespace Pegasus_backend.pegasusContext
             Invoice = new HashSet<Invoice>();
             InvoiceWaitingConfirm = new HashSet<InvoiceWaitingConfirm>();
             LearnerTransaction = new HashSet<LearnerTransaction>();
+            RemindLog = new HashSet<RemindLog>();
             TeacherTransaction = new HashSet<TeacherTransaction>();
             TodoList = new HashSet<TodoList>();
         }
@@ -37,6 +38,7 @@ namespace Pegasus_backend.pegasusContext
         public ICollection<Invoice> Invoice { get; set; }
         public ICollection<InvoiceWaitingConfirm> InvoiceWaitingConfirm { get; set; }
         public ICollection<LearnerTransaction> LearnerTransaction { get; set; }
+        public ICollection<RemindLog> RemindLog { get; set; }
         public ICollection<TeacherTransaction> TeacherTransaction { get; set; }
         public ICollection<TodoList> TodoList { get; set; }
     }

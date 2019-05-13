@@ -13,8 +13,13 @@ namespace Pegasus_backend.pegasusContext
         public short? ProcessFlag { get; set; }
         public short? UserId { get; set; }
         public DateTime? TodoDate { get; set; }
+<<<<<<< HEAD
         public int? LessonId { get; set; }
         public int? LearnerId { get; set; }
+=======
+        public int? LearnerId { get; set; }
+        public int? LessonId { get; set; }
+>>>>>>> 280c5efa9f999d8cae8c754ad39ce815ab39b06f
         public short? TeacherId { get; set; }
 
         public Learner Learner { get; set; }

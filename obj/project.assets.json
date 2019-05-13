@@ -72,10 +72,10 @@
           "lib/netstandard1.0/Google.Protobuf.dll": {}
         }
       },
-      "MailKit/2.1.3": {
+      "MailKit/2.1.4": {
         "type": "package",
         "dependencies": {
-          "MimeKit": "2.1.3",
+          "MimeKit": "2.1.4",
           "NETStandard.Library": "1.6.1",
           "Portable.BouncyCastle": "1.8.2",
           "System.Data.Common": "4.3.0",
@@ -2853,7 +2853,7 @@
           }
         }
       },
-      "MimeKit/2.1.3": {
+      "MimeKit/2.1.4": {
         "type": "package",
         "dependencies": {
           "NETStandard.Library": "1.6.1",
@@ -5215,10 +5215,10 @@
         "lib/netstandard1.0/Google.Protobuf.xml"
       ]
     },
-    "MailKit/2.1.3": {
-      "sha512": "Sg7yIOSos8z9RweIHren5kEYvjL8Qbxrw1ZSw9m4D3UMr8+vkrXK0dZl+Q6w8QNyjwkcle0sY1XMTmugJP0Now==",
+    "MailKit/2.1.4": {
+      "sha512": "Nxd1vDcgpSrblHyrh+A1hdygbONN34KAdIuj378uA5zSm17Iy5nbjb5OUFYLsVv6TyHKBErLHV6QU0mCNUwiFQ==",
       "type": "package",
-      "path": "mailkit/2.1.3",
+      "path": "mailkit/2.1.4",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -5236,7 +5236,7 @@
         "lib/portable-win81+wpa81/MailKit.xml",
         "lib/xamarinios/MailKit.dll",
         "lib/xamarinios/MailKit.xml",
-        "mailkit.2.1.3.nupkg.sha512",
+        "mailkit.2.1.4.nupkg.sha512",
         "mailkit.nuspec"
       ]
     },
@@ -8193,10 +8193,10 @@
         "version.txt"
       ]
     },
-    "MimeKit/2.1.3": {
-      "sha512": "ca3D71hjXU6n1avifY7mU1X2lZ6SGnC7CdGI9LqjrgtPDvQyEjLJW1kQdhJbNr8fvv5uzlMQHitGzeJ0rHdSLw==",
+    "MimeKit/2.1.4": {
+      "sha512": "5M3fzxJOpPZvTxCXLhs4tqMwUm4vuEieA9aMSvJuJPX5FQ2fcfgc50gVlIIMiIxhZVQCGIC86GA1vzaf2cHJCA==",
       "type": "package",
-      "path": "mimekit/2.1.3",
+      "path": "mimekit/2.1.4",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -8220,7 +8220,7 @@
         "lib/xamarinios/BouncyCastle.dll",
         "lib/xamarinios/MimeKit.dll",
         "lib/xamarinios/MimeKit.xml",
-        "mimekit.2.1.3.nupkg.sha512",
+        "mimekit.2.1.4.nupkg.sha512",
         "mimekit.nuspec"
       ]
     },
@@ -13883,7 +13883,7 @@
     ".NETCoreApp,Version=v2.1": [
       "AutoMapper >= 8.0.0",
       "AutoMapper.Extensions.Microsoft.DependencyInjection >= 6.0.0",
-      "MailKit >= 2.1.3",
+      "MailKit >= 2.1.4",
       "Microsoft.AspNetCore.App >= 2.1.1",
       "Microsoft.AspNetCore.Razor.Design >= 2.1.2",
       "Microsoft.EntityFrameworkCore.Design >= 2.1.2",
@@ -13913,7 +13913,7 @@
         "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "/Users/oliver/.nuget/NuGet/NuGet.Config"
+        "/Users/oliver/.config/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp2.1"
@@ -13945,7 +13945,7 @@
           },
           "MailKit": {
             "target": "Package",
-            "version": "[2.1.3, )"
+            "version": "[2.1.4, )"
           },
           "Microsoft.AspNetCore.App": {
             "suppressParent": "All",
@@ -13971,6 +13971,7 @@
             "version": "[2.1.1, )"
           },
           "Microsoft.NETCore.App": {
+            "suppressParent": "All",
             "target": "Package",
             "version": "[2.1.0, )",
             "autoReferenced": true

@@ -1798,13 +1798,15 @@ namespace Pegasus_backend.pegasusContext
                 entity.HasIndex(e => e.LearnerId)
                     .HasName("R_77");
 
+                entity.HasIndex(e => e.LessonId)
+                    .HasName("R_107");
+
                 entity.HasIndex(e => e.TeacherId)
                     .HasName("R_78");
 
                 entity.Property(e => e.RemindId)
                     .HasColumnName("remind_id")
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedNever();
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.CreatedAt).HasColumnName("created_at");
 
@@ -1823,12 +1825,25 @@ namespace Pegasus_backend.pegasusContext
                     .HasColumnName("learner_id")
                     .HasColumnType("int(11)");
 
+                entity.Property(e => e.LessonId)
+                    .HasColumnName("lesson_id")
+                    .HasColumnType("int(11)");
+
                 entity.Property(e => e.ProcessFlag)
                     .HasColumnName("process_flag")
                     .HasColumnType("bit(1)");
 
+                entity.Property(e => e.ReceivedFlag)
+                    .HasColumnName("received_flag")
+                    .HasColumnType("bit(1)");
+
                 entity.Property(e => e.RemindContent)
                     .HasColumnName("remind_content")
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.RemindTitle)
+                    .HasColumnName("remind_title")
                     .HasMaxLength(200)
                     .IsUnicode(false);
 
@@ -1844,6 +1859,11 @@ namespace Pegasus_backend.pegasusContext
                     .WithMany(p => p.RemindLog)
                     .HasForeignKey(d => d.LearnerId)
                     .HasConstraintName("R_77");
+
+                entity.HasOne(d => d.Lesson)
+                    .WithMany(p => p.RemindLog)
+                    .HasForeignKey(d => d.LessonId)
+                    .HasConstraintName("R_107");
 
                 entity.HasOne(d => d.Teacher)
                     .WithMany(p => p.RemindLog)
@@ -2542,6 +2562,15 @@ namespace Pegasus_backend.pegasusContext
                 entity.HasKey(e => e.ListId);
 
                 entity.ToTable("todo_list", "ablemusic");
+
+                entity.HasIndex(e => e.LearnerId)
+                    .HasName("R_109");
+
+                entity.HasIndex(e => e.LessonId)
+                    .HasName("R_108");
+
+                entity.HasIndex(e => e.TeacherId)
+                    .HasName("R_110");
 
                 entity.HasIndex(e => e.LearnerId)
                     .HasName("R_109");
