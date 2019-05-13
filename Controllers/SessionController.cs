@@ -21,11 +21,7 @@ namespace Pegasus_backend.Controllers
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
 
-<<<<<<< HEAD
         public SessionController(pegasusContext.ablemusicContext pegasusContext, IMapper mapper)
-=======
-        public SessionController(pegasusContext.pegasusContext pegasusContext, IMapper mapper, IConfiguration configuration)
->>>>>>> 280c5efa9f999d8cae8c754ad39ce815ab39b06f
         {
             _pegasusContext = pegasusContext;
             _mapper = mapper;
