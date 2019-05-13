@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Pegasus_backend.pegasusContext
+namespace Pegasus_backend.ablemusicContext
 {
     public partial class TeacherQualificatiion
     {
