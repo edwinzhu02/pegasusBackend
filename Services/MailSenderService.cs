@@ -1,5 +1,4 @@
-﻿/*
-using MimeKit;
+﻿using MimeKit;
 using System;
 using System.Linq;
 using MailKit.Net.Smtp;
@@ -31,12 +30,12 @@ namespace Pegasus_backend.Services
                         emailClient.Disconnect(true);
                     }
 
-                    pegasusContext.pegasusContext pegasusContext = new pegasusContext.pegasusContext();
-                    var remindLog = pegasusContext.RemindLog.Where(r => r.RemindId == remindLogId).FirstOrDefault();
+                    pegasusContext.ablemusicContext ablemusicContext = new pegasusContext.ablemusicContext();
+                    var remindLog = ablemusicContext.RemindLog.Where(r => r.RemindId == remindLogId).FirstOrDefault();
                     remindLog.EmailAt = DateTime.Now;
                     remindLog.ReceivedFlag = 1;
-                    pegasusContext.SaveChanges();
-                    pegasusContext.Dispose();
+                    ablemusicContext.SaveChanges();
+                    ablemusicContext.Dispose();
                 }
                 catch (Exception e)
                 {
@@ -46,4 +45,3 @@ namespace Pegasus_backend.Services
         }
     }
 }
-*/
