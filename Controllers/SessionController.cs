@@ -157,7 +157,7 @@ namespace Pegasus_backend.Controllers
                 if (holiday.HolidayDate.Date == todoDate.Date)
                 {
                     todoDate = todoDate.AddDays(-1);
-                }
+                }                
             }
 
             //string userConfirmUrlPrefix = "https://localhost:44304/api/session/sessioncancelconfirm/"; 

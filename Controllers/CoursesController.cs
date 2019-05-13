@@ -18,9 +18,9 @@ namespace Pegasus_backend.Controllers
         private readonly pegasusContext.ablemusicContext _ablemusicContext;
         private readonly IMapper _mapper;
 
-        public CoursesController(pegasusContext.ablemusicContext pegasusContext, IMapper mapper)
+        public CoursesController(pegasusContext.ablemusicContext ablemusicContext, IMapper mapper)
         {
-            _ablemusicContext = pegasusContext;
+            _ablemusicContext = ablemusicContext;
             _mapper = mapper;
         }
 
