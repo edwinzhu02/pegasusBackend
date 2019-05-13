@@ -75,12 +75,13 @@ namespace Pegasus_backend.Controllers
                 var details = _pegasusContext.Lesson.Where(s => s.TeacherId == teacherId)
                     .Include(s=>s.Room)
                     .Include(s=>s.Learner)
+                    .Include(s=>s.Teacher)
                     .Include(s=>s.GroupCourseInstance)
                     .Select(q=>new
                     {
                         title=IsNull(q.GroupCourseInstanceId)?"One to One":"Group",start=q.BeginTime,end=q.EndTime,
                         student=IsNull(q.GroupCourseInstance)?new List<string>(){q.Learner.FirstName}:q.GroupCourseInstance.LearnerGroupCourse.Select(w=>w.Learner.FirstName),
-                        description=""
+                        description="",teacherFirstName= q.Teacher.FirstName, teacherLastName = q.Teacher.LastName
                     });
                 result.Data = details;
 
