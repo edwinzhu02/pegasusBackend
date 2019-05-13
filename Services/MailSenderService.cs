@@ -1,4 +1,5 @@
-﻿using MimeKit;
+﻿/*
+using MimeKit;
 using System;
 using System.Linq;
 using MailKit.Net.Smtp;
@@ -45,3 +46,4 @@ namespace Pegasus_backend.Services
         }
     }
 }
+*/
