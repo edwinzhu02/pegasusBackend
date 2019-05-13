@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,10 +15,10 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class SessionController : BasicController
     {
-        private readonly pegasusContext.pegasusContext _pegasusContext;
+        private readonly pegasusContext.ablemusicContext _pegasusContext;
         private readonly IMapper _mapper;
 
-        public SessionController(pegasusContext.pegasusContext pegasusContext, IMapper mapper)
+        public SessionController(pegasusContext.ablemusicContext pegasusContext, IMapper mapper)
         {
             _pegasusContext = pegasusContext;
             _mapper = mapper;
@@ -103,4 +103,4 @@ namespace Pegasus_backend.Controllers
             return _pegasusContext.Lesson.Any(e => e.LessonId == id);
         }
     }
-}
+}*/

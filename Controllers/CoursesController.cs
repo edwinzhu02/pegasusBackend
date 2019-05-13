@@ -15,10 +15,10 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class CoursesController : BasicController
     {
-        private readonly pegasusContext.pegasusContext _pegasusContext;
+        private readonly pegasusContext.ablemusicContext _pegasusContext;
         private readonly IMapper _mapper;
 
-        public CoursesController(pegasusContext.pegasusContext pegasusContext, IMapper mapper)
+        public CoursesController(pegasusContext.ablemusicContext pegasusContext, IMapper mapper)
         {
             _pegasusContext = pegasusContext;
             _mapper = mapper;

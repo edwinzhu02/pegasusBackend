@@ -18,9 +18,9 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class PaymentController: ControllerBase
     {
-        private readonly pegasusContext.pegasusContext _pegasusContext;
+        private readonly pegasusContext.ablemusicContext _pegasusContext;
         private IMapper _mapper;
-        public PaymentController(pegasusContext.pegasusContext pegasusContext,IMapper mapper)
+        public PaymentController(pegasusContext.ablemusicContext pegasusContext,IMapper mapper)
         {
             _pegasusContext = pegasusContext;
             _mapper = mapper;

@@ -20,12 +20,12 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class InvoiceGenerateController : ControllerBase
     {
-        private readonly pegasusContext.pegasusContext _context;
+        private readonly pegasusContext.ablemusicContext _context;
         private List<Learner> StudentInfo;
         private decimal? price;
         private IEnumerable<Holiday> holidays;
         
-        public InvoiceGenerateController(pegasusContext.pegasusContext context)
+        public InvoiceGenerateController(pegasusContext.ablemusicContext context)
         {
             _context = context;
             holidays = _context.Holiday.ToList();

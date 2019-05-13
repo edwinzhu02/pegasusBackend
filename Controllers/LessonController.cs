@@ -13,9 +13,9 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class LessonController: BasicController
     {
-        private readonly pegasusContext.pegasusContext _pegasusContext;
+        private readonly pegasusContext.ablemusicContext _pegasusContext;
 
-        public LessonController(pegasusContext.pegasusContext pegasusContext)
+        public LessonController(pegasusContext.ablemusicContext pegasusContext)
         {
             _pegasusContext = pegasusContext;
         }
@@ -24,6 +24,7 @@ namespace Pegasus_backend.Controllers
         //GET: http://localhost:5000/api/lesson/:date
         [HttpGet("{date}")]
         [Authorize]
+        //for receptionist
         public async Task<IActionResult> GetLesson(DateTime date)
         {
             Result<Object> result = new Result<object>();
@@ -58,5 +59,24 @@ namespace Pegasus_backend.Controllers
             return Ok(result);
 
         }
+
+        [HttpGet("teacher/{id}")]
+        public  IActionResult GetLessonsforteacher(byte id)
+        {
+            Result<Object> result = new Result<object>();
+            try
+            {
+                
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+
+            return Ok(result);
+        }
+        
     }
 }

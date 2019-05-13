@@ -19,10 +19,10 @@ namespace Pegasus_backend.Controllers
     public class ProductController : BasicController
     {
 
-        private readonly pegasusContext.pegasusContext _pegasusContext;
+        private readonly pegasusContext.ablemusicContext _pegasusContext;
         private readonly IMapper _mapper;
 
-        public ProductController(pegasusContext.pegasusContext pegasusContext, IMapper mapper)
+        public ProductController(pegasusContext.ablemusicContext pegasusContext, IMapper mapper)
         {
             _pegasusContext = pegasusContext;
             _mapper = mapper;

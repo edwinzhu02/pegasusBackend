@@ -24,9 +24,9 @@ namespace Pegasus_backend.Controllers.Authorization
     [ApiController]
     public class LoginController: BasicController
     {
-        private readonly pegasusContext.pegasusContext _pegasusContext;
+        private readonly pegasusContext.ablemusicContext _pegasusContext;
         private readonly ApplicationSettings _appSettings;
-        public LoginController(pegasusContext.pegasusContext pegasusContext, IOptions<ApplicationSettings> appSettings)
+        public LoginController(pegasusContext.ablemusicContext pegasusContext, IOptions<ApplicationSettings> appSettings)
         {
             _pegasusContext = pegasusContext;
             _appSettings = appSettings.Value;

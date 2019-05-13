@@ -27,4 +27,8 @@
         <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.15" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Remove="Controllers\ClassController.cs" />
+    </ItemGroup>
+
 </Project>

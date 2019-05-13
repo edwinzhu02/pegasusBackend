@@ -22,20 +22,21 @@ namespace Pegasus_backend.Controllers
     public class TeacherController : BasicController
     {
 
-        private readonly pegasusContext.pegasusContext _pegasusContext;
+        private readonly pegasusContext.ablemusicContext _pegasusContext;
         private readonly IMapper _mapper;
         private TeacherLanguage newTeacherLanguage;
         private TeacherQualificatiion newTeacherQualification;
         private AvailableDays DayList;
 
-        public TeacherController(pegasusContext.pegasusContext pegasusContext,IMapper mapper)
+        public TeacherController(pegasusContext.ablemusicContext pegasusContext,IMapper mapper)
         {
             _pegasusContext = pegasusContext;
             _mapper = mapper;
         }
 
         
-        
+        //GET http://localhost:5000/api/teacher/1
+        [HttpGet("{name}")]
         
         //DELETE http://localhost:5000/api/teacher
         [HttpDelete("{id}")]
@@ -69,7 +70,8 @@ namespace Pegasus_backend.Controllers
             try
             {
                 result.IsSuccess = true;
-                var teachers = await _pegasusContext.Teacher
+                _pegasusContext.SaveChanges();
+                var teachers = _pegasusContext.Teacher
                     .Include(s => s.TeacherLanguage)
                     .ThenInclude(s => s.Lang)
                     .Include(s => s.TeacherQualificatiion)
@@ -89,9 +91,8 @@ namespace Pegasus_backend.Controllers
                         q.AvailableDays,q.TeacherLanguage,q.TeacherQualificatiion,q.TeacherCourse
                         
                     })
-                    
-                    .ToListAsync();
-                
+                    .ToList();
+
                 result.Data = teachers;
             }
             catch (Exception ex)

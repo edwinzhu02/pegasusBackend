@@ -15,9 +15,9 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class NavItemsController: BasicController
     {
-        private readonly pegasusContext.pegasusContext _pegasusContext;
+        private readonly pegasusContext.ablemusicContext _pegasusContext;
 
-        public NavItemsController(pegasusContext.pegasusContext pegasusContext)
+        public NavItemsController(pegasusContext.ablemusicContext pegasusContext)
         {
             _pegasusContext = pegasusContext;
         }

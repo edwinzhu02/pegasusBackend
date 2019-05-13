@@ -14,9 +14,9 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class RoomController: BasicController
     {
-        private readonly pegasusContext.pegasusContext _pegasusContext;
+        private readonly pegasusContext.ablemusicContext _pegasusContext;
 
-        public RoomController(pegasusContext.pegasusContext pegasusContext)
+        public RoomController(pegasusContext.ablemusicContext pegasusContext)
         {
             _pegasusContext = pegasusContext;
         }
@@ -67,7 +67,7 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = ex.Message;
                 return BadRequest(result);
             }
-
+            
             return Ok(result);
         }
     }
