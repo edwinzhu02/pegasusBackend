@@ -42,4 +42,6 @@ namespace Pegasus_backend.Controllers
             return BadRequest(result);
         }
     }
+    
+    }
 }
