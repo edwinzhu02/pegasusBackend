@@ -56,8 +56,11 @@ namespace Pegasus_backend.pegasusContext
         public ICollection<One2oneCourseInstance> One2oneCourseInstance { get; set; }
         public ICollection<Parent> Parent { get; set; }
         public ICollection<Payment> Payment { get; set; }
+        [JsonIgnore]
         public ICollection<RemindLog> RemindLog { get; set; }
+        [JsonIgnore]
         public ICollection<SoldTransaction> SoldTransaction { get; set; }
+        [JsonIgnore]
         public ICollection<TodoList> TodoList { get; set; }
     }
 }

@@ -13911,8 +13911,12 @@
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
+<<<<<<< HEAD
+        "/Users/oliver/.config/NuGet/NuGet.Config"
+=======
         "C:\\Users\\Learnspace\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+>>>>>>> 50ea2cfc92b008c5082ad3e4a36cbccbb49c18ce
       ],
       "originalTargetFrameworks": [
         "netcoreapp2.1"
@@ -13971,6 +13975,7 @@
             "version": "[2.1.1, )"
           },
           "Microsoft.NETCore.App": {
+            "suppressParent": "All",
             "target": "Package",
             "version": "[2.1.0, )",
             "autoReferenced": true
