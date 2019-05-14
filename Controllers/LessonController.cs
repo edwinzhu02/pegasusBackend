@@ -60,31 +60,13 @@ namespace Pegasus_backend.Controllers
 
         }
 
-        [HttpGet("user/{userid}")]
-        public  IActionResult GetLessonsforteacher(byte userid)
+        [HttpGet("teacher/{id}")]
+        public  IActionResult GetLessonsforteacher(byte id)
         {
             Result<Object> result = new Result<object>();
             try
             {
-                var teacher = _pegasusContext.Teacher.FirstOrDefault(s => s.UserId == userid);
-                if (teacher == null)
-                {
-                    throw new Exception("Teacher does not exist.");
-                }
-                var teacherId = teacher.TeacherId;
-                var details = _pegasusContext.Lesson.Where(s => s.TeacherId == teacherId)
-                    .Include(s=>s.Room)
-                    .Include(s=>s.Learner)
-                    .Include(s=>s.Teacher)
-                    .Include(s=>s.GroupCourseInstance)
-                    .Select(q=>new
-                    {
-                        title=IsNull(q.GroupCourseInstanceId)?"One to One":"Group",start=q.BeginTime,end=q.EndTime,
-                        student=IsNull(q.GroupCourseInstance)?new List<string>(){q.Learner.FirstName}:q.GroupCourseInstance.LearnerGroupCourse.Select(w=>w.Learner.FirstName),
-                        description="",teacherFirstName= q.Teacher.FirstName, teacherLastName = q.Teacher.LastName
-                    });
-                result.Data = details;
-
+                
             }
             catch (Exception ex)
             {

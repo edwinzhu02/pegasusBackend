@@ -61,6 +61,25 @@ namespace Pegasus_backend.Controllers
             }
         }
 
+        [Route("[action]")]
+        [HttpGet]
+        public async Task<ActionResult> GetCoursesCate()
+        {
+            Result<Object> result = new Result<object>();
+            try
+            {
+                result.IsSuccess = true;
+                result.Data = await _ablemusicContext.CourseCategory.ToListAsync();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+        }
+
         // PUT: api/Courses/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCourse(int id, [FromBody] CourseViewModel courseViewModel)
