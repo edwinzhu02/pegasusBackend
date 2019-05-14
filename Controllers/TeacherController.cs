@@ -107,6 +107,8 @@ namespace Pegasus_backend.Controllers
                     .ThenInclude(s => s.Course)
                     .Include(s => s.AvailableDays)
                     .ThenInclude(s=>s.Org)
+                    .Include(s=>s.TeacherCourse)
+                    .ThenInclude(s=>s.Course)
                     .Where(s => s.IsActivate == 1)
                     .Select(q => new
                     {
@@ -115,7 +117,7 @@ namespace Pegasus_backend.Controllers
                         TeacherLanguage = q.TeacherLanguage.Select(w=>new {w.LangId,w.Lang.LangName}),
                         TeacherQualificatiion = q.TeacherQualificatiion.Select(w=> new {w.QualiId,w.Quali.QualiName}),
                         TeacherCourse = q.TeacherCourse.Select(w=> new {w.CourseId,w.TeacherCourseId,w.Course.CourseName,w.Course.Level})*/
-                        q.AvailableDays,q.TeacherLanguage,q.TeacherQualificatiion,q.TeacherCourse
+                        q.AvailableDays,q.TeacherLanguage,q.TeacherQualificatiion
                         
                     })
                     .ToList();
