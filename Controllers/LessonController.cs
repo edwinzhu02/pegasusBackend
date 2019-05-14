@@ -60,12 +60,13 @@ namespace Pegasus_backend.Controllers
 
         }
 
-        [HttpGet("user/{userid}")]
-        public  IActionResult GetLessonsforteacher(byte userid)
+        [HttpGet("teacher/{id}")]
+        public  IActionResult GetLessonsforteacher(byte id)
         {
             Result<Object> result = new Result<object>();
             try
             {
+<<<<<<< HEAD
                 var teacher = _pegasusContext.Teacher.FirstOrDefault(s => s.UserId == userid);
                 if (teacher == null)
                 {
@@ -89,6 +90,9 @@ namespace Pegasus_backend.Controllers
                     });
                 result.Data = details;
 
+=======
+                
+>>>>>>> 50ea2cfc92b008c5082ad3e4a36cbccbb49c18ce
             }
             catch (Exception ex)
             {

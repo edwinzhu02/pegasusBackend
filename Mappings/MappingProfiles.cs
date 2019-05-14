@@ -20,6 +20,7 @@ namespace Pegasus_backend.Mappings
             CreateMap<SoldTransactionModel, SoldTransaction>();
             CreateMap<CourseViewModel, Course>();
             CreateMap<TeachersUpdate, Teacher>();
+            CreateMap<InvoiceWaitingConfirmViewModel, InvoiceWaitingConfirm>();
         }
     }
 }

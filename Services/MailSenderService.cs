@@ -43,5 +43,39 @@ namespace Pegasus_backend.Services
                 }
             });
         }
+
+        public static Task SendMailUpdateInvoiceWaitingTableAsync(string mailTo, string mailTitle, string mailContent, int waitingId)
+        {
+            return Task.Factory.StartNew(() =>
+            {
+                try
+                {
+                    var message = new MimeMessage();
+                    message.To.Add(new MailboxAddress(mailTo));
+                    message.From.Add(new MailboxAddress("LuxeDreamEventHire", "luxecontacts94@gmail.com"));
+                    message.Subject = mailTitle;
+                    var builder = new BodyBuilder();
+                    builder.HtmlBody = mailContent;
+                    message.Body = builder.ToMessageBody();
+                    using (var emailClient = new SmtpClient())
+                    {
+                        emailClient.Connect("smtp.gmail.com", 587, false);
+                        emailClient.Authenticate("luxecontacts94@gmail.com", "luxe1234");
+                        emailClient.Send(message);
+                        emailClient.Disconnect(true);
+                    }
+
+                    pegasusContext.ablemusicContext ablemusicContext = new pegasusContext.ablemusicContext();
+                    var invoiceWaitingConfirm = ablemusicContext.InvoiceWaitingConfirm.Where(r => r.WaitingId == waitingId).FirstOrDefault();
+                    invoiceWaitingConfirm.IsEmailSent = 1;
+                    ablemusicContext.SaveChanges();
+                    ablemusicContext.Dispose();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            });
+        }
     }
 }
