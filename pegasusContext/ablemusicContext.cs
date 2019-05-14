@@ -888,6 +888,10 @@ namespace Pegasus_backend.pegasusContext
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
+                entity.Property(e => e.OrgId)
+                    .HasColumnName("org_id")
+                    .HasColumnType("smallint(6)");
+
                 entity.Property(e => e.Photo)
                     .HasColumnName("photo")
                     .HasMaxLength(50)

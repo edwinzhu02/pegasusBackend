@@ -35,10 +35,9 @@ namespace Pegasus_backend.Controllers
             List<InvoiceWaitingConfirm> invoiceWaitingConfirmsForGroupCourse = new List<InvoiceWaitingConfirm>();
             try
             {
-                invoiceWaitingConfirmsForOTOCourse = await (from s in _ablemusicContext.Staff
+                result.Data = await (from s in _ablemusicContext.Staff
                                                             join so in _ablemusicContext.StaffOrg on s.StaffId equals so.StaffId
-                                                            join oto in _ablemusicContext.One2oneCourseInstance on so.OrgId equals oto.OrgId
-                                                            join l in _ablemusicContext.Learner on oto.LearnerId equals l.LearnerId
+                                                            join l in _ablemusicContext.Learner on so.OrgId equals l.OrgId
                                                             join iw in _ablemusicContext.InvoiceWaitingConfirm on l.LearnerId equals iw.LearnerId
                                                             join t in _ablemusicContext.Term on iw.TermId equals t.TermId
                                                             where s.UserId == id && DateTime.Now.Date < t.EndDate
@@ -76,49 +75,6 @@ namespace Pegasus_backend.Controllers
                                                                 IsEmailSent = iw.IsEmailSent,
                                                                 IsConfirmed = iw.IsConfirmed
                                                             }).ToListAsync();
-
-                invoiceWaitingConfirmsForGroupCourse = await (from s in _ablemusicContext.Staff
-                                                              join so in _ablemusicContext.StaffOrg on s.StaffId equals so.StaffId
-                                                              join gci in _ablemusicContext.GroupCourseInstance on so.OrgId equals gci.OrgId
-                                                              join lgc in _ablemusicContext.LearnerGroupCourse on gci.GroupCourseInstanceId equals lgc.GroupCourseInstanceId
-                                                              join l in _ablemusicContext.Learner on lgc.LearnerId equals l.LearnerId
-                                                              join iw in _ablemusicContext.InvoiceWaitingConfirm on l.LearnerId equals iw.LearnerId
-                                                              join t in _ablemusicContext.Term on iw.TermId equals t.TermId
-                                                              where s.UserId == id && DateTime.Now.Date < t.EndDate
-                                                              select new InvoiceWaitingConfirm
-                                                              {
-                                                                  WaitingId = iw.WaitingId,
-                                                                  InvoiceNum = iw.InvoiceNum,
-                                                                  LessonFee = iw.LessonFee,
-                                                                  ConcertFee = iw.ConcertFee,
-                                                                  NoteFee = iw.NoteFee,
-                                                                  Other1Fee = iw.Other1Fee,
-                                                                  Other2Fee = iw.Other2Fee,
-                                                                  Other3Fee = iw.Other3Fee,
-                                                                  LearnerId = iw.LearnerId,
-                                                                  LearnerName = iw.LearnerName,
-                                                                  BeginDate = iw.BeginDate,
-                                                                  EndDate = iw.EndDate,
-                                                                  TotalFee = iw.TotalFee,
-                                                                  DueDate = iw.DueDate,
-                                                                  PaidFee = iw.PaidFee,
-                                                                  OwingFee = iw.OwingFee,
-                                                                  CreatedAt = iw.CreatedAt,
-                                                                  IsPaid = iw.IsPaid,
-                                                                  TermId = iw.TermId,
-                                                                  CourseInstanceId = iw.CourseInstanceId,
-                                                                  GroupCourseInstanceId = iw.GroupCourseInstanceId,
-                                                                  LessonQuantity = iw.LessonQuantity,
-                                                                  CourseName = iw.CourseName,
-                                                                  ConcertFeeName = iw.ConcertFeeName,
-                                                                  LessonNoteFeeName = iw.LessonNoteFeeName,
-                                                                  Other1FeeName = iw.Other1FeeName,
-                                                                  Other2FeeName = iw.Other2FeeName,
-                                                                  Other3FeeName = iw.Other3FeeName,
-                                                                  IsActivate = iw.IsActivate,
-                                                                  IsEmailSent = iw.IsEmailSent,
-                                                                  IsConfirmed = iw.IsConfirmed
-                                                              }).ToListAsync();
             }
             catch (Exception ex)
             {
@@ -126,7 +82,6 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = ex.Message;
                 return BadRequest(result);
             }
-            result.Data = invoiceWaitingConfirmsForOTOCourse.Concat(invoiceWaitingConfirmsForGroupCourse).ToList();
             return Ok(result);
         }
 
@@ -161,8 +116,8 @@ namespace Pegasus_backend.Controllers
                 return NotFound(result);
             }
 
-            invoiceWaitingConfirmUpdate.IsConfirmed = 1;
             UpdateTable(invoiceWaitingConfirm, typeof(InvoiceWaitingConfirm), invoiceWaitingConfirmUpdate);
+            invoiceWaitingConfirmUpdate.IsConfirmed = 1;
 
             invoice.InvoiceNum = invoiceWaitingConfirmUpdate.InvoiceNum;
             invoice.LessonFee = invoiceWaitingConfirmUpdate.LessonFee;

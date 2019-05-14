@@ -40,6 +40,7 @@ namespace Pegasus_backend.pegasusContext
         public string MiddleName { get; set; }
         public short? LevelType { get; set; }
         public short? UserId { get; set; }
+        public short? OrgId { get; set; }
 
         public User User { get; set; }
         public ICollection<Amendment> Amendment { get; set; }

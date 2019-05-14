@@ -88,7 +88,19 @@ namespace Pegasus_backend.Controllers
             Type courseType = typeof(Course);
             Course course = new Course();
             _mapper.Map(courseViewModel, course);
-            var updateCourse = await _ablemusicContext.Course.Where(c => c.CourseId == id).FirstOrDefaultAsync();
+            Course updateCourse = new Course();
+            try
+            {
+                updateCourse = await _ablemusicContext.Course.Where(c => c.CourseId == id).FirstOrDefaultAsync();
+            }
+            catch(Exception ex)
+            {
+                result.IsSuccess = false;
+                result.IsFound = false;
+                result.ErrorMessage = ex.Message;
+                return NotFound(result);
+            }
+
             if (updateCourse == null)
             {
                 return NotFound(result);
@@ -116,8 +128,19 @@ namespace Pegasus_backend.Controllers
             Result<List<Course>> result = new Result<List<Course>>();
             Course course = new Course();
             _mapper.Map(courseViewModel, course);
+            Course courseExists = new Course();
+            try
+            {
+                courseExists = await _ablemusicContext.Course.Where(c => c.CourseId == course.CourseId).FirstOrDefaultAsync();
+            }
+            catch(Exception ex)
+            {
+                result.IsSuccess = false;
+                result.IsFound = false;
+                result.ErrorMessage = ex.Message;
+                return NotFound(result);
+            }
 
-            var courseExists = await _ablemusicContext.Course.Where(c => c.CourseId == course.CourseId).FirstOrDefaultAsync();
             if (courseExists != null)
             {
                 result.ErrorMessage = "The input id is already exists";
