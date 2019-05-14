@@ -15,12 +15,12 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class CoursesController : BasicController
     {
-        private readonly pegasusContext.ablemusicContext _pegasusContext;
+        private readonly pegasusContext.ablemusicContext _ablemusicContext;
         private readonly IMapper _mapper;
 
-        public CoursesController(pegasusContext.ablemusicContext pegasusContext, IMapper mapper)
+        public CoursesController(pegasusContext.ablemusicContext ablemusicContext, IMapper mapper)
         {
-            _pegasusContext = pegasusContext;
+            _ablemusicContext = ablemusicContext;
             _mapper = mapper;
         }
 
@@ -32,7 +32,7 @@ namespace Pegasus_backend.Controllers
             try
             {
                 result.IsSuccess = true;
-                result.Data = await _pegasusContext.Course.Include(c => c.CourseCategory).ToListAsync();
+                result.Data = await _ablemusicContext.Course.Include(c => c.CourseCategory).ToListAsync();
                 return Ok(result);
             }
             catch (Exception ex)
@@ -51,7 +51,7 @@ namespace Pegasus_backend.Controllers
             Type courseType = typeof(Course);
             Course course = new Course();
             _mapper.Map(courseViewModel, course);
-            var updateCourse = await _pegasusContext.Course.Where(c => c.CourseId == id).FirstOrDefaultAsync();
+            var updateCourse = await _ablemusicContext.Course.Where(c => c.CourseId == id).FirstOrDefaultAsync();
             if (updateCourse == null)
             {
                 return NotFound(DataNotFound(result));
@@ -59,7 +59,7 @@ namespace Pegasus_backend.Controllers
             UpdateTable(course, courseType, updateCourse);
             try
             {
-                await _pegasusContext.SaveChangesAsync();
+                await _ablemusicContext.SaveChangesAsync();
             }
             catch (Exception e)
             {
@@ -80,7 +80,7 @@ namespace Pegasus_backend.Controllers
             Course course = new Course();
             _mapper.Map(courseViewModel, course);
 
-            var courseExists = await _pegasusContext.Course.Where(c => c.CourseId == course.CourseId).FirstOrDefaultAsync();
+            var courseExists = await _ablemusicContext.Course.Where(c => c.CourseId == course.CourseId).FirstOrDefaultAsync();
             if (courseExists != null)
             {
                 result.ErrorMessage = "The input id is already exists";
@@ -91,15 +91,15 @@ namespace Pegasus_backend.Controllers
 
             try
             {
-                await _pegasusContext.Course.AddAsync(course);
-                await _pegasusContext.SaveChangesAsync();
+                await _ablemusicContext.Course.AddAsync(course);
+                await _ablemusicContext.SaveChangesAsync();
             }
             catch (Exception e)
             {
                 result.ErrorMessage = e.Message;
                 result.IsSuccess = false;
                 result.IsFound = false;
-                _pegasusContext.Remove(course);
+                _ablemusicContext.Remove(course);
                 return BadRequest(result);
             }
 
@@ -114,7 +114,7 @@ namespace Pegasus_backend.Controllers
 
             try
             {
-                var course = await _pegasusContext.Course.FindAsync(id);
+                var course = await _ablemusicContext.Course.FindAsync(id);
                 if (course == null)
                 {
                     result.ErrorMessage = "id not found";
@@ -123,8 +123,8 @@ namespace Pegasus_backend.Controllers
                     return NotFound(result);
                 }
 
-                _pegasusContext.Course.Remove(course);
-                await _pegasusContext.SaveChangesAsync();
+                _ablemusicContext.Course.Remove(course);
+                await _ablemusicContext.SaveChangesAsync();
                 result.IsFound = true;
                 result.IsSuccess = true;
                 return Ok(result);
@@ -141,7 +141,7 @@ namespace Pegasus_backend.Controllers
 
         private bool CourseExists(int id)
         {
-            return _pegasusContext.Course.Any(e => e.CourseId == id);
+            return _ablemusicContext.Course.Any(e => e.CourseId == id);
         }
     }
 }

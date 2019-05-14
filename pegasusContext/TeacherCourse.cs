@@ -9,8 +9,7 @@ namespace Pegasus_backend.pegasusContext
         public short? TeacherId { get; set; }
         public int TeacherCourseId { get; set; }
         public decimal? HourlyWage { get; set; }
-        
-        
+
         public Course Course { get; set; }
         public Teacher Teacher { get; set; }
     }

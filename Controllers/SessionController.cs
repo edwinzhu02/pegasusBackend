@@ -1,4 +1,4 @@
-﻿/*using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,13 +17,13 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class SessionController : BasicController
     {
-        private readonly pegasusContext.ablemusicContext _pegasusContext;
+        private readonly pegasusContext.ablemusicContext _ablemusicContext;
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
 
-        public SessionController(pegasusContext.ablemusicContext pegasusContext, IMapper mapper)
+        public SessionController(pegasusContext.ablemusicContext ablemusicContext, IMapper mapper, IConfiguration configuration)
         {
-            _pegasusContext = pegasusContext;
+            _ablemusicContext = ablemusicContext;
             _mapper = mapper;
             _configuration = configuration;
         }
@@ -37,8 +37,8 @@ namespace Pegasus_backend.Controllers
             RemindLog remindLog;
             try
             {
-                todoList = await _pegasusContext.TodoList.Where(t => t.ListId == listId).FirstOrDefaultAsync();
-                remindLog = await _pegasusContext.RemindLog.Where(r => r.RemindId == remindId).FirstOrDefaultAsync();
+                todoList = await _ablemusicContext.TodoList.Where(t => t.ListId == listId).FirstOrDefaultAsync();
+                remindLog = await _ablemusicContext.RemindLog.Where(r => r.RemindId == remindId).FirstOrDefaultAsync();
             }
             catch(Exception ex)
             {
@@ -59,7 +59,7 @@ namespace Pegasus_backend.Controllers
 
             try
             {
-                await _pegasusContext.SaveChangesAsync();
+                await _ablemusicContext.SaveChangesAsync();
             }
             catch (Exception e)
             {
@@ -79,7 +79,7 @@ namespace Pegasus_backend.Controllers
             Lesson lesson;
             try
             {
-                lesson = await _pegasusContext.Lesson.Where(x => x.LessonId == sessionId).FirstOrDefaultAsync();
+                lesson = await _ablemusicContext.Lesson.Where(x => x.LessonId == sessionId).FirstOrDefaultAsync();
             }
             catch (Exception ex)
             {
@@ -100,7 +100,7 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = "Reason is required";
                 return NotFound(result);
             }
-            var user = await _pegasusContext.User.Where(u => u.UserId == userId).FirstOrDefaultAsync();
+            var user = await _ablemusicContext.User.Where(u => u.UserId == userId).FirstOrDefaultAsync();
             if (user == null)
             {
                 result.IsSuccess = false;
@@ -117,24 +117,24 @@ namespace Pegasus_backend.Controllers
             List<Holiday> holidays;
             try
             {
-                teacher = await _pegasusContext.Teacher.FirstOrDefaultAsync(t => t.TeacherId == lesson.TeacherId);
-                courses = isGroupCourse ? (from c in _pegasusContext.Course
-                                               join gc in _pegasusContext.GroupCourseInstance on c.CourseId equals gc.CourseId
+                teacher = await _ablemusicContext.Teacher.FirstOrDefaultAsync(t => t.TeacherId == lesson.TeacherId);
+                courses = isGroupCourse ? (from c in _ablemusicContext.Course
+                                               join gc in _ablemusicContext.GroupCourseInstance on c.CourseId equals gc.CourseId
                                                where gc.GroupCourseInstanceId == lesson.GroupCourseInstanceId
                                                select new Course
                                                {
                                                    CourseId = c.CourseId,
                                                    CourseName = c.CourseName
                                                }).ToList() :
-                                               (from c in _pegasusContext.Course
-                                                join oto in _pegasusContext.One2oneCourseInstance on c.CourseId equals oto.CourseId
+                                               (from c in _ablemusicContext.Course
+                                                join oto in _ablemusicContext.One2oneCourseInstance on c.CourseId equals oto.CourseId
                                                 where oto.CourseInstanceId == lesson.CourseInstanceId
                                                 select new Course
                                                 {
                                                     CourseId = c.CourseId,
                                                     CourseName = c.CourseName
                                                 }).ToList();
-                holidays = await _pegasusContext.Holiday.ToListAsync();
+                holidays = await _ablemusicContext.Holiday.ToListAsync();
             }
             catch (Exception e)
             {
@@ -157,7 +157,7 @@ namespace Pegasus_backend.Controllers
                 if (holiday.HolidayDate.Date == todoDate.Date)
                 {
                     todoDate = todoDate.AddDays(-1);
-                }
+                }                
             }
 
             //string userConfirmUrlPrefix = "https://localhost:44304/api/session/sessioncancelconfirm/"; 
@@ -169,7 +169,7 @@ namespace Pegasus_backend.Controllers
                 Learner learner;
                 try
                 {
-                    learner = await _pegasusContext.Learner.FirstOrDefaultAsync(l => l.LearnerId == lesson.LearnerId);
+                    learner = await _ablemusicContext.Learner.FirstOrDefaultAsync(l => l.LearnerId == lesson.LearnerId);
                 }
                 catch (Exception ex)
                 {
@@ -185,11 +185,11 @@ namespace Pegasus_backend.Controllers
 
                 try
                 {
-                    await _pegasusContext.TodoList.AddAsync(todolistForLearner);
-                    await _pegasusContext.TodoList.AddAsync(todolistForTeacher);
-                    await _pegasusContext.RemindLog.AddAsync(remindLogForTeacher);
-                    await _pegasusContext.RemindLog.AddAsync(remindLogForLearner);
-                    await _pegasusContext.SaveChangesAsync();
+                    await _ablemusicContext.TodoList.AddAsync(todolistForLearner);
+                    await _ablemusicContext.TodoList.AddAsync(todolistForTeacher);
+                    await _ablemusicContext.RemindLog.AddAsync(remindLogForTeacher);
+                    await _ablemusicContext.RemindLog.AddAsync(remindLogForLearner);
+                    await _ablemusicContext.SaveChangesAsync();
                 }
                 catch (Exception e)
                 {
@@ -197,6 +197,7 @@ namespace Pegasus_backend.Controllers
                     result.IsSuccess = false;
                     return BadRequest(result);
                 }
+
                 //sending Email
                 string mailTitle = "Lesson Cancellation Confirm";
                 string confirmURLForLearner = userConfirmUrlPrefix + todolistForLearner.ListId + "/" + remindLogForLearner.RemindId;
@@ -212,8 +213,8 @@ namespace Pegasus_backend.Controllers
                 List<Learner> learners;
                 try
                 {
-                    learners = (from lgc in _pegasusContext.LearnerGroupCourse
-                                join l in _pegasusContext.Learner on lgc.LearnerId equals l.LearnerId
+                    learners = (from lgc in _ablemusicContext.LearnerGroupCourse
+                                join l in _ablemusicContext.Learner on lgc.LearnerId equals l.LearnerId
                                 where lgc.GroupCourseInstanceId == lesson.GroupCourseInstanceId
                                 select new Learner()
                                 {
@@ -237,17 +238,17 @@ namespace Pegasus_backend.Controllers
 
                 try
                 {
-                    await _pegasusContext.TodoList.AddAsync(todolistForTeacher);
-                    await _pegasusContext.RemindLog.AddAsync(remindLogForTeacher);
+                    await _ablemusicContext.TodoList.AddAsync(todolistForTeacher);
+                    await _ablemusicContext.RemindLog.AddAsync(remindLogForTeacher);
                     foreach (var todolist in todolistForLearners)
                     {
-                        await _pegasusContext.TodoList.AddAsync(todolist);
+                        await _ablemusicContext.TodoList.AddAsync(todolist);
                     }
                     foreach (var remindLog in remindLogForLearners)
                     {
-                        await _pegasusContext.RemindLog.AddAsync(remindLog);
+                        await _ablemusicContext.RemindLog.AddAsync(remindLog);
                     }
-                    await _pegasusContext.SaveChangesAsync();
+                    await _ablemusicContext.SaveChangesAsync();
                 }
                 catch (Exception e)
                 {
@@ -273,7 +274,7 @@ namespace Pegasus_backend.Controllers
 
         private bool LessonExists(int id)
         {
-            return _pegasusContext.Lesson.Any(e => e.LessonId == id);
+            return _ablemusicContext.Lesson.Any(e => e.LessonId == id);
         }
 
         private TodoList TodoListForTeacherCreater(Lesson lesson, short userId, Teacher teacher, string reason, DateTime todoDate)
@@ -383,4 +384,4 @@ namespace Pegasus_backend.Controllers
         }
 
     }
-}*/
+}

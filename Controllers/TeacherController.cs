@@ -35,10 +35,33 @@ namespace Pegasus_backend.Controllers
         }
 
         
-        //GET http://localhost:5000/api/teacher/1
-        [HttpGet("{name}")]
+        //GET http://localhost:5000/api/teacher/:words
+        [CheckModelFilter]
+        [HttpGet("{words}")]
+        public async Task<IActionResult> SearchTeacher(string words, [FromBody] TeacherSearch searchFormat)
+        {
+            Result<Object> result = new Result<Object>();
+            try
+            {
+                
+                var firstNameList = searchFormat.FirstName?_pegasusContext.Teacher.Where(s => s.FirstName.Contains(words)).ToList():new List<Teacher>();
+                var lastNameList = searchFormat.LastName?_pegasusContext.Teacher.Where(s => s.LastName.Contains(words)).ToList():new List<Teacher>();
+                var genderList = searchFormat.Gender?_pegasusContext.Teacher.Where(s => s.Gender.ToString().Contains(words)).ToList():new List<Teacher>();
+                var mobilePhoneList = searchFormat.MobilePhone?_pegasusContext.Teacher.Where(s => s.MobilePhone.Contains(words)).ToList():new List<Teacher>();
+                var emailList = searchFormat.Email?_pegasusContext.Teacher.Where(s => s.Email.Contains(words)).ToList():new List<Teacher>();
+                result.Data = firstNameList.Union(lastNameList).Union(genderList).Union(mobilePhoneList)
+                    .Union(emailList);
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.ToString();
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
         
-        //DELETE http://localhost:5000/api/teacher
+        //DELETE http://localhost:5000/api/teacher/:id
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTeacher(int id)
         {
@@ -46,6 +69,10 @@ namespace Pegasus_backend.Controllers
             try
             {
                 var item = _pegasusContext.Teacher.FirstOrDefault(s => s.TeacherId == id);
+                if (item == null)
+                {
+                    throw new Exception("teacher does not exist.");
+                }
                 item.IsActivate = 0;
                 _pegasusContext.Update(item);
                 await _pegasusContext.SaveChangesAsync();

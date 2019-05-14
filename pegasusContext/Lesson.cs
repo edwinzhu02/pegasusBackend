@@ -7,8 +7,6 @@ namespace Pegasus_backend.pegasusContext
     {
         public Lesson()
         {
-            Invoice = new HashSet<Invoice>();
-            InvoiceWaitingConfirm = new HashSet<InvoiceWaitingConfirm>();
             LearnerTransaction = new HashSet<LearnerTransaction>();
             RemindLog = new HashSet<RemindLog>();
             TeacherTransaction = new HashSet<TeacherTransaction>();
@@ -28,15 +26,15 @@ namespace Pegasus_backend.pegasusContext
         public byte? IsTrial { get; set; }
         public DateTime? BeginTime { get; set; }
         public DateTime? EndTime { get; set; }
+        public int? InvoiceId { get; set; }
 
         public One2oneCourseInstance CourseInstance { get; set; }
         public GroupCourseInstance GroupCourseInstance { get; set; }
+        public Invoice Invoice { get; set; }
         public Learner Learner { get; set; }
         public Org Org { get; set; }
         public Room Room { get; set; }
         public Teacher Teacher { get; set; }
-        public ICollection<Invoice> Invoice { get; set; }
-        public ICollection<InvoiceWaitingConfirm> InvoiceWaitingConfirm { get; set; }
         public ICollection<LearnerTransaction> LearnerTransaction { get; set; }
         public ICollection<RemindLog> RemindLog { get; set; }
         public ICollection<TeacherTransaction> TeacherTransaction { get; set; }

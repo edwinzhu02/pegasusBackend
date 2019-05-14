@@ -1,4 +1,4 @@
-﻿/*using Pegasus_backend.pegasusContext;
+﻿using Pegasus_backend.pegasusContext;
 using System.Collections.Generic;
 using System;
 using Newtonsoft.Json;
@@ -42,4 +42,4 @@ namespace Pegasus_backend.Models
         public Stock Stock { get; set; }
 
     }
-}*/
+}
