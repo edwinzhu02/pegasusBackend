@@ -32,7 +32,25 @@ namespace Pegasus_backend.Controllers
             try
             {
                 result.IsSuccess = true;
-                result.Data = await _ablemusicContext.Course.Include(c => c.CourseCategory).ToListAsync();
+                result.Data = await (from c in _ablemusicContext.Course
+                                  join cc in _ablemusicContext.CourseCategory on c.CourseCategoryId equals cc.CourseCategoryId
+                                  select new Course
+                                  {
+                                      CourseId = c.CourseId,
+                                      CourseName = c.CourseName,
+                                      CourseType = c.CourseType,
+                                      Level = c.Level,
+                                      Duration = c.Duration,
+                                      Price = c.Price,
+                                      CourseCategoryId = c.CourseCategoryId,
+                                      TeacherLevel = c.TeacherLevel,
+                                      CourseCategory = new CourseCategory
+                                      {
+                                          CourseCategoryId = cc.CourseCategoryId,
+                                          CourseCategoryName = cc.CourseCategoryName,
+                                          Course = null
+                                      }
+                                  }).ToListAsync();
                 return Ok(result);
             }
             catch (Exception ex)
@@ -54,7 +72,7 @@ namespace Pegasus_backend.Controllers
             var updateCourse = await _ablemusicContext.Course.Where(c => c.CourseId == id).FirstOrDefaultAsync();
             if (updateCourse == null)
             {
-                return NotFound(DataNotFound(result));
+                return NotFound(result);
             }
             UpdateTable(course, courseType, updateCourse);
             try
