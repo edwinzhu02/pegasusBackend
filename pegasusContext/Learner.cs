@@ -41,7 +41,11 @@ namespace Pegasus_backend.pegasusContext
         public short? LevelType { get; set; }
         public short? UserId { get; set; }
         public short? OrgId { get; set; }
+        public short? HowKnowId { get; set; }
+        public short? LearnPurposeId { get; set; }
 
+        public LearnPurpose LearnPurpose { get; set; }
+        public Org Org { get; set; }
         public User User { get; set; }
         public ICollection<Amendment> Amendment { get; set; }
         public ICollection<Invoice> Invoice { get; set; }

@@ -24,6 +24,7 @@ namespace Pegasus_backend.pegasusContext
         public virtual DbSet<Fund> Fund { get; set; }
         public virtual DbSet<GroupCourseInstance> GroupCourseInstance { get; set; }
         public virtual DbSet<Holiday> Holiday { get; set; }
+        public virtual DbSet<HowKnown> HowKnown { get; set; }
         public virtual DbSet<Invoice> Invoice { get; set; }
         public virtual DbSet<InvoiceWaitingConfirm> InvoiceWaitingConfirm { get; set; }
         public virtual DbSet<Language> Language { get; set; }
@@ -31,9 +32,11 @@ namespace Pegasus_backend.pegasusContext
         public virtual DbSet<LearnerAppForm> LearnerAppForm { get; set; }
         public virtual DbSet<LearnerGroupCourse> LearnerGroupCourse { get; set; }
         public virtual DbSet<LearnerTransaction> LearnerTransaction { get; set; }
+        public virtual DbSet<LearnPurpose> LearnPurpose { get; set; }
         public virtual DbSet<Lesson> Lesson { get; set; }
         public virtual DbSet<LessonRemain> LessonRemain { get; set; }
         public virtual DbSet<LoginLog> LoginLog { get; set; }
+        public virtual DbSet<Lookup> Lookup { get; set; }
         public virtual DbSet<One2oneCourseInstance> One2oneCourseInstance { get; set; }
         public virtual DbSet<OnlineUser> OnlineUser { get; set; }
         public virtual DbSet<Org> Org { get; set; }
@@ -472,6 +475,26 @@ namespace Pegasus_backend.pegasusContext
                     .IsUnicode(false);
             });
 
+            modelBuilder.Entity<HowKnown>(entity =>
+            {
+                entity.HasKey(e => e.HowKnowId);
+
+                entity.ToTable("how_known", "ablemusic");
+
+                entity.Property(e => e.HowKnowId)
+                    .HasColumnName("how_know_id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.HowKnowName)
+                    .HasColumnName("how_know_name")
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.HowKnowType)
+                    .HasColumnName("how_know_type")
+                    .HasColumnType("bit(1)");
+            });
+
             modelBuilder.Entity<Invoice>(entity =>
             {
                 entity.ToTable("invoice", "ablemusic");
@@ -817,6 +840,12 @@ namespace Pegasus_backend.pegasusContext
             {
                 entity.ToTable("learner", "ablemusic");
 
+                entity.HasIndex(e => e.LearnPurposeId)
+                    .HasName("R_117");
+
+                entity.HasIndex(e => e.OrgId)
+                    .HasName("R_115");
+
                 entity.HasIndex(e => e.UserId)
                     .HasName("R_106");
 
@@ -861,6 +890,10 @@ namespace Pegasus_backend.pegasusContext
                     .HasColumnName("gender")
                     .HasColumnType("bit(1)");
 
+                entity.Property(e => e.HowKnowId)
+                    .HasColumnName("how_know_id")
+                    .HasColumnType("smallint(6)");
+
                 entity.Property(e => e.IsAbrsmG5)
                     .HasColumnName("is_abrsm_g5")
                     .HasColumnType("bit(1)");
@@ -873,6 +906,10 @@ namespace Pegasus_backend.pegasusContext
                     .HasColumnName("last_name")
                     .HasMaxLength(30)
                     .IsUnicode(false);
+
+                entity.Property(e => e.LearnPurposeId)
+                    .HasColumnName("learn_purpose_id")
+                    .HasColumnType("smallint(6)");
 
                 entity.Property(e => e.LevelType)
                     .HasColumnName("level_type")
@@ -904,6 +941,16 @@ namespace Pegasus_backend.pegasusContext
                 entity.Property(e => e.UserId)
                     .HasColumnName("user_id")
                     .HasColumnType("smallint(6)");
+
+                entity.HasOne(d => d.LearnPurpose)
+                    .WithMany(p => p.Learner)
+                    .HasForeignKey(d => d.LearnPurposeId)
+                    .HasConstraintName("R_117");
+
+                entity.HasOne(d => d.Org)
+                    .WithMany(p => p.Learner)
+                    .HasForeignKey(d => d.OrgId)
+                    .HasConstraintName("R_115");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Learner)
@@ -1077,6 +1124,20 @@ namespace Pegasus_backend.pegasusContext
                     .WithMany(p => p.LearnerTransaction)
                     .HasForeignKey(d => d.LessonId)
                     .HasConstraintName("R_35");
+            });
+
+            modelBuilder.Entity<LearnPurpose>(entity =>
+            {
+                entity.ToTable("learn_purpose", "ablemusic");
+
+                entity.Property(e => e.LearnPurposeId)
+                    .HasColumnName("learn_purpose_id")
+                    .HasColumnType("smallint(6)");
+
+                entity.Property(e => e.Purpose)
+                    .HasColumnName("purpose")
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<Lesson>(entity =>
@@ -1292,6 +1353,33 @@ namespace Pegasus_backend.pegasusContext
                     .WithMany(p => p.LoginLog)
                     .HasForeignKey(d => d.UserId)
                     .HasConstraintName("R_62");
+            });
+
+            modelBuilder.Entity<Lookup>(entity =>
+            {
+                entity.ToTable("lookup", "ablemusic");
+
+                entity.Property(e => e.LookupId)
+                    .HasColumnName("lookup_id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.Description)
+                    .HasColumnName("description")
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.LookupType)
+                    .HasColumnName("lookup_type")
+                    .HasColumnType("smallint(6)");
+
+                entity.Property(e => e.PropName)
+                    .HasColumnName("prop_name")
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PropValue)
+                    .HasColumnName("prop_value")
+                    .HasColumnType("int(11)");
             });
 
             modelBuilder.Entity<One2oneCourseInstance>(entity =>
