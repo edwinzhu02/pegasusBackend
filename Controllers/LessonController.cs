@@ -60,13 +60,13 @@ namespace Pegasus_backend.Controllers
 
         }
 
-        [HttpGet("teacher/{id}")]
+        [HttpGet("user/{id}")]
         public  IActionResult GetLessonsforteacher(byte id)
         {
             Result<Object> result = new Result<object>();
             try
             {
-                var teacher = _pegasusContext.Teacher.FirstOrDefault(s => s.UserId == userid);
+                var teacher = _pegasusContext.Teacher.FirstOrDefault(s => s.UserId == id);
                 if (teacher == null)
                 {
                     throw new Exception("Teacher does not exist.");
