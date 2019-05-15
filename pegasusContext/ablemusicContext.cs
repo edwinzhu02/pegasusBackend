@@ -104,7 +104,7 @@ namespace Pegasus_backend.pegasusContext
 
                 entity.Property(e => e.AmendType)
                     .HasColumnName("amend_type")
-                    .HasColumnType("bit(1)");
+                    .HasColumnType("tinyint(4)");
 
                 entity.Property(e => e.BeginDate)
                     .HasColumnName("begin_date")
@@ -423,6 +423,10 @@ namespace Pegasus_backend.pegasusContext
                 entity.Property(e => e.EndDate)
                     .HasColumnName("end_date")
                     .HasColumnType("date");
+
+                entity.Property(e => e.IsActivate)
+                    .HasColumnName("is_activate")
+                    .HasColumnType("bit(1)");
 
                 entity.Property(e => e.OrgId)
                     .HasColumnName("org_id")
