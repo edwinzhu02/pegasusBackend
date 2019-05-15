@@ -9,6 +9,7 @@ namespace Pegasus_backend.pegasusContext
         public string OthersType { get; set; }
         public short? OthersValue { get; set; }
         public int LearnerOthersId { get; set; }
+        public short? LearnerLevel { get; set; }
 
         public Learner Learner { get; set; }
     }
