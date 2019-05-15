@@ -41,7 +41,7 @@ namespace Pegasus_backend.Controllers
                     .ThenInclude(learnerCourse => learnerCourse.LearnerGroupCourse)
                     .ThenInclude(learner => learner.Learner)
                     .Select(s =>new {id = s.LessonId, resourceId = s.RoomId, start = s.BeginTime,end=s.EndTime,
-                        title=IsNull(s.GroupCourseInstance)?"One to One":"Group Course",description="",
+                        title=IsNull(s.GroupCourseInstance)?"1 to 1":"Group Course",description="",
                         teacher=s.Teacher.FirstName.ToString(),
                         student=IsNull(s.GroupCourseInstance)?new List<string>(){s.Learner.FirstName}:s.GroupCourseInstance.LearnerGroupCourse.Select(w=>w.Learner.FirstName),
                         IsGroup=!IsNull(s.GroupCourseInstance)

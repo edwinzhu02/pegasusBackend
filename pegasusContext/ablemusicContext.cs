@@ -31,6 +31,7 @@ namespace Pegasus_backend.pegasusContext
         public virtual DbSet<Learner> Learner { get; set; }
         public virtual DbSet<LearnerAppForm> LearnerAppForm { get; set; }
         public virtual DbSet<LearnerGroupCourse> LearnerGroupCourse { get; set; }
+        public virtual DbSet<LearnerOthers> LearnerOthers { get; set; }
         public virtual DbSet<LearnerTransaction> LearnerTransaction { get; set; }
         public virtual DbSet<LearnPurpose> LearnPurpose { get; set; }
         public virtual DbSet<Lesson> Lesson { get; set; }
@@ -72,7 +73,7 @@ namespace Pegasus_backend.pegasusContext
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseMySQL("Server=gradspace.org;UserId=dbuser;Database=ablemusic");
+                optionsBuilder.UseMySQL("server=gradspace.org;User Id=dbuser;Database=ablemusic");
             }
         }
 
@@ -840,9 +841,6 @@ namespace Pegasus_backend.pegasusContext
             {
                 entity.ToTable("learner", "ablemusic");
 
-                entity.HasIndex(e => e.LearnPurposeId)
-                    .HasName("R_117");
-
                 entity.HasIndex(e => e.OrgId)
                     .HasName("R_115");
 
@@ -890,10 +888,6 @@ namespace Pegasus_backend.pegasusContext
                     .HasColumnName("gender")
                     .HasColumnType("bit(1)");
 
-                entity.Property(e => e.HowKnowId)
-                    .HasColumnName("how_know_id")
-                    .HasColumnType("smallint(6)");
-
                 entity.Property(e => e.IsAbrsmG5)
                     .HasColumnName("is_abrsm_g5")
                     .HasColumnType("bit(1)");
@@ -906,10 +900,6 @@ namespace Pegasus_backend.pegasusContext
                     .HasColumnName("last_name")
                     .HasMaxLength(30)
                     .IsUnicode(false);
-
-                entity.Property(e => e.LearnPurposeId)
-                    .HasColumnName("learn_purpose_id")
-                    .HasColumnType("smallint(6)");
 
                 entity.Property(e => e.LevelType)
                     .HasColumnName("level_type")
@@ -941,11 +931,6 @@ namespace Pegasus_backend.pegasusContext
                 entity.Property(e => e.UserId)
                     .HasColumnName("user_id")
                     .HasColumnType("smallint(6)");
-
-                entity.HasOne(d => d.LearnPurpose)
-                    .WithMany(p => p.Learner)
-                    .HasForeignKey(d => d.LearnPurposeId)
-                    .HasConstraintName("R_117");
 
                 entity.HasOne(d => d.Org)
                     .WithMany(p => p.Learner)
@@ -1079,6 +1064,41 @@ namespace Pegasus_backend.pegasusContext
                     .WithMany(p => p.LearnerGroupCourse)
                     .HasForeignKey(d => d.LearnerId)
                     .HasConstraintName("R_86");
+            });
+
+            modelBuilder.Entity<LearnerOthers>(entity =>
+            {
+                entity.ToTable("learner_others", "ablemusic");
+
+                entity.HasIndex(e => e.LearnerId)
+                    .HasName("R_119");
+
+                entity.Property(e => e.LearnerOthersId)
+                    .HasColumnName("learner_others_id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.LearnerId)
+                    .HasColumnName("learner_id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.LearnerLevel)
+                    .HasColumnName("learner_level")
+                    .HasColumnType("bit(1)");
+
+                entity.Property(e => e.OthersType)
+                    .HasColumnName("others_type")
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.OthersValue)
+                    .HasColumnName("others_value")
+                    .HasColumnType("smallint(6)");
+
+                entity.HasOne(d => d.Learner)
+                    .WithMany(p => p.LearnerOthers)
+                    .HasForeignKey(d => d.LearnerId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("R_119");
             });
 
             modelBuilder.Entity<LearnerTransaction>(entity =>
