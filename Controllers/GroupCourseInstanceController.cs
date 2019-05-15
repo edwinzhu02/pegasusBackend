@@ -24,15 +24,29 @@ namespace Pegasus_backend.Controllers
         _pegasusContext = pegasusContext;
         _mapper = mapper;
     }
-    // GET: api/Courses
+    
+    // GET: api/groupcourseinstance
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<GroupCourseInstance>>> GetGroupCourseInstance()
+    public async Task<IActionResult> GetGroupCourseInstance()
     {
-        Result<List<GroupCourseInstance>> result = new Result<List<GroupCourseInstance>>();
+        Result<Object> result = new Result<Object>();
         try
         {
             result.IsSuccess = true;
-            result.Data = await _pegasusContext.GroupCourseInstance.Include(c => c.CourseSchedule).ToListAsync();
+            result.Data = _pegasusContext.GroupCourseInstance
+                .Include(c => c.CourseSchedule)
+                .Include(s => s.Course)
+                .Include(s => s.Org)
+                .Include(s => s.Room)
+                .Include(s => s.Teacher)
+                .Select(s => new
+                {
+                    s.CourseId,s.BeginDate,s.EndDate,s.GroupCourseInstanceId,
+                    Course = new {s.Course.CourseId,s.Course.CourseName,s.Course.CourseType,s.Course.Level,s.Course.Duration,s.Course.Price},
+                    Org = new {s.Org.OrgId, s.Org.OrgName}, Room= new {s.Room.RoomId,s.Room.RoomName},
+                    Teacher = new {s.Teacher.TeacherId,s.Teacher.FirstName,s.Teacher.LastName}
+                });
+                
             return Ok(result);
         }
         catch (Exception ex)
