@@ -841,6 +841,9 @@ namespace Pegasus_backend.pegasusContext
             {
                 entity.ToTable("learner", "ablemusic");
 
+                entity.HasIndex(e => e.LearnPurposeId)
+                    .HasName("R_117");
+
                 entity.HasIndex(e => e.OrgId)
                     .HasName("R_115");
 
@@ -888,6 +891,10 @@ namespace Pegasus_backend.pegasusContext
                     .HasColumnName("gender")
                     .HasColumnType("bit(1)");
 
+                entity.Property(e => e.HowKnowId)
+                    .HasColumnName("how_know_id")
+                    .HasColumnType("smallint(6)");
+
                 entity.Property(e => e.IsAbrsmG5)
                     .HasColumnName("is_abrsm_g5")
                     .HasColumnType("bit(1)");
@@ -900,6 +907,10 @@ namespace Pegasus_backend.pegasusContext
                     .HasColumnName("last_name")
                     .HasMaxLength(30)
                     .IsUnicode(false);
+
+                entity.Property(e => e.LearnPurposeId)
+                    .HasColumnName("learn_purpose_id")
+                    .HasColumnType("smallint(6)");
 
                 entity.Property(e => e.LevelType)
                     .HasColumnName("level_type")
@@ -932,6 +943,14 @@ namespace Pegasus_backend.pegasusContext
                     .HasColumnName("user_id")
                     .HasColumnType("smallint(6)");
 
+<<<<<<< HEAD
+=======
+                entity.HasOne(d => d.LearnPurpose)
+                    .WithMany(p => p.Learner)
+                    .HasForeignKey(d => d.LearnPurposeId)
+                    .HasConstraintName("R_117");
+
+>>>>>>> 7299a5171805a791a0ce0beb98746fe977efb047
                 entity.HasOne(d => d.Org)
                     .WithMany(p => p.Learner)
                     .HasForeignKey(d => d.OrgId)
