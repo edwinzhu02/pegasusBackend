@@ -17,6 +17,7 @@ namespace Pegasus_backend.pegasusContext
         public int? GroupCourseInstanceId { get; set; }
         public TimeSpan? BeginTime { get; set; }
         public TimeSpan? EndTime { get; set; }
+
         [JsonIgnore]
         public One2oneCourseInstance CourseInstance { get; set; }
         [JsonIgnore]

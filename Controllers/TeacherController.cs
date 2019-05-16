@@ -97,8 +97,7 @@ namespace Pegasus_backend.Controllers
             try
             {
                 result.IsSuccess = true;
-                _pegasusContext.SaveChanges();
-                var teachers = _pegasusContext.Teacher
+                var teachers = await _pegasusContext.Teacher
                     .Include(s => s.TeacherLanguage)
                     .ThenInclude(s => s.Lang)
                     .Include(s => s.TeacherQualificatiion)
@@ -120,9 +119,10 @@ namespace Pegasus_backend.Controllers
                         q.AvailableDays,q.TeacherLanguage,q.TeacherQualificatiion
                         
                     })
-                    .ToList();
-
+                    .ToListAsync();
+                    
                 result.Data = teachers;
+
             }
             catch (Exception ex)
             {

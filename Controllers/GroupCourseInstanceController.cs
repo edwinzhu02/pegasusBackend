@@ -33,12 +33,13 @@ namespace Pegasus_backend.Controllers
             try
             {
                 var schedule = _pegasusContext.CourseSchedule;
-                var item = _pegasusContext.GroupCourseInstance
+                var item = await _pegasusContext.GroupCourseInstance
                     .Include(c => c.CourseSchedule)
                     .Include(s => s.Course)
                     .Include(s => s.Org)
                     .Include(s => s.Room)
                     .Include(s => s.Teacher)
+                    .Where(s=>s.IsActivate == 1)
                     .Select(s => new
                     {
                         s.CourseId, s.GroupCourseInstanceId, schedule = schedule.Where(w=>w.GroupCourseInstanceId==s.GroupCourseInstanceId),
@@ -49,7 +50,8 @@ namespace Pegasus_backend.Controllers
                         },
                         Org = new {s.Org.OrgId, s.Org.OrgName}, Room = new {s.Room.RoomId, s.Room.RoomName},
                         Teacher = new {s.Teacher.TeacherId, s.Teacher.FirstName, s.Teacher.LastName}
-                    });
+                    })
+                    .ToListAsync();
                 
 
                 result.Data = item;
@@ -63,5 +65,96 @@ namespace Pegasus_backend.Controllers
                 return BadRequest(result);
             }
         }
+        
+        //Delete api/groupcourseinstance
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteGroupCourseInstance(int id)
+        {
+            Result<string> result = new Result<string>();
+            try
+            {
+                var item = _pegasusContext.GroupCourseInstance.FirstOrDefault(s => s.GroupCourseInstanceId == id);
+                if (item == null)
+                {
+                    result.IsFound = false;
+                    throw new Exception("Group course instance does not found");
+                }
+                item.IsActivate = 0;
+                _pegasusContext.Update(item);
+                await _pegasusContext.SaveChangesAsync();
+                result.Data = "success";
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+        
+        //POST: api/groupcourseinstance
+        [HttpPost]
+        [CheckModelFilter]
+        public async Task<IActionResult> PostgroupCourseInstance([FromBody] GroupCourseInstanceModel groupinstance)
+        {
+            Result<string> result = new Result<string>();
+            try
+            {
+                var newGroupInstance = new GroupCourseInstance();
+                _mapper.Map(groupinstance, newGroupInstance);
+                newGroupInstance.IsActivate = 1;
+                _pegasusContext.Add(newGroupInstance);
+                await _pegasusContext.SaveChangesAsync();
+                result.Data = "success";
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+
+            return Ok(result);
+        }
+        
+        //PUT api/groupcourseinstance/:id
+        [HttpPut("{id}")]
+        [CheckModelFilter]
+        public async Task<IActionResult> UpdateGroupCourseInstance(int id, [FromBody] GroupCourseInstanceModel groupCourseInstanceModel)
+        {
+            Result<string> result = new Result<string>();
+            try
+            {
+                var groupCourseinstance =
+                    _pegasusContext.GroupCourseInstance.FirstOrDefault(s => s.GroupCourseInstanceId == id);
+                if (groupCourseinstance == null)
+                {
+                    throw new Exception("Group course instance does not found");
+                }
+
+                using (var dbContextTransaction = _pegasusContext.Database.BeginTransaction())
+                {
+                    var scheduleList = _pegasusContext.CourseSchedule.Where(s => s.GroupCourseInstanceId == id);
+                    scheduleList.ToList().ForEach(s => { _pegasusContext.Remove(s); });
+                    await _pegasusContext.SaveChangesAsync();
+                    _mapper.Map(groupCourseInstanceModel, groupCourseinstance);
+                    _pegasusContext.Update(groupCourseinstance);
+                    await _pegasusContext.SaveChangesAsync();
+                    dbContextTransaction.Commit();
+                }
+                result.Data = "success";
+
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+
+            return Ok(result);
+        }
+        
     }
 }
