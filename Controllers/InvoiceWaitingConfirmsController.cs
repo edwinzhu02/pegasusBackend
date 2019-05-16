@@ -40,7 +40,7 @@ namespace Pegasus_backend.Controllers
                                                             join l in _ablemusicContext.Learner on so.OrgId equals l.OrgId
                                                             join iw in _ablemusicContext.InvoiceWaitingConfirm on l.LearnerId equals iw.LearnerId
                                                             join t in _ablemusicContext.Term on iw.TermId equals t.TermId
-                                                            where s.UserId == id && DateTime.Now.Date < t.EndDate
+                                                            where s.UserId == id && DateTime.Now.Date < t.EndDate && iw.IsActivate == 1
                                                             select new InvoiceWaitingConfirm
                                                             {
                                                                 WaitingId = iw.WaitingId,
@@ -73,7 +73,30 @@ namespace Pegasus_backend.Controllers
                                                                 Other3FeeName = iw.Other3FeeName,
                                                                 IsActivate = iw.IsActivate,
                                                                 IsEmailSent = iw.IsEmailSent,
-                                                                IsConfirmed = iw.IsConfirmed
+                                                                IsConfirmed = iw.IsConfirmed,
+                                                                Learner = new Learner
+                                                                {
+                                                                    Email = iw.Learner.Email,
+                                                                    FirstName = iw.Learner.FirstName,
+                                                                    MiddleName = iw.Learner.MiddleName,
+                                                                    LastName = iw.Learner.LastName,
+                                                                    EnrollDate = iw.Learner.EnrollDate,
+                                                                    ContactNum = iw.Learner.ContactNum,
+                                                                    Address = iw.Learner.Address,
+                                                                    IsUnder18 = iw.Learner.IsUnder18,
+                                                                    Dob = iw.Learner.Dob,
+                                                                    Gender = iw.Learner.Gender,
+                                                                    IsAbrsmG5 = iw.Learner.IsAbrsmG5,
+                                                                    G5Certification = iw.Learner.G5Certification,
+                                                                    CreatedAt = iw.Learner.CreatedAt,
+                                                                    ReferrerLearnerId = iw.Learner.ReferrerLearnerId,
+                                                                    Photo = iw.Learner.Photo,
+                                                                    Note = iw.Learner.Note,
+                                                                    LevelType = iw.Learner.LevelType,
+                                                                    UserId = iw.Learner.UserId,
+                                                                    OrgId = iw.Learner.OrgId,
+                                                                    Parent = iw.Learner.Parent,
+                                                                }
                                                             }).ToListAsync();
             }
             catch (Exception ex)
@@ -115,8 +138,15 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = "invoice waiting id not found";
                 return NotFound(result);
             }
+            if(invoiceWaitingConfirmUpdate.IsActivate == 0)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = "The provided invoice id is not active";
+                return BadRequest(result);
+            }
 
-            invoiceWaitingConfirmUpdate.IsConfirmed = 1;
+            invoiceWaitingConfirmUpdate.IsActivate = 0;
+            invoiceWaitingConfirm.IsConfirmed = 1;
 
             invoice.InvoiceNum = invoiceWaitingConfirmUpdate.InvoiceNum;
             invoice.LessonFee = invoiceWaitingConfirmUpdate.LessonFee;
@@ -148,6 +178,7 @@ namespace Pegasus_backend.Controllers
 
             try
             {
+                await _ablemusicContext.InvoiceWaitingConfirm.AddAsync(invoiceWaitingConfirm);
                 await _ablemusicContext.Invoice.AddAsync(invoice);
                 await _ablemusicContext.SaveChangesAsync();
                 learner = await _ablemusicContext.Learner.Where(l => l.LearnerId == invoice.LearnerId).FirstOrDefaultAsync();
