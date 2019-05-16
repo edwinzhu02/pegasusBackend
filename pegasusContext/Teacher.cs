@@ -36,6 +36,11 @@ namespace Pegasus_backend.pegasusContext
         public short? IsActivate { get; set; }
         public short? UserId { get; set; }
         public byte? Level { get; set; }
+        public short? IsContract { get; set; }
+        public short? IsLeft { get; set; }
+        public byte? InvoiceTemplate { get; set; }
+        public string Ability { get; set; }
+        public string Comment { get; set; }
 
         public User User { get; set; }
         public ICollection<AvailableDays> AvailableDays { get; set; }

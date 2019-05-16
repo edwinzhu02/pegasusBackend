@@ -2420,6 +2420,16 @@ namespace Pegasus_backend.pegasusContext
                     .HasColumnName("teacher_id")
                     .HasColumnType("smallint(6)");
 
+                entity.Property(e => e.Ability)
+                    .HasColumnName("ability")
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Comment)
+                    .HasColumnName("comment")
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.Dob)
                     .HasColumnName("dob")
                     .HasColumnType("date");
@@ -2461,6 +2471,10 @@ namespace Pegasus_backend.pegasusContext
                     .HasColumnName("id_type")
                     .HasColumnType("bit(1)");
 
+                entity.Property(e => e.InvoiceTemplate)
+                    .HasColumnName("invoice_template")
+                    .HasColumnType("tinyint(4)");
+
                 entity.Property(e => e.IrdNumber)
                     .HasColumnName("ird_number")
                     .HasMaxLength(40)
@@ -2468,6 +2482,14 @@ namespace Pegasus_backend.pegasusContext
 
                 entity.Property(e => e.IsActivate)
                     .HasColumnName("is_activate")
+                    .HasColumnType("bit(1)");
+
+                entity.Property(e => e.IsContract)
+                    .HasColumnName("is_contract")
+                    .HasColumnType("bit(1)");
+
+                entity.Property(e => e.IsLeft)
+                    .HasColumnName("is_left")
                     .HasColumnType("bit(1)");
 
                 entity.Property(e => e.LastName)

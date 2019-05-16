@@ -112,6 +112,7 @@ namespace Pegasus_backend.Controllers
                     .Select(q => new
                     {
                         q.TeacherId,q.FirstName,q.LastName,q.Dob,Gender=Convert.ToBoolean(q.Gender)?"Male":"Female",q.IrdNumber,q.IdType,q.IdPhoto,q.IdNumber,q.HomePhone,q.MobilePhone,q.Email,q.Photo,q.ExpiryDate,
+                        q.IsLeft,q.IsContract,q.InvoiceTemplate,q.Ability,q.Comment,
                         /*AvailableDays = q.AvailableDays.Select(w=> new {w.DayOfWeek,w.OrgId, w.Org.OrgName}),
                         TeacherLanguage = q.TeacherLanguage.Select(w=>new {w.LangId,w.Lang.LangName}),
                         TeacherQualificatiion = q.TeacherQualificatiion.Select(w=> new {w.QualiId,w.Quali.QualiName}),
