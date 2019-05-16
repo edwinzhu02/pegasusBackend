@@ -116,12 +116,14 @@ namespace Pegasus_backend.Controllers
             var result = new Result<string>();
             InvoiceWaitingConfirm invoiceWaitingConfirm = new InvoiceWaitingConfirm();
             InvoiceWaitingConfirm invoiceWaitingConfirmUpdate = new InvoiceWaitingConfirm();
+            List<Invoice> activeInvoices = new List<Invoice>();
             Invoice invoice = new Invoice();
             Learner learner = new Learner();
             _mapper.Map(invoiceWaitingConfirmViewModel, invoiceWaitingConfirm);
             try
             {
                 invoiceWaitingConfirmUpdate = await _ablemusicContext.InvoiceWaitingConfirm.Where(i => i.WaitingId == invoiceWaitingConfirm.WaitingId).FirstOrDefaultAsync();
+                activeInvoices = await _ablemusicContext.Invoice.Where(i => i.IsActive == 1 || i.IsActive == null && i.InvoiceNum == invoiceWaitingConfirm.InvoiceNum).ToListAsync();
             }
             catch(Exception ex)
             {
@@ -144,9 +146,16 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = "The provided invoice id is not active";
                 return BadRequest(result);
             }
+            if(invoiceWaitingConfirmUpdate.IsPaid == 1)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = "The provided invoice is already paid";
+                return BadRequest(result);
+            }
 
             invoiceWaitingConfirmUpdate.IsActivate = 0;
             invoiceWaitingConfirm.IsConfirmed = 1;
+            invoiceWaitingConfirm.WaitingId = 0;
 
             invoice.InvoiceNum = invoiceWaitingConfirmUpdate.InvoiceNum;
             invoice.LessonFee = invoiceWaitingConfirmUpdate.LessonFee;
@@ -175,9 +184,19 @@ namespace Pegasus_backend.Controllers
             invoice.Other1FeeName = invoiceWaitingConfirmUpdate.Other1FeeName;
             invoice.Other2FeeName = invoiceWaitingConfirmUpdate.Other2FeeName;
             invoice.Other3FeeName = invoiceWaitingConfirmUpdate.Other3FeeName;
+            invoice.IsActive = 1;
+
+            if (activeInvoices.Count > 0)
+            {
+                foreach(var activeInvoice in activeInvoices)
+                {
+                    activeInvoice.IsActive = 0;
+                }
+            }
 
             try
             {
+                await _ablemusicContext.SaveChangesAsync();
                 await _ablemusicContext.InvoiceWaitingConfirm.AddAsync(invoiceWaitingConfirm);
                 await _ablemusicContext.Invoice.AddAsync(invoice);
                 await _ablemusicContext.SaveChangesAsync();
