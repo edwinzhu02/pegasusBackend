@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Pegasus_backend.pegasusContext;
 
 namespace Pegasus_backend.Models
 {
@@ -26,11 +27,10 @@ namespace Pegasus_backend.Models
         public string Email { get; set; }
         [JsonProperty(Required = Required.Always)]
         public string Address { get; set; }
-        /*[Required(ErrorMessage = "Parent details is required")]*/
         public List<Parent> Parent { get; set; }
-        
-        //public List<int> GroupCourses { get; set; }
-        //public List<OnetoOneCourse> OnetoOneCourses { get; set; }
+        public List<LearnerGroupCourse> LearnerGroupCourse { get; set; }
+        public List<OnetoOneCourseInstanceModel> One2oneCourseInstance { get; set; }
+        public List<LearnerOthers> LearnerOthers { get; set; }
         
     }
 }

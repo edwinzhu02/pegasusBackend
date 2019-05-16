@@ -18,6 +18,22 @@ namespace Pegasus_backend.Controllers
 {
     public abstract class BasicController: ControllerBase
     {
+        protected TimeSpan GetEndTimeForOnetoOneCourseSchedule(TimeSpan beginTime, byte durationType)
+        {
+            switch (durationType)
+            {
+                case 1:
+                    return beginTime.Add(new TimeSpan(0,30,0));
+                case 2:
+                    return beginTime.Add(new TimeSpan(0,45,0));
+                case 3:
+                    return beginTime.Add(new TimeSpan(1,0,0));
+                case 4:
+                    return beginTime.Add(new TimeSpan(1,15,0));
+                default:
+                    throw new Exception("Duration type must be From 1 to 4");
+            }
+        }
         
         protected void DeleteFile(string filePath)
         {

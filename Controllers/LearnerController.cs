@@ -92,6 +92,21 @@ namespace Pegasus_backend.Controllers
                     _pegasusContext.Add(newLearner);
                     await _pegasusContext.SaveChangesAsync();
 
+                    for (var i = 0; i < newLearner.One2oneCourseInstance.ToList().Count; i++)
+                    {
+                        detailsJson.One2oneCourseInstance[i].id =
+                            newLearner.One2oneCourseInstance.ToList()[i].CourseInstanceId;
+                    }
+                    detailsJson.One2oneCourseInstance.ForEach(s =>
+                    {
+                        _pegasusContext.Add(new CourseSchedule
+                        {
+                            DayOfWeek = s.Schedule.DayOfWeek,CourseInstanceId = s.id,
+                            BeginTime = s.Schedule.BeginTime, EndTime = GetEndTimeForOnetoOneCourseSchedule(s.Schedule.BeginTime,s.Schedule.DurationType)
+                        });
+                    });
+                    await _pegasusContext.SaveChangesAsync();
+                    
                     if (image != null)
                     {
                         newLearner.Photo = $"images/LearnerImages/{newLearner.LearnerId}";
@@ -109,13 +124,14 @@ namespace Pegasus_backend.Controllers
                         UploadFile(ABRSM,"ABRSM",newLearner.LearnerId);
                     }
                     
+                    
                     dbContextTransaction.Commit();
                 }
             }
             catch (Exception ex)
             {
                 result.IsSuccess = false;
-                result.ErrorMessage = ex.Message;
+                result.ErrorMessage = ex.ToString();
                 return BadRequest(result);
             }
 
