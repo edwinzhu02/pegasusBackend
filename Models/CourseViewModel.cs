@@ -5,7 +5,6 @@ namespace Pegasus_backend.Models
 {
     public class CourseViewModel
     {
-        [Required(ErrorMessage = "Course id is required")]
         public int? CourseId { get; set; }
         [Required(ErrorMessage = "Course name is required")]
         public string CourseName { get; set; }
@@ -22,6 +21,5 @@ namespace Pegasus_backend.Models
         public short? CourseCategoryId { get; set; }
         [Required(ErrorMessage = "Teacher level is required")]
         public byte? TeacherLevel { get; set; }
-
     }
 }

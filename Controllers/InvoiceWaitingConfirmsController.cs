@@ -116,7 +116,6 @@ namespace Pegasus_backend.Controllers
                 return NotFound(result);
             }
 
-            UpdateTable(invoiceWaitingConfirm, typeof(InvoiceWaitingConfirm), invoiceWaitingConfirmUpdate);
             invoiceWaitingConfirmUpdate.IsConfirmed = 1;
 
             invoice.InvoiceNum = invoiceWaitingConfirmUpdate.InvoiceNum;

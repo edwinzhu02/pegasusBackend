@@ -55,12 +55,19 @@ namespace Pegasus_backend.Controllers
                                   join ta in _ablemusicContext.AvailableDays on t.TeacherId equals ta.TeacherId
                                   select new
                                   {
-                                      t.TeacherId,
+                                      TeacherId = t.TeacherId,
                                       TeacherFirstName = t.FirstName,
                                       TeacherLastName = t.LastName,
                                       TeacherAvailableOrgId = ta.OrgId,
                                       TeacherLevelId = t.Level,
-                                  }).ToListAsync();
+                                  } into x 
+                                  group x by new
+                                  {
+                                      x.TeacherId,
+                                      x.TeacherAvailableOrgId
+                                  } into g
+                                  select g.FirstOrDefault()
+                                  ).ToListAsync();
             }
             catch(Exception ex)
             {
@@ -68,23 +75,22 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = ex.Message;
                 return BadRequest(result);
             }
-            
-            var teachersNoRepeat = teachers.Distinct().ToList();
+
             List<Object> teacherResults = new List<Object>();
-            foreach(var org in orgs)
+            foreach (var org in orgs)
             {
                 List<Object> levelList = new List<Object>();
-                foreach(var level in levels)
+                foreach (var level in levels)
                 {
                     List<Object> teacherList = new List<Object>();
-                    foreach(var teacher in teachersNoRepeat)
+                    foreach (var teacher in teachers)
                     {
-                        if(teacher.TeacherAvailableOrgId == org.OrgId && teacher.TeacherLevelId == level.PropValue)
+                        if (teacher.TeacherAvailableOrgId == org.OrgId && teacher.TeacherLevelId == level.PropValue)
                         {
                             teacherList.Add(new
                             {
                                 teacher.TeacherId,
-                                TeacherName = teacher.TeacherFirstName + " " + teacher.TeacherLastName ,
+                                TeacherName = teacher.TeacherFirstName + " " + teacher.TeacherLastName,
                             });
                         }
                     }
@@ -97,9 +103,9 @@ namespace Pegasus_backend.Controllers
                     });
                 }
                 List<Object> roomList = new List<object>();
-                foreach(var room in rooms)
+                foreach (var room in rooms)
                 {
-                    if(org.OrgId == room.OrgId)
+                    if (org.OrgId == room.OrgId)
                     {
                         roomList.Add(new
                         {
