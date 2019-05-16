@@ -561,6 +561,10 @@ namespace Pegasus_backend.pegasusContext
                     .HasMaxLength(20)
                     .IsUnicode(false);
 
+                entity.Property(e => e.IsActive)
+                    .HasColumnName("is_active")
+                    .HasColumnType("bit(1)");
+
                 entity.Property(e => e.IsPaid)
                     .HasColumnName("is_paid")
                     .HasColumnType("bit(1)");
@@ -1044,6 +1048,11 @@ namespace Pegasus_backend.pegasusContext
                 entity.Property(e => e.LearnerGroupCourseId)
                     .HasColumnName("learner_group_course_id")
                     .HasColumnType("int(11)");
+
+                entity.Property(e => e.Comment)
+                    .HasColumnName("comment")
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.CreatedAt).HasColumnName("created_at");
 

@@ -10,6 +10,7 @@ namespace Pegasus_backend.pegasusContext
         public int LearnerGroupCourseId { get; set; }
         public DateTime? CreatedAt { get; set; }
         public short? IsActivate { get; set; }
+        public string Comment { get; set; }
 
         public GroupCourseInstance GroupCourseInstance { get; set; }
         public Learner Learner { get; set; }
