@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
 
 namespace Pegasus_backend.pegasusContext
 {
@@ -18,11 +17,8 @@ namespace Pegasus_backend.pegasusContext
         public TimeSpan? BeginTime { get; set; }
         public TimeSpan? EndTime { get; set; }
 
-        [JsonIgnore]
         public One2oneCourseInstance CourseInstance { get; set; }
-        [JsonIgnore]
         public GroupCourseInstance GroupCourseInstance { get; set; }
-        [JsonIgnore]
         public ICollection<Amendment> Amendment { get; set; }
     }
 }
