@@ -146,7 +146,7 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = "The provided invoice id is not active";
                 return BadRequest(result);
             }
-            if(invoiceWaitingConfirmUpdate.IsPaid == 1)
+            if(invoiceWaitingConfirmUpdate.PaidFee > 0)
             {
                 result.IsSuccess = false;
                 result.ErrorMessage = "The provided invoice is already paid";
@@ -157,33 +157,33 @@ namespace Pegasus_backend.Controllers
             invoiceWaitingConfirm.IsConfirmed = 1;
             invoiceWaitingConfirm.WaitingId = 0;
 
-            invoice.InvoiceNum = invoiceWaitingConfirmUpdate.InvoiceNum;
-            invoice.LessonFee = invoiceWaitingConfirmUpdate.LessonFee;
-            invoice.ConcertFee = invoiceWaitingConfirmUpdate.ConcertFee;
-            invoice.NoteFee = invoiceWaitingConfirmUpdate.NoteFee;
-            invoice.Other1Fee = invoiceWaitingConfirmUpdate.Other1Fee;
-            invoice.Other2Fee = invoiceWaitingConfirmUpdate.Other2Fee;
-            invoice.Other3Fee = invoiceWaitingConfirmUpdate.Other3Fee;
-            invoice.LearnerId = invoiceWaitingConfirmUpdate.LearnerId;
-            invoice.LearnerName = invoiceWaitingConfirmUpdate.LearnerName;
-            invoice.BeginDate = invoiceWaitingConfirmUpdate.BeginDate;
-            invoice.EndDate = invoiceWaitingConfirmUpdate.EndDate;
-            invoice.TotalFee = invoiceWaitingConfirmUpdate.TotalFee;
-            invoice.DueDate = invoiceWaitingConfirmUpdate.DueDate;
-            invoice.PaidFee = invoiceWaitingConfirmUpdate.PaidFee;
-            invoice.OwingFee = invoiceWaitingConfirmUpdate.OwingFee;
-            invoice.CreatedAt = invoiceWaitingConfirmUpdate.CreatedAt;
-            invoice.IsPaid = invoiceWaitingConfirmUpdate.IsPaid;
-            invoice.TermId = invoiceWaitingConfirmUpdate.TermId;
-            invoice.CourseInstanceId = invoiceWaitingConfirmUpdate.CourseInstanceId;
-            invoice.GroupCourseInstanceId = invoiceWaitingConfirmUpdate.GroupCourseInstanceId;
-            invoice.LessonQuantity = invoiceWaitingConfirmUpdate.LessonQuantity;
-            invoice.CourseName = invoiceWaitingConfirmUpdate.CourseName;
-            invoice.ConcertFeeName = invoiceWaitingConfirmUpdate.ConcertFeeName;
-            invoice.LessonNoteFeeName = invoiceWaitingConfirmUpdate.LessonNoteFeeName;
-            invoice.Other1FeeName = invoiceWaitingConfirmUpdate.Other1FeeName;
-            invoice.Other2FeeName = invoiceWaitingConfirmUpdate.Other2FeeName;
-            invoice.Other3FeeName = invoiceWaitingConfirmUpdate.Other3FeeName;
+            invoice.InvoiceNum = invoiceWaitingConfirm.InvoiceNum;
+            invoice.LessonFee = invoiceWaitingConfirm.LessonFee;
+            invoice.ConcertFee = invoiceWaitingConfirm.ConcertFee;
+            invoice.NoteFee = invoiceWaitingConfirm.NoteFee;
+            invoice.Other1Fee = invoiceWaitingConfirm.Other1Fee;
+            invoice.Other2Fee = invoiceWaitingConfirm.Other2Fee;
+            invoice.Other3Fee = invoiceWaitingConfirm.Other3Fee;
+            invoice.LearnerId = invoiceWaitingConfirm.LearnerId;
+            invoice.LearnerName = invoiceWaitingConfirm.LearnerName;
+            invoice.BeginDate = invoiceWaitingConfirm.BeginDate;
+            invoice.EndDate = invoiceWaitingConfirm.EndDate;
+            invoice.TotalFee = invoiceWaitingConfirm.TotalFee;
+            invoice.DueDate = invoiceWaitingConfirm.DueDate;
+            invoice.PaidFee = invoiceWaitingConfirm.PaidFee;
+            invoice.OwingFee = invoiceWaitingConfirm.OwingFee;
+            invoice.CreatedAt = invoiceWaitingConfirm.CreatedAt;
+            invoice.IsPaid = invoiceWaitingConfirm.IsPaid;
+            invoice.TermId = invoiceWaitingConfirm.TermId;
+            invoice.CourseInstanceId = invoiceWaitingConfirm.CourseInstanceId;
+            invoice.GroupCourseInstanceId = invoiceWaitingConfirm.GroupCourseInstanceId;
+            invoice.LessonQuantity = invoiceWaitingConfirm.LessonQuantity;
+            invoice.CourseName = invoiceWaitingConfirm.CourseName;
+            invoice.ConcertFeeName = invoiceWaitingConfirm.ConcertFeeName;
+            invoice.LessonNoteFeeName = invoiceWaitingConfirm.LessonNoteFeeName;
+            invoice.Other1FeeName = invoiceWaitingConfirm.Other1FeeName;
+            invoice.Other2FeeName = invoiceWaitingConfirm.Other2FeeName;
+            invoice.Other3FeeName = invoiceWaitingConfirm.Other3FeeName;
             invoice.IsActive = 1;
 
             if (activeInvoices.Count > 0)
