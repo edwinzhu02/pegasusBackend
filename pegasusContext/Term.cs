@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Pegasus_backend.pegasusContext
 {
@@ -17,7 +18,6 @@ namespace Pegasus_backend.pegasusContext
         public DateTime? EndDate { get; set; }
         public short? WeekQuantity { get; set; }
         public byte? TermType { get; set; }
-        
         [JsonIgnore]
 
         public ICollection<Invoice> Invoice { get; set; }
