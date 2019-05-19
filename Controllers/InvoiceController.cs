@@ -36,6 +36,7 @@ namespace Pegasus_backend.Controllers
             try
             {
                 return _pegasusContext.Invoice.Where(s => s.LearnerId == id).Include(s => s.Term)
+                    .Where(s=>s.IsPaid == 0)
                     .ToList();
             }
             catch (Exception ex)

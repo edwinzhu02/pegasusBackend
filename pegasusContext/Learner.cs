@@ -39,9 +39,11 @@ namespace Pegasus_backend.pegasusContext
         public string Photo { get; set; }
         public string Note { get; set; }
         public string MiddleName { get; set; }
-        public short? LevelType { get; set; }
+        public byte? LevelType { get; set; }
         public short? UserId { get; set; }
         public short? OrgId { get; set; }
+        public short? IsActive { get; set; }
+        public byte? LearnerLevel { get; set; }
 
         public Org Org { get; set; }
         public User User { get; set; }
@@ -50,6 +52,7 @@ namespace Pegasus_backend.pegasusContext
         public ICollection<InvoiceWaitingConfirm> InvoiceWaitingConfirm { get; set; }
         public ICollection<LearnerGroupCourse> LearnerGroupCourse { get; set; }
         public ICollection<LearnerOthers> LearnerOthers { get; set; }
+        
         public ICollection<Lesson> Lesson { get; set; }
         public ICollection<LessonRemain> LessonRemain { get; set; }
         public ICollection<One2oneCourseInstance> One2oneCourseInstance { get; set; }

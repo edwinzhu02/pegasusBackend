@@ -28,6 +28,33 @@ namespace Pegasus_backend.Controllers
             _mapper = mapper;
         }
         
+        //Delete: apo/learner/:id
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteLearner(int id)
+        {
+            Result<string> result = new Result<string>();
+            try
+            {
+                var learner = await _pegasusContext.Learner.FirstOrDefaultAsync(s => s.LearnerId == id);
+                if (learner == null)
+                {
+                    throw new Exception("Learner does not exist");
+                }
+                learner.IsActive = 0;
+                _pegasusContext.Update(learner);
+                await _pegasusContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+
+            result.Data = "delete successfully";
+            return Ok(result);
+        }
+        
         //GET: http://localhost:5000/api/learner/:name
         [HttpGet]
         [Route("{name}")]
@@ -36,10 +63,12 @@ namespace Pegasus_backend.Controllers
             Result<IEnumerable<Learner>> result = new Result<IEnumerable<Learner>>();
             try
             {
-                result.Data = await _pegasusContext.Learner.Where(s =>s.FirstName.Contains(name)).ToListAsync();
+                result.Data = await _pegasusContext.Learner
+                    .Where(s=>s.IsActive==1 &&s.FirstName.Contains(name))
+                    .ToListAsync();
                 if (result.Data.Count() == 0)
                 {
-                    return BadRequest(DataNotFound(result));
+                    return NotFound(DataNotFound(result));
                 }
                 
 
@@ -63,7 +92,7 @@ namespace Pegasus_backend.Controllers
             Result<List<Learner>> result = new Result<List<Learner>>();
             try
             {
-                var data = await _pegasusContext.Learner.ToListAsync();
+                var data = await _pegasusContext.Learner.Include(s=>s.Parent).Where(s=>s.IsActive==1).ToListAsync();
                 result.Data = data;
             }
             catch (Exception ex)
@@ -89,6 +118,7 @@ namespace Pegasus_backend.Controllers
                     var detailsJson = JsonConvert.DeserializeObject<StudentRegister>(details);
                     var newLearner = new Learner();
                     _mapper.Map(detailsJson, newLearner);
+                    newLearner.IsActive = 1;
                     _pegasusContext.Add(newLearner);
                     await _pegasusContext.SaveChangesAsync();
 
@@ -131,7 +161,7 @@ namespace Pegasus_backend.Controllers
             catch (Exception ex)
             {
                 result.IsSuccess = false;
-                result.ErrorMessage = ex.ToString();
+                result.ErrorMessage = ex.Message;
                 return BadRequest(result);
             }
 

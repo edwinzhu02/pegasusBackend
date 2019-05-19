@@ -26,6 +26,12 @@ namespace Pegasus_backend.Models
         [JsonProperty(Required = Required.Always)]
         public string Email { get; set; }
         [JsonProperty(Required = Required.Always)]
+        public byte LevelType { get; set; }
+        [JsonProperty(Required = Required.Always)]
+        public byte LearnerLevel { get; set; }
+        [JsonProperty(Required = Required.Always)]
+        public short OrgId { get; set; }
+        [JsonProperty(Required = Required.Always)]
         public string Address { get; set; }
         public List<Parent> Parent { get; set; }
         public List<LearnerGroupCourse> LearnerGroupCourse { get; set; }

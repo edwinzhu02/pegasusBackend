@@ -849,6 +849,9 @@ namespace Pegasus_backend.pegasusContext
             {
                 entity.ToTable("learner", "ablemusic");
 
+                entity.HasIndex(e => e.FirstName)
+                    .HasName("idx_learner_firstname");
+
                 entity.HasIndex(e => e.OrgId)
                     .HasName("R_115");
 
@@ -900,6 +903,10 @@ namespace Pegasus_backend.pegasusContext
                     .HasColumnName("is_abrsm_g5")
                     .HasColumnType("bit(1)");
 
+                entity.Property(e => e.IsActive)
+                    .HasColumnName("is_active")
+                    .HasColumnType("bit(1)");
+
                 entity.Property(e => e.IsUnder18)
                     .HasColumnName("is_under_18")
                     .HasColumnType("bit(1)");
@@ -909,9 +916,13 @@ namespace Pegasus_backend.pegasusContext
                     .HasMaxLength(30)
                     .IsUnicode(false);
 
+                entity.Property(e => e.LearnerLevel)
+                    .HasColumnName("learner_level")
+                    .HasColumnType("tinyint(4)");
+
                 entity.Property(e => e.LevelType)
                     .HasColumnName("level_type")
-                    .HasColumnType("bit(1)");
+                    .HasColumnType("tinyint(4)");
 
                 entity.Property(e => e.MiddleName)
                     .HasColumnName("middle_name")
@@ -2412,6 +2423,9 @@ namespace Pegasus_backend.pegasusContext
             modelBuilder.Entity<Teacher>(entity =>
             {
                 entity.ToTable("teacher", "ablemusic");
+
+                entity.HasIndex(e => e.FirstName)
+                    .HasName("idx_teacher_firstname");
 
                 entity.HasIndex(e => e.UserId)
                     .HasName("R_12");
