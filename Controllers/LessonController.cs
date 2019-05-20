@@ -101,6 +101,8 @@ namespace Pegasus_backend.Controllers
             return Ok(result);
         }
 
+
+        //auto-generate lessons sort by invoice when the invoice is paid
         [HttpPost]
         public async Task<IActionResult> SaveLesson()
         {
