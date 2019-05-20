@@ -65,6 +65,8 @@ namespace Pegasus_backend.Controllers
             try
             {
                 result.Data = await _pegasusContext.Learner
+                    .Include(s=>s.LearnerOthers)
+                    .Include(s=>s.Parent)
                     .Where(s=>s.IsActive==1 &&s.FirstName.Contains(name))
                     .ToListAsync();
                 if (result.Data.Count() == 0)
@@ -93,7 +95,10 @@ namespace Pegasus_backend.Controllers
             Result<List<Learner>> result = new Result<List<Learner>>();
             try
             {
-                var data = await _pegasusContext.Learner.Include(s=>s.Parent).Where(s=>s.IsActive==1).ToListAsync();
+                var data = await _pegasusContext.Learner
+                    .Include(s=>s.LearnerOthers)
+                    .Include(s=>s.Parent)
+                    .Where(s=>s.IsActive==1).ToListAsync();
                 result.Data = data;
             }
             catch (Exception ex)
