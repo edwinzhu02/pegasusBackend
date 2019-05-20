@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -139,7 +140,7 @@ namespace Pegasus_backend.Controllers
                     
                     if (image != null)
                     {
-                        newLearner.Photo = $"images/LearnerImages/{newLearner.LearnerId}";
+                        newLearner.Photo = $"images/LearnerImages/{newLearner.LearnerId+Path.GetExtension(image.FileName)}";
                         _pegasusContext.Update(newLearner);
                         await _pegasusContext.SaveChangesAsync();
                         UploadFile(image,"image",newLearner.LearnerId);
@@ -147,7 +148,7 @@ namespace Pegasus_backend.Controllers
 
                     if (ABRSM != null)
                     {
-                        newLearner.G5Certification = $"images/ABRSM_Grade5_Certificate/{newLearner.LearnerId}";
+                        newLearner.G5Certification = $"images/ABRSM_Grade5_Certificate/{newLearner.LearnerId+Path.GetExtension(ABRSM.FileName)}";
                         newLearner.IsAbrsmG5 = 1;
                         _pegasusContext.Update(newLearner);
                         await _pegasusContext.SaveChangesAsync();

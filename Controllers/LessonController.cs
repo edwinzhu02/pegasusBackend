@@ -33,17 +33,17 @@ namespace Pegasus_backend.Controllers
                 var userId = int.Parse(User.Claims.First(s => s.Type == "UserID").Value);
                 var staff = _pegasusContext.Staff.FirstOrDefault(s => s.UserId == userId);
                 var orgId = _pegasusContext.StaffOrg.FirstOrDefault(s => s.StaffId == staff.StaffId).OrgId;
-                var details = _pegasusContext.Lesson.Where(w => w.OrgId == orgId)
-                    .Where(s=>s.BeginTime.Value.Year == date.Year && s.BeginTime.Value.Month == date.Month && s.BeginTime.Value.Day == date.Day)
+                var details = _pegasusContext.Lesson
+                    .Where(s=>s.OrgId==orgId&&s.BeginTime.Value.Year == date.Year && s.BeginTime.Value.Month == date.Month && s.BeginTime.Value.Day == date.Day)
                     .Include(s=>s.Learner)
                     .Include(s => s.Teacher)
                     .Include(group => group.GroupCourseInstance)
                     .ThenInclude(learnerCourse => learnerCourse.LearnerGroupCourse)
                     .ThenInclude(learner => learner.Learner)
                     .Select(s =>new {id = s.LessonId, resourceId = s.RoomId, start = s.BeginTime,end=s.EndTime,
-                        title=IsNull(s.GroupCourseInstance)?"1 to 1":"Group Course",description="",
+                        title=IsNull(s.GroupCourseInstance)?"1":"G",description="",
                         teacher=s.Teacher.FirstName.ToString(),
-                        student=IsNull(s.GroupCourseInstance)?new List<string>(){s.Learner.FirstName}:s.GroupCourseInstance.LearnerGroupCourse.Select(w=>w.Learner.FirstName),
+                        student=IsNull(s.GroupCourseInstance)?new List<string>{s.Learner.FirstName}:s.GroupCourseInstance.LearnerGroupCourse.Select(w=>w.Learner.FirstName),
                         IsGroup=!IsNull(s.GroupCourseInstance)
                     });
                     
