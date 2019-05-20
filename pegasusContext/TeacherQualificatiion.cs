@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Pegasus_backend.pegasusContext
 {
@@ -11,6 +12,7 @@ namespace Pegasus_backend.pegasusContext
         public byte? QualiId { get; set; }
 
         public Qualification Quali { get; set; }
+        [JsonIgnore]
         public Teacher Teacher { get; set; }
     }
 }
