@@ -108,7 +108,6 @@ namespace Pegasus_backend.Controllers
 
             var invoice = await _pegasusContext.Invoice.FirstOrDefaultAsync(x => x.InvoiceId == 1);
             var course = await _pegasusContext.One2oneCourseInstance.FirstOrDefaultAsync(x => x.CourseInstanceId == invoice.CourseInstanceId);
-
             var holiday = await _pegasusContext.Holiday.Select(x => x.HolidayDate).ToArrayAsync();
             var schedules = await _pegasusContext.CourseSchedule.Where(x => x.CourseInstanceId == invoice.CourseInstanceId).ToArrayAsync();
             var amendments = await _pegasusContext.Amendment.Where(x => x.CourseInstanceId == invoice.CourseInstanceId && x.BeginDate <= invoice.EndDate).ToArrayAsync();
@@ -119,8 +118,6 @@ namespace Pegasus_backend.Controllers
 
             DateTime[] lesson_begindate = new DateTime[schedules.Length];
             int[] num = new int[schedules.Length];
-
-            int[] amen_week = new int[schedules.Length];
 
             for (int i = 0; i < invoice.LessonQuantity;)
             {
@@ -210,6 +207,21 @@ namespace Pegasus_backend.Controllers
                             }
                         }
 
+                        //if the first lesson of the week(datetime) earlier than the lesson of last week, generate this lesson and break the loop (otherlesson of this week waiting for the first lesson)
+                        if (lesson_flag==0 && i != 0)
+                        {
+                            DateTime max = lesson_begindate[lesson_flag];
+                            foreach (DateTime date in lesson_begindate)
+                            {
+                                if (DateTime.Compare(date, max) > 0 )
+                                {
+                                    flag = 2;
+                                    break;
+                                }
+                                    
+                            }
+                        }
+
                         if (lesson_begindate[lesson_flag] > invoice.EndDate) { i = (int)invoice.LessonQuantity; break; }
                         string lesson_begindate_result = lesson_begindate[lesson_flag].ToString("yyyy-MM-dd");
                         //Concat the datetime, date from invoice and time from schedule
@@ -229,6 +241,7 @@ namespace Pegasus_backend.Controllers
                         lesson.EndTime = EndTime;
                         await _pegasusContext.Lesson.AddAsync(lesson);
                         //await _pegasusContext.SaveChangesAsync();
+
                     }
                     catch (Exception e)
                     {
@@ -238,7 +251,9 @@ namespace Pegasus_backend.Controllers
                         return BadRequest(result);
                     }
                     i++;
+                    if (i >= invoice.LessonQuantity) break;
                     num[lesson_flag]++;
+                    if (flag == 2) break;
                     lesson_flag++;
                 }
             }
