@@ -116,7 +116,9 @@ namespace Pegasus_backend.Controllers
             //get the day of week of the begindate in invoice
             int DayOfWeek_invoice = day_trans(begindate_invoice.DayOfWeek.ToString());
 
+            //save the begindate of each lesson[each schedule]
             DateTime[] lesson_begindate = new DateTime[schedules.Length];
+            //count the week of course(each lesson)
             int[] num = new int[schedules.Length];
 
             for (int i = 0; i < invoice.LessonQuantity;)
@@ -156,6 +158,8 @@ namespace Pegasus_backend.Controllers
 
                         string begintime = "";
                         string endtime = "";
+
+                        //if the lesson has been motified
                         if (amendments != null)
                         {
                             foreach (var amendment in amendments)
@@ -222,7 +226,12 @@ namespace Pegasus_backend.Controllers
                             }
                         }
 
-                        if (lesson_begindate[lesson_flag] > invoice.EndDate) { i = (int)invoice.LessonQuantity; break; }
+                        if (lesson_begindate[lesson_flag] > invoice.EndDate) 
+                        {
+                            i = (int)invoice.LessonQuantity;
+                            break;
+                        }
+
                         string lesson_begindate_result = lesson_begindate[lesson_flag].ToString("yyyy-MM-dd");
                         //Concat the datetime, date from invoice and time from schedule
                         if (flag == 0)
@@ -233,7 +242,6 @@ namespace Pegasus_backend.Controllers
                         }
 
                         string beginDate = string.Concat(lesson_begindate_result, " ", begintime);
-
                         string endDate = string.Concat(lesson_begindate_result, " ", endtime);
                         DateTime BeginTime = Convert.ToDateTime(beginDate);
                         DateTime EndTime = Convert.ToDateTime(endDate);
