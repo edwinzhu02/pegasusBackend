@@ -94,6 +94,12 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = "Session not found";
                 return NotFound(result);
             }
+            if(lesson.IsCanceled == 1)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = "This lesson has already been cancelled";
+                return BadRequest(result);
+            }
             if (string.IsNullOrEmpty(reason))
             {
                 result.IsSuccess = false;
@@ -261,7 +267,7 @@ namespace Pegasus_backend.Controllers
                 List<Task> learnerMailSenderTasks = new List<Task>();
                 for (int i = 0; i < remindLogForLearners.Count; i++)
                 {
-                    string confirmURLForLearner = userConfirmUrlPrefix + todolistForLearners[i].ListId + "/" + remindLogForLearners[0].RemindId;
+                    string confirmURLForLearner = userConfirmUrlPrefix + todolistForLearners[i].ListId + "/" + remindLogForLearners[i].RemindId;
                     string mailContentForLearner = MailContentGenerator(learners[i].FirstName + " " + learners[i].LastName, courseName, lesson, reason, confirmURLForLearner);
                     learnerMailSenderTasks.Add(MailSenderService.SendMailAsync(remindLogForLearners[i].Email, mailTitle, mailContentForLearner, remindLogForLearners[i].RemindId));
                 }
