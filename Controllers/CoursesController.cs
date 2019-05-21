@@ -222,12 +222,17 @@ namespace Pegasus_backend.Controllers
             }
             catch (Exception e)
             {
-                result.ErrorMessage = e.Message;
+                if(e.HResult == -2146233088)
+                {
+                    result.ErrorMessage = "The selected course is not allowed to delete";
+                    result.IsSuccess = false;
+                    return BadRequest(result);
+                }
+                result.ErrorMessage = e.ToString();
                 result.IsSuccess = false;
                 result.IsFound = false;
                 return BadRequest(result);
-            }
-            
+            }        
         }
 
         private bool CourseExists(int id)
