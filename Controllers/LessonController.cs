@@ -33,6 +33,7 @@ namespace Pegasus_backend.Controllers
                 var staff = _pegasusContext.Staff.FirstOrDefault(s => s.UserId == userId);
                 var orgId = _pegasusContext.StaffOrg.FirstOrDefault(s => s.StaffId == staff.StaffId).OrgId;
                 var details = _pegasusContext.Lesson
+                    .Where(s=>s.IsCanceled ==0)
                     .Where(s=>s.OrgId==orgId&&s.BeginTime.Value.Year == date.Year && s.BeginTime.Value.Month == date.Month && s.BeginTime.Value.Day == date.Day)
                     .Include(s=>s.Learner)
                     .Include(s => s.Teacher)
@@ -72,6 +73,7 @@ namespace Pegasus_backend.Controllers
                 }
                 var teacherId = teacher.TeacherId;
                 var details = _pegasusContext.Lesson.Where(s => s.TeacherId == teacherId)
+                    .Where(s=>s.IsCanceled ==0)
                     .Include(s=>s.Room)
                     .Include(s=>s.Learner)
                     .Include(s=>s.Teacher)
@@ -122,9 +124,9 @@ namespace Pegasus_backend.Controllers
                     .Select(s => new
                     {
                         CourseName=!IsNull(s.GroupCourseInstance)?s.GroupCourseInstance.Course.CourseName:s.CourseInstance.Course.CourseName,
-                        TeacherFirstName=s.Teacher.FirstName,s.BeginTime,s.EndTime,
+                        TeacherFirstName=s.Teacher.FirstName,s.BeginTime,s.EndTime,s.LessonId,
                         Room=s.Room.RoomName, Branch=s.Org.OrgName, s.IsCanceled, CancelReson =s.Reason,
-                        s.IsTrial,Learner = s.Learner.FirstName, Learners= s.GroupCourseInstance.LearnerGroupCourse.Select(w=>w.Learner.FirstName)
+                        s.IsTrial,Learner = s.Learner.FirstName, Learners= ""
                     });
                     
                 result.Data = await items.ToListAsync();

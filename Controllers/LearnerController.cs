@@ -100,8 +100,13 @@ namespace Pegasus_backend.Controllers
                 var data = await _pegasusContext.Learner
                     .Include(s=>s.LearnerOthers)
                     .Include(s=>s.Parent)
+                    .Include(s=>s.Org)
+                    .ThenInclude(w=>w.Room)
                     .Include(s=>s.One2oneCourseInstance)
                     .ThenInclude(w=>w.Teacher)
+                    .Include(s=>s.One2oneCourseInstance)
+                    .ThenInclude(s=>s.Course)
+                    
                     .Include(s=>s.LearnerGroupCourse)
                     .Where(s=>s.IsActive==1).ToListAsync();
                 result.Data = data;

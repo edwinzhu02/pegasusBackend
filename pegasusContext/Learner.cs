@@ -45,11 +45,12 @@ namespace Pegasus_backend.pegasusContext
         public short? OrgId { get; set; }
         public short? IsActive { get; set; }
         public byte? LearnerLevel { get; set; }
+        public byte? PaymentPeriod { get; set; }
+        public string Referrer { get; set; }
 
         public Org Org { get; set; }
         public User User { get; set; }
         public ICollection<Amendment> Amendment { get; set; }
-        [JsonIgnore]
         public ICollection<Invoice> Invoice { get; set; }
         public ICollection<InvoiceWaitingConfirm> InvoiceWaitingConfirm { get; set; }
         public ICollection<LearnerGroupCourse> LearnerGroupCourse { get; set; }
@@ -58,6 +59,7 @@ namespace Pegasus_backend.pegasusContext
         public ICollection<LessonRemain> LessonRemain { get; set; }
         public ICollection<One2oneCourseInstance> One2oneCourseInstance { get; set; }
         public ICollection<Parent> Parent { get; set; }
+        [JsonIgnore]
         public ICollection<Payment> Payment { get; set; }
         public ICollection<RemindLog> RemindLog { get; set; }
         public ICollection<SoldTransaction> SoldTransaction { get; set; }

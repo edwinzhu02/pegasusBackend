@@ -9,8 +9,6 @@ namespace Pegasus_backend.pegasusContext
         public int LoginLogId { get; set; }
         public int? LogType { get; set; }
         public DateTime? CreatedAt { get; set; }
-        public string Ipaddr { get; set; }
-        public string Mac { get; set; }
 
         public User User { get; set; }
     }
