@@ -16,7 +16,7 @@ namespace Pegasus_backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LessonRearrangeController : ControllerBase
+    public class LessonRearrangeController : BasicController
     {
         private readonly pegasusContext.ablemusicContext _ablemusicContext;
         private readonly IMapper _mapper;
@@ -27,14 +27,6 @@ namespace Pegasus_backend.Controllers
             _ablemusicContext = ablemusicContext;
             _mapper = mapper;
             _configuration = configuration;
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> GetLessons()
-        {
-            var result = new Result<List<Lesson>>();
-            result.Data = await _ablemusicContext.Lesson.ToListAsync();
-            return Ok(result);
         }
 
         // PUT: api/LessonRearrange/5
@@ -88,7 +80,7 @@ namespace Pegasus_backend.Controllers
                 newLesson.BeginTime != oldLesson.BeginTime || newLesson.EndTime != oldLesson.EndTime)
                 {
                     conflictRooms = await _ablemusicContext.Lesson.Where(l => l.RoomId == newLesson.RoomId &&
-                    l.OrgId == newLesson.OrgId &&
+                    l.OrgId == newLesson.OrgId && l.IsCanceled != 1 && l.LessonId != newLesson.LessonId &&
                     ((l.BeginTime > newLesson.BeginTime && l.BeginTime < newLesson.EndTime) ||
                     (l.EndTime > newLesson.BeginTime && l.EndTime < newLesson.EndTime) ||
                     (l.BeginTime <= newLesson.BeginTime && l.EndTime >= newLesson.EndTime)))
@@ -100,6 +92,7 @@ namespace Pegasus_backend.Controllers
                     DateTime beginTime = newLesson.BeginTime.Value.AddMinutes(-60);
                     DateTime endTime = newLesson.EndTime.Value.AddMinutes(60);
                     conflictTeacherLessons = await _ablemusicContext.Lesson.Where(l => l.TeacherId == newLesson.TeacherId &&
+                    l.IsCanceled != 1 && l.LessonId != newLesson.LessonId &&
                     ((l.BeginTime > beginTime && l.BeginTime < endTime) ||
                     (l.EndTime > beginTime && l.EndTime < endTime) ||
                     (l.BeginTime <= beginTime && l.EndTime >= endTime)))

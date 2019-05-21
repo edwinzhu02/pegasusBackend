@@ -20,8 +20,8 @@ namespace Pegasus_backend.Controllers
         }
 
         // GET: api/TeacherFilter
-        [HttpGet]
-        public async Task<IActionResult> Get()
+        [HttpGet("{courseId}")]
+        public async Task<IActionResult> Get(int courseId)
         {
             Result<List<Object>> result = new Result<List<Object>>();
             dynamic orgs;
@@ -53,6 +53,8 @@ namespace Pegasus_backend.Controllers
                                 }).ToListAsync();
                 teachers = await (from t in _ablemusicContext.Teacher
                                   join ta in _ablemusicContext.AvailableDays on t.TeacherId equals ta.TeacherId
+                                  join tc in _ablemusicContext.TeacherCourse on t.TeacherId equals tc.TeacherId
+                                  where tc.CourseId == courseId
                                   select new
                                   {
                                       TeacherId = t.TeacherId,
