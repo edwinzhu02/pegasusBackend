@@ -82,7 +82,7 @@ namespace Pegasus_backend.Controllers
                     .Select(q=>new
                     {
                         title=IsNull(q.GroupCourseInstanceId)?"One to One":"Group",start=q.BeginTime,end=q.EndTime,
-                        student=IsNull(q.GroupCourseInstance)?new List<string>(){q.Learner.FirstName}:q.GroupCourseInstance.LearnerGroupCourse.Select(w=>w.Learner.FirstName),
+                        student=IsNull(q.GroupCourseInstance)?new List<string>{q.Learner.FirstName}:q.GroupCourseInstance.LearnerGroupCourse.Select(w=>w.Learner.FirstName),
                         description="", courseName=IsNull(q.GroupCourseInstanceId)?q.CourseInstance.Course.CourseName:q.GroupCourseInstance.Course.CourseName,
                         orgName= q.Org.OrgName, roomName=q.Room.RoomName
                     });
@@ -124,7 +124,7 @@ namespace Pegasus_backend.Controllers
                         CourseName=!IsNull(s.GroupCourseInstance)?s.GroupCourseInstance.Course.CourseName:s.CourseInstance.Course.CourseName,
                         TeacherFirstName=s.Teacher.FirstName,s.BeginTime,s.EndTime,
                         Room=s.Room.RoomName, Branch=s.Org.OrgName, s.IsCanceled, CancelReson =s.Reason,
-                        s.IsTrial
+                        s.IsTrial,Learner = s.Learner.FirstName, Learners= s.GroupCourseInstance.LearnerGroupCourse.Select(w=>w.Learner.FirstName)
                     });
                     
                 result.Data = await items.ToListAsync();

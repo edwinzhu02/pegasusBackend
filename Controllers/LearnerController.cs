@@ -101,6 +101,7 @@ namespace Pegasus_backend.Controllers
                     .Include(s=>s.LearnerOthers)
                     .Include(s=>s.Parent)
                     .Include(s=>s.One2oneCourseInstance)
+                    .ThenInclude(w=>w.Teacher)
                     .Include(s=>s.LearnerGroupCourse)
                     .Where(s=>s.IsActive==1).ToListAsync();
                 result.Data = data;
