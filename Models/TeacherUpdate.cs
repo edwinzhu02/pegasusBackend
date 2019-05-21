@@ -20,7 +20,6 @@ namespace Pegasus_backend.Models
         public DateTime Dob { get; set; }
         [JsonProperty(Required = Required.Always)]
         public string IRDNumber { get; set; }
-        [JsonProperty(Required = Required.Always)]
         public short IDType { get; set; }
         [JsonProperty(Required = Required.Always)]
         public string IDNumber { get; set; }

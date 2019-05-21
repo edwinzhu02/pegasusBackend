@@ -50,12 +50,7 @@ namespace Pegasus_backend.Controllers
 
         protected bool IsNull<T>(T item)
         {
-            if (item == null)
-            {
-                return true;
-            }
-
-            return false;
+            return item == null;
         }
 
         protected Object UserInfoFilter(User user, string positionToClient)
@@ -104,54 +99,46 @@ namespace Pegasus_backend.Controllers
             var extension = Path.GetExtension(fileName);
             var Id = id + extension;
             
-            try
+            if (imageName == "IdPhoto")
             {
-                if (imageName == "IdPhoto")
-                {
                     
-                    var folderName = Path.Combine("wwwroot", "images", "TeacherIdPhotos");
-                    var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
-                    var path = Path.Combine(pathToSave, Id );
-                    var stream = new FileStream(path, FileMode.Create);
-                    file.CopyTo(stream);
-                    stream.Close();
-                }
-
-                if (imageName == "Photo")
-                {
-                    var folderName = Path.Combine("wwwroot", "images", "TeacherImages");
-                    var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
-                    var path = Path.Combine(pathToSave, Id);
-                    var stream = new FileStream(path, FileMode.Create);
-                    file.CopyTo(stream);
-                    stream.Close();
-                }
-                
-                //student photo
-                if (imageName == "image")
-                {
-                    var folderName = Path.Combine("wwwroot", "images", "LearnerImages");
-                    var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
-                    var path = Path.Combine(pathToSave, Id);
-                    var stream = new FileStream(path, FileMode.Create);
-                    file.CopyTo(stream);
-                    stream.Close();
-                }
-
-                if (imageName == "ABRSM")
-                {
-                    var folderName = Path.Combine("wwwroot", "images", "ABRSM_Grade5_Certificate");
-                    var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
-                    var path = Path.Combine(pathToSave, Id);
-                    var stream = new FileStream(path, FileMode.Create);
-                    file.CopyTo(stream);
-                    stream.Close();
-                }
-                
+                var folderName = Path.Combine("wwwroot", "images", "TeacherIdPhotos");
+                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+                var path = Path.Combine(pathToSave, Id );
+                var stream = new FileStream(path, FileMode.Create);
+                file.CopyTo(stream);
+                stream.Close();
             }
-            catch (Exception ex)
+
+            if (imageName == "Photo")
             {
-                throw new Exception(ex.Message);
+                var folderName = Path.Combine("wwwroot", "images", "TeacherImages");
+                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+                var path = Path.Combine(pathToSave, Id);
+                var stream = new FileStream(path, FileMode.Create);
+                file.CopyTo(stream);
+                stream.Close();
+            }
+                
+            //student photo
+            if (imageName == "image")
+            {
+                var folderName = Path.Combine("wwwroot", "images", "LearnerImages");
+                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+                var path = Path.Combine(pathToSave, Id);
+                var stream = new FileStream(path, FileMode.Create);
+                file.CopyTo(stream);
+                stream.Close();
+            }
+
+            if (imageName == "ABRSM")
+            {
+                var folderName = Path.Combine("wwwroot", "images", "ABRSM_Grade5_Certificate");
+                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+                var path = Path.Combine(pathToSave, Id);
+                var stream = new FileStream(path, FileMode.Create);
+                file.CopyTo(stream);
+                stream.Close();
             }
         }
     }

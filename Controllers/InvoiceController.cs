@@ -35,7 +35,7 @@ namespace Pegasus_backend.Controllers
             Result<string> result = new Result<string>();
             try
             {
-                return _pegasusContext.Invoice.Where(s => s.LearnerId == id).Include(s => s.Term)
+                return _pegasusContext.Invoice.Where(s => s.LearnerId == id&&s.IsActive==1).Include(s => s.Term)
                     .Where(s=>s.IsPaid == 0)
                     .ToList();
             }
