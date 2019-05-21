@@ -11,6 +11,15 @@ namespace Pegasus_backend.Models
     public class TeachersRegister
     {
         [JsonProperty(Required = Required.Always)]
+        public byte? Level { get; set; }
+        [JsonProperty(Required = Required.Always)]
+        public short IsContract { get; set; }
+        [JsonProperty(Required = Required.Always)]
+        public short IsLeft { get; set; }
+        public byte InvoiceTemplate { get; set; }
+        public string Ability { get; set; }
+        public string Comment { get; set; }
+        [JsonProperty(Required = Required.Always)]
         public string FirstName { get; set; }
         [JsonProperty(Required = Required.Always)]
         public string LastName { get; set; }

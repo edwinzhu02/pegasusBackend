@@ -18,6 +18,8 @@ namespace Pegasus_backend.pegasusContext
         public virtual DbSet<Amendment> Amendment { get; set; }
         public virtual DbSet<AskOff> AskOff { get; set; }
         public virtual DbSet<AvailableDays> AvailableDays { get; set; }
+        public virtual DbSet<ChatGroup> ChatGroup { get; set; }
+        public virtual DbSet<ChatMessage> ChatMessage { get; set; }
         public virtual DbSet<Course> Course { get; set; }
         public virtual DbSet<CourseCategory> CourseCategory { get; set; }
         public virtual DbSet<CourseSchedule> CourseSchedule { get; set; }
@@ -271,6 +273,71 @@ namespace Pegasus_backend.pegasusContext
                     .WithMany(p => p.AvailableDays)
                     .HasForeignKey(d => d.TeacherId)
                     .HasConstraintName("R_9");
+            });
+
+            modelBuilder.Entity<ChatGroup>(entity =>
+            {
+                entity.ToTable("chat_group", "ablemusic");
+
+                entity.HasIndex(e => e.UserId)
+                    .HasName("R_121");
+
+                entity.Property(e => e.ChatGroupId)
+                    .HasColumnName("chat_group_id")
+                    .HasColumnType("int(11)")
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.UserId)
+                    .HasColumnName("user_id")
+                    .HasColumnType("smallint(6)");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.ChatGroup)
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("R_121");
+            });
+
+            modelBuilder.Entity<ChatMessage>(entity =>
+            {
+                entity.ToTable("chat_message", "ablemusic");
+
+                entity.HasIndex(e => e.ChatGroupId)
+                    .HasName("R_122");
+
+                entity.HasIndex(e => e.UserId)
+                    .HasName("R_123");
+
+                entity.Property(e => e.ChatMessageId)
+                    .HasColumnName("chat_message_id")
+                    .HasColumnType("int(11)")
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.ChatGroupId)
+                    .HasColumnName("chat_group_id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.CreateAt)
+                    .HasColumnName("create_at")
+                    .HasColumnType("date");
+
+                entity.Property(e => e.MessageBody)
+                    .HasColumnName("message_body")
+                    .HasMaxLength(2000)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.UserId)
+                    .HasColumnName("user_id")
+                    .HasColumnType("smallint(6)");
+
+                entity.HasOne(d => d.ChatGroup)
+                    .WithMany(p => p.ChatMessage)
+                    .HasForeignKey(d => d.ChatGroupId)
+                    .HasConstraintName("R_122");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.ChatMessage)
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("R_123");
             });
 
             modelBuilder.Entity<Course>(entity =>
@@ -938,9 +1005,18 @@ namespace Pegasus_backend.pegasusContext
                     .HasColumnName("org_id")
                     .HasColumnType("smallint(6)");
 
+                entity.Property(e => e.PaymentPeriod)
+                    .HasColumnName("payment_period")
+                    .HasColumnType("tinyint(4)");
+
                 entity.Property(e => e.Photo)
                     .HasColumnName("photo")
                     .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Referrer)
+                    .HasColumnName("referrer")
+                    .HasMaxLength(60)
                     .IsUnicode(false);
 
                 entity.Property(e => e.ReferrerLearnerId)
@@ -1375,19 +1451,9 @@ namespace Pegasus_backend.pegasusContext
 
                 entity.Property(e => e.CreatedAt).HasColumnName("created_at");
 
-                entity.Property(e => e.Ipaddr)
-                    .HasColumnName("ipaddr")
-                    .HasMaxLength(20)
-                    .IsUnicode(false);
-
                 entity.Property(e => e.LogType)
                     .HasColumnName("log_type")
                     .HasColumnType("int(11)");
-
-                entity.Property(e => e.Mac)
-                    .HasColumnName("mac")
-                    .HasMaxLength(20)
-                    .IsUnicode(false);
 
                 entity.Property(e => e.UserId)
                     .HasColumnName("user_id")
@@ -2022,6 +2088,10 @@ namespace Pegasus_backend.pegasusContext
                 entity.Property(e => e.RoleAccessId)
                     .HasColumnName("role_access_id")
                     .HasColumnType("smallint(6)");
+
+                entity.Property(e => e.IsMobile)
+                    .HasColumnName("is_mobile")
+                    .HasColumnType("bit(1)");
 
                 entity.Property(e => e.PageId)
                     .HasColumnName("page_id")
@@ -2812,6 +2882,10 @@ namespace Pegasus_backend.pegasusContext
                 entity.Property(e => e.RoleId)
                     .HasColumnName("role_id")
                     .HasColumnType("smallint(6)");
+
+                entity.Property(e => e.UnreadMessageId)
+                    .HasColumnName("unread_message_id")
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.UserName)
                     .HasColumnName("user_name")
