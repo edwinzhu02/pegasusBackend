@@ -21,16 +21,15 @@ namespace Pegasus_backend.Controllers
         }
         
         
-        //GET: http://localhost:5000/api/lesson/:date
-        [HttpGet("{date}")]
+        //GET: http://localhost:5000/api/lesson/GetLessonForReceptionist/:userId/:date
+        [HttpGet("[action]/{userId}/{date}")]
         [Authorize]
         //for receptionist
-        public async Task<IActionResult> GetLesson(DateTime date)
+        public async Task<IActionResult> GetLessonsForReceptionist(DateTime date,int userId)
         {
             Result<Object> result = new Result<object>();
             try
             {
-                var userId = int.Parse(User.Claims.First(s => s.Type == "UserID").Value);
                 var staff = _pegasusContext.Staff.FirstOrDefault(s => s.UserId == userId);
                 var orgId = _pegasusContext.StaffOrg.FirstOrDefault(s => s.StaffId == staff.StaffId).OrgId;
                 var details = _pegasusContext.Lesson
@@ -60,13 +59,13 @@ namespace Pegasus_backend.Controllers
 
         }
 
-        [HttpGet("user/{id}")]
-        public  IActionResult GetLessonsforteacher(byte id)
+        [HttpGet("[action]/{userId}")]
+        public async Task<IActionResult> GetLessonsForTeacher(byte userId)
         {
             Result<Object> result = new Result<object>();
             try
             {
-                var teacher = _pegasusContext.Teacher.FirstOrDefault(s => s.UserId == id);
+                var teacher = _pegasusContext.Teacher.FirstOrDefault(s => s.UserId == userId);
                 if (teacher == null)
                 {
                     throw new Exception("Teacher does not exist.");
@@ -87,7 +86,7 @@ namespace Pegasus_backend.Controllers
                         description="", courseName=IsNull(q.GroupCourseInstanceId)?q.CourseInstance.Course.CourseName:q.GroupCourseInstance.Course.CourseName,
                         orgName= q.Org.OrgName, roomName=q.Room.RoomName
                     });
-                result.Data = details;
+                result.Data = await details.ToListAsync();
 
                 
             }
@@ -98,6 +97,45 @@ namespace Pegasus_backend.Controllers
                 return BadRequest(result);
             }
 
+            return Ok(result);
+        }
+        
+        [HttpGet("[action]/{userId}/{beginDate}/{endDate}")]
+
+        public async Task<IActionResult> GetLessonsBetweenDate(DateTime beginDate, DateTime endDate, int userId)
+        {
+            Result<Object> result = new Result<object>();
+            try
+            {
+                var staff = _pegasusContext.Staff.FirstOrDefault(s => s.UserId == userId);
+                var orgId = _pegasusContext.StaffOrg.FirstOrDefault(s => s.StaffId == staff.StaffId).OrgId;
+                var items = _pegasusContext.Lesson
+                    .Include(s => s.Teacher)
+                    .Include(s=>s.Learner)
+                    .Include(s=>s.Room)
+                    .Include(s=>s.Org)
+                    .Include(s=>s.GroupCourseInstance)
+                    .ThenInclude(w=>w.Course)
+                    .Include(s=>s.CourseInstance)
+                    .ThenInclude(w=>w.Course)
+                    .Where(s => beginDate <= s.EndTime && s.EndTime <= endDate && s.OrgId == orgId)
+                    .Select(s => new
+                    {
+                        CourseName=!IsNull(s.GroupCourseInstance)?s.GroupCourseInstance.Course.CourseName:s.CourseInstance.Course.CourseName,
+                        TeacherFirstName=s.Teacher.FirstName,s.BeginTime,s.EndTime,
+                        Room=s.Room.RoomName, Branch=s.Org.OrgName, s.IsCanceled, CancelReson =s.Reason,
+                        s.IsTrial
+                    });
+                    
+                result.Data = await items.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+            
             return Ok(result);
         }
     }

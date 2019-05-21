@@ -67,6 +67,8 @@ namespace Pegasus_backend.Controllers
                 result.Data = await _pegasusContext.Learner
                     .Include(s=>s.LearnerOthers)
                     .Include(s=>s.Parent)
+                    .Include(s=>s.One2oneCourseInstance)
+                    .Include(s=>s.LearnerGroupCourse)
                     .Where(s=>s.IsActive==1 &&s.FirstName.Contains(name))
                     .ToListAsync();
                 if (result.Data.Count() == 0)
@@ -98,6 +100,8 @@ namespace Pegasus_backend.Controllers
                 var data = await _pegasusContext.Learner
                     .Include(s=>s.LearnerOthers)
                     .Include(s=>s.Parent)
+                    .Include(s=>s.One2oneCourseInstance)
+                    .Include(s=>s.LearnerGroupCourse)
                     .Where(s=>s.IsActive==1).ToListAsync();
                 result.Data = data;
             }
