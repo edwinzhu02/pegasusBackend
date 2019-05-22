@@ -29,7 +29,7 @@ namespace Pegasus_backend.Controllers
             _mapper = mapper;
         }
         
-        //Delete: apo/learner/:id
+        //Delete: api/learner/:id
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteLearner(int id)
         {
@@ -108,8 +108,11 @@ namespace Pegasus_backend.Controllers
                     .ThenInclude(w=>w.Room)
                     .Include(w=>w.One2oneCourseInstance)
                     .ThenInclude(w=>w.CourseSchedule)
+                    .Include(w=>w.One2oneCourseInstance)
+                    .ThenInclude(w=>w.Teacher)
                     .Include(w=>w.LearnerGroupCourse)
                     .ThenInclude(w=>w.GroupCourseInstance)
+                    .ThenInclude(s=>s.Teacher)
                     .Where(s=>s.IsActive ==1)
                     .ToListAsync();
                 result.Data = data;
@@ -183,7 +186,7 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = ex.Message;
                 return BadRequest(result);
             }
-
+            
             result.Data = "success!";
             return Ok(result);
         }
