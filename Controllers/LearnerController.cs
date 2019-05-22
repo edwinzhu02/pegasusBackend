@@ -29,7 +29,7 @@ namespace Pegasus_backend.Controllers
             _mapper = mapper;
         }
         
-        //Delete: apo/learner/:id
+        //Delete: api/learner/:id
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteLearner(int id)
         {
@@ -94,21 +94,27 @@ namespace Pegasus_backend.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Learner>>> GetLearners()
         {
-            Result<List<Learner>> result = new Result<List<Learner>>();
+            Result<Object> result = new Result<Object>();
             try
             {
                 var data = await _pegasusContext.Learner
-                    .Include(s=>s.LearnerOthers)
-                    .Include(s=>s.Parent)
-                    .Include(s=>s.Org)
+                    .Include(w=>w.Parent)
+                    .Include(w=>w.LearnerOthers)
+                    .Include(w=>w.One2oneCourseInstance)
+                    .ThenInclude(w=>w.Org)
+                    .Include(w=>w.One2oneCourseInstance)
+                    .ThenInclude(w=>w.Course)
+                    .Include(w=>w.One2oneCourseInstance)
                     .ThenInclude(w=>w.Room)
-                    .Include(s=>s.One2oneCourseInstance)
+                    .Include(w=>w.One2oneCourseInstance)
+                    .ThenInclude(w=>w.CourseSchedule)
+                    .Include(w=>w.One2oneCourseInstance)
                     .ThenInclude(w=>w.Teacher)
-                    .Include(s=>s.One2oneCourseInstance)
-                    .ThenInclude(s=>s.Course)
-                    
-                    .Include(s=>s.LearnerGroupCourse)
-                    .Where(s=>s.IsActive==1).ToListAsync();
+                    .Include(w=>w.LearnerGroupCourse)
+                    .ThenInclude(w=>w.GroupCourseInstance)
+                    .ThenInclude(s=>s.Teacher)
+                    .Where(s=>s.IsActive ==1)
+                    .ToListAsync();
                 result.Data = data;
             }
             catch (Exception ex)
@@ -180,7 +186,7 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = ex.Message;
                 return BadRequest(result);
             }
-
+            
             result.Data = "success!";
             return Ok(result);
         }
