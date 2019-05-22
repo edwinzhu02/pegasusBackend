@@ -163,7 +163,8 @@ namespace Pegasus_backend.Controllers
                         CourseName=!IsNull(s.GroupCourseInstance)?s.GroupCourseInstance.Course.CourseName:s.CourseInstance.Course.CourseName,
                         TeacherFirstName=s.Teacher.FirstName,s.BeginTime,s.EndTime,s.LessonId,
                         Room=s.Room.RoomName, Branch=s.Org.OrgName, s.IsCanceled, CancelReson =s.Reason,
-                        s.IsTrial,Learner = s.Learner.FirstName, Learners= ""
+                        s.IsTrial,Learner = s.Learner.FirstName, Learners= "", s.LearnerId, s.RoomId,s.TeacherId,s.OrgId,
+                        courseId=!IsNull(s.GroupCourseInstance)?s.GroupCourseInstance.Course.CourseId:s.CourseInstance.Course.CourseId
                     });
                     
                 result.Data = await items.ToListAsync();
