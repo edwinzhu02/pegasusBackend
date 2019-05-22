@@ -114,8 +114,8 @@ namespace Pegasus_backend.Controllers
                     .Select(q => new
                     {
                         q.TeacherId,q.FirstName,q.LastName,q.Dob,Gender=Convert.ToBoolean(q.Gender)?"Male":"Female",
-                        q.IrdNumber,q.IdType,IdPhoto=string.IsNullOrEmpty(q.IdPhoto)?null:String.Format("{0}?{1}",q.IdPhoto,r.Next()),q.IdNumber,q.HomePhone,q.MobilePhone,q.Email,
-                        Photo=string.IsNullOrEmpty(q.Photo)?null:String.Format("{0}?{1}",q.Photo,r.Next()),q.ExpiryDate,
+                        q.IrdNumber,q.IdType,IdPhoto=IsNull(q.IdPhoto)?null:String.Format("{0}?{1}",q.IdPhoto,r.Next()),q.IdNumber,q.HomePhone,q.MobilePhone,q.Email,
+                        Photo=IsNull(q.Photo)?null:String.Format("{0}?{1}",q.Photo,r.Next()),q.ExpiryDate,
                         q.IsLeft,q.IsContract,q.InvoiceTemplate,q.Ability,q.Comment,q.Level,
                         q.AvailableDays,q.TeacherLanguage,q.TeacherQualificatiion
                         
