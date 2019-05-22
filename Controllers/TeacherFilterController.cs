@@ -10,7 +10,7 @@ namespace Pegasus_backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TeacherFilterController : ControllerBase
+    public class TeacherFilterController : BasicController
     {
         private readonly pegasusContext.ablemusicContext _ablemusicContext;
 
