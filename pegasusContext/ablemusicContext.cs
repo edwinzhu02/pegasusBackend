@@ -1311,6 +1311,10 @@ namespace Pegasus_backend.pegasusContext
                     .HasColumnName("is_canceled")
                     .HasColumnType("bit(1)");
 
+                entity.Property(e => e.IsConfirm)
+                    .HasColumnName("is_confirm")
+                    .HasColumnType("tinyint(4)");
+
                 entity.Property(e => e.IsTrial)
                     .HasColumnName("is_trial")
                     .HasColumnType("tinyint(1)");
@@ -1529,6 +1533,10 @@ namespace Pegasus_backend.pegasusContext
                     .HasColumnName("end_date")
                     .HasColumnType("date");
 
+                entity.Property(e => e.InvoiceDate)
+                    .HasColumnName("invoice_date")
+                    .HasColumnType("date");
+
                 entity.Property(e => e.LearnerId)
                     .HasColumnName("learner_id")
                     .HasColumnType("int(11)");
@@ -1623,6 +1631,14 @@ namespace Pegasus_backend.pegasusContext
                 entity.Property(e => e.IsHeadoffice)
                     .HasColumnName("is_headoffice")
                     .HasColumnType("bit(1)");
+
+                entity.Property(e => e.LocaltionX)
+                    .HasColumnName("localtion_x")
+                    .HasColumnType("decimal(10,7)");
+
+                entity.Property(e => e.LocaltionY)
+                    .HasColumnName("localtion_y")
+                    .HasColumnType("decimal(10,7)");
 
                 entity.Property(e => e.OrgName)
                     .HasColumnName("org_name")

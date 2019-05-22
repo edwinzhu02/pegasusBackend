@@ -28,6 +28,7 @@ namespace Pegasus_backend.pegasusContext
         public Course Course { get; set; }
         public Org Org { get; set; }
         public Room Room { get; set; }
+        
         public Teacher Teacher { get; set; }
         public ICollection<CourseSchedule> CourseSchedule { get; set; }
         [JsonIgnore]

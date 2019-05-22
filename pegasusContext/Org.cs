@@ -27,6 +27,8 @@ namespace Pegasus_backend.pegasusContext
         public string Address { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
+        public decimal? LocaltionX { get; set; }
+        public decimal? LocaltionY { get; set; }
 
         public ICollection<Amendment> Amendment { get; set; }
         public ICollection<AvailableDays> AvailableDays { get; set; }

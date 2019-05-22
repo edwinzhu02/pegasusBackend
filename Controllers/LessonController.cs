@@ -60,6 +60,43 @@ namespace Pegasus_backend.Controllers
 
         }
 
+        
+        //GET api/lesson/:lessonId
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetLessonById(int id)
+        {
+            Result<Object> result = new Result<object>();
+            try
+            {
+                var item = _pegasusContext.Lesson
+                    .Include(s => s.Teacher)
+                    .Include(s=>s.Learner)
+                    .Include(s=>s.Room)
+                    .Include(s=>s.Org)
+                    .Include(s=>s.GroupCourseInstance)
+                    .ThenInclude(w=>w.Course)
+                    .Include(s=>s.CourseInstance)
+                    .ThenInclude(w=>w.Course)
+                    .Select(s => new
+                    {
+                        CourseName=!IsNull(s.GroupCourseInstance)?s.GroupCourseInstance.Course.CourseName:s.CourseInstance.Course.CourseName,
+                        TeacherFirstName=s.Teacher.FirstName,s.BeginTime,s.EndTime,s.LessonId,
+                        Room=s.Room.RoomName, Branch=s.Org.OrgName, s.IsCanceled, CancelReson =s.Reason,
+                        s.IsTrial,Learner = s.Learner.FirstName, Learners= ""
+                    })
+                    .FirstOrDefault(s => s.LessonId == id);
+                result.Data = item;
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.ToString();
+                return BadRequest(result); 
+            }
+
+            return Ok(result);
+        }
+
         [HttpGet("[action]/{userId}")]
         public async Task<IActionResult> GetLessonsForTeacher(byte userId)
         {
