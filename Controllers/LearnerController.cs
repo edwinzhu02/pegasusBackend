@@ -94,18 +94,24 @@ namespace Pegasus_backend.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Learner>>> GetLearners()
         {
-            Result<List<Learner>> result = new Result<List<Learner>>();
+            Result<Object> result = new Result<Object>();
             try
             {
                 var data = await _pegasusContext.Learner
-                    .Include(s=>s.LearnerOthers)
-                    .Include(s=>s.Parent)
-                    .Include(s=>s.Org)
+                    .Include(w=>w.Parent)
+                    .Include(w=>w.LearnerOthers)
+                    .Include(w=>w.One2oneCourseInstance)
+                    .ThenInclude(w=>w.Org)
+                    .Include(w=>w.One2oneCourseInstance)
+                    .ThenInclude(w=>w.Course)
+                    .Include(w=>w.One2oneCourseInstance)
                     .ThenInclude(w=>w.Room)
-                    .Include(s=>s.One2oneCourseInstance)
-                    .ThenInclude(w=>w.Teacher)
-                    .Include(s=>s.LearnerGroupCourse)
-                    .Where(s=>s.IsActive==1).ToListAsync();
+                    .Include(w=>w.One2oneCourseInstance)
+                    .ThenInclude(w=>w.CourseSchedule)
+                    .Include(w=>w.LearnerGroupCourse)
+                    .ThenInclude(w=>w.GroupCourseInstance)
+                    .Where(s=>s.IsActive ==1)
+                    .ToListAsync();
                 result.Data = data;
             }
             catch (Exception ex)
