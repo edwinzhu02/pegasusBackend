@@ -24,7 +24,6 @@ namespace Pegasus_backend.pegasusContext
         public ICollection<Amendment> Amendment { get; set; }
         [JsonIgnore]
         public ICollection<GroupCourseInstance> GroupCourseInstance { get; set; }
-        [JsonIgnore]
         public ICollection<Lesson> Lesson { get; set; }
         [JsonIgnore]
         public ICollection<One2oneCourseInstance> One2oneCourseInstance { get; set; }
