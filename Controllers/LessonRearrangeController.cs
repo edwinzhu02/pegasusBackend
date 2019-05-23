@@ -142,7 +142,8 @@ namespace Pegasus_backend.Controllers
                     await _ablemusicContext.Teacher.FirstOrDefaultAsync(t => t.TeacherId == oldLesson.TeacherId);
                 courses = (from c in _ablemusicContext.Course
                            join oto in _ablemusicContext.One2oneCourseInstance on c.CourseId equals oto.CourseId
-                           where oto.CourseInstanceId == newLesson.CourseInstanceId
+                           join l in _ablemusicContext.Lesson on oto.CourseInstanceId equals l.CourseInstanceId
+                           where l.LessonId == newLesson.LessonId
                            select new Course
                            {
                                CourseId = c.CourseId,
