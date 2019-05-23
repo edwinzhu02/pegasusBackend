@@ -402,7 +402,7 @@ namespace Pegasus_backend.Controllers
 
         [HttpPost]
         [Route("[action]")]
-        public async Task<IActionResult> GenerateInvoice()
+        public async Task<IActionResult> GenerateInvoice(int term_id)
         {
             var result = new Result<object>();
 
@@ -431,7 +431,7 @@ namespace Pegasus_backend.Controllers
                 })
                 .ToListAsync();
 
-            var term = await _pegasusContext.Term.FirstOrDefaultAsync(x => x.TermId == 1);
+            var term = await _pegasusContext.Term.FirstOrDefaultAsync(x => x.TermId == term_id);
 
             var all_terms = await _pegasusContext.Term.Select(x => new { x.TermId, x.BeginDate, x.EndDate }).ToListAsync();
 
