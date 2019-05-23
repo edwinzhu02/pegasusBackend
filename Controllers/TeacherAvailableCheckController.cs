@@ -59,7 +59,7 @@ namespace Pegasus_backend.Controllers
                 arrangedOtOSchedule = await (from l in _ablemusicContext.Learner
                                              join oto in _ablemusicContext.One2oneCourseInstance on l.LearnerId equals oto.LearnerId
                                              join cs in _ablemusicContext.CourseSchedule on oto.CourseInstanceId equals cs.CourseInstanceId
-                                             where oto.TeacherId == teacherId && beginDate > oto.BeginDate 
+                                             where oto.TeacherId == teacherId && beginDate < oto.EndDate 
                                              select new 
                                              {
                                                  CourseScheduleId = cs.CourseScheduleId,
@@ -74,7 +74,7 @@ namespace Pegasus_backend.Controllers
                                              }).ToListAsync();
                 arrangedGroupSchedule = await (from g in _ablemusicContext.GroupCourseInstance
                                              join cs in _ablemusicContext.CourseSchedule on g.GroupCourseInstanceId equals cs.GroupCourseInstanceId
-                                             where g.TeacherId == teacherId && beginDate > g.BeginDate
+                                             where g.TeacherId == teacherId && beginDate < g.EndDate
                                              select new 
                                              {
                                                  CourseScheduleId = cs.CourseScheduleId,
@@ -181,9 +181,9 @@ namespace Pegasus_backend.Controllers
                 });
             }
 
-            var dayoffsOverThreeMonth = amendments.Where(a => a.AmendType == 1 && beginDate > a.BeginDate && 
+            var dayoffsOverThreeMonth = amendments.Where(a => a.AmendType == 1 && beginDate > a.BeginDate && beginDate < a.EndDate &&
             a.EndDate.Value.Month - a.BeginDate.Value.Month >= 3).ToList();
-            var changeTemporarily = amendments.Where(a => a.AmendType == 2 && a.IsTemporary == 1).ToList();
+            var changeTemporarily = amendments.Where(a => a.AmendType == 2 && a.IsTemporary == 1 && beginDate < a.EndDate).ToList();
             var changePermanentlyExpired = amendments.Where(a => a.AmendType == 2 && a.IsTemporary == 0 && beginDate > a.BeginDate).ToList();
             var changePermanentlyNotExpired = amendments.Where(a => a.AmendType == 2 && a.IsTemporary == 0 && beginDate <= a.BeginDate).ToList();
 

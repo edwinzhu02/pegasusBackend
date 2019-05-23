@@ -71,6 +71,45 @@ namespace Pegasus_backend.Controllers
             return Ok(result);  //Should redirect to a success page!
         }
 
+        [Route("sessionCancelConfirm/{remindId}")]
+        [HttpGet]
+        public async Task<IActionResult> CancelConfirm(int remindId)
+        {
+            var result = new Result<string>();
+            RemindLog remindLog;
+            try
+            {
+                remindLog = await _ablemusicContext.RemindLog.Where(r => r.RemindId == remindId).FirstOrDefaultAsync();
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.ToString();
+                return NotFound(result);
+            }
+
+            if (remindLog == null)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = "remind id is not found";
+                return NotFound(result);
+            }
+            remindLog.ProcessFlag = 1;
+
+            try
+            {
+                await _ablemusicContext.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                result.ErrorMessage = e.Message;
+                result.IsSuccess = false;
+                return BadRequest(result);
+            }
+
+            return Ok(result);  //Should redirect to a success page!
+        }
+
         // PUT: api/Session/5
         [HttpPut("{sessionId}/{reason}/{userId}")]
         public async Task<IActionResult> PutSesson(int sessionId, string reason, short userId)

@@ -128,5 +128,97 @@ namespace Pegasus_backend.Controllers
 
             return Ok(result);
         }
+
+        // GET: api/TeacherFilter
+        [HttpGet("sessionEditFilter/{courseId}")]
+        public async Task<IActionResult> sessionEditFilterGet(int courseId)
+        {
+            Result<List<Object>> result = new Result<List<Object>>();
+            dynamic orgs;
+            dynamic rooms;
+            dynamic teachers;
+            try
+            {
+                orgs = await (from o in _ablemusicContext.Org
+                              select new
+                              {
+                                  o.OrgId,
+                                  o.OrgName,
+                              }).ToListAsync();
+                rooms = await (from r in _ablemusicContext.Room
+                               select new
+                               {
+                                   r.RoomId,
+                                   r.RoomName,
+                                   r.OrgId
+                               }).ToListAsync();
+                teachers = await (from t in _ablemusicContext.Teacher
+                                  join ta in _ablemusicContext.AvailableDays on t.TeacherId equals ta.TeacherId
+                                  join tc in _ablemusicContext.TeacherCourse on t.TeacherId equals tc.TeacherId
+                                  where tc.CourseId == courseId
+                                  select new
+                                  {
+                                      TeacherId = t.TeacherId,
+                                      TeacherFirstName = t.FirstName,
+                                      TeacherLastName = t.LastName,
+                                      TeacherAvailableOrgId = ta.OrgId,
+                                      TeacherLevelId = t.Level,
+                                  } into x
+                                  group x by new
+                                  {
+                                      x.TeacherId,
+                                      x.TeacherAvailableOrgId
+                                  } into g
+                                  select g.FirstOrDefault()
+                                  ).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+
+            List<Object> teacherResults = new List<Object>();
+            foreach (var org in orgs)
+            {
+                List<Object> levelList = new List<Object>();
+                List<Object> teacherList = new List<Object>();
+                foreach (var teacher in teachers)
+                {
+                    if (teacher.TeacherAvailableOrgId == org.OrgId)
+                    {
+                        teacherList.Add(new
+                        {
+                            teacher.TeacherId,
+                            TeacherName = teacher.TeacherFirstName + " " + teacher.TeacherLastName,
+                        });
+                    }
+                }
+
+                List<Object> roomList = new List<object>();
+                foreach (var room in rooms)
+                {
+                    if (org.OrgId == room.OrgId)
+                    {
+                        roomList.Add(new
+                        {
+                            room.RoomId,
+                            room.RoomName
+                        });
+                    }
+                }
+                teacherResults.Add(new
+                {
+                    org.OrgId,
+                    org.OrgName,
+                    Room = roomList,
+                    Teacher = teacherList
+                });
+            }
+            result.Data = teacherResults;
+
+            return Ok(result);
+        }
     }
 }
