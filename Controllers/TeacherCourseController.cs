@@ -33,6 +33,7 @@ namespace Pegasus_backend.Controllers
             Result<Object> result = new Result<Object>();
             try
             {
+                var groupCourse = _pegasusContext.GroupCourseInstance;
                 result.Data = await _pegasusContext.TeacherCourse
                     .Include(s=>s.Teacher)
                     .Include(s=>s.Course)
@@ -42,7 +43,7 @@ namespace Pegasus_backend.Controllers
                         Course=new
                         {
                             s.Course.CourseId,s.Course.CourseName,s.Course.Level,s.Course.Duration,
-                            s.Course.Price
+                            s.Course.Price, isGroup=IsNull(groupCourse.FirstOrDefault(w=>w.CourseId==s.CourseId))?0:1
                         },
                         Teacher= new {s.Teacher.TeacherId,s.Teacher.FirstName,s.Teacher.LastName,s.Teacher.Level}
                     })

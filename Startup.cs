@@ -80,7 +80,6 @@ namespace Pegasus_backend
                     
                 };
             });
-            
             services.AddAutoMapper();
 
         }
