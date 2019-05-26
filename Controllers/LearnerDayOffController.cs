@@ -34,6 +34,7 @@ namespace Pegasus_backend.Controllers
             var result = new Result<List<Amendment>>();
             List<Lesson> lessons;
             List<Amendment> amendments = new List<Amendment>();
+            List<Amendment> exsitsAmendment;
             Learner learner;
             dynamic courseSchedules;
             List<Holiday> holidays;
@@ -71,6 +72,8 @@ namespace Pegasus_backend.Controllers
                                          }).ToListAsync();
                 learner = await _ablemusicContext.Learner.Where(l => l.LearnerId == inputObj.LearnerId).FirstOrDefaultAsync();
                 holidays = await _ablemusicContext.Holiday.ToListAsync();
+                exsitsAmendment = await _ablemusicContext.Amendment.Where(a => a.LearnerId == inputObj.LearnerId && a.AmendType == 1 &&
+                a.BeginDate == inputObj.BeginDate && a.EndDate == inputObj.EndDate).ToListAsync();
             }
             catch(Exception ex)
             {
@@ -94,6 +97,12 @@ namespace Pegasus_backend.Controllers
             {
                 result.IsSuccess = false;
                 result.ErrorMessage = "Learner not found";
+                return BadRequest(result);
+            }
+            if(exsitsAmendment.Count > 0)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = "The provided learner is alreay taken the Dayoff";
                 return BadRequest(result);
             }
 
@@ -184,8 +193,12 @@ namespace Pegasus_backend.Controllers
             string mailContentForLearner = MailContentGenerator(learnerName, courseSchedules[0], inputObj, confirmURLForLearner);
             Task learnerMailSenderTask = MailSenderService.SendMailAsync(learnerRemindLog.Email, mailTitle, mailContentForLearner, learnerRemindLog.RemindId);
 
+            foreach(var amendment in amendments)
+            {
+                amendment.Learner = null;
+            }
             result.Data = amendments;
-            return Ok(courseSchedules);
+            return Ok(result);
         }
 
         private TodoList TodoListForLearnerCreater(dynamic courseSchedule, LearnerDayoffViewModel inputObj, DateTime todoDate)
