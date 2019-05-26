@@ -39,6 +39,11 @@ namespace Pegasus_backend.Controllers
             {
                 using (var dbContextTransaction = _pegasusContext.Database.BeginTransaction())
                 {
+                    var staff = _pegasusContext.Staff.FirstOrDefault(s => s.UserId == details.UserId);
+                    if (staff == null)
+                    {
+                        throw new Exception("there is no relation between staff and user");
+                    }
                     var invoiceItem =
                         await _pegasusContext.Invoice.FirstOrDefaultAsync(s => s.InvoiceId == details.InvoiceId);
                     if (invoiceItem == null)
@@ -71,9 +76,14 @@ namespace Pegasus_backend.Controllers
                     _mapper.Map(details, paymentItem);
                     paymentItem.CreatedAt = DateTime.Now;
                     paymentItem.PaymentType = 1;
+                    paymentItem.StaffId = staff.StaffId;
+                    var beforeBalance = _pegasusContext.Fund.FirstOrDefault(s => s.LearnerId == details.LearnerId).Balance;
+                    paymentItem.BeforeBalance = beforeBalance;
+                    paymentItem.AfterBalance = beforeBalance + details.Amount;
                     _pegasusContext.Add(paymentItem);
                     await _pegasusContext.SaveChangesAsync();
-
+                    
+                    //fund
                     var fundItem =
                         await _pegasusContext.Fund.FirstOrDefaultAsync(s => s.LearnerId == details.LearnerId);
                     fundItem.Balance = fundItem.Balance + details.Amount;

@@ -165,6 +165,11 @@ namespace Pegasus_backend.Controllers
                     });
                     await _pegasusContext.SaveChangesAsync();
                     
+                    //add new fund row for new student
+                    var fundItem = new Fund{Balance = 0,LearnerId = newLearner.LearnerId};
+                    _pegasusContext.Add(fundItem);
+                    await _pegasusContext.SaveChangesAsync();
+                    
                     if (image != null)
                     {
                         newLearner.Photo = $"images/LearnerImages/{newLearner.LearnerId+Path.GetExtension(image.FileName)}";
