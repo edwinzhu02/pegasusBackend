@@ -42,7 +42,7 @@ namespace Pegasus_backend.Controllers
                     var staff = _pegasusContext.Staff.FirstOrDefault(s => s.UserId == details.UserId);
                     if (staff == null)
                     {
-                        throw new Exception("there is no relation between staff and user");
+                        throw new Exception("The user is not staff of the school.");
                     }
                     var invoiceItem =
                         await _pegasusContext.Invoice.FirstOrDefaultAsync(s => s.InvoiceId == details.InvoiceId);
