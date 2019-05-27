@@ -24,11 +24,11 @@ namespace Pegasus_backend.pegasusContext
         public short? OrgId { get; set; }
         public int GroupCourseInstanceId { get; set; }
         public short? IsActivate { get; set; }
+        public short? IsStarted { get; set; }
 
         public Course Course { get; set; }
         public Org Org { get; set; }
         public Room Room { get; set; }
-        
         public Teacher Teacher { get; set; }
         public ICollection<CourseSchedule> CourseSchedule { get; set; }
         [JsonIgnore]

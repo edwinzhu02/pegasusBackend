@@ -13,6 +13,7 @@ namespace Pegasus_backend.pegasusContext
             GroupCourseInstance = new HashSet<GroupCourseInstance>();
             Learner = new HashSet<Learner>();
             Lesson = new HashSet<Lesson>();
+            LoginLog = new HashSet<LoginLog>();
             One2oneCourseInstance = new HashSet<One2oneCourseInstance>();
             Room = new HashSet<Room>();
             StaffOrg = new HashSet<StaffOrg>();
@@ -37,6 +38,7 @@ namespace Pegasus_backend.pegasusContext
         [JsonIgnore]
         public ICollection<Learner> Learner { get; set; }
         public ICollection<Lesson> Lesson { get; set; }
+        public ICollection<LoginLog> LoginLog { get; set; }
         [JsonIgnore]
         public ICollection<One2oneCourseInstance> One2oneCourseInstance { get; set; }
         public ICollection<Room> Room { get; set; }
