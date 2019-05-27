@@ -52,7 +52,35 @@ namespace Pegasus_backend.Controllers
             }
             return Ok(result);
         }
-        
+
+        [HttpGet("getbyid/{id}")]
+        public async Task<IActionResult> GetCourseCategory(int id)
+        {
+            Result<string> result = new Result<string>();
+            CourseCategory courseCategory;
+            try
+            {
+                result.IsSuccess = true;
+                courseCategory = await _ablemusicContext.CourseCategory.Where(c => c.CourseCategoryId == id).FirstOrDefaultAsync();
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.IsFound = false;
+                result.ErrorMessage = ex.Message;
+                return NotFound(result);
+            }
+            if (courseCategory == null)
+            {
+                result.IsSuccess = false;
+                result.IsFound = false;
+                result.ErrorMessage = "Course Category not found";
+                return NotFound(result);
+            }
+            result.Data = courseCategory.CourseCategoryName;
+            return Ok(result);
+        }
+
         private bool CourseCategoryExists(short id)
         {
             return _ablemusicContext.CourseCategory.Any(e => e.CourseCategoryId == id);
