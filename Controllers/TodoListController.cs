@@ -51,14 +51,14 @@ namespace Pegasus_backend.Controllers
         }
 
         // PUT: api/TodoList/5
-        [HttpPut("achieve/{id}")]
+        [HttpPut("achieve/{todoId}")]
         public async Task<IActionResult> Put(short todoId)
         {
             Result<string> result = new Result<string>();
             TodoList todo;
             try
             {
-                todo = await _ablemusicContext.TodoList.Where(t => t.ListId == todoId).FirstAsync();
+                todo = await _ablemusicContext.TodoList.Where(t => t.ListId == todoId).FirstOrDefaultAsync();
             }
             catch(Exception ex)
             {
