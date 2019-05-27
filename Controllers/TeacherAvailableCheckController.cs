@@ -71,6 +71,7 @@ namespace Pegasus_backend.Controllers
                                                  LearnerId = l.LearnerId,
                                                  LearnerFirstName = l.FirstName,
                                                  LearnerLastName = l.LastName,
+                                                 OrgId = oto.OrgId,
                                              }).ToListAsync();
                 arrangedGroupSchedule = await (from g in _ablemusicContext.GroupCourseInstance
                                              join cs in _ablemusicContext.CourseSchedule on g.GroupCourseInstanceId equals cs.GroupCourseInstanceId
@@ -83,7 +84,8 @@ namespace Pegasus_backend.Controllers
                                                  GroupCourseInstanceId = cs.GroupCourseInstanceId,
                                                  BeginTime = cs.BeginTime,
                                                  EndTime = cs.EndTime,
-                                                 LearnerName = "Group"
+                                                 LearnerName = "Group",
+                                                 OrgId = g.OrgId,
                                              }).ToListAsync();
                 amendments = await (from oto in _ablemusicContext.One2oneCourseInstance
                                     join a in _ablemusicContext.Amendment on oto.CourseInstanceId equals a.CourseInstanceId
@@ -167,6 +169,7 @@ namespace Pegasus_backend.Controllers
                     TimeEnd = oto.EndTime,
                     LearnerName = oto.LearnerFirstName + " " + oto.LearnerLastName,
                     CourseScheduleId = oto.CourseScheduleId,
+                    OrgId = oto.OrgId,
                 });
             }
             foreach(var g in arrangedGroupSchedule)
@@ -178,6 +181,7 @@ namespace Pegasus_backend.Controllers
                     TimeEnd = g.EndTime,
                     LearnerName = g.LearnerName,
                     CourseScheduleId = g.CourseScheduleId,
+                    OrgId = g.OrgId,
                 });
             }
 
