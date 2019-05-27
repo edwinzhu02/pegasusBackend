@@ -20,17 +20,22 @@ namespace Pegasus_backend.Controllers
             _ablemusicContext = ablemusicContext;
         }
 
-        [HttpGet("{date}")]
-        public async Task<IActionResult> GetPayrollByMonth(DateTime date)
+
+        [HttpGet("{begindate}/{enddate}")]
+        public async Task<IActionResult> GetPayrollBetweenDate(DateTime begindate,DateTime enddate)
         {
             var result = new Result<Object>();
             try
             {
-                var teacherTransaction = _ablemusicContext.TeacherTransaction
-                    .Where(s => s.CreatedAt.Value.Month == date.Month)
-                    .GroupBy(s=>s.TeacherId)
-                    .Select(s=>new{MonthWage=s.Sum(q=>q.WageAmount)})
-                    .ToList();
+                var teacherSalary = await _ablemusicContext.TeacherTransaction
+                    .Where(s=>begindate<=s.CreatedAt.Value.Date && s.CreatedAt.Value.Date<=enddate)
+                    .GroupBy(g => g.TeacherId)
+                    .Select(s => new {
+                        s.First().TeacherId, TeacherFirstName=s.First().Teacher.FirstName,
+                        TeacherLastName=s.First().Teacher.LastName,Wage = s.Sum(c => c.WageAmount)
+                    })
+                    .ToListAsync();
+                result.Data = new{begindate=begindate,enddate=enddate,TeacherSalary=teacherSalary};
             }
             catch (Exception ex)
             {

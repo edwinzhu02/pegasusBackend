@@ -147,7 +147,17 @@ namespace Pegasus_backend.Controllers
                     var newLearner = new Learner();
                     _mapper.Map(detailsJson, newLearner);
                     newLearner.IsActive = 1;
+                    newLearner.CreatedAt = DateTime.Now;
                     _pegasusContext.Add(newLearner);
+                    await _pegasusContext.SaveChangesAsync();
+                    
+                    newLearner.LearnerGroupCourse.ToList().ForEach(s =>
+                    {
+                        s.CreatedAt=DateTime.Now;
+                        s.IsActivate = 1;
+                        _pegasusContext.Update(s);
+                    });
+
                     await _pegasusContext.SaveChangesAsync();
 
                     for (var i = 0; i < newLearner.One2oneCourseInstance.ToList().Count; i++)
