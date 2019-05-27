@@ -59,6 +59,7 @@ namespace Pegasus_backend.Controllers
                 arrangedOtOSchedule = await (from l in _ablemusicContext.Learner
                                              join oto in _ablemusicContext.One2oneCourseInstance on l.LearnerId equals oto.LearnerId
                                              join cs in _ablemusicContext.CourseSchedule on oto.CourseInstanceId equals cs.CourseInstanceId
+                                             join o in _ablemusicContext.Org on oto.OrgId equals o.OrgId
                                              where oto.TeacherId == teacherId && beginDate < oto.EndDate 
                                              select new 
                                              {
@@ -72,9 +73,11 @@ namespace Pegasus_backend.Controllers
                                                  LearnerFirstName = l.FirstName,
                                                  LearnerLastName = l.LastName,
                                                  OrgId = oto.OrgId,
+                                                 OrgName = o.OrgName,
                                              }).ToListAsync();
                 arrangedGroupSchedule = await (from g in _ablemusicContext.GroupCourseInstance
                                              join cs in _ablemusicContext.CourseSchedule on g.GroupCourseInstanceId equals cs.GroupCourseInstanceId
+                                             join o in _ablemusicContext.Org on g.OrgId equals o.OrgId
                                              where g.TeacherId == teacherId && beginDate < g.EndDate
                                              select new 
                                              {
@@ -86,6 +89,7 @@ namespace Pegasus_backend.Controllers
                                                  EndTime = cs.EndTime,
                                                  LearnerName = "Group",
                                                  OrgId = g.OrgId,
+                                                 OrgName = o.OrgName,
                                              }).ToListAsync();
                 amendments = await (from oto in _ablemusicContext.One2oneCourseInstance
                                     join a in _ablemusicContext.Amendment on oto.CourseInstanceId equals a.CourseInstanceId
@@ -170,6 +174,7 @@ namespace Pegasus_backend.Controllers
                     LearnerName = oto.LearnerFirstName + " " + oto.LearnerLastName,
                     CourseScheduleId = oto.CourseScheduleId,
                     OrgId = oto.OrgId,
+                    OrgName = oto.OrgName,
                 });
             }
             foreach(var g in arrangedGroupSchedule)
@@ -182,6 +187,7 @@ namespace Pegasus_backend.Controllers
                     LearnerName = g.LearnerName,
                     CourseScheduleId = g.CourseScheduleId,
                     OrgId = g.OrgId,
+                    OrgName = g.OrgName,
                 });
             }
 
