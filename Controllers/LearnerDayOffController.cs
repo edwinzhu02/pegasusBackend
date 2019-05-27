@@ -73,7 +73,9 @@ namespace Pegasus_backend.Controllers
                 learner = await _ablemusicContext.Learner.Where(l => l.LearnerId == inputObj.LearnerId).FirstOrDefaultAsync();
                 holidays = await _ablemusicContext.Holiday.ToListAsync();
                 exsitsAmendment = await _ablemusicContext.Amendment.Where(a => a.LearnerId == inputObj.LearnerId && a.AmendType == 1 &&
-                a.BeginDate == inputObj.BeginDate && a.EndDate == inputObj.EndDate).ToListAsync();
+                ((inputObj.BeginDate >= a.BeginDate && inputObj.BeginDate <= a.EndDate) ||
+                (inputObj.EndDate >= a.BeginDate && inputObj.EndDate <= a.EndDate) ||
+                (inputObj.BeginDate <= a.BeginDate && inputObj.EndDate >= a.EndDate))).ToListAsync();
             }
             catch(Exception ex)
             {
@@ -102,7 +104,7 @@ namespace Pegasus_backend.Controllers
             if(exsitsAmendment.Count > 0)
             {
                 result.IsSuccess = false;
-                result.ErrorMessage = "The provided learner is alreay taken the Dayoff";
+                result.ErrorMessage = "There is a conflict of date on your previous dayoff";
                 return BadRequest(result);
             }
 
