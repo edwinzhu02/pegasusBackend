@@ -98,7 +98,8 @@ namespace Pegasus_backend.Controllers
                     var teacherTransaction = new TeacherTransaction
                     {
                         LessonId = lesson.LessonId,CreatedAt = DateTime.Now,
-                        WageAmount = (decimal) wageAmout
+                        WageAmount = (decimal) wageAmout,
+                        TeacherId = lesson.TeacherId
                     };
                     _ablemusicContext.Add(teacherTransaction);
                     await _ablemusicContext.SaveChangesAsync();

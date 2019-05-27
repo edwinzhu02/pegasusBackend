@@ -16,6 +16,7 @@ namespace Pegasus_backend.pegasusContext
             TeacherCourse = new HashSet<TeacherCourse>();
             TeacherLanguage = new HashSet<TeacherLanguage>();
             TeacherQualificatiion = new HashSet<TeacherQualificatiion>();
+            TeacherTransaction = new HashSet<TeacherTransaction>();
             TodoList = new HashSet<TodoList>();
         }
 
@@ -54,6 +55,7 @@ namespace Pegasus_backend.pegasusContext
         public ICollection<TeacherCourse> TeacherCourse { get; set; }
         public ICollection<TeacherLanguage> TeacherLanguage { get; set; }
         public ICollection<TeacherQualificatiion> TeacherQualificatiion { get; set; }
+        public ICollection<TeacherTransaction> TeacherTransaction { get; set; }
         public ICollection<TodoList> TodoList { get; set; }
     }
 }
