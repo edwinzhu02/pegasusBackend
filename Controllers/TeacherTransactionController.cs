@@ -20,8 +20,8 @@ namespace Pegasus_backend.Controllers
             _ablemusicContext = ablemusicContext;
         }
 
-        [HttpGet("{userId}")]
-        public async Task<IActionResult> GetTeacherTransaction(short userId)
+        [HttpGet("{teacherId}/{begindate}/{enddate}")]
+        public async Task<IActionResult> GetTeacherTransaction(short teacherId,DateTime begindate,DateTime enddate)
         {
             var result = new Result<Object>();
             try
@@ -30,7 +30,7 @@ namespace Pegasus_backend.Controllers
                     .Include(s=>s.Teacher)
                     .Include(s=>s.Lesson)
                     .ThenInclude(s=>s.Org)
-                    .Where(s=>s.TeacherId==_ablemusicContext.Teacher.FirstOrDefault(w=>w.UserId==userId).TeacherId)
+                    .Where(s=>s.TeacherId == teacherId && begindate<=s.CreatedAt.Value.Date && s.CreatedAt.Value.Date<=enddate)
                     .Select(s=>new {TeacherFirstName=s.Teacher.FirstName,s.Teacher.TeacherId,
                         LessonBeginTime=s.Lesson.BeginTime,LessonEndTime=s.Lesson.EndTime,
                         s.LessonId, s.WageAmount, s.TranId, Branch=s.Lesson.Org.OrgName,
