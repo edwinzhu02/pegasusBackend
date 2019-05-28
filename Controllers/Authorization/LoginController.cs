@@ -32,14 +32,6 @@ namespace Pegasus_backend.Controllers.Authorization
             _appSettings = appSettings.Value;
         }
         
-        /*[Authorize]
-        [HttpGet]
-        public ActionResult get()
-        {
-            var a = User.Claims.First(s=>s.Type=="UserID").Value;
-            return Ok(a);
-        }*/
-        
         
         //POST: http://localhost:5000/api/login
         [CheckModelFilter]
