@@ -18,7 +18,7 @@ namespace Pegasus_backend.Controllers
 {
     public abstract class BasicController: ControllerBase
     {
-        protected TimeSpan GetEndTimeForOnetoOneCourseSchedule(TimeSpan beginTime, byte durationType)
+        protected TimeSpan GetEndTimeForOnetoOneCourseSchedule(TimeSpan beginTime, short? durationType)
         {
             switch (durationType)
             {

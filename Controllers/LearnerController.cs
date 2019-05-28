@@ -167,10 +167,12 @@ namespace Pegasus_backend.Controllers
                     }
                     detailsJson.One2oneCourseInstance.ForEach(s =>
                     {
+                        var durationType = _pegasusContext.Course.FirstOrDefault(w => w.CourseId == s.CourseId).Duration;
                         _pegasusContext.Add(new CourseSchedule
                         {
                             DayOfWeek = s.Schedule.DayOfWeek,CourseInstanceId = s.id,
-                            BeginTime = s.Schedule.BeginTime, EndTime = GetEndTimeForOnetoOneCourseSchedule(s.Schedule.BeginTime,s.Schedule.DurationType)
+                            BeginTime = s.Schedule.BeginTime, 
+                            EndTime = GetEndTimeForOnetoOneCourseSchedule(s.Schedule.BeginTime,durationType)
                         });
                     });
                     await _pegasusContext.SaveChangesAsync();

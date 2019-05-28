@@ -6,6 +6,5 @@ namespace Pegasus_backend.Models
     {
         public byte? DayOfWeek { get; set; }
         public TimeSpan BeginTime { get; set; }
-        public byte DurationType { get; set; }
     }
 }
