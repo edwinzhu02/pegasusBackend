@@ -104,7 +104,7 @@ namespace Pegasus_backend.Controllers
             if (imageName == "IdPhoto")
             {
                     
-                var folderName = Path.Combine("wwwroot", "images", "TeacherIdPhotos");
+                var folderName = Path.Combine("wwwroot", "images", "tutor","IdPhotos");
                 var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
                 var path = Path.Combine(pathToSave, Id );
                 var stream = new FileStream(path, FileMode.Create);
@@ -114,7 +114,7 @@ namespace Pegasus_backend.Controllers
 
             if (imageName == "Photo")
             {
-                var folderName = Path.Combine("wwwroot", "images", "TeacherImages");
+                var folderName = Path.Combine("wwwroot", "images", "tutor","Photos");
                 var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
                 var path = Path.Combine(pathToSave, Id);
                 var stream = new FileStream(path, FileMode.Create);
@@ -125,7 +125,7 @@ namespace Pegasus_backend.Controllers
             //student photo
             if (imageName == "image")
             {
-                var folderName = Path.Combine("wwwroot", "images", "LearnerImages");
+                var folderName = Path.Combine("wwwroot", "images", "learner","Photos");
                 var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
                 var path = Path.Combine(pathToSave, Id);
                 var stream = new FileStream(path, FileMode.Create);
@@ -135,7 +135,37 @@ namespace Pegasus_backend.Controllers
 
             if (imageName == "ABRSM")
             {
-                var folderName = Path.Combine("wwwroot", "images", "ABRSM_Grade5_Certificate");
+                var folderName = Path.Combine("wwwroot", "images","learner" ,"ABRSM_Grade5_Certificate");
+                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+                var path = Path.Combine(pathToSave, Id);
+                var stream = new FileStream(path, FileMode.Create);
+                file.CopyTo(stream);
+                stream.Close();
+            }
+
+            if (imageName == "CV")
+            {
+                var folderName = Path.Combine("wwwroot", "images","tutor" ,"CV");
+                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+                var path = Path.Combine(pathToSave, Id);
+                var stream = new FileStream(path, FileMode.Create);
+                file.CopyTo(stream);
+                stream.Close();
+            }
+
+            if (imageName == "Form")
+            {
+                var folderName = Path.Combine("wwwroot", "images","tutor" ,"Form");
+                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+                var path = Path.Combine(pathToSave, Id);
+                var stream = new FileStream(path, FileMode.Create);
+                file.CopyTo(stream);
+                stream.Close();
+            }
+
+            if (imageName == "Other")
+            {
+                var folderName = Path.Combine("wwwroot", "images","tutor" ,"Other");
                 var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
                 var path = Path.Combine(pathToSave, Id);
                 var stream = new FileStream(path, FileMode.Create);

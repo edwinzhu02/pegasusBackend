@@ -188,7 +188,7 @@ namespace Pegasus_backend.Controllers
                     
                     if (image != null)
                     {
-                        newLearner.Photo = $"images/LearnerImages/{newLearner.LearnerId+Path.GetExtension(image.FileName)}";
+                        newLearner.Photo = $"images/learner/Photos/{newLearner.LearnerId+Path.GetExtension(image.FileName)}";
                         _pegasusContext.Update(newLearner);
                         await _pegasusContext.SaveChangesAsync();
                         UploadFile(image,"image",newLearner.LearnerId);
@@ -196,7 +196,7 @@ namespace Pegasus_backend.Controllers
 
                     if (ABRSM != null)
                     {
-                        newLearner.G5Certification = $"images/ABRSM_Grade5_Certificate/{newLearner.LearnerId+Path.GetExtension(ABRSM.FileName)}";
+                        newLearner.G5Certification = $"images/learner/ABRSM_Grade5_Certificate/{newLearner.LearnerId+Path.GetExtension(ABRSM.FileName)}";
                         newLearner.IsAbrsmG5 = 1;
                         _pegasusContext.Update(newLearner);
                         await _pegasusContext.SaveChangesAsync();
