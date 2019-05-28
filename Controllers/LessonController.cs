@@ -50,7 +50,7 @@ namespace Pegasus_backend.Controllers
                         {
                             s.Room.RoomName,s.RoomId,s.Org.OrgName,s.OrgId,s.TeacherId,TeacherName=s.Teacher.FirstName,s.BeginTime,s.EndTime,
                             CourseName=!IsNull(s.GroupCourseInstance)?s.GroupCourseInstance.Course.CourseName:s.CourseInstance.Course.CourseName,
-                            s.LessonId,courseId=!IsNull(s.GroupCourseInstance)?s.GroupCourseInstance.Course.CourseId:s.CourseInstance.Course.CourseId
+                            s.LessonId,courseId=!IsNull(s.GroupCourseInstance)?s.GroupCourseInstance.Course.CourseId:s.CourseInstance.Course.CourseId,s.LearnerId
                         }
                     });
                     
