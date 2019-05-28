@@ -20,6 +20,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Pegasus_backend.Models;
+using Pegasus_backend.pegasusContext;
+using Microsoft.EntityFrameworkCore;
 
 namespace Pegasus_backend
 {
@@ -53,6 +55,8 @@ namespace Pegasus_backend
             
             services.AddDirectoryBrowser();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddDbContext<ablemusicContext>(options =>
+                options.UseMySQL(Configuration.GetConnectionString("AblemusicDatabase")));
             services.AddTransient<pegasusContext.ablemusicContext>();
             services.AddCors();
             
