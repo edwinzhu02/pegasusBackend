@@ -167,6 +167,10 @@ namespace Pegasus_backend.Controllers
                     }
                     detailsJson.One2oneCourseInstance.ForEach(s =>
                     {
+                        if (_pegasusContext.Course.FirstOrDefault(w => w.CourseId == s.CourseId).CourseType != 1)
+                        {
+                            throw new Exception("This course is not one to one course");
+                        }
                         var durationType = _pegasusContext.Course.FirstOrDefault(w => w.CourseId == s.CourseId).Duration;
                         _pegasusContext.Add(new CourseSchedule
                         {

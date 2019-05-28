@@ -36,6 +36,8 @@ namespace Pegasus_backend.Controllers
                     .Where(s=>s.OrgId==orgId&&s.BeginTime.Value.Year == date.Year && s.BeginTime.Value.Month == date.Month && s.BeginTime.Value.Day == date.Day)
                     .Include(s=>s.Learner)
                     .Include(s => s.Teacher)
+                    .Include(s=>s.Room)
+                    .Include(s=>s.Org)
                     .Include(group => group.GroupCourseInstance)
                     .ThenInclude(learnerCourse => learnerCourse.LearnerGroupCourse)
                     .ThenInclude(learner => learner.Learner)
@@ -43,7 +45,8 @@ namespace Pegasus_backend.Controllers
                         title=IsNull(s.GroupCourseInstance)?"1":"G",description="",
                         teacher=s.Teacher.FirstName.ToString(),
                         student=IsNull(s.GroupCourseInstance)?new List<string>{s.Learner.FirstName}:s.GroupCourseInstance.LearnerGroupCourse.Select(w=>w.Learner.FirstName),
-                        IsGroup=!IsNull(s.GroupCourseInstance)
+                        IsGroup=!IsNull(s.GroupCourseInstance),
+                        info = new {s.Room.RoomName,s.RoomId,s.Org.OrgName,s.OrgId,s.TeacherId,s.Teacher.FirstName}
                     });
                     
                 result.Data = await details.ToListAsync();
