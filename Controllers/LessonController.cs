@@ -46,7 +46,11 @@ namespace Pegasus_backend.Controllers
                         teacher=s.Teacher.FirstName.ToString(),
                         student=IsNull(s.GroupCourseInstance)?new List<string>{s.Learner.FirstName}:s.GroupCourseInstance.LearnerGroupCourse.Select(w=>w.Learner.FirstName),
                         IsGroup=!IsNull(s.GroupCourseInstance),
-                        info = new {s.Room.RoomName,s.RoomId,s.Org.OrgName,s.OrgId,s.TeacherId,s.Teacher.FirstName,s.BeginTime,s.EndTime}
+                        info = new
+                        {
+                            s.Room.RoomName,s.RoomId,s.Org.OrgName,s.OrgId,s.TeacherId,s.Teacher.FirstName,s.BeginTime,s.EndTime,
+                            CourseName=!IsNull(s.GroupCourseInstance)?s.GroupCourseInstance.Course.CourseName:s.CourseInstance.Course.CourseName
+                        }
                     });
                     
                 result.Data = await details.ToListAsync();
