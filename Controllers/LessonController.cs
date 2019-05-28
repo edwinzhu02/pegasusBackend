@@ -48,7 +48,7 @@ namespace Pegasus_backend.Controllers
                         IsGroup=!IsNull(s.GroupCourseInstance),
                         info = new
                         {
-                            s.Room.RoomName,s.RoomId,s.Org.OrgName,s.OrgId,s.TeacherId,s.Teacher.FirstName,s.BeginTime,s.EndTime,
+                            s.Room.RoomName,s.RoomId,s.Org.OrgName,s.OrgId,s.TeacherId,TeacherName=s.Teacher.FirstName,s.BeginTime,s.EndTime,
                             CourseName=!IsNull(s.GroupCourseInstance)?s.GroupCourseInstance.Course.CourseName:s.CourseInstance.Course.CourseName
                         }
                     });
