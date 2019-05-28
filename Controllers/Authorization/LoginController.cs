@@ -53,6 +53,8 @@ namespace Pegasus_backend.Controllers.Authorization
                 var user = await _pegasusContext.User.Include(s=>s.Learner)
                     .Include(s=>s.Teacher)
                     .Include(s=>s.Staff)
+                    .ThenInclude(w=>w.StaffOrg)
+                    .ThenInclude(q=>q.Org)
                     .Include(s=>s.Role)
                     .FirstOrDefaultAsync(s=>s.UserName==model.UserName);
                 

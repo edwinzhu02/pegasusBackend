@@ -29,7 +29,7 @@ namespace Pegasus_backend.Controllers
             _mapper = mapper;
         }
         
-        //Delete: apo/learner/:id
+        //Delete: api/learner/:id
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteLearner(int id)
         {
@@ -94,21 +94,33 @@ namespace Pegasus_backend.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Learner>>> GetLearners()
         {
-            Result<List<Learner>> result = new Result<List<Learner>>();
+            Result<Object> result = new Result<Object>();
             try
             {
                 var data = await _pegasusContext.Learner
-                    .Include(s=>s.LearnerOthers)
-                    .Include(s=>s.Parent)
-                    .Include(s=>s.Org)
+                    .Include(w=>w.Parent)
+                    .Include(w=>w.LearnerOthers)
+                    .Include(w=>w.One2oneCourseInstance)
+                    .ThenInclude(w=>w.Org)
+                    .Include(w=>w.One2oneCourseInstance)
+                    .ThenInclude(w=>w.Course)
+                    .Include(w=>w.One2oneCourseInstance)
                     .ThenInclude(w=>w.Room)
-                    .Include(s=>s.One2oneCourseInstance)
+                    .Include(w=>w.One2oneCourseInstance)
+                    .ThenInclude(w=>w.CourseSchedule)
+                    .Include(w=>w.One2oneCourseInstance)
                     .ThenInclude(w=>w.Teacher)
+                    .Include(w=>w.LearnerGroupCourse)
+                    .ThenInclude(w=>w.GroupCourseInstance)
+                    .ThenInclude(s=>s.Teacher)
+                    .Include(w=>w.LearnerGroupCourse)
+                    .ThenInclude(s=>s.GroupCourseInstance)
+                    .ThenInclude(s=>s.CourseSchedule)
                     .Include(s=>s.One2oneCourseInstance)
-                    .ThenInclude(s=>s.Course)
+                    .ThenInclude(s=>s.CourseSchedule)
+                    .Where(s=>s.IsActive ==1)
                     
-                    .Include(s=>s.LearnerGroupCourse)
-                    .Where(s=>s.IsActive==1).ToListAsync();
+                    .ToListAsync();
                 result.Data = data;
             }
             catch (Exception ex)
@@ -135,7 +147,17 @@ namespace Pegasus_backend.Controllers
                     var newLearner = new Learner();
                     _mapper.Map(detailsJson, newLearner);
                     newLearner.IsActive = 1;
+                    newLearner.CreatedAt = DateTime.Now;
                     _pegasusContext.Add(newLearner);
+                    await _pegasusContext.SaveChangesAsync();
+                    
+                    newLearner.LearnerGroupCourse.ToList().ForEach(s =>
+                    {
+                        s.CreatedAt=DateTime.Now;
+                        s.IsActivate = 1;
+                        _pegasusContext.Update(s);
+                    });
+
                     await _pegasusContext.SaveChangesAsync();
 
                     for (var i = 0; i < newLearner.One2oneCourseInstance.ToList().Count; i++)
@@ -151,6 +173,11 @@ namespace Pegasus_backend.Controllers
                             BeginTime = s.Schedule.BeginTime, EndTime = GetEndTimeForOnetoOneCourseSchedule(s.Schedule.BeginTime,s.Schedule.DurationType)
                         });
                     });
+                    await _pegasusContext.SaveChangesAsync();
+                    
+                    //add new fund row for new student
+                    var fundItem = new Fund{Balance = 0,LearnerId = newLearner.LearnerId};
+                    _pegasusContext.Add(fundItem);
                     await _pegasusContext.SaveChangesAsync();
                     
                     if (image != null)
@@ -180,7 +207,7 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = ex.Message;
                 return BadRequest(result);
             }
-
+            
             result.Data = "success!";
             return Ok(result);
         }

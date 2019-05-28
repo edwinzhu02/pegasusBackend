@@ -142,7 +142,8 @@ namespace Pegasus_backend.Controllers
                     await _ablemusicContext.Teacher.FirstOrDefaultAsync(t => t.TeacherId == oldLesson.TeacherId);
                 courses = (from c in _ablemusicContext.Course
                            join oto in _ablemusicContext.One2oneCourseInstance on c.CourseId equals oto.CourseId
-                           where oto.CourseInstanceId == newLesson.CourseInstanceId
+                           join l in _ablemusicContext.Lesson on oto.CourseInstanceId equals l.CourseInstanceId
+                           where l.LessonId == newLesson.LessonId
                            select new Course
                            {
                                CourseId = c.CourseId,
@@ -265,22 +266,36 @@ namespace Pegasus_backend.Controllers
                 Task newTeacherMailSenderTask = MailSenderService.SendMailAsync(remindLogForNewTeacher.Email, mailTitle, mailContentForNewTeacher, remindLogForNewTeacher.RemindId);
             }
 
-            //oldLesson.LearnerId = newLesson.LearnerId;
-            oldLesson.RoomId = newLesson.RoomId;
-            oldLesson.TeacherId = newLesson.TeacherId;
-            oldLesson.OrgId = newLesson.OrgId;
-            //oldLesson.IsCanceled = newLesson.IsCanceled;
+            oldLesson.IsCanceled = 1;
             oldLesson.Reason = newLesson.Reason;
-            //oldLesson.CreatedAt = newLesson.CreatedAt;
-            //oldLesson.CourseInstanceId = newLesson.CourseInstanceId;
-            //oldLesson.GroupCourseInstanceId = newLesson.GroupCourseInstanceId;
-            //oldLesson.IsTrial = newLesson.IsTrial;
-            oldLesson.BeginTime = newLesson.BeginTime.Value;
-            oldLesson.EndTime = newLesson.EndTime.Value;
-            //oldLesson.InvoiceId = newLesson.InvoiceId;
+
+            newLesson.LessonId = 0;
+            newLesson.LearnerId = oldLesson.LearnerId;
+            newLesson.IsCanceled = 0;
+            newLesson.Reason = "";
+            newLesson.CreatedAt = DateTime.Now;
+            newLesson.CourseInstanceId = oldLesson.CourseInstanceId;
+            newLesson.GroupCourseInstanceId = oldLesson.GroupCourseInstanceId;
+            newLesson.IsTrial = oldLesson.IsTrial;
+            newLesson.InvoiceId = oldLesson.InvoiceId;
+
+            ////oldLesson.LearnerId = newLesson.LearnerId;
+            //oldLesson.RoomId = newLesson.RoomId;
+            //oldLesson.TeacherId = newLesson.TeacherId;
+            //oldLesson.OrgId = newLesson.OrgId;
+            ////oldLesson.IsCanceled = newLesson.IsCanceled;
+            //oldLesson.Reason = newLesson.Reason;
+            ////oldLesson.CreatedAt = newLesson.CreatedAt;
+            ////oldLesson.CourseInstanceId = newLesson.CourseInstanceId;
+            ////oldLesson.GroupCourseInstanceId = newLesson.GroupCourseInstanceId;
+            ////oldLesson.IsTrial = newLesson.IsTrial;
+            //oldLesson.BeginTime = newLesson.BeginTime.Value;
+            //oldLesson.EndTime = newLesson.EndTime.Value;
+            ////oldLesson.InvoiceId = newLesson.InvoiceId;
 
             try
             {
+                await _ablemusicContext.Lesson.AddAsync(newLesson);
                 await _ablemusicContext.SaveChangesAsync();
             }
             catch(Exception ex)

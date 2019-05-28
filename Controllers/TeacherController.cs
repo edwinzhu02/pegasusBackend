@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using Google.Protobuf.WellKnownTypes;
 using Microsoft.AspNetCore.Mvc;
@@ -96,6 +97,7 @@ namespace Pegasus_backend.Controllers
             Result<Object> result = new Result<Object>();
             try
             {
+                Random r = new Random();
                 result.IsSuccess = true;
                 var teachers = await _pegasusContext.Teacher
                     .Include(s => s.TeacherLanguage)
@@ -111,12 +113,10 @@ namespace Pegasus_backend.Controllers
                     .Where(s => s.IsActivate == 1)
                     .Select(q => new
                     {
-                        q.TeacherId,q.FirstName,q.LastName,q.Dob,Gender=Convert.ToBoolean(q.Gender)?"Male":"Female",q.IrdNumber,q.IdType,q.IdPhoto,q.IdNumber,q.HomePhone,q.MobilePhone,q.Email,q.Photo,q.ExpiryDate,
+                        q.TeacherId,q.FirstName,q.LastName,q.Dob,Gender=Convert.ToBoolean(q.Gender)?"Male":"Female",
+                        q.IrdNumber,q.IdType,IdPhoto=IsNull(q.IdPhoto)?null:String.Format("{0}?{1}",q.IdPhoto,r.Next()),q.IdNumber,q.HomePhone,q.MobilePhone,q.Email,
+                        Photo=IsNull(q.Photo)?null:String.Format("{0}?{1}",q.Photo,r.Next()),q.ExpiryDate,
                         q.IsLeft,q.IsContract,q.InvoiceTemplate,q.Ability,q.Comment,q.Level,
-                        /*AvailableDays = q.AvailableDays.Select(w=> new {w.DayOfWeek,w.OrgId, w.Org.OrgName}),
-                        TeacherLanguage = q.TeacherLanguage.Select(w=>new {w.LangId,w.Lang.LangName}),
-                        TeacherQualificatiion = q.TeacherQualificatiion.Select(w=> new {w.QualiId,w.Quali.QualiName}),
-                        TeacherCourse = q.TeacherCourse.Select(w=> new {w.CourseId,w.TeacherCourseId,w.Course.CourseName,w.Course.Level})*/
                         q.AvailableDays,q.TeacherLanguage,q.TeacherQualificatiion
                         
                     })

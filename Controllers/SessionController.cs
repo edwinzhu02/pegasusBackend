@@ -28,6 +28,96 @@ namespace Pegasus_backend.Controllers
             _configuration = configuration;
         }
 
+        [HttpPut("[action]/{lessonId}/{reason}")]
+        public async Task<IActionResult> Confirm(int lessonId, string reason)
+        {
+            Result<string> result = new Result<string>();
+            try
+            {
+                using (var dbContextTransaction = _ablemusicContext.Database.BeginTransaction())
+                {
+                    var lesson = _ablemusicContext.Lesson.FirstOrDefault(s => s.LessonId == lessonId);
+                    if (lesson == null)
+                    {
+                        return NotFound(DataNotFound(result));
+                    }
+
+                    if (!IsNull(lesson.GroupCourseInstanceId))
+                    {
+                        throw new Exception("Group course cannot be confirmed");
+                    }
+                    if (lesson.IsCanceled == 1)
+                    {
+                        throw new Exception("This lesson has already canceled");
+                    }
+
+                    if (lesson.IsConfirm == 1)
+                    {
+                        throw new Exception("This lesson has already confirm.");
+                    }
+                    lesson.IsConfirm = 1;
+                    lesson.Reason = reason;
+                    _ablemusicContext.Update(lesson);
+                    await _ablemusicContext.SaveChangesAsync();
+                    
+                    //lessonRemain
+                    var lessonRemain = _ablemusicContext.LessonRemain.FirstOrDefault(s =>
+                        s.LearnerId == lesson.LearnerId && s.CourseInstanceId == lesson.CourseInstanceId);
+                    if (lessonRemain.Quantity == 0)
+                    {
+                        throw new Exception("the remain quantities of your lesson is 0");
+                    }
+
+                    lessonRemain.Quantity -= 1;
+                    _ablemusicContext.Update(lessonRemain);
+                    await _ablemusicContext.SaveChangesAsync();
+                    
+                    //fund
+                    var courseInstance =
+                        _ablemusicContext.One2oneCourseInstance.FirstOrDefault(s =>
+                            s.CourseInstanceId == lesson.CourseInstanceId);
+                    var course = _ablemusicContext.Course.FirstOrDefault(s => s.CourseId == courseInstance.CourseId);
+                    var fund = _ablemusicContext.Fund.FirstOrDefault(s => s.LearnerId == lesson.LearnerId);
+                    fund.Balance -= course.Price;
+                    _ablemusicContext.Update(fund);
+                    await _ablemusicContext.SaveChangesAsync();
+                    
+                    //learner transaction
+                    var learnerTransaction = new LearnerTransaction
+                    {
+                        LessonId = lesson.LessonId,CreatedAt = DateTime.Now.ToShortDateString(),
+                        Amount = course.Price.ToString(),LearnerId = lesson.LearnerId
+                    };
+                    _ablemusicContext.Add(learnerTransaction);
+                    await _ablemusicContext.SaveChangesAsync();
+                    
+                    //teacher transaction
+                    var houlyWage = _ablemusicContext.TeacherCourse.FirstOrDefault(s =>
+                        s.TeacherId == lesson.TeacherId && s.CourseId == courseInstance.CourseId).HourlyWage;
+                    var wageAmout = (double) houlyWage*(lesson.EndTime.Value.Subtract(lesson.BeginTime.Value).TotalMinutes/60);
+                    var teacherTransaction = new TeacherTransaction
+                    {
+                        LessonId = lesson.LessonId,CreatedAt = DateTime.Now,
+                        WageAmount = (decimal) wageAmout,
+                        TeacherId = lesson.TeacherId
+                    };
+                    _ablemusicContext.Add(teacherTransaction);
+                    await _ablemusicContext.SaveChangesAsync();
+                    
+                    dbContextTransaction.Commit();
+                    result.Data = "Success";
+                    return Ok(result);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.ToString();
+                return BadRequest(result);
+            }
+        }
+        
         [Route("sessionCancelConfirm/{listId}/{remindId}")]
         [HttpGet]
         public async Task<IActionResult> CancelConfirm(int listId, int remindId)
@@ -55,6 +145,45 @@ namespace Pegasus_backend.Controllers
             }
             todoList.ProcessFlag = 1;
             todoList.ProcessedAt = DateTime.Now;
+            remindLog.ProcessFlag = 1;
+
+            try
+            {
+                await _ablemusicContext.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                result.ErrorMessage = e.Message;
+                result.IsSuccess = false;
+                return BadRequest(result);
+            }
+
+            return Ok(result);  //Should redirect to a success page!
+        }
+
+        [Route("sessionCancelConfirm/{remindId}")]
+        [HttpGet]
+        public async Task<IActionResult> CancelConfirm(int remindId)
+        {
+            var result = new Result<string>();
+            RemindLog remindLog;
+            try
+            {
+                remindLog = await _ablemusicContext.RemindLog.Where(r => r.RemindId == remindId).FirstOrDefaultAsync();
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.ToString();
+                return NotFound(result);
+            }
+
+            if (remindLog == null)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = "remind id is not found";
+                return NotFound(result);
+            }
             remindLog.ProcessFlag = 1;
 
             try

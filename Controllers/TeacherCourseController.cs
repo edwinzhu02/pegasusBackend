@@ -36,13 +36,14 @@ namespace Pegasus_backend.Controllers
                 result.Data = await _pegasusContext.TeacherCourse
                     .Include(s=>s.Teacher)
                     .Include(s=>s.Course)
+                    .ThenInclude(s=>s.GroupCourseInstance)
                     .Select(s=> new
                     {
                         s.TeacherCourseId,s.CourseId,s.TeacherId,s.HourlyWage,
                         Course=new
                         {
                             s.Course.CourseId,s.Course.CourseName,s.Course.Level,s.Course.Duration,
-                            s.Course.Price
+                            s.Course.Price, s.Course.CourseType
                         },
                         Teacher= new {s.Teacher.TeacherId,s.Teacher.FirstName,s.Teacher.LastName,s.Teacher.Level}
                     })

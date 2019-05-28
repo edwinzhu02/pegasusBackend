@@ -21,6 +21,24 @@ namespace Pegasus_backend.Controllers
             _ablemusicContext = ablemusicContext;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetLookups()
+        {
+            Result<List<Lookup>> result = new Result<List<Lookup>>();
+            try
+            {
+                result.Data = await _ablemusicContext.Lookup.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+
+            return Ok(result);
+        }
+
         // GET: api/Lookups/5
         [HttpGet("{type}")]
         public async Task<IActionResult> GetLookup([FromRoute] int type)

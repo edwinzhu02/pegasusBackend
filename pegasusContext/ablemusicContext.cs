@@ -495,6 +495,10 @@ namespace Pegasus_backend.pegasusContext
                     .HasColumnName("is_activate")
                     .HasColumnType("bit(1)");
 
+                entity.Property(e => e.IsStarted)
+                    .HasColumnName("is_started")
+                    .HasColumnType("bit(1)");
+
                 entity.Property(e => e.OrgId)
                     .HasColumnName("org_id")
                     .HasColumnType("smallint(6)");
@@ -1136,6 +1140,10 @@ namespace Pegasus_backend.pegasusContext
                     .HasColumnName("learner_group_course_id")
                     .HasColumnType("int(11)");
 
+                entity.Property(e => e.BeginDate)
+                    .HasColumnName("begin_date")
+                    .HasColumnType("date");
+
                 entity.Property(e => e.Comment)
                     .HasColumnName("comment")
                     .HasMaxLength(100)
@@ -1143,9 +1151,17 @@ namespace Pegasus_backend.pegasusContext
 
                 entity.Property(e => e.CreatedAt).HasColumnName("created_at");
 
+                entity.Property(e => e.EndDate)
+                    .HasColumnName("end_date")
+                    .HasColumnType("date");
+
                 entity.Property(e => e.GroupCourseInstanceId)
                     .HasColumnName("group_course_instance_id")
                     .HasColumnType("int(11)");
+
+                entity.Property(e => e.InvoiceDate)
+                    .HasColumnName("invoice_date")
+                    .HasColumnType("date");
 
                 entity.Property(e => e.IsActivate)
                     .HasColumnName("is_activate")
@@ -1311,6 +1327,10 @@ namespace Pegasus_backend.pegasusContext
                     .HasColumnName("is_canceled")
                     .HasColumnType("bit(1)");
 
+                entity.Property(e => e.IsConfirm)
+                    .HasColumnName("is_confirm")
+                    .HasColumnType("tinyint(4)");
+
                 entity.Property(e => e.IsTrial)
                     .HasColumnName("is_trial")
                     .HasColumnType("tinyint(1)");
@@ -1442,6 +1462,9 @@ namespace Pegasus_backend.pegasusContext
             {
                 entity.ToTable("login_log", "ablemusic");
 
+                entity.HasIndex(e => e.OrgId)
+                    .HasName("R_120");
+
                 entity.HasIndex(e => e.UserId)
                     .HasName("R_62");
 
@@ -1455,9 +1478,18 @@ namespace Pegasus_backend.pegasusContext
                     .HasColumnName("log_type")
                     .HasColumnType("int(11)");
 
+                entity.Property(e => e.OrgId)
+                    .HasColumnName("org_id")
+                    .HasColumnType("smallint(6)");
+
                 entity.Property(e => e.UserId)
                     .HasColumnName("user_id")
                     .HasColumnType("smallint(6)");
+
+                entity.HasOne(d => d.Org)
+                    .WithMany(p => p.LoginLog)
+                    .HasForeignKey(d => d.OrgId)
+                    .HasConstraintName("R_120");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.LoginLog)
@@ -1527,6 +1559,10 @@ namespace Pegasus_backend.pegasusContext
 
                 entity.Property(e => e.EndDate)
                     .HasColumnName("end_date")
+                    .HasColumnType("date");
+
+                entity.Property(e => e.InvoiceDate)
+                    .HasColumnName("invoice_date")
                     .HasColumnType("date");
 
                 entity.Property(e => e.LearnerId)
@@ -1623,6 +1659,14 @@ namespace Pegasus_backend.pegasusContext
                 entity.Property(e => e.IsHeadoffice)
                     .HasColumnName("is_headoffice")
                     .HasColumnType("bit(1)");
+
+                entity.Property(e => e.LocaltionX)
+                    .HasColumnName("localtion_x")
+                    .HasColumnType("decimal(10,7)");
+
+                entity.Property(e => e.LocaltionY)
+                    .HasColumnName("localtion_y")
+                    .HasColumnType("decimal(10,7)");
 
                 entity.Property(e => e.OrgName)
                     .HasColumnName("org_name")
@@ -2731,6 +2775,9 @@ namespace Pegasus_backend.pegasusContext
                 entity.HasIndex(e => e.LessonId)
                     .HasName("R_42");
 
+                entity.HasIndex(e => e.TeacherId)
+                    .HasName("R_125");
+
                 entity.Property(e => e.TranId)
                     .HasColumnName("tran_id")
                     .HasColumnType("int(11)");
@@ -2741,6 +2788,10 @@ namespace Pegasus_backend.pegasusContext
                     .HasColumnName("lesson_id")
                     .HasColumnType("int(11)");
 
+                entity.Property(e => e.TeacherId)
+                    .HasColumnName("teacher_id")
+                    .HasColumnType("smallint(6)");
+
                 entity.Property(e => e.WageAmount)
                     .HasColumnName("wage_amount")
                     .HasColumnType("decimal(6,2)");
@@ -2749,6 +2800,11 @@ namespace Pegasus_backend.pegasusContext
                     .WithMany(p => p.TeacherTransaction)
                     .HasForeignKey(d => d.LessonId)
                     .HasConstraintName("R_42");
+
+                entity.HasOne(d => d.Teacher)
+                    .WithMany(p => p.TeacherTransaction)
+                    .HasForeignKey(d => d.TeacherId)
+                    .HasConstraintName("R_125");
             });
 
             modelBuilder.Entity<Term>(entity =>

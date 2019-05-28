@@ -23,6 +23,7 @@ namespace Pegasus_backend.pegasusContext
         public DateTime? EndDate { get; set; }
         public int? LearnerId { get; set; }
         public short? RoomId { get; set; }
+        public DateTime? InvoiceDate { get; set; }
 
         public Course Course { get; set; }
         public Learner Learner { get; set; }

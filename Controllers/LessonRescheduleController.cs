@@ -357,7 +357,7 @@ namespace Pegasus_backend.Controllers
             remindLogLearner.Email = learner.Email;
             remindLogLearner.RemindType = 1;
             remindLogLearner.RemindContent = "Inform learner " + learner.FirstName + " " + learner.LastName +
-                " the " + courseName + " lession from " + lesson.BeginTime.ToString() + " to " + lesson.EndTime.ToString() +
+                " the " + courseName + " lesson from " + lesson.BeginTime.ToString() + " to " + lesson.EndTime.ToString() +
                 " has been rescheduled. Lesson remain hours are append to the following lessions: \n";
             foreach (var appendLesson in appendLessons)
             {
@@ -381,7 +381,7 @@ namespace Pegasus_backend.Controllers
             remindLogForTeacher.Email = teacher.Email;
             remindLogForTeacher.RemindType = 1;
             remindLogForTeacher.RemindContent = "Inform teacher " + teacher.FirstName + " " + teacher.LastName +
-                " the " + courseName + " lession from " + lesson.BeginTime.ToString() + " to " + lesson.EndTime.ToString() +
+                " the " + courseName + " lesson from " + lesson.BeginTime.ToString() + " to " + lesson.EndTime.ToString() +
                 " has been rescheduled. Lesson Remain hours are append to the following lessons: \n";
             foreach (var appendLesson in appendLessons)
             {
