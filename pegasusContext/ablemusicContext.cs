@@ -1642,6 +1642,11 @@ namespace Pegasus_backend.pegasusContext
                     .HasColumnName("org_id")
                     .HasColumnType("smallint(6)");
 
+                entity.Property(e => e.Abbr)
+                    .HasColumnName("abbr")
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.Address)
                     .HasColumnName("address")
                     .HasMaxLength(60)
@@ -2073,7 +2078,7 @@ namespace Pegasus_backend.pegasusContext
 
                 entity.Property(e => e.RemindContent)
                     .HasColumnName("remind_content")
-                    .HasMaxLength(200)
+                    .HasMaxLength(2000)
                     .IsUnicode(false);
 
                 entity.Property(e => e.RemindTitle)
@@ -2866,7 +2871,7 @@ namespace Pegasus_backend.pegasusContext
 
                 entity.Property(e => e.ListContent)
                     .HasColumnName("list_content")
-                    .HasMaxLength(200)
+                    .HasMaxLength(2000)
                     .IsUnicode(false);
 
                 entity.Property(e => e.ListName)

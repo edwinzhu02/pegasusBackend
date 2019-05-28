@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
 
 namespace Pegasus_backend.pegasusContext
 {
@@ -12,7 +11,6 @@ namespace Pegasus_backend.pegasusContext
         public int LearnerOthersId { get; set; }
         public short? LearnerLevel { get; set; }
 
-        [JsonIgnore]
         public Learner Learner { get; set; }
     }
 }
