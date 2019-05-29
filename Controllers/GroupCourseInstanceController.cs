@@ -102,6 +102,16 @@ namespace Pegasus_backend.Controllers
             Result<string> result = new Result<string>();
             try
             {
+                if (_pegasusContext.Course.FirstOrDefault(s => s.CourseId == groupinstance.CourseId).CourseType !=0)
+                {
+                    throw new Exception("This course is not group course");
+                }
+                var duration = _pegasusContext.Course.FirstOrDefault(s => s.CourseId == groupinstance.CourseId).Duration;
+                for (var i = 0; i < groupinstance.CourseSchedule.Count; i++ )
+                {
+                    groupinstance.CourseSchedule[i].EndTime =
+                        GetEndTimeForOnetoOneCourseSchedule(groupinstance.CourseSchedule[i].BeginTime.Value, duration);
+                }
                 var newGroupInstance = new GroupCourseInstance();
                 _mapper.Map(groupinstance, newGroupInstance);
                 newGroupInstance.IsActivate = 1;
@@ -133,12 +143,24 @@ namespace Pegasus_backend.Controllers
                 {
                     throw new Exception("Group course instance does not found");
                 }
+                
+                if (_pegasusContext.Course.FirstOrDefault(s => s.CourseId == groupCourseInstanceModel.CourseId).CourseType !=0)
+                {
+                    throw new Exception("This course is not group course");
+                }
 
                 using (var dbContextTransaction = _pegasusContext.Database.BeginTransaction())
                 {
+                    
                     var scheduleList = _pegasusContext.CourseSchedule.Where(s => s.GroupCourseInstanceId == id);
                     scheduleList.ToList().ForEach(s => { _pegasusContext.Remove(s); });
                     await _pegasusContext.SaveChangesAsync();
+                    var duration = _pegasusContext.Course.FirstOrDefault(s => s.CourseId == groupCourseInstanceModel.CourseId).Duration;
+                    for (var i = 0; i < groupCourseInstanceModel.CourseSchedule.Count; i++ )
+                    {
+                        groupCourseInstanceModel.CourseSchedule[i].EndTime =
+                            GetEndTimeForOnetoOneCourseSchedule(groupCourseInstanceModel.CourseSchedule[i].BeginTime.Value, duration);
+                    }
                     _mapper.Map(groupCourseInstanceModel, groupCourseinstance);
                     _pegasusContext.Update(groupCourseinstance);
                     await _pegasusContext.SaveChangesAsync();

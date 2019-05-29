@@ -80,7 +80,7 @@ namespace Pegasus_backend.Controllers.Authorization
                 var tokenToClient = tokenHandle.WriteToken(securityToken);
                 var position = user.Role.RoleName;
                 var date = DateTimeOffset.UtcNow.AddDays(14).ToUnixTimeSeconds();
-                result.Data = new {token=tokenToClient,roleid = user.RoleId,userid=user.UserId,expires=date,userdetails= UserInfoFilter(user,position)};
+                result.Data = new {token=tokenToClient,username=model.UserName,roleid = user.RoleId,userid=user.UserId,expires=date,userdetails= UserInfoFilter(user,position)};
                 result.IsSuccess = true;
                 return Ok(result);
             }

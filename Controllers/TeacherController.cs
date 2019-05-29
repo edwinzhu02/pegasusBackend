@@ -116,6 +116,9 @@ namespace Pegasus_backend.Controllers
                         q.TeacherId,q.FirstName,q.LastName,q.Dob,Gender=Convert.ToBoolean(q.Gender)?"Male":"Female",
                         q.IrdNumber,q.IdType,IdPhoto=IsNull(q.IdPhoto)?null:String.Format("{0}?{1}",q.IdPhoto,r.Next()),q.IdNumber,q.HomePhone,q.MobilePhone,q.Email,
                         Photo=IsNull(q.Photo)?null:String.Format("{0}?{1}",q.Photo,r.Next()),q.ExpiryDate,
+                        CV=IsNull(q.CvUrl)?null:String.Format("{0}?{1}",q.CvUrl,r.Next()),
+                        OtherFile=IsNull(q.OtherfileUrl)?null:String.Format("{0}?{1}",q.OtherfileUrl,r.Next()),
+                        Form=IsNull(q.FormUrl)?null:String.Format("{0}?{1}",q.FormUrl,r.Next()),
                         q.IsLeft,q.IsContract,q.InvoiceTemplate,q.Ability,q.Comment,q.Level,
                         q.AvailableDays,q.TeacherLanguage,q.TeacherQualificatiion
                         
@@ -139,7 +142,8 @@ namespace Pegasus_backend.Controllers
         [HttpPut("{TeacherId}")]
         [CheckModelFilter]
         public async Task<IActionResult> TeacherUpdate([FromForm] string details,short TeacherId,
-            [FromForm(Name = "IdPhoto")] IFormFile IdPhoto, [FromForm(Name = "Photo")] IFormFile Photo)
+            [FromForm(Name = "IdPhoto")] IFormFile IdPhoto, [FromForm(Name = "Photo")] IFormFile Photo,
+            [FromForm(Name="CV")] IFormFile CV,[FromForm(Name="Form")] IFormFile Form, [FromForm(Name = "Other")] IFormFile Other)
         {
             Result<string> result = new Result<string>();
             try
@@ -202,32 +206,69 @@ namespace Pegasus_backend.Controllers
                     //end
                     
                     //start uploading the images
-                    if (Photo != null && teacher.Photo == null)
+                    var strDateTime = DateTime.Now.ToString("yyMMddhhmmssfff"); 
+                    if (IdPhoto != null)
                     {
-                        teacher.Photo = $"images/TeacherImages/{teacher.TeacherId+Path.GetExtension(Photo.FileName)}";
-                        UploadFile(Photo,"Photo",teacher.TeacherId);
+                        
+                        teacher.IdPhoto = $"images/tutor/IdPhotos/{teacher.TeacherId+strDateTime+Path.GetExtension(IdPhoto.FileName)}";
+                        _pegasusContext.Update(teacher);
+                        await _pegasusContext.SaveChangesAsync();
+                        var uploadResult = UploadFile(IdPhoto,"tutor/IdPhotos/",teacher.TeacherId,strDateTime);
+                        if (!uploadResult.IsUploadSuccess)
+                        {
+                            throw new Exception(uploadResult.ErrorMessage);
+                        }
+                        
                     }
 
-                    if (Photo != null && teacher.Photo != null)
+                    if (Photo != null)
                     {
-                        DeleteFile(teacher.Photo);
-                        teacher.Photo = $"images/TeacherImages/{teacher.TeacherId+Path.GetExtension(Photo.FileName)}";
-                        UploadFile(Photo,"Photo", teacher.TeacherId);
+                        teacher.Photo = $"images/tutor/Photos/{teacher.TeacherId+strDateTime+Path.GetExtension(Photo.FileName)}";
+                        _pegasusContext.Update(teacher);
+                        await _pegasusContext.SaveChangesAsync();
+                        var uploadResult = UploadFile(Photo,"tutor/Photos/", teacher.TeacherId,strDateTime);
+                        if (!uploadResult.IsUploadSuccess)
+                        {
+                            throw new Exception(uploadResult.ErrorMessage);
+                        }
                     }
 
-                    if (IdPhoto != null && teacher.IdPhoto == null)
+                    if (CV != null)
                     {
-                        teacher.IdPhoto = $"images/TeacherIdPhotos/{teacher.TeacherId+Path.GetExtension(IdPhoto.FileName)}";
-                        UploadFile(IdPhoto,"IdPhoto",teacher.TeacherId);
+                        teacher.CvUrl = $"images/tutor/CV/{teacher.TeacherId+strDateTime+Path.GetExtension(CV.FileName)}";
+                        _pegasusContext.Update(teacher);
+                        await _pegasusContext.SaveChangesAsync();
+                        var uploadResult = UploadFile(CV,"tutor/CV/",teacher.TeacherId,strDateTime);
+                        if (!uploadResult.IsUploadSuccess)
+                        {
+                            throw new Exception(uploadResult.ErrorMessage);
+                        }
                     }
 
-                    if (IdPhoto != null && teacher.IdPhoto != null)
+                    if (Form != null)
                     {
-                        DeleteFile(teacher.IdPhoto);
-                        teacher.IdPhoto = $"images/TeacherIdPhotos/{teacher.TeacherId+Path.GetExtension(IdPhoto.FileName)}";
-                        UploadFile(IdPhoto,"IdPhoto",teacher.TeacherId);
+                        teacher.FormUrl = $"images/tutor/Form/{teacher.TeacherId+strDateTime+Path.GetExtension(Form.FileName)}";
+                        _pegasusContext.Update(teacher);
+                        await _pegasusContext.SaveChangesAsync();
+                        var uploadResult = UploadFile(Form,"tutor/Form/",teacher.TeacherId,strDateTime);
+                        if (!uploadResult.IsUploadSuccess)
+                        {
+                            throw new Exception(uploadResult.ErrorMessage);
+                        }
                     }
-                    _pegasusContext.Update(teacher);
+
+                    if (Other != null)
+                    {
+                        teacher.OtherfileUrl =$"images/tutor/Other/{teacher.TeacherId+strDateTime+Path.GetExtension(Other.FileName)}";
+                        _pegasusContext.Update(teacher);
+                        await _pegasusContext.SaveChangesAsync();
+                        var uploadResult = UploadFile(Other,"tutor/Other/",teacher.TeacherId,strDateTime);
+                        if (!uploadResult.IsUploadSuccess)
+                        {
+                            throw new Exception(uploadResult.ErrorMessage);
+                        }
+                    }
+                    
                     await _pegasusContext.SaveChangesAsync();
                     //end uploading images
                     
@@ -249,7 +290,8 @@ namespace Pegasus_backend.Controllers
         //POST: http://localhost:5000/api/teacher
         [HttpPost]
         [CheckModelFilter]
-        public async Task<IActionResult> TeacherRegister([FromForm] string details, [FromForm(Name = "IdPhoto")] IFormFile IdPhoto,[FromForm(Name ="Photo" )] IFormFile Photo )
+        public async Task<IActionResult> TeacherRegister([FromForm] string details, [FromForm(Name = "IdPhoto")] IFormFile IdPhoto,[FromForm(Name ="Photo" )] IFormFile Photo,
+            [FromForm(Name="CV")] IFormFile CV,[FromForm(Name="Form")] IFormFile Form, [FromForm(Name = "Other")] IFormFile Other)
         {
             Result<string> result = new Result<string>();
             try
@@ -306,23 +348,70 @@ namespace Pegasus_backend.Controllers
                     });
 
                     await _pegasusContext.SaveChangesAsync();
-                    
+                    //file upload part
+                    var strDateTime = DateTime.Now.ToString("yyMMddhhmmssfff"); 
                     if (IdPhoto != null)
                     {
                         
-                        newTeacher.IdPhoto = $"images/TeacherIdPhotos/{newTeacher.TeacherId+Path.GetExtension(IdPhoto.FileName)}";
+                        newTeacher.IdPhoto = $"images/tutor/IdPhotos/{newTeacher.TeacherId+strDateTime+Path.GetExtension(IdPhoto.FileName)}";
                         _pegasusContext.Update(newTeacher);
                         await _pegasusContext.SaveChangesAsync();
-                        UploadFile(IdPhoto,"IdPhoto",newTeacher.TeacherId);
+                        var uploadResult = UploadFile(IdPhoto,"tutor/IdPhotos/",newTeacher.TeacherId,strDateTime);
+                        if (!uploadResult.IsUploadSuccess)
+                        {
+                            throw new Exception(uploadResult.ErrorMessage);
+                        }
+                        
                     }
 
                     if (Photo != null)
                     {
-                        newTeacher.Photo = $"images/TeacherImages/{newTeacher.TeacherId+Path.GetExtension(Photo.FileName)}";
+                        newTeacher.Photo = $"images/tutor/Photos/{newTeacher.TeacherId+strDateTime+Path.GetExtension(Photo.FileName)}";
                         _pegasusContext.Update(newTeacher);
                         await _pegasusContext.SaveChangesAsync();
-                        UploadFile(Photo,"Photo", newTeacher.TeacherId);
+                        var uploadResult = UploadFile(Photo,"tutor/Photos/", newTeacher.TeacherId,strDateTime);
+                        if (!uploadResult.IsUploadSuccess)
+                        {
+                            throw new Exception(uploadResult.ErrorMessage);
+                        }
                     }
+
+                    if (CV != null)
+                    {
+                        newTeacher.CvUrl = $"images/tutor/CV/{newTeacher.TeacherId+strDateTime+Path.GetExtension(CV.FileName)}";
+                        _pegasusContext.Update(newTeacher);
+                        await _pegasusContext.SaveChangesAsync();
+                        var uploadResult = UploadFile(CV,"tutor/CV/",newTeacher.TeacherId,strDateTime);
+                        if (!uploadResult.IsUploadSuccess)
+                        {
+                            throw new Exception(uploadResult.ErrorMessage);
+                        }
+                    }
+
+                    if (Form != null)
+                    {
+                        newTeacher.FormUrl = $"images/tutor/Form/{newTeacher.TeacherId+strDateTime+Path.GetExtension(Form.FileName)}";
+                        _pegasusContext.Update(newTeacher);
+                        await _pegasusContext.SaveChangesAsync();
+                        var uploadResult = UploadFile(Form,"tutor/Form/",newTeacher.TeacherId,strDateTime);
+                        if (!uploadResult.IsUploadSuccess)
+                        {
+                            throw new Exception(uploadResult.ErrorMessage);
+                        }
+                    }
+
+                    if (Other != null)
+                    {
+                        newTeacher.OtherfileUrl =$"images/tutor/Other/{newTeacher.TeacherId+strDateTime+Path.GetExtension(Other.FileName)}";
+                        _pegasusContext.Update(newTeacher);
+                        await _pegasusContext.SaveChangesAsync();
+                        var uploadResult = UploadFile(Other,"tutor/Other/",newTeacher.TeacherId,strDateTime);
+                        if (!uploadResult.IsUploadSuccess)
+                        {
+                            throw new Exception(uploadResult.ErrorMessage);
+                        }
+                    }
+
                     
                     dbContextTransaction.Commit();
                     result.Data = "Success!";

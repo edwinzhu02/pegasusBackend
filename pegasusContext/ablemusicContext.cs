@@ -70,6 +70,15 @@ namespace Pegasus_backend.pegasusContext
         public virtual DbSet<TodoList> TodoList { get; set; }
         public virtual DbSet<User> User { get; set; }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseMySQL("server=gradspace.org;User Id=dbuser;Database=ablemusic");
+            }
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Amendment>(entity =>
@@ -954,7 +963,7 @@ namespace Pegasus_backend.pegasusContext
 
                 entity.Property(e => e.G5Certification)
                     .HasColumnName("g5_certification")
-                    .HasMaxLength(50)
+                    .HasMaxLength(200)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Gender)
@@ -1006,7 +1015,7 @@ namespace Pegasus_backend.pegasusContext
 
                 entity.Property(e => e.Photo)
                     .HasColumnName("photo")
-                    .HasMaxLength(50)
+                    .HasMaxLength(200)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Referrer)
@@ -1632,6 +1641,11 @@ namespace Pegasus_backend.pegasusContext
                 entity.Property(e => e.OrgId)
                     .HasColumnName("org_id")
                     .HasColumnType("smallint(6)");
+
+                entity.Property(e => e.Abbr)
+                    .HasColumnName("abbr")
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Address)
                     .HasColumnName("address")
@@ -2549,6 +2563,11 @@ namespace Pegasus_backend.pegasusContext
                     .HasMaxLength(100)
                     .IsUnicode(false);
 
+                entity.Property(e => e.CvUrl)
+                    .HasColumnName("cv_url")
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.Dob)
                     .HasColumnName("dob")
                     .HasColumnType("date");
@@ -2567,6 +2586,11 @@ namespace Pegasus_backend.pegasusContext
                     .HasMaxLength(30)
                     .IsUnicode(false);
 
+                entity.Property(e => e.FormUrl)
+                    .HasColumnName("form_url")
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.Gender)
                     .HasColumnName("gender")
                     .HasColumnType("bit(1)");
@@ -2583,7 +2607,7 @@ namespace Pegasus_backend.pegasusContext
 
                 entity.Property(e => e.IdPhoto)
                     .HasColumnName("id_photo")
-                    .HasMaxLength(40)
+                    .HasMaxLength(200)
                     .IsUnicode(false);
 
                 entity.Property(e => e.IdType)
@@ -2625,9 +2649,14 @@ namespace Pegasus_backend.pegasusContext
                     .HasMaxLength(40)
                     .IsUnicode(false);
 
+                entity.Property(e => e.OtherfileUrl)
+                    .HasColumnName("otherfile_url")
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.Photo)
                     .HasColumnName("photo")
-                    .HasMaxLength(40)
+                    .HasMaxLength(200)
                     .IsUnicode(false);
 
                 entity.Property(e => e.UserId)
