@@ -22,6 +22,7 @@ namespace Pegasus_backend.Models
         [JsonProperty(Required = Required.Always)]
         public DateTime dob { get; set; }
         public DateTime EnrollDate { get; set; }
+        [JsonProperty(Required = Required.Always)]
         public string ContactNum { get; set; }
         [JsonProperty(Required = Required.Always)]
         public string Email { get; set; }
