@@ -51,13 +51,13 @@ namespace Pegasus_backend.Controllers.MobileControllers
 
             return Ok(loginLog);
         }
-        [Route("[action]")]
+        [Route("[action]/{id}")]
         [HttpGet]
-        public async Task<IActionResult> GetLastCheck(int checkStatus)
+        public async Task<IActionResult> GetLastCheck(int id)
         {
             Result<LoginLog> logResult = new Result<LoginLog>();
 
-            var checkIn = await _context.LoginLog.LastOrDefaultAsync(x => x.LogType == checkStatus);
+            var checkIn = await _context.LoginLog.LastOrDefaultAsync(x => x.LogType == id);
             if (checkIn == null)
             {
                 logResult.ErrorMessage = "Cannot find the last check details";
