@@ -186,21 +186,31 @@ namespace Pegasus_backend.Controllers
                     _pegasusContext.Add(fundItem);
                     await _pegasusContext.SaveChangesAsync();
                     
+                    var strDateTime = DateTime.Now.ToString("yyMMddhhmmssfff");
                     if (image != null)
                     {
-                        newLearner.Photo = $"images/learner/Photos/{newLearner.LearnerId+Path.GetExtension(image.FileName)}";
+                        newLearner.Photo = $"images/learner/Photos/{newLearner.LearnerId+strDateTime+Path.GetExtension(image.FileName)}";
                         _pegasusContext.Update(newLearner);
                         await _pegasusContext.SaveChangesAsync();
-                        UploadFile(image,"image",newLearner.LearnerId);
+                        var uploadResult = UploadFile(image,"learner/Photos/",newLearner.LearnerId,strDateTime);
+                        if (!uploadResult.IsUploadSuccess)
+                        {
+                            throw new Exception(uploadResult.ErrorMessage);
+                        }
                     }
 
                     if (ABRSM != null)
                     {
-                        newLearner.G5Certification = $"images/learner/ABRSM_Grade5_Certificate/{newLearner.LearnerId+Path.GetExtension(ABRSM.FileName)}";
+                        newLearner.G5Certification = $"images/learner/ABRSM_Grade5_Certificate/{newLearner.LearnerId+strDateTime+Path.GetExtension(ABRSM.FileName)}";
                         newLearner.IsAbrsmG5 = 1;
                         _pegasusContext.Update(newLearner);
                         await _pegasusContext.SaveChangesAsync();
-                        UploadFile(ABRSM,"ABRSM",newLearner.LearnerId);
+                        var uploadResult = UploadFile(ABRSM,"learner/ABRSM_Grade5_Certificate/",newLearner.LearnerId,strDateTime);
+                        if (!uploadResult.IsUploadSuccess)
+                        {
+                            throw new Exception(uploadResult.ErrorMessage);
+                        }
+                        
                     }
                     
                     
