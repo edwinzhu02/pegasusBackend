@@ -963,7 +963,7 @@ namespace Pegasus_backend.pegasusContext
 
                 entity.Property(e => e.G5Certification)
                     .HasColumnName("g5_certification")
-                    .HasMaxLength(50)
+                    .HasMaxLength(200)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Gender)
@@ -1015,7 +1015,7 @@ namespace Pegasus_backend.pegasusContext
 
                 entity.Property(e => e.Photo)
                     .HasColumnName("photo")
-                    .HasMaxLength(50)
+                    .HasMaxLength(200)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Referrer)
@@ -2607,7 +2607,7 @@ namespace Pegasus_backend.pegasusContext
 
                 entity.Property(e => e.IdPhoto)
                     .HasColumnName("id_photo")
-                    .HasMaxLength(40)
+                    .HasMaxLength(200)
                     .IsUnicode(false);
 
                 entity.Property(e => e.IdType)
@@ -2656,7 +2656,7 @@ namespace Pegasus_backend.pegasusContext
 
                 entity.Property(e => e.Photo)
                     .HasColumnName("photo")
-                    .HasMaxLength(40)
+                    .HasMaxLength(200)
                     .IsUnicode(false);
 
                 entity.Property(e => e.UserId)
