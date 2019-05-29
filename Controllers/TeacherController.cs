@@ -209,19 +209,26 @@ namespace Pegasus_backend.Controllers
                     if (Photo != null && teacher.Photo == null)
                     {
                         teacher.Photo = $"images/tutor/Photos/{teacher.TeacherId+Path.GetExtension(Photo.FileName)}";
+                        _pegasusContext.Update(teacher);
+                        await _pegasusContext.SaveChangesAsync();
                         UploadFile(Photo,"Photo",teacher.TeacherId);
+                        
                     }
 
                     if (Photo != null && teacher.Photo != null)
                     {
                         DeleteFile(teacher.Photo);
                         teacher.Photo = $"images/tutor/Photos/{teacher.TeacherId+Path.GetExtension(Photo.FileName)}";
+                        _pegasusContext.Update(teacher);
+                        await _pegasusContext.SaveChangesAsync();
                         UploadFile(Photo,"Photo", teacher.TeacherId);
                     }
 
                     if (IdPhoto != null && teacher.IdPhoto == null)
                     {
                         teacher.IdPhoto = $"images/tutor/IdPhotos/{teacher.TeacherId+Path.GetExtension(IdPhoto.FileName)}";
+                        _pegasusContext.Update(teacher);
+                        await _pegasusContext.SaveChangesAsync();
                         UploadFile(IdPhoto,"IdPhoto",teacher.TeacherId);
                     }
 
@@ -229,12 +236,16 @@ namespace Pegasus_backend.Controllers
                     {
                         DeleteFile(teacher.IdPhoto);
                         teacher.IdPhoto = $"images/tutor/IdPhotos/{teacher.TeacherId+Path.GetExtension(IdPhoto.FileName)}";
+                        _pegasusContext.Update(teacher);
+                        await _pegasusContext.SaveChangesAsync();
                         UploadFile(IdPhoto,"IdPhoto",teacher.TeacherId);
                     }
 
                     if (CV != null && teacher.CvUrl == null)
                     {
                         teacher.CvUrl = $"images/tutor/CV/{teacher.TeacherId+Path.GetExtension(CV.FileName)}";
+                        _pegasusContext.Update(teacher);
+                        await _pegasusContext.SaveChangesAsync();
                         UploadFile(CV,"CV",teacher.TeacherId);
                     }
                     
@@ -242,12 +253,16 @@ namespace Pegasus_backend.Controllers
                     {
                         DeleteFile(teacher.CvUrl);
                         teacher.CvUrl = $"images/tutor/CV/{teacher.TeacherId+Path.GetExtension(CV.FileName)}";
+                        _pegasusContext.Update(teacher);
+                        await _pegasusContext.SaveChangesAsync();
                         UploadFile(CV,"CV",teacher.TeacherId);
                     }
 
                     if (Form != null && teacher.FormUrl == null)
                     {
                         teacher.FormUrl = $"images/tutor/CV/{teacher.TeacherId+Path.GetExtension(Form.FileName)}";
+                        _pegasusContext.Update(teacher);
+                        await _pegasusContext.SaveChangesAsync();
                         UploadFile(Form,"Form",teacher.TeacherId);
                     }
 
@@ -255,12 +270,16 @@ namespace Pegasus_backend.Controllers
                     {
                         DeleteFile(teacher.FormUrl);
                         teacher.FormUrl = $"images/tutor/CV/{teacher.TeacherId+Path.GetExtension(Form.FileName)}";
+                        _pegasusContext.Update(teacher);
+                        await _pegasusContext.SaveChangesAsync();
                         UploadFile(Form,"Form",teacher.TeacherId);
                     }
 
                     if (Other != null && teacher.OtherfileUrl == null)
                     {
                         teacher.OtherfileUrl = $"images/tutor/CV/{teacher.TeacherId+Path.GetExtension(Other.FileName)}";
+                        _pegasusContext.Update(teacher);
+                        await _pegasusContext.SaveChangesAsync();
                         UploadFile(Other,"Other",teacher.TeacherId);
                     }
 
@@ -268,10 +287,11 @@ namespace Pegasus_backend.Controllers
                     {
                         DeleteFile(teacher.OtherfileUrl);
                         teacher.OtherfileUrl = $"images/tutor/CV/{teacher.TeacherId+Path.GetExtension(Other.FileName)}";
+                        _pegasusContext.Update(teacher);
+                        await _pegasusContext.SaveChangesAsync();
                         UploadFile(Other,"Other",teacher.TeacherId);
                     }
                     
-                    _pegasusContext.Update(teacher);
                     await _pegasusContext.SaveChangesAsync();
                     //end uploading images
                     
