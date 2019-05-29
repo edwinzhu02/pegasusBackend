@@ -64,8 +64,13 @@ namespace Pegasus_backend.Controllers
 
             if (user.Staff.Count != 0)
             {
-                return new {firstname=user.Staff.ToList()[0].FirstName,lastname=user.Staff.ToList()[0].LastName,
-                    position=positionToClient, OrgName=user.Staff.ToList()[0].StaffOrg.ToList().Select(s=>s.Org.OrgName)};
+                return new
+                {
+                    firstname = user.Staff.ToList()[0].FirstName, lastname = user.Staff.ToList()[0].LastName,
+                    position = positionToClient,
+                    OrgName = user.Staff.ToList()[0].StaffOrg.ToList().Select(s => s.Org.OrgName),
+                    OrgId = user.Staff.ToList()[0].StaffOrg.ToList().Select(s => s.Org.OrgId)
+                };
             }
 
             if (user.Learner.Count != 0)
@@ -101,12 +106,6 @@ namespace Pegasus_backend.Controllers
             var model = new UploadFileModel();
             try
             {
-                if (file.Length > 409600)
-                {
-                    model.IsUploadSuccess = false;
-                    model.ErrorMessage = "The size of file is no more than 4M";
-                    return model;
-                }
                 string[] LimitFileType = {".JPG", ".JPEG", ".PNG", ".PDF", ".DOCX"};
 
                 string currentFileExtension = Path.GetExtension(file.FileName);
