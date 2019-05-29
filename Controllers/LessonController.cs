@@ -21,11 +21,10 @@ namespace Pegasus_backend.Controllers
         }
         
         
-        //GET: http://localhost:5000/api/lesson/GetLessonForReceptionist/:userId/:date
+        //GET: http://localhost:5000/api/lesson/GetLessonsForReceptionist/:userId/:date
         [HttpGet("[action]/{userId}/{date}")]
-        [Authorize]
         //for receptionist
-        public async Task<IActionResult> GetLessonsForReceptionist(DateTime date,int userId)
+        public async Task<IActionResult> GetLessonsForReceptionist(int userId,DateTime date)
         {
             Result<Object> result = new Result<object>();
             try
@@ -33,10 +32,12 @@ namespace Pegasus_backend.Controllers
                 var staff = _pegasusContext.Staff.FirstOrDefault(s => s.UserId == userId);
                 var orgId = _pegasusContext.StaffOrg.FirstOrDefault(s => s.StaffId == staff.StaffId).OrgId;
                 var details = _pegasusContext.Lesson
-                    .Where(s=>s.IsCanceled ==0)
+                    .Where(s=>s.IsCanceled != 1 && s.IsConfirm != 1)
                     .Where(s=>s.OrgId==orgId&&s.BeginTime.Value.Year == date.Year && s.BeginTime.Value.Month == date.Month && s.BeginTime.Value.Day == date.Day)
                     .Include(s=>s.Learner)
                     .Include(s => s.Teacher)
+                    .Include(s=>s.Room)
+                    .Include(s=>s.Org)
                     .Include(group => group.GroupCourseInstance)
                     .ThenInclude(learnerCourse => learnerCourse.LearnerGroupCourse)
                     .ThenInclude(learner => learner.Learner)
@@ -44,7 +45,13 @@ namespace Pegasus_backend.Controllers
                         title=IsNull(s.GroupCourseInstance)?"1":"G",description="",
                         teacher=s.Teacher.FirstName.ToString(),
                         student=IsNull(s.GroupCourseInstance)?new List<string>{s.Learner.FirstName}:s.GroupCourseInstance.LearnerGroupCourse.Select(w=>w.Learner.FirstName),
-                        IsGroup=!IsNull(s.GroupCourseInstance)
+                        IsGroup=!IsNull(s.GroupCourseInstance),
+                        info = new
+                        {
+                            s.Room.RoomName,s.RoomId,s.Org.OrgName,s.OrgId,s.TeacherId,TeacherName=s.Teacher.FirstName,s.BeginTime,s.EndTime,
+                            CourseName=!IsNull(s.GroupCourseInstance)?s.GroupCourseInstance.Course.CourseName:s.CourseInstance.Course.CourseName,
+                            s.LessonId,courseId=!IsNull(s.GroupCourseInstance)?s.GroupCourseInstance.Course.CourseId:s.CourseInstance.Course.CourseId,s.LearnerId
+                        }
                     });
                     
                 result.Data = await details.ToListAsync();

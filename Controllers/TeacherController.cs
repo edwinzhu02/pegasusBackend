@@ -116,6 +116,9 @@ namespace Pegasus_backend.Controllers
                         q.TeacherId,q.FirstName,q.LastName,q.Dob,Gender=Convert.ToBoolean(q.Gender)?"Male":"Female",
                         q.IrdNumber,q.IdType,IdPhoto=IsNull(q.IdPhoto)?null:String.Format("{0}?{1}",q.IdPhoto,r.Next()),q.IdNumber,q.HomePhone,q.MobilePhone,q.Email,
                         Photo=IsNull(q.Photo)?null:String.Format("{0}?{1}",q.Photo,r.Next()),q.ExpiryDate,
+                        CV=IsNull(q.CvUrl)?null:String.Format("{0}?{1}",q.CvUrl,r.Next()),
+                        OtherFile=IsNull(q.OtherfileUrl)?null:String.Format("{0}?{1}",q.OtherfileUrl,r.Next()),
+                        Form=IsNull(q.FormUrl)?null:String.Format("{0}?{1}",q.FormUrl,r.Next()),
                         q.IsLeft,q.IsContract,q.InvoiceTemplate,q.Ability,q.Comment,q.Level,
                         q.AvailableDays,q.TeacherLanguage,q.TeacherQualificatiion
                         
@@ -139,7 +142,8 @@ namespace Pegasus_backend.Controllers
         [HttpPut("{TeacherId}")]
         [CheckModelFilter]
         public async Task<IActionResult> TeacherUpdate([FromForm] string details,short TeacherId,
-            [FromForm(Name = "IdPhoto")] IFormFile IdPhoto, [FromForm(Name = "Photo")] IFormFile Photo)
+            [FromForm(Name = "IdPhoto")] IFormFile IdPhoto, [FromForm(Name = "Photo")] IFormFile Photo,
+            [FromForm(Name="CV")] IFormFile CV,[FromForm(Name="Form")] IFormFile Form, [FromForm(Name = "Other")] IFormFile Other)
         {
             Result<string> result = new Result<string>();
             try
@@ -204,29 +208,69 @@ namespace Pegasus_backend.Controllers
                     //start uploading the images
                     if (Photo != null && teacher.Photo == null)
                     {
-                        teacher.Photo = $"images/TeacherImages/{teacher.TeacherId+Path.GetExtension(Photo.FileName)}";
+                        teacher.Photo = $"images/tutor/Photos/{teacher.TeacherId+Path.GetExtension(Photo.FileName)}";
                         UploadFile(Photo,"Photo",teacher.TeacherId);
                     }
 
                     if (Photo != null && teacher.Photo != null)
                     {
                         DeleteFile(teacher.Photo);
-                        teacher.Photo = $"images/TeacherImages/{teacher.TeacherId+Path.GetExtension(Photo.FileName)}";
+                        teacher.Photo = $"images/tutor/Photos/{teacher.TeacherId+Path.GetExtension(Photo.FileName)}";
                         UploadFile(Photo,"Photo", teacher.TeacherId);
                     }
 
                     if (IdPhoto != null && teacher.IdPhoto == null)
                     {
-                        teacher.IdPhoto = $"images/TeacherIdPhotos/{teacher.TeacherId+Path.GetExtension(IdPhoto.FileName)}";
+                        teacher.IdPhoto = $"images/tutor/IdPhotos/{teacher.TeacherId+Path.GetExtension(IdPhoto.FileName)}";
                         UploadFile(IdPhoto,"IdPhoto",teacher.TeacherId);
                     }
 
                     if (IdPhoto != null && teacher.IdPhoto != null)
                     {
                         DeleteFile(teacher.IdPhoto);
-                        teacher.IdPhoto = $"images/TeacherIdPhotos/{teacher.TeacherId+Path.GetExtension(IdPhoto.FileName)}";
+                        teacher.IdPhoto = $"images/tutor/IdPhotos/{teacher.TeacherId+Path.GetExtension(IdPhoto.FileName)}";
                         UploadFile(IdPhoto,"IdPhoto",teacher.TeacherId);
                     }
+
+                    if (CV != null && teacher.CvUrl == null)
+                    {
+                        teacher.CvUrl = $"images/tutor/CV/{teacher.TeacherId+Path.GetExtension(CV.FileName)}";
+                        UploadFile(CV,"CV",teacher.TeacherId);
+                    }
+                    
+                    if (CV != null && teacher.CvUrl != null)
+                    {
+                        DeleteFile(teacher.CvUrl);
+                        teacher.CvUrl = $"images/tutor/CV/{teacher.TeacherId+Path.GetExtension(CV.FileName)}";
+                        UploadFile(CV,"CV",teacher.TeacherId);
+                    }
+
+                    if (Form != null && teacher.FormUrl == null)
+                    {
+                        teacher.FormUrl = $"images/tutor/CV/{teacher.TeacherId+Path.GetExtension(Form.FileName)}";
+                        UploadFile(Form,"Form",teacher.TeacherId);
+                    }
+
+                    if (Form != null && teacher.FormUrl != null)
+                    {
+                        DeleteFile(teacher.FormUrl);
+                        teacher.FormUrl = $"images/tutor/CV/{teacher.TeacherId+Path.GetExtension(Form.FileName)}";
+                        UploadFile(Form,"Form",teacher.TeacherId);
+                    }
+
+                    if (Other != null && teacher.OtherfileUrl == null)
+                    {
+                        teacher.OtherfileUrl = $"images/tutor/CV/{teacher.TeacherId+Path.GetExtension(Other.FileName)}";
+                        UploadFile(Other,"Other",teacher.TeacherId);
+                    }
+
+                    if (Other != null && teacher.OtherfileUrl != null)
+                    {
+                        DeleteFile(teacher.OtherfileUrl);
+                        teacher.OtherfileUrl = $"images/tutor/CV/{teacher.TeacherId+Path.GetExtension(Other.FileName)}";
+                        UploadFile(Other,"Other",teacher.TeacherId);
+                    }
+                    
                     _pegasusContext.Update(teacher);
                     await _pegasusContext.SaveChangesAsync();
                     //end uploading images
@@ -249,7 +293,8 @@ namespace Pegasus_backend.Controllers
         //POST: http://localhost:5000/api/teacher
         [HttpPost]
         [CheckModelFilter]
-        public async Task<IActionResult> TeacherRegister([FromForm] string details, [FromForm(Name = "IdPhoto")] IFormFile IdPhoto,[FromForm(Name ="Photo" )] IFormFile Photo )
+        public async Task<IActionResult> TeacherRegister([FromForm] string details, [FromForm(Name = "IdPhoto")] IFormFile IdPhoto,[FromForm(Name ="Photo" )] IFormFile Photo,
+            [FromForm(Name="CV")] IFormFile CV,[FromForm(Name="Form")] IFormFile Form, [FromForm(Name = "Other")] IFormFile Other)
         {
             Result<string> result = new Result<string>();
             try
@@ -306,11 +351,11 @@ namespace Pegasus_backend.Controllers
                     });
 
                     await _pegasusContext.SaveChangesAsync();
-                    
+                    //file upload part
                     if (IdPhoto != null)
                     {
                         
-                        newTeacher.IdPhoto = $"images/TeacherIdPhotos/{newTeacher.TeacherId+Path.GetExtension(IdPhoto.FileName)}";
+                        newTeacher.IdPhoto = $"images/tutor/IdPhotos/{newTeacher.TeacherId+Path.GetExtension(IdPhoto.FileName)}";
                         _pegasusContext.Update(newTeacher);
                         await _pegasusContext.SaveChangesAsync();
                         UploadFile(IdPhoto,"IdPhoto",newTeacher.TeacherId);
@@ -318,11 +363,36 @@ namespace Pegasus_backend.Controllers
 
                     if (Photo != null)
                     {
-                        newTeacher.Photo = $"images/TeacherImages/{newTeacher.TeacherId+Path.GetExtension(Photo.FileName)}";
+                        newTeacher.Photo = $"images/tutor/Photos/{newTeacher.TeacherId+Path.GetExtension(Photo.FileName)}";
                         _pegasusContext.Update(newTeacher);
                         await _pegasusContext.SaveChangesAsync();
                         UploadFile(Photo,"Photo", newTeacher.TeacherId);
                     }
+
+                    if (CV != null)
+                    {
+                        newTeacher.CvUrl = $"images/tutor/CV/{newTeacher.TeacherId+Path.GetExtension(CV.FileName)}";
+                        _pegasusContext.Update(newTeacher);
+                        await _pegasusContext.SaveChangesAsync();
+                        UploadFile(CV,"CV",newTeacher.TeacherId);
+                    }
+
+                    if (Form != null)
+                    {
+                        newTeacher.FormUrl = $"images/tutor/Form/{newTeacher.TeacherId+Path.GetExtension(Form.FileName)}";
+                        _pegasusContext.Update(newTeacher);
+                        await _pegasusContext.SaveChangesAsync();
+                        UploadFile(Form,"Form",newTeacher.TeacherId);
+                    }
+
+                    if (Other != null)
+                    {
+                        newTeacher.OtherfileUrl =$"images/tutor/Other/{newTeacher.TeacherId+Path.GetExtension(Other.FileName)}";
+                        _pegasusContext.Update(newTeacher);
+                        await _pegasusContext.SaveChangesAsync();
+                        UploadFile(Other,"Other",newTeacher.TeacherId);
+                    }
+                    
                     
                     dbContextTransaction.Commit();
                     result.Data = "Success!";

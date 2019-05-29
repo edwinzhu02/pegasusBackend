@@ -6,10 +6,13 @@
 
     <ItemGroup>
         <Folder Include="wwwroot\" />
-        <Folder Include="wwwroot\images\ABRSM_Grade5_Certificate" />
-        <Folder Include="wwwroot\images\LearnerImages" />
-        <Folder Include="wwwroot\images\TeacherIdPhotos" />
-        <Folder Include="wwwroot\images\TeacherImages" />
+        <Folder Include="wwwroot\images\learner\ABRSM_Grade5_Certificate" />
+        <Folder Include="wwwroot\images\learner\Photos" />
+        <Folder Include="wwwroot\images\tutor\CV" />
+        <Folder Include="wwwroot\images\tutor\Form" />
+        <Folder Include="wwwroot\images\tutor\IdPhotos" />
+        <Folder Include="wwwroot\images\tutor\Other" />
+        <Folder Include="wwwroot\images\tutor\Photos" />
     </ItemGroup>
 
     <ItemGroup>

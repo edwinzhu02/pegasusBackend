@@ -2563,6 +2563,11 @@ namespace Pegasus_backend.pegasusContext
                     .HasMaxLength(100)
                     .IsUnicode(false);
 
+                entity.Property(e => e.CvUrl)
+                    .HasColumnName("cv_url")
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.Dob)
                     .HasColumnName("dob")
                     .HasColumnType("date");
@@ -2579,6 +2584,11 @@ namespace Pegasus_backend.pegasusContext
                 entity.Property(e => e.FirstName)
                     .HasColumnName("first_name")
                     .HasMaxLength(30)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.FormUrl)
+                    .HasColumnName("form_url")
+                    .HasMaxLength(200)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Gender)
@@ -2637,6 +2647,11 @@ namespace Pegasus_backend.pegasusContext
                 entity.Property(e => e.MobilePhone)
                     .HasColumnName("mobile_phone")
                     .HasMaxLength(40)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.OtherfileUrl)
+                    .HasColumnName("otherfile_url")
+                    .HasMaxLength(200)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Photo)

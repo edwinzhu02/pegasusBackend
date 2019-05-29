@@ -42,6 +42,9 @@ namespace Pegasus_backend.pegasusContext
         public byte? InvoiceTemplate { get; set; }
         public string Ability { get; set; }
         public string Comment { get; set; }
+        public string CvUrl { get; set; }
+        public string FormUrl { get; set; }
+        public string OtherfileUrl { get; set; }
 
         public User User { get; set; }
         public ICollection<AvailableDays> AvailableDays { get; set; }
