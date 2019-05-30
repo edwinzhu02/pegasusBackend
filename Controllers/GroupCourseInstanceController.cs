@@ -144,7 +144,7 @@ namespace Pegasus_backend.Controllers
                     throw new Exception("Group course instance does not found");
                 }
                 
-                if (_pegasusContext.Course.FirstOrDefault(s => s.CourseId == groupCourseInstanceModel.CourseId).CourseType !=0)
+                if (_pegasusContext.Course.FirstOrDefault(s => s.CourseId == groupCourseInstanceModel.CourseId).CourseType ==0)
                 {
                     throw new Exception("This course is not group course");
                 }
