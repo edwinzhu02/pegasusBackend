@@ -119,7 +119,6 @@ namespace Pegasus_backend.Controllers
                     .Include(s=>s.One2oneCourseInstance)
                     .ThenInclude(s=>s.CourseSchedule)
                     .Where(s=>s.IsActive ==1)
-                    
                     .ToListAsync();
                 result.Data = data;
             }
@@ -186,7 +185,19 @@ namespace Pegasus_backend.Controllers
                     _pegasusContext.Add(fundItem);
                     await _pegasusContext.SaveChangesAsync();
                     
+                    //add create new user for this learner
+                    var newUser = new User
+                    {
+                        UserName = newLearner.Email,Password = "helloworld",
+                        CreatedAt = DateTime.Now,RoleId = 4, IsActivate = 1
+                        
+                    };
+                    _pegasusContext.Add(newUser);
+                    await _pegasusContext.SaveChangesAsync();
+                    
+                    //upload file
                     var strDateTime = DateTime.Now.ToString("yyMMddhhmmssfff");
+                   
                     if (image != null)
                     {
                         newLearner.Photo = $"images/learner/Photos/{newLearner.LearnerId+strDateTime+Path.GetExtension(image.FileName)}";
