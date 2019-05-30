@@ -102,7 +102,7 @@ namespace Pegasus_backend.Controllers
             Result<string> result = new Result<string>();
             try
             {
-                if (_pegasusContext.Course.FirstOrDefault(s => s.CourseId == groupinstance.CourseId).CourseType !=0)
+                if (_pegasusContext.Course.FirstOrDefault(s => s.CourseId == groupinstance.CourseId).CourseType ==2)
                 {
                     throw new Exception("This course is not group course");
                 }
@@ -144,7 +144,7 @@ namespace Pegasus_backend.Controllers
                     throw new Exception("Group course instance does not found");
                 }
                 
-                if (_pegasusContext.Course.FirstOrDefault(s => s.CourseId == groupCourseInstanceModel.CourseId).CourseType ==0)
+                if (_pegasusContext.Course.FirstOrDefault(s => s.CourseId == groupCourseInstanceModel.CourseId).CourseType ==2)
                 {
                     throw new Exception("This course is not group course");
                 }
