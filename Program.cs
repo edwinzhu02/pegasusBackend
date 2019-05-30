@@ -18,7 +18,7 @@ namespace Pegasus_backend
             //use this to allow command line parameters in the config
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json")
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddCommandLine(args)
                 .Build();
 
@@ -28,7 +28,8 @@ namespace Pegasus_backend
                 hostUrl = "http://*:5000";
 
 
-            var host = new WebHostBuilder()
+            //var host = new WebHostBuilder()
+             var host = WebHost.CreateDefaultBuilder()
                 .UseKestrel()
                 .UseUrls(hostUrl)   // <!-- this 
                 .UseContentRoot(Directory.GetCurrentDirectory())
