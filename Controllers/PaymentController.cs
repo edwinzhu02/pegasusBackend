@@ -444,7 +444,7 @@ namespace Pegasus_backend.Controllers
             var term = await _pegasusContext.Term.FirstOrDefaultAsync(x => x.TermId == term_id);
 
             var all_terms = await _pegasusContext.Term.Select(x => new { x.TermId, x.BeginDate, x.EndDate }).ToListAsync();
-            //int i = 0;
+            int i = 0;
             foreach (var course_instance in course_instances)
             {
                 InvoiceWaitingConfirm invoice = new InvoiceWaitingConfirm();
