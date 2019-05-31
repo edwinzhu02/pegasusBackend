@@ -106,26 +106,15 @@ namespace Pegasus_backend.Controllers
             var model = new UploadFileModel();
             try
             {
-                string[] LimitFileType = {".JPG", ".JPEG", ".PNG", ".PDF", ".DOCX"};
-
                 string currentFileExtension = Path.GetExtension(file.FileName);
-                if (LimitFileType.Contains(currentFileExtension.ToUpper()))
+                var saveName = id.ToString() + strDateTime + currentFileExtension;
+                var newPath = Path.Combine("images", folderName, saveName);
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", newPath);
+                using (var stream = new FileStream(path, FileMode.Create))
                 {
-                    var saveName = id.ToString() + strDateTime + currentFileExtension;
-                    var newPath = Path.Combine("images", folderName, saveName);
-                    var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", newPath);
-                    using (var stream = new FileStream(path, FileMode.Create))
-                    {
-                        file.CopyTo(stream);
-                    }
+                    file.CopyTo(stream);
                 }
-                else
-                {
-                    model.IsUploadSuccess = false;
-                    model.ErrorMessage = "File format is not correct";
-                    return model;
-                }
-
+                
                 model.IsUploadSuccess = true;
                 model.ErrorMessage = "";
                 return model;
