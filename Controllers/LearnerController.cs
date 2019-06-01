@@ -119,7 +119,6 @@ namespace Pegasus_backend.Controllers
                     .Include(s=>s.One2oneCourseInstance)
                     .ThenInclude(s=>s.CourseSchedule)
                     .Where(s=>s.IsActive ==1)
-                    
                     .ToListAsync();
                 result.Data = data;
             }
@@ -186,21 +185,48 @@ namespace Pegasus_backend.Controllers
                     _pegasusContext.Add(fundItem);
                     await _pegasusContext.SaveChangesAsync();
                     
+                    //add create new user for this learner
+                    var newUser = new User
+                    {
+                        UserName = newLearner.Email,Password = "helloworld",
+                        CreatedAt = DateTime.Now,RoleId = 4, IsActivate = 1
+                        
+                    };
+                    _pegasusContext.Add(newUser);
+                    await _pegasusContext.SaveChangesAsync();
+                    
+                    //keep userid to learner table
+                    newLearner.UserId = newUser.UserId;
+                    _pegasusContext.Update(newLearner);
+                    await _pegasusContext.SaveChangesAsync();
+                    
+                    //upload file
+                    var strDateTime = DateTime.Now.ToString("yyMMddhhmmssfff");
+                   
                     if (image != null)
                     {
-                        newLearner.Photo = $"images/learner/Photos/{newLearner.LearnerId+Path.GetExtension(image.FileName)}";
+                        newLearner.Photo = $"images/learner/Photos/{newLearner.LearnerId+strDateTime+Path.GetExtension(image.FileName)}";
                         _pegasusContext.Update(newLearner);
                         await _pegasusContext.SaveChangesAsync();
-                        UploadFile(image,"image",newLearner.LearnerId);
+                        var uploadResult = UploadFile(image,"learner/Photos/",newLearner.LearnerId,strDateTime);
+                        if (!uploadResult.IsUploadSuccess)
+                        {
+                            throw new Exception(uploadResult.ErrorMessage);
+                        }
                     }
-
+                    
                     if (ABRSM != null)
                     {
-                        newLearner.G5Certification = $"images/learner/ABRSM_Grade5_Certificate/{newLearner.LearnerId+Path.GetExtension(ABRSM.FileName)}";
+                        newLearner.G5Certification = $"images/learner/ABRSM_Grade5_Certificate/{newLearner.LearnerId+strDateTime+Path.GetExtension(ABRSM.FileName)}";
                         newLearner.IsAbrsmG5 = 1;
                         _pegasusContext.Update(newLearner);
                         await _pegasusContext.SaveChangesAsync();
-                        UploadFile(ABRSM,"ABRSM",newLearner.LearnerId);
+                        var uploadResult = UploadFile(ABRSM,"learner/ABRSM_Grade5_Certificate/",newLearner.LearnerId,strDateTime);
+                        if (!uploadResult.IsUploadSuccess)
+                        {
+                            throw new Exception(uploadResult.ErrorMessage);
+                        }
+                        
                     }
                     
                     

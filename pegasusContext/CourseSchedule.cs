@@ -17,6 +17,7 @@ namespace Pegasus_backend.pegasusContext
         public TimeSpan? BeginTime { get; set; }
         public TimeSpan? EndTime { get; set; }
 
+        
         public One2oneCourseInstance CourseInstance { get; set; }
         public GroupCourseInstance GroupCourseInstance { get; set; }
         public ICollection<Amendment> Amendment { get; set; }

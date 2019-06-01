@@ -26,6 +26,9 @@ namespace Pegasus_backend.Mappings
             CreateMap<LessonViewModel, Lesson>();
             CreateMap<TeacherCourseModel, TeacherCourse>();
             CreateMap<LoginLogModel, LoginLog>();
+            CreateMap<Invoice, WaitingOrInvoice>();
+            CreateMap<InvoiceWaitingConfirm, WaitingOrInvoice>();
+            CreateMap<StaffModel, Staff>();
         }
     }
 }

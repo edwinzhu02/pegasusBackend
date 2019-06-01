@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Web.Http;
 using Microsoft.AspNetCore.Http;
 //using System.Web.Http.ModelBinding;
@@ -63,8 +64,13 @@ namespace Pegasus_backend.Controllers
 
             if (user.Staff.Count != 0)
             {
-                return new {firstname=user.Staff.ToList()[0].FirstName,lastname=user.Staff.ToList()[0].LastName,
-                    position=positionToClient, OrgName=user.Staff.ToList()[0].StaffOrg.ToList().Select(s=>s.Org.OrgName)};
+                return new
+                {
+                    firstname = user.Staff.ToList()[0].FirstName, lastname = user.Staff.ToList()[0].LastName,
+                    position = positionToClient,
+                    OrgName = user.Staff.ToList()[0].StaffOrg.ToList().Select(s => s.Org.OrgName),
+                    OrgId = user.Staff.ToList()[0].StaffOrg.ToList().Select(s => s.Org.OrgId)
+                };
             }
 
             if (user.Learner.Count != 0)
@@ -95,82 +101,29 @@ namespace Pegasus_backend.Controllers
             tResult.ErrorMessage = "Not Found";
             return tResult;
         }
-        protected void UploadFile(IFormFile file,string imageName, int id)
+        protected UploadFileModel UploadFile(IFormFile file,string folderName, int id,string strDateTime)
         {
-            var fileName = file.FileName;
-            var extension = Path.GetExtension(fileName);
-            var Id = id + extension;
-            
-            if (imageName == "IdPhoto")
+            var model = new UploadFileModel();
+            try
             {
-                    
-                var folderName = Path.Combine("wwwroot", "images", "tutor","IdPhotos");
-                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
-                var path = Path.Combine(pathToSave, Id );
-                var stream = new FileStream(path, FileMode.Create);
-                file.CopyTo(stream);
-                stream.Close();
-            }
-
-            if (imageName == "Photo")
-            {
-                var folderName = Path.Combine("wwwroot", "images", "tutor","Photos");
-                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
-                var path = Path.Combine(pathToSave, Id);
-                var stream = new FileStream(path, FileMode.Create);
-                file.CopyTo(stream);
-                stream.Close();
-            }
+                string currentFileExtension = Path.GetExtension(file.FileName);
+                var saveName = id.ToString() + strDateTime + currentFileExtension;
+                var newPath = Path.Combine("images", folderName, saveName);
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", newPath);
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    file.CopyTo(stream);
+                }
                 
-            //student photo
-            if (imageName == "image")
-            {
-                var folderName = Path.Combine("wwwroot", "images", "learner","Photos");
-                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
-                var path = Path.Combine(pathToSave, Id);
-                var stream = new FileStream(path, FileMode.Create);
-                file.CopyTo(stream);
-                stream.Close();
+                model.IsUploadSuccess = true;
+                model.ErrorMessage = "";
+                return model;
             }
-
-            if (imageName == "ABRSM")
+            catch (Exception ex)
             {
-                var folderName = Path.Combine("wwwroot", "images","learner" ,"ABRSM_Grade5_Certificate");
-                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
-                var path = Path.Combine(pathToSave, Id);
-                var stream = new FileStream(path, FileMode.Create);
-                file.CopyTo(stream);
-                stream.Close();
-            }
-
-            if (imageName == "CV")
-            {
-                var folderName = Path.Combine("wwwroot", "images","tutor" ,"CV");
-                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
-                var path = Path.Combine(pathToSave, Id);
-                var stream = new FileStream(path, FileMode.Create);
-                file.CopyTo(stream);
-                stream.Close();
-            }
-
-            if (imageName == "Form")
-            {
-                var folderName = Path.Combine("wwwroot", "images","tutor" ,"Form");
-                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
-                var path = Path.Combine(pathToSave, Id);
-                var stream = new FileStream(path, FileMode.Create);
-                file.CopyTo(stream);
-                stream.Close();
-            }
-
-            if (imageName == "Other")
-            {
-                var folderName = Path.Combine("wwwroot", "images","tutor" ,"Other");
-                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
-                var path = Path.Combine(pathToSave, Id);
-                var stream = new FileStream(path, FileMode.Create);
-                file.CopyTo(stream);
-                stream.Close();
+                model.IsUploadSuccess = false;
+                model.ErrorMessage = ex.Message;
+                return model;
             }
         }
     }

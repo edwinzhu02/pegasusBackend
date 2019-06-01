@@ -160,39 +160,39 @@ namespace Pegasus_backend.Controllers
 
 
         
-        public int DeductHoliday(IEnumerable<CourseInvoice> instances)
-        {
-            int numberOfHolidays=0;
-            foreach (var instance in instances)
-            {
-                if (instance.IsGroupCourse)
-                {
-                    Console.Write("Group course");
-                }
+        //public int DeductHoliday(IEnumerable<CourseInvoice> instances)
+        //{
+        //    int numberOfHolidays=0;
+        //    foreach (var instance in instances)
+        //    {
+        //        if (instance.IsGroupCourse)
+        //        {
+        //            Console.Write("Group course");
+        //        }
 
-                foreach (var holiday in holidays)
-                {
-                    if (Between(holiday.HolidayDate,instance.One2oneCourseInstance.BeginDate,instance.One2oneCourseInstance.EndDate))
-                    {
-                        numberOfHolidays += 1;
-                    }
-                }
-            }
+        //        foreach (var holiday in holidays)
+        //        {
+        //            if (Between(holiday.HolidayDate,instance.One2oneCourseInstance.BeginDate,instance.One2oneCourseInstance.EndDate))
+        //            {
+        //                numberOfHolidays += 1;
+        //            }
+        //        }
+        //    }
 
-            return numberOfHolidays;
-        }
+        //    return numberOfHolidays;
+        //}
 
         
         
         
-        [HttpGet("gh/{id}")]
-        public int getHoliday(int id)
-        {
+        //[HttpGet("gh/{id}")]
+        //public int getHoliday(int id)
+        //{
            
-           return DeductHoliday(GetCourses(id));
+        //   return DeductHoliday(GetCourses(id));
 
 
-        }
+        //}
        
         /*
         [HttpGet("ts/{studentId}")]

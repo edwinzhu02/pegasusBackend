@@ -46,6 +46,8 @@ namespace Pegasus_backend.pegasusContext
         public byte? LearnerLevel { get; set; }
         public byte? PaymentPeriod { get; set; }
         public string Referrer { get; set; }
+        public string FormUrl { get; set; }
+        public string OtherfileUrl { get; set; }
 
         public Org Org { get; set; }
         public User User { get; set; }

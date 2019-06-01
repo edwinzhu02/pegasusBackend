@@ -75,7 +75,7 @@ namespace Pegasus_backend.pegasusContext
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseMySQL("server=gradspace.org;User Id=dbuser;Database=ablemusic");
+                optionsBuilder.UseMySQL("server=gradspace.org;User Id=dbuser;Password=qwer1234;Database=ablemusic");
             }
         }
 
@@ -961,9 +961,14 @@ namespace Pegasus_backend.pegasusContext
                     .HasMaxLength(30)
                     .IsUnicode(false);
 
+                entity.Property(e => e.FormUrl)
+                    .HasColumnName("form_url")
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.G5Certification)
                     .HasColumnName("g5_certification")
-                    .HasMaxLength(50)
+                    .HasMaxLength(200)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Gender)
@@ -1009,13 +1014,18 @@ namespace Pegasus_backend.pegasusContext
                     .HasColumnName("org_id")
                     .HasColumnType("smallint(6)");
 
+                entity.Property(e => e.OtherfileUrl)
+                    .HasColumnName("otherfile_url")
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.PaymentPeriod)
                     .HasColumnName("payment_period")
                     .HasColumnType("tinyint(4)");
 
                 entity.Property(e => e.Photo)
                     .HasColumnName("photo")
-                    .HasMaxLength(50)
+                    .HasMaxLength(200)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Referrer)
@@ -2560,7 +2570,7 @@ namespace Pegasus_backend.pegasusContext
 
                 entity.Property(e => e.Comment)
                     .HasColumnName("comment")
-                    .HasMaxLength(100)
+                    .HasMaxLength(2000)
                     .IsUnicode(false);
 
                 entity.Property(e => e.CvUrl)
@@ -2607,7 +2617,7 @@ namespace Pegasus_backend.pegasusContext
 
                 entity.Property(e => e.IdPhoto)
                     .HasColumnName("id_photo")
-                    .HasMaxLength(40)
+                    .HasMaxLength(200)
                     .IsUnicode(false);
 
                 entity.Property(e => e.IdType)
@@ -2656,7 +2666,7 @@ namespace Pegasus_backend.pegasusContext
 
                 entity.Property(e => e.Photo)
                     .HasColumnName("photo")
-                    .HasMaxLength(40)
+                    .HasMaxLength(200)
                     .IsUnicode(false);
 
                 entity.Property(e => e.UserId)
