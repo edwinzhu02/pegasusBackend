@@ -143,5 +143,77 @@ namespace Pegasus_backend.Controllers
                 return BadRequest(result);
             }
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateStaff([FromForm(Name = "IdPhoto")] IFormFile idPhoto,
+            [FromForm(Name = "Photo")] IFormFile photo,[FromForm] string details, short id)
+        {
+            var result = new Result<string>();
+            try
+            {
+                using (var dbContextTransaction = _ablemusicContext.Database.BeginTransaction())
+                {
+                    var staff = await _ablemusicContext.Staff.FirstOrDefaultAsync(s => s.StaffId == id);
+                    if (staff == null)
+                    {
+                        return NotFound(DataNotFound(result));
+                    }
+                    var detailsJson = JsonConvert.DeserializeObject<StaffModel>(details);
+                
+                    //delete exist staff orgs
+                    _ablemusicContext.StaffOrg.Where(s=>s.StaffId==staff.StaffId).ToList().ForEach(s => { _ablemusicContext.Remove(s);});
+                    await _ablemusicContext.SaveChangesAsync();
+
+                    //update basic staff info
+                    _mapper.Map(detailsJson, staff);
+                    _ablemusicContext.Update(staff);
+                    await _ablemusicContext.SaveChangesAsync();
+                    
+                    //update role id
+                    var user = _ablemusicContext.User.FirstOrDefault(s => s.UserId == staff.UserId);
+                    user.RoleId = detailsJson.RoleId;
+                    _ablemusicContext.Update(user);
+                    await _ablemusicContext.SaveChangesAsync();
+                
+                    //upload files
+                    var strDateTime = DateTime.Now.ToString("yyMMddhhmmssfff");
+                    if (idPhoto != null)
+                    {
+                        staff.IdPhoto = $"images/staff/IdPhotos/{staff.StaffId+strDateTime+Path.GetExtension(idPhoto.FileName)}";
+                        _ablemusicContext.Update(staff);
+                        await _ablemusicContext.SaveChangesAsync();
+                        var uploadResult = UploadFile(idPhoto,"staff/IdPhotos/",staff.StaffId,strDateTime);
+                        if (!uploadResult.IsUploadSuccess)
+                        {
+                            throw new Exception(uploadResult.ErrorMessage);
+                        }
+                    }
+
+                    if (photo != null)
+                    {
+                        staff.Photo = $"images/staff/Photos/{staff.StaffId+strDateTime+Path.GetExtension(photo.FileName)}";
+                        _ablemusicContext.Update(staff);
+                        await _ablemusicContext.SaveChangesAsync();
+                        var uploadResult = UploadFile(photo,"staff/Photos/",staff.StaffId,strDateTime);
+                        if (!uploadResult.IsUploadSuccess)
+                        {
+                            throw new Exception(uploadResult.ErrorMessage);
+                        }
+                    }
+                    
+                    dbContextTransaction.Commit();
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+            result.Data = "success!";
+            return Ok(result);
+        }
     }
 }
