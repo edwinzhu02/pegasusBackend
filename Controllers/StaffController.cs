@@ -24,7 +24,45 @@ namespace Pegasus_backend.Controllers
         public async Task<IActionResult> GetStaffs()
         {
             var result = new Result<Object>();
-            return Ok();
+            try
+            {
+                result.Data = await _ablemusicContext.Staff.ToListAsync();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteStaff(short id)
+        {
+            var result = new Result<string>();
+            try
+            {
+                var staff = _ablemusicContext.Staff.FirstOrDefault(s => s.StaffId == id);
+                if (staff == null)
+                {
+                    return NotFound(DataNotFound(result));
+                }
+
+                staff.IsActivate = 0;
+                _ablemusicContext.Update(staff);
+                await _ablemusicContext.SaveChangesAsync();
+                result.Data = "success";
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+
+            return Ok(result);
+        }
+        
     }
 }
