@@ -8,6 +8,8 @@
         <Folder Include="wwwroot\" />
         <Folder Include="wwwroot\images\learner\ABRSM_Grade5_Certificate" />
         <Folder Include="wwwroot\images\learner\Photos" />
+        <Folder Include="wwwroot\images\staff\IdPhotos" />
+        <Folder Include="wwwroot\images\staff\Photos" />
         <Folder Include="wwwroot\images\tutor\CV" />
         <Folder Include="wwwroot\images\tutor\Form" />
         <Folder Include="wwwroot\images\tutor\IdPhotos" />
