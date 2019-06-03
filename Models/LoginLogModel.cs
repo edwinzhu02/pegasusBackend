@@ -14,5 +14,8 @@ namespace Pegasus_backend.Models
         public int? LogType { get; set; }
         [Required (ErrorMessage = "Time is required")]
         public DateTime CreatedAt { get; set; }
+        [Required (ErrorMessage = "OrgId is required")]
+        public short OrgId { get; set; }
+
     }
 }

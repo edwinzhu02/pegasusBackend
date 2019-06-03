@@ -198,6 +198,11 @@ namespace Pegasus_backend.Controllers
                     _pegasusContext.Add(newUser);
                     await _pegasusContext.SaveChangesAsync();
                     
+                    //keep userid to learner table
+                    newLearner.UserId = newUser.UserId;
+                    _pegasusContext.Update(newLearner);
+                    await _pegasusContext.SaveChangesAsync();
+                    
                     //upload file
                     var strDateTime = DateTime.Now.ToString("yyMMddhhmmssfff");
                    
@@ -212,7 +217,7 @@ namespace Pegasus_backend.Controllers
                             throw new Exception(uploadResult.ErrorMessage);
                         }
                     }
-
+                    
                     if (ABRSM != null)
                     {
                         newLearner.G5Certification = $"images/learner/ABRSM_Grade5_Certificate/{newLearner.LearnerId+strDateTime+Path.GetExtension(ABRSM.FileName)}";
