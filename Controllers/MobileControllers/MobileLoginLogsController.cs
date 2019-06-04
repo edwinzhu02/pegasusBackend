@@ -51,6 +51,19 @@ namespace Pegasus_backend.Controllers.MobileControllers
 
             return Ok(loginLog);
         }
+        // get the lastest 4 loginLog
+        [Route("[action]")]
+        public async Task<IActionResult> GetRecentLoginLog()
+        {
+            Result<List<LoginLog>> logResult = new Result<List<LoginLog>>();
+            if (_context.LoginLog.Count() <= 4)
+            {
+                logResult.Data = await _context.LoginLog.Include(x => x.Org).ToListAsync();
+                return Ok(logResult);
+            }
+            logResult.Data = await _context.LoginLog.OrderByDescending(x => x.LoginLogId).Take(4).Include(x =>x.Org).ToListAsync();
+            return Ok(logResult);
+        }
         [Route("[action]/{id}")]
         [HttpGet]
         public async Task<IActionResult> GetLastCheck(int id)
@@ -112,6 +125,9 @@ namespace Pegasus_backend.Controllers.MobileControllers
         {
             Result<LoginLog> result = new Result<LoginLog>();
             LoginLog loginLog = new LoginLog();
+            // change time zone
+            TimeZoneInfo timeInfo = TimeZoneInfo.FindSystemTimeZoneById("New Zealand Standard Time");
+            loginLogModel.CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(loginLogModel.CreatedAt, timeInfo);
             _mapper.Map(loginLogModel, loginLog);
             try
             {

@@ -92,7 +92,7 @@ namespace Pegasus_backend.Controllers
                             LearnerId = invoiceItem.LearnerId
                         };
                         _pegasusContext.Add(lessonRemain);
-                        await SaveLesson(details.InvoiceId);
+                        await SaveLesson(details.InvoiceId,0);
                         await _pegasusContext.SaveChangesAsync();
 
                     }
@@ -186,11 +186,20 @@ namespace Pegasus_backend.Controllers
 
 
         //auto-generate lessons sort by invoice when the invoice is paid
-        private async Task<int> SaveLesson(int invoice_id)
+        private async Task<int> SaveLesson(int invoice_id, int isWaitingConfirm)
         {
             var result = new Result<object>();
-
-            var invoice = await _pegasusContext.Invoice.FirstOrDefaultAsync(x => x.InvoiceId == invoice_id);
+            var invoice = new WaitingOrInvoice();
+            if (isWaitingConfirm == 1)
+            {
+                var tem = await _pegasusContext.InvoiceWaitingConfirm.FirstOrDefaultAsync(x => x.WaitingId == invoice_id);
+                _mapper.Map(tem,invoice);
+            }
+            else
+            {
+                var tem = await _pegasusContext.Invoice.FirstOrDefaultAsync(x => x.InvoiceId == invoice_id);
+                _mapper.Map(tem,invoice);
+            }
             var course = await _pegasusContext.One2oneCourseInstance.FirstOrDefaultAsync(x => x.CourseInstanceId == invoice.CourseInstanceId);
             var holiday = await _pegasusContext.Holiday.Select(x => x.HolidayDate).ToArrayAsync();
             var schedules = await _pegasusContext.CourseSchedule.Where(x => x.CourseInstanceId == invoice.CourseInstanceId).OrderBy(x => x.DayOfWeek).ToArrayAsync();
@@ -409,7 +418,7 @@ namespace Pegasus_backend.Controllers
 
             var course_instances = await _pegasusContext.One2oneCourseInstance
                 .Include(x => x.Course)
-                .Include(x => x.Learner)
+                .Include(x => x.Learner).Where(x=>x.Learner.IsActive==1)
                 .Select(x => new
                 {
                     x.LearnerId,
@@ -438,7 +447,8 @@ namespace Pegasus_backend.Controllers
             int i = 0;
             foreach (var course_instance in course_instances)
             {
-                Invoice invoice = new Invoice();
+                if (course_instance.InvoiceDate>=Convert.ToDateTime(term.EndDate)) continue;
+                InvoiceWaitingConfirm invoice = new InvoiceWaitingConfirm();
 
                 invoice.LearnerId = course_instance.LearnerId;
                 invoice.LearnerName = course_instance.Learner.FirstName;
@@ -447,10 +457,15 @@ namespace Pegasus_backend.Controllers
                 invoice.TermId = (short)term_id;
                 invoice.IsPaid = 0;
                 invoice.PaidFee = 0;
+                invoice.CreatedAt=DateTime.Now;
+                invoice.IsConfirmed = 0;
+                invoice.IsActivate = 1;
+                invoice.IsEmailSent = 0;
+
                 var courseIns = await _pegasusContext.One2oneCourseInstance.FirstOrDefaultAsync(x => x.CourseInstanceId == invoice.CourseInstanceId);
                 int lesson_quantity = 0;
 
-                if (course_instance.Learner.PaymentPeriod == 1 && (course_instance.InvoiceDate == null || course_instance.InvoiceDate < term.BeginDate))
+                if (course_instance.Learner.PaymentPeriod == 1 && (course_instance.InvoiceDate == null || course_instance.InvoiceDate < term.EndDate))
                 {
                     if (course_instance.BeginDate >= term.BeginDate)
                     {
@@ -463,11 +478,11 @@ namespace Pegasus_backend.Controllers
 
                     invoice.EndDate = term.EndDate;
 
-                    await _pegasusContext.Invoice.AddAsync(invoice);
+                    await _pegasusContext.InvoiceWaitingConfirm.AddAsync(invoice);
                     await _pegasusContext.SaveChangesAsync();
                     using (var dbContextTransaction = _pegasusContext.Database.BeginTransaction())
                     {
-                        lesson_quantity = await SaveLesson(invoice.InvoiceId);
+                        lesson_quantity = await SaveLesson(invoice.WaitingId,1);
                         dbContextTransaction.Rollback();
 
                     }
@@ -505,23 +520,30 @@ namespace Pegasus_backend.Controllers
                     {
                         if (invoice.EndDate >= all_term.BeginDate && invoice.EndDate <= all_term.EndDate) invoice.TermId = all_term.TermId;
                     }
-                    await _pegasusContext.Invoice.AddAsync(invoice);
+                    await _pegasusContext.InvoiceWaitingConfirm.AddAsync(invoice);
                     await _pegasusContext.SaveChangesAsync();
                     using (var dbContextTransaction = _pegasusContext.Database.BeginTransaction())
                     {
-                        lesson_quantity = await SaveLesson(invoice.InvoiceId);
+                        lesson_quantity = await SaveLesson(invoice.WaitingId,1);
                         dbContextTransaction.Rollback();
 
                     }
                 }
+                if (invoice.BeginDate!=null) invoice.DueDate = Convert.ToDateTime(invoice.BeginDate).AddDays(-1);
+                invoice.LessonFee = course_instance.Course.Price * lesson_quantity;
                 invoice.LessonFee = course_instance.Course.Price * lesson_quantity;
                 invoice.OwingFee = invoice.LessonFee;
+                invoice.TotalFee = invoice.LessonFee;
                 invoice.LessonQuantity = lesson_quantity;
-                _pegasusContext.Invoice.Update(invoice);
+                if (invoice.LessonFee<=0) continue;               
+                _pegasusContext.InvoiceWaitingConfirm.Update(invoice);
+                invoice.InvoiceNum = invoice.WaitingId.ToString();
                 _pegasusContext.Update(courseIns);
+
                 await _pegasusContext.SaveChangesAsync();
 
                 i++;
+                //if (i == 4) break;
 
             }
             result.Data = i;

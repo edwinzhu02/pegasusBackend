@@ -8,6 +8,8 @@
         <Folder Include="wwwroot\" />
         <Folder Include="wwwroot\images\learner\ABRSM_Grade5_Certificate" />
         <Folder Include="wwwroot\images\learner\Photos" />
+        <Folder Include="wwwroot\images\staff\IdPhotos" />
+        <Folder Include="wwwroot\images\staff\Photos" />
         <Folder Include="wwwroot\images\tutor\CV" />
         <Folder Include="wwwroot\images\tutor\Form" />
         <Folder Include="wwwroot\images\tutor\IdPhotos" />
@@ -20,7 +22,9 @@
         <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.0.0" />
         <PackageReference Include="MailKit" Version="2.1.4" />
         <PackageReference Include="Microsoft.AspNetCore.App" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.Abstractions" Version="2.1.1" />
         <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
+        <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.0.4" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.2" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="2.1.2" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.1" />

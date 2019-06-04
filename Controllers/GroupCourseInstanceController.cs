@@ -36,6 +36,7 @@ namespace Pegasus_backend.Controllers
                 var item = await _pegasusContext.GroupCourseInstance
                     .Include(c => c.CourseSchedule)
                     .Include(s => s.Course)
+                    //.ThenInclude(s => s.CourseCategory)                    
                     .Include(s => s.Org)
                     .Include(s => s.Room)
                     .Include(s => s.Teacher)
@@ -47,7 +48,7 @@ namespace Pegasus_backend.Controllers
                         Course = new
                         {
                             s.Course.CourseId, s.Course.CourseName, s.Course.CourseType, s.Course.Level,
-                            s.Course.Duration, s.Course.Price
+                            s.Course.Duration, s.Course.Price ,s.Course.CourseCategory
                         },
                         Org = new {s.Org.OrgId, s.Org.OrgName}, Room = new {s.Room.RoomId, s.Room.RoomName},
                         Teacher = new {s.Teacher.TeacherId, s.Teacher.FirstName, s.Teacher.LastName}

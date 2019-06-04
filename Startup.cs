@@ -22,6 +22,7 @@ using Microsoft.IdentityModel.Tokens;
 using Pegasus_backend.Models;
 using Pegasus_backend.pegasusContext;
 using Microsoft.EntityFrameworkCore;
+using Pegasus_backend.Controllers.MobileControllers;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace Pegasus_backend
@@ -55,6 +56,7 @@ namespace Pegasus_backend
                 );
             
             services.AddDirectoryBrowser();
+            services.AddSignalR();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddDbContext<ablemusicContext>(options =>
                 options.UseMySQL(Configuration.GetConnectionString("AblemusicDatabase")));
@@ -92,7 +94,6 @@ namespace Pegasus_backend
                 };
             });
             services.AddAutoMapper();
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -119,7 +120,6 @@ namespace Pegasus_backend
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ablemusic API V1");
             });
 
-
             app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(
@@ -134,6 +134,8 @@ namespace Pegasus_backend
                 RequestPath = "/images"
             });
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+//            app.UseCors(x => x.WithOrigins("http://localhost:8100").AllowAnyMethod().AllowAnyHeader().AllowCredentials());
+            app.UseSignalR(routes => { routes.MapHub<Chatroom>("/chat"); });
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseMvc();
