@@ -123,7 +123,7 @@ namespace Pegasus_backend.Controllers
             try
             {
                 invoiceWaitingConfirmUpdate = await _ablemusicContext.InvoiceWaitingConfirm.Where(i => i.WaitingId == invoiceWaitingConfirm.WaitingId).FirstOrDefaultAsync();
-                activeInvoices = await _ablemusicContext.Invoice.Where(i => i.IsActive == 1 || i.IsActive == null && i.InvoiceNum == invoiceWaitingConfirm.InvoiceNum).ToListAsync();
+                activeInvoices = await _ablemusicContext.Invoice.Where(i => (i.IsActive == 1 || i.IsActive == null) && i.InvoiceNum == invoiceWaitingConfirm.InvoiceNum).ToListAsync();
             }
             catch(Exception ex)
             {
@@ -146,7 +146,7 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = "The provided invoice id is not active";
                 return BadRequest(result);
             }
-            if(invoiceWaitingConfirmUpdate.PaidFee > 0)
+            if(activeInvoices.Count > 0 && activeInvoices.FirstOrDefault().PaidFee > 0)
             {
                 result.IsSuccess = false;
                 result.ErrorMessage = "The provided invoice is already paid";
