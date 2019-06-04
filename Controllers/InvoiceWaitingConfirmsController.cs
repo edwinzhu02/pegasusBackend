@@ -118,9 +118,10 @@ namespace Pegasus_backend.Controllers
             InvoiceWaitingConfirm invoiceWaitingConfirmUpdate = new InvoiceWaitingConfirm();
             List<Invoice> activeInvoices = new List<Invoice>();
             Invoice invoice = new Invoice();
+            Invoice existInvoice = new Invoice();
             Learner learner = new Learner();
             _mapper.Map(invoiceWaitingConfirmViewModel, invoiceWaitingConfirm);
-            try
+                try
             {
                 invoiceWaitingConfirmUpdate = await _ablemusicContext.InvoiceWaitingConfirm.Where(i => i.WaitingId == invoiceWaitingConfirm.WaitingId).FirstOrDefaultAsync();
                 activeInvoices = await _ablemusicContext.Invoice.Where(i => i.IsActive == 1 || i.IsActive == null && i.InvoiceNum == invoiceWaitingConfirm.InvoiceNum).ToListAsync();
@@ -146,7 +147,7 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = "The provided invoice id is not active";
                 return BadRequest(result);
             }
-            if(invoiceWaitingConfirmUpdate.PaidFee > 0)
+            if(activeInvoices.Count()>0&&activeInvoices.FirstOrDefault().PaidFee > 0)
             {
                 result.IsSuccess = false;
                 result.ErrorMessage = "The provided invoice is already paid";
@@ -156,6 +157,14 @@ namespace Pegasus_backend.Controllers
             invoiceWaitingConfirmUpdate.IsActivate = 0;
             invoiceWaitingConfirm.IsConfirmed = 1;
             invoiceWaitingConfirm.WaitingId = 0;
+            invoiceWaitingConfirm.IsPaid = 0;            
+            invoiceWaitingConfirm.IsActivate = 1;
+            invoiceWaitingConfirm.IsEmailSent = 0;
+            invoiceWaitingConfirm.CreatedAt = DateTime.Now;
+            //for patch
+            invoiceWaitingConfirm.EndDate = invoiceWaitingConfirmUpdate.EndDate;
+            invoiceWaitingConfirm.DueDate = invoiceWaitingConfirmUpdate.DueDate;
+            //
 
             invoice.InvoiceNum = invoiceWaitingConfirm.InvoiceNum;
             invoice.LessonFee = invoiceWaitingConfirm.LessonFee;
@@ -201,6 +210,13 @@ namespace Pegasus_backend.Controllers
                 await _ablemusicContext.Invoice.AddAsync(invoice);
                 await _ablemusicContext.SaveChangesAsync();
                 learner = await _ablemusicContext.Learner.Where(l => l.LearnerId == invoice.LearnerId).FirstOrDefaultAsync();
+                if(learner == null)
+                    {
+                        result.IsSuccess = false;
+                        result.IsFound = false;
+                        result.ErrorMessage = "learner not found";
+                        return NotFound(result);
+                    }
             }
             catch (Exception ex)
             {

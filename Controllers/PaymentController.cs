@@ -418,7 +418,7 @@ namespace Pegasus_backend.Controllers
 
             var course_instances = await _pegasusContext.One2oneCourseInstance
                 .Include(x => x.Course)
-                .Include(x => x.Learner)
+                .Include(x => x.Learner).Where(x=>x.Learner.IsActive==1)
                 .Select(x => new
                 {
                     x.LearnerId,
@@ -447,6 +447,7 @@ namespace Pegasus_backend.Controllers
             int i = 0;
             foreach (var course_instance in course_instances)
             {
+                if (course_instance.InvoiceDate>=Convert.ToDateTime(term.EndDate)) continue;
                 InvoiceWaitingConfirm invoice = new InvoiceWaitingConfirm();
 
                 invoice.LearnerId = course_instance.LearnerId;
@@ -460,10 +461,11 @@ namespace Pegasus_backend.Controllers
                 invoice.IsConfirmed = 0;
                 invoice.IsActivate = 1;
                 invoice.IsEmailSent = 0;
+
                 var courseIns = await _pegasusContext.One2oneCourseInstance.FirstOrDefaultAsync(x => x.CourseInstanceId == invoice.CourseInstanceId);
                 int lesson_quantity = 0;
 
-                if (course_instance.Learner.PaymentPeriod == 1 && (course_instance.InvoiceDate == null || course_instance.InvoiceDate < term.BeginDate))
+                if (course_instance.Learner.PaymentPeriod == 1 && (course_instance.InvoiceDate == null || course_instance.InvoiceDate < term.EndDate))
                 {
                     if (course_instance.BeginDate >= term.BeginDate)
                     {
@@ -527,12 +529,17 @@ namespace Pegasus_backend.Controllers
 
                     }
                 }
+                if (invoice.BeginDate!=null) invoice.DueDate = Convert.ToDateTime(invoice.BeginDate).AddDays(-1);
                 invoice.LessonFee = course_instance.Course.Price * lesson_quantity;
                 invoice.LessonFee = course_instance.Course.Price * lesson_quantity;
                 invoice.OwingFee = invoice.LessonFee;
+                invoice.TotalFee = invoice.LessonFee;
                 invoice.LessonQuantity = lesson_quantity;
+                if (invoice.LessonFee<=0) continue;               
                 _pegasusContext.InvoiceWaitingConfirm.Update(invoice);
+                invoice.InvoiceNum = invoice.WaitingId.ToString();
                 _pegasusContext.Update(courseIns);
+
                 await _pegasusContext.SaveChangesAsync();
 
                 i++;

@@ -32,13 +32,21 @@ namespace Pegasus_backend.Controllers
         [Route("{id}")]
         public ActionResult<List<Invoice>> GetInvoice(int id)
         {
-            Result<string> result = new Result<string>();
+            Result<List<Invoice>> result = new Result<List<Invoice>>();
             try
             {
-                return _pegasusContext.Invoice.Where(s => s.LearnerId == id&&s.IsActive==1).Include(s => s.Term)
+                var res =_pegasusContext.Invoice.Where(s => s.LearnerId == id&&s.IsActive==1).Include(s => s.Term)
                     .Where(s=>s.IsPaid == 0)
                     .ToList();
-            }
+                if (res.Count ==0){
+                    result.IsSuccess = false;
+                    result.ErrorMessage ="Sorry, No invoice !";
+                    return BadRequest(result);                    
+                }
+                result.Data = res;
+                result.IsSuccess = true;
+                return Ok(result);                    
+             }
             catch (Exception ex)
             {
                 result.IsSuccess = false;
