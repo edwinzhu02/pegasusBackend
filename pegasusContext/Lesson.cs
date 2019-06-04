@@ -29,8 +29,8 @@ namespace Pegasus_backend.pegasusContext
         public DateTime? EndTime { get; set; }
         public int? InvoiceId { get; set; }
         public byte? IsConfirm { get; set; }
-
         [JsonIgnore]
+
         public One2oneCourseInstance CourseInstance { get; set; }
         [JsonIgnore]
         public GroupCourseInstance GroupCourseInstance { get; set; }
