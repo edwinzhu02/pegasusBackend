@@ -147,7 +147,7 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = "The provided invoice id is not active";
                 return BadRequest(result);
             }
-            if(activeInvoices.FirstOrDefault().PaidFee > 0)
+            if(activeInvoices!=null&&activeInvoices.FirstOrDefault().PaidFee > 0)
             {
                 result.IsSuccess = false;
                 result.ErrorMessage = "The provided invoice is already paid";
