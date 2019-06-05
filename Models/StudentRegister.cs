@@ -34,6 +34,7 @@ namespace Pegasus_backend.Models
         public short OrgId { get; set; }
         [JsonProperty(Required = Required.Always)]
         public string Address { get; set; }
+        [JsonProperty(Required = Required.Always)]
         public short IsUnder18 { get; set; }
         public string Note { get; set; }
         public string Referrer { get; set; }

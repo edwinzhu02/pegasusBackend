@@ -17,6 +17,7 @@ namespace Pegasus_backend.pegasusContext
             One2oneCourseInstance = new HashSet<One2oneCourseInstance>();
             Parent = new HashSet<Parent>();
             Payment = new HashSet<Payment>();
+            Rating = new HashSet<Rating>();
             RemindLog = new HashSet<RemindLog>();
             SoldTransaction = new HashSet<SoldTransaction>();
             TodoList = new HashSet<TodoList>();
@@ -61,6 +62,7 @@ namespace Pegasus_backend.pegasusContext
         public ICollection<One2oneCourseInstance> One2oneCourseInstance { get; set; }
         public ICollection<Parent> Parent { get; set; }
         public ICollection<Payment> Payment { get; set; }
+        public ICollection<Rating> Rating { get; set; }
         public ICollection<RemindLog> RemindLog { get; set; }
         public ICollection<SoldTransaction> SoldTransaction { get; set; }
         public ICollection<TodoList> TodoList { get; set; }

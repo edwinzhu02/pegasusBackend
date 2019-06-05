@@ -12,11 +12,13 @@ namespace Pegasus_backend.pegasusContext
             GroupCourseInstance = new HashSet<GroupCourseInstance>();
             Lesson = new HashSet<Lesson>();
             One2oneCourseInstance = new HashSet<One2oneCourseInstance>();
+            Rating = new HashSet<Rating>();
             RemindLog = new HashSet<RemindLog>();
             TeacherCourse = new HashSet<TeacherCourse>();
             TeacherLanguage = new HashSet<TeacherLanguage>();
             TeacherQualificatiion = new HashSet<TeacherQualificatiion>();
             TeacherTransaction = new HashSet<TeacherTransaction>();
+            TeacherWageRates = new HashSet<TeacherWageRates>();
             TodoList = new HashSet<TodoList>();
         }
 
@@ -54,11 +56,13 @@ namespace Pegasus_backend.pegasusContext
         public ICollection<Lesson> Lesson { get; set; }
         [JsonIgnore]
         public ICollection<One2oneCourseInstance> One2oneCourseInstance { get; set; }
+        public ICollection<Rating> Rating { get; set; }
         public ICollection<RemindLog> RemindLog { get; set; }
         public ICollection<TeacherCourse> TeacherCourse { get; set; }
         public ICollection<TeacherLanguage> TeacherLanguage { get; set; }
         public ICollection<TeacherQualificatiion> TeacherQualificatiion { get; set; }
         public ICollection<TeacherTransaction> TeacherTransaction { get; set; }
+        public ICollection<TeacherWageRates> TeacherWageRates { get; set; }
         public ICollection<TodoList> TodoList { get; set; }
     }
 }

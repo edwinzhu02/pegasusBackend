@@ -65,22 +65,76 @@ namespace Pegasus_backend.Controllers
         [CheckModelFilter]
         public async Task<IActionResult> UpdateTeacherCourse([FromBody] TeacherCourseRegister model)
         {
+            Decimal? houlyWage = 0;
             Result<string> result = new Result<string>();
             try
             {
                 using (var dbContextTransaction = _pegasusContext.Database.BeginTransaction())
                 {
+
+                    if (_pegasusContext.Teacher.FirstOrDefault(s => s.TeacherId == model.TeacherId) == null)
+                    {
+                        throw new Exception("Teacher id does not found");
+                    }
+                    
                     var teacherCourses = _pegasusContext.TeacherCourse.Where(s => s.TeacherId == model.TeacherId);
                     teacherCourses.ToList().ForEach(s => { _pegasusContext.Remove(s); });
                     await _pegasusContext.SaveChangesAsync();
+
                     
-                    model.TeacherCourses.ForEach(s =>
+                    //delete older teacher wage rate
+                    var oldteacherWageRate =
+                        _pegasusContext.TeacherWageRates.FirstOrDefault(s => s.TeacherId == model.TeacherId);
+                    oldteacherWageRate.IsActivate = 0;
+                    _pegasusContext.Update(oldteacherWageRate);
+                    await _pegasusContext.SaveChangesAsync();
+                    
+                    var teacherWageRate = new TeacherWageRates
                     {
-                        var teacherCourse = new TeacherCourse();
-                        _mapper.Map(s, teacherCourse);
-                        teacherCourse.TeacherId = model.TeacherId;
+                        TeacherId = model.TeacherId, PianoRates = model.TeacherWageRates.PianoRates, TheoryRates = model.TeacherWageRates.TheoryRates,
+                        GroupRates = model.TeacherWageRates.GroupRates, OthersRates = model.TeacherWageRates.OthersRates,
+                        CreateAt = DateTime.Now, IsActivate = 1
+                    };
+                    _pegasusContext.Add(teacherWageRate);
+                    await _pegasusContext.SaveChangesAsync();
+                    
+                    model.Courses.ForEach(s =>
+                    {
+                        var course = _pegasusContext.Course.Include(q=>q.CourseCategory).FirstOrDefault(w => w.CourseId == s);
+                        if (course == null)
+                        {
+                            throw new Exception("Course of course id: " + s + " does not exist.");
+                        }
+
+                        if (course.CourseType == 2)
+                        {
+                            houlyWage = teacherWageRate.GroupRates;
+                            
+                        }
+                        else
+                        {
+                            if (course.CourseCategory.CourseCategoryId == 1)
+                            {
+                                houlyWage = teacherWageRate.PianoRates;
+                            }
+
+                            else if (course.CourseCategory.CourseCategoryId == 7)
+                            {
+                                houlyWage = teacherWageRate.TheoryRates;
+                            }
+                            else
+                            {
+                                houlyWage = teacherWageRate.OthersRates;
+                            }
+                        }
+                        var teacherCourse = new TeacherCourse
+                        {
+                            CourseId = s, TeacherId = model.TeacherId,HourlyWage = houlyWage,
+                            
+                        };
                         _pegasusContext.Add(teacherCourse);
                     });
+                    
                     await _pegasusContext.SaveChangesAsync();
                     dbContextTransaction.Commit();
                 }
@@ -103,17 +157,74 @@ namespace Pegasus_backend.Controllers
         [CheckModelFilter]
         public async Task<IActionResult> AddTeacherCourse([FromBody] TeacherCourseRegister model)
         {
+            Decimal? houlyWage = 0;
             Result<String> result = new Result<string>();
             try
             {
-                model.TeacherCourses.ForEach(s =>
+                using (var dbContextTransaction = _pegasusContext.Database.BeginTransaction())
                 {
-                    var teacherCourse = new TeacherCourse();
-                    _mapper.Map(s, teacherCourse);
-                    teacherCourse.TeacherId = model.TeacherId;
-                    _pegasusContext.Add(teacherCourse);
-                });
-                await _pegasusContext.SaveChangesAsync();
+                    if (_pegasusContext.TeacherCourse.Where(s => s.TeacherId == model.TeacherId).ToList().Count != 0)
+                    {
+                        throw new Exception("Teacher course has already added for this teacher");
+                    }
+
+                    if (_pegasusContext.Teacher.FirstOrDefault(s => s.TeacherId == model.TeacherId) == null)
+                    {
+                        throw new Exception("Teacher id does not found");
+                    }
+                    
+                    var teacherWageRate = new TeacherWageRates
+                    {
+                        TeacherId = model.TeacherId, PianoRates = model.TeacherWageRates.PianoRates, TheoryRates = model.TeacherWageRates.TheoryRates,
+                        GroupRates = model.TeacherWageRates.GroupRates, OthersRates = model.TeacherWageRates.OthersRates,
+                        CreateAt = DateTime.Now, IsActivate = 1
+                    };
+                    _pegasusContext.Add(teacherWageRate);
+                    await _pegasusContext.SaveChangesAsync();
+                    
+                    model.Courses.ForEach(s =>
+                    {
+                        var course = _pegasusContext.Course.Include(q=>q.CourseCategory).FirstOrDefault(w => w.CourseId == s);
+                        if (course == null)
+                        {
+                            throw new Exception("Course of course id: " + s + " does not exist.");
+                        }
+
+                        if (course.CourseType == 2)
+                        {
+                            houlyWage = teacherWageRate.GroupRates;
+                            
+                        }
+                        else
+                        {
+                            if (course.CourseCategory.CourseCategoryId == 1)
+                            {
+                                houlyWage = teacherWageRate.PianoRates;
+                            }
+
+                            else if (course.CourseCategory.CourseCategoryId == 7)
+                            {
+                                houlyWage = teacherWageRate.TheoryRates;
+                            }
+                            else
+                            {
+                                houlyWage = teacherWageRate.OthersRates;
+                            }
+                        }
+                        var teacherCourse = new TeacherCourse
+                        {
+                            CourseId = s, TeacherId = model.TeacherId,HourlyWage = houlyWage,
+                            
+                        };
+                        _pegasusContext.Add(teacherCourse);
+                    });
+                    await _pegasusContext.SaveChangesAsync();
+                    
+                    dbContextTransaction.Commit();
+                    
+                }
+                
+                
             }
             catch (Exception ex)
             {

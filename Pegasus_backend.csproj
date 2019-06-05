@@ -7,6 +7,8 @@
     <ItemGroup>
         <Folder Include="wwwroot\" />
         <Folder Include="wwwroot\images\learner\ABRSM_Grade5_Certificate" />
+        <Folder Include="wwwroot\images\learner\Form" />
+        <Folder Include="wwwroot\images\learner\Otherfile" />
         <Folder Include="wwwroot\images\learner\Photos" />
         <Folder Include="wwwroot\images\staff\IdPhotos" />
         <Folder Include="wwwroot\images\staff\Photos" />
