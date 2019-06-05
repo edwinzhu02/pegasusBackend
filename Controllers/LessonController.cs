@@ -164,7 +164,7 @@ namespace Pegasus_backend.Controllers
                     .ThenInclude(w=>w.Course)
                     .Include(s=>s.CourseInstance)
                     .ThenInclude(w=>w.Course)
-                    .Where(s => beginDate.Date <= s.EndTime && s.EndTime <= endDate.Date && s.OrgId == orgId)
+                    .Where(s => beginDate.Date <= s.EndTime.Value.Date && s.EndTime.Value.Date <= endDate.Date && s.OrgId == orgId)
                     .Select(s => new
                     {
                         CourseName=!IsNull(s.GroupCourseInstance)?s.GroupCourseInstance.Course.CourseName:s.CourseInstance.Course.CourseName,
