@@ -121,9 +121,9 @@ namespace Pegasus_backend.Controllers
                     .ThenInclude(s=>s.Course)
                     .Include(s=>s.One2oneCourseInstance)
                     .ThenInclude(s=>s.CourseSchedule)
-                    /*.Include(s=>s.LearnerGroupCourse)
+                    .Include(s=>s.LearnerGroupCourse)
                     .ThenInclude(s=>s.GroupCourseInstance)
-                    .ThenInclude(s=>s.Room)*/
+                    .ThenInclude(s=>s.Room)
                     .Where(s=>s.IsActive ==1)
                     .ToListAsync();
                 result.Data = data;
@@ -140,9 +140,7 @@ namespace Pegasus_backend.Controllers
         //POST: http://localhost:5000/api/learner
         [HttpPost]
         [CheckModelFilter]
-        public async Task<IActionResult> StudentRegister([FromForm(Name = "photo")] IFormFile image, [FromForm(Name = "ABRSM")] IFormFile ABRSM,
-            [FromForm(Name="Form")] IFormFile Form, [FromForm(Name="Otherfile")] IFormFile Otherfile
-            ,[FromForm] string details)
+        public async Task<IActionResult> StudentRegister([FromForm(Name = "photo")] IFormFile image, [FromForm(Name = "ABRSM")] IFormFile ABRSM,[FromForm] string details)
         {
             Result<string> result = new Result<string>();
             try
@@ -235,30 +233,6 @@ namespace Pegasus_backend.Controllers
                             throw new Exception(uploadResult.ErrorMessage);
                         }
                         
-                    }
-
-                    if (Form != null)
-                    {
-                        newLearner.FormUrl = $"images/learner/Form/{newLearner.LearnerId+strDateTime+Path.GetExtension(Form.FileName)}";
-                        _pegasusContext.Update(newLearner);
-                        await _pegasusContext.SaveChangesAsync();
-                        var uploadResult = UploadFile(Form,"learner/Form",newLearner.LearnerId,strDateTime);
-                        if (!uploadResult.IsUploadSuccess)
-                        {
-                            throw new Exception(uploadResult.ErrorMessage);
-                        }
-                    }
-
-                    if (Otherfile != null)
-                    {
-                        newLearner.OtherfileUrl = $"images/learner/Otherfile/{newLearner.LearnerId+strDateTime+Path.GetExtension(Otherfile.FileName)}";
-                        _pegasusContext.Update(newLearner);
-                        await _pegasusContext.SaveChangesAsync();
-                        var uploadResult = UploadFile(Otherfile,"learner/Otherfile",newLearner.LearnerId,strDateTime);
-                        if (!uploadResult.IsUploadSuccess)
-                        {
-                            throw new Exception(uploadResult.ErrorMessage);
-                        }
                     }
                     
                     
