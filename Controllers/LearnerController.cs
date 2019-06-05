@@ -137,10 +137,162 @@ namespace Pegasus_backend.Controllers
             return Ok(result);
         }
         
+        //PUT api/learner/:id
+        [HttpPut("{id}")]
+        [CheckModelFilter]
+        public async Task<IActionResult> StudentUpdate(int id,[FromForm(Name = "photo")] IFormFile image, [FromForm(Name = "ABRSM")] IFormFile ABRSM,
+            [FromForm(Name="Form")] IFormFile Form, [FromForm(Name="Otherfile")] IFormFile Otherfile,[FromForm] string details)
+        {
+            var result = new Result<string>();
+            try
+            {
+                if (_pegasusContext.Learner.FirstOrDefault(s => s.LearnerId == id) == null)
+                {
+                    throw new Exception("Learner does not exist");
+                }
+                using (var dbContextTransaction = _pegasusContext.Database.BeginTransaction())
+                {
+                    var detailsJson = JsonConvert.DeserializeObject<StudentRegister>(details);
+                    var learner = _pegasusContext.Learner.FirstOrDefault(s => s.LearnerId == id);
+                    //delete learner's group courses
+                    _pegasusContext.LearnerGroupCourse.Where(s=>s.LearnerId==id).ToList().ForEach(s =>
+                        {
+                            _pegasusContext.Remove(s);
+                        });
+                    await _pegasusContext.SaveChangesAsync();
+                    
+                    //delete parents for this learner
+                    _pegasusContext.Parent.Where(s=>s.LearnerId==id).ToList().ForEach(s =>
+                        {
+                            _pegasusContext.Remove(s);
+                        });
+                    await _pegasusContext.SaveChangesAsync();
+                    
+                    //delete learner other
+                    _pegasusContext.LearnerOthers.Where(s=>s.LearnerId==id).ToList().ForEach(s =>
+                        {
+                            _pegasusContext.Remove(s);
+                        });
+                    await _pegasusContext.SaveChangesAsync();
+                    
+                   
+                    _pegasusContext.One2oneCourseInstance.Where(s=>s.LearnerId==id).ToList().ForEach(s =>
+                    {
+                        var scheduleItem = _pegasusContext.CourseSchedule.FirstOrDefault(r => s.CourseInstanceId == r.CourseInstanceId);
+                        _pegasusContext.Remove(scheduleItem);
+                        _pegasusContext.Remove(s);
+                        });
+                    await _pegasusContext.SaveChangesAsync();
+                    
+                    //update learner
+                    _mapper.Map(detailsJson, learner);
+                    _pegasusContext.Update(learner);
+                    await _pegasusContext.SaveChangesAsync();
+                    
+                    learner.LearnerGroupCourse.ToList().ForEach(s =>
+                    {
+                        s.CreatedAt=DateTime.Now;
+                        s.IsActivate = 1;
+                        _pegasusContext.Update(s);
+                    });
+
+                    await _pegasusContext.SaveChangesAsync();
+
+                    for (var i = 0; i < learner.One2oneCourseInstance.ToList().Count; i++)
+                    {
+                        detailsJson.One2oneCourseInstance[i].id =
+                            learner.One2oneCourseInstance.ToList()[i].CourseInstanceId;
+                    }
+                    detailsJson.One2oneCourseInstance.ForEach(s =>
+                    {
+                        if (_pegasusContext.Course.FirstOrDefault(w => w.CourseId == s.CourseId).CourseType != 1)
+                        {
+                            throw new Exception("This course is not one to one course");
+                        }
+                        var durationType = _pegasusContext.Course.FirstOrDefault(w => w.CourseId == s.CourseId).Duration;
+                        _pegasusContext.Add(new CourseSchedule
+                        {
+                            DayOfWeek = s.Schedule.DayOfWeek,CourseInstanceId = s.id,
+                            BeginTime = s.Schedule.BeginTime, 
+                            EndTime = GetEndTimeForOnetoOneCourseSchedule(s.Schedule.BeginTime,durationType)
+                        });
+                    });
+                    await _pegasusContext.SaveChangesAsync();
+                    
+                    
+                    //upload file
+                    var strDateTime = DateTime.Now.ToString("yyMMddhhmmssfff");
+                   
+                    if (image != null)
+                    {
+                        learner.Photo = $"images/learner/Photos/{learner.LearnerId+strDateTime+Path.GetExtension(image.FileName)}";
+                        _pegasusContext.Update(learner);
+                        await _pegasusContext.SaveChangesAsync();
+                        var uploadResult = UploadFile(image,"learner/Photos/",learner.LearnerId,strDateTime);
+                        if (!uploadResult.IsUploadSuccess)
+                        {
+                            throw new Exception(uploadResult.ErrorMessage);
+                        }
+                    }
+                    
+                    if (ABRSM != null)
+                    {
+                        learner.G5Certification = $"images/learner/ABRSM_Grade5_Certificate/{learner.LearnerId+strDateTime+Path.GetExtension(ABRSM.FileName)}";
+                        learner.IsAbrsmG5 = 1;
+                        _pegasusContext.Update(learner);
+                        await _pegasusContext.SaveChangesAsync();
+                        var uploadResult = UploadFile(ABRSM,"learner/ABRSM_Grade5_Certificate/",learner.LearnerId,strDateTime);
+                        if (!uploadResult.IsUploadSuccess)
+                        {
+                            throw new Exception(uploadResult.ErrorMessage);
+                        }
+                        
+                    }
+                    
+                    if (Form != null)
+                    {
+                        learner.FormUrl = $"images/learner/Form/{learner.LearnerId+strDateTime+Path.GetExtension(Form.FileName)}";
+                        _pegasusContext.Update(learner);
+                        await _pegasusContext.SaveChangesAsync();
+                        var uploadResult = UploadFile(Form,"learner/Form",learner.LearnerId,strDateTime);
+                        if (!uploadResult.IsUploadSuccess)
+                        {
+                            throw new Exception(uploadResult.ErrorMessage);
+                        }
+                    }
+
+                    if (Otherfile != null)
+                    {
+                        learner.OtherfileUrl = $"images/learner/Otherfile/{learner.LearnerId+strDateTime+Path.GetExtension(Otherfile.FileName)}";
+                        _pegasusContext.Update(learner);
+                        await _pegasusContext.SaveChangesAsync();
+                        var uploadResult = UploadFile(Otherfile,"learner/Otherfile",learner.LearnerId,strDateTime);
+                        if (!uploadResult.IsUploadSuccess)
+                        {
+                            throw new Exception(uploadResult.ErrorMessage);
+                        }
+                    }
+                    
+                    
+                    dbContextTransaction.Commit();
+                    result.Data = "success";
+                    return Ok(result);
+                }
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.ToString();
+                return BadRequest(result);
+            }
+        }
+        
         //POST: http://localhost:5000/api/learner
         [HttpPost]
         [CheckModelFilter]
-        public async Task<IActionResult> StudentRegister([FromForm(Name = "photo")] IFormFile image, [FromForm(Name = "ABRSM")] IFormFile ABRSM,[FromForm] string details)
+        public async Task<IActionResult> StudentRegister([FromForm(Name = "photo")] IFormFile image, [FromForm(Name = "ABRSM")] IFormFile ABRSM,
+            [FromForm(Name="Form")] IFormFile Form, [FromForm(Name="Otherfile")] IFormFile Otherfile
+            ,[FromForm] string details)
         {
             Result<string> result = new Result<string>();
             try
@@ -233,6 +385,30 @@ namespace Pegasus_backend.Controllers
                             throw new Exception(uploadResult.ErrorMessage);
                         }
                         
+                    }
+                    
+                    if (Form != null)
+                    {
+                        newLearner.FormUrl = $"images/learner/Form/{newLearner.LearnerId+strDateTime+Path.GetExtension(Form.FileName)}";
+                        _pegasusContext.Update(newLearner);
+                        await _pegasusContext.SaveChangesAsync();
+                        var uploadResult = UploadFile(Form,"learner/Form",newLearner.LearnerId,strDateTime);
+                        if (!uploadResult.IsUploadSuccess)
+                        {
+                            throw new Exception(uploadResult.ErrorMessage);
+                        }
+                    }
+
+                    if (Otherfile != null)
+                    {
+                        newLearner.OtherfileUrl = $"images/learner/Otherfile/{newLearner.LearnerId+strDateTime+Path.GetExtension(Otherfile.FileName)}";
+                        _pegasusContext.Update(newLearner);
+                        await _pegasusContext.SaveChangesAsync();
+                        var uploadResult = UploadFile(Otherfile,"learner/Otherfile",newLearner.LearnerId,strDateTime);
+                        if (!uploadResult.IsUploadSuccess)
+                        {
+                            throw new Exception(uploadResult.ErrorMessage);
+                        }
                     }
                     
                     
