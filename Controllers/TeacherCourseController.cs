@@ -45,7 +45,7 @@ namespace Pegasus_backend.Controllers
                         Course=new
                         {
                             s.Course.CourseId,s.Course.CourseName,s.Course.Level,s.Course.Duration,
-                            s.Course.Price, s.Course.CourseType
+                            s.Course.Price, s.Course.CourseType,s.Course.CourseCategory
                         },
                         Teacher= new {s.Teacher.TeacherId,s.Teacher.FirstName,s.Teacher.LastName,s.Teacher.Level}
                     })
