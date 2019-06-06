@@ -31,22 +31,23 @@ namespace Pegasus_backend.Controllers
         [HttpPut("[action]/{lessonId}/{reason}")]
         public async Task<IActionResult> Confirm(int lessonId, string reason)
         {
+            Decimal? houlyWage = 0;
             Result<string> result = new Result<string>();
             try
             {
                 using (var dbContextTransaction = _ablemusicContext.Database.BeginTransaction())
                 {
                     var lesson = _ablemusicContext.Lesson
+                        .Include(s=>s.GroupCourseInstance)
+                        .ThenInclude(s=>s.Course)
+                        .Include(s=>s.GroupCourseInstance)
+                        .ThenInclude(s=>s.Course)
                         .FirstOrDefault(s => s.LessonId == lessonId);
                     if (lesson == null)
                     {
                         return NotFound(DataNotFound(result));
                     }
 
-                    if (!IsNull(lesson.GroupCourseInstanceId))
-                    {
-                        throw new Exception("Group course cannot be confirmed");
-                    }
                     if (lesson.IsCanceled == 1)
                     {
                         throw new Exception("This lesson has already canceled");
@@ -55,6 +56,25 @@ namespace Pegasus_backend.Controllers
                     if (lesson.IsConfirm == 1)
                     {
                         throw new Exception("This lesson has already confirm.");
+                    }
+                    
+                    if (!IsNull(lesson.GroupCourseInstanceId))
+                    {
+                        var houlywage = _ablemusicContext.TeacherWageRates
+                            .FirstOrDefault(s => s.TeacherId == lesson.TeacherId && s.IsActivate == 1).GroupRates;
+                        var GroupWageAmout = (double) houlywage*(lesson.EndTime.Value.Subtract(lesson.BeginTime.Value).TotalMinutes/60);
+                        var teacherTransactionForGroup = new TeacherTransaction
+                        {
+                            LessonId = lesson.LessonId,CreatedAt = DateTime.Now,
+                            WageAmount = (decimal) GroupWageAmout,
+                            TeacherId = lesson.TeacherId
+                        };
+                        _ablemusicContext.Add(teacherTransactionForGroup);
+                        await _ablemusicContext.SaveChangesAsync();
+                        dbContextTransaction.Commit();
+                        result.Data = "success";
+                        return Ok(result);
+
                     }
                     lesson.IsConfirm = 1;
                     lesson.Reason = reason;
@@ -93,8 +113,24 @@ namespace Pegasus_backend.Controllers
                     await _ablemusicContext.SaveChangesAsync();
                     
                     //teacher transaction
-                    var houlyWage = _ablemusicContext.TeacherCourse.FirstOrDefault(s =>
-                        s.TeacherId == lesson.TeacherId && s.CourseId == courseInstance.CourseId).HourlyWage;
+                    var teacherWageRate =
+                        _ablemusicContext.TeacherWageRates.FirstOrDefault(s =>
+                            s.TeacherId == lesson.TeacherId && s.IsActivate == 1);
+                    
+                    var courseCatogoryId = lesson.CourseInstance.Course.CourseCategoryId;
+                    if (course.CourseCategory.CourseCategoryId == 1)
+                    {
+                        houlyWage = teacherWageRate.PianoRates;
+                    }
+
+                    else if (course.CourseCategory.CourseCategoryId == 7)
+                    {
+                        houlyWage = teacherWageRate.TheoryRates;
+                    }
+                    else
+                    {
+                        houlyWage = teacherWageRate.OthersRates;
+                    }
                     var wageAmout = (double) houlyWage*(lesson.EndTime.Value.Subtract(lesson.BeginTime.Value).TotalMinutes/60);
                     var teacherTransaction = new TeacherTransaction
                     {
