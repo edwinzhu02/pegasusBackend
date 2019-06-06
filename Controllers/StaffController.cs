@@ -115,7 +115,7 @@ namespace Pegasus_backend.Controllers
                     _ablemusicContext.Update(newStaff);
                     await _ablemusicContext.SaveChangesAsync();
                     
-                    //upload files
+                    //upload filesΩ
                     var strDateTime = DateTime.Now.ToString("yyMMddhhmmssfff");
                     if (idPhoto != null)
                     {

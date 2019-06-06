@@ -36,7 +36,8 @@ namespace Pegasus_backend.Controllers
             {
                 using (var dbContextTransaction = _ablemusicContext.Database.BeginTransaction())
                 {
-                    var lesson = _ablemusicContext.Lesson.FirstOrDefault(s => s.LessonId == lessonId);
+                    var lesson = _ablemusicContext.Lesson
+                        .FirstOrDefault(s => s.LessonId == lessonId);
                     if (lesson == null)
                     {
                         return NotFound(DataNotFound(result));
