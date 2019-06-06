@@ -19,8 +19,7 @@ namespace Pegasus_backend.Models
         public string LastName { get; set; }
         [JsonProperty(Required = Required.Always)]
         public short Gender { get; set; }
-        [JsonProperty(Required = Required.Always)]
-        public DateTime dob { get; set; }
+        public DateTime? dob { get; set; }
         public DateTime EnrollDate { get; set; }
         [JsonProperty(Required = Required.Always)]
         public string ContactNum { get; set; }
