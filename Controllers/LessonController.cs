@@ -103,7 +103,6 @@ namespace Pegasus_backend.Controllers
 
             return Ok(result);
         }
-
         [HttpGet("[action]/{userId}")]
         public async Task<IActionResult> GetLessonsForTeacher(byte userId)
         {
@@ -116,6 +115,44 @@ namespace Pegasus_backend.Controllers
                     throw new Exception("Teacher does not exist.");
                 }
                 var teacherId = teacher.TeacherId;
+                var details = _pegasusContext.Lesson.Where(s => s.TeacherId == teacherId)
+                    .Where(s=>s.IsCanceled ==0)
+                    .Include(s=>s.Room)
+                    .Include(s=>s.Learner)
+                    .Include(s=>s.Teacher)
+                    .Include(s=>s.GroupCourseInstance)
+                    .Include(s=>s.CourseInstance).ThenInclude(w=>w.Course)
+                    .Include(s=>s.GroupCourseInstance).ThenInclude(w=>w.Course)
+                    .Include(s=>s.Org)
+                    .Select(q=>new
+                    {
+                        title=IsNull(q.GroupCourseInstanceId)?"1":"G",start=q.BeginTime,end=q.EndTime,
+                        student=IsNull(q.GroupCourseInstance)?new List<string>{q.Learner.FirstName}:q.GroupCourseInstance.LearnerGroupCourse.Select(w=>w.Learner.FirstName),
+                        description="", courseName=IsNull(q.GroupCourseInstanceId)?q.CourseInstance.Course.CourseName:q.GroupCourseInstance.Course.CourseName,
+                        orgName= q.Org.OrgName, roomName=q.Room.RoomName
+                    });
+                result.Data = await details.ToListAsync();
+
+                
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+
+            return Ok(result);
+        }
+        
+
+        [HttpGet("[action]/{teacherId}")]
+        public async Task<IActionResult> GetLessonsTeacherId(int teacherId)
+        {
+            Result<Object> result = new Result<object>();
+            try
+            {
+               
                 var details = _pegasusContext.Lesson.Where(s => s.TeacherId == teacherId)
                     .Where(s=>s.IsCanceled ==0)
                     .Include(s=>s.Room)
