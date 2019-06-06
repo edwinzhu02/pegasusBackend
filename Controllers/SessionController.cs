@@ -60,6 +60,11 @@ namespace Pegasus_backend.Controllers
                     
                     if (!IsNull(lesson.GroupCourseInstanceId))
                     {
+                        lesson.IsConfirm = 1;
+                        lesson.Reason = reason;
+                        _ablemusicContext.Update(lesson);
+                        await _ablemusicContext.SaveChangesAsync();
+                        
                         var houlywage = _ablemusicContext.TeacherWageRates
                             .FirstOrDefault(s => s.TeacherId == lesson.TeacherId && s.IsActivate == 1).GroupRates;
                         var GroupWageAmout = (double) houlywage*(lesson.EndTime.Value.Subtract(lesson.BeginTime.Value).TotalMinutes/60);
