@@ -120,7 +120,7 @@ namespace Pegasus_backend.Controllers
                         OtherFile=IsNull(q.OtherfileUrl)?null:String.Format("{0}?{1}",q.OtherfileUrl,r.Next()),
                         Form=IsNull(q.FormUrl)?null:String.Format("{0}?{1}",q.FormUrl,r.Next()),
                         q.IsLeft,q.IsContract,q.InvoiceTemplate,q.Ability,q.Comment,q.Level,
-                        q.AvailableDays,q.TeacherLanguage,q.TeacherQualificatiion
+                        q.AvailableDays,q.TeacherLanguage,q.TeacherQualificatiion,TeacherWageRate =q.TeacherWageRates.FirstOrDefault(s=>s.IsActivate==1)
                         
                     })
                     .ToListAsync();
