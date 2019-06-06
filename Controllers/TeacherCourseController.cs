@@ -37,6 +37,8 @@ namespace Pegasus_backend.Controllers
                     .Include(s=>s.Teacher)
                     .Include(s=>s.Course)
                     .ThenInclude(s=>s.GroupCourseInstance)
+                    .Include(s=>s.Course)
+                    .ThenInclude(s=>s.CourseCategory)                    
                     .Select(s=> new
                     {
                         s.TeacherCourseId,s.CourseId,s.TeacherId,s.HourlyWage,
