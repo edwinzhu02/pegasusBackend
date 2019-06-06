@@ -15,27 +15,27 @@ namespace Pegasus_backend.Services
             {
                 try
                 {
-                    var message = new MimeMessage();
-                    message.To.Add(new MailboxAddress(mailTo));
-                    message.From.Add(new MailboxAddress("LuxeDreamEventHire", "luxecontacts94@gmail.com"));
-                    message.Subject = mailTitle;
-                    var builder = new BodyBuilder();
-                    builder.HtmlBody = mailContent;
-                    message.Body = builder.ToMessageBody();
-                    using (var emailClient = new SmtpClient())
-                    {
-                        emailClient.Connect("smtp.gmail.com", 587, false);
-                        emailClient.Authenticate("luxecontacts94@gmail.com", "luxe1234");
-                        emailClient.Send(message);
-                        emailClient.Disconnect(true);
-                    }
+                    //var message = new MimeMessage();
+                    //message.To.Add(new MailboxAddress(mailTo));
+                    //message.From.Add(new MailboxAddress("LuxeDreamEventHire", "luxecontacts94@gmail.com"));
+                    //message.Subject = mailTitle;
+                    //var builder = new BodyBuilder();
+                    //builder.HtmlBody = mailContent;
+                    //message.Body = builder.ToMessageBody();
+                    //using (var emailClient = new SmtpClient())
+                    //{
+                    //    emailClient.Connect("smtp.gmail.com", 587, false);
+                    //    emailClient.Authenticate("luxecontacts94@gmail.com", "luxe1234");
+                    //    emailClient.Send(message);
+                    //    emailClient.Disconnect(true);
+                    //}
 
-                    pegasusContext.ablemusicContext ablemusicContext = new pegasusContext.ablemusicContext();
-                    var remindLog = ablemusicContext.RemindLog.Where(r => r.RemindId == remindLogId).FirstOrDefault();
-                    remindLog.EmailAt = DateTime.Now;
-                    remindLog.ReceivedFlag = 1;
-                    ablemusicContext.SaveChanges();
-                    ablemusicContext.Dispose();
+                    //pegasusContext.ablemusicContext ablemusicContext = new pegasusContext.ablemusicContext();
+                    //var remindLog = ablemusicContext.RemindLog.Where(r => r.RemindId == remindLogId).FirstOrDefault();
+                    //remindLog.EmailAt = DateTime.Now;
+                    //remindLog.ReceivedFlag = 1;
+                    //ablemusicContext.SaveChanges();
+                    //ablemusicContext.Dispose();
                 }
                 catch (Exception e)
                 {
@@ -50,26 +50,26 @@ namespace Pegasus_backend.Services
             {
                 try
                 {
-                    var message = new MimeMessage();
-                    message.To.Add(new MailboxAddress(mailTo));
-                    message.From.Add(new MailboxAddress("LuxeDreamEventHire", "luxecontacts94@gmail.com"));
-                    message.Subject = mailTitle;
-                    var builder = new BodyBuilder();
-                    builder.HtmlBody = mailContent;
-                    message.Body = builder.ToMessageBody();
-                    using (var emailClient = new SmtpClient())
-                    {
-                        emailClient.Connect("smtp.gmail.com", 587, false);
-                        emailClient.Authenticate("luxecontacts94@gmail.com", "luxe1234");
-                        emailClient.Send(message);
-                        emailClient.Disconnect(true);
-                    }
+                    //var message = new MimeMessage();
+                    //message.To.Add(new MailboxAddress(mailTo));
+                    //message.From.Add(new MailboxAddress("LuxeDreamEventHire", "luxecontacts94@gmail.com"));
+                    //message.Subject = mailTitle;
+                    //var builder = new BodyBuilder();
+                    //builder.HtmlBody = mailContent;
+                    //message.Body = builder.ToMessageBody();
+                    //using (var emailClient = new SmtpClient())
+                    //{
+                    //    emailClient.Connect("smtp.gmail.com", 587, false);
+                    //    emailClient.Authenticate("luxecontacts94@gmail.com", "luxe1234");
+                    //    emailClient.Send(message);
+                    //    emailClient.Disconnect(true);
+                    //}
 
-                    pegasusContext.ablemusicContext ablemusicContext = new pegasusContext.ablemusicContext();
-                    var invoiceWaitingConfirm = ablemusicContext.InvoiceWaitingConfirm.Where(r => r.WaitingId == waitingId).FirstOrDefault();
-                    invoiceWaitingConfirm.IsEmailSent = 1;
-                    ablemusicContext.SaveChanges();
-                    ablemusicContext.Dispose();
+                    //pegasusContext.ablemusicContext ablemusicContext = new pegasusContext.ablemusicContext();
+                    //var invoiceWaitingConfirm = ablemusicContext.InvoiceWaitingConfirm.Where(r => r.WaitingId == waitingId).FirstOrDefault();
+                    //invoiceWaitingConfirm.IsEmailSent = 1;
+                    //ablemusicContext.SaveChanges();
+                    //ablemusicContext.Dispose();
                 }
                 catch (Exception e)
                 {
