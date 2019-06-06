@@ -31,7 +31,18 @@ namespace Pegasus_backend.Controllers
             var result = new Result<Object>();
             try
             {
-                result.Data = await _ablemusicContext.Staff.Where(s=>s.IsActivate==1).ToListAsync();
+                result.Data = await _ablemusicContext.Staff
+                    .Include(s=>s.User)
+                    .ThenInclude(s=>s.Role)
+                    .Include(s=>s.StaffOrg)
+                    .Where(s=>s.IsActivate==1)
+                    .Select(s=>new
+                    {
+                        s.Dob,s.Visa,s.Email,s.Photo,s.Gender,s.IdType,
+                        s.IdPhoto,s.StaffId,s.IdNumber,s.LastName,s.FirstName,s.HomePhone,s.IrdNumber,
+                        s.StaffOrg,s.ExpiryDate,s.StockOrder,s.MobilePhone,s.User.Role.RoleName
+                    })
+                    .ToListAsync();
                 return Ok(result);
             }
             catch (Exception ex)
@@ -104,7 +115,7 @@ namespace Pegasus_backend.Controllers
                     _ablemusicContext.Update(newStaff);
                     await _ablemusicContext.SaveChangesAsync();
                     
-                    //upload files
+                    //upload filesΩ
                     var strDateTime = DateTime.Now.ToString("yyMMddhhmmssfff");
                     if (idPhoto != null)
                     {
@@ -139,7 +150,7 @@ namespace Pegasus_backend.Controllers
             catch (Exception ex)
             {
                 result.IsSuccess = false;
-                result.ErrorMessage = ex.Message;
+                result.ErrorMessage = ex.ToString();
                 return BadRequest(result);
             }
         }
