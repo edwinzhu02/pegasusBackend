@@ -123,12 +123,12 @@ namespace Pegasus_backend.Controllers
                             s.TeacherId == lesson.TeacherId && s.IsActivate == 1);
                     
                     var courseCatogoryId = lesson.CourseInstance.Course.CourseCategoryId;
-                    if (course.CourseCategory.CourseCategoryId == 1)
+                    if (courseCatogoryId == 1)
                     {
                         houlyWage = teacherWageRate.PianoRates;
                     }
 
-                    else if (course.CourseCategory.CourseCategoryId == 7)
+                    else if (courseCatogoryId == 7)
                     {
                         houlyWage = teacherWageRate.TheoryRates;
                     }

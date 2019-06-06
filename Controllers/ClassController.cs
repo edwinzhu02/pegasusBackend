@@ -36,10 +36,7 @@ namespace Pegasus_backend.Controllers
             Result<List<GroupCourseInstance>> result = new Result<List<GroupCourseInstance>>();
             try
             {
-                details = _pegasusContext.GroupCourseInstance
-                    .Include(s => s.Course)
-                    .Include(s => s.Org)
-                    .ToList();
+                var a = await _
             }
             
             catch (Exception ex)

@@ -27,7 +27,6 @@ namespace Pegasus_backend.Controllers
         [HttpGet]
         public async Task<IActionResult> GetRoom()
         {
-            
             Result<IEnumerable<Object>> result = new Result<IEnumerable<Object>>();
             try
             {
