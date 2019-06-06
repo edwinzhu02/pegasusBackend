@@ -29,6 +29,7 @@ namespace Pegasus_backend.Models
         public string MobilePhone { get; set; }
         [JsonProperty(Required = Required.Always)]
         public string Email { get; set; }
+        [JsonProperty(Required = Required.Always)]
         public short RoleId { get; set; }
         public List<StaffOrg> StaffOrg { get; set; }
     }
