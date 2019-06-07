@@ -52,6 +52,10 @@ namespace Pegasus_backend.Services
             return result;
         }
         
+        public static bool Between(DateTime? input, DateTime? date1, DateTime? date2)
+        {
+            return (input > date1 && input < date2);
+        }
 
     }
 }
