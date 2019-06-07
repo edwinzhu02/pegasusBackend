@@ -15,6 +15,9 @@ using Microsoft.EntityFrameworkCore.Scaffolding.Internal;
 namespace Pegasus_backend.Services
 {
     
+    /*
+     * Data service 4 course remain
+     */
     public class DataService
     {
         private readonly ablemusicContext _context;
@@ -94,7 +97,6 @@ namespace Pegasus_backend.Services
             result.Data = lessons;
             return result;
         }
-
         
         //TermFilter(GetUnconfirmedLessons(studentId)) return the unconfirmed lessons with termId
         public Result<IEnumerable<LessonTerm>> TermFilter(IEnumerable<Lesson> lesson)
