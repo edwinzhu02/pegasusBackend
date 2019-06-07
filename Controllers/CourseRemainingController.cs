@@ -31,11 +31,25 @@ namespace Pegasus_backend.Controllers
 
         [HttpGet("{studentId}")]
 
-        public IEnumerable<LessonRemain> GetRemainLessons(int studentId)
+        public Result<IEnumerable<LessonRemain>> GetRemainLessons(int studentId)
         {
-            var uc = _dataService.GetUnconfirmedLessons(studentId).Data;
-            var lr = _dataService.GetRemainLesson(studentId).Data;
-            return _dataService.CalculateQuantity(uc,lr);
+            var uc = _dataService.GetUnconfirmedLessons(studentId);
+            var lr = _dataService.GetRemainLesson(studentId);
+            var result = new Result<IEnumerable<LessonRemain>>();
+            if (!uc.IsSuccess)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = uc.ErrorMessage;
+                return result;
+
+            }
+            if (!lr.IsSuccess)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = lr.ErrorMessage;
+                return result;
+            }
+            return _dataService.CalculateQuantity(uc.Data,lr.Data);
              
         }
 

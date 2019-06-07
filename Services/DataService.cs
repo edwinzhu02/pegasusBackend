@@ -154,11 +154,21 @@ namespace Pegasus_backend.Services
             
         }
 
-        public IEnumerable<LessonRemain> CalculateQuantity(IEnumerable<Lesson> unconfirmedLessons, IEnumerable<LessonRemain> lr)
+        public Result<IEnumerable<LessonRemain>> CalculateQuantity(IEnumerable<Lesson> unconfirmedLessons, IEnumerable<LessonRemain> lr)
         {
             IEnumerable<LessonRemain> result = new LessonRemain[]{};
+            var lessonWithTerm = TermFilter(unconfirmedLessons);
+            var returnResult = new Result<IEnumerable<LessonRemain>>();
+            if (!lessonWithTerm.IsSuccess)
+            {
+                returnResult.IsSuccess = false;
+                returnResult.ErrorMessage = lessonWithTerm.ErrorMessage;
+                returnResult.ErrorCode = lessonWithTerm.ErrorCode;
+                return returnResult;
+            }
+
+            var unconfiremedLesson = lessonWithTerm.Data;
             
-            var unconfiremedLesson = TermFilter(unconfirmedLessons).Data;
             var lessonRemains = lr;
             foreach (var lessonRemain in lessonRemains)
             {
@@ -180,7 +190,9 @@ namespace Pegasus_backend.Services
                 result = result.Append(lessonRemain);
             }
 
-            return result;
+            returnResult.IsSuccess = true;
+            returnResult.Data = result;
+            return returnResult;
         }
         
 
