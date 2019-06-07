@@ -15,7 +15,7 @@ using Pegasus_backend.Services;
 namespace Pegasus_backend.Controllers
 {
     
-    [Route("cr")]
+    [Route("api/[controller]")]
     [ApiController]
     
     public class CourseRemainingController: ControllerBase
@@ -29,13 +29,20 @@ namespace Pegasus_backend.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("l/{studentId}")]
+        [HttpGet("{studentId}")]
 
-        public Result<IEnumerable<Lesson>> GetCourse(int studentId)
+        public IEnumerable<LessonRemain> GetRemainLessons(int studentId)
         {
-            return _dataService.GetLessons(studentId).Result;
-
+            var uc = _dataService.GetUnconfirmedLessons(studentId).Data;
+            var lr = _dataService.GetRemainLesson(studentId).Data;
+            return _dataService.CalculateQuantity(uc,lr);
+             
         }
+
+        
+        
+            
+        
         
         
     }
