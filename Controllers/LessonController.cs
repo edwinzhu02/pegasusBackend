@@ -104,12 +104,13 @@ namespace Pegasus_backend.Controllers
             return Ok(result);
         }
 
-        [HttpGet("[action]/{userId}")]
-        public async Task<IActionResult> GetLessonsForTeacher(byte userId)
+        [HttpGet("[action]/{userId}/{beginDate}")]
+        public async Task<IActionResult> GetLessonsForTeacher(byte userId, DateTime beginDate)
         {
             Result<Object> result = new Result<object>();
             try
             {
+                var endDate = beginDate.AddDays(6);
                 var teacher = _pegasusContext.Teacher.FirstOrDefault(s => s.UserId == userId);
                 if (teacher == null)
                 {
@@ -117,7 +118,8 @@ namespace Pegasus_backend.Controllers
                 }
                 var teacherId = teacher.TeacherId;
                 var details = _pegasusContext.Lesson.Where(s => s.TeacherId == teacherId)
-                    .Where(s=>s.IsCanceled ==0)
+                    .Where(s=>s.IsCanceled != 1 && s.IsConfirm != 1)
+                    .Where(s=>beginDate.Date <= s.EndTime.Value.Date && s.EndTime.Value.Date <= endDate.Date)
                     .Include(s=>s.Room)
                     .Include(s=>s.Learner)
                     .Include(s=>s.Teacher)
