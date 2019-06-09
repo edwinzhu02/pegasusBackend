@@ -585,7 +585,7 @@ namespace Pegasus_backend.Controllers
                     x.IsStarted,
                     CourseName=x.Course.CourseName,
                     Price=x.Course.Price,
-                    Learners=x.LearnerGroupCourse.Select(s=>new {s.Learner.FirstName,s.LearnerId,s.CreatedAt,s.BeginDate,s.EndDate,s.InvoiceDate,s.LearnerGroupCourseId}).ToArray()
+                    Learners=x.LearnerGroupCourse.Select(s=>new {s.Learner.FirstName,s.LearnerId,s.CreatedAt,s.BeginDate,s.EndDate,s.InvoiceDate,s.LearnerGroupCourseId,s.IsActivate}).Where(s=>s.IsActivate==1).ToArray()
 
                 })
                 .ToListAsync();
