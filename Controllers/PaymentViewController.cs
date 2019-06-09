@@ -32,11 +32,41 @@ namespace Pegasus_backend.Controllers
         [HttpGet("{id}")]
         public Result<IEnumerable<Payment>> GetStudentPayment(int id)
         {
-            var result = _service.GetPayment(id);
+            var result = _service.LookUpById(id);
+            return result;
+            
+        }
+
+
+        [HttpGet("btn/{begin}&{end}")]
+        public Result<IEnumerable<Payment>> LookUpBetweenDates(DateTime begin, DateTime end)
+        {
+            var result = _service.LookUpByDate(begin,end);
+            return result;
+        }
+        
+        [HttpGet("btndesc/{begin}&{end}")]
+        public Result<IEnumerable<Payment>> LookUpBetweenDatesDesc(DateTime begin, DateTime end)
+        {
+            var result = _service.LookUpByDateDesc(begin,end);
+            return result;
+        }
+        
+        [HttpGet("asce")]
+        public Result<IEnumerable<Payment>> LookUpAsce()
+        {
+            var result = _service.LookUpByOrderASCE();
             return result;
             
         }
         
+        [HttpGet("desc")]
+        public Result<IEnumerable<Payment>> LookUpDesc()
+        {
+            var result = _service.LookUpByOrderDESC();
+            return result;
+            
+        }
         
         
     }

@@ -23,7 +23,7 @@ namespace Pegasus_backend.Services
             _context = context;
         }
 
-        public Result<IEnumerable<Payment>> GetPayment(int studentId)
+        public Result<IEnumerable<Payment>> LookUpById(int studentId)
         {
             Result<IEnumerable<Payment>> result = new Result<IEnumerable<Payment>>();
             IEnumerable<Payment> payments;
@@ -51,10 +51,99 @@ namespace Pegasus_backend.Services
             result.Data = payments;
             return result;
         }
-        
+
         public static bool Between(DateTime? input, DateTime? date1, DateTime? date2)
         {
-            return (input > date1 && input < date2);
+            var end = DateTime.Today;
+            if (date2 != null)
+            {
+                end = date2.GetValueOrDefault();}
+
+            end = end.AddDays(1);
+            return input >= date1 && input < end;
+        }
+
+        public Result<IEnumerable<Payment>> LookUpByDate(DateTime begin, DateTime end)
+        {
+            Result<IEnumerable<Payment>> result = new Result<IEnumerable<Payment>>();
+            if(end==null){end=DateTime.Today;}
+            IEnumerable<Payment> payments;
+            try
+            {
+                payments = _context.Payment.Where(d => Between(d.CreatedAt, begin, end));
+            }
+            catch (Exception e)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = e.Message;
+                return result;
+            }
+
+            result.IsSuccess = true;
+            result.Data = payments;
+            return result;
+        }
+        
+        public Result<IEnumerable<Payment>> LookUpByDateDesc(DateTime begin, DateTime end)
+        {
+            Result<IEnumerable<Payment>> result = new Result<IEnumerable<Payment>>();
+            if(end==null){end=DateTime.Today;}
+            IEnumerable<Payment> payments;
+            try
+            {
+                payments = _context.Payment.Where(d => Between(d.CreatedAt, begin, end)).OrderByDescending(d=>d.CreatedAt);
+            }
+            catch (Exception e)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = e.Message;
+                return result;
+            }
+
+            result.IsSuccess = true;
+            result.Data = payments;
+            return result;
+        }
+
+        public Result<IEnumerable<Payment>> LookUpByOrderASCE()
+        {
+            Result<IEnumerable<Payment>> result = new Result<IEnumerable<Payment>>();
+            IEnumerable<Payment> payments;
+            try
+            {
+                payments = _context.Payment.OrderBy(d=>d.CreatedAt);
+            }
+            catch (Exception e)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = e.Message;
+                return result;
+            }
+
+            result.IsSuccess = true;
+            result.Data = payments;
+            return result;
+            
+        }
+
+        public Result<IEnumerable<Payment>> LookUpByOrderDESC()
+        {
+            Result<IEnumerable<Payment>> result = new Result<IEnumerable<Payment>>();
+            IEnumerable<Payment> payments;
+            try
+            {
+                payments = _context.Payment.OrderByDescending(d=>d.CreatedAt);
+            }
+            catch (Exception e)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = e.Message;
+                return result;
+            }
+
+            result.IsSuccess = true;
+            result.Data = payments;
+            return result;
         }
 
     }
