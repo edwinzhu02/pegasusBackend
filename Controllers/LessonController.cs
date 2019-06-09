@@ -216,9 +216,9 @@ namespace Pegasus_backend.Controllers
                         s.IsConfirm,
                         s.IsTrial, Learner = s.Learner.FirstName, Learners = "", s.LearnerId, s.RoomId, s.TeacherId,
                         s.OrgId,
-                        /*courseId = !IsNull(s.GroupCourseInstance)
+                        courseId = !IsNull(s.GroupCourseInstance)
                             ? s.GroupCourseInstance.Course.CourseId
-                            : s.CourseInstance.Course.CourseId*/
+                            : s.CourseInstance.Course.CourseId
                     });
                 
                 result.Data = await items.ToListAsync();
