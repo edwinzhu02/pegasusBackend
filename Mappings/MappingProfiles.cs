@@ -28,6 +28,8 @@ namespace Pegasus_backend.Mappings
             CreateMap<Invoice, WaitingOrInvoice>();
             CreateMap<InvoiceWaitingConfirm, WaitingOrInvoice>();
             CreateMap<StaffModel, Staff>();
+            CreateMap<One2oneCourseInstance, OneOrGroupCourse>();
+            CreateMap<GroupCourseInstance, OneOrGroupCourse>();
         }
     }
 }

@@ -92,7 +92,7 @@ namespace Pegasus_backend.Controllers
                             LearnerId = invoiceItem.LearnerId
                         };
                         _pegasusContext.Add(lessonRemain);
-                        await SaveLesson(details.InvoiceId,0);
+                        await SaveLesson(details.InvoiceId,0,1);
                         await _pegasusContext.SaveChangesAsync();
 
                     }
@@ -186,7 +186,7 @@ namespace Pegasus_backend.Controllers
 
 
         //auto-generate lessons sort by invoice when the invoice is paid
-        private async Task<int> SaveLesson(int invoice_id, int isWaitingConfirm)
+        private async Task<int> SaveLesson(int invoice_id, int isWaitingConfirm, int isOne2one)
         {
             var result = new Result<object>();
             var invoice = new WaitingOrInvoice();
@@ -200,11 +200,27 @@ namespace Pegasus_backend.Controllers
                 var tem = await _pegasusContext.Invoice.FirstOrDefaultAsync(x => x.InvoiceId == invoice_id);
                 _mapper.Map(tem,invoice);
             }
-            var course = await _pegasusContext.One2oneCourseInstance.FirstOrDefaultAsync(x => x.CourseInstanceId == invoice.CourseInstanceId);
-            var holiday = await _pegasusContext.Holiday.Select(x => x.HolidayDate).ToArrayAsync();
-            var schedules = await _pegasusContext.CourseSchedule.Where(x => x.CourseInstanceId == invoice.CourseInstanceId).OrderBy(x => x.DayOfWeek).ToArrayAsync();
-            var amendments = await _pegasusContext.Amendment.Where(x => x.CourseInstanceId == invoice.CourseInstanceId && x.BeginDate <= invoice.EndDate).OrderBy(x=>x.CreatedAt).ToArrayAsync();
 
+            var course = new OneOrGroupCourse();
+            var schedules = await _pegasusContext.CourseSchedule.Where(x => x.CourseInstanceId == invoice.CourseInstanceId).OrderBy(x => x.DayOfWeek).ToArrayAsync();
+            var amendments = await _pegasusContext.Amendment.Where(x => x.CourseInstanceId == invoice.CourseInstanceId && x.BeginDate <= invoice.EndDate).OrderBy(x => x.CreatedAt).ToArrayAsync();
+
+            if (isOne2one == 1)
+            {
+                var cour = await _pegasusContext.One2oneCourseInstance.FirstOrDefaultAsync(x => x.CourseInstanceId == invoice.CourseInstanceId);
+                _mapper.Map(cour, course);
+ 
+            }
+            else
+            {
+                var cour = await _pegasusContext.GroupCourseInstance.FirstOrDefaultAsync(x => x.GroupCourseInstanceId == invoice.GroupCourseInstanceId);
+                _mapper.Map(cour, course);
+                schedules = await _pegasusContext.CourseSchedule.Where(x => x.GroupCourseInstanceId == invoice.GroupCourseInstanceId).OrderBy(x => x.DayOfWeek).ToArrayAsync();
+                amendments = null;
+            }
+
+            
+            var holiday = await _pegasusContext.Holiday.Select(x => x.HolidayDate).ToArrayAsync();
 
             DateTime begindate_invoice = (DateTime)invoice.BeginDate;
             //get the day of week of the begindate in invoice
@@ -482,7 +498,7 @@ namespace Pegasus_backend.Controllers
                     await _pegasusContext.SaveChangesAsync();
                     using (var dbContextTransaction = _pegasusContext.Database.BeginTransaction())
                     {
-                        lesson_quantity = await SaveLesson(invoice.WaitingId,1);
+                        lesson_quantity = await SaveLesson(invoice.WaitingId,1,1);
                         dbContextTransaction.Rollback();
 
                     }
@@ -524,7 +540,7 @@ namespace Pegasus_backend.Controllers
                     await _pegasusContext.SaveChangesAsync();
                     using (var dbContextTransaction = _pegasusContext.Database.BeginTransaction())
                     {
-                        lesson_quantity = await SaveLesson(invoice.WaitingId,1);
+                        lesson_quantity = await SaveLesson(invoice.WaitingId,1,1);
                         dbContextTransaction.Rollback();
 
                     }
@@ -552,12 +568,12 @@ namespace Pegasus_backend.Controllers
 
 
         [HttpPost]
-        [Route("[action]")]
-        public async Task<IActionResult> GenerateGroupInvoice()
+        [Route("[action]/{term_id}")]
+        public async Task<IActionResult> GenerateGroupInvoice(int term_id)
         {
             var result = new Result<object>();
 
-            var group_course_instance = await _pegasusContext.GroupCourseInstance
+            var group_course_instances = await _pegasusContext.GroupCourseInstance
                 .Include(x => x.Course)
                 .Include(x => x.LearnerGroupCourse)
                 .Select(x => new
@@ -569,15 +585,84 @@ namespace Pegasus_backend.Controllers
                     x.IsStarted,
                     CourseName=x.Course.CourseName,
                     Price=x.Course.Price,
-                    Learner=x.LearnerGroupCourse.Select(s=>new {s.Learner.LastName,s.LearnerId})
+                    Learners=x.LearnerGroupCourse.Select(s=>new {s.Learner.FirstName,s.LearnerId,s.CreatedAt,s.BeginDate,s.EndDate,s.InvoiceDate,s.LearnerGroupCourseId,s.IsActivate}).Where(s=>s.IsActivate==1).ToArray()
 
                 })
                 .ToListAsync();
 
-            var term = await _pegasusContext.Term.FirstOrDefaultAsync(x => x.TermId == 1);
+            var term = await _pegasusContext.Term.FirstOrDefaultAsync(x => x.TermId == term_id);
+            int i = 0;
+            //int j = 0;
+            foreach (var group_course_instance in group_course_instances)
+            {
+                foreach (var learner in group_course_instance.Learners)
+                {
+                    if (learner.InvoiceDate >= Convert.ToDateTime(term.EndDate)) continue;
+                    DateTime begin_date;
+                    InvoiceWaitingConfirm invoice = new InvoiceWaitingConfirm();
 
+                    invoice.LearnerId = learner.LearnerId;
+                    invoice.LearnerName = learner.FirstName;
+                    invoice.GroupCourseInstanceId = group_course_instance.GroupCourseInstanceId;
+                    invoice.CourseName = group_course_instance.CourseName;
+                    invoice.TermId = (short)term.TermId;
+                    invoice.IsPaid = 0;
+                    invoice.PaidFee = 0;
+                    invoice.CreatedAt = DateTime.Now;
+                    invoice.IsConfirmed = 0;
+                    invoice.IsActivate = 1;
+                    invoice.IsEmailSent = 0;
 
-            return Ok(group_course_instance);
+                    var courseIns = await _pegasusContext.LearnerGroupCourse.FirstOrDefaultAsync(x => x.LearnerGroupCourseId == learner.LearnerGroupCourseId);
+                    int lesson_quantity = 0;
+
+                    if (learner.InvoiceDate == null  || (learner.InvoiceDate < term.EndDate && learner.BeginDate<=term.EndDate))
+                    {
+                        if (learner.BeginDate >= term.BeginDate)
+                        {
+                            begin_date = (DateTime)learner.BeginDate;
+                        }
+                        else
+                        {
+                            begin_date = (DateTime)term.BeginDate;
+                        }
+                        invoice.BeginDate = begin_date;
+                        invoice.EndDate = term.EndDate;
+
+                        await _pegasusContext.InvoiceWaitingConfirm.AddAsync(invoice);
+                        await _pegasusContext.SaveChangesAsync();
+                        using (var dbContextTransaction = _pegasusContext.Database.BeginTransaction())
+                        {
+                            lesson_quantity = await SaveLesson(invoice.WaitingId, 1,0);
+                            dbContextTransaction.Rollback();
+
+                        }
+                        courseIns.InvoiceDate=invoice.EndDate;
+                    }
+                        
+
+                    if (invoice.BeginDate != null) invoice.DueDate = Convert.ToDateTime(invoice.BeginDate).AddDays(-1);
+                    invoice.LessonFee = group_course_instance.Price * lesson_quantity;
+
+                    invoice.OwingFee = invoice.LessonFee;
+                    invoice.TotalFee = invoice.LessonFee;
+                    invoice.LessonQuantity = lesson_quantity;
+                    if (invoice.LessonFee <= 0) continue;
+                    _pegasusContext.InvoiceWaitingConfirm.Update(invoice);
+                    invoice.InvoiceNum = invoice.WaitingId.ToString();
+                    _pegasusContext.Update(courseIns);
+
+                    await _pegasusContext.SaveChangesAsync();
+
+                    i++;
+                    //j++;
+                    //if (i == 5) break;
+                }
+                //if (j > 1) break;
+            }
+            result.Data = i;
+
+            return Ok(result);
 
         }
 
