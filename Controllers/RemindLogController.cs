@@ -20,8 +20,8 @@ namespace Pegasus_backend.Controllers
             _ablemusicContext = ablemusicContext;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetRemindLog()
+        [HttpGet("{beginDate}/{endDate}")]
+        public async Task<IActionResult> GetRemindLog(DateTime? beginDate, DateTime? endDate)
         {
             var result = new Result<Object>();
             try
@@ -29,6 +29,8 @@ namespace Pegasus_backend.Controllers
                 var item = await _ablemusicContext.RemindLog
                     .Include(s=>s.Teacher)
                     .Include(s=>s.Learner)
+                    .Where(s => beginDate.Value.Date <= s.CreatedAt.Value.Date &&
+                                s.CreatedAt.Value.Date <= endDate.Value.Date)
                     .Select(s=> new
                     {
                         s.RemindId,s.Email,s.RemindType,s.RemindContent,s.CreatedAt,s.IsLearner,s.ProcessFlag,
