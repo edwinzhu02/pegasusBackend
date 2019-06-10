@@ -147,7 +147,7 @@ namespace Pegasus_backend.Controllers
         
 
         [HttpGet("[action]/{teacherId}")]
-        public async Task<IActionResult> GetLessonsTeacherId(int teacherId)
+        public async Task<IActionResult> GetLessonsTeacherId(short teacherId)
         {
             Result<Object> result = new Result<object>();
             try
