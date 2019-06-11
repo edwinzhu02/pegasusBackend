@@ -29,15 +29,25 @@ namespace Pegasus_backend.Controllers
                 var item = await _ablemusicContext.RemindLog
                     .Include(s=>s.Teacher)
                     .Include(s=>s.Learner)
+                    .Include(s=>s.Lesson)
+                    .ThenInclude(l=>l.CourseInstance)                    
+                    .ThenInclude(ci=>ci.Course)                                        
+                    .Include(s=>s.Lesson)
+                    .ThenInclude(l=>l.GroupCourseInstance)                    
+                    .ThenInclude(gc=>gc.Course)                                        
                     .Where(s => beginDate.Value.Date <= s.CreatedAt.Value.Date &&
                                 s.CreatedAt.Value.Date <= endDate.Value.Date)
                     .Select(s=> new
                     {
                         s.RemindId,s.Email,s.RemindType,s.RemindContent,s.CreatedAt,s.IsLearner,s.ProcessFlag,
                         s.EmailAt,s.RemindTitle,s.ReceivedFlag,
+                        CourseName = IsNull(s.Lesson.GroupCourseInstance.Course.CourseName)?
+                                    (s.Lesson.CourseInstance.Course.CourseName):
+                                    (s.Lesson.GroupCourseInstance.Course.CourseName),                        
                         Learner = IsNull(s.Learner)?
                             null:new {s.Learner.FirstName,s.Learner.LastName,s.LearnerId},
-                        Teacher= IsNull(s.Teacher)?null:new {s.Teacher.TeacherId,s.Teacher.FirstName,s.Teacher.LastName}
+                        Teacher= IsNull(s.Teacher)?null:new {s.Teacher.TeacherId,s.Teacher.FirstName,s.Teacher.LastName
+                        }
                     })
                     .ToListAsync();
                     result.Data = item;
