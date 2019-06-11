@@ -40,7 +40,8 @@ namespace Pegasus_backend.Controllers
                         Teacher= IsNull(s.Teacher)?null:new {s.Teacher.TeacherId,s.Teacher.FirstName,s.Teacher.LastName}
                     })
                     .ToListAsync();
-                return Ok(item);
+                    result.Data = item;
+                return Ok(result);
             }
             catch (Exception ex)
             {
