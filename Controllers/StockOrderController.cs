@@ -53,7 +53,7 @@ namespace Pegasus_backend.Controllers
         {
             var result = new Result<StockOrder>();
             Product product = new Product();
-            Stock stock = new Stock();
+            Stock stock;
             StockOrder stockOrder = new StockOrder();
             int productId;
             short orgId;
@@ -74,36 +74,6 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = ex.ToString();
                 return BadRequest(result);
             }
-            if (productId <= 0)
-            {
-                result.IsSuccess = false;
-                result.ErrorMessage = "productId is required";
-                return BadRequest(result);
-            }
-            if (orgId <= 0)
-            {
-                result.IsSuccess = false;
-                result.ErrorMessage = "orgId is required";
-                return BadRequest(result);
-            }
-            if (quantity <= 0)
-            {
-                result.IsSuccess = false;
-                result.ErrorMessage = "quantity is required";
-                return BadRequest(result);
-            }
-            if (price <= 0)
-            {
-                result.IsSuccess = false;
-                result.ErrorMessage = "price is required";
-                return BadRequest(result);
-            }
-            if (staffId <= 0)
-            {
-                result.IsSuccess = false;
-                result.ErrorMessage = "staffId is required";
-                return BadRequest(result);
-            }
             try
             {
                 product = await _ablemusicContext.Product.Where(p => p.ProductId == productId).FirstOrDefaultAsync();
@@ -122,7 +92,7 @@ namespace Pegasus_backend.Controllers
                 return BadRequest(result);
             }
             var uploadfileTime = DateTime.Now;
-            var uploadImageResult = UploadFile(ReceiptImg, "stock_order/receipt/", product.ProductId, uploadfileTime.ToString());
+            var uploadImageResult = UploadFile(ReceiptImg, "stock_order/receipt/", product.ProductId, uploadfileTime.ToString("dd MMMM yyyy HH:mm:ss"));
             if (!uploadImageResult.IsUploadSuccess)
             {
                 result.IsSuccess = false;
@@ -130,24 +100,39 @@ namespace Pegasus_backend.Controllers
                 return BadRequest(result);
             }
 
-            var imageAddress = "images/stock_order/receipt/" + product.ProductId.ToString() + uploadfileTime.ToString() + Path.GetExtension(ReceiptImg.FileName);
+            var imageAddress = "images/stock_order/receipt/" + product.ProductId.ToString() + uploadfileTime.ToString("dd MMMM yyyy HH:mm:ss") + 
+                Path.GetExtension(ReceiptImg.FileName);
 
             if (stock == null)
             {
+                stock = new Stock();
+                stock.OrgId = orgId;
+                stock.ProductId = productId;
+                stock.Quantity = 0;
+                try
+                {
+                    await _ablemusicContext.Stock.AddAsync(stock);
+                    await _ablemusicContext.SaveChangesAsync();
+                }
+                catch(Exception ex)
+                {
+                    //delete file
+                    result.IsSuccess = false;
+                    result.ErrorMessage = ex.Message;
+                    return BadRequest(result);
+                }
+            }
 
-            }
-            else
-            {
-                stockOrder.StockId = stock.StockId;
-                stockOrder.OrderType = 2;
-                stockOrder.ProductId = productId;
-                stockOrder.OrgId = orgId;
-                stockOrder.Quantity = quantity;
-                stockOrder.BuyingPrice = price;
-                stockOrder.ReceiptImg = imageAddress;
-                stockOrder.StaffId = staffId;
-                stockOrder.CreatedAt = DateTime.Now;
-            }
+            stock.Quantity += quantity;
+            stockOrder.StockId = stock.StockId;
+            stockOrder.OrderType = 2;
+            stockOrder.ProductId = productId;
+            stockOrder.OrgId = orgId;
+            stockOrder.Quantity = quantity;
+            stockOrder.BuyingPrice = price;
+            stockOrder.ReceiptImg = imageAddress;
+            stockOrder.StaffId = staffId;
+            stockOrder.CreatedAt = DateTime.Now;
 
             try
             {
