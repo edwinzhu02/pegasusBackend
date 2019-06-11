@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Pegasus_backend.Models;
 using Pegasus_backend.pegasusContext;
+using System.IO;
+
 
 namespace Pegasus_backend.Controllers
 {
@@ -46,13 +48,32 @@ namespace Pegasus_backend.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromForm] int productId, short orgId, int quantity, decimal price, short staffId,
-            [FromForm(Name = "Receipt")] IFormFile ReceiptImg)
+        public async Task<IActionResult> Post([FromForm] string productIdstr, [FromForm] string orgIdstr, [FromForm] string quantitystr,
+            [FromForm] string pricestr, [FromForm] string staffIdstr, [FromForm(Name = "Receipt")] IFormFile ReceiptImg)
         {
             var result = new Result<StockOrder>();
             Product product = new Product();
             Stock stock = new Stock();
             StockOrder stockOrder = new StockOrder();
+            int productId;
+            short orgId;
+            int quantity;
+            decimal price;
+            short staffId;
+            try
+            {
+                productId = Int32.Parse(productIdstr);
+                orgId = Int16.Parse(orgIdstr);
+                quantity = Int32.Parse(quantitystr);
+                price = Convert.ToDecimal(pricestr);
+                staffId = Int16.Parse(staffIdstr);
+            }
+            catch(Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.ToString();
+                return BadRequest(result);
+            }
             if (productId <= 0)
             {
                 result.IsSuccess = false;
@@ -100,8 +121,16 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = "Product not found";
                 return BadRequest(result);
             }
+            var uploadfileTime = DateTime.Now;
+            var uploadImageResult = UploadFile(ReceiptImg, "stock_order/receipt/", product.ProductId, uploadfileTime.ToString());
+            if (!uploadImageResult.IsUploadSuccess)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = uploadImageResult.ErrorMessage;
+                return BadRequest(result);
+            }
 
-
+            var imageAddress = "images/stock_order/receipt/" + product.ProductId.ToString() + uploadfileTime.ToString() + Path.GetExtension(ReceiptImg.FileName);
 
             if (stock == null)
             {
@@ -115,11 +144,24 @@ namespace Pegasus_backend.Controllers
                 stockOrder.OrgId = orgId;
                 stockOrder.Quantity = quantity;
                 stockOrder.BuyingPrice = price;
-                //stockOrder.ReceiptImg = stock.StockId;
+                stockOrder.ReceiptImg = imageAddress;
                 stockOrder.StaffId = staffId;
                 stockOrder.CreatedAt = DateTime.Now;
             }
 
+            try
+            {
+                await _ablemusicContext.StockOrder.AddAsync(stockOrder);
+                await _ablemusicContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                //delete file
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+            result.Data = stockOrder;
             return Ok(result);
         }
 
