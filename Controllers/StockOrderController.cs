@@ -92,7 +92,7 @@ namespace Pegasus_backend.Controllers
                 return BadRequest(result);
             }
             var uploadfileTime = DateTime.Now;
-            var uploadImageResult = UploadFile(ReceiptImg, "stock_order/receipt/", product.ProductId, uploadfileTime.ToString("dd MMMM yyyy HH:mm:ss"));
+            var uploadImageResult = UploadFile(ReceiptImg, "stock_order/receipt/", product.ProductId, uploadfileTime.ToString("yyMMddhhmmssfff"));
             if (!uploadImageResult.IsUploadSuccess)
             {
                 result.IsSuccess = false;
@@ -100,7 +100,7 @@ namespace Pegasus_backend.Controllers
                 return BadRequest(result);
             }
 
-            var imageAddress = "images/stock_order/receipt/" + product.ProductId.ToString() + uploadfileTime.ToString("dd MMMM yyyy HH:mm:ss") + 
+            var imageAddress = "images/stock_order/receipt/" + product.ProductId.ToString() + uploadfileTime.ToString("yyMMddhhmmssfff") + 
                 Path.GetExtension(ReceiptImg.FileName);
 
             if (stock == null)
@@ -117,6 +117,15 @@ namespace Pegasus_backend.Controllers
                 catch(Exception ex)
                 {
                     //delete file
+                    try
+                    {
+                        System.IO.File.Delete(Path.Combine("wwwroot", imageAddress));
+                    }catch(Exception e)
+                    {
+                        result.IsSuccess = false;
+                        result.ErrorMessage = ex.Message + '\n' + e.Message;
+                        return BadRequest(result);
+                    }
                     result.IsSuccess = false;
                     result.ErrorMessage = ex.Message;
                     return BadRequest(result);
@@ -142,6 +151,16 @@ namespace Pegasus_backend.Controllers
             catch (Exception ex)
             {
                 //delete file
+                try
+                {
+                    System.IO.File.Delete(Path.Combine("wwwroot", imageAddress));
+                }
+                catch (Exception e)
+                {
+                    result.IsSuccess = false;
+                    result.ErrorMessage = ex.Message + '\n' + e.Message;
+                    return BadRequest(result);
+                }
                 result.IsSuccess = false;
                 result.ErrorMessage = ex.Message;
                 return BadRequest(result);
