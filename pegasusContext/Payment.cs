@@ -20,6 +20,8 @@ namespace Pegasus_backend.pegasusContext
         public decimal? BeforeBalance { get; set; }
         public decimal? AfterBalance { get; set; }
         public byte? PaymentType { get; set; }
+        public short? IsConfirmed { get; set; }
+        public string Comment { get; set; }
 
         public Invoice Invoice { get; set; }
         public Learner Learner { get; set; }
