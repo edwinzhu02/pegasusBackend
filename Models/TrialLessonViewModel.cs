@@ -10,11 +10,15 @@ namespace Pegasus_backend.Models
     public class TrialLessonViewModel
     {
         [Required(ErrorMessage = "LearnerId is required")]
+        [Range(0, int.MaxValue, ErrorMessage = "Id must greater than 0")]
         public int? LearnerId { get; set; }
         [Required(ErrorMessage = "RoomId is required")]
+        [Range(0, int.MaxValue, ErrorMessage = "Id must greater than 0")]
         public short? RoomId { get; set; }
+        [Range(0, int.MaxValue, ErrorMessage = "Id must greater than 0")]
         [Required(ErrorMessage = "TeacherId is required")]
         public short? TeacherId { get; set; }
+        [Range(0, int.MaxValue, ErrorMessage = "Id must greater than 0")]
         [Required(ErrorMessage = "OrgId is required")]
         public short OrgId { get; set; }
         [Required(ErrorMessage = "BeginTime is required")]
@@ -25,8 +29,10 @@ namespace Pegasus_backend.Models
         public byte? PaymentMethod { get; set; }
         [Required(ErrorMessage = "Amount is required")]
         public decimal? Amount { get; set; }
+        [Range(0, int.MaxValue, ErrorMessage = "Id must greater than 0")]
         [Required(ErrorMessage = "StaffId is required")]
         public short? StaffId { get; set; }
+        [Range(0, int.MaxValue, ErrorMessage = "Id must greater than 0")]
         [Required(ErrorMessage = "TrialCourseId is required")]
         public int? TrialCourseId { get; set; }
 
