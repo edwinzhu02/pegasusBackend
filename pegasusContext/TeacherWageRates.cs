@@ -14,8 +14,8 @@ namespace Pegasus_backend.pegasusContext
         public int RatesId { get; set; }
         public DateTime? CreateAt { get; set; }
         public short? IsActivate { get; set; }
-        [JsonIgnore]
 
+        [JsonIgnore]
         public Teacher Teacher { get; set; }
     }
 }

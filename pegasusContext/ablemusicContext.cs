@@ -75,7 +75,7 @@ namespace Pegasus_backend.pegasusContext
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseMySQL("server=gradspace.org;User Id=dbuser;Password=qwer1234;Database=ablemusic");
+                optionsBuilder.UseMySQL("Server=gradspace.org;UserId=dbuser;Password=qwer1234;Database=ablemusic");
             }
         }
 
@@ -1277,6 +1277,9 @@ namespace Pegasus_backend.pegasusContext
                 entity.HasIndex(e => e.TeacherId)
                     .HasName("R_33");
 
+                entity.HasIndex(e => e.TrialCourseId)
+                    .HasName("R_127");
+
                 entity.Property(e => e.LessonId)
                     .HasColumnName("lesson_id")
                     .HasColumnType("int(11)");
@@ -1332,6 +1335,10 @@ namespace Pegasus_backend.pegasusContext
                     .HasColumnName("teacher_id")
                     .HasColumnType("smallint(6)");
 
+                entity.Property(e => e.TrialCourseId)
+                    .HasColumnName("trial_course_id")
+                    .HasColumnType("int(11)");
+
                 entity.HasOne(d => d.CourseInstance)
                     .WithMany(p => p.Lesson)
                     .HasForeignKey(d => d.CourseInstanceId)
@@ -1367,6 +1374,11 @@ namespace Pegasus_backend.pegasusContext
                     .WithMany(p => p.Lesson)
                     .HasForeignKey(d => d.TeacherId)
                     .HasConstraintName("R_33");
+
+                entity.HasOne(d => d.TrialCourse)
+                    .WithMany(p => p.Lesson)
+                    .HasForeignKey(d => d.TrialCourseId)
+                    .HasConstraintName("R_127");
             });
 
             modelBuilder.Entity<LessonRemain>(entity =>
@@ -1865,11 +1877,20 @@ namespace Pegasus_backend.pegasusContext
                     .HasColumnName("before_balance")
                     .HasColumnType("decimal(8,2)");
 
+                entity.Property(e => e.Comment)
+                    .HasColumnName("comment")
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.CreatedAt).HasColumnName("created_at");
 
                 entity.Property(e => e.InvoiceId)
                     .HasColumnName("invoice_id")
                     .HasColumnType("int(11)");
+
+                entity.Property(e => e.IsConfirmed)
+                    .HasColumnName("is_confirmed")
+                    .HasColumnType("bit(1)");
 
                 entity.Property(e => e.LearnerId)
                     .HasColumnName("learner_id")
@@ -2527,7 +2548,7 @@ namespace Pegasus_backend.pegasusContext
 
                 entity.Property(e => e.ReceiptImg)
                     .HasColumnName("receipt_img")
-                    .HasMaxLength(40)
+                    .HasMaxLength(300)
                     .IsUnicode(false);
 
                 entity.Property(e => e.StaffId)

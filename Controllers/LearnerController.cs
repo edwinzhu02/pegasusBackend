@@ -154,12 +154,6 @@ namespace Pegasus_backend.Controllers
                 {
                     var detailsJson = JsonConvert.DeserializeObject<StudentRegister>(details);
                     var learner = _pegasusContext.Learner.FirstOrDefault(s => s.LearnerId == id);
-                    //delete learner's group courses
-                    _pegasusContext.LearnerGroupCourse.Where(s=>s.LearnerId==id).ToList().ForEach(s =>
-                        {
-                            _pegasusContext.Remove(s);
-                        });
-                    await _pegasusContext.SaveChangesAsync();
                     
                     //delete parents for this learner
                     _pegasusContext.Parent.Where(s=>s.LearnerId==id).ToList().ForEach(s =>
@@ -175,48 +169,9 @@ namespace Pegasus_backend.Controllers
                         });
                     await _pegasusContext.SaveChangesAsync();
                     
-                   
-                    _pegasusContext.One2oneCourseInstance.Where(s=>s.LearnerId==id).ToList().ForEach(s =>
-                    {
-                        var scheduleItem = _pegasusContext.CourseSchedule.FirstOrDefault(r => s.CourseInstanceId == r.CourseInstanceId);
-                        _pegasusContext.Remove(scheduleItem);
-                        _pegasusContext.Remove(s);
-                        });
-                    await _pegasusContext.SaveChangesAsync();
-                    
                     //update learner
                     _mapper.Map(detailsJson, learner);
                     _pegasusContext.Update(learner);
-                    await _pegasusContext.SaveChangesAsync();
-                    
-                    learner.LearnerGroupCourse.ToList().ForEach(s =>
-                    {
-                        s.CreatedAt=DateTime.Now;
-                        s.IsActivate = 1;
-                        _pegasusContext.Update(s);
-                    });
-
-                    await _pegasusContext.SaveChangesAsync();
-
-                    for (var i = 0; i < learner.One2oneCourseInstance.ToList().Count; i++)
-                    {
-                        detailsJson.One2oneCourseInstance[i].id =
-                            learner.One2oneCourseInstance.ToList()[i].CourseInstanceId;
-                    }
-                    detailsJson.One2oneCourseInstance.ForEach(s =>
-                    {
-                        if (_pegasusContext.Course.FirstOrDefault(w => w.CourseId == s.CourseId).CourseType != 1)
-                        {
-                            throw new Exception("This course is not one to one course");
-                        }
-                        var durationType = _pegasusContext.Course.FirstOrDefault(w => w.CourseId == s.CourseId).Duration;
-                        _pegasusContext.Add(new CourseSchedule
-                        {
-                            DayOfWeek = s.Schedule.DayOfWeek,CourseInstanceId = s.id,
-                            BeginTime = s.Schedule.BeginTime, 
-                            EndTime = GetEndTimeForOnetoOneCourseSchedule(s.Schedule.BeginTime,durationType)
-                        });
-                    });
                     await _pegasusContext.SaveChangesAsync();
                     
                     

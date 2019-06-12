@@ -82,7 +82,6 @@ namespace Pegasus_backend.Controllers
                 result.Data.Add(s);
             }
             return Ok(result);
-        }
-
+        }        
     }
 }

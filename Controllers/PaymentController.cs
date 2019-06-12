@@ -273,6 +273,8 @@ namespace Pegasus_backend.Controllers
                         lesson.TeacherId = course.TeacherId;
                         lesson.LearnerId = (int)invoice.LearnerId;
                         lesson.InvoiceId = invoice.InvoiceId;
+                        lesson.IsConfirm = 0;
+                        lesson.IsCanceled = 0;                        
 
                         string begintime = "";
                         string endtime = "";
@@ -568,8 +570,8 @@ namespace Pegasus_backend.Controllers
 
 
         [HttpPost]
-        [Route("[action]")]
-        public async Task<IActionResult> GenerateGroupInvoice()
+        [Route("[action]/{term_id}")]
+        public async Task<IActionResult> GenerateGroupInvoice(int term_id)
         {
             var result = new Result<object>();
 
@@ -590,15 +592,15 @@ namespace Pegasus_backend.Controllers
                 })
                 .ToListAsync();
 
-            var term = await _pegasusContext.Term.FirstOrDefaultAsync(x => x.TermId == 1);
+            var term = await _pegasusContext.Term.FirstOrDefaultAsync(x => x.TermId == term_id);
             int i = 0;
             //int j = 0;
-            foreach(var group_course_instance in group_course_instances)
+            foreach (var group_course_instance in group_course_instances)
             {
-                foreach(var learner in group_course_instance.Learners)
+                foreach (var learner in group_course_instance.Learners)
                 {
                     if (learner.InvoiceDate >= Convert.ToDateTime(term.EndDate)) continue;
-                    DateTime  begin_date;
+                    DateTime begin_date;
                     InvoiceWaitingConfirm invoice = new InvoiceWaitingConfirm();
 
                     invoice.LearnerId = learner.LearnerId;
@@ -616,7 +618,7 @@ namespace Pegasus_backend.Controllers
                     var courseIns = await _pegasusContext.LearnerGroupCourse.FirstOrDefaultAsync(x => x.LearnerGroupCourseId == learner.LearnerGroupCourseId);
                     int lesson_quantity = 0;
 
-                    if (learner.InvoiceDate < term.EndDate && learner.BeginDate<=term.EndDate)
+                    if (learner.InvoiceDate == null  || (learner.InvoiceDate < term.EndDate && learner.BeginDate<=term.EndDate))
                     {
                         if (learner.BeginDate >= term.BeginDate)
                         {

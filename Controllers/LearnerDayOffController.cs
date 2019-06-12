@@ -83,12 +83,6 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = ex.ToString();
                 return BadRequest(result);
             }
-            if(lessons.Count < 1)
-            {
-                result.IsSuccess = false;
-                result.ErrorMessage = "Lesson not found";
-                return BadRequest(result);
-            }
             if(courseSchedules.Count < 1)
             {
                 result.IsSuccess = false;
