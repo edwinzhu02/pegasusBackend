@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Pegasus_backend.Models;
+using Pegasus_backend.pegasusContext;
 
 namespace Pegasus_backend.Controllers
 {
@@ -42,6 +43,71 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = "org not found";
             }
             result.Data = orgs;
+
+            return Ok(result);
+        }
+
+        [Route("OrgAndRoom")]
+        [HttpGet]
+        public async Task<IActionResult> GetOrgAndRoom()
+        {
+            var result = new Result<List<Object>>();
+            var orgs = new List<pegasusContext.Org>();
+            var rooms = new List<Room>();
+            try
+            {
+                orgs = await _ablemusicContext.Org.ToListAsync();
+                rooms = await _ablemusicContext.Room.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return NotFound(result);
+            }
+            if (orgs == null)
+            {
+                result.IsSuccess = false;
+                result.IsFound = false;
+                result.ErrorMessage = "org not found";
+            }
+            if (rooms == null)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = "Room not found";
+                return BadRequest(result);
+            }
+
+            result.Data = new List<Object>();
+            foreach(var o in orgs)
+            {
+                var eachOrgRooms = new List<Object>();
+                foreach(var r in rooms)
+                {
+                    if (r.OrgId == o.OrgId)
+                    {
+                        eachOrgRooms.Add(new
+                        {
+                            RoomId = r.RoomId,
+                            RoomName = r.RoomName,
+                        });
+                    }
+                }
+                result.Data.Add(new
+                {
+                    o.OrgId,
+                    o.OrgName,
+                    o.IsHeadoffice,
+                    o.IsActivate,
+                    o.Address,
+                    o.Email,
+                    o.Phone,
+                    o.LocaltionX,
+                    o.LocaltionY,
+                    o.Abbr,
+                    Rooms = eachOrgRooms
+                });
+            }
 
             return Ok(result);
         }
