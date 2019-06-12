@@ -185,7 +185,44 @@ namespace Pegasus_backend.Controllers
 
             return Ok(result);
         }
-        
+        [HttpGet("[action]/{learnerId}")]
+        public async Task<IActionResult> GetArrangedLessonsByLearner(int learnerId)
+        {
+            Result<Object> result = new Result<object>();
+            try
+            {
+               
+                var details = _pegasusContext.Lesson.Where(s => s.LearnerId == learnerId)
+                    .Where(s=>s.IsCanceled ==0 &&s.IsConfirm !=1)
+                    .Include(s=>s.Room)
+                    .Include(s=>s.Learner)
+                    .Include(s=>s.Teacher)
+                    .Include(s=>s.GroupCourseInstance)
+                    .Include(s=>s.CourseInstance).ThenInclude(w=>w.Course)
+                    .Include(s=>s.GroupCourseInstance).ThenInclude(w=>w.Course)
+                    .Include(s=>s.Org)
+                    .Select(q=>new
+                    {
+                        start=q.BeginTime,end=q.EndTime,
+                        learnerFirstName=q.Learner.FirstName,learnerLastName=q.Learner.LastName,
+                        teacherFirstName=q.Teacher.FirstName,TeacherLastName=q.Teacher.LastName,
+                        courseName=IsNull(q.GroupCourseInstanceId)?q.CourseInstance.Course.CourseName:q.GroupCourseInstance.Course.CourseName,
+                        orgName= q.Org.OrgName, roomName=q.Room.RoomName
+                    });
+                result.Data = await details.ToListAsync();
+
+                
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+
+            return Ok(result);
+        }
+                
         [HttpGet("[action]/{userId}/{beginDate}/{endDate}")]
 
         public async Task<IActionResult> GetLessonsBetweenDate(DateTime? beginDate, DateTime? endDate, int? userId)
