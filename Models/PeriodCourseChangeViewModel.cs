@@ -25,7 +25,6 @@ namespace Pegasus_backend.Models
         public short DayOfWeek { get; set; }
         [Required(ErrorMessage = "BeginTime is required")]
         public TimeSpan BeginTime { get; set; }
-        [Required(ErrorMessage = "EndTime is required")]
         public TimeSpan EndTime { get; set; }
         [Required(ErrorMessage = "RoomId is required")]
         public short RoomId { get; set; }
