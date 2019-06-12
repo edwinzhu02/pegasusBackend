@@ -15,4 +15,9 @@ namespace Pegasus_backend.Models
         public short? RoomId { get; set; }
         public CourseScheduleModel Schedule { get; set; }
     }
+
+    public class OnetoOneCourseInstancesModel
+    {
+        public List<OnetoOneCourseInstanceModel> OnetoOneCourses { get; set; }
+    }
 }

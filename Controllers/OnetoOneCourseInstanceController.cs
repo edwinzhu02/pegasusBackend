@@ -57,33 +57,36 @@ namespace Pegasus_backend.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddOnetoOneCourseInstance([FromBody] OnetoOneCourseInstanceModel model)
+        public async Task<IActionResult> AddOnetoOneCourseInstance([FromBody] OnetoOneCourseInstancesModel model)
         {
             var result = new Result<string>();
             try
             {
-                using (var dbtransaction = _pegasusContext.Database.BeginTransaction())
+                using (var dbtransaction =await _pegasusContext.Database.BeginTransactionAsync())
                 {
-                    var courseInstance = new One2oneCourseInstance();
-                    _mapper.Map(model, courseInstance);
-                    if (_pegasusContext.Course.FirstOrDefault(s => courseInstance.CourseId == s.CourseId).CourseType != 1)
+                    model.OnetoOneCourses.ForEach(q =>
                     {
-                        throw new Exception("This course is not one to one course");
-                    }
+                        var courseInstance = new One2oneCourseInstance();
+                        _mapper.Map(q, courseInstance);
+                        if (_pegasusContext.Course.FirstOrDefault(s => courseInstance.CourseId == s.CourseId).CourseType != 1)
+                        {
+                            throw new Exception("This course is not one to one course");
+                        }
 
-                    var durationType = _pegasusContext.Course.FirstOrDefault(s => s.CourseId == courseInstance.CourseId)
-                        .Duration;
-                    _pegasusContext.Add(courseInstance);
-                    await _pegasusContext.SaveChangesAsync();
+                        var durationType = _pegasusContext.Course.FirstOrDefault(s => s.CourseId == courseInstance.CourseId)
+                            .Duration;
+                        _pegasusContext.Add(courseInstance);
+                        _pegasusContext.SaveChanges();
 
-                    var schedule = new CourseSchedule
-                    {
-                        DayOfWeek = model.Schedule.DayOfWeek, CourseInstanceId = courseInstance.CourseInstanceId,
-                        BeginTime = model.Schedule.BeginTime,
-                        EndTime = GetEndTimeForOnetoOneCourseSchedule(model.Schedule.BeginTime,durationType)
-                    };
-                    _pegasusContext.Add(schedule);
-                    await _pegasusContext.SaveChangesAsync();
+                        var schedule = new CourseSchedule
+                        {
+                            DayOfWeek = q.Schedule.DayOfWeek, CourseInstanceId = courseInstance.CourseInstanceId,
+                            BeginTime = q.Schedule.BeginTime,
+                            EndTime = GetEndTimeForOnetoOneCourseSchedule(q.Schedule.BeginTime,durationType)
+                        };
+                        _pegasusContext.Add(schedule);
+                        _pegasusContext.SaveChanges();
+                    });
                     
                     dbtransaction.Commit();
                 }
