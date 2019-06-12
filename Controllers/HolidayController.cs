@@ -48,7 +48,7 @@ namespace Pegasus_backend.Controllers
             var result = new Result<string>();
             try
             {
-                var holiday = _pegasusContext.Holiday.FirstOrDefault(s => s.HolidayId == id);
+                var holiday = _pegasusContext.Holiday.Where(s => s.HolidayId == id).FirstOrDefault();
                 if (holiday == null)
                 {
                     return NotFound(DataNotFound(result));
@@ -73,15 +73,13 @@ namespace Pegasus_backend.Controllers
         {
             var result = new Result<string>();            
             if ((holiday.HolidayDate == null )||(holiday.HolidayName == null )){
-                result.IsSuccess = false;
-                result.ErrorMessage = "Holiday date and name is required!";
-                return BadRequest(result);                
+                throw new Exception("Holiday date and name is required!");
             }
             try
             {
 
             //var courseCategory = pegasusContext.CourseCategory    //.Where(c => c.CourseCategoryId == id).FirstOrDefaultAsync();
-                var kholiday = _pegasusContext.Holiday.FirstOrDefault(s => s.HolidayId == 1);
+
             var iholiday 
                 =  _pegasusContext.Holiday.Where(c=>c.HolidayDate.Date ==holiday.HolidayDate.Date).FirstOrDefault();
             if (iholiday==null){
