@@ -79,20 +79,12 @@ namespace Pegasus_backend.Controllers
             }
 
             result.Data = new List<Object>();
+
             foreach(var o in orgs)
             {
-                var eachOrgRooms = new List<Object>();
-                foreach(var r in rooms)
-                {
-                    if (r.OrgId == o.OrgId)
-                    {
-                        eachOrgRooms.Add(new
-                        {
-                            RoomId = r.RoomId,
-                            RoomName = r.RoomName,
-                        });
-                    }
-                }
+                var eachOrgRooms = from r in rooms
+                                   where r.OrgId == o.OrgId
+                                   select new { r.RoomId, r.RoomName };
                 result.Data.Add(new
                 {
                     o.OrgId,
