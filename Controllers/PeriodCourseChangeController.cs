@@ -70,6 +70,7 @@ namespace Pegasus_backend.Controllers
                                         RoomName = r.RoomName,
                                         CourseId = i.CourseId,
                                         CourseName = c.CourseName,
+                                        c.Duration,
                                         TeacherId = i.TeacherId,
                                         TeacherFirstName = t.FirstName,
                                         TeacherLastName = t.LastName,
@@ -91,8 +92,8 @@ namespace Pegasus_backend.Controllers
                 holidays = await _ablemusicContext.Holiday.ToListAsync();
                 exsitingAmendments = await _ablemusicContext.Amendment.Where(a => a.LearnerId == inputObj.LearnerId && a.AmendType == 2 &&
                 a.BeginDate == inputObj.BeginDate && a.EndDate == inputObj.EndDate && inputObj.OrgId == a.OrgId && 
-                inputObj.BeginTime == a.BeginTime && inputObj.EndTime == a.EndTime && inputObj.DayOfWeek == a.DayOfWeek &&
-                inputObj.InstanceId == a.CourseInstanceId && inputObj.RoomId == a.RoomId && inputObj.IsTemporary == a.IsTemporary).ToListAsync();
+                inputObj.BeginTime == a.BeginTime && inputObj.DayOfWeek == a.DayOfWeek && inputObj.InstanceId == a.CourseInstanceId && 
+                inputObj.RoomId == a.RoomId && inputObj.IsTemporary == a.IsTemporary).ToListAsync();
             }
             catch(Exception ex)
             {
@@ -129,6 +130,16 @@ namespace Pegasus_backend.Controllers
                 result.IsSuccess = false;
                 result.ErrorMessage = "EndDate is required when type is temporary";
                 return BadRequest(result);
+            }
+
+            switch (courseInfo.Duration)
+            {
+                case 1: inputObj.EndTime = inputObj.BeginTime.Add(TimeSpan.FromMinutes(30));
+                    break;
+                case 2: inputObj.EndTime = inputObj.BeginTime.Add(TimeSpan.FromMinutes(45));
+                    break;
+                case 3: inputObj.EndTime = inputObj.BeginTime.Add(TimeSpan.FromMinutes(60));
+                    break;
             }
 
             amendment.CourseInstanceId = inputObj.InstanceId;
