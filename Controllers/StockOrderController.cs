@@ -27,10 +27,24 @@ namespace Pegasus_backend.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var result = new Result<List<StockOrder>>();
+            var result = new Result<Object>();
             try
             {
-                result.Data = await _ablemusicContext.StockOrder.ToListAsync();
+                result.Data = await _ablemusicContext.StockOrder.
+                                Include(s=>s.Product).
+                                Include(s=>s.Product).
+                                ThenInclude(p=>p.ProdType).
+                                Include(s=>s.Product).
+                                ThenInclude(p=>p.ProdType).
+                                ThenInclude(t=>t.ProdCat).
+                                Include(s=>s.Org).
+                                Include(s=>s.Staff).
+                                Select(x=>new {x.OrderId,x.OrderType,x.ReceiptImg,x.Quantity,
+                                x.BuyingPrice,x.OrgId,x.Org.OrgName,x.StaffId,x.Staff.FirstName,x.Staff.LastName,
+                                x.Product.ProductId,x.Product.ProductName,x.Product.ProdType.ProdTypeId,x.Product.ProdType.ProdTypeName,
+                                x.Product.ProdType.ProdCat.ProdCatId,x.Product.ProdType.ProdCat.ProdCatName
+                                }).                               
+                                ToListAsync();
             }
             catch(Exception ex)
             {
@@ -38,12 +52,12 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = ex.Message;
                 return BadRequest(result);
             }
-            if(result.Data.Count <= 0)
-            {
-                result.IsSuccess = false;
-                result.ErrorMessage = "StockOrder not found";
-                return BadRequest(result);
-            }
+            // if(result.Data.Count <= 0)
+            // {
+            //     result.IsSuccess = false;
+            //     result.ErrorMessage = "StockOrder not found";
+            //     return BadRequest(result);
+            // }
             return Ok(result);
         }
 

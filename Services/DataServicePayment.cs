@@ -52,9 +52,10 @@ namespace Pegasus_backend.Services
             return result;
         }
 
-        public static bool Between(DateTime? input, DateTime? date1, DateTime? date2)
+        public bool Between(DateTime? input, DateTime? date1, DateTime? date2)
         {
             var end = DateTime.Today;
+            
             if (date2 != null)
             {
                 end = date2.GetValueOrDefault();}
@@ -70,7 +71,16 @@ namespace Pegasus_backend.Services
             IEnumerable<Payment> payments;
             try
             {
-                payments = _context.Payment.Where(d => Between(d.CreatedAt, begin, end));
+                payments = _context.Payment.Where(d => Between(d.CreatedAt, begin, end))
+                    .Include(t => t.SoldTransaction)
+                    .ThenInclude(t => t.Product)
+                    .Include(i => i.Invoice)
+                    .ThenInclude(i => i.CourseInstance)
+                    .ThenInclude(i => i.Course)
+                    .Include(i => i.Invoice)
+                    .ThenInclude(i => i.GroupCourseInstance)
+                    .ThenInclude(i => i.Course);
+
             }
             catch (Exception e)
             {
@@ -91,7 +101,16 @@ namespace Pegasus_backend.Services
             IEnumerable<Payment> payments;
             try
             {
-                payments = _context.Payment.Where(d => Between(d.CreatedAt, begin, end)).OrderByDescending(d=>d.CreatedAt);
+                payments = _context.Payment.Where(d => Between(d.CreatedAt, begin, end))
+                    .Include(t => t.SoldTransaction)
+                    .ThenInclude(t => t.Product)
+                    .Include(i => i.Invoice)
+                    .ThenInclude(i => i.CourseInstance)
+                    .ThenInclude(i => i.Course)
+                    .Include(i => i.Invoice)
+                    .ThenInclude(i => i.GroupCourseInstance)
+                    .ThenInclude(i => i.Course)
+                    .OrderByDescending(d=>d.CreatedAt);
             }
             catch (Exception e)
             {
@@ -111,7 +130,16 @@ namespace Pegasus_backend.Services
             IEnumerable<Payment> payments;
             try
             {
-                payments = _context.Payment.OrderBy(d=>d.CreatedAt);
+                payments = _context.Payment
+                    .Include(t => t.SoldTransaction)
+                    .ThenInclude(t => t.Product)
+                    .Include(i => i.Invoice)
+                    .ThenInclude(i => i.CourseInstance)
+                    .ThenInclude(i => i.Course)
+                    .Include(i => i.Invoice)
+                    .ThenInclude(i => i.GroupCourseInstance)
+                    .ThenInclude(i => i.Course)
+                    .OrderBy(d=>d.CreatedAt);
             }
             catch (Exception e)
             {
@@ -132,7 +160,15 @@ namespace Pegasus_backend.Services
             IEnumerable<Payment> payments;
             try
             {
-                payments = _context.Payment.OrderByDescending(d=>d.CreatedAt);
+                payments = _context.Payment.OrderByDescending(d=>d.CreatedAt)
+                    .Include(t => t.SoldTransaction)
+                    .ThenInclude(t => t.Product)
+                    .Include(i => i.Invoice)
+                    .ThenInclude(i => i.CourseInstance)
+                    .ThenInclude(i => i.Course)
+                    .Include(i => i.Invoice)
+                    .ThenInclude(i => i.GroupCourseInstance)
+                    .ThenInclude(i => i.Course);
             }
             catch (Exception e)
             {
