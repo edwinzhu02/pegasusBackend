@@ -69,7 +69,8 @@ namespace Pegasus_backend.Controllers
                     l.OrgId == lesson.OrgId && l.IsCanceled != 1 && l.LessonId != lesson.LessonId &&
                     ((l.BeginTime > lesson.BeginTime && l.BeginTime < lesson.EndTime) ||
                     (l.EndTime > lesson.BeginTime && l.EndTime < lesson.EndTime) ||
-                    (l.BeginTime <= lesson.BeginTime && l.EndTime >= lesson.EndTime)))
+                    (l.BeginTime <= lesson.BeginTime && l.EndTime >= lesson.EndTime) ||
+                    (l.BeginTime > lesson.BeginTime && l.EndTime < lesson.EndTime)))
                     .ToListAsync();
                 conflictTeacherLessons = await _ablemusicContext.Lesson.Where(l => l.TeacherId == lesson.TeacherId &&
                     l.IsCanceled != 1 && l.LessonId != lesson.LessonId &&
