@@ -38,21 +38,21 @@ namespace Pegasus_backend.Controllers
         }
 
 
-        [HttpGet("btn/{begin}&{end}")]
-        public Result<IEnumerable<Payment>> LookUpBetweenDates(DateTime begin, DateTime end)
+        [HttpGet("paymentBetween/{beginDate}&{endDate}")]
+        public Result<IEnumerable<Payment>> LookUpBetweenDates(DateTime beginDate, DateTime endDate)
         {
-            var result = _service.LookUpByDate(begin,end);
+            var result = _service.LookUpByDate(beginDate,endDate);
             return result;
         }
         
-        [HttpGet("btndesc/{begin}&{end}")]
-        public Result<IEnumerable<Payment>> LookUpBetweenDatesDesc(DateTime begin, DateTime end)
+        [HttpGet("paymentBetweenDesc/{beginDate}&{endDate}")]
+        public Result<IEnumerable<Payment>> LookUpBetweenDatesDesc(DateTime beginDate, DateTime endDate)
         {
-            var result = _service.LookUpByDateDesc(begin,end);
+            var result = _service.LookUpByDateDesc(beginDate,endDate);
             return result;
         }
         
-        [HttpGet("asce")]
+        [HttpGet("PaymentInAsceOrder")]
         public Result<IEnumerable<Payment>> LookUpAsce()
         {
             var result = _service.LookUpByOrderASCE();
@@ -60,7 +60,7 @@ namespace Pegasus_backend.Controllers
             
         }
         
-        [HttpGet("desc")]
+        [HttpGet("PaymentInDescOrder")]
         public Result<IEnumerable<Payment>> LookUpDesc()
         {
             var result = _service.LookUpByOrderDESC();

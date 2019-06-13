@@ -39,19 +39,20 @@ namespace Pegasus_backend.Controllers
                     .Include(s => s.Teacher)
                     .Include(s=>s.Room)
                     .Include(s=>s.Org)
+                    .Include(s=>s.TrialCourse)
                     .Include(group => group.GroupCourseInstance)
                     .ThenInclude(learnerCourse => learnerCourse.LearnerGroupCourse)
                     .ThenInclude(learner => learner.Learner)
                     .Select(s =>new {id = s.LessonId, resourceId = s.RoomId, start = s.BeginTime,end=s.EndTime,
-                        title=IsNull(s.GroupCourseInstance)?"1":"G",description="",
+                        title=IsNull(s.GroupCourseInstance)?IsNull(s.CourseInstance)?"T":"1":"G",description="",
                         teacher=s.Teacher.FirstName.ToString(),
-                        student=IsNull(s.GroupCourseInstance)?new List<string>{s.Learner.FirstName}:s.GroupCourseInstance.LearnerGroupCourse.Select(w=>w.Learner.FirstName),
+                        student=IsNull(s.GroupCourseInstance)?IsNull(s.CourseInstance)?new List<string>{s.Learner.FirstName}:new List<string>{s.Learner.FirstName}:s.GroupCourseInstance.LearnerGroupCourse.Select(w=>w.Learner.FirstName),
                         IsGroup=!IsNull(s.GroupCourseInstance),
                         info = new
                         {
                             s.Room.RoomName,s.RoomId,s.Org.OrgName,s.OrgId,s.TeacherId,TeacherName=s.Teacher.FirstName,s.BeginTime,s.EndTime,
-                            CourseName=!IsNull(s.GroupCourseInstance)?s.GroupCourseInstance.Course.CourseName:s.CourseInstance.Course.CourseName,
-                            s.LessonId,courseId=!IsNull(s.GroupCourseInstance)?s.GroupCourseInstance.Course.CourseId:s.CourseInstance.Course.CourseId,s.LearnerId
+                            CourseName=!IsNull(s.GroupCourseInstance)?s.GroupCourseInstance.Course.CourseName:IsNull(s.CourseInstance)?s.TrialCourse.CourseName:s.CourseInstance.Course.CourseName,
+                            s.LessonId,courseId=!IsNull(s.GroupCourseInstance)?s.GroupCourseInstance.Course.CourseId:IsNull(s.CourseInstance)?s.TrialCourseId:s.CourseInstance.Course.CourseId,s.LearnerId
                         }
                     });
                     
@@ -69,41 +70,6 @@ namespace Pegasus_backend.Controllers
         }
 
         
-        //GET api/lesson/:lessonId
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetLessonById(int id)
-        {
-            Result<Object> result = new Result<object>();
-            try
-            {
-                var item = _pegasusContext.Lesson
-                    .Include(s => s.Teacher)
-                    .Include(s=>s.Learner)
-                    .Include(s=>s.Room)
-                    .Include(s=>s.Org)
-                    .Include(s=>s.GroupCourseInstance)
-                    .ThenInclude(w=>w.Course)
-                    .Include(s=>s.CourseInstance)
-                    .ThenInclude(w=>w.Course)
-                    .Select(s => new
-                    {
-                        CourseName=!IsNull(s.GroupCourseInstance)?s.GroupCourseInstance.Course.CourseName:s.CourseInstance.Course.CourseName,
-                        TeacherFirstName=s.Teacher.FirstName,s.BeginTime,s.EndTime,s.LessonId,
-                        Room=s.Room.RoomName, Branch=s.Org.OrgName, s.IsCanceled, CancelReson =s.Reason,
-                        s.IsTrial,Learner = s.Learner.FirstName, Learners= ""
-                    })
-                    .FirstOrDefault(s => s.LessonId == id);
-                result.Data = item;
-            }
-            catch (Exception ex)
-            {
-                result.IsSuccess = false;
-                result.ErrorMessage = ex.ToString();
-                return BadRequest(result); 
-            }
-
-            return Ok(result);
-        }
         [HttpGet("[action]/{userId}/{beginDate}")]
         public async Task<IActionResult> GetLessonsForTeacher(byte userId, DateTime beginDate)
         {
@@ -129,9 +95,9 @@ namespace Pegasus_backend.Controllers
                     .Include(s=>s.Org)
                     .Select(q=>new
                     {
-                        title=IsNull(q.GroupCourseInstanceId)?"1":"G",start=q.BeginTime,end=q.EndTime,
-                        student=IsNull(q.GroupCourseInstance)?new List<string>{q.Learner.FirstName}:q.GroupCourseInstance.LearnerGroupCourse.Select(w=>w.Learner.FirstName),
-                        description="", courseName=IsNull(q.GroupCourseInstanceId)?q.CourseInstance.Course.CourseName:q.GroupCourseInstance.Course.CourseName,
+                        title=IsNull(q.GroupCourseInstance)?IsNull(q.CourseInstance)?"T":"1":"G",start=q.BeginTime,end=q.EndTime,
+                        student=IsNull(q.GroupCourseInstance)?IsNull(q.CourseInstance)?new List<string>{q.Learner.FirstName}:new List<string>{q.Learner.FirstName}:q.GroupCourseInstance.LearnerGroupCourse.Select(w=>w.Learner.FirstName),
+                        description="", CourseName=!IsNull(q.GroupCourseInstance)?q.GroupCourseInstance.Course.CourseName:IsNull(q.CourseInstance)?q.TrialCourse.CourseName:q.CourseInstance.Course.CourseName,
                         orgName= q.Org.OrgName, roomName=q.Room.RoomName
                     });
                 result.Data = await details.ToListAsync();
@@ -245,17 +211,13 @@ namespace Pegasus_backend.Controllers
                                 s.EndTime.Value.Date <= endDate.Value.Date && s.OrgId == orgId)
                     .Select(s => new
                     {
-                        CourseName = !IsNull(s.GroupCourseInstance)
-                            ? s.GroupCourseInstance.Course.CourseName
-                            : s.CourseInstance.Course.CourseName,
+                        CourseName=!IsNull(s.GroupCourseInstance)?s.GroupCourseInstance.Course.CourseName:IsNull(s.CourseInstance)?s.TrialCourse.CourseName:s.CourseInstance.Course.CourseName,
                         TeacherFirstName = s.Teacher.FirstName, s.BeginTime, s.EndTime, s.LessonId,
                         Room = s.Room.RoomName, Branch = s.Org.OrgName, s.IsCanceled, CancelReson = s.Reason,
                         s.IsConfirm,
                         s.IsTrial, Learner = s.Learner.FirstName, Learners = "", s.LearnerId, s.RoomId, s.TeacherId,
                         s.OrgId,
-                        courseId = !IsNull(s.GroupCourseInstance)
-                            ? s.GroupCourseInstance.Course.CourseId
-                            : s.CourseInstance.Course.CourseId
+                        courseId=!IsNull(s.GroupCourseInstance)?s.GroupCourseInstance.Course.CourseId:IsNull(s.CourseInstance)?s.TrialCourseId:s.CourseInstance.Course.CourseId
                     });
                 
                 result.Data = await items.ToListAsync();
