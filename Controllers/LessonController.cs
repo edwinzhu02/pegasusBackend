@@ -176,7 +176,6 @@ namespace Pegasus_backend.Controllers
                         orgName= q.Org.OrgName, roomName=q.Room.RoomName
                     });
                 result.Data = await details.ToListAsync();
-
                 
             }
             catch (Exception ex)

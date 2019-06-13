@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Pegasus_backend.Models
 {
@@ -7,6 +8,7 @@ namespace Pegasus_backend.Models
     {
         public int id { get; set; }
         public int? CourseId { get; set; }
+        [JsonProperty(Required = Required.Always)]
         public short? TeacherId { get; set; }
         public short? OrgId { get; set; }
         public DateTime? BeginDate { get; set; }
