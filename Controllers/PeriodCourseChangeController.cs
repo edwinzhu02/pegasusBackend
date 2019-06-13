@@ -150,7 +150,7 @@ namespace Pegasus_backend.Controllers
             amendment.LearnerId = inputObj.LearnerId;
             amendment.RoomId = inputObj.RoomId;
             amendment.BeginDate = inputObj.BeginDate;
-            amendment.EndDate = inputObj.EndDate;
+            amendment.EndDate = inputObj.IsTemporary == 1 ? inputObj.EndDate : null;
             amendment.CreatedAt = DateTime.Now;
             amendment.Reason = inputObj.Reason;
             amendment.IsTemporary = inputObj.IsTemporary;
