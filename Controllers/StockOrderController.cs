@@ -42,7 +42,7 @@ namespace Pegasus_backend.Controllers
                                 Select(x=>new {x.OrderId,x.OrderType,x.ReceiptImg,x.Quantity,
                                 x.BuyingPrice,x.OrgId,x.Org.OrgName,x.StaffId,x.Staff.FirstName,x.Staff.LastName,
                                 x.Product.ProductId,x.Product.ProductName,x.Product.ProdType.ProdTypeId,x.Product.ProdType.ProdTypeName,
-                                x.Product.ProdType.ProdCat.ProdCatId,x.Product.ProdType.ProdCat.ProdCatName
+                                x.Product.ProdType.ProdCat.ProdCatId,x.Product.ProdType.ProdCat.ProdCatName,x.CreatedAt
                                 }).                               
                                 ToListAsync();
             }
