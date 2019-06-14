@@ -196,8 +196,26 @@ namespace Pegasus_backend.Services
             returnResult.Data = result;
             return returnResult;
         }
-        
 
+        public async Task<Result<IEnumerable<Lesson>>> GetLessonByTeacher(int teacherId)
+        {
+            Result<IEnumerable<Lesson>> result = new Result<IEnumerable<Lesson>>();
+            IEnumerable<Lesson> lessons;
+            try
+            {
+                lessons = await _context.Lesson.Where(i => i.TeacherId == teacherId).ToListAsync();
+                
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return result;
+            }
+            result.IsSuccess = true;
+            result.Data = lessons;
+            return result;
+        }
 
 
     }
