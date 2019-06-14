@@ -40,7 +40,7 @@ namespace Pegasus_backend.Controllers
                     {
                         s.Dob,s.Visa,s.Email,s.Photo,s.Gender,s.IdType,
                         s.IdPhoto,s.StaffId,s.IdNumber,s.LastName,s.FirstName,s.HomePhone,s.IrdNumber,
-                        s.StaffOrg,s.ExpiryDate,s.StockOrder,s.MobilePhone,s.User.Role.RoleName
+                        s.StaffOrg,s.ExpiryDate,s.StockOrder,s.MobilePhone,s.User.Role.RoleName,s.User.Role.RoleId
                     })
                     .ToListAsync();
                 return Ok(result);
