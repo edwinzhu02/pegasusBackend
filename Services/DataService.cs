@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Pegasus_backend.pegasusContext;
 using Pegasus_backend.ActionFilter;
 using Pegasus_backend.Models;
+using Pegasus_backend.Services;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.EntityFrameworkCore.Scaffolding.Internal;
@@ -217,6 +218,79 @@ namespace Pegasus_backend.Services
             return result;
         }
 
+        public (DateTime bgnWeek, DateTime endWeek) GetWeekInterval(DateTime date)
+        {
+            var week = date.DayOfWeek;
+            DateTime begin;
+            DateTime end;
+            switch (week)
+            {
+                case DayOfWeek.Monday:
+                    begin = date;
+                    end = date.AddDays(6.0);
+                    break;
+                case DayOfWeek.Tuesday:
+                    begin = date.AddDays(-1);
+                    end = date.AddDays(5.0);
+                    break;
+                case DayOfWeek.Wednesday:
+                    begin = date.AddDays(-2);
+                    end = date.AddDays(4.0);
+                    break;
+                case DayOfWeek.Thursday:
+                    begin = date.AddDays(-3);
+                    end = date.AddDays(3.0);
+                    break;
+                case DayOfWeek.Friday:
+                    begin = date.AddDays(-4);
+                    end = date.AddDays(2.0);
+                    break;
+                case DayOfWeek.Saturday:
+                    begin = date.AddDays(-5);
+                    end = date.AddDays(1.0);
+                    break;
+                case DayOfWeek.Sunday:
+                    begin = date.AddDays(-6);
+                    end = date;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+                
+            }
 
+            return (begin, end);
+        }
+        
+        
+        public Result<IEnumerable<Lesson>> FilterLessonByDate(Task<Result<IEnumerable<Lesson>>> inputLesson,DateTime inputDate)
+        {
+            var (begin, end) = GetWeekInterval(inputDate);
+            var result = new Result<IEnumerable<Lesson>>();
+            if (!inputLesson.Result.IsSuccess)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = inputLesson.Result.ErrorMessage;
+                return result;
+            }
+
+            IEnumerable<Lesson> lessons;
+            try
+            {
+                lessons = inputLesson.Result.Data.Where(d=>DataServicePayment.Between(d.BeginTime,begin,end));
+            }
+            catch (Exception e)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = e.Message;
+                return result;
+                
+            }
+            result.IsSuccess = true;
+            result.Data = lessons;
+            return result;
+
+        }
+        
+        
     }
 }
