@@ -76,28 +76,42 @@ namespace Pegasus_backend.Controllers
             List<Lesson> conflictTeacherLessons = new List<Lesson>();
             try
             {
-                if (newLesson.RoomId != oldLesson.RoomId || newLesson.OrgId != oldLesson.OrgId ||
-                newLesson.BeginTime != oldLesson.BeginTime || newLesson.EndTime != oldLesson.EndTime)
-                {
-                    conflictRooms = await _ablemusicContext.Lesson.Where(l => l.RoomId == newLesson.RoomId &&
+                //if (newLesson.RoomId != oldLesson.RoomId || newLesson.OrgId != oldLesson.OrgId ||
+                //newLesson.BeginTime != oldLesson.BeginTime || newLesson.EndTime != oldLesson.EndTime)
+                //{
+                //    conflictRooms = await _ablemusicContext.Lesson.Where(l => l.RoomId == newLesson.RoomId &&
+                //    l.OrgId == newLesson.OrgId && l.IsCanceled != 1 && l.LessonId != newLesson.LessonId &&
+                //    ((l.BeginTime > newLesson.BeginTime && l.BeginTime < newLesson.EndTime) ||
+                //    (l.EndTime > newLesson.BeginTime && l.EndTime < newLesson.EndTime) ||
+                //    (l.BeginTime <= newLesson.BeginTime && l.EndTime >= newLesson.EndTime)))
+                //    .ToListAsync();
+                //}
+                //if (newLesson.TeacherId != oldLesson.TeacherId || newLesson.BeginTime != oldLesson.BeginTime ||
+                //    newLesson.EndTime != oldLesson.EndTime)
+                //{
+                //    DateTime beginTime = newLesson.BeginTime.Value.AddMinutes(-60);
+                //    DateTime endTime = newLesson.EndTime.Value.AddMinutes(60);
+                //    conflictTeacherLessons = await _ablemusicContext.Lesson.Where(l => l.TeacherId == newLesson.TeacherId &&
+                //    l.IsCanceled != 1 && l.LessonId != newLesson.LessonId &&
+                //    ((l.BeginTime > beginTime && l.BeginTime < endTime) ||
+                //    (l.EndTime > beginTime && l.EndTime < endTime) ||
+                //    (l.BeginTime <= beginTime && l.EndTime >= endTime)))
+                //    .ToListAsync();
+                //}
+                conflictRooms = await _ablemusicContext.Lesson.Where(l => l.RoomId == newLesson.RoomId &&
                     l.OrgId == newLesson.OrgId && l.IsCanceled != 1 && l.LessonId != newLesson.LessonId &&
                     ((l.BeginTime > newLesson.BeginTime && l.BeginTime < newLesson.EndTime) ||
                     (l.EndTime > newLesson.BeginTime && l.EndTime < newLesson.EndTime) ||
                     (l.BeginTime <= newLesson.BeginTime && l.EndTime >= newLesson.EndTime)))
                     .ToListAsync();
-                }
-                if (newLesson.TeacherId != oldLesson.TeacherId || newLesson.BeginTime != oldLesson.BeginTime ||
-                    newLesson.EndTime != oldLesson.EndTime)
-                {
-                    DateTime beginTime = newLesson.BeginTime.Value.AddMinutes(-60);
-                    DateTime endTime = newLesson.EndTime.Value.AddMinutes(60);
-                    conflictTeacherLessons = await _ablemusicContext.Lesson.Where(l => l.TeacherId == newLesson.TeacherId &&
-                    l.IsCanceled != 1 && l.LessonId != newLesson.LessonId &&
-                    ((l.BeginTime > beginTime && l.BeginTime < endTime) ||
-                    (l.EndTime > beginTime && l.EndTime < endTime) ||
-                    (l.BeginTime <= beginTime && l.EndTime >= endTime)))
-                    .ToListAsync();
-                }
+                DateTime beginTime = newLesson.BeginTime.Value.AddMinutes(-60);
+                DateTime endTime = newLesson.EndTime.Value.AddMinutes(60);
+                conflictTeacherLessons = await _ablemusicContext.Lesson.Where(l => l.TeacherId == newLesson.TeacherId &&
+                l.IsCanceled != 1 && l.LessonId != newLesson.LessonId &&
+                ((l.BeginTime > beginTime && l.BeginTime < endTime) ||
+                (l.EndTime > beginTime && l.EndTime < endTime) ||
+                (l.BeginTime <= beginTime && l.EndTime >= endTime)))
+                .ToListAsync();
             }
             catch(Exception ex)
             {
@@ -133,22 +147,28 @@ namespace Pegasus_backend.Controllers
             Pegasus_backend.pegasusContext.Org newOrg;
             Room oldRoom;
             Room newRoom;
-            List<Course> courses;
+            Course course;
             List<Holiday> holidays;
             try
             {
                 newTeacher = await _ablemusicContext.Teacher.FirstOrDefaultAsync(t => t.TeacherId == newLesson.TeacherId);
                 oldTeacher = newLesson.TeacherId == oldLesson.TeacherId ? newTeacher : 
                     await _ablemusicContext.Teacher.FirstOrDefaultAsync(t => t.TeacherId == oldLesson.TeacherId);
-                courses = (from c in _ablemusicContext.Course
-                           join oto in _ablemusicContext.One2oneCourseInstance on c.CourseId equals oto.CourseId
-                           join l in _ablemusicContext.Lesson on oto.CourseInstanceId equals l.CourseInstanceId
-                           where l.LessonId == newLesson.LessonId
-                           select new Course
-                           {
-                               CourseId = c.CourseId,
-                               CourseName = c.CourseName
-                           }).ToList();
+                if(oldLesson.IsTrial == 1)
+                {
+                    course = await _ablemusicContext.Course.Where(c => c.CourseId == oldLesson.TrialCourseId).FirstOrDefaultAsync();
+                } else
+                {
+                    course = await (from c in _ablemusicContext.Course
+                                    join oto in _ablemusicContext.One2oneCourseInstance on c.CourseId equals oto.CourseId
+                                    join l in _ablemusicContext.Lesson on oto.CourseInstanceId equals l.CourseInstanceId
+                                    where l.LessonId == newLesson.LessonId
+                                    select new Course
+                                    {
+                                        CourseId = c.CourseId,
+                                        CourseName = c.CourseName
+                                    }).FirstOrDefaultAsync();
+                }
                 holidays = await _ablemusicContext.Holiday.ToListAsync();
                 oldOrg = await _ablemusicContext.Org.Where(o => o.OrgId == oldLesson.OrgId).FirstOrDefaultAsync();
                 newOrg = newLesson.OrgId == oldLesson.OrgId ? oldOrg :
@@ -163,13 +183,13 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = e.Message;
                 return NotFound(result);
             }
-            if (courses.Count <= 0)
+            if (course == null)
             {
                 result.IsSuccess = false;
                 result.ErrorMessage = "Fail to found course name under this lesson";
                 return NotFound(result);
             }
-            string courseName = courses[0].CourseName;
+            string courseName = course.CourseName;
 
             DateTime oldTodoDate = oldLesson.BeginTime.Value.AddDays(-1);
             DateTime newTodoDate = newLesson.BeginTime.Value.AddDays(-1);
@@ -277,6 +297,7 @@ namespace Pegasus_backend.Controllers
             newLesson.CourseInstanceId = oldLesson.CourseInstanceId;
             newLesson.GroupCourseInstanceId = oldLesson.GroupCourseInstanceId;
             newLesson.IsTrial = oldLesson.IsTrial;
+            newLesson.TrialCourseId = oldLesson.TrialCourseId;
             newLesson.InvoiceId = oldLesson.InvoiceId;
 
             ////oldLesson.LearnerId = newLesson.LearnerId;

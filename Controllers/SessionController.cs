@@ -290,27 +290,33 @@ namespace Pegasus_backend.Controllers
 
             bool isGroupCourse = lesson.LearnerId == null;
             Teacher teacher;
-            List<Course> courses;
+            Course course;
             List<Holiday> holidays;
             try
             {
                 teacher = await _ablemusicContext.Teacher.FirstOrDefaultAsync(t => t.TeacherId == lesson.TeacherId);
-                courses = isGroupCourse ? (from c in _ablemusicContext.Course
-                                               join gc in _ablemusicContext.GroupCourseInstance on c.CourseId equals gc.CourseId
-                                               where gc.GroupCourseInstanceId == lesson.GroupCourseInstanceId
-                                               select new Course
-                                               {
-                                                   CourseId = c.CourseId,
-                                                   CourseName = c.CourseName
-                                               }).ToList() :
-                                               (from c in _ablemusicContext.Course
-                                                join oto in _ablemusicContext.One2oneCourseInstance on c.CourseId equals oto.CourseId
-                                                where oto.CourseInstanceId == lesson.CourseInstanceId
-                                                select new Course
-                                                {
-                                                    CourseId = c.CourseId,
-                                                    CourseName = c.CourseName
-                                                }).ToList();
+                if(lesson.IsTrial == 1)
+                {
+                    course = await _ablemusicContext.Course.Where(c => c.CourseId == lesson.TrialCourseId).FirstOrDefaultAsync();
+                } else
+                {
+                    course = isGroupCourse ? await (from c in _ablemusicContext.Course
+                                                    join gc in _ablemusicContext.GroupCourseInstance on c.CourseId equals gc.CourseId
+                                                    where gc.GroupCourseInstanceId == lesson.GroupCourseInstanceId
+                                                    select new Course
+                                                    {
+                                                        CourseId = c.CourseId,
+                                                        CourseName = c.CourseName
+                                                    }).FirstOrDefaultAsync() :
+                                          await (from c in _ablemusicContext.Course
+                                                 join oto in _ablemusicContext.One2oneCourseInstance on c.CourseId equals oto.CourseId
+                                                 where oto.CourseInstanceId == lesson.CourseInstanceId
+                                                 select new Course
+                                                 {
+                                                     CourseId = c.CourseId,
+                                                     CourseName = c.CourseName
+                                                 }).FirstOrDefaultAsync();
+                }                
                 holidays = await _ablemusicContext.Holiday.ToListAsync();
             }
             catch (Exception e)
@@ -320,13 +326,13 @@ namespace Pegasus_backend.Controllers
                 return NotFound(result);
             }
             
-            if (courses.Count <= 0)
+            if (course == null)
             {
                 result.IsSuccess = false;
                 result.ErrorMessage = "Fail to found course name under this lesson";
                 return NotFound(result);
             }
-            string courseName = courses[0].CourseName;
+            string courseName = course.CourseName;
 
             DateTime todoDate = lesson.BeginTime.Value.AddDays(-1);
             foreach(var holiday in holidays)
