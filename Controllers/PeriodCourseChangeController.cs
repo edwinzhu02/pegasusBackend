@@ -155,6 +155,7 @@ namespace Pegasus_backend.Controllers
             amendment.Reason = inputObj.Reason;
             amendment.IsTemporary = inputObj.IsTemporary;
             amendment.AmendType = 2;
+            amendment.TeacherId = inputObj.TeacherId;
             amendment.CourseScheduleId = inputObj.CourseScheduleId;
 
             foreach (var holiday in holidays)

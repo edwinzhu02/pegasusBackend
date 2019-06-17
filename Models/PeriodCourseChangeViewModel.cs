@@ -10,6 +10,8 @@ namespace Pegasus_backend.Models
     {
         [Required(ErrorMessage = "UserId is required")]
         public short UserId { get; set; }
+        [Required(ErrorMessage = "TeacherId is required")]
+        public short? TeacherId { get; set; }
         [Required(ErrorMessage = "LearnerId is required")]
         public int LearnerId { get; set; }
         [Required(ErrorMessage = "BeginDate is required")]
