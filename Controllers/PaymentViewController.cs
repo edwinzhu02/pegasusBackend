@@ -17,7 +17,7 @@ namespace Pegasus_backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PaymentViewController:ControllerBase
+    public class PaymentViewController:BasicController
     {
         private readonly DataServicePayment _service;
         private IMapper _mapper;

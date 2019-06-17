@@ -52,7 +52,7 @@ namespace Pegasus_backend.Services
             return result;
         }
 
-        public bool Between(DateTime? input, DateTime? date1, DateTime? date2)
+        public static bool Between(DateTime? input, DateTime? date1, DateTime? date2)
         {
             var end = DateTime.Today;
             

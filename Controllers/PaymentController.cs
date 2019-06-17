@@ -274,7 +274,8 @@ namespace Pegasus_backend.Controllers
                         lesson.LearnerId = (int)invoice.LearnerId;
                         lesson.InvoiceId = invoice.InvoiceId;
                         lesson.IsConfirm = 0;
-                        lesson.IsCanceled = 0;                        
+                        lesson.IsCanceled = 0; 
+                        lesson.IsTrial = 0;                                                                       
 
                         string begintime = "";
                         string endtime = "";
