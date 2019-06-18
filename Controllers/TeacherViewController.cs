@@ -47,10 +47,10 @@ namespace Pegasus_backend.Controllers
         }
         
 
-        [HttpGet("isReachedHours/TeacherId={id}&LessonDate={date}")]
-        public Result<bool> IsReachedMinHours(int id, DateTime date)
+        [HttpGet("isHoursReached/TeacherId={id}&LessonDate={date}")]
+        public Result<bool> IsMinHoursReached(int id, DateTime date)
         {
-           return _service.IsReachedMinimumHours(id, GetLessonsByTeacherIdAndDate(id, date));
+           return _service.IsMinimumHoursReached(id, GetLessonsByTeacherIdAndDate(id, date));
         }
 
         [HttpGet("hoursDiff/TeacherId={id}&LessonDate={date}")]

@@ -353,7 +353,7 @@ namespace Pegasus_backend.Services
         }
         
         
-        public Result<bool> IsReachedMinimumHours(int teacherId, Result<IEnumerable<Lesson>> inputLesson)
+        public Result<bool> IsMinimumHoursReached (int teacherId, Result<IEnumerable<Lesson>> inputLesson)
         {
             var result = new Result<bool>();
             var teacher = GetTeacherById(teacherId);

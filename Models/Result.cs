@@ -12,7 +12,7 @@ namespace Pegasus_backend.Models
         public string ErrorCode { get; set; }
         public bool IsFound { get; set; } = true;
         public string ErrorMessage { get; set; }
-        public string Note { get; set; } //in the case if isSuccess=true and addtional information is needed
+        public string Note { get; set; } //in the case if isSuccess=true and additional information is needed
         public T Data { get; set; }
         
         
