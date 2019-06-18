@@ -371,7 +371,7 @@ namespace Pegasus_backend.Services
                 result.IsSuccess = true;
                 result.Data = true;
                 return result;
-            }git
+            }
             
             if (!lessonsHours.IsSuccess)
             {
