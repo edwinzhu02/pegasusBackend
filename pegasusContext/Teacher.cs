@@ -8,6 +8,7 @@ namespace Pegasus_backend.pegasusContext
     {
         public Teacher()
         {
+            Amendment = new HashSet<Amendment>();
             AvailableDays = new HashSet<AvailableDays>();
             GroupCourseInstance = new HashSet<GroupCourseInstance>();
             Lesson = new HashSet<Lesson>();
@@ -54,7 +55,7 @@ namespace Pegasus_backend.pegasusContext
         [JsonIgnore]
         public ICollection<GroupCourseInstance> GroupCourseInstance { get; set; }
         public ICollection<Lesson> Lesson { get; set; }
-        [JsonIgnore]
+        [JsonIgnore] 
         public ICollection<One2oneCourseInstance> One2oneCourseInstance { get; set; }
         public ICollection<Rating> Rating { get; set; }
         public ICollection<RemindLog> RemindLog { get; set; }
