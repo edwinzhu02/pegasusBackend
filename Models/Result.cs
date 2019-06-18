@@ -12,8 +12,9 @@ namespace Pegasus_backend.Models
         public string ErrorCode { get; set; }
         public bool IsFound { get; set; } = true;
         public string ErrorMessage { get; set; }
+        public string Note { get; set; }
         public T Data { get; set; }
         
-        public string Note { get; set; }
+        
     }
 }
