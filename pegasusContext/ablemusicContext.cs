@@ -2697,6 +2697,10 @@ namespace Pegasus_backend.pegasusContext
                     .HasColumnName("level")
                     .HasColumnType("tinyint(4)");
 
+                entity.Property(e => e.MinimumHours)
+                    .HasColumnName("minimum_hours")
+                    .HasColumnType("tinyint(4)");
+
                 entity.Property(e => e.MobilePhone)
                     .HasColumnName("mobile_phone")
                     .HasMaxLength(40)
