@@ -8,14 +8,14 @@ namespace Pegasus_backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class ValuesController : BasicController
     {
         
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public IActionResult Get()
         {
-            return new string[] {"value1", "value2"};
+            return Ok(toNZTimezone(DateTime.UtcNow));
         }
 
         // GET api/values/5

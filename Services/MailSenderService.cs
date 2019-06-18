@@ -32,7 +32,7 @@ namespace Pegasus_backend.Services
 
                     //pegasusContext.ablemusicContext ablemusicContext = new pegasusContext.ablemusicContext();
                     //var remindLog = ablemusicContext.RemindLog.Where(r => r.RemindId == remindLogId).FirstOrDefault();
-                    //remindLog.EmailAt = DateTime.Now;
+                    //remindLog.EmailAt = toNZTimezone(DateTime.UtcNow);
                     //remindLog.ReceivedFlag = 1;
                     //ablemusicContext.SaveChanges();
                     //ablemusicContext.Dispose();

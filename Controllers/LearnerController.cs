@@ -176,7 +176,7 @@ namespace Pegasus_backend.Controllers
                     
                     
                     //upload file
-                    var strDateTime = DateTime.Now.ToString("yyMMddhhmmssfff");
+                    var strDateTime = toNZTimezone(DateTime.UtcNow).ToString("yyMMddhhmmssfff");
                    
                     if (image != null)
                     {
@@ -259,13 +259,13 @@ namespace Pegasus_backend.Controllers
                     var newLearner = new Learner();
                     _mapper.Map(detailsJson, newLearner);
                     newLearner.IsActive = 1;
-                    newLearner.CreatedAt = DateTime.Now;
+                    newLearner.CreatedAt = toNZTimezone(DateTime.UtcNow);
                     _pegasusContext.Add(newLearner);
                     await _pegasusContext.SaveChangesAsync();
                     
                     newLearner.LearnerGroupCourse.ToList().ForEach(s =>
                     {
-                        s.CreatedAt=DateTime.Now;
+                        s.CreatedAt=toNZTimezone(DateTime.UtcNow);
                         s.IsActivate = 1;
                         _pegasusContext.Update(s);
                     });
@@ -302,7 +302,7 @@ namespace Pegasus_backend.Controllers
                     var newUser = new User
                     {
                         UserName = newLearner.Email,Password = "helloworld",
-                        CreatedAt = DateTime.Now,RoleId = 4, IsActivate = 1
+                        CreatedAt = toNZTimezone(DateTime.UtcNow),RoleId = 4, IsActivate = 1
                         
                     };
                     _pegasusContext.Add(newUser);
@@ -314,7 +314,7 @@ namespace Pegasus_backend.Controllers
                     await _pegasusContext.SaveChangesAsync();
                     
                     //upload file
-                    var strDateTime = DateTime.Now.ToString("yyMMddhhmmssfff");
+                    var strDateTime = toNZTimezone(DateTime.UtcNow).ToString("yyMMddhhmmssfff");
                    
                     if (image != null)
                     {

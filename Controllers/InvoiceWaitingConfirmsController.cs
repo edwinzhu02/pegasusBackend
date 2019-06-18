@@ -40,7 +40,7 @@ namespace Pegasus_backend.Controllers
                                                             join l in _ablemusicContext.Learner on so.OrgId equals l.OrgId
                                                             join iw in _ablemusicContext.InvoiceWaitingConfirm on l.LearnerId equals iw.LearnerId
                                                             join t in _ablemusicContext.Term on iw.TermId equals t.TermId
-                                                            where s.UserId == id && DateTime.Now.Date < t.EndDate && iw.IsActivate == 1
+                                                            where s.UserId == id && toNZTimezone(DateTime.UtcNow).Date < t.EndDate && iw.IsActivate == 1
                                                             select new InvoiceWaitingConfirm
                                                             {
                                                                 WaitingId = iw.WaitingId,
@@ -160,7 +160,7 @@ namespace Pegasus_backend.Controllers
             invoiceWaitingConfirm.IsPaid = 0;            
             invoiceWaitingConfirm.IsActivate = 1;
             invoiceWaitingConfirm.IsEmailSent = 0;
-            invoiceWaitingConfirm.CreatedAt = DateTime.Now;
+            invoiceWaitingConfirm.CreatedAt = toNZTimezone(DateTime.UtcNow);
             //for patch
             invoiceWaitingConfirm.EndDate = invoiceWaitingConfirmUpdate.EndDate;
             invoiceWaitingConfirm.DueDate = invoiceWaitingConfirmUpdate.DueDate;

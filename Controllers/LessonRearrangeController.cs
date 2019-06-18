@@ -293,7 +293,7 @@ namespace Pegasus_backend.Controllers
             newLesson.LearnerId = oldLesson.LearnerId;
             newLesson.IsCanceled = 0;
             newLesson.Reason = "";
-            newLesson.CreatedAt = DateTime.Now;
+            newLesson.CreatedAt = toNZTimezone(DateTime.UtcNow);
             newLesson.CourseInstanceId = oldLesson.CourseInstanceId;
             newLesson.GroupCourseInstanceId = oldLesson.GroupCourseInstanceId;
             newLesson.IsTrial = oldLesson.IsTrial;
@@ -347,7 +347,7 @@ namespace Pegasus_backend.Controllers
                 " " + oldRoom.RoomName + " has been rearanged to be given by teacher " + newTeacher.FirstName + " " +
                 newTeacher.LastName + " from " + newLesson.BeginTime.ToString() + " to " + newLesson.EndTime.ToString() +
                 " at " + newOrg.OrgName + " " + newRoom.RoomName;
-            todolistForLearner.CreatedAt = DateTime.Now;
+            todolistForLearner.CreatedAt = toNZTimezone(DateTime.UtcNow);
             todolistForLearner.ProcessedAt = null;
             todolistForLearner.ProcessFlag = 0;
             todolistForLearner.UserId = userId;
@@ -370,7 +370,7 @@ namespace Pegasus_backend.Controllers
                 " " + oldRoom.RoomName + " has been rearanged to be given by " + newTeacher.FirstName + " " +
                 newTeacher.LastName + " from " + newLesson.BeginTime.ToString() + " to " +
                 newLesson.EndTime.ToString() + " at " + newOrg.OrgName + " " + newRoom.RoomName;
-            todolistForNewTeacher.CreatedAt = DateTime.Now;
+            todolistForNewTeacher.CreatedAt = toNZTimezone(DateTime.UtcNow);
             todolistForNewTeacher.ProcessedAt = null;
             todolistForNewTeacher.ProcessFlag = 0;
             todolistForNewTeacher.UserId = userId;
@@ -393,7 +393,7 @@ namespace Pegasus_backend.Controllers
                 " " + oldRoom.RoomName + " has been rearanged to be given by " + newTeacher.FirstName + " " +
                 newTeacher.LastName + " from " + newLesson.BeginTime.ToString() + " to " +
                 newLesson.EndTime.ToString() + " at " + newOrg.OrgName + " " + newRoom.RoomName;
-            todolistForOldTeacher.CreatedAt = DateTime.Now;
+            todolistForOldTeacher.CreatedAt = toNZTimezone(DateTime.UtcNow);
             todolistForOldTeacher.ProcessedAt = null;
             todolistForOldTeacher.ProcessFlag = 0;
             todolistForOldTeacher.UserId = userId;
@@ -417,7 +417,7 @@ namespace Pegasus_backend.Controllers
                 " at " + oldOrg.OrgName + " " + oldRoom.RoomName + " has been rearranged to be given by teacher " +
                 newTeacher.FirstName + " " + newTeacher.LastName + " from " + newLesson.BeginTime.ToString() + " to " +
                 newLesson.EndTime.ToString() + " at " + newOrg.OrgName + " " + newRoom.RoomName;
-            remindLogLearner.CreatedAt = DateTime.Now;
+            remindLogLearner.CreatedAt = toNZTimezone(DateTime.UtcNow);
             remindLogLearner.TeacherId = null;
             remindLogLearner.IsLearner = 1;
             remindLogLearner.ProcessFlag = 0;
@@ -441,7 +441,7 @@ namespace Pegasus_backend.Controllers
                 " at " + oldOrg.OrgName + " " + oldRoom.RoomName + " has been rearranged to be given by teacher " +
                 newTeacher.FirstName + " " + newTeacher.LastName + " from " + newLesson.BeginTime.ToString() + " to " +
                 newLesson.EndTime.ToString() + " at " + newOrg.OrgName + " " + newRoom.RoomName;
-            remindLogForOldTeacher.CreatedAt = DateTime.Now;
+            remindLogForOldTeacher.CreatedAt = toNZTimezone(DateTime.UtcNow);
             remindLogForOldTeacher.TeacherId = oldLesson.TeacherId;
             remindLogForOldTeacher.IsLearner = 0;
             remindLogForOldTeacher.ProcessFlag = 0;
@@ -465,7 +465,7 @@ namespace Pegasus_backend.Controllers
                 " at " + oldOrg.OrgName + " " + oldRoom.RoomName + " has been rearranged to be given by teacher " +
                 newTeacher.FirstName + " " + newTeacher.LastName + " from " + newLesson.BeginTime.ToString() + " to " +
                 newLesson.EndTime.ToString() + " at " + newOrg.OrgName + " " + newRoom.RoomName;
-            remindLogForNewTeacher.CreatedAt = DateTime.Now;
+            remindLogForNewTeacher.CreatedAt = toNZTimezone(DateTime.UtcNow);
             remindLogForNewTeacher.TeacherId = newLesson.TeacherId;
             remindLogForNewTeacher.IsLearner = 0;
             remindLogForNewTeacher.ProcessFlag = 0;

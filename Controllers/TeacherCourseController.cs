@@ -95,7 +95,7 @@ namespace Pegasus_backend.Controllers
                     {
                         TeacherId = model.TeacherId, PianoRates = model.TeacherWageRates.PianoRates, TheoryRates = model.TeacherWageRates.TheoryRates,
                         GroupRates = model.TeacherWageRates.GroupRates, OthersRates = model.TeacherWageRates.OthersRates,
-                        CreateAt = DateTime.Now, IsActivate = 1
+                        CreateAt = toNZTimezone(DateTime.UtcNow), IsActivate = 1
                     };
                     _pegasusContext.Add(teacherWageRate);
                     await _pegasusContext.SaveChangesAsync();
@@ -179,7 +179,7 @@ namespace Pegasus_backend.Controllers
                     {
                         TeacherId = model.TeacherId, PianoRates = model.TeacherWageRates.PianoRates, TheoryRates = model.TeacherWageRates.TheoryRates,
                         GroupRates = model.TeacherWageRates.GroupRates, OthersRates = model.TeacherWageRates.OthersRates,
-                        CreateAt = DateTime.Now, IsActivate = 1
+                        CreateAt = toNZTimezone(DateTime.UtcNow), IsActivate = 1
                     };
                     _pegasusContext.Add(teacherWageRate);
                     await _pegasusContext.SaveChangesAsync();
