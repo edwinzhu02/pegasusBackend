@@ -126,5 +126,25 @@ namespace Pegasus_backend.Controllers
                 return model;
             }
         }
+        protected DateTime toNZTimezone(DateTime utc)
+        {
+            DateTime nzTime = utc;
+            try
+            {
+                TimeZoneInfo cstZone = TimeZoneInfo.FindSystemTimeZoneById("New Zealand Standard Time");
+                nzTime = TimeZoneInfo.ConvertTimeFromUtc(utc, cstZone);
+                return nzTime;
+            }
+            catch (TimeZoneNotFoundException)
+            {
+                Console.WriteLine("The registry does not define the Central Standard Time zone.");
+                return nzTime;
+            }
+            catch (InvalidTimeZoneException)
+            {
+                Console.WriteLine("Registry data on the Central Standard Time zone has been corrupted.");
+                return nzTime;
+            }
+        }
     }
 }

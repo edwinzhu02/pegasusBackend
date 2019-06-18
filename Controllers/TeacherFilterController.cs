@@ -213,7 +213,7 @@ namespace Pegasus_backend.Controllers
                     org.OrgId,
                     org.OrgName,
                     Room = roomList,
-                    Teacher = teacherList
+                    Teacher = teacherList,
                 });
             }
             result.Data = teacherResults;

@@ -126,7 +126,7 @@ namespace Pegasus_backend.Controllers
                 amendment.RoomId = cs.RoomId;
                 amendment.BeginDate = inputObj.BeginDate;
                 amendment.EndDate = inputObj.EndDate;
-                amendment.CreatedAt = DateTime.Now;
+                amendment.CreatedAt = toNZTimezone(DateTime.UtcNow);
                 amendment.Reason = inputObj.Reason;
                 amendment.IsTemporary = null;
                 amendment.AmendType = 1;
@@ -203,7 +203,7 @@ namespace Pegasus_backend.Controllers
             todolistForLearner.ListName = "Period Dayoff Remind";
             todolistForLearner.ListContent = "Inform learner " + courseSchedule.LearnerFirstName + " " + courseSchedule.LearnerLastName +
                 " the period of dayoff for the course: " + courseSchedule.CourseName + " will finish soon by " + inputObj.EndDate.ToString();
-            todolistForLearner.CreatedAt = DateTime.Now;
+            todolistForLearner.CreatedAt = toNZTimezone(DateTime.UtcNow);
             todolistForLearner.ProcessedAt = null;
             todolistForLearner.ProcessFlag = 0;
             todolistForLearner.UserId = inputObj.UserId;
@@ -221,7 +221,7 @@ namespace Pegasus_backend.Controllers
             todolistForTeacher.ListContent = "Inform teacher " + courseSchedule.TeacherFirstName + " " + courseSchedule.TeacherLastName +
                 " the learner " + courseSchedule.LearnerFirstName + " " + courseSchedule.LearnerLastName + "'s dayoff for the course " + 
                 courseSchedule.CourseName + " will finish soon by " + inputObj.EndDate.ToString();
-            todolistForTeacher.CreatedAt = DateTime.Now;
+            todolistForTeacher.CreatedAt = toNZTimezone(DateTime.UtcNow);
             todolistForTeacher.ProcessedAt = null;
             todolistForTeacher.ProcessFlag = 0;
             todolistForTeacher.UserId = inputObj.UserId;
@@ -250,7 +250,7 @@ namespace Pegasus_backend.Controllers
             remindLogLearner.RemindType = 1;
             remindLogLearner.RemindContent = "Inform learner " + courseSchedule.LearnerFirstName + " " + courseSchedule.LearnerLastName +
                 " the period of dayoff for the course: " + courseSchedule.CourseName + " will finish soon by " + inputObj.EndDate.ToString();
-            remindLogLearner.CreatedAt = DateTime.Now;
+            remindLogLearner.CreatedAt = toNZTimezone(DateTime.UtcNow);
             remindLogLearner.TeacherId = null;
             remindLogLearner.IsLearner = 1;
             remindLogLearner.ProcessFlag = 0;
@@ -270,7 +270,7 @@ namespace Pegasus_backend.Controllers
             remindLogForTeacher.RemindContent = "Inform teacher " + courseSchedule.TeacherFirstName + " " + courseSchedule.TeacherLastName + 
                 " the learner " +courseSchedule.LearnerFirstName + " " + courseSchedule.LearnerLastName + "'s dayoff for the course " + 
                 courseSchedule.CourseName + " will finish soon by " + inputObj.EndDate.ToString();
-            remindLogForTeacher.CreatedAt = DateTime.Now;
+            remindLogForTeacher.CreatedAt = toNZTimezone(DateTime.UtcNow);
             remindLogForTeacher.TeacherId = courseSchedule.TeacherId;
             remindLogForTeacher.IsLearner = 0;
             remindLogForTeacher.ProcessFlag = 0;

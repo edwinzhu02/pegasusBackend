@@ -31,7 +31,7 @@ namespace Pegasus_backend.Controllers
             List<TodoList> todos = new List<TodoList>();
             try
             {
-                todos = await _ablemusicContext.TodoList.Where(t => t.UserId == userId && t.TodoDate == DateTime.Now.Date).ToListAsync();
+                todos = await _ablemusicContext.TodoList.Where(t => t.UserId == userId && t.TodoDate == toNZTimezone(DateTime.UtcNow).Date).ToListAsync();
             }
             catch(Exception ex)
             {
@@ -72,7 +72,7 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = "Todo not found";
                 return BadRequest(result);
             }
-            todo.ProcessedAt = DateTime.Now;
+            todo.ProcessedAt = toNZTimezone(DateTime.UtcNow);
             todo.ProcessFlag = 1;
             try
             {
