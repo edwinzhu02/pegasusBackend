@@ -65,5 +65,7 @@ namespace Pegasus_backend.pegasusContext
         public ICollection<TeacherTransaction> TeacherTransaction { get; set; }
         public ICollection<TeacherWageRates> TeacherWageRates { get; set; }
         public ICollection<TodoList> TodoList { get; set; }
+
+        public ICollection<Amendment> Amendment { get; set; }
     }
 }
