@@ -100,6 +100,9 @@ namespace Pegasus_backend.pegasusContext
                 entity.HasIndex(e => e.RoomId)
                     .HasName("R_28");
 
+                entity.HasIndex(e => e.TeacherId)
+                    .HasName("R_111");
+
                 entity.Property(e => e.AmendmentId)
                     .HasColumnName("amendment_id")
                     .HasColumnType("int(11)");
@@ -155,6 +158,10 @@ namespace Pegasus_backend.pegasusContext
                     .HasColumnName("room_id")
                     .HasColumnType("smallint(6)");
 
+                entity.Property(e => e.TeacherId)
+                    .HasColumnName("teacher_id")
+                    .HasColumnType("smallint(6)");
+
                 entity.HasOne(d => d.CourseInstance)
                     .WithMany(p => p.Amendment)
                     .HasForeignKey(d => d.CourseInstanceId)
@@ -179,6 +186,11 @@ namespace Pegasus_backend.pegasusContext
                     .WithMany(p => p.Amendment)
                     .HasForeignKey(d => d.RoomId)
                     .HasConstraintName("R_28");
+
+                entity.HasOne(d => d.Teacher)
+                    .WithMany(p => p.Amendment)
+                    .HasForeignKey(d => d.TeacherId)
+                    .HasConstraintName("R_111");
             });
 
             modelBuilder.Entity<AskOff>(entity =>
@@ -2683,6 +2695,10 @@ namespace Pegasus_backend.pegasusContext
 
                 entity.Property(e => e.Level)
                     .HasColumnName("level")
+                    .HasColumnType("tinyint(4)");
+
+                entity.Property(e => e.MinimumHours)
+                    .HasColumnName("minimum_hours")
                     .HasColumnType("tinyint(4)");
 
                 entity.Property(e => e.MobilePhone)

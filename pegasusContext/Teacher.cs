@@ -49,10 +49,11 @@ namespace Pegasus_backend.pegasusContext
         public string CvUrl { get; set; }
         public string FormUrl { get; set; }
         public string OtherfileUrl { get; set; }
+        public byte? MinimumHours { get; set; }
 
         public User User { get; set; }
+        public ICollection<Amendment> Amendment { get; set; }
         public ICollection<AvailableDays> AvailableDays { get; set; }
-        [JsonIgnore]
         public ICollection<GroupCourseInstance> GroupCourseInstance { get; set; }
         public ICollection<Lesson> Lesson { get; set; }
         [JsonIgnore] 
@@ -66,6 +67,6 @@ namespace Pegasus_backend.pegasusContext
         public ICollection<TeacherWageRates> TeacherWageRates { get; set; }
         public ICollection<TodoList> TodoList { get; set; }
 
-        public ICollection<Amendment> Amendment { get; set; }
+        //public ICollection<Amendment> Amendment { get; set; }
     }
 }
