@@ -198,6 +198,14 @@ namespace Pegasus_backend.Services
             return returnResult;
         }
 
+        /*
+         *    Teacher 
+         *            view
+         *                 methods
+         * 
+         */
+        
+        
         public async Task<Result<IEnumerable<Lesson>>> GetLessonByTeacher(int teacherId)
         {
             Result<IEnumerable<Lesson>> result = new Result<IEnumerable<Lesson>>();
@@ -290,6 +298,153 @@ namespace Pegasus_backend.Services
             return result;
 
         }
+
+        public Result<double> GetHours(Result<IEnumerable<Lesson>> inputLesson)
+        {
+            var result = new Result<double>();
+            if (!inputLesson.IsSuccess)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = inputLesson.ErrorMessage;
+                return result;
+            }
+
+            var lessons = inputLesson.Data;
+            var hours = new double();
+            foreach (var lesson in lessons)
+            {
+                if(lesson.EndTime ==null || lesson.BeginTime == null)
+                {
+                    result.IsSuccess = false;
+                    result.ErrorMessage = "Invalid lesson's begin or end time";
+                    return result;
+                    
+                }
+                
+                var hour = lesson.EndTime.GetValueOrDefault() - lesson.BeginTime.GetValueOrDefault();
+                hours += hour.TotalHours ;
+            }
+            result.IsSuccess = true;
+            result.Data = hours;
+            return result;
+            
+
+        }
+
+        public Result<Teacher> GetTeacherById(int id)
+        {
+            Result<Teacher> result = new Result<Teacher>();
+            var teacher = new Teacher();
+            try
+            {
+                teacher =  _context.Teacher.FirstOrDefault(i => i.TeacherId == id);
+                
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return result;
+            }
+            result.IsSuccess = true;
+            result.Data = teacher;
+            return result;
+            
+        }
+        
+        
+        public Result<bool> IsMinimumHoursReached (int teacherId, Result<IEnumerable<Lesson>> inputLesson)
+        {
+            var result = new Result<bool>();
+            var teacher = GetTeacherById(teacherId);
+            var lessonsHours = GetHours(inputLesson);
+            
+            if (!teacher.IsSuccess)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = teacher.ErrorMessage;
+                return result;
+            }
+            if (teacher.Data.MinimumHours==null)
+            {
+                result.Note = "No Minimum Hours Requirement";
+                result.IsSuccess = true;
+                result.Data = true;
+                return result;
+            }
+            
+            if (!lessonsHours.IsSuccess)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = lessonsHours.ErrorMessage;
+                return result;
+            }
+
+            
+            
+
+            var hours = lessonsHours.Data;
+            if (teacher.Data.MinimumHours<=hours)
+            {
+                result.IsSuccess = true;
+                result.Data = true;
+                return result;
+            }
+
+            
+            result.IsSuccess = true;
+            result.Data = false;
+            return result;
+
+
+
+        }
+
+        public Result<double> GetHoursDiff(int id, DateTime date)
+        {
+            var result = new Result<double>();
+            var teacher = GetTeacherById(id);
+            var lessons = FilterLessonByDate(GetLessonByTeacher(id),date);
+            if (!teacher.IsSuccess || !lessons.IsSuccess)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = teacher.ErrorMessage + lessons.ErrorMessage;
+                return result;
+            }
+            var hours = GetHours(lessons);
+            if (!hours.IsSuccess)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = hours.ErrorMessage;
+                return result;
+            }
+
+            if (teacher.Data.MinimumHours==null)
+            {
+                result.IsSuccess = true;
+                result.Note = "No Minimum Hours Requirement";
+                result.Data = 0;
+                return result;
+            }
+            
+            var minHours = teacher.Data.MinimumHours.GetValueOrDefault();
+            var diff = minHours - hours.Data;
+            if (diff<0)
+            {
+                
+                result.IsSuccess = true;
+                result.Data = 0;
+                return result;
+                
+            }
+            result.IsSuccess = true;
+            result.Data = diff;
+            return result;
+
+
+
+        }
+        
         
         
     }
