@@ -14,5 +14,6 @@ namespace Pegasus_backend.Models
         public string ErrorMessage { get; set; }
         public T Data { get; set; }
         
+        public string Note { get; set; }
     }
 }
