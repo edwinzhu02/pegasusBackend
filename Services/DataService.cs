@@ -358,6 +358,21 @@ namespace Pegasus_backend.Services
             var result = new Result<bool>();
             var teacher = GetTeacherById(teacherId);
             var lessonsHours = GetHours(inputLesson);
+            
+            if (!teacher.IsSuccess)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = teacher.ErrorMessage;
+                return result;
+            }
+            if (teacher.Data.MinimumHours==null)
+            {
+                result.Note = "No Minimum Hours Requirement";
+                result.IsSuccess = true;
+                result.Data = true;
+                return result;
+            }git
+            
             if (!lessonsHours.IsSuccess)
             {
                 result.IsSuccess = false;
@@ -365,12 +380,7 @@ namespace Pegasus_backend.Services
                 return result;
             }
 
-            if (!teacher.IsSuccess)
-            {
-                result.IsSuccess = false;
-                result.ErrorMessage = teacher.ErrorMessage;
-                return result;
-            }
+            
             
 
             var hours = lessonsHours.Data;
@@ -381,13 +391,7 @@ namespace Pegasus_backend.Services
                 return result;
             }
 
-            if (teacher.Data.MinimumHours==null)
-            {
-                result.Note = "No Minimum Hours Requirement";
-                result.IsSuccess = true;
-                result.Data = true;
-                return result;
-            }
+            
             result.IsSuccess = true;
             result.Data = false;
             return result;
