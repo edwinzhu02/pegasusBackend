@@ -42,7 +42,7 @@ namespace Pegasus_backend.Controllers
                                 Select(x=>new {x.OrderId,x.OrderType,x.ReceiptImg,x.Quantity,
                                 x.BuyingPrice,x.OrgId,x.Org.OrgName,x.StaffId,x.Staff.FirstName,x.Staff.LastName,
                                 x.Product.ProductId,x.Product.ProductName,x.Product.ProdType.ProdTypeId,x.Product.ProdType.ProdTypeName,
-                                x.Product.ProdType.ProdCat.ProdCatId,x.Product.ProdType.ProdCat.ProdCatName
+                                x.Product.ProdType.ProdCat.ProdCatId,x.Product.ProdType.ProdCat.ProdCatName,x.CreatedAt
                                 }).                               
                                 ToListAsync();
             }
@@ -105,7 +105,7 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = "Product not found";
                 return BadRequest(result);
             }
-            var uploadfileTime = DateTime.Now;
+            var uploadfileTime = toNZTimezone(DateTime.UtcNow);
             var uploadImageResult = UploadFile(ReceiptImg, "stock_order/receipt/", product.ProductId, uploadfileTime.ToString("yyMMddhhmmssfff"));
             if (!uploadImageResult.IsUploadSuccess)
             {
@@ -155,7 +155,7 @@ namespace Pegasus_backend.Controllers
             stockOrder.BuyingPrice = price;
             stockOrder.ReceiptImg = imageAddress;
             stockOrder.StaffId = staffId;
-            stockOrder.CreatedAt = DateTime.Now;
+            stockOrder.CreatedAt = toNZTimezone(DateTime.UtcNow);
 
             try
             {

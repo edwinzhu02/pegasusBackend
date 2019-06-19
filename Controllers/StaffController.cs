@@ -40,7 +40,7 @@ namespace Pegasus_backend.Controllers
                     {
                         s.Dob,s.Visa,s.Email,s.Photo,s.Gender,s.IdType,
                         s.IdPhoto,s.StaffId,s.IdNumber,s.LastName,s.FirstName,s.HomePhone,s.IrdNumber,
-                        s.StaffOrg,s.ExpiryDate,s.StockOrder,s.MobilePhone,s.User.Role.RoleName
+                        s.StaffOrg,s.ExpiryDate,s.StockOrder,s.MobilePhone,s.User.Role.RoleName,s.User.Role.RoleId
                     })
                     .ToListAsync();
                 return Ok(result);
@@ -105,7 +105,7 @@ namespace Pegasus_backend.Controllers
                     var newUser = new User
                     {
                         UserName = newStaff.Email,Password = "helloworld",
-                        CreatedAt = DateTime.Now,IsActivate = 1, RoleId = detailsJson.RoleId
+                        CreatedAt = toNZTimezone(DateTime.UtcNow),IsActivate = 1, RoleId = detailsJson.RoleId
                     };
                     _ablemusicContext.Add(newUser);
                     await _ablemusicContext.SaveChangesAsync();
@@ -116,7 +116,7 @@ namespace Pegasus_backend.Controllers
                     await _ablemusicContext.SaveChangesAsync();
                     
                     //upload filesΩ
-                    var strDateTime = DateTime.Now.ToString("yyMMddhhmmssfff");
+                    var strDateTime = toNZTimezone(DateTime.UtcNow).ToString("yyMMddhhmmssfff");
                     if (idPhoto != null)
                     {
                         newStaff.IdPhoto = $"images/staff/IdPhotos/{newStaff.StaffId+strDateTime+Path.GetExtension(idPhoto.FileName)}";
@@ -187,7 +187,7 @@ namespace Pegasus_backend.Controllers
                     await _ablemusicContext.SaveChangesAsync();
                 
                     //upload files
-                    var strDateTime = DateTime.Now.ToString("yyMMddhhmmssfff");
+                    var strDateTime = toNZTimezone(DateTime.UtcNow).ToString("yyMMddhhmmssfff");
                     if (idPhoto != null)
                     {
                         staff.IdPhoto = $"images/staff/IdPhotos/{staff.StaffId+strDateTime+Path.GetExtension(idPhoto.FileName)}";

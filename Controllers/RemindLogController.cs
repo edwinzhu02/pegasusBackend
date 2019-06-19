@@ -34,7 +34,9 @@ namespace Pegasus_backend.Controllers
                     .ThenInclude(ci=>ci.Course)                                        
                     .Include(s=>s.Lesson)
                     .ThenInclude(l=>l.GroupCourseInstance)                    
-                    .ThenInclude(gc=>gc.Course)                                        
+                    .ThenInclude(gc=>gc.Course)
+                    .Include(s=>s.Lesson)
+                    .ThenInclude(l=>l.TrialCourse)                    
                     .Where(s => beginDate.Value.Date <= s.CreatedAt.Value.Date &&
                                 s.CreatedAt.Value.Date <= endDate.Value.Date)
                     .Select(s=> new
@@ -42,7 +44,8 @@ namespace Pegasus_backend.Controllers
                         s.RemindId,s.Email,s.RemindType,s.RemindContent,s.CreatedAt,s.IsLearner,s.ProcessFlag,
                         s.EmailAt,s.RemindTitle,s.ReceivedFlag,
                         CourseName = IsNull(s.Lesson.GroupCourseInstance.Course.CourseName)?
-                                    (s.Lesson.CourseInstance.Course.CourseName):
+                                    (IsNull(s.Lesson.CourseInstance.Course.CourseName)?
+                                    s.Lesson.TrialCourse.CourseName:s.Lesson.CourseInstance.Course.CourseName):
                                     (s.Lesson.GroupCourseInstance.Course.CourseName),                        
                         Learner = IsNull(s.Learner)?
                             null:new {s.Learner.FirstName,s.Learner.LastName,s.LearnerId},

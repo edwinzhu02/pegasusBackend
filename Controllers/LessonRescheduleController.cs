@@ -316,7 +316,7 @@ namespace Pegasus_backend.Controllers
             {
                 todolistForLearner.ListContent += "Lesson from " + appendLesson.BeginTime + " to " + appendLesson.EndTime + "\n";
             }
-            todolistForLearner.CreatedAt = DateTime.Now;
+            todolistForLearner.CreatedAt = toNZTimezone(DateTime.UtcNow);
             todolistForLearner.ProcessedAt = null;
             todolistForLearner.ProcessFlag = 0;
             todolistForLearner.UserId = userId;
@@ -339,7 +339,7 @@ namespace Pegasus_backend.Controllers
             {
                 todolistForTeacher.ListContent += "Lesson from " + appendLesson.BeginTime + " to " + appendLesson.EndTime + "\n";
             }
-            todolistForTeacher.CreatedAt = DateTime.Now;
+            todolistForTeacher.CreatedAt = toNZTimezone(DateTime.UtcNow);
             todolistForTeacher.ProcessedAt = null;
             todolistForTeacher.ProcessFlag = 0;
             todolistForTeacher.UserId = userId;
@@ -363,7 +363,7 @@ namespace Pegasus_backend.Controllers
             {
                 remindLogLearner.RemindContent += "Lesson from " + appendLesson.BeginTime + " to " + appendLesson.EndTime + "\n";
             }
-            remindLogLearner.CreatedAt = DateTime.Now;
+            remindLogLearner.CreatedAt = toNZTimezone(DateTime.UtcNow);
             remindLogLearner.TeacherId = null;
             remindLogLearner.IsLearner = 1;
             remindLogLearner.ProcessFlag = 0;
@@ -387,7 +387,7 @@ namespace Pegasus_backend.Controllers
             {
                 remindLogForTeacher.RemindContent += "Lesson from " + appendLesson.BeginTime + " to " + appendLesson.EndTime + "\n";
             }
-            remindLogForTeacher.CreatedAt = DateTime.Now;
+            remindLogForTeacher.CreatedAt = toNZTimezone(DateTime.UtcNow);
             remindLogForTeacher.TeacherId = teacher.TeacherId;
             remindLogForTeacher.IsLearner = 0;
             remindLogForTeacher.ProcessFlag = 0;

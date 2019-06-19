@@ -197,7 +197,7 @@ namespace Pegasus_backend.Controllers
                         {
                             s.ForEach(w =>
                             {
-                                _pegasusContext.Add(new AvailableDays{TeacherId = teacher.TeacherId, DayOfWeek = i, CreatedAt = DateTime.Now,OrgId = w});
+                                _pegasusContext.Add(new AvailableDays{TeacherId = teacher.TeacherId, DayOfWeek = i, CreatedAt = toNZTimezone(DateTime.UtcNow),OrgId = w});
                             });
                         }
                         i++;
@@ -206,7 +206,7 @@ namespace Pegasus_backend.Controllers
                     //end
                     
                     //start uploading the images
-                    var strDateTime = DateTime.Now.ToString("yyMMddhhmmssfff"); 
+                    var strDateTime = toNZTimezone(DateTime.UtcNow).ToString("yyMMddhhmmssfff"); 
                     if (IdPhoto != null)
                     {
                         
@@ -351,7 +351,7 @@ namespace Pegasus_backend.Controllers
                                 {
                                     DayList = new AvailableDays
                                     {
-                                        TeacherId = newTeacher.TeacherId, DayOfWeek = i, CreatedAt = DateTime.Now,
+                                        TeacherId = newTeacher.TeacherId, DayOfWeek = i, CreatedAt = toNZTimezone(DateTime.UtcNow),
                                         OrgId = w
                                     };
                                     _pegasusContext.Add(DayList);
@@ -363,7 +363,7 @@ namespace Pegasus_backend.Controllers
 
                     await _pegasusContext.SaveChangesAsync();
                     //file upload part
-                    var strDateTime = DateTime.Now.ToString("yyMMddhhmmssfff"); 
+                    var strDateTime = toNZTimezone(DateTime.UtcNow).ToString("yyMMddhhmmssfff"); 
                     if (IdPhoto != null)
                     {
                         

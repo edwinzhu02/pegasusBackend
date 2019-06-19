@@ -40,7 +40,7 @@ namespace Pegasus_backend.Controllers
                     var item = new LearnerGroupCourse
                     {
                         LearnerId = s.LearnerId, GroupCourseInstanceId = s.GroupCourseInstanceId,
-                        Comment = s.Comment, BeginDate = s.BeginDate, CreatedAt = DateTime.Now,
+                        Comment = s.Comment, BeginDate = s.BeginDate, CreatedAt = toNZTimezone(DateTime.UtcNow),
                         IsActivate = 1
                     };
                     _pegasusContext.Add(item);

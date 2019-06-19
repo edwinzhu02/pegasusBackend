@@ -24,6 +24,7 @@ using Pegasus_backend.pegasusContext;
 using Microsoft.EntityFrameworkCore;
 using Pegasus_backend.Controllers.MobileControllers;
 using Swashbuckle.AspNetCore.Swagger;
+using Pegasus_backend.Services;
 
 namespace Pegasus_backend
 {
@@ -62,6 +63,7 @@ namespace Pegasus_backend
                 options.UseMySQL(Configuration.GetConnectionString("AblemusicDatabase")));
             services.AddTransient<pegasusContext.ablemusicContext>();
             services.AddCors();
+            services.AddHostedService<TimedHostedService>();
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>

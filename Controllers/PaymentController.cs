@@ -16,7 +16,7 @@ namespace Pegasus_backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PaymentController : ControllerBase
+    public class PaymentController : BasicController
     {
         private readonly pegasusContext.ablemusicContext _pegasusContext;
         private IMapper _mapper;
@@ -69,7 +69,7 @@ namespace Pegasus_backend.Controllers
                     //save the Invoice payment to Payment table
                     var paymentItem = new Payment();
                     _mapper.Map(details, paymentItem);
-                    paymentItem.CreatedAt = DateTime.Now;
+                    paymentItem.CreatedAt = toNZTimezone(DateTime.UtcNow);
                     paymentItem.PaymentType = 1;
                     _pegasusContext.Add(paymentItem);
                     await _pegasusContext.SaveChangesAsync();
@@ -77,7 +77,7 @@ namespace Pegasus_backend.Controllers
                     var fundItem =
                         await _pegasusContext.Fund.FirstOrDefaultAsync(s => s.LearnerId == details.LearnerId);
                     fundItem.Balance = fundItem.Balance + details.Amount;
-                    fundItem.UpdatedAt = DateTime.Now;
+                    fundItem.UpdatedAt = toNZTimezone(DateTime.UtcNow);
                     _pegasusContext.Update(fundItem);
                     await _pegasusContext.SaveChangesAsync();
 
@@ -121,7 +121,7 @@ namespace Pegasus_backend.Controllers
                 var paymentTranListJson = JsonConvert.DeserializeObject<PaymentTranModel>(paymentTranList);
                 Payment payment = new Payment();
                 _mapper.Map(paymentTranListJson, payment);
-                payment.CreatedAt = DateTime.Now;
+                payment.CreatedAt = toNZTimezone(DateTime.UtcNow);
                 payment.PaymentType = 2;
                 int i = 0;
                 decimal? amount = 0;
@@ -144,7 +144,7 @@ namespace Pegasus_backend.Controllers
                         throw new Exception(name.ProductName + " has not enough stock, only " + stock.Quantity + " left");
                     }
                     detail.StockId = stock.StockId;
-                    detail.CreatedAt = DateTime.Now;
+                    detail.CreatedAt = toNZTimezone(DateTime.UtcNow);
                     detail.DiscountedAmount = name.SellPrice * detail.SoldQuantity;
                     if (detail.DiscountAmount != 0)
                     {
@@ -267,14 +267,15 @@ namespace Pegasus_backend.Controllers
                     {
                         Lesson lesson = new Lesson();
                         lesson.CourseInstanceId = invoice.CourseInstanceId;
-                        lesson.CreatedAt = DateTime.Now;
+                        lesson.CreatedAt = toNZTimezone(DateTime.UtcNow);
                         lesson.RoomId = course.RoomId;
                         lesson.OrgId = (short)course.OrgId;
                         lesson.TeacherId = course.TeacherId;
                         lesson.LearnerId = (int)invoice.LearnerId;
                         lesson.InvoiceId = invoice.InvoiceId;
                         lesson.IsConfirm = 0;
-                        lesson.IsCanceled = 0;                        
+                        lesson.IsCanceled = 0; 
+                        lesson.IsTrial = 0;                                                                       
 
                         string begintime = "";
                         string endtime = "";
@@ -475,7 +476,7 @@ namespace Pegasus_backend.Controllers
                 invoice.TermId = (short)term_id;
                 invoice.IsPaid = 0;
                 invoice.PaidFee = 0;
-                invoice.CreatedAt=DateTime.Now;
+                invoice.CreatedAt=toNZTimezone(DateTime.UtcNow);
                 invoice.IsConfirmed = 0;
                 invoice.IsActivate = 1;
                 invoice.IsEmailSent = 0;
@@ -610,7 +611,7 @@ namespace Pegasus_backend.Controllers
                     invoice.TermId = (short)term.TermId;
                     invoice.IsPaid = 0;
                     invoice.PaidFee = 0;
-                    invoice.CreatedAt = DateTime.Now;
+                    invoice.CreatedAt = toNZTimezone(DateTime.UtcNow);
                     invoice.IsConfirmed = 0;
                     invoice.IsActivate = 1;
                     invoice.IsEmailSent = 0;
