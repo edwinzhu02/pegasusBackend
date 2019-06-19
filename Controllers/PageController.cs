@@ -26,6 +26,7 @@ namespace Pegasus_backend.Controllers
             var result = new Result<Object>();
             try
             {
+                
                 var item = await _pegasusContext.RoleAccess
                     .Include(s=>s.Page)
                     .Select(s=> new {s.RoleId,s.Page.Url})
