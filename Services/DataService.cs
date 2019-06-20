@@ -83,7 +83,7 @@ namespace Pegasus_backend.Services
             try
             {
                 lessons = _context.Lesson.Where(i => i.LearnerId == studentId)
-                        .Where(c=>c.IsConfirm!=1)
+                        .Where(c=>c.IsConfirm!=1 && c.IsCanceled!=1)
                         .Include(c=>c.Invoice);
                 
             }
@@ -141,7 +141,7 @@ namespace Pegasus_backend.Services
             IEnumerable<LessonRemain> remainLessons;
             try
             {
-                remainLessons = _context.LessonRemain.Where(i => i.LearnerId == studentId);
+                remainLessons = _context.LessonRemain.Where(l => l.LearnerId == studentId);
                 
             }
             catch (Exception ex)
@@ -176,7 +176,7 @@ namespace Pegasus_backend.Services
             foreach (var lessonRemain in lessonRemains)
             {
                 var unconfirm = 0;
-                if (lessonRemain.CourseInstance != null)
+                if (lessonRemain.CourseInstanceId != null)
                 {
                     unconfirm = unconfiremedLesson
                         .Where(c => c.TermId == lessonRemain.TermId)
