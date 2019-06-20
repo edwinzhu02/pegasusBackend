@@ -55,6 +55,83 @@ namespace Pegasus_backend.Controllers
             result.Data = "delete successfully";
             return Ok(result);
         }
+
+        [HttpGet]
+        [Route("two")]
+        public async Task<IActionResult> GetLearner2()
+        {
+            var result = new Result<Object>();
+            try
+            {
+                var learner = _pegasusContext.Learner
+                    .Include(w=>w.Parent)
+                    .Include(w=>w.LearnerOthers)
+                    .Include(w=>w.One2oneCourseInstance)
+                    .ThenInclude(w=>w.Org)
+                    .Include(w=>w.One2oneCourseInstance)
+                    .ThenInclude(w=>w.Course)
+                    .Include(w=>w.One2oneCourseInstance)
+                    .ThenInclude(w=>w.Room)
+                    .Include(w=>w.One2oneCourseInstance)
+                    .ThenInclude(w=>w.CourseSchedule)
+                    .Include(w=>w.One2oneCourseInstance)
+                    .ThenInclude(w=>w.Teacher)
+                    .Include(w=>w.LearnerGroupCourse)
+                    .ThenInclude(w=>w.GroupCourseInstance)
+                    .ThenInclude(s=>s.Teacher)//
+                    .Include(w=>w.LearnerGroupCourse)
+                    .ThenInclude(s=>s.GroupCourseInstance)
+                    .ThenInclude(s=>s.CourseSchedule)
+                    .Include(w=>w.LearnerGroupCourse)
+                    .ThenInclude(s=>s.GroupCourseInstance)
+                    .ThenInclude(s=>s.Course)
+                    .Include(s=>s.LearnerGroupCourse)
+                    .ThenInclude(s=>s.GroupCourseInstance)
+                    .ThenInclude(s=>s.Room)
+                    .Where(s=>s.IsActive ==1)
+                    .Select(s=> new
+                    {
+                        s.LearnerId,s.FirstName,s.LastName,s.EnrollDate,s.ContactNum,s.Email,s.Address,s.IsUnder18,s.Dob,
+                        s.Gender,s.IsAbrsmG5,s.G5Certification,s.CreatedAt,s.ReferrerLearnerId,s.Photo,s.Note,s.MiddleName,s.LevelType,
+                        s.LearnerLevel,s.PaymentPeriod,s.Referrer,s.FormUrl,s.OtherfileUrl,
+                        Parent= s.Parent.Select(w=>new{w.FirstName,w.LastName,w.Email,w.ContactNum,w.Relationship,w.CreatedAt}),
+                        LearnerOthers=s.LearnerOthers.Select(w=>new{w.OthersType,w.OthersValue,w.LearnerOthersId,w.LearnerLevel}),
+                        One2oneCourseInstance=s.One2oneCourseInstance.Select(w=>new
+                        {
+                            w.BeginDate,w.EndDate,w.InvoiceDate,
+                            Org=new{w.Org.OrgId,w.Org.OrgName},
+                            Course=new
+                            {
+                                w.Course.CourseId,w.Course.CourseName,w.Course.CourseType,w.Course.Level,
+                                w.Course.Duration,w.Course.Price,w.Course.CourseCategoryId,w.Course.TeacherLevel
+                            },
+                            Room=new{w.Room.RoomId,w.Room.RoomName},
+                            CourseSchedule=w.CourseSchedule.Select(q=>new{q.CourseInstanceId,q.DayOfWeek,q.CourseScheduleId,q.BeginTime,q.EndTime}),
+                            Teacher=new
+                            {
+                                w.Teacher.TeacherId,w.Teacher.FirstName,w.Teacher.LastName,w.Teacher.Dob,w.Teacher.Gender,
+                                w.Teacher.IrdNumber,w.Teacher.IdType,w.Teacher.IdPhoto,w.Teacher.IdNumber,w.Teacher.HomePhone,
+                                w.Teacher.MobilePhone,w.Teacher.Email,w.Teacher.Photo,w.Teacher.Visa,w.Teacher.ExpiryDate,
+                                w.Teacher.IsActivate,  w.Teacher.Level, w.Teacher.IsContract, w.Teacher.IsLeft,
+                                w.Teacher.InvoiceTemplate,w.Teacher.Ability,w.Teacher.Comment,w.Teacher.CvUrl,
+                                w.Teacher.FormUrl, w.Teacher.OtherfileUrl,w.Teacher.MinimumHours
+                            },
+                            
+                            
+                        })
+                        
+                    })
+                    .ToListAsync();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+        }
+        
         
         //GET: http://localhost:5000/api/learner/:name
         [HttpGet]
@@ -124,6 +201,7 @@ namespace Pegasus_backend.Controllers
                     .Include(s=>s.LearnerGroupCourse)
                     .ThenInclude(s=>s.GroupCourseInstance)
                     .ThenInclude(s=>s.Room)
+                    .Include(s=>s.Amendment)
                     .Where(s=>s.IsActive ==1)
                     .ToListAsync();
                 result.Data = data;
