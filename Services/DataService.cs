@@ -141,7 +141,11 @@ namespace Pegasus_backend.Services
             IEnumerable<LessonRemain> remainLessons;
             try
             {
-                remainLessons = _context.LessonRemain.Where(l => l.LearnerId == studentId);
+                remainLessons = _context.LessonRemain.Where(l => l.LearnerId == studentId)
+                        .Include(lr=>lr.Term)
+                        .Include(lr => lr.CourseInstance).ThenInclude(ci =>ci.Course)
+                        .Include(lr => lr.GroupCourseInstance).ThenInclude(ci =>ci.Course)
+                        ;
                 
             }
             catch (Exception ex)
