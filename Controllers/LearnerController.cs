@@ -78,7 +78,7 @@ namespace Pegasus_backend.Controllers
                     .ThenInclude(w=>w.Teacher)
                     .Include(w=>w.LearnerGroupCourse)
                     .ThenInclude(w=>w.GroupCourseInstance)
-                    .ThenInclude(s=>s.Teacher)//
+                    .ThenInclude(s=>s.Teacher)
                     .Include(w=>w.LearnerGroupCourse)
                     .ThenInclude(s=>s.GroupCourseInstance)
                     .ThenInclude(s=>s.CourseSchedule)
@@ -107,27 +107,51 @@ namespace Pegasus_backend.Controllers
                             },
                             Room=new{w.Room.RoomId,w.Room.RoomName},
                             CourseSchedule=w.CourseSchedule.Select(q=>new{q.CourseInstanceId,q.DayOfWeek,q.CourseScheduleId,q.BeginTime,q.EndTime}),
+                            //下面有问题
                             Teacher=new
                             {
-                                w.Teacher.TeacherId,w.Teacher.FirstName,w.Teacher.LastName,w.Teacher.Dob,w.Teacher.Gender,
-                                w.Teacher.IrdNumber,w.Teacher.IdType,w.Teacher.IdPhoto,w.Teacher.IdNumber,w.Teacher.HomePhone,
-                                w.Teacher.MobilePhone,w.Teacher.Email,w.Teacher.Photo,w.Teacher.Visa,w.Teacher.ExpiryDate,
-                                w.Teacher.IsActivate,  w.Teacher.Level, w.Teacher.IsContract, w.Teacher.IsLeft,
-                                w.Teacher.InvoiceTemplate,w.Teacher.Ability,w.Teacher.Comment,w.Teacher.CvUrl,
-                                w.Teacher.FormUrl, w.Teacher.OtherfileUrl,w.Teacher.MinimumHours
-                            },
-                            
-                            
-                        })
+                                w.Teacher.TeacherId,w.Teacher.FirstName,w.Teacher.LastName,
+                            }
+                        }),
+                        LearnerGroupCourse= s.LearnerGroupCourse.Select(w=>new
+                        {
+                            w.LearnerGroupCourseId, w.LearnerId,w.GroupCourseInstanceId,w.CreatedAt,w.IsActivate,
+                            w.Comment,w.BeginDate,w.EndDate,
+                            GroupCourseInstance = new
+                            {
+                                w.GroupCourseInstance.CourseId,w.GroupCourseInstance.TeacherId,w.GroupCourseInstance.BeginDate,
+                                w.GroupCourseInstance.EndDate,w.GroupCourseInstance.RoomId,w.GroupCourseInstance.OrgId,
+                                w.GroupCourseInstanceId,w.GroupCourseInstance.IsActivate,w.GroupCourseInstance.IsStarted,
+                                Teacher=new
+                                {
+                                    w.GroupCourseInstance.Teacher.TeacherId,w.GroupCourseInstance.Teacher.FirstName,w.GroupCourseInstance.Teacher.LastName
+                                },
+                                CourseSchedule=w.GroupCourseInstance.CourseSchedule.Select(q=>new{q.GroupCourseInstanceId,q.DayOfWeek,q.CourseScheduleId,q.BeginTime,q.EndTime}),
+                                Course= new
+                                {
+                                    w.GroupCourseInstance.CourseId, w.GroupCourseInstance.Course.CourseName,
+                                    w.GroupCourseInstance.Course.CourseType, w.GroupCourseInstance.Course.Level,
+                                    w.GroupCourseInstance.Course.Duration, w.GroupCourseInstance.Course.Price,
+                                    w.GroupCourseInstance.Course.TeacherLevel
+                                },
+                                Room = new
+                                {
+                                    w.GroupCourseInstance.Room.RoomId,w.GroupCourseInstance.Room.OrgId,
+                                    w.GroupCourseInstance.Room.RoomName,w.GroupCourseInstance.Room.IsActivate
+                                }
+                                 
+                            }
+                        })                     
                         
                     })
                     .ToListAsync();
-                return Ok();
+                result.Data = learner;
+                return Ok(result);
             }
             catch (Exception ex)
             {
                 result.IsSuccess = false;
-                result.ErrorMessage = ex.Message;
+                result.ErrorMessage = ex.ToString();
                 return BadRequest(result);
             }
         }
