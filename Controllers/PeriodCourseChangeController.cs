@@ -47,7 +47,8 @@ namespace Pegasus_backend.Controllers
                 if (inputObj.EndDate.HasValue)
                 {
                     exsitingLessons = await _ablemusicContext.Lesson.Where(l => l.LearnerId == inputObj.LearnerId &&
-                    l.BeginTime.Value.Date < inputObj.EndDate.Value.Date && l.BeginTime.Value.Date > inputObj.BeginDate.Date).ToListAsync();
+                    l.BeginTime.Value.Date < inputObj.EndDate.Value.Date && l.BeginTime.Value.Date > inputObj.BeginDate.Date&&
+                    l.CourseInstanceId == inputObj.InstanceId).ToListAsync();
                 } else
                 {
                     exsitingLessons = await _ablemusicContext.Lesson.Where(l => l.LearnerId == inputObj.LearnerId &&
@@ -131,14 +132,15 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = "EndDate is required when type is temporary";
                 return BadRequest(result);
             }
-
-            switch (courseInfo.Duration)
+            switch ((short)courseInfo.Duration)
             {
                 case 1: inputObj.EndTime = inputObj.BeginTime.Add(TimeSpan.FromMinutes(30));
                     break;
-                case 2: inputObj.EndTime = inputObj.BeginTime.Add(TimeSpan.FromMinutes(45));
+                case 2: 
+                    inputObj.EndTime = inputObj.BeginTime.Add(TimeSpan.FromMinutes(45));
                     break;
-                case 3: inputObj.EndTime = inputObj.BeginTime.Add(TimeSpan.FromMinutes(60));
+                case 3: 
+                    inputObj.EndTime = inputObj.BeginTime.Add(TimeSpan.FromMinutes(60));
                     break;
             }
 
@@ -151,10 +153,11 @@ namespace Pegasus_backend.Controllers
             amendment.RoomId = inputObj.RoomId;
             amendment.BeginDate = inputObj.BeginDate;
             amendment.EndDate = inputObj.IsTemporary == 1 ? inputObj.EndDate : null;
-            amendment.CreatedAt = DateTime.Now;
+            amendment.CreatedAt = toNZTimezone(DateTime.UtcNow);
             amendment.Reason = inputObj.Reason;
             amendment.IsTemporary = inputObj.IsTemporary;
             amendment.AmendType = 2;
+            amendment.TeacherId = inputObj.TeacherId;
             amendment.CourseScheduleId = inputObj.CourseScheduleId;
 
             foreach (var holiday in holidays)
@@ -235,7 +238,7 @@ namespace Pegasus_backend.Controllers
                 "on " + getDayOfWeek(inputObj.DayOfWeek) + " ";
             todolistForLearner.ListContent += inputObj.IsTemporary == 1 ? "for the period between " + inputObj.BeginDate + " to " +
                 inputObj.EndDate + "Temporarily" : "from " + inputObj.BeginDate + "permanently";
-            todolistForLearner.CreatedAt = DateTime.Now;
+            todolistForLearner.CreatedAt = toNZTimezone(DateTime.UtcNow);
             todolistForLearner.ProcessedAt = null;
             todolistForLearner.ProcessFlag = 0;
             todolistForLearner.UserId = inputObj.UserId;
@@ -257,7 +260,7 @@ namespace Pegasus_backend.Controllers
                 "on " + getDayOfWeek(inputObj.DayOfWeek) + " ";
             todolistForTeacher.ListContent += inputObj.IsTemporary == 1 ? "for the period between " + inputObj.BeginDate + " to " +
                 inputObj.EndDate + "Temporarily" : "from " + inputObj.BeginDate + "permanently";
-            todolistForTeacher.CreatedAt = DateTime.Now;
+            todolistForTeacher.CreatedAt = toNZTimezone(DateTime.UtcNow);
             todolistForTeacher.ProcessedAt = null;
             todolistForTeacher.ProcessFlag = 0;
             todolistForTeacher.UserId = inputObj.UserId;
@@ -281,7 +284,7 @@ namespace Pegasus_backend.Controllers
                 "on " + getDayOfWeek(inputObj.DayOfWeek) + " ";
             remindLogLearner.RemindContent += inputObj.IsTemporary == 1 ? "for the period between " + inputObj.BeginDate + " to " +
                 inputObj.EndDate + "Temporarily" : "from " + inputObj.BeginDate + "permanently";
-            remindLogLearner.CreatedAt = DateTime.Now;
+            remindLogLearner.CreatedAt = toNZTimezone(DateTime.UtcNow);
             remindLogLearner.TeacherId = null;
             remindLogLearner.IsLearner = 1;
             remindLogLearner.ProcessFlag = 0;
@@ -305,7 +308,7 @@ namespace Pegasus_backend.Controllers
                 "on " + getDayOfWeek(inputObj.DayOfWeek) + " ";
             remindLogForTeacher.RemindContent += inputObj.IsTemporary == 1 ? "for the period between " + inputObj.BeginDate + " to " +
                 inputObj.EndDate + "Temporarily" : "from " + inputObj.BeginDate + "permanently";
-            remindLogForTeacher.CreatedAt = DateTime.Now;
+            remindLogForTeacher.CreatedAt = toNZTimezone(DateTime.UtcNow);
             remindLogForTeacher.TeacherId = courseInfo.TeacherId;
             remindLogForTeacher.IsLearner = 0;
             remindLogForTeacher.ProcessFlag = 0;

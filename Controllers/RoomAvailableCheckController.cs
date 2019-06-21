@@ -97,7 +97,7 @@ namespace Pegasus_backend.Controllers
             var conflictRooms = new List<Room>();
             try
             {
-                DateTime startDate = startDateStr == null ? DateTime.Now : DateTime.Parse(startDateStr);
+                DateTime startDate = startDateStr == null ? toNZTimezone(DateTime.UtcNow) : DateTime.Parse(startDateStr);
                 startTime = TimeSpan.Parse(startTimeStr);
                 endTime = TimeSpan.Parse(endTimeStr);
                 availableRooms = await _ablemusicContext.Room.Where(r => r.OrgId == orgId).ToListAsync();

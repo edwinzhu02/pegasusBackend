@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,22 @@ using Microsoft.AspNetCore.Authorization;
 using Pegasus_backend.Controllers;
 using Pegasus_backend.ActionFilter;
 
+=======
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Pegasus_backend.Models;
+using Pegasus_backend.pegasusContext;
+>>>>>>> 8bb70eb193f19afe9dfc6e0e1044c2aba33a531c
 namespace Pegasus_backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+<<<<<<< HEAD
     public class PageController : BasicController
     {
         private readonly pegasusContext.ablemusicContext _pegasusContext;
@@ -28,10 +41,24 @@ namespace Pegasus_backend.Controllers
         // GET: api/Page
         [HttpGet]
         public async Task<IActionResult> GetGroup()
+=======
+    public class PageController: BasicController
+    {
+        private readonly pegasusContext.ablemusicContext _pegasusContext;
+
+        public PageController(pegasusContext.ablemusicContext pegasusContext)
+        {
+            _pegasusContext = pegasusContext;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetRolePage()
+>>>>>>> 8bb70eb193f19afe9dfc6e0e1044c2aba33a531c
         {
             var result = new Result<Object>();
             try
             {
+<<<<<<< HEAD
                 result.Data = await _pegasusContext.Page
                 .Include(p => p.PageGroup)
                 .Select(p => new {
@@ -123,6 +150,16 @@ namespace Pegasus_backend.Controllers
             await _pegasusContext.SaveChangesAsync();
             result.Data = "success";
 
+=======
+                
+                var item = await _pegasusContext.RoleAccess
+                    .Include(s=>s.Page)
+                    .Select(s=> new {s.RoleId,s.Page.Url})
+                    .ToListAsync();
+                result.Data = item;
+                result.IsSuccess = true;
+                return Ok(result);
+>>>>>>> 8bb70eb193f19afe9dfc6e0e1044c2aba33a531c
             }
             catch (Exception ex)
             {
@@ -130,8 +167,14 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = ex.Message;
                 return BadRequest(result);
             }
+<<<<<<< HEAD
             return Ok(result);
         }
     }
 }
 
+=======
+        }
+    }
+}
+>>>>>>> 8bb70eb193f19afe9dfc6e0e1044c2aba33a531c

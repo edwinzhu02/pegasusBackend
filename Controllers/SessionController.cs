@@ -70,7 +70,7 @@ namespace Pegasus_backend.Controllers
                         var GroupWageAmout = (double) houlywage*(lesson.EndTime.Value.Subtract(lesson.BeginTime.Value).TotalMinutes/60);
                         var teacherTransactionForGroup = new TeacherTransaction
                         {
-                            LessonId = lesson.LessonId,CreatedAt = DateTime.Now,
+                            LessonId = lesson.LessonId,CreatedAt = toNZTimezone(DateTime.UtcNow),
                             WageAmount = (decimal) GroupWageAmout,
                             TeacherId = lesson.TeacherId
                         };
@@ -111,7 +111,7 @@ namespace Pegasus_backend.Controllers
                     //learner transaction
                     var learnerTransaction = new LearnerTransaction
                     {
-                        LessonId = lesson.LessonId,CreatedAt = DateTime.Now.ToShortDateString(),
+                        LessonId = lesson.LessonId,CreatedAt = toNZTimezone(DateTime.UtcNow).ToShortDateString(),
                         Amount = course.Price.ToString(),LearnerId = lesson.LearnerId
                     };
                     _ablemusicContext.Add(learnerTransaction);
@@ -139,7 +139,7 @@ namespace Pegasus_backend.Controllers
                     var wageAmout = (double) houlyWage*(lesson.EndTime.Value.Subtract(lesson.BeginTime.Value).TotalMinutes/60);
                     var teacherTransaction = new TeacherTransaction
                     {
-                        LessonId = lesson.LessonId,CreatedAt = DateTime.Now,
+                        LessonId = lesson.LessonId,CreatedAt = toNZTimezone(DateTime.UtcNow),
                         WageAmount = (decimal) wageAmout,
                         TeacherId = lesson.TeacherId
                     };
@@ -186,7 +186,7 @@ namespace Pegasus_backend.Controllers
                 return NotFound(result);
             }
             todoList.ProcessFlag = 1;
-            todoList.ProcessedAt = DateTime.Now;
+            todoList.ProcessedAt = toNZTimezone(DateTime.UtcNow);
             remindLog.ProcessFlag = 1;
 
             try
@@ -290,27 +290,33 @@ namespace Pegasus_backend.Controllers
 
             bool isGroupCourse = lesson.LearnerId == null;
             Teacher teacher;
-            List<Course> courses;
+            Course course;
             List<Holiday> holidays;
             try
             {
                 teacher = await _ablemusicContext.Teacher.FirstOrDefaultAsync(t => t.TeacherId == lesson.TeacherId);
-                courses = isGroupCourse ? (from c in _ablemusicContext.Course
-                                               join gc in _ablemusicContext.GroupCourseInstance on c.CourseId equals gc.CourseId
-                                               where gc.GroupCourseInstanceId == lesson.GroupCourseInstanceId
-                                               select new Course
-                                               {
-                                                   CourseId = c.CourseId,
-                                                   CourseName = c.CourseName
-                                               }).ToList() :
-                                               (from c in _ablemusicContext.Course
-                                                join oto in _ablemusicContext.One2oneCourseInstance on c.CourseId equals oto.CourseId
-                                                where oto.CourseInstanceId == lesson.CourseInstanceId
-                                                select new Course
-                                                {
-                                                    CourseId = c.CourseId,
-                                                    CourseName = c.CourseName
-                                                }).ToList();
+                if(lesson.IsTrial == 1)
+                {
+                    course = await _ablemusicContext.Course.Where(c => c.CourseId == lesson.TrialCourseId).FirstOrDefaultAsync();
+                } else
+                {
+                    course = isGroupCourse ? await (from c in _ablemusicContext.Course
+                                                    join gc in _ablemusicContext.GroupCourseInstance on c.CourseId equals gc.CourseId
+                                                    where gc.GroupCourseInstanceId == lesson.GroupCourseInstanceId
+                                                    select new Course
+                                                    {
+                                                        CourseId = c.CourseId,
+                                                        CourseName = c.CourseName
+                                                    }).FirstOrDefaultAsync() :
+                                          await (from c in _ablemusicContext.Course
+                                                 join oto in _ablemusicContext.One2oneCourseInstance on c.CourseId equals oto.CourseId
+                                                 where oto.CourseInstanceId == lesson.CourseInstanceId
+                                                 select new Course
+                                                 {
+                                                     CourseId = c.CourseId,
+                                                     CourseName = c.CourseName
+                                                 }).FirstOrDefaultAsync();
+                }                
                 holidays = await _ablemusicContext.Holiday.ToListAsync();
             }
             catch (Exception e)
@@ -320,13 +326,13 @@ namespace Pegasus_backend.Controllers
                 return NotFound(result);
             }
             
-            if (courses.Count <= 0)
+            if (course == null)
             {
                 result.IsSuccess = false;
                 result.ErrorMessage = "Fail to found course name under this lesson";
                 return NotFound(result);
             }
-            string courseName = courses[0].CourseName;
+            string courseName = course.CourseName;
 
             DateTime todoDate = lesson.BeginTime.Value.AddDays(-1);
             foreach(var holiday in holidays)
@@ -461,7 +467,7 @@ namespace Pegasus_backend.Controllers
             todolistForTeacher.ListContent = "Inform teacher " + teacher.FirstName + " " + teacher.LastName + 
                 " session from " + lesson.BeginTime.ToString() + " to " + lesson.EndTime.ToString() + 
                 " has been cancelled due to " + reason;
-            todolistForTeacher.CreatedAt = DateTime.Now;
+            todolistForTeacher.CreatedAt = toNZTimezone(DateTime.UtcNow);
             todolistForTeacher.ProcessedAt = null;
             todolistForTeacher.ProcessFlag = 0;
             todolistForTeacher.UserId = userId;
@@ -481,7 +487,7 @@ namespace Pegasus_backend.Controllers
             remindLogTeacher.RemindContent = "Your " + courseName + " lesson from " + lesson.BeginTime.ToString() +
                 " to " + lesson.EndTime.ToString() + " has been cancelled due to " + reason +
                 "\n Please click the following link to confirm. \n";
-            remindLogTeacher.CreatedAt = DateTime.Now;
+            remindLogTeacher.CreatedAt = toNZTimezone(DateTime.UtcNow);
             remindLogTeacher.TeacherId = lesson.TeacherId;
             remindLogTeacher.IsLearner = 0;
             remindLogTeacher.ProcessFlag = 0;
@@ -520,7 +526,7 @@ namespace Pegasus_backend.Controllers
             todolistForLearner.ListName = "Cancellation to Remind";
             todolistForLearner.ListContent = "Inform learner " + learner.FirstName + " " + learner.LastName +
                 " session from " + lesson.BeginTime.ToString() + " to " + lesson.EndTime.ToString() +
-                " has been cancelled due to " + reason; todolistForLearner.CreatedAt = DateTime.Now;
+                " has been cancelled due to " + reason; todolistForLearner.CreatedAt = toNZTimezone(DateTime.UtcNow);
             todolistForLearner.ProcessedAt = null;
             todolistForLearner.ProcessFlag = 0;
             todolistForLearner.UserId = userId;
@@ -539,7 +545,7 @@ namespace Pegasus_backend.Controllers
             remindLogLearner.RemindType = 1;
             remindLogLearner.RemindContent = "Your " + courseName + " lesson from " + lesson.BeginTime.ToString() +
                             " to " + lesson.EndTime.ToString() + " has been cancelled due to " + reason +
-                            "\n Please click the following link to confirm. \n"; remindLogLearner.CreatedAt = DateTime.Now;
+                            "\n Please click the following link to confirm. \n"; remindLogLearner.CreatedAt = toNZTimezone(DateTime.UtcNow);
             remindLogLearner.TeacherId = null;
             remindLogLearner.IsLearner = 1;
             remindLogLearner.ProcessFlag = 0;

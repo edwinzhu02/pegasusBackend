@@ -105,7 +105,7 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = "Product not found";
                 return BadRequest(result);
             }
-            var uploadfileTime = DateTime.Now;
+            var uploadfileTime = toNZTimezone(DateTime.UtcNow);
             var uploadImageResult = UploadFile(ReceiptImg, "stock_order/receipt/", product.ProductId, uploadfileTime.ToString("yyMMddhhmmssfff"));
             if (!uploadImageResult.IsUploadSuccess)
             {
@@ -155,7 +155,7 @@ namespace Pegasus_backend.Controllers
             stockOrder.BuyingPrice = price;
             stockOrder.ReceiptImg = imageAddress;
             stockOrder.StaffId = staffId;
-            stockOrder.CreatedAt = DateTime.Now;
+            stockOrder.CreatedAt = toNZTimezone(DateTime.UtcNow);
 
             try
             {

@@ -37,7 +37,7 @@ namespace Pegasus_backend.Controllers
             lesson.OrgId = trialLessonViewModel.OrgId;
             lesson.IsCanceled = 0;
             lesson.Reason = null;
-            lesson.CreatedAt = DateTime.Now;
+            lesson.CreatedAt = toNZTimezone(DateTime.UtcNow);
             lesson.CourseInstanceId = null;
             lesson.GroupCourseInstanceId = null;
             lesson.IsTrial = 1;
@@ -50,7 +50,7 @@ namespace Pegasus_backend.Controllers
             payment.PaymentMethod = trialLessonViewModel.PaymentMethod;
             payment.LearnerId = trialLessonViewModel.LearnerId;
             payment.Amount = trialLessonViewModel.Amount;
-            payment.CreatedAt = DateTime.Now;
+            payment.CreatedAt = toNZTimezone(DateTime.UtcNow);
             payment.StaffId = trialLessonViewModel.StaffId;
             payment.InvoiceId = null;
             payment.BeforeBalance = null;

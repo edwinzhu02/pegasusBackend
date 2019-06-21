@@ -197,7 +197,7 @@ namespace Pegasus_backend.Controllers
                         {
                             s.ForEach(w =>
                             {
-                                _pegasusContext.Add(new AvailableDays{TeacherId = teacher.TeacherId, DayOfWeek = i, CreatedAt = DateTime.Now,OrgId = w});
+                                _pegasusContext.Add(new AvailableDays{TeacherId = teacher.TeacherId, DayOfWeek = i, CreatedAt = toNZTimezone(DateTime.UtcNow),OrgId = w});
                             });
                         }
                         i++;
@@ -206,7 +206,7 @@ namespace Pegasus_backend.Controllers
                     //end
                     
                     //start uploading the images
-                    var strDateTime = DateTime.Now.ToString("yyMMddhhmmssfff"); 
+                    var strDateTime = toNZTimezone(DateTime.UtcNow).ToString("yyMMddhhmmssfff"); 
                     if (IdPhoto != null)
                     {
                         
@@ -310,6 +310,20 @@ namespace Pegasus_backend.Controllers
                     newTeacher.IsActivate = 1;
                     _pegasusContext.Add(newTeacher);
                     await _pegasusContext.SaveChangesAsync();
+                    
+                    
+                    var newUser = new User
+                    {
+                        UserName = newTeacher.Email,Password = "helloworld",
+                        CreatedAt = DateTime.Now,RoleId = 1, IsActivate = 1
+                        
+                    };
+                    _pegasusContext.Add(newUser);
+                    await _pegasusContext.SaveChangesAsync();
+                    
+                    newTeacher.UserId = newUser.UserId;
+                    _pegasusContext.Update(newTeacher);
+                    await _pegasusContext.SaveChangesAsync();
 
                     
                     detailsJson.Language.ForEach(s =>{ _pegasusContext.Add(new TeacherLanguage {TeacherId = newTeacher.TeacherId, LangId = s});});
@@ -337,7 +351,7 @@ namespace Pegasus_backend.Controllers
                                 {
                                     DayList = new AvailableDays
                                     {
-                                        TeacherId = newTeacher.TeacherId, DayOfWeek = i, CreatedAt = DateTime.Now,
+                                        TeacherId = newTeacher.TeacherId, DayOfWeek = i, CreatedAt = toNZTimezone(DateTime.UtcNow),
                                         OrgId = w
                                     };
                                     _pegasusContext.Add(DayList);
@@ -349,7 +363,7 @@ namespace Pegasus_backend.Controllers
 
                     await _pegasusContext.SaveChangesAsync();
                     //file upload part
-                    var strDateTime = DateTime.Now.ToString("yyMMddhhmmssfff"); 
+                    var strDateTime = toNZTimezone(DateTime.UtcNow).ToString("yyMMddhhmmssfff"); 
                     if (IdPhoto != null)
                     {
                         
