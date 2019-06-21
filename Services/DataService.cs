@@ -34,8 +34,12 @@ namespace Pegasus_backend.Services
             IEnumerable<Lesson> lessons;
             try
             {
-                lessons = await _context.Lesson.Where(i => i.LearnerId == studentId).ToListAsync();
-                
+                lessons = await _context.Lesson
+                    .Where(i => i.LearnerId == studentId)
+                    .Include(i=>i.CourseInstance.Course)
+                    .Include(i=>i.GroupCourseInstance.Course)
+                    .ToListAsync();
+
             }
             catch (Exception ex)
             {
@@ -82,8 +86,7 @@ namespace Pegasus_backend.Services
             IEnumerable<Lesson> lessons;
             try
             {
-                lessons = _context.Lesson.Where(i => i.LearnerId == studentId)
-                        .Where(c=>c.IsConfirm!=1 && c.IsCanceled!=1)
+                lessons = _context.Lesson.Where(i => i.LearnerId == studentId && i.IsConfirm!=1 && i.IsCanceled!=1 )
                         .Include(c=>c.Invoice);
                 
             }
@@ -141,12 +144,67 @@ namespace Pegasus_backend.Services
             IEnumerable<LessonRemain> remainLessons;
             try
             {
-                remainLessons = _context.LessonRemain.Where(l => l.LearnerId == studentId)
-                        .Include(lr=>lr.Term)
-                        .Include(lr => lr.CourseInstance).ThenInclude(ci =>ci.Course)
-                        .Include(lr => lr.GroupCourseInstance).ThenInclude(ci =>ci.Course)
-                        ;
-                
+                remainLessons = _context.LessonRemain.Where(lr => lr.LearnerId == studentId)
+                    .Include(lr => lr.Term)
+                    .Include(lr => lr.CourseInstance)
+                    .ThenInclude(o2o => o2o.Course)
+                    .Include(lr => lr.GroupCourseInstance)
+                    .ThenInclude(gci => gci.Course);
+
+
+                /*
+                remainLessons = from lr in _context.LessonRemain.ToList()
+                    join t in _context.Term.ToList() on lr.TermId equals t.TermId
+                    
+                    join ci in _context.One2oneCourseInstance on lr.CourseInstanceId equals ci.CourseInstanceId into cicGroup
+                    from cicG in cicGroup.DefaultIfEmpty()    
+                    join cic in _context.Course on cicG.CourseId equals cic.CourseId into ciccGroup
+                    from ciccG in ciccGroup.DefaultIfEmpty()  
+                    join gci in _context.GroupCourseInstance on lr.GroupCourseInstanceId equals gci
+                        .GroupCourseInstanceId into gciGroup
+                    from gciG in gciGroup.DefaultIfEmpty()
+                    join gc in _context.Course on gciG.CourseId equals gc.CourseId into gcGroup
+                    from gcG in gcGroup.DefaultIfEmpty()  
+                    where lr.LearnerId == studentId
+                    select new LessonRemain
+                    {
+                        LessonRemainId = lr.LessonRemainId,
+                        Quantity = lr.Quantity,
+                        TermId = lr.TermId,
+                        Term = new Term
+                        {
+                            TermId = t.TermId
+                            
+                        },
+                        ExpiryDate = lr.ExpiryDate,
+                        LearnerId = lr.LearnerId,
+                        CourseInstanceId = cicG.CourseInstanceId,
+                        CourseInstance = new One2oneCourseInstance
+                        {
+                            CourseInstanceId = cicG.CourseInstanceId,
+                            CourseId = cicG.CourseId,
+                            Course = new Course
+                            {
+                                CourseId = ciccG.CourseId,
+                                CourseName = ciccG.CourseName
+                            }
+                        },
+                        GroupCourseInstanceId = gciG.GroupCourseInstanceId,
+                        GroupCourseInstance = new GroupCourseInstance
+                        {
+                            GroupCourseInstanceId = gciG.GroupCourseInstanceId,
+                            Course = new Course
+                            {
+                                CourseId = gcG.CourseId,
+                                CourseName = gcG.CourseName
+                            }
+                        }
+                        
+                    };
+                */
+
+
+
             }
             catch (Exception ex)
             {
