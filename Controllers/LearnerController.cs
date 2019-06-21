@@ -58,103 +58,51 @@ namespace Pegasus_backend.Controllers
 
         [HttpGet]
         [Route("two")]
-        public async Task<IActionResult> GetLearner2()
+        public async Task<IActionResult> GetLearner3()
         {
-            var result = new Result<Object>();
+            var result = new Result<object>();
             try
             {
-                var learner = _pegasusContext.Learner
-                    .Include(w=>w.Parent)
-                    .Include(w=>w.LearnerOthers)
-                    .Include(w=>w.One2oneCourseInstance)
-                    .ThenInclude(w=>w.Org)
-                    .Include(w=>w.One2oneCourseInstance)
-                    .ThenInclude(w=>w.Course)
-                    .Include(w=>w.One2oneCourseInstance)
-                    .ThenInclude(w=>w.Room)
-                    .Include(w=>w.One2oneCourseInstance)
-                    .ThenInclude(w=>w.CourseSchedule)
-                    .Include(w=>w.One2oneCourseInstance)
-                    .ThenInclude(w=>w.Teacher)
-                    .Include(w=>w.LearnerGroupCourse)
-                    .ThenInclude(w=>w.GroupCourseInstance)
-                    .ThenInclude(s=>s.Teacher)
-                    .Include(w=>w.LearnerGroupCourse)
-                    .ThenInclude(s=>s.GroupCourseInstance)
-                    .ThenInclude(s=>s.CourseSchedule)
-                    .Include(w=>w.LearnerGroupCourse)
-                    .ThenInclude(s=>s.GroupCourseInstance)
-                    .ThenInclude(s=>s.Course)
-                    .Include(s=>s.LearnerGroupCourse)
-                    .ThenInclude(s=>s.GroupCourseInstance)
-                    .ThenInclude(s=>s.Room)
-                    .Where(s=>s.IsActive ==1)
-                    .Select(s=> new
-                    {
-                        s.LearnerId,s.FirstName,s.LastName,s.EnrollDate,s.ContactNum,s.Email,s.Address,s.IsUnder18,s.Dob,
-                        s.Gender,s.IsAbrsmG5,s.G5Certification,s.CreatedAt,s.ReferrerLearnerId,s.Photo,s.Note,s.MiddleName,s.LevelType,
-                        s.LearnerLevel,s.PaymentPeriod,s.Referrer,s.FormUrl,s.OtherfileUrl,
-                        Parent= s.Parent.Select(w=>new{w.FirstName,w.LastName,w.Email,w.ContactNum,w.Relationship,w.CreatedAt}),
-                        LearnerOthers=s.LearnerOthers.Select(w=>new{w.OthersType,w.OthersValue,w.LearnerOthersId,w.LearnerLevel}),
-                        One2oneCourseInstance=s.One2oneCourseInstance.Select(w=>new
-                        {
-                            w.BeginDate,w.EndDate,w.InvoiceDate,
-                            Org=new{w.Org.OrgId,w.Org.OrgName},
-                            Course=new
-                            {
-                                w.Course.CourseId,w.Course.CourseName,w.Course.CourseType,w.Course.Level,
-                                w.Course.Duration,w.Course.Price,w.Course.CourseCategoryId,w.Course.TeacherLevel
-                            },
-                            Room=new{w.Room.RoomId,w.Room.RoomName},
-                            CourseSchedule=w.CourseSchedule.Select(q=>new{q.CourseInstanceId,q.DayOfWeek,q.CourseScheduleId,q.BeginTime,q.EndTime}),
-                            //下面有问题
-                            Teacher=new
-                            {
-                                w.Teacher.TeacherId,w.Teacher.FirstName,w.Teacher.LastName,
-                            }
-                        }),
-                        LearnerGroupCourse= s.LearnerGroupCourse.Select(w=>new
-                        {
-                            w.LearnerGroupCourseId, w.LearnerId,w.GroupCourseInstanceId,w.CreatedAt,w.IsActivate,
-                            w.Comment,w.BeginDate,w.EndDate,
-                            GroupCourseInstance = new
-                            {
-                                w.GroupCourseInstance.CourseId,w.GroupCourseInstance.TeacherId,w.GroupCourseInstance.BeginDate,
-                                w.GroupCourseInstance.EndDate,w.GroupCourseInstance.RoomId,w.GroupCourseInstance.OrgId,
-                                w.GroupCourseInstanceId,w.GroupCourseInstance.IsActivate,w.GroupCourseInstance.IsStarted,
-                                Teacher=new
-                                {
-                                    w.GroupCourseInstance.Teacher.TeacherId,w.GroupCourseInstance.Teacher.FirstName,w.GroupCourseInstance.Teacher.LastName
-                                },
-                                CourseSchedule=w.GroupCourseInstance.CourseSchedule.Select(q=>new{q.GroupCourseInstanceId,q.DayOfWeek,q.CourseScheduleId,q.BeginTime,q.EndTime}),
-                                Course= new
-                                {
-                                    w.GroupCourseInstance.CourseId, w.GroupCourseInstance.Course.CourseName,
-                                    w.GroupCourseInstance.Course.CourseType, w.GroupCourseInstance.Course.Level,
-                                    w.GroupCourseInstance.Course.Duration, w.GroupCourseInstance.Course.Price,
-                                    w.GroupCourseInstance.Course.TeacherLevel
-                                },
-                                Room = new
-                                {
-                                    w.GroupCourseInstance.Room.RoomId,w.GroupCourseInstance.Room.OrgId,
-                                    w.GroupCourseInstance.Room.RoomName,w.GroupCourseInstance.Room.IsActivate
-                                }
-                                 
-                            }
-                        })                     
-                        
-                    })
+                var learners = await _pegasusContext.Learner
+                    .Include(w => w.Parent)
+                    .Include(w => w.LearnerOthers)
+                    .Include(w => w.One2oneCourseInstance)
+                    .ThenInclude(w => w.Org)
+                    .Include(w => w.One2oneCourseInstance)
+                    .ThenInclude(w => w.Course)
+                    .Include(w => w.One2oneCourseInstance)
+                    .ThenInclude(w => w.Room)
+                    .Include(w => w.One2oneCourseInstance)
+                    .ThenInclude(w => w.CourseSchedule)
+                    .Include(w => w.One2oneCourseInstance)
+                    .ThenInclude(w => w.Teacher)
+                    .Include(w => w.LearnerGroupCourse)
+                    .ThenInclude(w => w.GroupCourseInstance)
+                    .ThenInclude(s => s.Teacher)
+                    .Include(w => w.LearnerGroupCourse)
+                    .ThenInclude(s => s.GroupCourseInstance)
+                    .ThenInclude(s => s.CourseSchedule)
+                    .Include(w => w.LearnerGroupCourse)
+                    .ThenInclude(s => s.GroupCourseInstance)
+                    .ThenInclude(s => s.Course)
+                    .Include(s => s.LearnerGroupCourse)
+                    .ThenInclude(s => s.GroupCourseInstance)
+                    .ThenInclude(s => s.Room)//
+                    .Where(s => s.IsActive == 1)
                     .ToListAsync();
-                result.Data = learner;
+                
+                var mapperItem = _mapper.Map<List<GetLearnerModel>>(learners);
+                result.Data = mapperItem;
                 return Ok(result);
             }
             catch (Exception ex)
             {
                 result.IsSuccess = false;
-                result.ErrorMessage = ex.ToString();
+                result.ErrorMessage = ex.Message;
                 return BadRequest(result);
             }
         }
+
         
         
         //GET: http://localhost:5000/api/learner/:name
