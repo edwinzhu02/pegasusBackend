@@ -44,7 +44,7 @@ namespace Pegasus_backend.Controllers
                     p.Para,
                     p.ParaFlag,
                     p.PageGroup.PageGroupName }
-                )
+                      )
                 .ToListAsync();
 
             }
