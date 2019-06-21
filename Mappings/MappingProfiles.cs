@@ -30,6 +30,7 @@ namespace Pegasus_backend.Mappings
             CreateMap<StaffModel, Staff>();
             CreateMap<One2oneCourseInstance, OneOrGroupCourse>();
             CreateMap<GroupCourseInstance, OneOrGroupCourse>();
+            CreateMap<PageModel, Page>();
         }
     }
 }
