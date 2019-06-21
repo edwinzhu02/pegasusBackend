@@ -66,6 +66,8 @@ namespace Pegasus_backend.Controllers
                 var learners = await _pegasusContext.Learner
                     .Include(w => w.Parent)
                     .Include(w => w.LearnerOthers)
+                    .Include(w=>w.One2oneCourseInstance)
+                    .ThenInclude(w=>w.Amendment)
                     .Include(w => w.One2oneCourseInstance)
                     .ThenInclude(w => w.Org)
                     .Include(w => w.One2oneCourseInstance)

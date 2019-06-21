@@ -43,6 +43,7 @@ namespace Pegasus_backend.Mappings
             CreateMap<GetLearnerOnetoOneCourseInstanceCourseSchedule,CourseSchedule>();
             CreateMap<GetLearnerOnetoOneCourseInstanceCourseTeacher, Teacher>();
             CreateMap<GetLearnerLearnerGroupCourse, LearnerGroupCourse>();
+            CreateMap<GetLearnerOnetoOneCourseInstanceCourseAmendment, Amendment>();
             CreateMap<GetLearnerLearnerGroupCourseGroupCourseInstance,GroupCourseInstance>();
             CreateMap<GetLearnerLearnerGroupCourseGroupCourseInstanceTeacher,Teacher>();
             CreateMap<GetLearnerLearnerGroupCourseGroupCourseInstanceCourseSchedule, CourseSchedule>();
