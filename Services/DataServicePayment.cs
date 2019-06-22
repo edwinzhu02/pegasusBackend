@@ -29,15 +29,90 @@ namespace Pegasus_backend.Services
             IEnumerable<Payment> payments;
             try
             {
-                payments = _context.Payment.Where(p => p.LearnerId == studentId)
-                    .Include(t => t.SoldTransaction)
-                    .ThenInclude(t => t.Product)
-                    .Include(i => i.Invoice)
-                    .ThenInclude(i => i.CourseInstance)
-                    .ThenInclude(i => i.Course)
-                    .Include(i => i.Invoice)
-                    .ThenInclude(i => i.GroupCourseInstance)
-                    .ThenInclude(i => i.Course);
+                payments = _context.Payment.Where(p=>p.LearnerId == studentId)
+                    .GroupJoin(_context.Invoice,
+                        payment => payment.InvoiceId,
+                        invoice => invoice.InvoiceId,
+                        (payment, invoice) => new Payment
+                        {
+                            PaymentId = payment.PaymentId,
+                            PaymentMethod = payment.PaymentMethod,
+                            LearnerId = payment.LearnerId,
+                            Amount = payment.Amount,
+                            CreatedAt = payment.CreatedAt,
+                            StaffId = payment.StaffId,
+                            InvoiceId = payment.InvoiceId,
+                            Invoice = invoice.FirstOrDefault(),
+                            BeforeBalance = payment.BeforeBalance,
+                            AfterBalance = payment.AfterBalance,
+                            PaymentType = payment.PaymentType,
+                            IsConfirmed = payment.IsConfirmed,
+                            Comment = payment.Comment,
+                            SoldTransaction = payment.SoldTransaction
+
+                        }).GroupJoin(_context.SoldTransaction,
+                        p => p.PaymentId,
+                        s => s.PaymentId,
+                        (p, s) => new Payment
+                        {
+                            PaymentId = p.PaymentId,
+                            PaymentMethod = p.PaymentMethod,
+                            LearnerId = p.LearnerId,
+                            Amount = p.Amount,
+                            CreatedAt = p.CreatedAt,
+                            StaffId = p.StaffId,
+                            InvoiceId = p.InvoiceId,
+                            Invoice = p.Invoice,
+                            BeforeBalance = p.BeforeBalance,
+                            AfterBalance = p.AfterBalance,
+                            PaymentType = p.PaymentType,
+                            IsConfirmed = p.IsConfirmed,
+                            Comment = p.Comment,
+                            SoldTransaction = s.ToList()
+
+                        }
+                    ).GroupJoin(_context.Staff,
+                        p=>p.StaffId,
+                        s=>s.StaffId,
+                        (p,s)=>new Payment
+                        {
+                            PaymentId = p.PaymentId,
+                            PaymentMethod = p.PaymentMethod,
+                            LearnerId = p.LearnerId,
+                            Amount = p.Amount,
+                            CreatedAt = p.CreatedAt,
+                            StaffId = p.StaffId,
+                            InvoiceId = p.InvoiceId,
+                            Invoice = p.Invoice,
+                            BeforeBalance = p.BeforeBalance,
+                            AfterBalance = p.AfterBalance,
+                            PaymentType = p.PaymentType,
+                            IsConfirmed = p.IsConfirmed,
+                            Comment = p.Comment,
+                            SoldTransaction = p.SoldTransaction,
+                            Staff = s.FirstOrDefault()
+                        }).GroupJoin(_context.Learner,
+                        p=>p.LearnerId,
+                        l=>l.LearnerId,
+                        (p,l)=>new Payment
+                        {
+                            PaymentId = p.PaymentId,
+                            PaymentMethod = p.PaymentMethod,
+                            LearnerId = p.LearnerId,
+                            Amount = p.Amount,
+                            CreatedAt = p.CreatedAt,
+                            StaffId = p.StaffId,
+                            InvoiceId = p.InvoiceId,
+                            Invoice = p.Invoice,
+                            BeforeBalance = p.BeforeBalance,
+                            AfterBalance = p.AfterBalance,
+                            PaymentType = p.PaymentType,
+                            IsConfirmed = p.IsConfirmed,
+                            Comment = p.Comment,
+                            SoldTransaction = p.SoldTransaction,
+                            Staff = p.Staff,
+                            Learner = l.FirstOrDefault()
+                        });
 
             }
             catch (Exception e)
@@ -114,7 +189,48 @@ namespace Pegasus_backend.Services
                             SoldTransaction = s.ToList()
                             
                         }
-                        );
+                        ).GroupJoin(_context.Staff,
+                        p=>p.StaffId,
+                        s=>s.StaffId,
+                        (p,s)=>new Payment
+                        {
+                            PaymentId = p.PaymentId,
+                            PaymentMethod = p.PaymentMethod,
+                            LearnerId = p.LearnerId,
+                            Amount = p.Amount,
+                            CreatedAt = p.CreatedAt,
+                            StaffId = p.StaffId,
+                            InvoiceId = p.InvoiceId,
+                            Invoice = p.Invoice,
+                            BeforeBalance = p.BeforeBalance,
+                            AfterBalance = p.AfterBalance,
+                            PaymentType = p.PaymentType,
+                            IsConfirmed = p.IsConfirmed,
+                            Comment = p.Comment,
+                            SoldTransaction = p.SoldTransaction,
+                            Staff = s.FirstOrDefault()
+                        }).GroupJoin(_context.Learner,
+                        p=>p.LearnerId,
+                        l=>l.LearnerId,
+                        (p,l)=>new Payment
+                        {
+                            PaymentId = p.PaymentId,
+                            PaymentMethod = p.PaymentMethod,
+                            LearnerId = p.LearnerId,
+                            Amount = p.Amount,
+                            CreatedAt = p.CreatedAt,
+                            StaffId = p.StaffId,
+                            InvoiceId = p.InvoiceId,
+                            Invoice = p.Invoice,
+                            BeforeBalance = p.BeforeBalance,
+                            AfterBalance = p.AfterBalance,
+                            PaymentType = p.PaymentType,
+                            IsConfirmed = p.IsConfirmed,
+                            Comment = p.Comment,
+                            SoldTransaction = p.SoldTransaction,
+                            Staff = p.Staff,
+                            Learner = l.FirstOrDefault()
+                        });
 
             }
             catch (Exception e)
@@ -178,7 +294,48 @@ namespace Pegasus_backend.Services
                             SoldTransaction = s.ToList()
                             
                         }
-                        )
+                        ).GroupJoin(_context.Staff,
+                        p=>p.StaffId,
+                        s=>s.StaffId,
+                        (p,s)=>new Payment
+                        {
+                            PaymentId = p.PaymentId,
+                            PaymentMethod = p.PaymentMethod,
+                            LearnerId = p.LearnerId,
+                            Amount = p.Amount,
+                            CreatedAt = p.CreatedAt,
+                            StaffId = p.StaffId,
+                            InvoiceId = p.InvoiceId,
+                            Invoice = p.Invoice,
+                            BeforeBalance = p.BeforeBalance,
+                            AfterBalance = p.AfterBalance,
+                            PaymentType = p.PaymentType,
+                            IsConfirmed = p.IsConfirmed,
+                            Comment = p.Comment,
+                            SoldTransaction = p.SoldTransaction,
+                            Staff = s.FirstOrDefault()
+                        }).GroupJoin(_context.Learner,
+                        p=>p.LearnerId,
+                        l=>l.LearnerId,
+                        (p,l)=>new Payment
+                        {
+                            PaymentId = p.PaymentId,
+                            PaymentMethod = p.PaymentMethod,
+                            LearnerId = p.LearnerId,
+                            Amount = p.Amount,
+                            CreatedAt = p.CreatedAt,
+                            StaffId = p.StaffId,
+                            InvoiceId = p.InvoiceId,
+                            Invoice = p.Invoice,
+                            BeforeBalance = p.BeforeBalance,
+                            AfterBalance = p.AfterBalance,
+                            PaymentType = p.PaymentType,
+                            IsConfirmed = p.IsConfirmed,
+                            Comment = p.Comment,
+                            SoldTransaction = p.SoldTransaction,
+                            Staff = p.Staff,
+                            Learner = l.FirstOrDefault()
+                        })
                     
                     .OrderByDescending(d=>d.CreatedAt);
                 
@@ -244,7 +401,48 @@ namespace Pegasus_backend.Services
                             SoldTransaction = s.ToList()
                             
                         }
-                        )
+                        ).GroupJoin(_context.Staff,
+                        p=>p.StaffId,
+                        s=>s.StaffId,
+                        (p,s)=>new Payment
+                        {
+                            PaymentId = p.PaymentId,
+                            PaymentMethod = p.PaymentMethod,
+                            LearnerId = p.LearnerId,
+                            Amount = p.Amount,
+                            CreatedAt = p.CreatedAt,
+                            StaffId = p.StaffId,
+                            InvoiceId = p.InvoiceId,
+                            Invoice = p.Invoice,
+                            BeforeBalance = p.BeforeBalance,
+                            AfterBalance = p.AfterBalance,
+                            PaymentType = p.PaymentType,
+                            IsConfirmed = p.IsConfirmed,
+                            Comment = p.Comment,
+                            SoldTransaction = p.SoldTransaction,
+                            Staff = s.FirstOrDefault()
+                        }).GroupJoin(_context.Learner,
+                        p=>p.LearnerId,
+                        l=>l.LearnerId,
+                        (p,l)=>new Payment
+                        {
+                            PaymentId = p.PaymentId,
+                            PaymentMethod = p.PaymentMethod,
+                            LearnerId = p.LearnerId,
+                            Amount = p.Amount,
+                            CreatedAt = p.CreatedAt,
+                            StaffId = p.StaffId,
+                            InvoiceId = p.InvoiceId,
+                            Invoice = p.Invoice,
+                            BeforeBalance = p.BeforeBalance,
+                            AfterBalance = p.AfterBalance,
+                            PaymentType = p.PaymentType,
+                            IsConfirmed = p.IsConfirmed,
+                            Comment = p.Comment,
+                            SoldTransaction = p.SoldTransaction,
+                            Staff = p.Staff,
+                            Learner = l.FirstOrDefault()
+                        })
                     .OrderBy(d=>d.CreatedAt);
             }
             catch (Exception e)
@@ -308,7 +506,48 @@ namespace Pegasus_backend.Services
                             SoldTransaction = s.ToList()
                             
                         }
-                        );
+                        ).GroupJoin(_context.Staff,
+                        p=>p.StaffId,
+                        s=>s.StaffId,
+                        (p,s)=>new Payment
+                        {
+                            PaymentId = p.PaymentId,
+                            PaymentMethod = p.PaymentMethod,
+                            LearnerId = p.LearnerId,
+                            Amount = p.Amount,
+                            CreatedAt = p.CreatedAt,
+                            StaffId = p.StaffId,
+                            InvoiceId = p.InvoiceId,
+                            Invoice = p.Invoice,
+                            BeforeBalance = p.BeforeBalance,
+                            AfterBalance = p.AfterBalance,
+                            PaymentType = p.PaymentType,
+                            IsConfirmed = p.IsConfirmed,
+                            Comment = p.Comment,
+                            SoldTransaction = p.SoldTransaction,
+                            Staff = s.FirstOrDefault()
+                        }).GroupJoin(_context.Learner,
+                        p=>p.LearnerId,
+                        l=>l.LearnerId,
+                        (p,l)=>new Payment
+                        {
+                            PaymentId = p.PaymentId,
+                            PaymentMethod = p.PaymentMethod,
+                            LearnerId = p.LearnerId,
+                            Amount = p.Amount,
+                            CreatedAt = p.CreatedAt,
+                            StaffId = p.StaffId,
+                            InvoiceId = p.InvoiceId,
+                            Invoice = p.Invoice,
+                            BeforeBalance = p.BeforeBalance,
+                            AfterBalance = p.AfterBalance,
+                            PaymentType = p.PaymentType,
+                            IsConfirmed = p.IsConfirmed,
+                            Comment = p.Comment,
+                            SoldTransaction = p.SoldTransaction,
+                            Staff = p.Staff,
+                            Learner = l.FirstOrDefault()
+                        });
             }
             catch (Exception e)
             {
