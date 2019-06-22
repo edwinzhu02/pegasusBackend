@@ -71,15 +71,48 @@ namespace Pegasus_backend.Services
             IEnumerable<Payment> payments;
             try
             {
-                payments = _context.Payment.Where(d => Between(d.CreatedAt, begin, end))
-                    .Include(t => t.SoldTransaction)
+                payments = _context.Payment.Where(p => Between(p.CreatedAt, begin, end))
+                    .Include(p => p.SoldTransaction)
                     .ThenInclude(t => t.Product)
-                    .Include(i => i.Invoice)
-                    .ThenInclude(i => i.CourseInstance)
-                    .ThenInclude(i => i.Course)
-                    .Include(i => i.Invoice)
-                    .ThenInclude(i => i.GroupCourseInstance)
-                    .ThenInclude(i => i.Course);
+                    .Include(p => p.Invoice.CourseInstance.Course)
+                    .Include(p => p.Invoice.GroupCourseInstance.Course)
+                    .Select(p=> new Payment
+                    {
+                        PaymentId = p.PaymentId,
+                        PaymentType = p.PaymentType,
+                        PaymentMethod = p.PaymentMethod,
+                        LearnerId = p.LearnerId,
+                        Amount = p.Amount,
+                        CreatedAt = p.CreatedAt,
+                        StaffId =p.StaffId,
+                        InvoiceId = p.InvoiceId,
+                        BeforeBalance = p.BeforeBalance,
+                        AfterBalance=p.AfterBalance,
+                        IsConfirmed=p.IsConfirmed,
+                        Comment=p.Comment,
+                        Invoice = new Invoice
+                        {
+                            InvoiceId = p.Invoice.InvoiceId,
+                            LessonFee = p.Invoice.LessonFee,
+                            ConcertFee=p.Invoice.ConcertFee,
+                            NoteFee=p.Invoice.NoteFee,
+                            Other1Fee=p.Invoice.Other1Fee,
+                            Other2Fee=p.Invoice.Other2Fee,
+                            Other3Fee=p.Invoice.Other3Fee,
+                            TotalFee=p.Invoice.TotalFee,
+                            PaidFee=p.Invoice.PaidFee,
+                            OwingFee=p.Invoice.OwingFee,
+                            IsPaid=p.Invoice.IsPaid,
+                            LessonQuantity=p.Invoice.LessonQuantity,
+                            CourseName = p.Invoice.CourseName,
+                            ConcertFeeName = p.Invoice.ConcertFeeName,
+                            LessonNoteFeeName = p.Invoice.LessonNoteFeeName,
+                            IsActive = p.Invoice.IsActive
+                        },
+                        SoldTransaction=p.SoldTransaction
+                        
+                        
+                    });
 
             }
             catch (Exception e)
