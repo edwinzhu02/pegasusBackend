@@ -39,7 +39,7 @@ namespace Pegasus_backend.Controllers
 
 
         [HttpGet("paymentBetween/{beginDate}&{endDate}")]
-        public Result<IEnumerable<Object>> LookUpBetweenDates(DateTime beginDate, DateTime endDate)
+        public Result<IEnumerable<Payment>> LookUpBetweenDates(DateTime beginDate, DateTime endDate)
         {
             var result = _service.LookUpByDate(beginDate,endDate);
             return result;
