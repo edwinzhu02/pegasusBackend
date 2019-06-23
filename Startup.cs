@@ -25,6 +25,7 @@ using Microsoft.EntityFrameworkCore;
 using Pegasus_backend.Controllers.MobileControllers;
 using Swashbuckle.AspNetCore.Swagger;
 using Pegasus_backend.Services;
+using Serilog;
 
 namespace Pegasus_backend
 {
@@ -33,6 +34,11 @@ namespace Pegasus_backend
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            Log.Logger = new LoggerConfiguration()
+                             .Enrich.FromLogContext()
+                             .WriteTo.File("log.txt", rollingInterval: RollingInterval.Day, rollOnFileSizeLimit: true)
+                             .WriteTo.Console()
+                             .CreateLogger();
         }
 
         public IConfiguration Configuration { get; }
@@ -40,6 +46,8 @@ namespace Pegasus_backend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddLogging(loggingBuilder =>
+            loggingBuilder.AddSerilog(dispose: true));
             //Inject AppSettings
             services.Configure<ApplicationSettings>(Configuration.GetSection("ApplicationSettings"));
             services.Configure<ApiBehaviorOptions>(options =>
@@ -90,9 +98,7 @@ namespace Pegasus_backend
                     IssuerSigningKey = new SymmetricSecurityKey(key),
                     ValidateIssuer = false,
                     ValidateAudience = false,
-                    ClockSkew = TimeSpan.Zero
-
-                    
+                    ClockSkew = TimeSpan.Zero                   
                 };
             });
             services.AddAutoMapper();
@@ -109,7 +115,6 @@ namespace Pegasus_backend
             {
                 app.UseHsts();
             }
-            
             app.UseStaticFiles(); // For the wwwroot folder
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
