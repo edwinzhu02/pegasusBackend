@@ -8,6 +8,29 @@ namespace Pegasus_backend.Models
         public int LearnerId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public DateTime? EnrollDate { get; set; }
+        public string ContactNum { get; set; }
+        public string Email { get; set; }
+        public string Address { get; set; }
+        public short? IsUnder18 { get; set; }
+        public DateTime? Dob { get; set; }
+        public short? Gender { get; set; }
+        public short? IsAbrsmG5 { get; set; }
+        public string G5Certification { get; set; }
+        public DateTime? CreatedAt { get; set; }
+        public int? ReferrerLearnerId { get; set; }
+        public string Photo { get; set; }
+        public string Note { get; set; }
+        public string MiddleName { get; set; }
+        public byte? LevelType { get; set; }
+        public short? UserId { get; set; }
+        public short? OrgId { get; set; }
+        public short? IsActive { get; set; }
+        public byte? LearnerLevel { get; set; }
+        public byte? PaymentPeriod { get; set; }
+        public string Referrer { get; set; }
+        public string FormUrl { get; set; }
+        public string OtherfileUrl { get; set; }
         public List<GetLearnerParentModel> Parent { get; set; }
         public List<GetLearnerLearnerOthers> LearnerOthers { get; set; }
         public List<GetLearnerOnetoOneCourseInstance> One2oneCourseInstance { get; set; }
