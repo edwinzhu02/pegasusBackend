@@ -7,6 +7,8 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Serilog;
+using Serilog.Events;
 
 namespace Pegasus_backend
 {
@@ -22,11 +24,9 @@ namespace Pegasus_backend
                 .AddCommandLine(args)
                 .Build();
 
-
             var hostUrl = configuration["hosturl"];
             if (string.IsNullOrEmpty(hostUrl))
                 hostUrl = "http://*:5000";
-
 
             //var host = new WebHostBuilder()
              var host = WebHost.CreateDefaultBuilder()
@@ -36,6 +36,7 @@ namespace Pegasus_backend
                 .UseConfiguration(configuration)
                 .UseIISIntegration()
                 .UseStartup<Startup>()
+                .UseSerilog()
                 .Build();
 
             host.Run();
@@ -47,5 +48,6 @@ namespace Pegasus_backend
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>();
+                
     }
 }

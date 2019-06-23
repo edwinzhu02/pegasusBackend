@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace Pegasus_backend.Controllers
 {
@@ -10,11 +11,18 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class ValuesController : BasicController
     {
-        
+        readonly ILogger<ValuesController> _log;
+
+        public ValuesController(ILogger<ValuesController> log)
+        {
+            _log = log;
+        }
+
         // GET api/values
         [HttpGet]
         public IActionResult Get()
         {
+            //_log.LogInformation("Hello, world!");
             return Ok(toNZTimezone(DateTime.UtcNow));
         }
 
