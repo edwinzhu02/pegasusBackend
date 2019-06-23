@@ -34,8 +34,12 @@ namespace Pegasus_backend.Services
             IEnumerable<Lesson> lessons;
             try
             {
-                lessons = await _context.Lesson.Where(i => i.LearnerId == studentId).ToListAsync();
-                
+                lessons = await _context.Lesson
+                    .Where(i => i.LearnerId == studentId)
+                    .Include(i=>i.CourseInstance.Course)
+                    .Include(i=>i.GroupCourseInstance.Course)
+                    .ToListAsync();
+
             }
             catch (Exception ex)
             {
@@ -82,8 +86,7 @@ namespace Pegasus_backend.Services
             IEnumerable<Lesson> lessons;
             try
             {
-                lessons = _context.Lesson.Where(i => i.LearnerId == studentId)
-                        .Where(c=>c.IsConfirm!=1)
+                lessons = _context.Lesson.Where(i => i.LearnerId == studentId && i.IsConfirm!=1 && i.IsCanceled!=1 )
                         .Include(c=>c.Invoice);
                 
             }
@@ -141,8 +144,67 @@ namespace Pegasus_backend.Services
             IEnumerable<LessonRemain> remainLessons;
             try
             {
-                remainLessons = _context.LessonRemain.Where(i => i.LearnerId == studentId);
-                
+                remainLessons = _context.LessonRemain.Where(lr => lr.LearnerId == studentId)
+                    .Include(lr => lr.Term)
+                    .Include(lr => lr.CourseInstance)
+                    .ThenInclude(o2o => o2o.Course)
+                    .Include(lr => lr.GroupCourseInstance)
+                    .ThenInclude(gci => gci.Course);
+
+
+                /*
+                remainLessons = from lr in _context.LessonRemain.ToList()
+                    join t in _context.Term.ToList() on lr.TermId equals t.TermId
+                    
+                    join ci in _context.One2oneCourseInstance on lr.CourseInstanceId equals ci.CourseInstanceId into cicGroup
+                    from cicG in cicGroup.DefaultIfEmpty()    
+                    join cic in _context.Course on cicG.CourseId equals cic.CourseId into ciccGroup
+                    from ciccG in ciccGroup.DefaultIfEmpty()  
+                    join gci in _context.GroupCourseInstance on lr.GroupCourseInstanceId equals gci
+                        .GroupCourseInstanceId into gciGroup
+                    from gciG in gciGroup.DefaultIfEmpty()
+                    join gc in _context.Course on gciG.CourseId equals gc.CourseId into gcGroup
+                    from gcG in gcGroup.DefaultIfEmpty()  
+                    where lr.LearnerId == studentId
+                    select new LessonRemain
+                    {
+                        LessonRemainId = lr.LessonRemainId,
+                        Quantity = lr.Quantity,
+                        TermId = lr.TermId,
+                        Term = new Term
+                        {
+                            TermId = t.TermId
+                            
+                        },
+                        ExpiryDate = lr.ExpiryDate,
+                        LearnerId = lr.LearnerId,
+                        CourseInstanceId = cicG.CourseInstanceId,
+                        CourseInstance = new One2oneCourseInstance
+                        {
+                            CourseInstanceId = cicG.CourseInstanceId,
+                            CourseId = cicG.CourseId,
+                            Course = new Course
+                            {
+                                CourseId = ciccG.CourseId,
+                                CourseName = ciccG.CourseName
+                            }
+                        },
+                        GroupCourseInstanceId = gciG.GroupCourseInstanceId,
+                        GroupCourseInstance = new GroupCourseInstance
+                        {
+                            GroupCourseInstanceId = gciG.GroupCourseInstanceId,
+                            Course = new Course
+                            {
+                                CourseId = gcG.CourseId,
+                                CourseName = gcG.CourseName
+                            }
+                        }
+                        
+                    };
+                */
+
+
+
             }
             catch (Exception ex)
             {
@@ -176,7 +238,7 @@ namespace Pegasus_backend.Services
             foreach (var lessonRemain in lessonRemains)
             {
                 var unconfirm = 0;
-                if (lessonRemain.CourseInstance != null)
+                if (lessonRemain.CourseInstanceId != null)
                 {
                     unconfirm = unconfiremedLesson
                         .Where(c => c.TermId == lessonRemain.TermId)
@@ -198,6 +260,14 @@ namespace Pegasus_backend.Services
             return returnResult;
         }
 
+        /*
+         *    Teacher 
+         *            view
+         *                 methods
+         * 
+         */
+        
+        
         public async Task<Result<IEnumerable<Lesson>>> GetLessonByTeacher(int teacherId)
         {
             Result<IEnumerable<Lesson>> result = new Result<IEnumerable<Lesson>>();
@@ -290,6 +360,153 @@ namespace Pegasus_backend.Services
             return result;
 
         }
+
+        public Result<double> GetHours(Result<IEnumerable<Lesson>> inputLesson)
+        {
+            var result = new Result<double>();
+            if (!inputLesson.IsSuccess)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = inputLesson.ErrorMessage;
+                return result;
+            }
+
+            var lessons = inputLesson.Data;
+            var hours = new double();
+            foreach (var lesson in lessons)
+            {
+                if(lesson.EndTime ==null || lesson.BeginTime == null)
+                {
+                    result.IsSuccess = false;
+                    result.ErrorMessage = "Invalid lesson's begin or end time";
+                    return result;
+                    
+                }
+                
+                var hour = lesson.EndTime.GetValueOrDefault() - lesson.BeginTime.GetValueOrDefault();
+                hours += hour.TotalHours ;
+            }
+            result.IsSuccess = true;
+            result.Data = hours;
+            return result;
+            
+
+        }
+
+        public Result<Teacher> GetTeacherById(int id)
+        {
+            Result<Teacher> result = new Result<Teacher>();
+            var teacher = new Teacher();
+            try
+            {
+                teacher =  _context.Teacher.FirstOrDefault(i => i.TeacherId == id);
+                
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return result;
+            }
+            result.IsSuccess = true;
+            result.Data = teacher;
+            return result;
+            
+        }
+        
+        
+        public Result<bool> IsMinimumHoursReached (int teacherId, Result<IEnumerable<Lesson>> inputLesson)
+        {
+            var result = new Result<bool>();
+            var teacher = GetTeacherById(teacherId);
+            var lessonsHours = GetHours(inputLesson);
+            
+            if (!teacher.IsSuccess)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = teacher.ErrorMessage;
+                return result;
+            }
+            if (teacher.Data.MinimumHours==null)
+            {
+                result.Note = "No Minimum Hours Requirement";
+                result.IsSuccess = true;
+                result.Data = true;
+                return result;
+            }
+            
+            if (!lessonsHours.IsSuccess)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = lessonsHours.ErrorMessage;
+                return result;
+            }
+
+            
+            
+
+            var hours = lessonsHours.Data;
+            if (teacher.Data.MinimumHours<=hours)
+            {
+                result.IsSuccess = true;
+                result.Data = true;
+                return result;
+            }
+
+            
+            result.IsSuccess = true;
+            result.Data = false;
+            return result;
+
+
+
+        }
+
+        public Result<double> GetHoursDiff(int id, DateTime date)
+        {
+            var result = new Result<double>();
+            var teacher = GetTeacherById(id);
+            var lessons = FilterLessonByDate(GetLessonByTeacher(id),date);
+            if (!teacher.IsSuccess || !lessons.IsSuccess)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = teacher.ErrorMessage + lessons.ErrorMessage;
+                return result;
+            }
+            var hours = GetHours(lessons);
+            if (!hours.IsSuccess)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = hours.ErrorMessage;
+                return result;
+            }
+
+            if (teacher.Data.MinimumHours==null)
+            {
+                result.IsSuccess = true;
+                result.Note = "No Minimum Hours Requirement";
+                result.Data = 0;
+                return result;
+            }
+            
+            var minHours = teacher.Data.MinimumHours.GetValueOrDefault();
+            var diff = minHours - hours.Data;
+            if (diff<0)
+            {
+                
+                result.IsSuccess = true;
+                result.Data = 0;
+                return result;
+                
+            }
+            result.IsSuccess = true;
+            result.Data = diff;
+            return result;
+
+
+
+        }
+        
         
         
     }

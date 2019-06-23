@@ -289,7 +289,7 @@ namespace Pegasus_backend.Controllers
                             foreach (var amendment in amendments)
                             {
 
-                                if (lesson_begindate[lesson_flag] >= amendment.BeginDate && lesson_begindate[lesson_flag] <= amendment.EndDate)
+                                if (lesson_begindate[lesson_flag] >= amendment.BeginDate && (lesson_begindate[lesson_flag] <= amendment.EndDate || amendment.EndDate==null))
                                 {
                                     if (amendment.AmendType == 1)
                                     {
@@ -430,6 +430,7 @@ namespace Pegasus_backend.Controllers
 
 
         [HttpPost("{term_id}")]
+        //[HttpPost]
         //[Route("[action]")]
         public async Task<IActionResult> Generateone2oneInvoice(int term_id)
         {

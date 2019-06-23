@@ -310,6 +310,20 @@ namespace Pegasus_backend.Controllers
                     newTeacher.IsActivate = 1;
                     _pegasusContext.Add(newTeacher);
                     await _pegasusContext.SaveChangesAsync();
+                    
+                    
+                    var newUser = new User
+                    {
+                        UserName = newTeacher.Email,Password = "helloworld",
+                        CreatedAt = DateTime.Now,RoleId = 1, IsActivate = 1
+                        
+                    };
+                    _pegasusContext.Add(newUser);
+                    await _pegasusContext.SaveChangesAsync();
+                    
+                    newTeacher.UserId = newUser.UserId;
+                    _pegasusContext.Update(newTeacher);
+                    await _pegasusContext.SaveChangesAsync();
 
                     
                     detailsJson.Language.ForEach(s =>{ _pegasusContext.Add(new TeacherLanguage {TeacherId = newTeacher.TeacherId, LangId = s});});

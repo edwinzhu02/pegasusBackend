@@ -1,6 +1,7 @@
 using AutoMapper;
 using Pegasus_backend.pegasusContext;
 using Pegasus_backend.Models;
+using Parent = Pegasus_backend.Models.Parent;
 
 namespace Pegasus_backend.Mappings
 {
@@ -30,6 +31,25 @@ namespace Pegasus_backend.Mappings
             CreateMap<StaffModel, Staff>();
             CreateMap<One2oneCourseInstance, OneOrGroupCourse>();
             CreateMap<GroupCourseInstance, OneOrGroupCourse>();
+            
+            //Start: Get Learner Model
+            CreateMap<GetLearnerModel, Learner>();
+            CreateMap<GetLearnerParentModel, Parent>();
+            CreateMap<GetLearnerLearnerOthers, LearnerOthers>();
+            CreateMap<GetLearnerOnetoOneCourseInstance, One2oneCourseInstance>();
+            CreateMap<GetLearnerOnetoOneCourseInstanceOrg, pegasusContext.Org>();
+            CreateMap<GetLearnerOnetoOneCourseInstanceCourse, Course>();
+            CreateMap<GetLearnerOnetoOneCourseInstanceRoom, Room>();
+            CreateMap<GetLearnerOnetoOneCourseInstanceCourseSchedule,CourseSchedule>();
+            CreateMap<GetLearnerOnetoOneCourseInstanceCourseTeacher, Teacher>();
+            CreateMap<GetLearnerLearnerGroupCourse, LearnerGroupCourse>();
+            CreateMap<GetLearnerOnetoOneCourseInstanceCourseAmendment, Amendment>();
+            CreateMap<GetLearnerLearnerGroupCourseGroupCourseInstance,GroupCourseInstance>();
+            CreateMap<GetLearnerLearnerGroupCourseGroupCourseInstanceTeacher,Teacher>();
+            CreateMap<GetLearnerLearnerGroupCourseGroupCourseInstanceCourseSchedule, CourseSchedule>();
+            CreateMap<GetLearnerLearnerGroupCourseGroupCourseInstanceCourse, Course>();
+            CreateMap<GetLearnerLearnerGroupCourseGroupCourseInstanceRoom, Room>();
+            //End
         }
     }
 }

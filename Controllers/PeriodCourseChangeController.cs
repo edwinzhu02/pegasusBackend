@@ -47,7 +47,8 @@ namespace Pegasus_backend.Controllers
                 if (inputObj.EndDate.HasValue)
                 {
                     exsitingLessons = await _ablemusicContext.Lesson.Where(l => l.LearnerId == inputObj.LearnerId &&
-                    l.BeginTime.Value.Date < inputObj.EndDate.Value.Date && l.BeginTime.Value.Date > inputObj.BeginDate.Date).ToListAsync();
+                    l.BeginTime.Value.Date < inputObj.EndDate.Value.Date && l.BeginTime.Value.Date > inputObj.BeginDate.Date&&
+                    l.CourseInstanceId == inputObj.InstanceId).ToListAsync();
                 } else
                 {
                     exsitingLessons = await _ablemusicContext.Lesson.Where(l => l.LearnerId == inputObj.LearnerId &&
@@ -131,14 +132,15 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = "EndDate is required when type is temporary";
                 return BadRequest(result);
             }
-
-            switch (courseInfo.Duration)
+            switch ((short)courseInfo.Duration)
             {
                 case 1: inputObj.EndTime = inputObj.BeginTime.Add(TimeSpan.FromMinutes(30));
                     break;
-                case 2: inputObj.EndTime = inputObj.BeginTime.Add(TimeSpan.FromMinutes(45));
+                case 2: 
+                    inputObj.EndTime = inputObj.BeginTime.Add(TimeSpan.FromMinutes(45));
                     break;
-                case 3: inputObj.EndTime = inputObj.BeginTime.Add(TimeSpan.FromMinutes(60));
+                case 3: 
+                    inputObj.EndTime = inputObj.BeginTime.Add(TimeSpan.FromMinutes(60));
                     break;
             }
 

@@ -55,6 +55,57 @@ namespace Pegasus_backend.Controllers
             result.Data = "delete successfully";
             return Ok(result);
         }
+
+        [HttpGet]
+        [Route("two")]
+        public async Task<IActionResult> GetLearner3()
+        {
+            var result = new Result<object>();
+            try
+            {
+                var learners = await _pegasusContext.Learner
+                    .Include(w => w.Parent)
+                    .Include(w => w.LearnerOthers)
+                    .Include(w=>w.One2oneCourseInstance)
+                    .ThenInclude(w=>w.Amendment)
+                    .Include(w => w.One2oneCourseInstance)
+                    .ThenInclude(w => w.Org)
+                    .Include(w => w.One2oneCourseInstance)
+                    .ThenInclude(w => w.Course)
+                    .Include(w => w.One2oneCourseInstance)
+                    .ThenInclude(w => w.Room)
+                    .Include(w => w.One2oneCourseInstance)
+                    .ThenInclude(w => w.CourseSchedule)
+                    .Include(w => w.One2oneCourseInstance)
+                    .ThenInclude(w => w.Teacher)
+                    .Include(w => w.LearnerGroupCourse)
+                    .ThenInclude(w => w.GroupCourseInstance)
+                    .ThenInclude(s => s.Teacher)
+                    .Include(w => w.LearnerGroupCourse)
+                    .ThenInclude(s => s.GroupCourseInstance)
+                    .ThenInclude(s => s.CourseSchedule)
+                    .Include(w => w.LearnerGroupCourse)
+                    .ThenInclude(s => s.GroupCourseInstance)
+                    .ThenInclude(s => s.Course)
+                    .Include(s => s.LearnerGroupCourse)
+                    .ThenInclude(s => s.GroupCourseInstance)
+                    .ThenInclude(s => s.Room)//
+                    .Where(s => s.IsActive == 1)
+                    .ToListAsync();
+                
+                var mapperItem = _mapper.Map<List<GetLearnerModel>>(learners);
+                result.Data = mapperItem;
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+        }
+
+        
         
         //GET: http://localhost:5000/api/learner/:name
         [HttpGet]
@@ -124,6 +175,7 @@ namespace Pegasus_backend.Controllers
                     .Include(s=>s.LearnerGroupCourse)
                     .ThenInclude(s=>s.GroupCourseInstance)
                     .ThenInclude(s=>s.Room)
+                    .Include(s=>s.Amendment)
                     .Where(s=>s.IsActive ==1)
                     .ToListAsync();
                 result.Data = data;
