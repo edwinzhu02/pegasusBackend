@@ -10,6 +10,7 @@ using Pegasus_backend.ActionFilter;
 using Pegasus_backend.Models;
 using Pegasus_backend.pegasusContext;
 using Pegasus_backend.Services;
+using Microsoft.Extensions.Logging;
 
 namespace Pegasus_backend.Controllers
 {
@@ -17,12 +18,10 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class LearnerDayOffController : BasicController
     {
-        private readonly pegasusContext.ablemusicContext _ablemusicContext;
         private readonly IConfiguration _configuration;
 
-        public LearnerDayOffController(pegasusContext.ablemusicContext ablemusicContext, IConfiguration configuration)
+        public LearnerDayOffController(ablemusicContext ablemusicContext, ILogger<ValuesController> log, IConfiguration configuration) : base(ablemusicContext, log)
         {
-            _ablemusicContext = ablemusicContext;
             _configuration = configuration;
         }
 

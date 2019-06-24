@@ -11,6 +11,7 @@ using Pegasus_backend.Models;
 using Pegasus_backend.ActionFilter;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.Extensions.Logging;
 
 namespace Pegasus_backend.Controllers
 {
@@ -18,11 +19,9 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class PaymentController : BasicController
     {
-        private readonly pegasusContext.ablemusicContext _pegasusContext;
         private IMapper _mapper;
-        public PaymentController(pegasusContext.ablemusicContext pegasusContext, IMapper mapper)
+        public PaymentController(ablemusicContext ablemusicContext, ILogger<ValuesController> log, IMapper mapper) : base(ablemusicContext, log)
         {
-            _pegasusContext = pegasusContext;
             _mapper = mapper;
         }
 
@@ -37,10 +36,10 @@ namespace Pegasus_backend.Controllers
             Result<string> result = new Result<string>();
             try
             {
-                using (var dbContextTransaction = _pegasusContext.Database.BeginTransaction())
+                using (var dbContextTransaction = _ablemusicContext.Database.BeginTransaction())
                 {
                     var invoiceItem =
-                        await _pegasusContext.Invoice.FirstOrDefaultAsync(s => s.InvoiceId == details.InvoiceId);
+                        await _ablemusicContext.Invoice.FirstOrDefaultAsync(s => s.InvoiceId == details.InvoiceId);
                     if (invoiceItem == null)
                     {
                         throw new Exception("Invoice does not found.");
@@ -63,23 +62,23 @@ namespace Pegasus_backend.Controllers
                     {
                         invoiceItem.IsPaid = 1;
                     }
-                    _pegasusContext.Update(invoiceItem);
-                    await _pegasusContext.SaveChangesAsync();
+                    _ablemusicContext.Update(invoiceItem);
+                    await _ablemusicContext.SaveChangesAsync();
 
                     //save the Invoice payment to Payment table
                     var paymentItem = new Payment();
                     _mapper.Map(details, paymentItem);
                     paymentItem.CreatedAt = toNZTimezone(DateTime.UtcNow);
                     paymentItem.PaymentType = 1;
-                    _pegasusContext.Add(paymentItem);
-                    await _pegasusContext.SaveChangesAsync();
+                    _ablemusicContext.Add(paymentItem);
+                    await _ablemusicContext.SaveChangesAsync();
 
                     var fundItem =
-                        await _pegasusContext.Fund.FirstOrDefaultAsync(s => s.LearnerId == details.LearnerId);
+                        await _ablemusicContext.Fund.FirstOrDefaultAsync(s => s.LearnerId == details.LearnerId);
                     fundItem.Balance = fundItem.Balance + details.Amount;
                     fundItem.UpdatedAt = toNZTimezone(DateTime.UtcNow);
-                    _pegasusContext.Update(fundItem);
-                    await _pegasusContext.SaveChangesAsync();
+                    _ablemusicContext.Update(fundItem);
+                    await _ablemusicContext.SaveChangesAsync();
 
                     if (invoiceItem.IsPaid == 1)
                     {
@@ -91,9 +90,9 @@ namespace Pegasus_backend.Controllers
                             CourseInstanceId = invoiceItem.CourseInstanceId,
                             LearnerId = invoiceItem.LearnerId
                         };
-                        _pegasusContext.Add(lessonRemain);
+                        _ablemusicContext.Add(lessonRemain);
                         await SaveLesson(details.InvoiceId,0,1);
-                        await _pegasusContext.SaveChangesAsync();
+                        await _ablemusicContext.SaveChangesAsync();
 
                     }
                     dbContextTransaction.Commit();
@@ -127,8 +126,8 @@ namespace Pegasus_backend.Controllers
                 decimal? amount = 0;
                 foreach (var detail in payment.SoldTransaction)
                 {
-                    var stock = await _pegasusContext.Stock.FirstOrDefaultAsync(x => x.OrgId == paymentTranListJson.OrgId && x.ProductId == detail.ProductId);
-                    var name = await _pegasusContext.Product.FirstOrDefaultAsync(x => x.ProductId == detail.ProductId);
+                    var stock = await _ablemusicContext.Stock.FirstOrDefaultAsync(x => x.OrgId == paymentTranListJson.OrgId && x.ProductId == detail.ProductId);
+                    var name = await _ablemusicContext.Product.FirstOrDefaultAsync(x => x.ProductId == detail.ProductId);
                     //return Ok(stock);
                     if (stock == null)
                     {
@@ -160,14 +159,14 @@ namespace Pegasus_backend.Controllers
                     }
 
                     stock.Quantity -= detail.SoldQuantity;
-                    _pegasusContext.Stock.Update(stock);
+                    _ablemusicContext.Stock.Update(stock);
                     _mapper.Map(detail, payment.SoldTransaction.ToArray()[i]);
                     i++;
                     amount += detail.DiscountedAmount;
 
                 }
-                await _pegasusContext.Payment.AddAsync(payment);
-                await _pegasusContext.SaveChangesAsync();
+                await _ablemusicContext.Payment.AddAsync(payment);
+                await _ablemusicContext.SaveChangesAsync();
                 if (amount != payment.Amount)
                 {
                     throw new Exception("Amount Error!");
@@ -192,35 +191,35 @@ namespace Pegasus_backend.Controllers
             var invoice = new WaitingOrInvoice();
             if (isWaitingConfirm == 1)
             {
-                var tem = await _pegasusContext.InvoiceWaitingConfirm.FirstOrDefaultAsync(x => x.WaitingId == invoice_id);
+                var tem = await _ablemusicContext.InvoiceWaitingConfirm.FirstOrDefaultAsync(x => x.WaitingId == invoice_id);
                 _mapper.Map(tem,invoice);
             }
             else
             {
-                var tem = await _pegasusContext.Invoice.FirstOrDefaultAsync(x => x.InvoiceId == invoice_id);
+                var tem = await _ablemusicContext.Invoice.FirstOrDefaultAsync(x => x.InvoiceId == invoice_id);
                 _mapper.Map(tem,invoice);
             }
 
             var course = new OneOrGroupCourse();
-            var schedules = await _pegasusContext.CourseSchedule.Where(x => x.CourseInstanceId == invoice.CourseInstanceId).OrderBy(x => x.DayOfWeek).ToArrayAsync();
-            var amendments = await _pegasusContext.Amendment.Where(x => x.CourseInstanceId == invoice.CourseInstanceId && x.BeginDate <= invoice.EndDate).OrderBy(x => x.CreatedAt).ToArrayAsync();
+            var schedules = await _ablemusicContext.CourseSchedule.Where(x => x.CourseInstanceId == invoice.CourseInstanceId).OrderBy(x => x.DayOfWeek).ToArrayAsync();
+            var amendments = await _ablemusicContext.Amendment.Where(x => x.CourseInstanceId == invoice.CourseInstanceId && x.BeginDate <= invoice.EndDate).OrderBy(x => x.CreatedAt).ToArrayAsync();
 
             if (isOne2one == 1)
             {
-                var cour = await _pegasusContext.One2oneCourseInstance.FirstOrDefaultAsync(x => x.CourseInstanceId == invoice.CourseInstanceId);
+                var cour = await _ablemusicContext.One2oneCourseInstance.FirstOrDefaultAsync(x => x.CourseInstanceId == invoice.CourseInstanceId);
                 _mapper.Map(cour, course);
  
             }
             else
             {
-                var cour = await _pegasusContext.GroupCourseInstance.FirstOrDefaultAsync(x => x.GroupCourseInstanceId == invoice.GroupCourseInstanceId);
+                var cour = await _ablemusicContext.GroupCourseInstance.FirstOrDefaultAsync(x => x.GroupCourseInstanceId == invoice.GroupCourseInstanceId);
                 _mapper.Map(cour, course);
-                schedules = await _pegasusContext.CourseSchedule.Where(x => x.GroupCourseInstanceId == invoice.GroupCourseInstanceId).OrderBy(x => x.DayOfWeek).ToArrayAsync();
+                schedules = await _ablemusicContext.CourseSchedule.Where(x => x.GroupCourseInstanceId == invoice.GroupCourseInstanceId).OrderBy(x => x.DayOfWeek).ToArrayAsync();
                 amendments = null;
             }
 
             
-            var holiday = await _pegasusContext.Holiday.Select(x => x.HolidayDate).ToArrayAsync();
+            var holiday = await _ablemusicContext.Holiday.Select(x => x.HolidayDate).ToArrayAsync();
 
             DateTime begindate_invoice = (DateTime)invoice.BeginDate;
             //get the day of week of the begindate in invoice
@@ -382,8 +381,8 @@ namespace Pegasus_backend.Controllers
                         DateTime EndTime = Convert.ToDateTime(endDate);
                         lesson.BeginTime = BeginTime;
                         lesson.EndTime = EndTime;
-                        await _pegasusContext.Lesson.AddAsync(lesson);
-                        await _pegasusContext.SaveChangesAsync();
+                        await _ablemusicContext.Lesson.AddAsync(lesson);
+                        await _ablemusicContext.SaveChangesAsync();
                         lesson_quantity++;
                     }
                     catch (Exception e)
@@ -399,7 +398,7 @@ namespace Pegasus_backend.Controllers
                 }
                 num++;
             }
-            //await _pegasusContext.SaveChangesAsync();
+            //await _ablemusicContext.SaveChangesAsync();
             return lesson_quantity;
         }
 
@@ -443,7 +442,7 @@ namespace Pegasus_backend.Controllers
         {
             var result = new Result<object>();
 
-            var course_instances = await _pegasusContext.One2oneCourseInstance
+            var course_instances = await _ablemusicContext.One2oneCourseInstance
                 .Include(x => x.Course)
                 .Include(x => x.Learner).Where(x=>x.Learner.IsActive==1)
                 .Select(x => new
@@ -468,9 +467,9 @@ namespace Pegasus_backend.Controllers
                 })
                 .ToListAsync();
 
-            var term = await _pegasusContext.Term.FirstOrDefaultAsync(x => x.TermId == term_id);
+            var term = await _ablemusicContext.Term.FirstOrDefaultAsync(x => x.TermId == term_id);
 
-            var all_terms = await _pegasusContext.Term.Select(x => new { x.TermId, x.BeginDate, x.EndDate }).ToListAsync();
+            var all_terms = await _ablemusicContext.Term.Select(x => new { x.TermId, x.BeginDate, x.EndDate }).ToListAsync();
             int i = 0;
             foreach (var course_instance in course_instances)
             {
@@ -489,7 +488,7 @@ namespace Pegasus_backend.Controllers
                 invoice.IsActivate = 1;
                 invoice.IsEmailSent = 0;
 
-                var courseIns = await _pegasusContext.One2oneCourseInstance.FirstOrDefaultAsync(x => x.CourseInstanceId == invoice.CourseInstanceId);
+                var courseIns = await _ablemusicContext.One2oneCourseInstance.FirstOrDefaultAsync(x => x.CourseInstanceId == invoice.CourseInstanceId);
                 int lesson_quantity = 0;
 
                 if (course_instance.Learner.PaymentPeriod == 1 && (course_instance.InvoiceDate == null || course_instance.InvoiceDate < term.EndDate))
@@ -505,9 +504,9 @@ namespace Pegasus_backend.Controllers
 
                     invoice.EndDate = term.EndDate;
 
-                    await _pegasusContext.InvoiceWaitingConfirm.AddAsync(invoice);
-                    await _pegasusContext.SaveChangesAsync();
-                    using (var dbContextTransaction = _pegasusContext.Database.BeginTransaction())
+                    await _ablemusicContext.InvoiceWaitingConfirm.AddAsync(invoice);
+                    await _ablemusicContext.SaveChangesAsync();
+                    using (var dbContextTransaction = _ablemusicContext.Database.BeginTransaction())
                     {
                         lesson_quantity = await SaveLesson(invoice.WaitingId,1,1);
                         dbContextTransaction.Rollback();
@@ -547,9 +546,9 @@ namespace Pegasus_backend.Controllers
                     {
                         if (invoice.EndDate >= all_term.BeginDate && invoice.EndDate <= all_term.EndDate) invoice.TermId = all_term.TermId;
                     }
-                    await _pegasusContext.InvoiceWaitingConfirm.AddAsync(invoice);
-                    await _pegasusContext.SaveChangesAsync();
-                    using (var dbContextTransaction = _pegasusContext.Database.BeginTransaction())
+                    await _ablemusicContext.InvoiceWaitingConfirm.AddAsync(invoice);
+                    await _ablemusicContext.SaveChangesAsync();
+                    using (var dbContextTransaction = _ablemusicContext.Database.BeginTransaction())
                     {
                         lesson_quantity = await SaveLesson(invoice.WaitingId,1,1);
                         dbContextTransaction.Rollback();
@@ -563,11 +562,11 @@ namespace Pegasus_backend.Controllers
                 invoice.TotalFee = invoice.LessonFee;
                 invoice.LessonQuantity = lesson_quantity;
                 if (invoice.LessonFee<=0) continue;               
-                _pegasusContext.InvoiceWaitingConfirm.Update(invoice);
+                _ablemusicContext.InvoiceWaitingConfirm.Update(invoice);
                 invoice.InvoiceNum = invoice.WaitingId.ToString();
-                _pegasusContext.Update(courseIns);
+                _ablemusicContext.Update(courseIns);
 
-                await _pegasusContext.SaveChangesAsync();
+                await _ablemusicContext.SaveChangesAsync();
 
                 i++;
                 //if (i == 4) break;
@@ -584,7 +583,7 @@ namespace Pegasus_backend.Controllers
         {
             var result = new Result<object>();
 
-            var group_course_instances = await _pegasusContext.GroupCourseInstance
+            var group_course_instances = await _ablemusicContext.GroupCourseInstance
                 .Include(x => x.Course)
                 .Include(x => x.LearnerGroupCourse)
                 .Select(x => new
@@ -601,7 +600,7 @@ namespace Pegasus_backend.Controllers
                 })
                 .ToListAsync();
 
-            var term = await _pegasusContext.Term.FirstOrDefaultAsync(x => x.TermId == term_id);
+            var term = await _ablemusicContext.Term.FirstOrDefaultAsync(x => x.TermId == term_id);
             int i = 0;
             //int j = 0;
             foreach (var group_course_instance in group_course_instances)
@@ -624,7 +623,7 @@ namespace Pegasus_backend.Controllers
                     invoice.IsActivate = 1;
                     invoice.IsEmailSent = 0;
 
-                    var courseIns = await _pegasusContext.LearnerGroupCourse.FirstOrDefaultAsync(x => x.LearnerGroupCourseId == learner.LearnerGroupCourseId);
+                    var courseIns = await _ablemusicContext.LearnerGroupCourse.FirstOrDefaultAsync(x => x.LearnerGroupCourseId == learner.LearnerGroupCourseId);
                     int lesson_quantity = 0;
 
                     if (learner.InvoiceDate == null  || (learner.InvoiceDate < term.EndDate && learner.BeginDate<=term.EndDate))
@@ -640,9 +639,9 @@ namespace Pegasus_backend.Controllers
                         invoice.BeginDate = begin_date;
                         invoice.EndDate = term.EndDate;
 
-                        await _pegasusContext.InvoiceWaitingConfirm.AddAsync(invoice);
-                        await _pegasusContext.SaveChangesAsync();
-                        using (var dbContextTransaction = _pegasusContext.Database.BeginTransaction())
+                        await _ablemusicContext.InvoiceWaitingConfirm.AddAsync(invoice);
+                        await _ablemusicContext.SaveChangesAsync();
+                        using (var dbContextTransaction = _ablemusicContext.Database.BeginTransaction())
                         {
                             lesson_quantity = await SaveLesson(invoice.WaitingId, 1,0);
                             dbContextTransaction.Rollback();
@@ -659,11 +658,11 @@ namespace Pegasus_backend.Controllers
                     invoice.TotalFee = invoice.LessonFee;
                     invoice.LessonQuantity = lesson_quantity;
                     if (invoice.LessonFee <= 0) continue;
-                    _pegasusContext.InvoiceWaitingConfirm.Update(invoice);
+                    _ablemusicContext.InvoiceWaitingConfirm.Update(invoice);
                     invoice.InvoiceNum = invoice.WaitingId.ToString();
-                    _pegasusContext.Update(courseIns);
+                    _ablemusicContext.Update(courseIns);
 
-                    await _pegasusContext.SaveChangesAsync();
+                    await _ablemusicContext.SaveChangesAsync();
 
                     i++;
                     //j++;
@@ -684,7 +683,7 @@ namespace Pegasus_backend.Controllers
             try
             {
                 result.IsSuccess = true;
-                result.Data = await _pegasusContext.Term
+                result.Data = await _ablemusicContext.Term
                    
                     .ToListAsync();
                 return Ok(result);

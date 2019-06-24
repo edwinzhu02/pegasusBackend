@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Pegasus_backend.Models;
 using Pegasus_backend.pegasusContext;
 using System.IO;
-
+using Microsoft.Extensions.Logging;
 
 namespace Pegasus_backend.Controllers
 {
@@ -16,11 +16,8 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class StockOrderController : BasicController
     {
-        private readonly pegasusContext.ablemusicContext _ablemusicContext;
-
-        public StockOrderController(pegasusContext.ablemusicContext ablemusicContext)
+        public StockOrderController(ablemusicContext ablemusicContext, ILogger<ValuesController> log) : base(ablemusicContext, log)
         {
-            _ablemusicContext = ablemusicContext;
         }
 
         // GET: api/StockOrder

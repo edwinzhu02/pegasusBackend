@@ -11,6 +11,7 @@ using Pegasus_backend.ActionFilter;
 using Pegasus_backend.Models;
 using Pegasus_backend.pegasusContext;
 using Pegasus_backend.Services;
+using Microsoft.Extensions.Logging;
 
 namespace Pegasus_backend.Controllers
 {
@@ -18,13 +19,11 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class LessonRearrangeController : BasicController
     {
-        private readonly pegasusContext.ablemusicContext _ablemusicContext;
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
 
-        public LessonRearrangeController(pegasusContext.ablemusicContext ablemusicContext, IMapper mapper, IConfiguration configuration)
+        public LessonRearrangeController(ablemusicContext ablemusicContext, ILogger<ValuesController> log, IMapper mapper, IConfiguration configuration) : base(ablemusicContext, log)
         {
-            _ablemusicContext = ablemusicContext;
             _mapper = mapper;
             _configuration = configuration;
         }

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Pegasus_backend.pegasusContext;
 using Microsoft.EntityFrameworkCore;
 using Pegasus_backend.Models;
+using Microsoft.Extensions.Logging;
 
 namespace Pegasus_backend.Controllers
 {
@@ -13,11 +14,9 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class LessonConflictCheckController : BasicController
     {
-        private readonly pegasusContext.ablemusicContext _ablemusicContext;
 
-        public LessonConflictCheckController(pegasusContext.ablemusicContext ablemusicContext)
+        public LessonConflictCheckController(ablemusicContext ablemusicContext, ILogger<ValuesController> log) : base(ablemusicContext, log)
         {
-            _ablemusicContext = ablemusicContext;
         }
 
         // GET: api/LessonConflictCheck/5

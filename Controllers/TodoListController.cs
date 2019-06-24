@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Pegasus_backend.Models;
 using Pegasus_backend.pegasusContext;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.Extensions.Logging;
 
 namespace Pegasus_backend.Controllers
 {
@@ -15,11 +15,8 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class TodoListController : BasicController
     {
-        private readonly pegasusContext.ablemusicContext _ablemusicContext;
-
-        public TodoListController(pegasusContext.ablemusicContext ablemusicContext)
+        public TodoListController (ablemusicContext ablemusicContext, ILogger<ValuesController> log) : base(ablemusicContext, log)
         {
-            _ablemusicContext = ablemusicContext;
         }
 
         // GET: api/TodoList

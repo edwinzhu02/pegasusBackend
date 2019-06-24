@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Http;
 using MySqlX.XDevAPI.Common;
 using Newtonsoft.Json;
 using Pegasus_backend.ActionFilter;
+using Microsoft.Extensions.Logging;
 
 namespace Pegasus_backend.Controllers
 {
@@ -22,16 +23,13 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class TeacherController : BasicController
     {
-
-        private readonly pegasusContext.ablemusicContext _pegasusContext;
         private readonly IMapper _mapper;
         private TeacherLanguage newTeacherLanguage;
         private TeacherQualificatiion newTeacherQualification;
         private AvailableDays DayList;
 
-        public TeacherController(pegasusContext.ablemusicContext pegasusContext,IMapper mapper)
+        public TeacherController(ablemusicContext ablemusicContext, ILogger<ValuesController> log, IMapper mapper) : base(ablemusicContext, log)
         {
-            _pegasusContext = pegasusContext;
             _mapper = mapper;
         }
 
@@ -45,11 +43,11 @@ namespace Pegasus_backend.Controllers
             try
             {
                 
-                var firstNameList = searchFormat.FirstName?_pegasusContext.Teacher.Where(s => s.FirstName.Contains(words)).ToList():new List<Teacher>();
-                var lastNameList = searchFormat.LastName?_pegasusContext.Teacher.Where(s => s.LastName.Contains(words)).ToList():new List<Teacher>();
-                var genderList = searchFormat.Gender?_pegasusContext.Teacher.Where(s => s.Gender.ToString().Contains(words)).ToList():new List<Teacher>();
-                var mobilePhoneList = searchFormat.MobilePhone?_pegasusContext.Teacher.Where(s => s.MobilePhone.Contains(words)).ToList():new List<Teacher>();
-                var emailList = searchFormat.Email?_pegasusContext.Teacher.Where(s => s.Email.Contains(words)).ToList():new List<Teacher>();
+                var firstNameList = searchFormat.FirstName?_ablemusicContext.Teacher.Where(s => s.FirstName.Contains(words)).ToList():new List<Teacher>();
+                var lastNameList = searchFormat.LastName?_ablemusicContext.Teacher.Where(s => s.LastName.Contains(words)).ToList():new List<Teacher>();
+                var genderList = searchFormat.Gender?_ablemusicContext.Teacher.Where(s => s.Gender.ToString().Contains(words)).ToList():new List<Teacher>();
+                var mobilePhoneList = searchFormat.MobilePhone?_ablemusicContext.Teacher.Where(s => s.MobilePhone.Contains(words)).ToList():new List<Teacher>();
+                var emailList = searchFormat.Email?_ablemusicContext.Teacher.Where(s => s.Email.Contains(words)).ToList():new List<Teacher>();
                 result.Data = firstNameList.Union(lastNameList).Union(genderList).Union(mobilePhoneList)
                     .Union(emailList);
             }
@@ -69,14 +67,14 @@ namespace Pegasus_backend.Controllers
             Result<string> result = new Result<string>();
             try
             {
-                var item = _pegasusContext.Teacher.FirstOrDefault(s => s.TeacherId == id);
+                var item = _ablemusicContext.Teacher.FirstOrDefault(s => s.TeacherId == id);
                 if (item == null)
                 {
                     throw new Exception("teacher does not exist.");
                 }
                 item.IsActivate = 0;
-                _pegasusContext.Update(item);
-                await _pegasusContext.SaveChangesAsync();
+                _ablemusicContext.Update(item);
+                await _ablemusicContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
@@ -99,7 +97,7 @@ namespace Pegasus_backend.Controllers
             {
                 Random r = new Random();
                 result.IsSuccess = true;
-                var teachers = await _pegasusContext.Teacher
+                var teachers = await _ablemusicContext.Teacher
                     .Include(s => s.TeacherLanguage)
                     .ThenInclude(s => s.Lang)
                     .Include(s => s.TeacherQualificatiion)
@@ -148,37 +146,37 @@ namespace Pegasus_backend.Controllers
             Result<string> result = new Result<string>();
             try
             {
-                using (var dbContextTransaction = _pegasusContext.Database.BeginTransaction())
+                using (var dbContextTransaction = _ablemusicContext.Database.BeginTransaction())
                 {
                     var detailsJson = JsonConvert.DeserializeObject<TeachersUpdate>(details);
-                    if (await _pegasusContext.Teacher.FirstOrDefaultAsync(s => s.TeacherId == TeacherId) == null)
+                    if (await _ablemusicContext.Teacher.FirstOrDefaultAsync(s => s.TeacherId == TeacherId) == null)
                     {
                         return NotFound(DataNotFound(result));
                     }
-                    var teacher = await _pegasusContext.Teacher.FirstOrDefaultAsync(s => s.TeacherId == TeacherId);
+                    var teacher = await _ablemusicContext.Teacher.FirstOrDefaultAsync(s => s.TeacherId == TeacherId);
                     _mapper.Map(detailsJson, teacher);
 
                     
                     //start update language
-                    var teacherLanguages = _pegasusContext.TeacherLanguage.Where(s => s.TeacherId == TeacherId);
-                    teacherLanguages.ToList().ForEach(s => { _pegasusContext.Remove(s); });
-                    await _pegasusContext.SaveChangesAsync();
+                    var teacherLanguages = _ablemusicContext.TeacherLanguage.Where(s => s.TeacherId == TeacherId);
+                    teacherLanguages.ToList().ForEach(s => { _ablemusicContext.Remove(s); });
+                    await _ablemusicContext.SaveChangesAsync();
                     detailsJson.Language.ForEach(s =>
                     {
-                        _pegasusContext.Add(new TeacherLanguage {TeacherId = teacher.TeacherId, LangId = s});
+                        _ablemusicContext.Add(new TeacherLanguage {TeacherId = teacher.TeacherId, LangId = s});
                     });
-                    await _pegasusContext.SaveChangesAsync();
+                    await _ablemusicContext.SaveChangesAsync();
                     //end
                     
                     //start update qualification
-                    var teacherqualifications = _pegasusContext.TeacherQualificatiion.Where(s => s.TeacherId == TeacherId);
-                    teacherqualifications.ToList().ForEach(s => { _pegasusContext.Remove(s);});
-                    await _pegasusContext.SaveChangesAsync();
+                    var teacherqualifications = _ablemusicContext.TeacherQualificatiion.Where(s => s.TeacherId == TeacherId);
+                    teacherqualifications.ToList().ForEach(s => { _ablemusicContext.Remove(s);});
+                    await _ablemusicContext.SaveChangesAsync();
                     detailsJson.Qualificatiion.ForEach(s=>
                     {
-                        _pegasusContext.Add(new TeacherQualificatiion{TeacherId = teacher.TeacherId, QualiId = s});
+                        _ablemusicContext.Add(new TeacherQualificatiion{TeacherId = teacher.TeacherId, QualiId = s});
                     });
-                    await _pegasusContext.SaveChangesAsync();
+                    await _ablemusicContext.SaveChangesAsync();
                     //end
                     
                     //start update day of week
@@ -187,9 +185,9 @@ namespace Pegasus_backend.Controllers
                         throw new Exception("Day Of Week List must be length 7.");
                     }
 
-                    var teacherDayOfWeek = _pegasusContext.AvailableDays.Where(s => s.TeacherId == TeacherId);
-                    teacherDayOfWeek.ToList().ForEach(s => { _pegasusContext.Remove(s);});
-                    await _pegasusContext.SaveChangesAsync();
+                    var teacherDayOfWeek = _ablemusicContext.AvailableDays.Where(s => s.TeacherId == TeacherId);
+                    teacherDayOfWeek.ToList().ForEach(s => { _ablemusicContext.Remove(s);});
+                    await _ablemusicContext.SaveChangesAsync();
                     byte i = 1;
                     detailsJson.DayOfWeek.ForEach(s =>
                     {
@@ -197,12 +195,12 @@ namespace Pegasus_backend.Controllers
                         {
                             s.ForEach(w =>
                             {
-                                _pegasusContext.Add(new AvailableDays{TeacherId = teacher.TeacherId, DayOfWeek = i, CreatedAt = toNZTimezone(DateTime.UtcNow),OrgId = w});
+                                _ablemusicContext.Add(new AvailableDays{TeacherId = teacher.TeacherId, DayOfWeek = i, CreatedAt = toNZTimezone(DateTime.UtcNow),OrgId = w});
                             });
                         }
                         i++;
                     });
-                    await _pegasusContext.SaveChangesAsync();
+                    await _ablemusicContext.SaveChangesAsync();
                     //end
                     
                     //start uploading the images
@@ -211,8 +209,8 @@ namespace Pegasus_backend.Controllers
                     {
                         
                         teacher.IdPhoto = $"images/tutor/IdPhotos/{teacher.TeacherId+strDateTime+Path.GetExtension(IdPhoto.FileName)}";
-                        _pegasusContext.Update(teacher);
-                        await _pegasusContext.SaveChangesAsync();
+                        _ablemusicContext.Update(teacher);
+                        await _ablemusicContext.SaveChangesAsync();
                         var uploadResult = UploadFile(IdPhoto,"tutor/IdPhotos/",teacher.TeacherId,strDateTime);
                         if (!uploadResult.IsUploadSuccess)
                         {
@@ -224,8 +222,8 @@ namespace Pegasus_backend.Controllers
                     if (Photo != null)
                     {
                         teacher.Photo = $"images/tutor/Photos/{teacher.TeacherId+strDateTime+Path.GetExtension(Photo.FileName)}";
-                        _pegasusContext.Update(teacher);
-                        await _pegasusContext.SaveChangesAsync();
+                        _ablemusicContext.Update(teacher);
+                        await _ablemusicContext.SaveChangesAsync();
                         var uploadResult = UploadFile(Photo,"tutor/Photos/", teacher.TeacherId,strDateTime);
                         if (!uploadResult.IsUploadSuccess)
                         {
@@ -236,8 +234,8 @@ namespace Pegasus_backend.Controllers
                     if (CV != null)
                     {
                         teacher.CvUrl = $"images/tutor/CV/{teacher.TeacherId+strDateTime+Path.GetExtension(CV.FileName)}";
-                        _pegasusContext.Update(teacher);
-                        await _pegasusContext.SaveChangesAsync();
+                        _ablemusicContext.Update(teacher);
+                        await _ablemusicContext.SaveChangesAsync();
                         var uploadResult = UploadFile(CV,"tutor/CV/",teacher.TeacherId,strDateTime);
                         if (!uploadResult.IsUploadSuccess)
                         {
@@ -248,8 +246,8 @@ namespace Pegasus_backend.Controllers
                     if (Form != null)
                     {
                         teacher.FormUrl = $"images/tutor/Form/{teacher.TeacherId+strDateTime+Path.GetExtension(Form.FileName)}";
-                        _pegasusContext.Update(teacher);
-                        await _pegasusContext.SaveChangesAsync();
+                        _ablemusicContext.Update(teacher);
+                        await _ablemusicContext.SaveChangesAsync();
                         var uploadResult = UploadFile(Form,"tutor/Form/",teacher.TeacherId,strDateTime);
                         if (!uploadResult.IsUploadSuccess)
                         {
@@ -260,8 +258,8 @@ namespace Pegasus_backend.Controllers
                     if (Other != null)
                     {
                         teacher.OtherfileUrl =$"images/tutor/Other/{teacher.TeacherId+strDateTime+Path.GetExtension(Other.FileName)}";
-                        _pegasusContext.Update(teacher);
-                        await _pegasusContext.SaveChangesAsync();
+                        _ablemusicContext.Update(teacher);
+                        await _ablemusicContext.SaveChangesAsync();
                         var uploadResult = UploadFile(Other,"tutor/Other/",teacher.TeacherId,strDateTime);
                         if (!uploadResult.IsUploadSuccess)
                         {
@@ -269,7 +267,7 @@ namespace Pegasus_backend.Controllers
                         }
                     }
                     
-                    await _pegasusContext.SaveChangesAsync();
+                    await _ablemusicContext.SaveChangesAsync();
                     //end uploading images
                     
                     dbContextTransaction.Commit();
@@ -296,10 +294,10 @@ namespace Pegasus_backend.Controllers
             Result<string> result = new Result<string>();
             try
             {
-                using (var dbContextTransaction = _pegasusContext.Database.BeginTransaction())
+                using (var dbContextTransaction = _ablemusicContext.Database.BeginTransaction())
                 {
                     var detailsJson = JsonConvert.DeserializeObject<TeachersRegister>(details);
-                    if (await _pegasusContext.Teacher.FirstOrDefaultAsync(s => s.IdNumber == detailsJson.IDNumber) !=
+                    if (await _ablemusicContext.Teacher.FirstOrDefaultAsync(s => s.IdNumber == detailsJson.IDNumber) !=
                         null)
                     {
                         throw new Exception("Teacher has exist.");
@@ -308,8 +306,8 @@ namespace Pegasus_backend.Controllers
                     var newTeacher = new Teacher();
                     _mapper.Map(detailsJson,newTeacher);
                     newTeacher.IsActivate = 1;
-                    _pegasusContext.Add(newTeacher);
-                    await _pegasusContext.SaveChangesAsync();
+                    _ablemusicContext.Add(newTeacher);
+                    await _ablemusicContext.SaveChangesAsync();
                     
                     
                     var newUser = new User
@@ -318,24 +316,24 @@ namespace Pegasus_backend.Controllers
                         CreatedAt = DateTime.Now,RoleId = 1, IsActivate = 1
                         
                     };
-                    _pegasusContext.Add(newUser);
-                    await _pegasusContext.SaveChangesAsync();
+                    _ablemusicContext.Add(newUser);
+                    await _ablemusicContext.SaveChangesAsync();
                     
                     newTeacher.UserId = newUser.UserId;
-                    _pegasusContext.Update(newTeacher);
-                    await _pegasusContext.SaveChangesAsync();
+                    _ablemusicContext.Update(newTeacher);
+                    await _ablemusicContext.SaveChangesAsync();
 
                     
-                    detailsJson.Language.ForEach(s =>{ _pegasusContext.Add(new TeacherLanguage {TeacherId = newTeacher.TeacherId, LangId = s});});
-                    await _pegasusContext.SaveChangesAsync();
+                    detailsJson.Language.ForEach(s =>{ _ablemusicContext.Add(new TeacherLanguage {TeacherId = newTeacher.TeacherId, LangId = s});});
+                    await _ablemusicContext.SaveChangesAsync();
                     
                     detailsJson.Qualificatiion.ForEach(s=>
                         {
                             newTeacherQualification = new TeacherQualificatiion
                                 {TeacherId = newTeacher.TeacherId, QualiId = s};
-                            _pegasusContext.Add(newTeacherQualification);
+                            _ablemusicContext.Add(newTeacherQualification);
                         });
-                    await _pegasusContext.SaveChangesAsync();
+                    await _ablemusicContext.SaveChangesAsync();
 
                     if (detailsJson.DayOfWeek.Count != 7)
                     {
@@ -354,22 +352,22 @@ namespace Pegasus_backend.Controllers
                                         TeacherId = newTeacher.TeacherId, DayOfWeek = i, CreatedAt = toNZTimezone(DateTime.UtcNow),
                                         OrgId = w
                                     };
-                                    _pegasusContext.Add(DayList);
+                                    _ablemusicContext.Add(DayList);
                                 });
                         }
 
                         i++;
                     });
 
-                    await _pegasusContext.SaveChangesAsync();
+                    await _ablemusicContext.SaveChangesAsync();
                     //file upload part
                     var strDateTime = toNZTimezone(DateTime.UtcNow).ToString("yyMMddhhmmssfff"); 
                     if (IdPhoto != null)
                     {
                         
                         newTeacher.IdPhoto = $"images/tutor/IdPhotos/{newTeacher.TeacherId+strDateTime+Path.GetExtension(IdPhoto.FileName)}";
-                        _pegasusContext.Update(newTeacher);
-                        await _pegasusContext.SaveChangesAsync();
+                        _ablemusicContext.Update(newTeacher);
+                        await _ablemusicContext.SaveChangesAsync();
                         var uploadResult = UploadFile(IdPhoto,"tutor/IdPhotos/",newTeacher.TeacherId,strDateTime);
                         if (!uploadResult.IsUploadSuccess)
                         {
@@ -381,8 +379,8 @@ namespace Pegasus_backend.Controllers
                     if (Photo != null)
                     {
                         newTeacher.Photo = $"images/tutor/Photos/{newTeacher.TeacherId+strDateTime+Path.GetExtension(Photo.FileName)}";
-                        _pegasusContext.Update(newTeacher);
-                        await _pegasusContext.SaveChangesAsync();
+                        _ablemusicContext.Update(newTeacher);
+                        await _ablemusicContext.SaveChangesAsync();
                         var uploadResult = UploadFile(Photo,"tutor/Photos/", newTeacher.TeacherId,strDateTime);
                         if (!uploadResult.IsUploadSuccess)
                         {
@@ -393,8 +391,8 @@ namespace Pegasus_backend.Controllers
                     if (CV != null)
                     {
                         newTeacher.CvUrl = $"images/tutor/CV/{newTeacher.TeacherId+strDateTime+Path.GetExtension(CV.FileName)}";
-                        _pegasusContext.Update(newTeacher);
-                        await _pegasusContext.SaveChangesAsync();
+                        _ablemusicContext.Update(newTeacher);
+                        await _ablemusicContext.SaveChangesAsync();
                         var uploadResult = UploadFile(CV,"tutor/CV/",newTeacher.TeacherId,strDateTime);
                         if (!uploadResult.IsUploadSuccess)
                         {
@@ -405,8 +403,8 @@ namespace Pegasus_backend.Controllers
                     if (Form != null)
                     {
                         newTeacher.FormUrl = $"images/tutor/Form/{newTeacher.TeacherId+strDateTime+Path.GetExtension(Form.FileName)}";
-                        _pegasusContext.Update(newTeacher);
-                        await _pegasusContext.SaveChangesAsync();
+                        _ablemusicContext.Update(newTeacher);
+                        await _ablemusicContext.SaveChangesAsync();
                         var uploadResult = UploadFile(Form,"tutor/Form/",newTeacher.TeacherId,strDateTime);
                         if (!uploadResult.IsUploadSuccess)
                         {
@@ -417,8 +415,8 @@ namespace Pegasus_backend.Controllers
                     if (Other != null)
                     {
                         newTeacher.OtherfileUrl =$"images/tutor/Other/{newTeacher.TeacherId+strDateTime+Path.GetExtension(Other.FileName)}";
-                        _pegasusContext.Update(newTeacher);
-                        await _pegasusContext.SaveChangesAsync();
+                        _ablemusicContext.Update(newTeacher);
+                        await _ablemusicContext.SaveChangesAsync();
                         var uploadResult = UploadFile(Other,"tutor/Other/",newTeacher.TeacherId,strDateTime);
                         if (!uploadResult.IsUploadSuccess)
                         {
