@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Pegasus_backend.Models;
 using Pegasus_backend.pegasusContext;
+using Microsoft.Extensions.Logging;
 
 namespace Pegasus_backend.Controllers
 {
@@ -14,11 +14,8 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class TeacherAvailableCheckController : BasicController
     {
-        private readonly pegasusContext.ablemusicContext _ablemusicContext;
-
-        public TeacherAvailableCheckController(pegasusContext.ablemusicContext ablemusicContext)
+        public TeacherAvailableCheckController(ablemusicContext ablemusicContext, ILogger<TeacherAvailableCheckController> log) : base(ablemusicContext, log)
         {
-            _ablemusicContext = ablemusicContext;
         }
  
         // GET: api/TeacherAvailableCheck/5

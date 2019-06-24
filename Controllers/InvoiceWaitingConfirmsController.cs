@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Pegasus_backend.ActionFilter;
 using Pegasus_backend.Models;
 using Pegasus_backend.pegasusContext;
@@ -17,12 +17,10 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class InvoiceWaitingConfirmsController : BasicController
     {
-        private readonly pegasusContext.ablemusicContext _ablemusicContext;
         private readonly IMapper _mapper;
 
-        public InvoiceWaitingConfirmsController(pegasusContext.ablemusicContext ablemusicContext, IMapper mapper)
+        public InvoiceWaitingConfirmsController(ablemusicContext ablemusicContext, ILogger<InvoiceWaitingConfirmsController> log, IMapper mapper) : base(ablemusicContext, log)
         {
-            _ablemusicContext = ablemusicContext;
             _mapper = mapper;
         }
 

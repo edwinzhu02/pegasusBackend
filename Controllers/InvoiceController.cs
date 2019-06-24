@@ -7,6 +7,7 @@ using AutoMapper;
 using Pegasus_backend.pegasusContext;
 using Pegasus_backend.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -17,13 +18,10 @@ namespace Pegasus_backend.Controllers
 
     public class InvoiceController : BasicController
     {
-
-        private readonly pegasusContext.ablemusicContext _pegasusContext;
         private readonly IMapper _mapper;
 
-        public InvoiceController(pegasusContext.ablemusicContext pegasusContext, IMapper mapper)
+        public InvoiceController(ablemusicContext ablemusicContext, ILogger<InvoiceController> log, IMapper mapper) : base(ablemusicContext, log)
         {
-            _pegasusContext = pegasusContext;
             _mapper = mapper;
         }
         
@@ -35,7 +33,7 @@ namespace Pegasus_backend.Controllers
             Result<List<Invoice>> result = new Result<List<Invoice>>();
             try
             {
-                var res =_pegasusContext.Invoice.Where(s => s.LearnerId == id&&s.IsActive==1).Include(s => s.Term)
+                var res =_ablemusicContext.Invoice.Where(s => s.LearnerId == id&&s.IsActive==1).Include(s => s.Term)
                     .Where(s=>s.IsPaid == 0)
                     .ToList();
                 if (res.Count ==0){
@@ -59,13 +57,13 @@ namespace Pegasus_backend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Invoice>>> GetInvoices()
         {
-            //_pegasusContext.Detach(Invoice);
+            //_ablemusicContext.Detach(Invoice);
             Result<List<Invoice>> result = new Result<List<Invoice>>();
 
 
             try
             {
-                result.Data = await _pegasusContext.Invoice.Include(x => x.Learner).Include(x => x.Term).Include(x => x.GroupCourseInstance).Include(x => x.CourseInstance).ToListAsync();
+                result.Data = await _ablemusicContext.Invoice.Include(x => x.Learner).Include(x => x.Term).Include(x => x.GroupCourseInstance).Include(x => x.CourseInstance).ToListAsync();
                 
             }
             catch (Exception ex)

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Pegasus_backend.Models;
 using Pegasus_backend.pegasusContext;
 using Pegasus_backend.Services;
@@ -17,13 +17,11 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class SessionController : BasicController
     {
-        private readonly pegasusContext.ablemusicContext _ablemusicContext;
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
 
-        public SessionController(pegasusContext.ablemusicContext ablemusicContext, IMapper mapper, IConfiguration configuration)
+        public SessionController(ablemusicContext ablemusicContext, ILogger<SessionController> log, IMapper mapper, IConfiguration configuration) : base(ablemusicContext, log)
         {
-            _ablemusicContext = ablemusicContext;
             _mapper = mapper;
             _configuration = configuration;
         }

@@ -13,6 +13,8 @@ using Newtonsoft.Json;
 using Pegasus_backend.ActionFilter;
 using Pegasus_backend.pegasusContext;
 using Pegasus_backend.Models;
+using Microsoft.Extensions.Logging;
+
 namespace Pegasus_backend.Controllers
 {
     [Route("api/[controller]")]
@@ -20,13 +22,11 @@ namespace Pegasus_backend.Controllers
     public class OnetoOneCourseInstanceController : BasicController
 
     {
-        private readonly pegasusContext.ablemusicContext _pegasusContext;
         private readonly IMapper _mapper;
 
-        public OnetoOneCourseInstanceController(pegasusContext.ablemusicContext pegasusContext, IMapper mapper)
+        public OnetoOneCourseInstanceController(ablemusicContext ablemusicContext, ILogger<OnetoOneCourseInstanceController> log, IMapper mapper) : base(ablemusicContext, log)
         {
             _mapper = mapper;
-            _pegasusContext = pegasusContext;
         }
 
         [HttpPut("{instanceId}/{endDate}")]
@@ -35,15 +35,15 @@ namespace Pegasus_backend.Controllers
             var result = new Result<string>();
             try
             {
-                var item = _pegasusContext.One2oneCourseInstance.FirstOrDefault(s => s.CourseInstanceId == instanceId);
+                var item = _ablemusicContext.One2oneCourseInstance.FirstOrDefault(s => s.CourseInstanceId == instanceId);
                 if (item == null)
                 {
                     throw new Exception("Course instance does not found");
                 }
 
                 item.EndDate = endDate;
-                _pegasusContext.Update(item);
-                await _pegasusContext.SaveChangesAsync();
+                _ablemusicContext.Update(item);
+                await _ablemusicContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
@@ -62,21 +62,21 @@ namespace Pegasus_backend.Controllers
             var result = new Result<string>();
             try
             {
-                using (var dbtransaction =await _pegasusContext.Database.BeginTransactionAsync())
+                using (var dbtransaction =await _ablemusicContext.Database.BeginTransactionAsync())
                 {
                     model.OnetoOneCourses.ForEach(q =>
                     {
                         var courseInstance = new One2oneCourseInstance();
                         _mapper.Map(q, courseInstance);
-                        if (_pegasusContext.Course.FirstOrDefault(s => courseInstance.CourseId == s.CourseId).CourseType != 1)
+                        if (_ablemusicContext.Course.FirstOrDefault(s => courseInstance.CourseId == s.CourseId).CourseType != 1)
                         {
                             throw new Exception("This course is not one to one course");
                         }
 
-                        var durationType = _pegasusContext.Course.FirstOrDefault(s => s.CourseId == courseInstance.CourseId)
+                        var durationType = _ablemusicContext.Course.FirstOrDefault(s => s.CourseId == courseInstance.CourseId)
                             .Duration;
-                        _pegasusContext.Add(courseInstance);
-                        _pegasusContext.SaveChanges();
+                        _ablemusicContext.Add(courseInstance);
+                        _ablemusicContext.SaveChanges();
 
                         var schedule = new CourseSchedule
                         {
@@ -84,8 +84,8 @@ namespace Pegasus_backend.Controllers
                             BeginTime = q.Schedule.BeginTime,
                             EndTime = GetEndTimeForOnetoOneCourseSchedule(q.Schedule.BeginTime,durationType)
                         };
-                        _pegasusContext.Add(schedule);
-                        _pegasusContext.SaveChanges();
+                        _ablemusicContext.Add(schedule);
+                        _ablemusicContext.SaveChanges();
                     });
                     
                     dbtransaction.Commit();

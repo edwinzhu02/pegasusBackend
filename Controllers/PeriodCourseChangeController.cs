@@ -10,6 +10,7 @@ using Pegasus_backend.Models;
 using Pegasus_backend.pegasusContext;
 using Microsoft.EntityFrameworkCore;
 using Pegasus_backend.Services;
+using Microsoft.Extensions.Logging;
 
 namespace Pegasus_backend.Controllers
 {
@@ -17,12 +18,10 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class PeriodCourseChangeController : BasicController
     {
-        private readonly pegasusContext.ablemusicContext _ablemusicContext;
         private readonly IConfiguration _configuration;
 
-        public PeriodCourseChangeController(pegasusContext.ablemusicContext ablemusicContext, IConfiguration configuration)
+        public PeriodCourseChangeController(ablemusicContext ablemusicContext, ILogger<PeriodCourseChangeController> log, IConfiguration configuration) : base(ablemusicContext, log)
         {
-            _ablemusicContext = ablemusicContext;
             _configuration = configuration;
         }
 

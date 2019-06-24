@@ -18,17 +18,17 @@ using Org.BouncyCastle.Asn1.Crmf;
 using Pegasus_backend.ActionFilter;
 using Pegasus_backend.pegasusContext;
 using Pegasus_backend.Models;
+using Microsoft.Extensions.Logging;
+
 namespace Pegasus_backend.Controllers.Authorization
 {
     [Route("api/[controller]")]
     [ApiController]
     public class ChangePasswordController: BasicController
     {
-        private readonly pegasusContext.ablemusicContext _pegasusContext;
 
-        public ChangePasswordController(pegasusContext.ablemusicContext pegasusContext)
+        public ChangePasswordController(ablemusicContext ablemusicContext, ILogger<ChangePasswordController> log) : base(ablemusicContext, log)
         {
-            _pegasusContext = pegasusContext;
         }
 
         [HttpPut]
@@ -37,7 +37,7 @@ namespace Pegasus_backend.Controllers.Authorization
             var result = new Result<string>();
             try
             {
-                var user = _pegasusContext.User.FirstOrDefault(s => s.UserName == model.userName);
+                var user = _ablemusicContext.User.FirstOrDefault(s => s.UserName == model.userName);
                 if (user == null)
                 {
                     throw new Exception("user does not exist");
@@ -56,8 +56,8 @@ namespace Pegasus_backend.Controllers.Authorization
                 }
 
                 user.Password = model.newPassword;
-                _pegasusContext.Update(user);
-                await _pegasusContext.SaveChangesAsync();
+                _ablemusicContext.Update(user);
+                await _ablemusicContext.SaveChangesAsync();
                 result.Data = "success";
             }
             catch (Exception ex)

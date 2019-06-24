@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Pegasus_backend.Models;
 using Pegasus_backend.pegasusContext;
 using Pegasus_backend.Services;
+using Microsoft.Extensions.Logging;
 
 namespace Pegasus_backend.Controllers
 {
@@ -15,12 +16,10 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class LessonRescheduleController : BasicController
     {
-        private readonly pegasusContext.ablemusicContext _ablemusicContext;
         private readonly IConfiguration _configuration;
 
-        public LessonRescheduleController(pegasusContext.ablemusicContext ablemusicContext, IConfiguration configuration)
+        public LessonRescheduleController(ablemusicContext ablemusicContext, ILogger<LessonRescheduleController> log, IConfiguration configuration) : base(ablemusicContext, log)
         {
-            _ablemusicContext = ablemusicContext;
             _configuration = configuration;
         }
 

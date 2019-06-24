@@ -11,6 +11,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Pegasus_backend.Controllers;
 using Pegasus_backend.ActionFilter;
+using Microsoft.Extensions.Logging;
 
 namespace Pegasus_backend.Controllers
 {
@@ -18,13 +19,10 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class ProductController : BasicController
     {
-
-        private readonly pegasusContext.ablemusicContext _pegasusContext;
         private readonly IMapper _mapper;
 
-        public ProductController(pegasusContext.ablemusicContext pegasusContext, IMapper mapper)
+        public ProductController(ablemusicContext ablemusicContext, ILogger<ProductController> log, IMapper mapper) : base(ablemusicContext, log)
         {
-            _pegasusContext = pegasusContext;
             _mapper = mapper;
         }
 
@@ -37,7 +35,7 @@ namespace Pegasus_backend.Controllers
             try
             {
                 result.IsSuccess = true;
-                result.Data = await _pegasusContext.Product
+                result.Data = await _ablemusicContext.Product
                     .Include(x => x.ProdType.ProdCat)
                     .Select(x => new {
                         x.ProductId,
@@ -74,7 +72,7 @@ namespace Pegasus_backend.Controllers
             try
             {
                 result.IsSuccess = true;
-                result.Data = await _pegasusContext.Product
+                result.Data = await _ablemusicContext.Product
                     .Where(x => x.ProductId == id)
                     .Include(x => x.ProdType.ProdCat)
                     .Select(x => new {
@@ -111,7 +109,7 @@ namespace Pegasus_backend.Controllers
             try
             {
                 result.IsSuccess = true;
-                result.Data = await _pegasusContext.Product
+                result.Data = await _ablemusicContext.Product
                     .Where(x => x.ProdTypeId == typeid)
                     .Include(x => x.ProdType)
                     .ThenInclude(cate=>cate.ProdCat)
@@ -153,7 +151,7 @@ namespace Pegasus_backend.Controllers
 
                 result.IsSuccess = true;
 
-                result.Data = await _pegasusContext.ProdCat
+                result.Data = await _ablemusicContext.ProdCat
                     .Where(x => x.ProdCatId == cateid)
                     .Include(x => x.ProdType)
                     .Select(x => new {
@@ -186,7 +184,7 @@ namespace Pegasus_backend.Controllers
             try
             {
                 result.IsSuccess = true;
-                result.Data = await _pegasusContext
+                result.Data = await _ablemusicContext
                     .ProdCat
                     .Select(x => new {
                         x.ProdCatId, 
@@ -213,7 +211,7 @@ namespace Pegasus_backend.Controllers
             Type productType = typeof(Product);
             Product product = new Product();
             _mapper.Map(productModel, product);
-            var updateProd = await _pegasusContext.Product
+            var updateProd = await _ablemusicContext.Product
                 .Where(x => x.ProductId == id)
                 .FirstOrDefaultAsync();
             product.ProductId = id;
@@ -224,7 +222,7 @@ namespace Pegasus_backend.Controllers
             UpdateTable(product, productType, updateProd);
             try
             {
-                await _pegasusContext.SaveChangesAsync();
+                await _ablemusicContext.SaveChangesAsync();
             }
             catch (Exception e)
             {
@@ -250,11 +248,11 @@ namespace Pegasus_backend.Controllers
 
             try
             {
-                await _pegasusContext.Product.AddAsync(product);
-                await _pegasusContext.SaveChangesAsync();
+                await _ablemusicContext.Product.AddAsync(product);
+                await _ablemusicContext.SaveChangesAsync();
 
                 //retrieve the new data with the ProductType and ProductCategory detail
-                result.Data = await _pegasusContext.Product
+                result.Data = await _ablemusicContext.Product
                     .Include(x => x.ProdType.ProdCat)
                     .Where(x => x.ProductId == (int)product.ProductId)
                     .Select(x => new {
@@ -280,7 +278,7 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = e.Message;
                 result.IsSuccess = false;
                 result.IsFound = false;
-                _pegasusContext.Remove(product);
+                _ablemusicContext.Remove(product);
                 return BadRequest(result);
             }
 

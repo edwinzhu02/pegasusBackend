@@ -6,6 +6,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using MySqlX.XDevAPI.Common;
 using Pegasus_backend.ActionFilter;
 using Pegasus_backend.Models;
@@ -17,12 +18,10 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class TeacherCourseController: BasicController
     {
-        private readonly pegasusContext.ablemusicContext _pegasusContext;
         private readonly IMapper _mapper;
 
-        public TeacherCourseController(pegasusContext.ablemusicContext pegasusContext,IMapper mapper)
+        public TeacherCourseController(ablemusicContext ablemusicContext, ILogger<TeacherCourseController> log, IMapper mapper) : base(ablemusicContext, log)
         {
-            _pegasusContext = pegasusContext;
             _mapper = mapper;
         }
         
@@ -33,7 +32,7 @@ namespace Pegasus_backend.Controllers
             Result<Object> result = new Result<Object>();
             try
             {
-                result.Data = await _pegasusContext.TeacherCourse
+                result.Data = await _ablemusicContext.TeacherCourse
                     .Include(s=>s.Teacher)
                     .Include(s=>s.Course)
                     .ThenInclude(s=>s.GroupCourseInstance)
@@ -71,25 +70,25 @@ namespace Pegasus_backend.Controllers
             Result<string> result = new Result<string>();
             try
             {
-                using (var dbContextTransaction = _pegasusContext.Database.BeginTransaction())
+                using (var dbContextTransaction = _ablemusicContext.Database.BeginTransaction())
                 {
 
-                    if (_pegasusContext.Teacher.FirstOrDefault(s => s.TeacherId == model.TeacherId) == null)
+                    if (_ablemusicContext.Teacher.FirstOrDefault(s => s.TeacherId == model.TeacherId) == null)
                     {
                         throw new Exception("Teacher id does not found");
                     }
                     
-                    var teacherCourses = _pegasusContext.TeacherCourse.Where(s => s.TeacherId == model.TeacherId);
-                    teacherCourses.ToList().ForEach(s => { _pegasusContext.Remove(s); });
-                    await _pegasusContext.SaveChangesAsync();
+                    var teacherCourses = _ablemusicContext.TeacherCourse.Where(s => s.TeacherId == model.TeacherId);
+                    teacherCourses.ToList().ForEach(s => { _ablemusicContext.Remove(s); });
+                    await _ablemusicContext.SaveChangesAsync();
 
                     
                     //delete older teacher wage rate
                     var oldteacherWageRate =
-                        _pegasusContext.TeacherWageRates.FirstOrDefault(s => s.TeacherId == model.TeacherId);
+                        _ablemusicContext.TeacherWageRates.FirstOrDefault(s => s.TeacherId == model.TeacherId);
                     oldteacherWageRate.IsActivate = 0;
-                    _pegasusContext.Update(oldteacherWageRate);
-                    await _pegasusContext.SaveChangesAsync();
+                    _ablemusicContext.Update(oldteacherWageRate);
+                    await _ablemusicContext.SaveChangesAsync();
                     
                     var teacherWageRate = new TeacherWageRates
                     {
@@ -97,12 +96,12 @@ namespace Pegasus_backend.Controllers
                         GroupRates = model.TeacherWageRates.GroupRates, OthersRates = model.TeacherWageRates.OthersRates,
                         CreateAt = toNZTimezone(DateTime.UtcNow), IsActivate = 1
                     };
-                    _pegasusContext.Add(teacherWageRate);
-                    await _pegasusContext.SaveChangesAsync();
+                    _ablemusicContext.Add(teacherWageRate);
+                    await _ablemusicContext.SaveChangesAsync();
                     
                     model.Courses.ForEach(s =>
                     {
-                        var course = _pegasusContext.Course.Include(q=>q.CourseCategory).FirstOrDefault(w => w.CourseId == s);
+                        var course = _ablemusicContext.Course.Include(q=>q.CourseCategory).FirstOrDefault(w => w.CourseId == s);
                         if (course == null)
                         {
                             throw new Exception("Course of course id: " + s + " does not exist.");
@@ -134,10 +133,10 @@ namespace Pegasus_backend.Controllers
                             CourseId = s, TeacherId = model.TeacherId,HourlyWage = houlyWage,
                             
                         };
-                        _pegasusContext.Add(teacherCourse);
+                        _ablemusicContext.Add(teacherCourse);
                     });
                     
-                    await _pegasusContext.SaveChangesAsync();
+                    await _ablemusicContext.SaveChangesAsync();
                     dbContextTransaction.Commit();
                 }
 
@@ -163,14 +162,14 @@ namespace Pegasus_backend.Controllers
             Result<String> result = new Result<string>();
             try
             {
-                using (var dbContextTransaction = _pegasusContext.Database.BeginTransaction())
+                using (var dbContextTransaction = _ablemusicContext.Database.BeginTransaction())
                 {
-                    if (_pegasusContext.TeacherCourse.Where(s => s.TeacherId == model.TeacherId).ToList().Count != 0)
+                    if (_ablemusicContext.TeacherCourse.Where(s => s.TeacherId == model.TeacherId).ToList().Count != 0)
                     {
                         throw new Exception("Teacher course has already added for this teacher");
                     }
 
-                    if (_pegasusContext.Teacher.FirstOrDefault(s => s.TeacherId == model.TeacherId) == null)
+                    if (_ablemusicContext.Teacher.FirstOrDefault(s => s.TeacherId == model.TeacherId) == null)
                     {
                         throw new Exception("Teacher id does not found");
                     }
@@ -181,12 +180,12 @@ namespace Pegasus_backend.Controllers
                         GroupRates = model.TeacherWageRates.GroupRates, OthersRates = model.TeacherWageRates.OthersRates,
                         CreateAt = toNZTimezone(DateTime.UtcNow), IsActivate = 1
                     };
-                    _pegasusContext.Add(teacherWageRate);
-                    await _pegasusContext.SaveChangesAsync();
+                    _ablemusicContext.Add(teacherWageRate);
+                    await _ablemusicContext.SaveChangesAsync();
                     
                     model.Courses.ForEach(s =>
                     {
-                        var course = _pegasusContext.Course.Include(q=>q.CourseCategory).FirstOrDefault(w => w.CourseId == s);
+                        var course = _ablemusicContext.Course.Include(q=>q.CourseCategory).FirstOrDefault(w => w.CourseId == s);
                         if (course == null)
                         {
                             throw new Exception("Course of course id: " + s + " does not exist.");
@@ -218,9 +217,9 @@ namespace Pegasus_backend.Controllers
                             CourseId = s, TeacherId = model.TeacherId,HourlyWage = houlyWage,
                             
                         };
-                        _pegasusContext.Add(teacherCourse);
+                        _ablemusicContext.Add(teacherCourse);
                     });
-                    await _pegasusContext.SaveChangesAsync();
+                    await _ablemusicContext.SaveChangesAsync();
                     
                     dbContextTransaction.Commit();
                     

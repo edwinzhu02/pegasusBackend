@@ -11,6 +11,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Pegasus_backend.Controllers;
 using Pegasus_backend.ActionFilter;
+using Microsoft.Extensions.Logging;
 
 namespace Pegasus_backend.Controllers
 {
@@ -18,10 +19,8 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class SoldTranscationController : BasicController
     {
-    private readonly pegasusContext.ablemusicContext _pegasusContext;
-    public SoldTranscationController(pegasusContext.ablemusicContext pegasusContext)
+    public SoldTranscationController(ablemusicContext ablemusicContext, ILogger<SoldTranscationController> log) : base(ablemusicContext, log)
         {
-            _pegasusContext = pegasusContext;
         }
         //GET: http://localhost:5000/api/SoldTranscation
         [HttpGet]
@@ -30,7 +29,7 @@ namespace Pegasus_backend.Controllers
             var result = new Result<Object>();
             try 
             {
-                result.Data = await _pegasusContext.Payment
+                result.Data = await _ablemusicContext.Payment
                 .Include(s => s.SoldTransaction)
                 .ThenInclude(p => p.Product)
                 .Include(s => s.Staff)

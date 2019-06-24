@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Pegasus_backend.ActionFilter;
 using Pegasus_backend.Models;
 using Pegasus_backend.pegasusContext;
 using AutoMapper;
+using Microsoft.Extensions.Logging;
 
 namespace Pegasus_backend.Controllers
 {
@@ -16,12 +16,10 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class GroupCourseInstanceController : BasicController
     {
-        private readonly pegasusContext.ablemusicContext _pegasusContext;
         private readonly IMapper _mapper;
 
-        public GroupCourseInstanceController(pegasusContext.ablemusicContext pegasusContext, IMapper mapper)
+        public GroupCourseInstanceController(ablemusicContext ablemusicContext, ILogger<GroupCourseInstanceController> log, IMapper mapper) : base(ablemusicContext, log)
         {
-            _pegasusContext = pegasusContext;
             _mapper = mapper;
         }
 
@@ -32,8 +30,8 @@ namespace Pegasus_backend.Controllers
             Result<Object> result = new Result<Object>();
             try
             {
-                var schedule = _pegasusContext.CourseSchedule;
-                var item = await _pegasusContext.GroupCourseInstance
+                var schedule = _ablemusicContext.CourseSchedule;
+                var item = await _ablemusicContext.GroupCourseInstance
                     .Include(c => c.CourseSchedule)
                     .Include(s => s.Course)
                     //.ThenInclude(s => s.CourseCategory)                    
@@ -75,15 +73,15 @@ namespace Pegasus_backend.Controllers
             Result<string> result = new Result<string>();
             try
             {
-                var item = _pegasusContext.GroupCourseInstance.FirstOrDefault(s => s.GroupCourseInstanceId == id);
+                var item = _ablemusicContext.GroupCourseInstance.FirstOrDefault(s => s.GroupCourseInstanceId == id);
                 if (item == null)
                 {
                     result.IsFound = false;
                     throw new Exception("Group course instance does not found");
                 }
                 item.IsActivate = 0;
-                _pegasusContext.Update(item);
-                await _pegasusContext.SaveChangesAsync();
+                _ablemusicContext.Update(item);
+                await _ablemusicContext.SaveChangesAsync();
                 result.Data = "success";
             }
             catch (Exception ex)
@@ -103,11 +101,11 @@ namespace Pegasus_backend.Controllers
             Result<string> result = new Result<string>();
             try
             {
-                if (_pegasusContext.Course.FirstOrDefault(s => s.CourseId == groupinstance.CourseId).CourseType !=2)
+                if (_ablemusicContext.Course.FirstOrDefault(s => s.CourseId == groupinstance.CourseId).CourseType !=2)
                 {
                     throw new Exception("This course is not group course");
                 }
-                var duration = _pegasusContext.Course.FirstOrDefault(s => s.CourseId == groupinstance.CourseId).Duration;
+                var duration = _ablemusicContext.Course.FirstOrDefault(s => s.CourseId == groupinstance.CourseId).Duration;
                 for (var i = 0; i < groupinstance.CourseSchedule.Count; i++ )
                 {
                     groupinstance.CourseSchedule[i].EndTime =
@@ -116,8 +114,8 @@ namespace Pegasus_backend.Controllers
                 var newGroupInstance = new GroupCourseInstance();
                 _mapper.Map(groupinstance, newGroupInstance);
                 newGroupInstance.IsActivate = 1;
-                _pegasusContext.Add(newGroupInstance);
-                await _pegasusContext.SaveChangesAsync();
+                _ablemusicContext.Add(newGroupInstance);
+                await _ablemusicContext.SaveChangesAsync();
                 result.Data = "success";
             }
             catch (Exception ex)
@@ -139,32 +137,32 @@ namespace Pegasus_backend.Controllers
             try
             {
                 var groupCourseinstance =
-                    _pegasusContext.GroupCourseInstance.FirstOrDefault(s => s.GroupCourseInstanceId == id);
+                    _ablemusicContext.GroupCourseInstance.FirstOrDefault(s => s.GroupCourseInstanceId == id);
                 if (groupCourseinstance == null)
                 {
                     throw new Exception("Group course instance does not found");
                 }
                 
-                if (_pegasusContext.Course.FirstOrDefault(s => s.CourseId == groupCourseInstanceModel.CourseId).CourseType !=2)
+                if (_ablemusicContext.Course.FirstOrDefault(s => s.CourseId == groupCourseInstanceModel.CourseId).CourseType !=2)
                 {
                     throw new Exception("This course is not group course");
                 }
 
-                using (var dbContextTransaction = _pegasusContext.Database.BeginTransaction())
+                using (var dbContextTransaction = _ablemusicContext.Database.BeginTransaction())
                 {
                     
-                    var scheduleList = _pegasusContext.CourseSchedule.Where(s => s.GroupCourseInstanceId == id);
-                    scheduleList.ToList().ForEach(s => { _pegasusContext.Remove(s); });
-                    await _pegasusContext.SaveChangesAsync();
-                    var duration = _pegasusContext.Course.FirstOrDefault(s => s.CourseId == groupCourseInstanceModel.CourseId).Duration;
+                    var scheduleList = _ablemusicContext.CourseSchedule.Where(s => s.GroupCourseInstanceId == id);
+                    scheduleList.ToList().ForEach(s => { _ablemusicContext.Remove(s); });
+                    await _ablemusicContext.SaveChangesAsync();
+                    var duration = _ablemusicContext.Course.FirstOrDefault(s => s.CourseId == groupCourseInstanceModel.CourseId).Duration;
                     for (var i = 0; i < groupCourseInstanceModel.CourseSchedule.Count; i++ )
                     {
                         groupCourseInstanceModel.CourseSchedule[i].EndTime =
                             GetEndTimeForOnetoOneCourseSchedule(groupCourseInstanceModel.CourseSchedule[i].BeginTime.Value, duration);
                     }
                     _mapper.Map(groupCourseInstanceModel, groupCourseinstance);
-                    _pegasusContext.Update(groupCourseinstance);
-                    await _pegasusContext.SaveChangesAsync();
+                    _ablemusicContext.Update(groupCourseinstance);
+                    await _ablemusicContext.SaveChangesAsync();
                     dbContextTransaction.Commit();
                 }
                 result.Data = "success";

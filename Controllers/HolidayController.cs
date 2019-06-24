@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Pegasus_backend.Models;
 using Pegasus_backend.pegasusContext;
 using Microsoft.AspNetCore.Http;
-
+using Microsoft.Extensions.Logging;
 
 namespace Pegasus_backend.Controllers
 {
@@ -16,11 +16,8 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class HolidayController: BasicController
     {
-        private readonly pegasusContext.ablemusicContext _pegasusContext;
-
-        public HolidayController(pegasusContext.ablemusicContext pegasusContext)
+        public HolidayController(ablemusicContext ablemusicContext, ILogger<HolidayController> log) : base(ablemusicContext, log)
         {
-            _pegasusContext = pegasusContext;
         }
         
         //GET: http://localhost:5000/api/room/forCalendar
@@ -32,7 +29,7 @@ namespace Pegasus_backend.Controllers
             Result<IEnumerable<Object>> result = new Result<IEnumerable<Object>>();
             try
             {
-                result.Data  = await _pegasusContext.Holiday.ToListAsync();
+                result.Data  = await _ablemusicContext.Holiday.ToListAsync();
             }
             catch (Exception ex)
             {
@@ -48,14 +45,14 @@ namespace Pegasus_backend.Controllers
             var result = new Result<string>();
             try
             {
-                var holiday = _pegasusContext.Holiday.Where(s => s.HolidayId == id).FirstOrDefault();
+                var holiday = _ablemusicContext.Holiday.Where(s => s.HolidayId == id).FirstOrDefault();
                 if (holiday == null)
                 {
                     return NotFound(DataNotFound(result));
                 }
 
-                _pegasusContext.Remove(holiday);
-                await _pegasusContext.SaveChangesAsync();
+                _ablemusicContext.Remove(holiday);
+                await _ablemusicContext.SaveChangesAsync();
                 result.Data = "success";
             }
             catch (Exception ex)
@@ -81,18 +78,18 @@ namespace Pegasus_backend.Controllers
             //var courseCategory = pegasusContext.CourseCategory    //.Where(c => c.CourseCategoryId == id).FirstOrDefaultAsync();
 
             var iholiday 
-                =  _pegasusContext.Holiday.Where(c=>c.HolidayDate.Date ==holiday.HolidayDate.Date).FirstOrDefault();
+                =  _ablemusicContext.Holiday.Where(c=>c.HolidayDate.Date ==holiday.HolidayDate.Date).FirstOrDefault();
             if (iholiday==null){
-                    _pegasusContext.Add(holiday);
-                    await _pegasusContext.SaveChangesAsync();
+                    _ablemusicContext.Add(holiday);
+                    await _ablemusicContext.SaveChangesAsync();
                     result.Data = "success";
                 }
             else
                 {
                     iholiday.HolidayName= holiday.HolidayName;
                     iholiday.HolidayDate= holiday.HolidayDate;                    
-                    _pegasusContext.Update(iholiday);
-                    await _pegasusContext.SaveChangesAsync();
+                    _ablemusicContext.Update(iholiday);
+                    await _ablemusicContext.SaveChangesAsync();
                     result.Data = "success";                
                 }
             }

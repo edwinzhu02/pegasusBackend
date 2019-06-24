@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Pegasus_backend.Models;
 using Pegasus_backend.pegasusContext;
+using Microsoft.Extensions.Logging;
 
 namespace Pegasus_backend.Controllers
 {
@@ -14,11 +15,9 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class CourseInstanceController : BasicController
     {
-        private readonly pegasusContext.ablemusicContext _ablemusicContext;
 
-        public CourseInstanceController(pegasusContext.ablemusicContext ablemusicContext)
+        public CourseInstanceController(ablemusicContext ablemusicContext, ILogger<CourseInstanceController> log) : base(ablemusicContext, log)
         {
-            _ablemusicContext = ablemusicContext;
         }
 
         // GET: api/CourseInstance/1/0

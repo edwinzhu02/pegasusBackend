@@ -12,6 +12,7 @@ using Pegasus_backend.ActionFilter;
 using Pegasus_backend.Services;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.Extensions.Logging;
 
 namespace Pegasus_backend.Controllers
 {
@@ -22,9 +23,9 @@ namespace Pegasus_backend.Controllers
         private readonly DataServicePayment _service;
         private IMapper _mapper;
 
-        public PaymentViewController(ablemusicContext pegasusContext, IMapper mapper)
+        public PaymentViewController(ablemusicContext ablemusicContext, ILogger<PaymentViewController> log, IMapper mapper) : base(ablemusicContext, log)
         {
-            _service = new DataServicePayment(pegasusContext);
+            _service = new DataServicePayment(_ablemusicContext);
             _mapper = mapper;
             
         }

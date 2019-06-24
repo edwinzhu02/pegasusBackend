@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Pegasus_backend.Models;
 using Pegasus_backend.pegasusContext;
 
@@ -14,11 +14,8 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class StockController : BasicController
     {
-        private readonly pegasusContext.ablemusicContext _ablemusicContext;
-
-        public StockController(pegasusContext.ablemusicContext ablemusicContext)
+        public StockController(ablemusicContext ablemusicContext, ILogger<StockController> log) : base(ablemusicContext, log)
         {
-            _ablemusicContext = ablemusicContext;
         }
 
         // GET: api/Stock

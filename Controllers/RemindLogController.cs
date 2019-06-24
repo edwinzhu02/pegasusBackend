@@ -1,10 +1,9 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Pegasus_backend.Models;
 using Pegasus_backend.pegasusContext;
 namespace Pegasus_backend.Controllers
@@ -13,11 +12,8 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class RemindLogController: BasicController
     {
-        private readonly pegasusContext.ablemusicContext _ablemusicContext;
-
-        public RemindLogController(pegasusContext.ablemusicContext ablemusicContext)
+        public RemindLogController(ablemusicContext ablemusicContext, ILogger<RemindLogController> log) : base(ablemusicContext, log)
         {
-            _ablemusicContext = ablemusicContext;
         }
 
         [HttpGet("{beginDate}/{endDate}")]

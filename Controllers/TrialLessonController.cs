@@ -8,6 +8,7 @@ using Pegasus_backend.ActionFilter;
 using Pegasus_backend.Models;
 using Pegasus_backend.pegasusContext;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace Pegasus_backend.Controllers
 {
@@ -15,11 +16,8 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class TrialLessonController : BasicController
     {
-        private readonly pegasusContext.ablemusicContext _ablemusicContext;
-
-        public TrialLessonController(pegasusContext.ablemusicContext ablemusicContext)
+        public TrialLessonController(ablemusicContext ablemusicContext, ILogger<TrialLessonController> log) : base(ablemusicContext, log)
         {
-            _ablemusicContext = ablemusicContext;
         }
 
         // POST: api/TrialLesson

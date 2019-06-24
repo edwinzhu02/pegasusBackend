@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Pegasus_backend.Models;
 using Pegasus_backend.pegasusContext;
 namespace Pegasus_backend.Controllers
@@ -13,11 +14,8 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class PageController: BasicController
     {
-        private readonly pegasusContext.ablemusicContext _pegasusContext;
-
-        public PageController(pegasusContext.ablemusicContext pegasusContext)
+        public PageController(ablemusicContext ablemusicContext, ILogger<PageController> log) : base(ablemusicContext, log)
         {
-            _pegasusContext = pegasusContext;
         }
 
         [HttpGet]
@@ -27,7 +25,7 @@ namespace Pegasus_backend.Controllers
             try
             {
                 
-                var item = await _pegasusContext.RoleAccess
+                var item = await _ablemusicContext.RoleAccess
                     .Include(s=>s.Page)
                     .Select(s=> new {s.RoleId,s.Page.Url})
                     .ToListAsync();

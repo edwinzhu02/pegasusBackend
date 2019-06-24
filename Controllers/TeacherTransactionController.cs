@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Pegasus_backend.Models;
 using Pegasus_backend.pegasusContext;
 namespace Pegasus_backend.Controllers
@@ -13,11 +14,8 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class TeacherTransactionController: BasicController
     {
-        private readonly pegasusContext.ablemusicContext _ablemusicContext;
-
-        public TeacherTransactionController(pegasusContext.ablemusicContext ablemusicContext)
+        public TeacherTransactionController(ablemusicContext ablemusicContext, ILogger<TeacherTransactionController> log) : base(ablemusicContext, log)
         {
-            _ablemusicContext = ablemusicContext;
         }
 
         [HttpGet("{teacherId}/{begindate}/{enddate}")]

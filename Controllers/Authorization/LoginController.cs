@@ -16,6 +16,7 @@ using Org.BouncyCastle.Asn1.Crmf;
 using Pegasus_backend.ActionFilter;
 using Pegasus_backend.pegasusContext;
 using Pegasus_backend.Models;
+using Microsoft.Extensions.Logging;
 
 namespace Pegasus_backend.Controllers.Authorization
 {
@@ -24,14 +25,11 @@ namespace Pegasus_backend.Controllers.Authorization
     [ApiController]
     public class LoginController: BasicController
     {
-        private readonly pegasusContext.ablemusicContext _pegasusContext;
         private readonly ApplicationSettings _appSettings;
-        public LoginController(pegasusContext.ablemusicContext pegasusContext, IOptions<ApplicationSettings> appSettings)
+        public LoginController(ablemusicContext ablemusicContext, ILogger<LoginController> log, IOptions<ApplicationSettings> appSettings) : base(ablemusicContext, log)
         {
-            _pegasusContext = pegasusContext;
             _appSettings = appSettings.Value;
         }
-        
         
         //POST: http://localhost:5000/api/login
         [CheckModelFilter]
@@ -42,7 +40,7 @@ namespace Pegasus_backend.Controllers.Authorization
            
             try
             {
-                var user = await _pegasusContext.User.Include(s=>s.Learner)
+                var user = await _ablemusicContext.User.Include(s=>s.Learner)
                     .Include(s=>s.Teacher)
                     .Include(s=>s.Staff)
                     .ThenInclude(w=>w.StaffOrg)

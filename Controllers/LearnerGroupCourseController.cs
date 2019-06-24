@@ -13,17 +13,17 @@ using Pegasus_backend.ActionFilter;
 using Pegasus_backend.Controllers;
 using Pegasus_backend.pegasusContext;
 using Pegasus_backend.Models;
+using Microsoft.Extensions.Logging;
+
 namespace Pegasus_backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class LearnerGroupCourseController: BasicController
     {
-        private readonly pegasusContext.ablemusicContext _pegasusContext;
 
-        public LearnerGroupCourseController(pegasusContext.ablemusicContext pegasusContext)
+        public LearnerGroupCourseController(ablemusicContext ablemusicContext, ILogger<LearnerGroupCourseController> log) : base(ablemusicContext, log)
         {
-            _pegasusContext = pegasusContext;
         }
 
         [HttpPost]
@@ -33,7 +33,7 @@ namespace Pegasus_backend.Controllers
             try
             {
                 model.LearnerGroupCourses.ForEach(s => {
-                    if (_pegasusContext.LearnerGroupCourse.FirstOrDefault(w => w.LearnerId == s.LearnerId && w.GroupCourseInstanceId==s.GroupCourseInstanceId) != null)
+                    if (_ablemusicContext.LearnerGroupCourse.FirstOrDefault(w => w.LearnerId == s.LearnerId && w.GroupCourseInstanceId==s.GroupCourseInstanceId) != null)
                     {
                         throw new Exception("Learner has joined this group course");
                     }
@@ -43,9 +43,9 @@ namespace Pegasus_backend.Controllers
                         Comment = s.Comment, BeginDate = s.BeginDate, CreatedAt = toNZTimezone(DateTime.UtcNow),
                         IsActivate = 1
                     };
-                    _pegasusContext.Add(item);
+                    _ablemusicContext.Add(item);
                 });
-                await _pegasusContext.SaveChangesAsync();
+                await _ablemusicContext.SaveChangesAsync();
 
                 result.Data = "success";
                 return Ok(result);
@@ -64,15 +64,15 @@ namespace Pegasus_backend.Controllers
             var result = new Result<string>();
             try
             {
-                var item = _pegasusContext.LearnerGroupCourse.FirstOrDefault(s =>
+                var item = _ablemusicContext.LearnerGroupCourse.FirstOrDefault(s =>
                     s.LearnerGroupCourseId == learnerGroupCourseId);
                 if (item == null)
                 {
                     return NotFound(DataNotFound(result));
                 }
                 item.EndDate = endDate;
-                _pegasusContext.Update(item);
-                await _pegasusContext.SaveChangesAsync();
+                _ablemusicContext.Update(item);
+                await _ablemusicContext.SaveChangesAsync();
                 result.Data = "success";
                 return Ok(result);
             }
