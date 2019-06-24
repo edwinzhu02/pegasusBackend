@@ -138,21 +138,23 @@ namespace Pegasus_backend.Controllers
         }
         protected DateTime toNZTimezone(DateTime utc)
         {
-            DateTime nzTime = utc;
+            DateTime nzTime = new DateTime();
             try
             {
-                TimeZoneInfo cstZone = TimeZoneInfo.FindSystemTimeZoneById("New Zealand Standard Time");
-                nzTime = TimeZoneInfo.ConvertTimeFromUtc(utc, cstZone);
+                TimeZoneInfo nztZone = TimeZoneInfo.FindSystemTimeZoneById("New Zealand Standard Time");
+                nzTime = TimeZoneInfo.ConvertTimeFromUtc(utc, nztZone);
                 return nzTime;
             }
             catch (TimeZoneNotFoundException)
             {
-                Console.WriteLine("The registry does not define the Central Standard Time zone.");
+                TimeZoneInfo nztZone = TimeZoneInfo.FindSystemTimeZoneById("Pacific/Auckland");
+                nzTime = TimeZoneInfo.ConvertTimeFromUtc(utc, nztZone);
                 return nzTime;
             }
             catch (InvalidTimeZoneException)
             {
-                Console.WriteLine("Registry data on the Central Standard Time zone has been corrupted.");
+                TimeZoneInfo nztZone = TimeZoneInfo.FindSystemTimeZoneById("Pacific/Auckland");
+                nzTime = TimeZoneInfo.ConvertTimeFromUtc(utc, nztZone);
                 return nzTime;
             }
         }
