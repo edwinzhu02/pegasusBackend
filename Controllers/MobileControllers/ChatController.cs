@@ -40,6 +40,43 @@ namespace Pegasus_backend.Controllers.MobileControllers
             return Ok(new {Message = "Request Completed"});
         }
 
+        [Route("[action]/{id}")]
+        [HttpGet]
+        public async Task<IActionResult> GetRole(int id)
+        {
+            var userDetail = await _pegasusContext.User.Where(x => x.UserId == id).FirstOrDefaultAsync();
+            if (userDetail == null)
+            {
+                return NotFound("No user found");
+            }
+
+            // teacher
+            if (userDetail.RoleId == 1)
+            {
+                var teacherDetail = await _pegasusContext.Teacher.Where(x => x.UserId == id).FirstOrDefaultAsync();
+                if (teacherDetail == null)
+                {
+                    return NotFound("Teacher not found");
+                }
+
+                return Ok(teacherDetail);
+            }
+
+            // student
+            if (userDetail.RoleId == 4)
+            {
+                var studentDetail = await _pegasusContext.Learner.Where(x => x.UserId == id).FirstOrDefaultAsync();
+                if (studentDetail == null)
+                {
+                    return NotFound("Learner not found");
+                }
+
+                return Ok(studentDetail);
+            }
+
+            return NotFound("User should be either teacher or student");
+        }
+
         //GET: http://localhost:5000/api/Chat/GetRelatedStudent/:tutorId
         [Route("[action]/{id}")]
         [HttpGet]
