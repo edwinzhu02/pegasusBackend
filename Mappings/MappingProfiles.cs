@@ -31,9 +31,7 @@ namespace Pegasus_backend.Mappings
             CreateMap<StaffModel, Staff>();
             CreateMap<One2oneCourseInstance, OneOrGroupCourse>();
             CreateMap<GroupCourseInstance, OneOrGroupCourse>();
-<<<<<<< HEAD
             CreateMap<PageModel, Page>();
-=======
             
             //Start: Get Learner Model
             CreateMap<GetLearnerModel, Learner>();
@@ -53,7 +51,6 @@ namespace Pegasus_backend.Mappings
             CreateMap<GetLearnerLearnerGroupCourseGroupCourseInstanceCourse, Course>();
             CreateMap<GetLearnerLearnerGroupCourseGroupCourseInstanceRoom, Room>();
             //End
->>>>>>> b863c24399bd29966d485a2d94976da9195260c9
         }
     }
 }
