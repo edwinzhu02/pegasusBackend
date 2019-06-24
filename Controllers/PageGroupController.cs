@@ -11,6 +11,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Pegasus_backend.Controllers;
 using Pegasus_backend.ActionFilter;
+using Microsoft.Extensions.Logging;
 
 namespace Pegasus_backend.Controllers
 {
@@ -18,11 +19,8 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class PageGroupController : BasicController
     {
-        private readonly pegasusContext.ablemusicContext _pegasusContext;
-
-        public PageGroupController(pegasusContext.ablemusicContext pegasusContext)
+        public PageGroupController(ablemusicContext ablemusicContext, ILogger<ValuesController> log) : base(ablemusicContext, log)
         {
-            _pegasusContext = pegasusContext;
         }
 
         // GET: api/PageGroup
@@ -32,7 +30,7 @@ namespace Pegasus_backend.Controllers
             var result = new Result<Object>();
             try
             {
-                result.Data = await _pegasusContext.PageGroup.ToListAsync();
+                result.Data = await _ablemusicContext.PageGroup.ToListAsync();
 
             }
             catch (Exception ex)
@@ -55,8 +53,8 @@ namespace Pegasus_backend.Controllers
             PageGroup pageGroup = new PageGroup();
             try
             {
-                await _pegasusContext.PageGroup.AddAsync(pagegroup);
-                await _pegasusContext.SaveChangesAsync();
+                await _ablemusicContext.PageGroup.AddAsync(pagegroup);
+                await _ablemusicContext.SaveChangesAsync();
                 result.Data = "success";
             }
             catch (Exception e)
@@ -78,20 +76,20 @@ namespace Pegasus_backend.Controllers
 
             try
             {
-                var pageGroup = await _pegasusContext.PageGroup
+                var pageGroup = await _ablemusicContext.PageGroup
            .Where(x => x.PageGroupId == id)
            .FirstOrDefaultAsync();
                 if (pageGroup == null)
                 {
                     return NotFound(DataNotFound(result));
                 }
-                pageGroup = await _pegasusContext.PageGroup
+                pageGroup = await _ablemusicContext.PageGroup
                 .Where(s => s.PageGroupId == id).FirstOrDefaultAsync();
                 pageGroup.PageGroupName = pagegroup.PageGroupName;
                 pageGroup.DisplayOrder = pagegroup.DisplayOrder;
                 pageGroup.Icon = pagegroup.Icon;
-                _pegasusContext.Update(pageGroup);
-                await _pegasusContext.SaveChangesAsync();
+                _ablemusicContext.Update(pageGroup);
+                await _ablemusicContext.SaveChangesAsync();
                 result.Data = "success";
             }
             catch (Exception e)
@@ -114,14 +112,14 @@ namespace Pegasus_backend.Controllers
 
             try
             {
-                var pageGroup = await _pegasusContext.PageGroup
+                var pageGroup = await _ablemusicContext.PageGroup
                         .Where(s => s.PageGroupId == id).FirstOrDefaultAsync();
                 if (pageGroup == null)
                 {
                     return NotFound(DataNotFound(result));
                 }
-                _pegasusContext.Remove(pageGroup);
-                await _pegasusContext.SaveChangesAsync();
+                _ablemusicContext.Remove(pageGroup);
+                await _ablemusicContext.SaveChangesAsync();
                 result.Data = "success";
             }
             catch (Exception ex)
