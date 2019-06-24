@@ -321,8 +321,7 @@ namespace Pegasus_backend.pegasusContext
 
                 entity.Property(e => e.ChatMessageId)
                     .HasColumnName("chat_message_id")
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedNever();
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.ChatGroupId)
                     .HasColumnName("chat_group_id")
