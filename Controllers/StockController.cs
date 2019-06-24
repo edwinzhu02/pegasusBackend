@@ -14,7 +14,7 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class StockController : BasicController
     {
-        public StockController(ablemusicContext ablemusicContext, ILogger<ValuesController> log) : base(ablemusicContext, log)
+        public StockController(ablemusicContext ablemusicContext, ILogger<StockController> log) : base(ablemusicContext, log)
         {
         }
 

@@ -14,7 +14,7 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class TeacherTransactionController: BasicController
     {
-        public TeacherTransactionController(ablemusicContext ablemusicContext, ILogger<ValuesController> log) : base(ablemusicContext, log)
+        public TeacherTransactionController(ablemusicContext ablemusicContext, ILogger<TeacherTransactionController> log) : base(ablemusicContext, log)
         {
         }
 

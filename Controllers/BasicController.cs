@@ -21,9 +21,9 @@ namespace Pegasus_backend.Controllers
     public abstract class BasicController: ControllerBase
     {
         protected readonly ablemusicContext _ablemusicContext;
-        protected readonly ILogger<ValuesController> _log;
+        protected readonly ILogger<Object> _log;
 
-        public BasicController(ablemusicContext ablemusicContext, ILogger<ValuesController> log)
+        public BasicController(ablemusicContext ablemusicContext, ILogger<Object> log)
         {
             _ablemusicContext = ablemusicContext;
             _log = log;

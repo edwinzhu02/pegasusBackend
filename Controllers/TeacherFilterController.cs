@@ -14,7 +14,7 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class TeacherFilterController : BasicController
     {
-        public TeacherFilterController(ablemusicContext ablemusicContext, ILogger<ValuesController> log) : base(ablemusicContext, log)
+        public TeacherFilterController(ablemusicContext ablemusicContext, ILogger<TeacherFilterController> log) : base(ablemusicContext, log)
         {
         }
 

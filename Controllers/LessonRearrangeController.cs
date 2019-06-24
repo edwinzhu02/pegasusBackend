@@ -22,7 +22,7 @@ namespace Pegasus_backend.Controllers
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
 
-        public LessonRearrangeController(ablemusicContext ablemusicContext, ILogger<ValuesController> log, IMapper mapper, IConfiguration configuration) : base(ablemusicContext, log)
+        public LessonRearrangeController(ablemusicContext ablemusicContext, ILogger<LessonRearrangeController> log, IMapper mapper, IConfiguration configuration) : base(ablemusicContext, log)
         {
             _mapper = mapper;
             _configuration = configuration;

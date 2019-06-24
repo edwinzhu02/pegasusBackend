@@ -15,7 +15,7 @@ namespace Pegasus_backend.Controllers
     public class PayrollController: BasicController
     {
 
-        public PayrollController(ablemusicContext ablemusicContext, ILogger<ValuesController> log) : base(ablemusicContext, log)
+        public PayrollController(ablemusicContext ablemusicContext, ILogger<PayrollController> log) : base(ablemusicContext, log)
         {
         }
 

@@ -12,7 +12,7 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class RemindLogController: BasicController
     {
-        public RemindLogController(ablemusicContext ablemusicContext, ILogger<ValuesController> log) : base(ablemusicContext, log)
+        public RemindLogController(ablemusicContext ablemusicContext, ILogger<RemindLogController> log) : base(ablemusicContext, log)
         {
         }
 

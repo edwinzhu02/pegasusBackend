@@ -19,7 +19,7 @@ namespace Pegasus_backend.Controllers
     {
         private readonly IMapper _mapper;
 
-        public InvoiceWaitingConfirmsController(ablemusicContext ablemusicContext, ILogger<ValuesController> log, IMapper mapper) : base(ablemusicContext, log)
+        public InvoiceWaitingConfirmsController(ablemusicContext ablemusicContext, ILogger<InvoiceWaitingConfirmsController> log, IMapper mapper) : base(ablemusicContext, log)
         {
             _mapper = mapper;
         }

@@ -27,7 +27,7 @@ namespace Pegasus_backend.Controllers.Authorization
     public class ChangePasswordController: BasicController
     {
 
-        public ChangePasswordController(ablemusicContext ablemusicContext, ILogger<ValuesController> log) : base(ablemusicContext, log)
+        public ChangePasswordController(ablemusicContext ablemusicContext, ILogger<ChangePasswordController> log) : base(ablemusicContext, log)
         {
         }
 

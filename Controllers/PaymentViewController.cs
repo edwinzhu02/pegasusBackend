@@ -23,7 +23,7 @@ namespace Pegasus_backend.Controllers
         private readonly DataServicePayment _service;
         private IMapper _mapper;
 
-        public PaymentViewController(ablemusicContext ablemusicContext, ILogger<ValuesController> log, IMapper mapper) : base(ablemusicContext, log)
+        public PaymentViewController(ablemusicContext ablemusicContext, ILogger<PaymentViewController> log, IMapper mapper) : base(ablemusicContext, log)
         {
             _service = new DataServicePayment(_ablemusicContext);
             _mapper = mapper;

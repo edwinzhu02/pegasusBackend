@@ -18,7 +18,7 @@ namespace Pegasus_backend.Controllers
     {
         private readonly IConfiguration _configuration;
 
-        public LessonRescheduleController(ablemusicContext ablemusicContext, ILogger<ValuesController> log, IConfiguration configuration) : base(ablemusicContext, log)
+        public LessonRescheduleController(ablemusicContext ablemusicContext, ILogger<LessonRescheduleController> log, IConfiguration configuration) : base(ablemusicContext, log)
         {
             _configuration = configuration;
         }

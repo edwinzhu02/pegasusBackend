@@ -17,7 +17,7 @@ namespace Pegasus_backend.Controllers
     public class NavItemsController: BasicController
     {
 
-        public NavItemsController(ablemusicContext ablemusicContext, ILogger<ValuesController> log) : base(ablemusicContext, log)
+        public NavItemsController(ablemusicContext ablemusicContext, ILogger<NavItemsController> log) : base(ablemusicContext, log)
         {
         }
         

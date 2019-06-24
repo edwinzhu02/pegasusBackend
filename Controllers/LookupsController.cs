@@ -15,7 +15,7 @@ namespace Pegasus_backend.Controllers
     public class LookupsController : BasicController
     {
 
-        public LookupsController(ablemusicContext ablemusicContext, ILogger<ValuesController> log) : base(ablemusicContext, log)
+        public LookupsController(ablemusicContext ablemusicContext, ILogger<LookupsController> log) : base(ablemusicContext, log)
         {
         }
 

@@ -16,7 +16,7 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class TrialLessonController : BasicController
     {
-        public TrialLessonController(ablemusicContext ablemusicContext, ILogger<ValuesController> log) : base(ablemusicContext, log)
+        public TrialLessonController(ablemusicContext ablemusicContext, ILogger<TrialLessonController> log) : base(ablemusicContext, log)
         {
         }
 

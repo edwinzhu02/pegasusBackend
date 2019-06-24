@@ -16,7 +16,7 @@ namespace Pegasus_backend.Controllers
     public class LessonController: BasicController
     {
 
-        public LessonController(ablemusicContext ablemusicContext, ILogger<ValuesController> log) : base(ablemusicContext, log)
+        public LessonController(ablemusicContext ablemusicContext, ILogger<LessonController> log) : base(ablemusicContext, log)
         {
         }
         

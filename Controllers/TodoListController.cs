@@ -15,7 +15,7 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class TodoListController : BasicController
     {
-        public TodoListController (ablemusicContext ablemusicContext, ILogger<ValuesController> log) : base(ablemusicContext, log)
+        public TodoListController (ablemusicContext ablemusicContext, ILogger<TodoListController> log) : base(ablemusicContext, log)
         {
         }
 

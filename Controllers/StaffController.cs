@@ -18,7 +18,7 @@ namespace Pegasus_backend.Controllers
     {
         private readonly IMapper _mapper;
 
-        public StaffController(ablemusicContext ablemusicContext, ILogger<ValuesController> log, IMapper mapper) : base(ablemusicContext, log)
+        public StaffController(ablemusicContext ablemusicContext, ILogger<StaffController> log, IMapper mapper) : base(ablemusicContext, log)
         {
             _mapper = mapper;
         }

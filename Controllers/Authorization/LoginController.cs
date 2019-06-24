@@ -26,7 +26,7 @@ namespace Pegasus_backend.Controllers.Authorization
     public class LoginController: BasicController
     {
         private readonly ApplicationSettings _appSettings;
-        public LoginController(ablemusicContext ablemusicContext, ILogger<ValuesController> log, IOptions<ApplicationSettings> appSettings) : base(ablemusicContext, log)
+        public LoginController(ablemusicContext ablemusicContext, ILogger<LoginController> log, IOptions<ApplicationSettings> appSettings) : base(ablemusicContext, log)
         {
             _appSettings = appSettings.Value;
         }

@@ -20,7 +20,7 @@ namespace Pegasus_backend.Controllers
     public class PaymentController : BasicController
     {
         private IMapper _mapper;
-        public PaymentController(ablemusicContext ablemusicContext, ILogger<ValuesController> log, IMapper mapper) : base(ablemusicContext, log)
+        public PaymentController(ablemusicContext ablemusicContext, ILogger<PaymentController> log, IMapper mapper) : base(ablemusicContext, log)
         {
             _mapper = mapper;
         }
