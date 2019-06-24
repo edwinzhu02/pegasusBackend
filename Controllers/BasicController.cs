@@ -69,7 +69,8 @@ namespace Pegasus_backend.Controllers
                     firstname = user.Staff.ToList()[0].FirstName, lastname = user.Staff.ToList()[0].LastName,
                     position = positionToClient,
                     OrgName = user.Staff.ToList()[0].StaffOrg.ToList().Select(s => s.Org.OrgName),
-                    OrgId = user.Staff.ToList()[0].StaffOrg.ToList().Select(s => s.Org.OrgId)
+                    OrgId = user.Staff.ToList()[0].StaffOrg.ToList().Select(s => s.Org.OrgId),
+                    StaffId =  user.Staff.FirstOrDefault().StaffId
                 };
             }
 
