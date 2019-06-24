@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using Pegasus_backend.pegasusContext;
+
 
 namespace Pegasus_backend.Controllers.MobileControllers
 {
@@ -14,7 +17,7 @@ namespace Pegasus_backend.Controllers.MobileControllers
 
         public DateTime TimerStarted { get; }
 
-        public TimeManager(Action action)
+        public TimeManager(Action action, ablemusicContext ablemusicContext, ILogger<ValuesController> log) : base(ablemusicContext, log)
         {
             _action = action;
             _autoResetEvent = new AutoResetEvent(false);

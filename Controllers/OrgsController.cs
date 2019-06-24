@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Pegasus_backend.Models;
 using Pegasus_backend.pegasusContext;
 
@@ -13,11 +14,8 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class OrgsController : BasicController
     {
-        private readonly pegasusContext.ablemusicContext _ablemusicContext;
-
-        public OrgsController(pegasusContext.ablemusicContext ablemusicContext)
+        public OrgsController(ablemusicContext ablemusicContext, ILogger<ValuesController> log) : base(ablemusicContext, log)
         {
-            _ablemusicContext = ablemusicContext;
         }
 
         // GET: api/Orgs

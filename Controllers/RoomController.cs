@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Pegasus_backend.Models;
 using Pegasus_backend.pegasusContext;
 
@@ -14,11 +15,8 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class RoomController: BasicController
     {
-        private readonly pegasusContext.ablemusicContext _pegasusContext;
-
-        public RoomController(pegasusContext.ablemusicContext pegasusContext)
-        {
-            _pegasusContext = pegasusContext;
+        public RoomController(ablemusicContext ablemusicContext, ILogger<ValuesController> log) : base(ablemusicContext, log)
+        {       
         }
         
         //GET: http://localhost:5000/api/room/forCalendar
@@ -31,9 +29,9 @@ namespace Pegasus_backend.Controllers
             try
             {
                 var userId = int.Parse(User.Claims.First(s=>s.Type=="UserID").Value);
-                var staff = _pegasusContext.Staff.FirstOrDefault(s => s.UserId == userId);
-                var orgId = _pegasusContext.StaffOrg.FirstOrDefault(s => s.StaffId == staff.StaffId).OrgId;
-                var rooms = _pegasusContext.Room.Where(s => s.OrgId == orgId);
+                var staff = _ablemusicContext.Staff.FirstOrDefault(s => s.UserId == userId);
+                var orgId = _ablemusicContext.StaffOrg.FirstOrDefault(s => s.StaffId == staff.StaffId).OrgId;
+                var rooms = _ablemusicContext.Room.Where(s => s.OrgId == orgId);
                 var data = rooms.Select(s =>  new {id=s.RoomId, title=s.RoomName });
                 result.Data = await data.ToListAsync();
             }
@@ -54,7 +52,7 @@ namespace Pegasus_backend.Controllers
             Result<Object> result = new Result<Object>();
             try
             {
-                result.Data = await _pegasusContext.Room
+                result.Data = await _ablemusicContext.Room
                     .Include(s=>s.Org)
                     .Select(s=> new {RoomId=s.RoomId,RoomName=s.RoomName,OrgId=s.OrgId,OrgName=s.Org.OrgName} )
                     .ToListAsync();

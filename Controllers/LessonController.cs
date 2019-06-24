@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Extensions.Internal;
+using Microsoft.Extensions.Logging;
 using Pegasus_backend.Models;
 using Pegasus_backend.pegasusContext;
 namespace Pegasus_backend.Controllers
@@ -14,11 +15,9 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class LessonController: BasicController
     {
-        private readonly pegasusContext.ablemusicContext _pegasusContext;
 
-        public LessonController(pegasusContext.ablemusicContext pegasusContext)
+        public LessonController(ablemusicContext ablemusicContext, ILogger<ValuesController> log) : base(ablemusicContext, log)
         {
-            _pegasusContext = pegasusContext;
         }
         
         
@@ -30,9 +29,9 @@ namespace Pegasus_backend.Controllers
             Result<Object> result = new Result<object>();
             try
             {
-                var staff = _pegasusContext.Staff.FirstOrDefault(s => s.UserId == userId);
-                var orgId = _pegasusContext.StaffOrg.FirstOrDefault(s => s.StaffId == staff.StaffId).OrgId;
-                var details = _pegasusContext.Lesson
+                var staff = _ablemusicContext.Staff.FirstOrDefault(s => s.UserId == userId);
+                var orgId = _ablemusicContext.StaffOrg.FirstOrDefault(s => s.StaffId == staff.StaffId).OrgId;
+                var details = _ablemusicContext.Lesson
                     .Where(s=>s.IsCanceled != 1 && s.IsConfirm != 1)
                     .Where(s=>s.OrgId==orgId&&s.BeginTime.Value.Year == date.Year && s.BeginTime.Value.Month == date.Month && s.BeginTime.Value.Day == date.Day)
                     .Include(s=>s.Learner)
@@ -77,13 +76,13 @@ namespace Pegasus_backend.Controllers
             try
             {
                 var endDate = beginDate.AddDays(6);
-                var teacher = _pegasusContext.Teacher.FirstOrDefault(s => s.UserId == userId);
+                var teacher = _ablemusicContext.Teacher.FirstOrDefault(s => s.UserId == userId);
                 if (teacher == null)
                 {
                     throw new Exception("Teacher does not exist.");
                 }
                 var teacherId = teacher.TeacherId;
-                var details = _pegasusContext.Lesson.Where(s => s.TeacherId == teacherId)
+                var details = _ablemusicContext.Lesson.Where(s => s.TeacherId == teacherId)
                     .Where(s=>s.IsCanceled != 1 && s.IsConfirm != 1)
                     .Where(s=>beginDate.Date <= s.EndTime.Value.Date && s.EndTime.Value.Date <= endDate.Date)
                     .Include(s=>s.Room)
@@ -122,7 +121,7 @@ namespace Pegasus_backend.Controllers
             try
             {
                
-                var details = _pegasusContext.Lesson.Where(s => s.TeacherId == teacherId)
+                var details = _ablemusicContext.Lesson.Where(s => s.TeacherId == teacherId)
                     .Where(s=>s.IsCanceled ==0)
                     .Include(s=>s.Room)
                     .Include(s=>s.Learner)
@@ -158,7 +157,7 @@ namespace Pegasus_backend.Controllers
             try
             {
                
-                var details = _pegasusContext.Lesson.Where(s => s.LearnerId == learnerId)
+                var details = _ablemusicContext.Lesson.Where(s => s.LearnerId == learnerId)
                     .Where(s=>s.IsCanceled ==0 &&s.IsConfirm !=1)
                     .Include(s=>s.Room)
                     .Include(s=>s.Learner)
@@ -195,9 +194,9 @@ namespace Pegasus_backend.Controllers
             Result<Object> result = new Result<Object>();
             try
             {
-                var staff = _pegasusContext.Staff.FirstOrDefault(s => s.UserId == userId);
-                var orgId = _pegasusContext.StaffOrg.FirstOrDefault(s => s.StaffId == staff.StaffId).OrgId;
-                var items = _pegasusContext.Lesson
+                var staff = _ablemusicContext.Staff.FirstOrDefault(s => s.UserId == userId);
+                var orgId = _ablemusicContext.StaffOrg.FirstOrDefault(s => s.StaffId == staff.StaffId).OrgId;
+                var items = _ablemusicContext.Lesson
                     .Include(s => s.Teacher)
                     .Include(s => s.Learner)
                     .Include(s => s.Room)

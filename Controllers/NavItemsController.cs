@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.Extensions.Logging;
 using Pegasus_backend.Models;
 using Pegasus_backend.pegasusContext;
 namespace Pegasus_backend.Controllers
@@ -15,11 +16,9 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class NavItemsController: BasicController
     {
-        private readonly pegasusContext.ablemusicContext _pegasusContext;
 
-        public NavItemsController(pegasusContext.ablemusicContext pegasusContext)
+        public NavItemsController(ablemusicContext ablemusicContext, ILogger<ValuesController> log) : base(ablemusicContext, log)
         {
-            _pegasusContext = pegasusContext;
         }
         
         
@@ -34,9 +33,9 @@ namespace Pegasus_backend.Controllers
             try
             {
                 var userId = int.Parse(User.Claims.First(s => s.Type == "UserID").Value);
-                var roleId = _pegasusContext.User.FirstOrDefault(s => s.UserId == userId).RoleId;
-                var pageList = _pegasusContext.RoleAccess.Where(s => s.RoleId == roleId).Select(s => s.PageId).ToList();
-                var pageGroups = _pegasusContext.PageGroup.Include(s=>s.Page).ToList();
+                var roleId = _ablemusicContext.User.FirstOrDefault(s => s.UserId == userId).RoleId;
+                var pageList = _ablemusicContext.RoleAccess.Where(s => s.RoleId == roleId).Select(s => s.PageId).ToList();
+                var pageGroups = _ablemusicContext.PageGroup.Include(s=>s.Page).ToList();
                 pageGroups.ForEach(pageGroup =>
                 {
                     detail = new List<Page>();

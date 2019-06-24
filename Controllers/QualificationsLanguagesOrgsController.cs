@@ -12,17 +12,16 @@ using Microsoft.EntityFrameworkCore;
 using Pegasus_backend.ActionFilter;
 using Pegasus_backend.pegasusContext;
 using Pegasus_backend.Models;
+using Microsoft.Extensions.Logging;
+
 namespace Pegasus_backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class QualificationsLanguagesOrgsController: BasicController
     {
-        private readonly pegasusContext.ablemusicContext _pegasusContext;
-
-        public QualificationsLanguagesOrgsController(pegasusContext.ablemusicContext pegasusContext)
+        public QualificationsLanguagesOrgsController(ablemusicContext ablemusicContext, ILogger<ValuesController> log) : base(ablemusicContext, log)
         {
-            _pegasusContext = pegasusContext;
         }
         
         
@@ -35,9 +34,9 @@ namespace Pegasus_backend.Controllers
             {
                 DetailsForTeacherRegister details = new DetailsForTeacherRegister()
                 {
-                    qualifications = await _pegasusContext.Qualification.ToListAsync(),
-                    Languages = await _pegasusContext.Language.ToListAsync(),
-                    Orgs = await _pegasusContext.Org.ToListAsync()
+                    qualifications = await _ablemusicContext.Qualification.ToListAsync(),
+                    Languages = await _ablemusicContext.Language.ToListAsync(),
+                    Orgs = await _ablemusicContext.Org.ToListAsync()
                 };
                 result.Data = details;
             }

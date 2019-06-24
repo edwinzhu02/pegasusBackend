@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Pegasus_backend.pegasusContext;
 using Pegasus_backend.Services;
-
+using Microsoft.Extensions.Logging;
 
 namespace Pegasus_backend.Controllers
 {
@@ -24,10 +24,9 @@ namespace Pegasus_backend.Controllers
     public class TeacherViewController:BasicController
     {
         private readonly DataService _service;
-        public TeacherViewController(ablemusicContext context)
+        public TeacherViewController(ablemusicContext ablemusicContext, ILogger<ValuesController> log) : base(ablemusicContext, log)
         {
-            _service = new DataService(context);
-            
+            _service = new DataService(_ablemusicContext);
         }
 
 

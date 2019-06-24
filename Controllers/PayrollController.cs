@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Pegasus_backend.Models;
 using Pegasus_backend.pegasusContext;
 namespace Pegasus_backend.Controllers
@@ -13,11 +14,9 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class PayrollController: BasicController
     {
-        private readonly pegasusContext.ablemusicContext _ablemusicContext;
 
-        public PayrollController(pegasusContext.ablemusicContext ablemusicContext)
+        public PayrollController(ablemusicContext ablemusicContext, ILogger<ValuesController> log) : base(ablemusicContext, log)
         {
-            _ablemusicContext = ablemusicContext;
         }
 
 

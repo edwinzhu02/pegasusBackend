@@ -14,11 +14,21 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Pegasus_backend.pegasusContext;
+using Microsoft.Extensions.Logging;
 
 namespace Pegasus_backend.Controllers
 {
     public abstract class BasicController: ControllerBase
     {
+        protected readonly ablemusicContext _ablemusicContext;
+        protected readonly ILogger<ValuesController> _log;
+
+        public BasicController(ablemusicContext ablemusicContext, ILogger<ValuesController> log)
+        {
+            _ablemusicContext = ablemusicContext;
+            _log = log;
+        }
+
         protected TimeSpan GetEndTimeForOnetoOneCourseSchedule(TimeSpan beginTime, short? durationType)
         {
             switch (durationType)
@@ -145,6 +155,21 @@ namespace Pegasus_backend.Controllers
                 Console.WriteLine("Registry data on the Central Standard Time zone has been corrupted.");
                 return nzTime;
             }
+        }
+        
+        protected void LogInfoToFile(string message)
+        {
+            _log.LogInformation(this.GetType().Name + " " + System.Reflection.MethodBase.GetCurrentMethod().Name + ": " + message);
+        }
+
+        protected void LogWarningToFile(string message)
+        {
+            _log.LogWarning(this.GetType().Name + " " + System.Reflection.MethodBase.GetCurrentMethod().Name + ": " + message);
+        }
+
+        protected void LogErrorToFile(string message)
+        {
+            _log.LogError(this.GetType().Name + " " + System.Reflection.MethodBase.GetCurrentMethod().Name + ": " + message);
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Pegasus_backend.Models;
 using Pegasus_backend.pegasusContext;
 
@@ -14,11 +15,8 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class RoomAvailableCheckController : BasicController
     {
-        private readonly pegasusContext.ablemusicContext _ablemusicContext;
-
-        public RoomAvailableCheckController(pegasusContext.ablemusicContext ablemusicContext)
+        public RoomAvailableCheckController(ablemusicContext ablemusicContext, ILogger<ValuesController> log) : base(ablemusicContext, log)
         {
-            _ablemusicContext = ablemusicContext;
         }
 
         // GET: api/RoomAvailableCheck/5
