@@ -311,6 +311,9 @@ namespace Pegasus_backend.Controllers
                                         endtime = amendment.EndTime.ToString();
                                         flag = 1;
                                         flag_DOW = (int)amendment.DayOfWeek;
+                                        lesson.RoomId = amendment.RoomId;
+                                        lesson.OrgId = (short)amendment.OrgId;
+                                        lesson.TeacherId = amendment.TeacherId;
                                         amend_conflict++;
 
                                     }
@@ -320,6 +323,10 @@ namespace Pegasus_backend.Controllers
                                         lesson_begindate[lesson_flag] = lesson_begindate[lesson_flag].AddDays(count);
                                         begintime = amendment.BeginTime.ToString();
                                         endtime = amendment.EndTime.ToString();
+                                        lesson.RoomId = amendment.RoomId;
+                                        lesson.OrgId = (short)amendment.OrgId;
+                                        lesson.TeacherId = amendment.TeacherId;
+
                                     }
                                 }
                             }

@@ -56,7 +56,6 @@ namespace Pegasus_backend.Controllers
         }
 
         [HttpGet]
-        [Route("two")]
         public async Task<IActionResult> GetLearner3()
         {
             var result = new Result<object>();
