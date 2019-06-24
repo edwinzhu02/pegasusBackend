@@ -289,7 +289,7 @@ namespace Pegasus_backend.Controllers
                             foreach (var amendment in amendments)
                             {
 
-                                if (lesson_begindate[lesson_flag] >= amendment.BeginDate && lesson_begindate[lesson_flag] <= amendment.EndDate)
+                                if (lesson_begindate[lesson_flag] >= amendment.BeginDate && (lesson_begindate[lesson_flag] <= amendment.EndDate || amendment.EndDate==null))
                                 {
                                     if (amendment.AmendType == 1)
                                     {
@@ -312,6 +312,9 @@ namespace Pegasus_backend.Controllers
                                         endtime = amendment.EndTime.ToString();
                                         flag = 1;
                                         flag_DOW = (int)amendment.DayOfWeek;
+                                        lesson.RoomId = amendment.RoomId;
+                                        lesson.OrgId = (short)amendment.OrgId;
+                                        lesson.TeacherId = amendment.TeacherId;
                                         amend_conflict++;
 
                                     }
@@ -321,6 +324,10 @@ namespace Pegasus_backend.Controllers
                                         lesson_begindate[lesson_flag] = lesson_begindate[lesson_flag].AddDays(count);
                                         begintime = amendment.BeginTime.ToString();
                                         endtime = amendment.EndTime.ToString();
+                                        lesson.RoomId = amendment.RoomId;
+                                        lesson.OrgId = (short)amendment.OrgId;
+                                        lesson.TeacherId = amendment.TeacherId;
+
                                     }
                                 }
                             }
@@ -430,6 +437,7 @@ namespace Pegasus_backend.Controllers
 
 
         [HttpPost("{term_id}")]
+        //[HttpPost]
         //[Route("[action]")]
         public async Task<IActionResult> Generateone2oneInvoice(int term_id)
         {
