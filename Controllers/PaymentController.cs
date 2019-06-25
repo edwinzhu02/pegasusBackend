@@ -30,7 +30,7 @@ namespace Pegasus_backend.Controllers
 //        [HttpGet("{beginDate}&{endDate}")]
         // [HttpGet]
         // [Route("payment/{beginDate}/{endDate}")]
-        [HttpGet("[action]/staffId/{beginDate}/{endDate}")]
+        [HttpGet("[action]/{beginDate}/{endDate}")]
         public async Task<IActionResult> PaymentByDate(DateTime beginDate, DateTime endDate)
         {
              Result<Object> result = new Result<object>();
