@@ -27,10 +27,38 @@ namespace Pegasus_backend.Controllers
 
 
         //POST: http://localhost:5000/api/payment/payInvoice
+//        [HttpGet("{beginDate}&{endDate}")]
+        // [HttpGet]
+        // [Route("payment/{beginDate}/{endDate}")]
+        [HttpGet("[action]/staffId/{beginDate}/{endDate}")]
+        public async Task<IActionResult> PaymentByDate(DateTime beginDate, DateTime endDate)
+        {
+             Result<Object> result = new Result<object>();
+                try
+             {
+                var orgs = await _ablemusicContext.StaffOrg.Where(o=>o.StaffId==staffId).Select(o=>o.OrgId).ToListAsync();
+                var payments = await _ablemusicContext.Payment
+                    .Where(d => d.CreatedAt >beginDate && d.CreatedAt <endDate )
+                     .Include(p => p.Invoice)
+                     .Include(p => p.Learner)                     
+                     .Include(p => p.SoldTransaction ).ThenInclude(p => p.Product)
+                     .Include(t => t.Staff ).ToListAsync();
+//&& orgs.Contains(d.Staff.StaffOrg.FirstOrDefault().OrgId
+                result.Data = _mapper.Map<List<GetPaymentModel>>(payments);
 
+              }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorCode = ex.Message;
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
         [CheckModelFilter]
         [HttpPost]
         [Route("payInvoice")]
+        
         public async Task<IActionResult> SavePaymentDetails([FromBody] InvoicePay details)
         {
             Result<string> result = new Result<string>();

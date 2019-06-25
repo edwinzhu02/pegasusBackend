@@ -1,0 +1,24 @@
+2019-06-26 10:04:25.149 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Payment/paymentbydate/1/2019-01-01/2019-07-01  
+2019-06-26 10:04:25.161 +12:00 [INF] Request finished in 11.9314ms 404 
+2019-06-26 10:04:53.556 +12:00 [INF] User profile is available. Using 'C:\Users\Learnspace\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-06-26 10:04:54.598 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
+2019-06-26 10:04:54.633 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-06-26 10:04:54.840 +12:00 [INF] Request finished in 243.2966ms 404 
+2019-06-26 10:04:59.849 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Payment/paymentbydate/1/2019-01-01/2019-07-01  
+2019-06-26 10:04:59.850 +12:00 [INF] Request finished in 5.5823ms 404 
+2019-06-26 10:05:03.331 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Payment/paymentbydate/1/2019-01-01/2019-07-01  
+2019-06-26 10:05:03.332 +12:00 [INF] Request finished in 0.4917ms 404 
+2019-06-26 10:05:24.201 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/index.html  
+2019-06-26 10:05:24.306 +12:00 [INF] Request finished in 105.1011ms 200 text/html
+2019-06-26 10:05:24.333 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/swagger-ui-standalone-preset.js  
+2019-06-26 10:05:24.333 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/swagger-ui-bundle.js  
+2019-06-26 10:05:24.399 +12:00 [INF] Sending file. Request path: '/swagger-ui-standalone-preset.js'. Physical path: 'N/A'
+2019-06-26 10:05:24.403 +12:00 [INF] Request finished in 69.5796ms 200 application/javascript
+2019-06-26 10:05:24.412 +12:00 [INF] Sending file. Request path: '/swagger-ui-bundle.js'. Physical path: 'N/A'
+2019-06-26 10:05:24.412 +12:00 [INF] Request finished in 79.3323ms 200 application/javascript
+2019-06-26 10:05:24.687 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/v1/swagger.json  
+2019-06-26 10:05:25.002 +12:00 [INF] Request finished in 315.3954ms 200 application/json;charset=utf-8
+2019-06-26 10:06:29.647 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Payment/paymentbydate/1/2019-01-01/2019-07-01  
+2019-06-26 10:06:29.655 +12:00 [INF] Request finished in 31.246ms 404 
+2019-06-26 10:06:58.749 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Payment/paymentbydate/3/2019-01-01/2019-07-01  
+2019-06-26 10:06:58.749 +12:00 [INF] Request finished in 0.3835ms 404 

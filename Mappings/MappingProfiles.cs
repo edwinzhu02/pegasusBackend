@@ -51,6 +51,14 @@ namespace Pegasus_backend.Mappings
             CreateMap<GetLearnerLearnerGroupCourseGroupCourseInstanceCourse, Course>();
             CreateMap<GetLearnerLearnerGroupCourseGroupCourseInstanceRoom, Room>();
             //End
+            //Payment
+            CreateMap<GetPaymentModel, Payment>();
+            CreateMap<PaymentInvoiceModel, Invoice>();
+            CreateMap<PaymentLearnerModel, Learner>();            
+            CreateMap<PaymentSoldTransaction, SoldTransaction>();            
+            CreateMap<PaymentProductModel, Product>();  
+            CreateMap<PaymentStaffModel, Staff>(); 
+
         }
     }
 }
