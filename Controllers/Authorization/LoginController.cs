@@ -98,7 +98,7 @@ namespace Pegasus_backend.Controllers.Authorization
             catch (Exception ex)
             {
                 result.IsSuccess = false;
-                result.ErrorMessage = ex.ToString();
+                result.ErrorMessage = ex.Message;
                 return StatusCode(401, result);
             }
             
