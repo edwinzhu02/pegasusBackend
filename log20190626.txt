@@ -1,0 +1,226 @@
+2019-06-26 11:05:08.763 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-06-26 11:05:19.183 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/learner application/json 48
+2019-06-26 11:05:19.213 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-06-26 11:05:19.341 +12:00 [INF] Route matched with {action = "GetLearner", controller = "Learner"}. Executing action Pegasus_backend.Controllers.LearnerController.GetLearner (Pegasus_backend)
+2019-06-26 11:05:19.757 +12:00 [INF] Executing action method Pegasus_backend.Controllers.LearnerController.GetLearner (Pegasus_backend) - Validation state: "Valid"
+2019-06-26 11:05:20.536 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-06-26 11:05:21.832 +12:00 [INF] Executed DbCommand (64ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `w`.`learner_id`, `w`.`address`, `w`.`contact_num`, `w`.`created_at`, `w`.`dob`, `w`.`email`, `w`.`enroll_date`, `w`.`first_name`, `w`.`form_url`, `w`.`g5_certification`, `w`.`gender`, `w`.`is_abrsm_g5`, `w`.`is_active`, `w`.`is_under_18`, `w`.`last_name`, `w`.`learner_level`, `w`.`level_type`, `w`.`middle_name`, `w`.`note`, `w`.`org_id`, `w`.`otherfile_url`, `w`.`payment_period`, `w`.`photo`, `w`.`referrer`, `w`.`referrer_learner_id`, `w`.`user_id`
+FROM `ablemusic`.`learner` AS `w`
+WHERE `w`.`is_active` = 1
+ORDER BY `w`.`learner_id`
+2019-06-26 11:05:22.040 +12:00 [INF] Executed DbCommand (98ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `w.Parent`.`parent_id`, `w.Parent`.`contact_num`, `w.Parent`.`created_at`, `w.Parent`.`email`, `w.Parent`.`first_name`, `w.Parent`.`last_name`, `w.Parent`.`learner_id`, `w.Parent`.`relationship`
+FROM `ablemusic`.`parent` AS `w.Parent`
+INNER JOIN (
+    SELECT `w0`.`learner_id`
+    FROM `ablemusic`.`learner` AS `w0`
+    WHERE `w0`.`is_active` = 1
+) AS `t` ON `w.Parent`.`learner_id` = `t`.`learner_id`
+ORDER BY `t`.`learner_id`
+2019-06-26 11:05:22.110 +12:00 [INF] Executed DbCommand (54ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `w.LearnerOthers`.`learner_others_id`, `w.LearnerOthers`.`learner_id`, `w.LearnerOthers`.`learner_level`, `w.LearnerOthers`.`others_type`, `w.LearnerOthers`.`others_value`
+FROM `ablemusic`.`learner_others` AS `w.LearnerOthers`
+INNER JOIN (
+    SELECT `w1`.`learner_id`
+    FROM `ablemusic`.`learner` AS `w1`
+    WHERE `w1`.`is_active` = 1
+) AS `t0` ON `w.LearnerOthers`.`learner_id` = `t0`.`learner_id`
+ORDER BY `t0`.`learner_id`
+2019-06-26 11:05:22.221 +12:00 [INF] Executed DbCommand (81ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `w.One2oneCourseInstance`.`course_instance_id`, `w.One2oneCourseInstance`.`begin_date`, `w.One2oneCourseInstance`.`course_id`, `w.One2oneCourseInstance`.`end_date`, `w.One2oneCourseInstance`.`invoice_date`, `w.One2oneCourseInstance`.`learner_id`, `w.One2oneCourseInstance`.`org_id`, `w.One2oneCourseInstance`.`room_id`, `w.One2oneCourseInstance`.`teacher_id`, `o.Teacher`.`teacher_id`, `o.Teacher`.`ability`, `o.Teacher`.`comment`, `o.Teacher`.`cv_url`, `o.Teacher`.`dob`, `o.Teacher`.`email`, `o.Teacher`.`expiry_date`, `o.Teacher`.`first_name`, `o.Teacher`.`form_url`, `o.Teacher`.`gender`, `o.Teacher`.`home_phone`, `o.Teacher`.`id_number`, `o.Teacher`.`id_photo`, `o.Teacher`.`id_type`, `o.Teacher`.`invoice_template`, `o.Teacher`.`ird_number`, `o.Teacher`.`is_activate`, `o.Teacher`.`is_contract`, `o.Teacher`.`is_left`, `o.Teacher`.`last_name`, `o.Teacher`.`level`, `o.Teacher`.`minimum_hours`, `o.Teacher`.`mobile_phone`, `o.Teacher`.`otherfile_url`, `o.Teacher`.`photo`, `o.Teacher`.`user_id`, `o.Teacher`.`visa`, `o.Room`.`room_id`, `o.Room`.`created_at`, `o.Room`.`is_activate`, `o.Room`.`org_id`, `o.Room`.`room_name`, `o.Course`.`course_id`, `o.Course`.`course_category_id`, `o.Course`.`course_name`, `o.Course`.`course_type`, `o.Course`.`duration`, `o.Course`.`level`, `o.Course`.`price`, `o.Course`.`teacher_level`, `o.Org`.`org_id`, `o.Org`.`abbr`, `o.Org`.`address`, `o.Org`.`email`, `o.Org`.`is_activate`, `o.Org`.`is_headoffice`, `o.Org`.`localtion_x`, `o.Org`.`localtion_y`, `o.Org`.`org_name`, `o.Org`.`phone`
+FROM `ablemusic`.`one2one_course_instance` AS `w.One2oneCourseInstance`
+LEFT JOIN `ablemusic`.`teacher` AS `o.Teacher` ON `w.One2oneCourseInstance`.`teacher_id` = `o.Teacher`.`teacher_id`
+LEFT JOIN `ablemusic`.`room` AS `o.Room` ON `w.One2oneCourseInstance`.`room_id` = `o.Room`.`room_id`
+LEFT JOIN `ablemusic`.`course` AS `o.Course` ON `w.One2oneCourseInstance`.`course_id` = `o.Course`.`course_id`
+LEFT JOIN `ablemusic`.`org` AS `o.Org` ON `w.One2oneCourseInstance`.`org_id` = `o.Org`.`org_id`
+INNER JOIN (
+    SELECT `w2`.`learner_id`
+    FROM `ablemusic`.`learner` AS `w2`
+    WHERE `w2`.`is_active` = 1
+) AS `t1` ON `w.One2oneCourseInstance`.`learner_id` = `t1`.`learner_id`
+ORDER BY `t1`.`learner_id`, `w.One2oneCourseInstance`.`course_instance_id`
+2019-06-26 11:05:22.549 +12:00 [INF] Executed DbCommand (172ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `w.One2oneCourseInstance.Amendment`.`amendment_id`, `w.One2oneCourseInstance.Amendment`.`amend_type`, `w.One2oneCourseInstance.Amendment`.`begin_date`, `w.One2oneCourseInstance.Amendment`.`begin_time`, `w.One2oneCourseInstance.Amendment`.`course_instance_id`, `w.One2oneCourseInstance.Amendment`.`course_schedule_id`, `w.One2oneCourseInstance.Amendment`.`created_at`, `w.One2oneCourseInstance.Amendment`.`day_of_week`, `w.One2oneCourseInstance.Amendment`.`end_date`, `w.One2oneCourseInstance.Amendment`.`end_time`, `w.One2oneCourseInstance.Amendment`.`is_temporary`, `w.One2oneCourseInstance.Amendment`.`learner_id`, `w.One2oneCourseInstance.Amendment`.`org_id`, `w.One2oneCourseInstance.Amendment`.`reason`, `w.One2oneCourseInstance.Amendment`.`room_id`, `w.One2oneCourseInstance.Amendment`.`teacher_id`, `a.Teacher`.`teacher_id`, `a.Teacher`.`ability`, `a.Teacher`.`comment`, `a.Teacher`.`cv_url`, `a.Teacher`.`dob`, `a.Teacher`.`email`, `a.Teacher`.`expiry_date`, `a.Teacher`.`first_name`, `a.Teacher`.`form_url`, `a.Teacher`.`gender`, `a.Teacher`.`home_phone`, `a.Teacher`.`id_number`, `a.Teacher`.`id_photo`, `a.Teacher`.`id_type`, `a.Teacher`.`invoice_template`, `a.Teacher`.`ird_number`, `a.Teacher`.`is_activate`, `a.Teacher`.`is_contract`, `a.Teacher`.`is_left`, `a.Teacher`.`last_name`, `a.Teacher`.`level`, `a.Teacher`.`minimum_hours`, `a.Teacher`.`mobile_phone`, `a.Teacher`.`otherfile_url`, `a.Teacher`.`photo`, `a.Teacher`.`user_id`, `a.Teacher`.`visa`, `a.Room`.`room_id`, `a.Room`.`created_at`, `a.Room`.`is_activate`, `a.Room`.`org_id`, `a.Room`.`room_name`
+FROM `ablemusic`.`amendment` AS `w.One2oneCourseInstance.Amendment`
+LEFT JOIN `ablemusic`.`teacher` AS `a.Teacher` ON `w.One2oneCourseInstance.Amendment`.`teacher_id` = `a.Teacher`.`teacher_id`
+LEFT JOIN `ablemusic`.`room` AS `a.Room` ON `w.One2oneCourseInstance.Amendment`.`room_id` = `a.Room`.`room_id`
+INNER JOIN (
+    SELECT DISTINCT `w.One2oneCourseInstance0`.`course_instance_id`, `t2`.`learner_id`
+    FROM `ablemusic`.`one2one_course_instance` AS `w.One2oneCourseInstance0`
+    LEFT JOIN `ablemusic`.`teacher` AS `o.Teacher0` ON `w.One2oneCourseInstance0`.`teacher_id` = `o.Teacher0`.`teacher_id`
+    LEFT JOIN `ablemusic`.`room` AS `o.Room0` ON `w.One2oneCourseInstance0`.`room_id` = `o.Room0`.`room_id`
+    LEFT JOIN `ablemusic`.`course` AS `o.Course0` ON `w.One2oneCourseInstance0`.`course_id` = `o.Course0`.`course_id`
+    LEFT JOIN `ablemusic`.`org` AS `o.Org0` ON `w.One2oneCourseInstance0`.`org_id` = `o.Org0`.`org_id`
+    INNER JOIN (
+        SELECT `w3`.`learner_id`
+        FROM `ablemusic`.`learner` AS `w3`
+        WHERE `w3`.`is_active` = 1
+    ) AS `t2` ON `w.One2oneCourseInstance0`.`learner_id` = `t2`.`learner_id`
+) AS `t3` ON `w.One2oneCourseInstance.Amendment`.`course_instance_id` = `t3`.`course_instance_id`
+ORDER BY `t3`.`learner_id`, `t3`.`course_instance_id`
+2019-06-26 11:05:22.663 +12:00 [INF] Executed DbCommand (68ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `w.One2oneCourseInstance.CourseSchedule`.`course_schedule_id`, `w.One2oneCourseInstance.CourseSchedule`.`begin_time`, `w.One2oneCourseInstance.CourseSchedule`.`course_instance_id`, `w.One2oneCourseInstance.CourseSchedule`.`day_of_week`, `w.One2oneCourseInstance.CourseSchedule`.`end_time`, `w.One2oneCourseInstance.CourseSchedule`.`group_course_instance_id`
+FROM `ablemusic`.`course_schedule` AS `w.One2oneCourseInstance.CourseSchedule`
+INNER JOIN (
+    SELECT DISTINCT `w.One2oneCourseInstance1`.`course_instance_id`, `t4`.`learner_id`
+    FROM `ablemusic`.`one2one_course_instance` AS `w.One2oneCourseInstance1`
+    LEFT JOIN `ablemusic`.`teacher` AS `o.Teacher1` ON `w.One2oneCourseInstance1`.`teacher_id` = `o.Teacher1`.`teacher_id`
+    LEFT JOIN `ablemusic`.`room` AS `o.Room1` ON `w.One2oneCourseInstance1`.`room_id` = `o.Room1`.`room_id`
+    LEFT JOIN `ablemusic`.`course` AS `o.Course1` ON `w.One2oneCourseInstance1`.`course_id` = `o.Course1`.`course_id`
+    LEFT JOIN `ablemusic`.`org` AS `o.Org1` ON `w.One2oneCourseInstance1`.`org_id` = `o.Org1`.`org_id`
+    INNER JOIN (
+        SELECT `w4`.`learner_id`
+        FROM `ablemusic`.`learner` AS `w4`
+        WHERE `w4`.`is_active` = 1
+    ) AS `t4` ON `w.One2oneCourseInstance1`.`learner_id` = `t4`.`learner_id`
+) AS `t5` ON `w.One2oneCourseInstance.CourseSchedule`.`course_instance_id` = `t5`.`course_instance_id`
+ORDER BY `t5`.`learner_id`, `t5`.`course_instance_id`
+2019-06-26 11:05:22.792 +12:00 [INF] Executed DbCommand (103ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `w.LearnerGroupCourse`.`learner_group_course_id`, `w.LearnerGroupCourse`.`begin_date`, `w.LearnerGroupCourse`.`comment`, `w.LearnerGroupCourse`.`created_at`, `w.LearnerGroupCourse`.`end_date`, `w.LearnerGroupCourse`.`group_course_instance_id`, `w.LearnerGroupCourse`.`invoice_date`, `w.LearnerGroupCourse`.`is_activate`, `w.LearnerGroupCourse`.`learner_id`, `l.GroupCourseInstance`.`group_course_instance_id`, `l.GroupCourseInstance`.`begin_date`, `l.GroupCourseInstance`.`course_id`, `l.GroupCourseInstance`.`end_date`, `l.GroupCourseInstance`.`is_activate`, `l.GroupCourseInstance`.`is_started`, `l.GroupCourseInstance`.`org_id`, `l.GroupCourseInstance`.`room_id`, `l.GroupCourseInstance`.`teacher_id`, `l.GroupCourseInstance.Teacher`.`teacher_id`, `l.GroupCourseInstance.Teacher`.`ability`, `l.GroupCourseInstance.Teacher`.`comment`, `l.GroupCourseInstance.Teacher`.`cv_url`, `l.GroupCourseInstance.Teacher`.`dob`, `l.GroupCourseInstance.Teacher`.`email`, `l.GroupCourseInstance.Teacher`.`expiry_date`, `l.GroupCourseInstance.Teacher`.`first_name`, `l.GroupCourseInstance.Teacher`.`form_url`, `l.GroupCourseInstance.Teacher`.`gender`, `l.GroupCourseInstance.Teacher`.`home_phone`, `l.GroupCourseInstance.Teacher`.`id_number`, `l.GroupCourseInstance.Teacher`.`id_photo`, `l.GroupCourseInstance.Teacher`.`id_type`, `l.GroupCourseInstance.Teacher`.`invoice_template`, `l.GroupCourseInstance.Teacher`.`ird_number`, `l.GroupCourseInstance.Teacher`.`is_activate`, `l.GroupCourseInstance.Teacher`.`is_contract`, `l.GroupCourseInstance.Teacher`.`is_left`, `l.GroupCourseInstance.Teacher`.`last_name`, `l.GroupCourseInstance.Teacher`.`level`, `l.GroupCourseInstance.Teacher`.`minimum_hours`, `l.GroupCourseInstance.Teacher`.`mobile_phone`, `l.GroupCourseInstance.Teacher`.`otherfile_url`, `l.GroupCourseInstance.Teacher`.`photo`, `l.GroupCourseInstance.Teacher`.`user_id`, `l.GroupCourseInstance.Teacher`.`visa`, `l.GroupCourseInstance.Course`.`course_id`, `l.GroupCourseInstance.Course`.`course_category_id`, `l.GroupCourseInstance.Course`.`course_name`, `l.GroupCourseInstance.Course`.`course_type`, `l.GroupCourseInstance.Course`.`duration`, `l.GroupCourseInstance.Course`.`level`, `l.GroupCourseInstance.Course`.`price`, `l.GroupCourseInstance.Course`.`teacher_level`, `l.GroupCourseInstance.Room`.`room_id`, `l.GroupCourseInstance.Room`.`created_at`, `l.GroupCourseInstance.Room`.`is_activate`, `l.GroupCourseInstance.Room`.`org_id`, `l.GroupCourseInstance.Room`.`room_name`
+FROM `ablemusic`.`learner_group_course` AS `w.LearnerGroupCourse`
+LEFT JOIN `ablemusic`.`group_course_instance` AS `l.GroupCourseInstance` ON `w.LearnerGroupCourse`.`group_course_instance_id` = `l.GroupCourseInstance`.`group_course_instance_id`
+LEFT JOIN `ablemusic`.`teacher` AS `l.GroupCourseInstance.Teacher` ON `l.GroupCourseInstance`.`teacher_id` = `l.GroupCourseInstance.Teacher`.`teacher_id`
+LEFT JOIN `ablemusic`.`course` AS `l.GroupCourseInstance.Course` ON `l.GroupCourseInstance`.`course_id` = `l.GroupCourseInstance.Course`.`course_id`
+LEFT JOIN `ablemusic`.`room` AS `l.GroupCourseInstance.Room` ON `l.GroupCourseInstance`.`room_id` = `l.GroupCourseInstance.Room`.`room_id`
+INNER JOIN (
+    SELECT `w5`.`learner_id`
+    FROM `ablemusic`.`learner` AS `w5`
+    WHERE `w5`.`is_active` = 1
+) AS `t6` ON `w.LearnerGroupCourse`.`learner_id` = `t6`.`learner_id`
+ORDER BY `t6`.`learner_id`, `l.GroupCourseInstance`.`group_course_instance_id`
+2019-06-26 11:05:22.927 +12:00 [INF] Executed DbCommand (72ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `l.GroupCourseInstance.CourseSchedule`.`course_schedule_id`, `l.GroupCourseInstance.CourseSchedule`.`begin_time`, `l.GroupCourseInstance.CourseSchedule`.`course_instance_id`, `l.GroupCourseInstance.CourseSchedule`.`day_of_week`, `l.GroupCourseInstance.CourseSchedule`.`end_time`, `l.GroupCourseInstance.CourseSchedule`.`group_course_instance_id`
+FROM `ablemusic`.`course_schedule` AS `l.GroupCourseInstance.CourseSchedule`
+INNER JOIN (
+    SELECT DISTINCT `l.GroupCourseInstance0`.`group_course_instance_id`, `t7`.`learner_id`
+    FROM `ablemusic`.`learner_group_course` AS `w.LearnerGroupCourse0`
+    LEFT JOIN `ablemusic`.`group_course_instance` AS `l.GroupCourseInstance0` ON `w.LearnerGroupCourse0`.`group_course_instance_id` = `l.GroupCourseInstance0`.`group_course_instance_id`
+    LEFT JOIN `ablemusic`.`teacher` AS `l.GroupCourseInstance.Teacher0` ON `l.GroupCourseInstance0`.`teacher_id` = `l.GroupCourseInstance.Teacher0`.`teacher_id`
+    LEFT JOIN `ablemusic`.`course` AS `l.GroupCourseInstance.Course0` ON `l.GroupCourseInstance0`.`course_id` = `l.GroupCourseInstance.Course0`.`course_id`
+    LEFT JOIN `ablemusic`.`room` AS `l.GroupCourseInstance.Room0` ON `l.GroupCourseInstance0`.`room_id` = `l.GroupCourseInstance.Room0`.`room_id`
+    INNER JOIN (
+        SELECT `w6`.`learner_id`
+        FROM `ablemusic`.`learner` AS `w6`
+        WHERE `w6`.`is_active` = 1
+    ) AS `t7` ON `w.LearnerGroupCourse0`.`learner_id` = `t7`.`learner_id`
+) AS `t8` ON `l.GroupCourseInstance.CourseSchedule`.`group_course_instance_id` = `t8`.`group_course_instance_id`
+ORDER BY `t8`.`learner_id`, `t8`.`group_course_instance_id`
+2019-06-26 11:05:23.122 +12:00 [INF] Executed action method Pegasus_backend.Controllers.LearnerController.GetLearner (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 3357.9886ms.
+2019-06-26 11:05:23.128 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-06-26 11:05:23.221 +12:00 [INF] Executed action Pegasus_backend.Controllers.LearnerController.GetLearner (Pegasus_backend) in 3877.4825ms
+2019-06-26 11:05:23.224 +12:00 [INF] Request finished in 4042.5398ms 200 application/json; charset=utf-8
+2019-06-26 11:05:23.230 +12:00 [INF] Connection id "0HLNPO6BTJNUK", Request id "0HLNPO6BTJNUK:00000001": the application completed without reading the entire request body.
+2019-06-26 11:06:50.165 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-06-26 11:06:54.266 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/learner application/json 48
+2019-06-26 11:06:54.294 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-06-26 11:06:54.412 +12:00 [INF] Route matched with {action = "GetLearner", controller = "Learner"}. Executing action Pegasus_backend.Controllers.LearnerController.GetLearner (Pegasus_backend)
+2019-06-26 11:06:54.811 +12:00 [INF] Executing action method Pegasus_backend.Controllers.LearnerController.GetLearner (Pegasus_backend) - Validation state: "Valid"
+2019-06-26 11:06:55.584 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-06-26 11:06:56.751 +12:00 [INF] Executed DbCommand (63ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `w`.`learner_id`, `w`.`address`, `w`.`contact_num`, `w`.`created_at`, `w`.`dob`, `w`.`email`, `w`.`enroll_date`, `w`.`first_name`, `w`.`form_url`, `w`.`g5_certification`, `w`.`gender`, `w`.`is_abrsm_g5`, `w`.`is_active`, `w`.`is_under_18`, `w`.`last_name`, `w`.`learner_level`, `w`.`level_type`, `w`.`middle_name`, `w`.`note`, `w`.`org_id`, `w`.`otherfile_url`, `w`.`payment_period`, `w`.`photo`, `w`.`referrer`, `w`.`referrer_learner_id`, `w`.`user_id`
+FROM `ablemusic`.`learner` AS `w`
+WHERE `w`.`is_active` = 1
+ORDER BY `w`.`learner_id`
+2019-06-26 11:06:56.913 +12:00 [INF] Executed DbCommand (59ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `w.Parent`.`parent_id`, `w.Parent`.`contact_num`, `w.Parent`.`created_at`, `w.Parent`.`email`, `w.Parent`.`first_name`, `w.Parent`.`last_name`, `w.Parent`.`learner_id`, `w.Parent`.`relationship`
+FROM `ablemusic`.`parent` AS `w.Parent`
+INNER JOIN (
+    SELECT `w0`.`learner_id`
+    FROM `ablemusic`.`learner` AS `w0`
+    WHERE `w0`.`is_active` = 1
+) AS `t` ON `w.Parent`.`learner_id` = `t`.`learner_id`
+ORDER BY `t`.`learner_id`
+2019-06-26 11:06:56.985 +12:00 [INF] Executed DbCommand (55ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `w.LearnerOthers`.`learner_others_id`, `w.LearnerOthers`.`learner_id`, `w.LearnerOthers`.`learner_level`, `w.LearnerOthers`.`others_type`, `w.LearnerOthers`.`others_value`
+FROM `ablemusic`.`learner_others` AS `w.LearnerOthers`
+INNER JOIN (
+    SELECT `w1`.`learner_id`
+    FROM `ablemusic`.`learner` AS `w1`
+    WHERE `w1`.`is_active` = 1
+) AS `t0` ON `w.LearnerOthers`.`learner_id` = `t0`.`learner_id`
+ORDER BY `t0`.`learner_id`
+2019-06-26 11:06:57.094 +12:00 [INF] Executed DbCommand (81ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `w.One2oneCourseInstance`.`course_instance_id`, `w.One2oneCourseInstance`.`begin_date`, `w.One2oneCourseInstance`.`course_id`, `w.One2oneCourseInstance`.`end_date`, `w.One2oneCourseInstance`.`invoice_date`, `w.One2oneCourseInstance`.`learner_id`, `w.One2oneCourseInstance`.`org_id`, `w.One2oneCourseInstance`.`room_id`, `w.One2oneCourseInstance`.`teacher_id`, `o.Teacher`.`teacher_id`, `o.Teacher`.`ability`, `o.Teacher`.`comment`, `o.Teacher`.`cv_url`, `o.Teacher`.`dob`, `o.Teacher`.`email`, `o.Teacher`.`expiry_date`, `o.Teacher`.`first_name`, `o.Teacher`.`form_url`, `o.Teacher`.`gender`, `o.Teacher`.`home_phone`, `o.Teacher`.`id_number`, `o.Teacher`.`id_photo`, `o.Teacher`.`id_type`, `o.Teacher`.`invoice_template`, `o.Teacher`.`ird_number`, `o.Teacher`.`is_activate`, `o.Teacher`.`is_contract`, `o.Teacher`.`is_left`, `o.Teacher`.`last_name`, `o.Teacher`.`level`, `o.Teacher`.`minimum_hours`, `o.Teacher`.`mobile_phone`, `o.Teacher`.`otherfile_url`, `o.Teacher`.`photo`, `o.Teacher`.`user_id`, `o.Teacher`.`visa`, `o.Room`.`room_id`, `o.Room`.`created_at`, `o.Room`.`is_activate`, `o.Room`.`org_id`, `o.Room`.`room_name`, `o.Course`.`course_id`, `o.Course`.`course_category_id`, `o.Course`.`course_name`, `o.Course`.`course_type`, `o.Course`.`duration`, `o.Course`.`level`, `o.Course`.`price`, `o.Course`.`teacher_level`, `o.Org`.`org_id`, `o.Org`.`abbr`, `o.Org`.`address`, `o.Org`.`email`, `o.Org`.`is_activate`, `o.Org`.`is_headoffice`, `o.Org`.`localtion_x`, `o.Org`.`localtion_y`, `o.Org`.`org_name`, `o.Org`.`phone`
+FROM `ablemusic`.`one2one_course_instance` AS `w.One2oneCourseInstance`
+LEFT JOIN `ablemusic`.`teacher` AS `o.Teacher` ON `w.One2oneCourseInstance`.`teacher_id` = `o.Teacher`.`teacher_id`
+LEFT JOIN `ablemusic`.`room` AS `o.Room` ON `w.One2oneCourseInstance`.`room_id` = `o.Room`.`room_id`
+LEFT JOIN `ablemusic`.`course` AS `o.Course` ON `w.One2oneCourseInstance`.`course_id` = `o.Course`.`course_id`
+LEFT JOIN `ablemusic`.`org` AS `o.Org` ON `w.One2oneCourseInstance`.`org_id` = `o.Org`.`org_id`
+INNER JOIN (
+    SELECT `w2`.`learner_id`
+    FROM `ablemusic`.`learner` AS `w2`
+    WHERE `w2`.`is_active` = 1
+) AS `t1` ON `w.One2oneCourseInstance`.`learner_id` = `t1`.`learner_id`
+ORDER BY `t1`.`learner_id`, `w.One2oneCourseInstance`.`course_instance_id`
+2019-06-26 11:06:57.350 +12:00 [INF] Executed DbCommand (94ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `w.One2oneCourseInstance.Amendment`.`amendment_id`, `w.One2oneCourseInstance.Amendment`.`amend_type`, `w.One2oneCourseInstance.Amendment`.`begin_date`, `w.One2oneCourseInstance.Amendment`.`begin_time`, `w.One2oneCourseInstance.Amendment`.`course_instance_id`, `w.One2oneCourseInstance.Amendment`.`course_schedule_id`, `w.One2oneCourseInstance.Amendment`.`created_at`, `w.One2oneCourseInstance.Amendment`.`day_of_week`, `w.One2oneCourseInstance.Amendment`.`end_date`, `w.One2oneCourseInstance.Amendment`.`end_time`, `w.One2oneCourseInstance.Amendment`.`is_temporary`, `w.One2oneCourseInstance.Amendment`.`learner_id`, `w.One2oneCourseInstance.Amendment`.`org_id`, `w.One2oneCourseInstance.Amendment`.`reason`, `w.One2oneCourseInstance.Amendment`.`room_id`, `w.One2oneCourseInstance.Amendment`.`teacher_id`, `a.Teacher`.`teacher_id`, `a.Teacher`.`ability`, `a.Teacher`.`comment`, `a.Teacher`.`cv_url`, `a.Teacher`.`dob`, `a.Teacher`.`email`, `a.Teacher`.`expiry_date`, `a.Teacher`.`first_name`, `a.Teacher`.`form_url`, `a.Teacher`.`gender`, `a.Teacher`.`home_phone`, `a.Teacher`.`id_number`, `a.Teacher`.`id_photo`, `a.Teacher`.`id_type`, `a.Teacher`.`invoice_template`, `a.Teacher`.`ird_number`, `a.Teacher`.`is_activate`, `a.Teacher`.`is_contract`, `a.Teacher`.`is_left`, `a.Teacher`.`last_name`, `a.Teacher`.`level`, `a.Teacher`.`minimum_hours`, `a.Teacher`.`mobile_phone`, `a.Teacher`.`otherfile_url`, `a.Teacher`.`photo`, `a.Teacher`.`user_id`, `a.Teacher`.`visa`, `a.Room`.`room_id`, `a.Room`.`created_at`, `a.Room`.`is_activate`, `a.Room`.`org_id`, `a.Room`.`room_name`
+FROM `ablemusic`.`amendment` AS `w.One2oneCourseInstance.Amendment`
+LEFT JOIN `ablemusic`.`teacher` AS `a.Teacher` ON `w.One2oneCourseInstance.Amendment`.`teacher_id` = `a.Teacher`.`teacher_id`
+LEFT JOIN `ablemusic`.`room` AS `a.Room` ON `w.One2oneCourseInstance.Amendment`.`room_id` = `a.Room`.`room_id`
+INNER JOIN (
+    SELECT DISTINCT `w.One2oneCourseInstance0`.`course_instance_id`, `t2`.`learner_id`
+    FROM `ablemusic`.`one2one_course_instance` AS `w.One2oneCourseInstance0`
+    LEFT JOIN `ablemusic`.`teacher` AS `o.Teacher0` ON `w.One2oneCourseInstance0`.`teacher_id` = `o.Teacher0`.`teacher_id`
+    LEFT JOIN `ablemusic`.`room` AS `o.Room0` ON `w.One2oneCourseInstance0`.`room_id` = `o.Room0`.`room_id`
+    LEFT JOIN `ablemusic`.`course` AS `o.Course0` ON `w.One2oneCourseInstance0`.`course_id` = `o.Course0`.`course_id`
+    LEFT JOIN `ablemusic`.`org` AS `o.Org0` ON `w.One2oneCourseInstance0`.`org_id` = `o.Org0`.`org_id`
+    INNER JOIN (
+        SELECT `w3`.`learner_id`
+        FROM `ablemusic`.`learner` AS `w3`
+        WHERE `w3`.`is_active` = 1
+    ) AS `t2` ON `w.One2oneCourseInstance0`.`learner_id` = `t2`.`learner_id`
+) AS `t3` ON `w.One2oneCourseInstance.Amendment`.`course_instance_id` = `t3`.`course_instance_id`
+ORDER BY `t3`.`learner_id`, `t3`.`course_instance_id`
+2019-06-26 11:06:57.463 +12:00 [INF] Executed DbCommand (69ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `w.One2oneCourseInstance.CourseSchedule`.`course_schedule_id`, `w.One2oneCourseInstance.CourseSchedule`.`begin_time`, `w.One2oneCourseInstance.CourseSchedule`.`course_instance_id`, `w.One2oneCourseInstance.CourseSchedule`.`day_of_week`, `w.One2oneCourseInstance.CourseSchedule`.`end_time`, `w.One2oneCourseInstance.CourseSchedule`.`group_course_instance_id`
+FROM `ablemusic`.`course_schedule` AS `w.One2oneCourseInstance.CourseSchedule`
+INNER JOIN (
+    SELECT DISTINCT `w.One2oneCourseInstance1`.`course_instance_id`, `t4`.`learner_id`
+    FROM `ablemusic`.`one2one_course_instance` AS `w.One2oneCourseInstance1`
+    LEFT JOIN `ablemusic`.`teacher` AS `o.Teacher1` ON `w.One2oneCourseInstance1`.`teacher_id` = `o.Teacher1`.`teacher_id`
+    LEFT JOIN `ablemusic`.`room` AS `o.Room1` ON `w.One2oneCourseInstance1`.`room_id` = `o.Room1`.`room_id`
+    LEFT JOIN `ablemusic`.`course` AS `o.Course1` ON `w.One2oneCourseInstance1`.`course_id` = `o.Course1`.`course_id`
+    LEFT JOIN `ablemusic`.`org` AS `o.Org1` ON `w.One2oneCourseInstance1`.`org_id` = `o.Org1`.`org_id`
+    INNER JOIN (
+        SELECT `w4`.`learner_id`
+        FROM `ablemusic`.`learner` AS `w4`
+        WHERE `w4`.`is_active` = 1
+    ) AS `t4` ON `w.One2oneCourseInstance1`.`learner_id` = `t4`.`learner_id`
+) AS `t5` ON `w.One2oneCourseInstance.CourseSchedule`.`course_instance_id` = `t5`.`course_instance_id`
+ORDER BY `t5`.`learner_id`, `t5`.`course_instance_id`
+2019-06-26 11:06:57.600 +12:00 [INF] Executed DbCommand (110ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `w.LearnerGroupCourse`.`learner_group_course_id`, `w.LearnerGroupCourse`.`begin_date`, `w.LearnerGroupCourse`.`comment`, `w.LearnerGroupCourse`.`created_at`, `w.LearnerGroupCourse`.`end_date`, `w.LearnerGroupCourse`.`group_course_instance_id`, `w.LearnerGroupCourse`.`invoice_date`, `w.LearnerGroupCourse`.`is_activate`, `w.LearnerGroupCourse`.`learner_id`, `l.GroupCourseInstance`.`group_course_instance_id`, `l.GroupCourseInstance`.`begin_date`, `l.GroupCourseInstance`.`course_id`, `l.GroupCourseInstance`.`end_date`, `l.GroupCourseInstance`.`is_activate`, `l.GroupCourseInstance`.`is_started`, `l.GroupCourseInstance`.`org_id`, `l.GroupCourseInstance`.`room_id`, `l.GroupCourseInstance`.`teacher_id`, `l.GroupCourseInstance.Teacher`.`teacher_id`, `l.GroupCourseInstance.Teacher`.`ability`, `l.GroupCourseInstance.Teacher`.`comment`, `l.GroupCourseInstance.Teacher`.`cv_url`, `l.GroupCourseInstance.Teacher`.`dob`, `l.GroupCourseInstance.Teacher`.`email`, `l.GroupCourseInstance.Teacher`.`expiry_date`, `l.GroupCourseInstance.Teacher`.`first_name`, `l.GroupCourseInstance.Teacher`.`form_url`, `l.GroupCourseInstance.Teacher`.`gender`, `l.GroupCourseInstance.Teacher`.`home_phone`, `l.GroupCourseInstance.Teacher`.`id_number`, `l.GroupCourseInstance.Teacher`.`id_photo`, `l.GroupCourseInstance.Teacher`.`id_type`, `l.GroupCourseInstance.Teacher`.`invoice_template`, `l.GroupCourseInstance.Teacher`.`ird_number`, `l.GroupCourseInstance.Teacher`.`is_activate`, `l.GroupCourseInstance.Teacher`.`is_contract`, `l.GroupCourseInstance.Teacher`.`is_left`, `l.GroupCourseInstance.Teacher`.`last_name`, `l.GroupCourseInstance.Teacher`.`level`, `l.GroupCourseInstance.Teacher`.`minimum_hours`, `l.GroupCourseInstance.Teacher`.`mobile_phone`, `l.GroupCourseInstance.Teacher`.`otherfile_url`, `l.GroupCourseInstance.Teacher`.`photo`, `l.GroupCourseInstance.Teacher`.`user_id`, `l.GroupCourseInstance.Teacher`.`visa`, `l.GroupCourseInstance.Course`.`course_id`, `l.GroupCourseInstance.Course`.`course_category_id`, `l.GroupCourseInstance.Course`.`course_name`, `l.GroupCourseInstance.Course`.`course_type`, `l.GroupCourseInstance.Course`.`duration`, `l.GroupCourseInstance.Course`.`level`, `l.GroupCourseInstance.Course`.`price`, `l.GroupCourseInstance.Course`.`teacher_level`, `l.GroupCourseInstance.Room`.`room_id`, `l.GroupCourseInstance.Room`.`created_at`, `l.GroupCourseInstance.Room`.`is_activate`, `l.GroupCourseInstance.Room`.`org_id`, `l.GroupCourseInstance.Room`.`room_name`
+FROM `ablemusic`.`learner_group_course` AS `w.LearnerGroupCourse`
+LEFT JOIN `ablemusic`.`group_course_instance` AS `l.GroupCourseInstance` ON `w.LearnerGroupCourse`.`group_course_instance_id` = `l.GroupCourseInstance`.`group_course_instance_id`
+LEFT JOIN `ablemusic`.`teacher` AS `l.GroupCourseInstance.Teacher` ON `l.GroupCourseInstance`.`teacher_id` = `l.GroupCourseInstance.Teacher`.`teacher_id`
+LEFT JOIN `ablemusic`.`course` AS `l.GroupCourseInstance.Course` ON `l.GroupCourseInstance`.`course_id` = `l.GroupCourseInstance.Course`.`course_id`
+LEFT JOIN `ablemusic`.`room` AS `l.GroupCourseInstance.Room` ON `l.GroupCourseInstance`.`room_id` = `l.GroupCourseInstance.Room`.`room_id`
+INNER JOIN (
+    SELECT `w5`.`learner_id`
+    FROM `ablemusic`.`learner` AS `w5`
+    WHERE `w5`.`is_active` = 1
+) AS `t6` ON `w.LearnerGroupCourse`.`learner_id` = `t6`.`learner_id`
+ORDER BY `t6`.`learner_id`, `l.GroupCourseInstance`.`group_course_instance_id`
+2019-06-26 11:06:57.739 +12:00 [INF] Executed DbCommand (75ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `l.GroupCourseInstance.CourseSchedule`.`course_schedule_id`, `l.GroupCourseInstance.CourseSchedule`.`begin_time`, `l.GroupCourseInstance.CourseSchedule`.`course_instance_id`, `l.GroupCourseInstance.CourseSchedule`.`day_of_week`, `l.GroupCourseInstance.CourseSchedule`.`end_time`, `l.GroupCourseInstance.CourseSchedule`.`group_course_instance_id`
+FROM `ablemusic`.`course_schedule` AS `l.GroupCourseInstance.CourseSchedule`
+INNER JOIN (
+    SELECT DISTINCT `l.GroupCourseInstance0`.`group_course_instance_id`, `t7`.`learner_id`
+    FROM `ablemusic`.`learner_group_course` AS `w.LearnerGroupCourse0`
+    LEFT JOIN `ablemusic`.`group_course_instance` AS `l.GroupCourseInstance0` ON `w.LearnerGroupCourse0`.`group_course_instance_id` = `l.GroupCourseInstance0`.`group_course_instance_id`
+    LEFT JOIN `ablemusic`.`teacher` AS `l.GroupCourseInstance.Teacher0` ON `l.GroupCourseInstance0`.`teacher_id` = `l.GroupCourseInstance.Teacher0`.`teacher_id`
+    LEFT JOIN `ablemusic`.`course` AS `l.GroupCourseInstance.Course0` ON `l.GroupCourseInstance0`.`course_id` = `l.GroupCourseInstance.Course0`.`course_id`
+    LEFT JOIN `ablemusic`.`room` AS `l.GroupCourseInstance.Room0` ON `l.GroupCourseInstance0`.`room_id` = `l.GroupCourseInstance.Room0`.`room_id`
+    INNER JOIN (
+        SELECT `w6`.`learner_id`
+        FROM `ablemusic`.`learner` AS `w6`
+        WHERE `w6`.`is_active` = 1
+    ) AS `t7` ON `w.LearnerGroupCourse0`.`learner_id` = `t7`.`learner_id`
+) AS `t8` ON `l.GroupCourseInstance.CourseSchedule`.`group_course_instance_id` = `t8`.`group_course_instance_id`
+ORDER BY `t8`.`learner_id`, `t8`.`group_course_instance_id`
+2019-06-26 11:06:57.951 +12:00 [INF] Executed action method Pegasus_backend.Controllers.LearnerController.GetLearner (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 3132.9046000000003ms.
+2019-06-26 11:06:57.956 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-06-26 11:06:58.047 +12:00 [INF] Executed action Pegasus_backend.Controllers.LearnerController.GetLearner (Pegasus_backend) in 3633.1125ms
+2019-06-26 11:06:58.050 +12:00 [INF] Request finished in 3786.3762ms 200 application/json; charset=utf-8
+2019-06-26 11:06:58.057 +12:00 [INF] Connection id "0HLNPO788D9MI", Request id "0HLNPO788D9MI:00000001": the application completed without reading the entire request body.
