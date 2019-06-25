@@ -36,14 +36,14 @@ namespace Pegasus_backend.Controllers
              Result<Object> result = new Result<object>();
                 try
              {
-                var orgs = await _ablemusicContext.StaffOrg.Where(o=>o.StaffId==staffId).Select(o=>o.OrgId).ToListAsync();
+                //var orgs = await _ablemusicContext.StaffOrg.Where(o=>o.StaffId==staffId).Select(o=>o.OrgId).ToListAsync();
                 var payments = await _ablemusicContext.Payment
-                    .Where(d => d.CreatedAt >beginDate && d.CreatedAt <endDate )
+                    .Where(d => d.CreatedAt >beginDate && d.CreatedAt <endDate)
                      .Include(p => p.Invoice)
                      .Include(p => p.Learner)                     
                      .Include(p => p.SoldTransaction ).ThenInclude(p => p.Product)
                      .Include(t => t.Staff ).ToListAsync();
-//&& orgs.Contains(d.Staff.StaffOrg.FirstOrDefault().OrgId
+ //&& orgs.Contains(d.Staff.StaffOrg.FirstOrDefault().OrgId)
                 result.Data = _mapper.Map<List<GetPaymentModel>>(payments);
 
               }
