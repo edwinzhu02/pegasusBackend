@@ -321,8 +321,7 @@ namespace Pegasus_backend.pegasusContext
 
                 entity.Property(e => e.ChatMessageId)
                     .HasColumnName("chat_message_id")
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedNever();
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.ChatGroupId)
                     .HasColumnName("chat_group_id")
@@ -1316,6 +1315,10 @@ namespace Pegasus_backend.pegasusContext
 
                 entity.Property(e => e.IsCanceled)
                     .HasColumnName("is_canceled")
+                    .HasColumnType("bit(1)");
+
+                entity.Property(e => e.IsChanged)
+                    .HasColumnName("is_changed")
                     .HasColumnType("bit(1)");
 
                 entity.Property(e => e.IsConfirm)
@@ -2946,6 +2949,11 @@ namespace Pegasus_backend.pegasusContext
                     .HasColumnName("end_date")
                     .HasColumnType("date");
 
+                entity.Property(e => e.TermName)
+                    .HasColumnName("term_name")
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.TermType)
                     .HasColumnName("term_type")
                     .HasColumnType("tinyint(4)");
@@ -3042,6 +3050,9 @@ namespace Pegasus_backend.pegasusContext
 
                 entity.HasIndex(e => e.RoleId)
                     .HasName("R_57");
+
+                entity.HasIndex(e => e.UserName)
+                    .HasName("idx_username");
 
                 entity.Property(e => e.UserId)
                     .HasColumnName("user_id")
