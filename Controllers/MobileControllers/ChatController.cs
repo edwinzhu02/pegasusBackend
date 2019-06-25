@@ -49,32 +49,7 @@ namespace Pegasus_backend.Controllers.MobileControllers
             {
                 return NotFound("No user found");
             }
-
-            // teacher
-            if (userDetail.RoleId == 1)
-            {
-                var teacherDetail = await _pegasusContext.Teacher.Where(x => x.UserId == id).FirstOrDefaultAsync();
-                if (teacherDetail == null)
-                {
-                    return NotFound("Teacher not found");
-                }
-
-                return Ok(teacherDetail);
-            }
-
-            // student
-            if (userDetail.RoleId == 4)
-            {
-                var studentDetail = await _pegasusContext.Learner.Where(x => x.UserId == id).FirstOrDefaultAsync();
-                if (studentDetail == null)
-                {
-                    return NotFound("Learner not found");
-                }
-
-                return Ok(studentDetail);
-            }
-
-            return NotFound("User should be either teacher or student");
+            return Ok(userDetail);
         }
 
         //GET: http://localhost:5000/api/Chat/GetRelatedStudent/:tutorId
@@ -83,7 +58,12 @@ namespace Pegasus_backend.Controllers.MobileControllers
         public async Task<IActionResult> GetRelatedStudent(int id)
         {
             Result<List<Learner>> result = new Result<List<Learner>>();
-            var students = await _pegasusContext.Lesson.Where(x => x.TeacherId == id).Select(x => x).ToListAsync();
+            var teacherDetail = await _pegasusContext.Teacher.Where(x => x.TeacherId == id).FirstOrDefaultAsync();
+            if (teacherDetail == null)
+            {
+                return NotFound("No such a teacher");
+            }
+            var students = await _pegasusContext.Lesson.Where(x => x.TeacherId == teacherDetail.TeacherId).Select(x => x).ToListAsync();
             if (students == null)
             {
                 return NotFound("No students yet");
@@ -131,7 +111,13 @@ namespace Pegasus_backend.Controllers.MobileControllers
         public async Task<IActionResult> GetRelatedTeacher(int id)
         {
             Result<List<Teacher>> result = new Result<List<Teacher>>();
-            var teachers = await _pegasusContext.Lesson.Where(x => x.LearnerId == id).Select(x => x).ToListAsync();
+            var learnerDetail = await _pegasusContext.Learner.Where(x => x.UserId == id).FirstOrDefaultAsync();
+            if (learnerDetail == null)
+            {
+                return NotFound("No such a learner");
+            }
+
+            var teachers = await _pegasusContext.Lesson.Where(x => x.LearnerId == learnerDetail.LearnerId).Select(x => x).ToListAsync();
             if (teachers == null)
             {
                 return NotFound("No teachers yet");
@@ -158,13 +144,13 @@ namespace Pegasus_backend.Controllers.MobileControllers
                 }
                 else
                 {
-                    return NotFound("Student not found");
+                    return NotFound("Teacher not found");
                 }
             }
 
             if (teacherList.Count == 0)
             {
-                return NotFound("No students yet");
+                return NotFound("No teachers yet");
             }
 
             result.Data = teacherList;

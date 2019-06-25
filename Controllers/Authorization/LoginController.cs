@@ -80,23 +80,25 @@ namespace Pegasus_backend.Controllers.Authorization
                 var tokenToClient = tokenHandle.WriteToken(securityToken);
                 var position = user.Role.RoleName;
                 var date = DateTimeOffset.UtcNow.AddDays(14).ToUnixTimeSeconds();
-                var staffId = user.Staff.FirstOrDefault().StaffId;
+
                 string photo;
                 if (user.Role.RoleId  ==1)  //teacher 
                     photo =  user.Teacher.FirstOrDefault().Photo;
                 else if (user.Role.RoleId  ==4)  //learner
                     photo =  user.Learner.FirstOrDefault().Photo;
                 else   //staff
+                {
                     photo =  user.Staff.FirstOrDefault().Photo;
+                }
                 result.Data = new {token=tokenToClient,username=model.UserName,roleid = user.RoleId,userid=user.UserId,
-                            expires=date,userdetails= UserInfoFilter(user,position),staffId=staffId ,photo=photo};
+                            expires=date,userdetails= UserInfoFilter(user,position),photo=photo};
                 result.IsSuccess = true;
                 return Ok(result);
             }
             catch (Exception ex)
             {
                 result.IsSuccess = false;
-                result.ErrorMessage = ex.Message;
+                result.ErrorMessage = ex.ToString();
                 return StatusCode(401, result);
             }
             
