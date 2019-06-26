@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
 using Pegasus_backend.Models;
 using Pegasus_backend.pegasusContext;
+using Microsoft.Extensions.Logging;
 
 namespace Pegasus_backend.Controllers.MobileControllers
 {
@@ -21,12 +22,10 @@ namespace Pegasus_backend.Controllers.MobileControllers
         private readonly pegasusContext.ablemusicContext _pegasusContext;
         private readonly IMapper _mapper;
 
-        public ChatController(pegasusContext.ablemusicContext pegasusContext, IMapper mapper)
-        {
-            _pegasusContext = pegasusContext;
-            _mapper = mapper;
-        }
 
+        public ChatController(ablemusicContext ablemusicContext, ILogger<NavItemsController> log) : base(ablemusicContext, log)
+        {
+        }
         [HttpGet]
         public IActionResult Get()
         {
