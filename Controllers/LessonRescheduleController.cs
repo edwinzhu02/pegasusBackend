@@ -33,9 +33,10 @@ namespace Pegasus_backend.Controllers
             List<Course> courses;
             List<Lesson> remainLessons;
             List<Holiday> holidays;
+            LessonRemain lessonRemain;
             try
             {
-                lesson = await _ablemusicContext.Lesson.Where(l => l.LessonId == lessonId).FirstOrDefaultAsync();
+                lesson = await _ablemusicContext.Lesson.Where(l => l.LessonId == lessonId).Include(l => l.Invoice).FirstOrDefaultAsync();
                 courses = await (from c in _ablemusicContext.Course
                                  join oto in _ablemusicContext.One2oneCourseInstance on c.CourseId equals oto.CourseId
                                  where oto.CourseInstanceId == lesson.CourseInstanceId
@@ -86,28 +87,30 @@ namespace Pegasus_backend.Controllers
                                        }).ToListAsync();
                 learner = await _ablemusicContext.Learner.Where(l => l.LearnerId == lesson.LearnerId).FirstOrDefaultAsync();
                 holidays = await _ablemusicContext.Holiday.ToListAsync();
+                lessonRemain = await _ablemusicContext.LessonRemain.Where(lr => lr.TermId == lesson.Invoice.TermId &&
+                lr.CourseInstanceId == lesson.CourseInstanceId && lr.LearnerId == lesson.LearnerId).FirstOrDefaultAsync();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 result.IsSuccess = false;
                 result.IsFound = false;
                 result.ErrorMessage = ex.ToString();
                 return NotFound(result);
             }
-            if(lesson == null)
+            if (lesson == null)
             {
                 result.IsSuccess = false;
                 result.IsFound = false;
                 result.ErrorMessage = "lesson id not found";
                 return NotFound(result);
             }
-            if(lesson.GroupCourseInstanceId != null)
+            if (lesson.GroupCourseInstanceId != null)
             {
                 result.IsSuccess = false;
                 result.ErrorMessage = "Group course is not allowed to reschedule";
                 return BadRequest(result);
             }
-            if(lesson.IsCanceled == 1)
+            if (lesson.IsCanceled == 1)
             {
                 result.IsSuccess = false;
                 result.ErrorMessage = "This lesson has been already canelled";
@@ -198,13 +201,13 @@ namespace Pegasus_backend.Controllers
                 }
             }
 
-            if(lessonsToBeAppend.Count < numOfSchedulesToBeAdd)
+            if (lessonsToBeAppend.Count < numOfSchedulesToBeAdd)
             {
                 result.IsSuccess = false;
                 result.ErrorMessage = "Not enough valid remain lessons to do reschedule";
                 return BadRequest(result);
             }
-           
+
             DateTime todoDate = lesson.BeginTime.Value;
             foreach (var holiday in holidays)
             {
@@ -225,14 +228,14 @@ namespace Pegasus_backend.Controllers
 
             TodoList todoForLearner = TodoListForLearnerCreater(lesson, userId, learner, todoDate, lessonsToBeAppend, courseName);
             List<TodoList> todoForTeachers = new List<TodoList>();
-            foreach(var teacher in effectedTeachers)
+            foreach (var teacher in effectedTeachers)
             {
                 todoForTeachers.Add(TodoListForTeacherCreater(lesson, userId, learner, todoDate, lessonsToBeAppend, teacher, courseName));
             }
 
             RemindLog remindLogForLearner = RemindLogForLearnerCreater(lesson, learner, lessonsToBeAppend, courseName);
             List<RemindLog> remindLogsForTeachers = new List<RemindLog>();
-            foreach(var teacher in effectedTeachers)
+            foreach (var teacher in effectedTeachers)
             {
                 remindLogsForTeachers.Add(RemindLogForTeacherCreater(lesson, lessonsToBeAppend, teacher, courseName));
             }
@@ -265,21 +268,23 @@ namespace Pegasus_backend.Controllers
             lesson.IsCanceled = 1;
             lesson.Reason = reason;
 
+            lessonRemain.Quantity -= 1;
+
             try
             {
                 await _ablemusicContext.TodoList.AddAsync(todoForLearner);
                 await _ablemusicContext.RemindLog.AddAsync(remindLogForLearner);
-                foreach(var t in todoForTeachers)
+                foreach (var t in todoForTeachers)
                 {
                     await _ablemusicContext.TodoList.AddAsync(t);
                 }
-                foreach(var r in remindLogsForTeachers)
+                foreach (var r in remindLogsForTeachers)
                 {
                     await _ablemusicContext.RemindLog.AddAsync(r);
                 }
                 await _ablemusicContext.SaveChangesAsync();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 result.IsSuccess = false;
                 result.ErrorMessage = ex.ToString();
@@ -303,7 +308,7 @@ namespace Pegasus_backend.Controllers
             return Ok(result);
         }
 
-        private TodoList TodoListForLearnerCreater(Lesson lesson, short userId, Learner learner, DateTime todoDate, 
+        private TodoList TodoListForLearnerCreater(Lesson lesson, short userId, Learner learner, DateTime todoDate,
             List<Lesson> appendLessons, string courseName)
         {
             TodoList todolistForLearner = new TodoList();
@@ -311,7 +316,7 @@ namespace Pegasus_backend.Controllers
             todolistForLearner.ListContent = "Inform learner " + learner.FirstName + " " + learner.LastName +
                 " the " + courseName + " lession from " + lesson.BeginTime.ToString() + " to " + lesson.EndTime.ToString() +
                 " has been rescheduled. Lesson remain hours are append to the following lessions: \n";
-            foreach(var appendLesson in appendLessons)
+            foreach (var appendLesson in appendLessons)
             {
                 todolistForLearner.ListContent += "Lesson from " + appendLesson.BeginTime + " to " + appendLesson.EndTime + "\n";
             }
@@ -326,7 +331,7 @@ namespace Pegasus_backend.Controllers
             return todolistForLearner;
         }
 
-        private TodoList TodoListForTeacherCreater(Lesson lesson, short userId, Learner learner, DateTime todoDate, 
+        private TodoList TodoListForTeacherCreater(Lesson lesson, short userId, Learner learner, DateTime todoDate,
             List<Lesson> appendLessons, Teacher teacher, string courseName)
         {
             TodoList todolistForTeacher = new TodoList();

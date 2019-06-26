@@ -70,8 +70,8 @@ namespace Pegasus_backend
             services.AddDbContext<ablemusicContext>(options =>
                 options.UseMySQL(Configuration.GetConnectionString("AblemusicDatabase")));
             services.AddTransient<pegasusContext.ablemusicContext>();
-            services.AddCors();
-            services.AddHostedService<TimedHostedService>();
+            // services.AddCors();
+            // services.AddHostedService<TimedHostedService>();
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>

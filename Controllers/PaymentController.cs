@@ -26,19 +26,16 @@ namespace Pegasus_backend.Controllers
         }
 
 
-        //POST: http://localhost:5000/api/payment/payInvoice
-//        [HttpGet("{beginDate}&{endDate}")]
-        // [HttpGet]
-        // [Route("payment/{beginDate}/{endDate}")]
-        [HttpGet("[action]/{beginDate}/{endDate}")]
-        public async Task<IActionResult> PaymentByDate(DateTime beginDate, DateTime endDate)
+        [HttpGet("[action]/{staffId}/{beginDate}/{endDate}")]
+        public async Task<IActionResult> PaymentByDate(short staffId,DateTime beginDate, DateTime endDate)
         {
-             Result<Object> result = new Result<object>();
-                try
+            Result<Object> result = new Result<object>();
+            try
              {
-                //var orgs = await _ablemusicContext.StaffOrg.Where(o=>o.StaffId==staffId).Select(o=>o.OrgId).ToListAsync();
+                var orgs = await _ablemusicContext.StaffOrg.Where(o=>o.StaffId==staffId).Select(o=>o.OrgId).ToListAsync();
                 var payments = await _ablemusicContext.Payment
-                    .Where(d => d.CreatedAt >beginDate && d.CreatedAt <endDate)
+                    .Where(d => d.CreatedAt >beginDate && d.CreatedAt <endDate
+                        && orgs.Contains(d.Staff.StaffOrg.FirstOrDefault().OrgId))
                      .Include(p => p.Invoice)
                      .Include(p => p.Learner)                     
                      .Include(p => p.SoldTransaction ).ThenInclude(p => p.Product)
@@ -722,6 +719,42 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = ex.Message;
                 return BadRequest(result);
             }
+        }
+
+        [HttpPut("{paymentId}")]
+        public async Task<IActionResult> Put(int paymentId)
+        {
+            var result = new Result<Payment>();
+            var payment = new Payment();
+            try
+            {
+                payment = await _ablemusicContext.Payment.Where(p => p.PaymentId == paymentId).FirstOrDefaultAsync();
+            }
+            catch(Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+            if(payment == null)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = "payment not found";
+                return BadRequest(result);
+            }
+            payment.IsConfirmed = 1;
+            try
+            {
+                await _ablemusicContext.SaveChangesAsync();
+            }
+            catch(Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+            result.Data = payment;
+            return Ok(result);
         }
     }
 }
