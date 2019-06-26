@@ -66,8 +66,20 @@ namespace Pegasus_backend.Controllers
             var studentWith0RemainLessonForToday = await dashboardService.getLearnerWithRemainLessonsForToday(0);
             var studentWith1RemainLessonForToday = await dashboardService.getLearnerWithRemainLessonsForToday(1);
             var studentWith2RemainLessonsForToday = await dashboardService.getLearnerWithRemainLessonsForToday(2);
-            var lessonsForRecent7Days = await dashboardService.getRecentLessons(7);
+            var lessonsForRecent7Days = await dashboardService.getRecentLessons(7, toNZTimezone(DateTime.UtcNow));
             var newEnrolledStudentsForRecent8Weeks = await dashboardService.getRecentNewRegisteredLearner(8);
+
+            var lessonsForRecent7DaysCount = new Dictionary<string, int>();
+            foreach(var l in lessonsForRecent7Days)
+            {
+                lessonsForRecent7DaysCount.Add(l.Key.ToString("MM/dd/yyyy"), l.Value.Count);
+            }
+            var newEnrolledStudentsForRecent8WeeksCount = new Dictionary<string, int>();
+            foreach(var ns in newEnrolledStudentsForRecent8Weeks)
+            {
+                newEnrolledStudentsForRecent8WeeksCount.Add(ns.Key, ns.Value.Count);
+            }
+
 
             result.Data = new
             {
@@ -82,8 +94,9 @@ namespace Pegasus_backend.Controllers
                 studentWith0RemainLessonForToday = studentWith0RemainLessonForToday.Count(),
                 studentWith1RemainLessonForToday = studentWith1RemainLessonForToday.Count(),
                 studentWith2RemainLessonsForToday = studentWith2RemainLessonsForToday.Count(),
-                lessonsForRecent7Days = lessonsForRecent7Days.Count(),
-                newEnrolledStudentsForRecent8Weeks = newEnrolledStudentsForRecent8Weeks.Count(),
+
+                lessonsForRecent7Days = lessonsForRecent7DaysCount,
+                newEnrolledStudentsForRecent8Weeks = newEnrolledStudentsForRecent8WeeksCount,
                 applyedOrgIds = orgIDs
             };
 
