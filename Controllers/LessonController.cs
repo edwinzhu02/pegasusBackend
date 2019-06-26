@@ -19,14 +19,37 @@ namespace Pegasus_backend.Controllers
         public LessonController(ablemusicContext ablemusicContext, ILogger<LessonController> log) : base(ablemusicContext, log)
         {
         }
-        
+
+        /*[HttpGet]
+        [Route("abc")]
+        public IActionResult a()
+        {
+            var item = _ablemusicContext.Lesson
+                .Include(s => s.CourseInstance)
+                .Include(s => s.Learner)
+                .Include(s => s.Teacher)
+                .Include(s => s.Room)
+                .Include(s => s.Org)
+                .Include(s => s.TrialCourse)
+                .Include(group => group.GroupCourseInstance)
+                .ThenInclude(learnerCourse => learnerCourse.LearnerGroupCourse)
+                .ThenInclude(learner => learner.Learner)
+                .FirstOrDefault(s => s.LessonId == 2);
+
+
+            var result = IsNull(item.CourseInstanceId)
+                ? false
+                : _ablemusicContext.Fund.FirstOrDefault(q => q.LearnerId == item.LearnerId).Balance
+                  - _ablemusicContext.Course.FirstOrDefault(q => q.CourseId == item.CourseInstance.CourseId).Price <= 0;
+            return Ok(result);
+        }*/
         
         //GET: http://localhost:5000/api/lesson/GetLessonsForReceptionist/:userId/:date
         [HttpGet("[action]/{userId}/{date}")]
         //for receptionist
         public async Task<IActionResult> GetLessonsForReceptionist(int userId,DateTime date)
         {
-            Result<Object> result = new Result<object>();
+            Result<Object> result = new Result<Object>();
             try
             {
                 var staff = _ablemusicContext.Staff.FirstOrDefault(s => s.UserId == userId);
@@ -34,6 +57,7 @@ namespace Pegasus_backend.Controllers
                 var details = _ablemusicContext.Lesson
                     .Where(s=>s.IsCanceled != 1 && s.IsConfirm != 1)
                     .Where(s=>s.OrgId==orgId&&s.BeginTime.Value.Year == date.Year && s.BeginTime.Value.Month == date.Month && s.BeginTime.Value.Day == date.Day)
+                    .Include(s=>s.CourseInstance)
                     .Include(s=>s.Learner)
                     .Include(s => s.Teacher)
                     .Include(s=>s.Room)
@@ -45,6 +69,11 @@ namespace Pegasus_backend.Controllers
                     .Select(s =>new {id = s.LessonId, resourceId = s.RoomId, start = s.BeginTime,end=s.EndTime,
                         title=IsNull(s.GroupCourseInstance)?IsNull(s.CourseInstance)?"T":"1":"G",description="",
                         teacher=s.Teacher.FirstName.ToString(),
+                        /*isOwnAfterLesson=IsNull(s.CourseInstanceId)?
+                            false:
+                            _ablemusicContext.Fund.FirstOrDefault(q=>q.LearnerId==s.LearnerId).Balance 
+                            - _ablemusicContext.Course.FirstOrDefault(q=>q.CourseId==s.CourseInstance.CourseId).Price <=0
+                       ,*/
                         student=IsNull(s.GroupCourseInstance)?IsNull(s.CourseInstance)?new List<string>{s.Learner.FirstName}:new List<string>{s.Learner.FirstName}:s.GroupCourseInstance.LearnerGroupCourse.Select(w=>w.Learner.FirstName),
                         IsGroup=!IsNull(s.GroupCourseInstance),
                         info = new

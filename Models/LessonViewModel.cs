@@ -25,8 +25,6 @@ namespace Pegasus_backend.Models
         public byte? IsTrial { get; set; }
         [Required(ErrorMessage = "BeginTime is required")]
         public DateTime? BeginTime { get; set; }
-        [Required(ErrorMessage = "EndTime is required")]
-        public DateTime? EndTime { get; set; }
         public int? InvoiceId { get; set; }
     }
 }

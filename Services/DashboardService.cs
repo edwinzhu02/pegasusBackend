@@ -208,13 +208,13 @@ namespace Pegasus_backend.Services
             return result;
         }
 
-        public async Task<Dictionary<DateTime, List<Lesson>>> getRecentLessons(int numOfDays)
+        public async Task<Dictionary<DateTime, List<Lesson>>> getRecentLessons(int numOfDays, DateTime calculateDate)
         {
             var result = new Dictionary<DateTime, List<Lesson>>();
             var daysBefore = numOfDays % 2 == 0 ? numOfDays / 2 : (numOfDays - 1) / 2;
             var daysLater = numOfDays % 2 == 0 ? (numOfDays / 2) - 1 : (numOfDays - 1) / 2;
-            DateTime beginDate = _today.AddDays(-daysBefore);
-            DateTime endDate = _today.AddDays(daysLater);
+            DateTime beginDate = calculateDate.AddDays(-daysBefore);
+            DateTime endDate = calculateDate.AddDays(daysLater);
             var totalLessons = new List<Lesson>();
             try
             {
@@ -232,7 +232,7 @@ namespace Pegasus_backend.Services
                 var eachDayLessons = new List<Lesson>();
                 foreach (var tl in totalLessons)
                 {
-                    if (tl.BeginTime.Value.Date == currentDate)
+                    if (tl.BeginTime.Value.Date == currentDate.Date)
                     {
                         eachDayLessons.Add(tl);
                     }
@@ -262,11 +262,11 @@ namespace Pegasus_backend.Services
             var weekBeginDate = beginTime;
             for(int i = 0; i < numOfWeeks; i++)
             {
-                string weekDuration = weekBeginDate.ToString() + " - " + weekBeginDate.AddDays(6).ToString();
+                string weekDuration = weekBeginDate.ToString("MM/dd/yyyy") + " - " + weekBeginDate.AddDays(6).ToString("MM/dd/yyyy");
                 var eachWeekLearner = new List<Learner>();
                 foreach(var tl in totalLearners)
                 {
-                    if(tl.EnrollDate >= weekBeginDate && tl.EnrollDate <= weekBeginDate.AddDays(6))
+                    if(tl.EnrollDate.Value.Date >= weekBeginDate.Date && tl.EnrollDate.Value.Date <= weekBeginDate.AddDays(6).Date)
                     {
                         eachWeekLearner.Add(tl);
                     }
