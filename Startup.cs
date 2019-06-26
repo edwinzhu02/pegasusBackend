@@ -140,7 +140,7 @@ namespace Pegasus_backend
                     Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images")),
                 RequestPath = "/images"
             });
-            app.UseCors(x => x.WithOrigins("http://localhost:8100").AllowAnyMethod().AllowAnyHeader().AllowCredentials());
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             app.UseSignalR(routes => { routes.MapHub<Chatroom>("/chat"); });
             app.UseHttpsRedirection();
             app.UseAuthentication();
