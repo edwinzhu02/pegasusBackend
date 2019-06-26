@@ -6,13 +6,13 @@ namespace Pegasus_backend.Models
     {
         [Required(ErrorMessage = "Invoice is required")]
         public int InvoiceId { get; set; }
-        [Required(ErrorMessage = "Invoice is required")]
+        [Required(ErrorMessage = "Amount is required")]
         public decimal Amount { get; set; }
-        [Required(ErrorMessage = "Invoice is required")]
+        [Required(ErrorMessage = "PaymentMethod is required")]
         public byte PaymentMethod { get; set; }
-        [Required(ErrorMessage = "Learner is required")]
+        [Required(ErrorMessage = "LearnerId is required")]
         public int LearnerId { get; set; }
-        [Required(ErrorMessage = "Learner is required")]
-        public short UserId { get; set; }
+        [Required(ErrorMessage = "staffId is required")]
+        public short? StaffId { get; set; }
     }
 }
