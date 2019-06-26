@@ -52,6 +52,7 @@ namespace Pegasus_backend.Controllers.MobileControllers
             return Ok(loginLog);
         }
         // get the lastest 4 loginLog
+        [HttpGet]
         [Route("[action]")]
         public async Task<IActionResult> GetRecentLoginLog()
         {
