@@ -24,8 +24,6 @@ using Pegasus_backend.pegasusContext;
 using Microsoft.EntityFrameworkCore;
 using Pegasus_backend.Controllers.MobileControllers;
 using Swashbuckle.AspNetCore.Swagger;
-using Pegasus_backend.Services;
-using Serilog;
 
 namespace Pegasus_backend
 {
@@ -34,11 +32,6 @@ namespace Pegasus_backend
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            Log.Logger = new LoggerConfiguration()
-                             .Enrich.FromLogContext()
-                             .WriteTo.File("log.txt", rollingInterval: RollingInterval.Day, rollOnFileSizeLimit: true)
-                             .WriteTo.Console()
-                             .CreateLogger();
         }
 
         public IConfiguration Configuration { get; }
@@ -46,14 +39,20 @@ namespace Pegasus_backend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddLogging(loggingBuilder =>
-            loggingBuilder.AddSerilog(dispose: true));
             //Inject AppSettings
             services.Configure<ApplicationSettings>(Configuration.GetSection("ApplicationSettings"));
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 options.SuppressModelStateInvalidFilter = true;
             });
+            // add Cors for chat service
+//            services.AddCors(options =>
+//            {
+//                options.AddPolicy(
+//                    "ChatService",policy => policy.WithOrigins("http://localhost:8100").AllowAnyHeader().AllowAnyMethod());
+//            });
+
+
             
             services.AddMvc()
                 .AddJsonOptions(
@@ -70,8 +69,6 @@ namespace Pegasus_backend
             services.AddDbContext<ablemusicContext>(options =>
                 options.UseMySQL(Configuration.GetConnectionString("AblemusicDatabase")));
             services.AddTransient<pegasusContext.ablemusicContext>();
-            services.AddCors();
-            services.AddHostedService<TimedHostedService>();
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
@@ -98,7 +95,9 @@ namespace Pegasus_backend
                     IssuerSigningKey = new SymmetricSecurityKey(key),
                     ValidateIssuer = false,
                     ValidateAudience = false,
-                    ClockSkew = TimeSpan.Zero                   
+                    ClockSkew = TimeSpan.Zero
+
+                    
                 };
             });
             services.AddAutoMapper();
@@ -115,6 +114,7 @@ namespace Pegasus_backend
             {
                 app.UseHsts();
             }
+            
             app.UseStaticFiles(); // For the wwwroot folder
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
@@ -140,8 +140,7 @@ namespace Pegasus_backend
                     Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images")),
                 RequestPath = "/images"
             });
-            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-//            app.UseCors(x => x.WithOrigins("http://localhost:8100").AllowAnyMethod().AllowAnyHeader().AllowCredentials());
+            app.UseCors(x => x.WithOrigins("http://localhost:8100").AllowAnyMethod().AllowAnyHeader().AllowCredentials());
             app.UseSignalR(routes => { routes.MapHub<Chatroom>("/chat"); });
             app.UseHttpsRedirection();
             app.UseAuthentication();

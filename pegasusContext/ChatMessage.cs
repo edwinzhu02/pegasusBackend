@@ -5,7 +5,7 @@ namespace Pegasus_backend.pegasusContext
 {
     public partial class ChatMessage
     {
-        public int ChatMessageId { get; set; }
+        public int? ChatMessageId { get; set; }
         public int? ChatGroupId { get; set; }
         public string MessageBody { get; set; }
         public short? UserId { get; set; }
