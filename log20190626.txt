@@ -213,3 +213,679 @@ System.NotSupportedException: Ambiguous HTTP method for action - Pegasus_backend
 2019-06-26 17:17:36.288 +12:00 [INF] Request finished in 26.3619ms 500 text/html; charset=utf-8
 2019-06-26 17:18:01.484 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/index.html  
 2019-06-26 17:18:01.485 +12:00 [INF] Request finished in 1.2268ms 200 text/html
+2019-06-26 21:03:03.748 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-06-26 21:03:17.570 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/lesson/GetLessonsForReceptionist/3/2019-06-26 application/json 48
+2019-06-26 21:03:17.597 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-06-26 21:03:17.731 +12:00 [INF] Route matched with {action = "GetLessonsForReceptionist", controller = "Lesson"}. Executing action Pegasus_backend.Controllers.LessonController.GetLessonsForReceptionist (Pegasus_backend)
+2019-06-26 21:03:17.843 +12:00 [INF] Executing action method Pegasus_backend.Controllers.LessonController.GetLessonsForReceptionist (Pegasus_backend) with arguments (["3","06/26/2019 00:00:00"]) - Validation state: "Valid"
+2019-06-26 21:03:18.639 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-06-26 21:03:19.462 +12:00 [INF] Executed DbCommand (42ms) [Parameters=[@__8__locals1_userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`staff_id`, `s`.`dob`, `s`.`email`, `s`.`expiry_date`, `s`.`first_name`, `s`.`gender`, `s`.`home_phone`, `s`.`id_number`, `s`.`id_photo`, `s`.`id_type`, `s`.`ird_number`, `s`.`is_activate`, `s`.`last_name`, `s`.`mobile_phone`, `s`.`photo`, `s`.`user_id`, `s`.`visa`
+FROM `ablemusic`.`staff` AS `s`
+WHERE `s`.`user_id` = @__8__locals1_userId_0
+LIMIT 1
+2019-06-26 21:03:19.637 +12:00 [INF] Executed DbCommand (36ms) [Parameters=[@__staff_StaffId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`staff_org_id`, `s`.`is_activate`, `s`.`org_id`, `s`.`staff_id`
+FROM `ablemusic`.`staff_org` AS `s`
+WHERE `s`.`staff_id` = @__staff_StaffId_0
+LIMIT 1
+2019-06-26 21:03:19.681 +12:00 [WRN] The Include operation for navigation '[s].CourseInstance' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:03:19.682 +12:00 [WRN] The Include operation for navigation '[s].Learner' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:03:19.682 +12:00 [WRN] The Include operation for navigation '[s].Teacher' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:03:19.682 +12:00 [WRN] The Include operation for navigation '[s].Room' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:03:19.682 +12:00 [WRN] The Include operation for navigation '[s].Org' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:03:19.683 +12:00 [WRN] The Include operation for navigation '[s].TrialCourse' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:03:19.683 +12:00 [WRN] The Include operation for navigation '[s].GroupCourseInstance.LearnerGroupCourse.Learner' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:03:19.742 +12:00 [WRN] The LINQ expression 'where ((((Convert(Convert([s].OrgId, Int32), Nullable`1) == Convert(__orgId_0, Nullable`1)) AndAlso (Convert([s].BeginTime, DateTime).Year == __8__locals1_date_Year_1)) AndAlso (Convert([s].BeginTime, DateTime).Month == __8__locals1_date_Month_2)) AndAlso (Convert([s].BeginTime, DateTime).Day == __8__locals1_date_Day_3))' could not be translated and will be evaluated locally.
+2019-06-26 21:03:19.927 +12:00 [INF] Executed DbCommand (56ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.CourseInstance`.`course_instance_id`, `s.CourseInstance`.`begin_date`, `s.CourseInstance`.`course_id`, `s.CourseInstance`.`end_date`, `s.CourseInstance`.`invoice_date`, `s.CourseInstance`.`learner_id`, `s.CourseInstance`.`org_id`, `s.CourseInstance`.`room_id`, `s.CourseInstance`.`teacher_id`, `s.GroupCourseInstance`.`group_course_instance_id`, `s.GroupCourseInstance`.`begin_date`, `s.GroupCourseInstance`.`course_id`, `s.GroupCourseInstance`.`end_date`, `s.GroupCourseInstance`.`is_activate`, `s.GroupCourseInstance`.`is_started`, `s.GroupCourseInstance`.`org_id`, `s.GroupCourseInstance`.`room_id`, `s.GroupCourseInstance`.`teacher_id`, `s`.`org_id` AS `OrgId`, `s`.`begin_time` AS `start`, `s`.`lesson_id` AS `id`, `s`.`room_id` AS `resourceId`, `s`.`end_time` AS `end`, `s.Teacher`.`first_name` AS `TeacherName`, `s`.`course_instance_id`, (
+    SELECT `q0`.`balance`
+    FROM `ablemusic`.`fund` AS `q0`
+    WHERE `q0`.`learner_id` = `s`.`learner_id`
+    LIMIT 1
+), `s.Learner`.`first_name`, `s.Room`.`room_name` AS `RoomName`, `s.Org`.`org_name` AS `OrgName`, `s`.`teacher_id` AS `TeacherId`, `s.GroupCourseInstance.Course`.`course_name`, `s.TrialCourse`.`course_name`, `s.CourseInstance.Course`.`course_name`, `s.GroupCourseInstance.Course`.`course_id`, `s`.`trial_course_id`, `s.CourseInstance.Course`.`course_id`, `s`.`learner_id` AS `LearnerId`
+FROM `ablemusic`.`lesson` AS `s`
+LEFT JOIN `ablemusic`.`course` AS `s.TrialCourse` ON `s`.`trial_course_id` = `s.TrialCourse`.`course_id`
+INNER JOIN `ablemusic`.`org` AS `s.Org` ON `s`.`org_id` = `s.Org`.`org_id`
+LEFT JOIN `ablemusic`.`room` AS `s.Room` ON `s`.`room_id` = `s.Room`.`room_id`
+LEFT JOIN `ablemusic`.`learner` AS `s.Learner` ON `s`.`learner_id` = `s.Learner`.`learner_id`
+LEFT JOIN `ablemusic`.`teacher` AS `s.Teacher` ON `s`.`teacher_id` = `s.Teacher`.`teacher_id`
+LEFT JOIN `ablemusic`.`one2one_course_instance` AS `s.CourseInstance` ON `s`.`course_instance_id` = `s.CourseInstance`.`course_instance_id`
+LEFT JOIN `ablemusic`.`course` AS `s.CourseInstance.Course` ON `s.CourseInstance`.`course_id` = `s.CourseInstance.Course`.`course_id`
+LEFT JOIN `ablemusic`.`group_course_instance` AS `s.GroupCourseInstance` ON `s`.`group_course_instance_id` = `s.GroupCourseInstance`.`group_course_instance_id`
+LEFT JOIN `ablemusic`.`course` AS `s.GroupCourseInstance.Course` ON `s.GroupCourseInstance`.`course_id` = `s.GroupCourseInstance.Course`.`course_id`
+WHERE ((`s`.`is_canceled` <> 1) OR `s`.`is_canceled` IS NULL) AND ((`s`.`is_confirm` <> 1) OR `s`.`is_confirm` IS NULL)
+2019-06-26 21:03:19.997 +12:00 [INF] Executed action method Pegasus_backend.Controllers.LessonController.GetLessonsForReceptionist (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 2143.4368ms.
+2019-06-26 21:03:20.003 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-06-26 21:03:20.052 +12:00 [INF] Executed action Pegasus_backend.Controllers.LessonController.GetLessonsForReceptionist (Pegasus_backend) in 2318.3287ms
+2019-06-26 21:03:20.055 +12:00 [INF] Request finished in 2486.011ms 200 application/json; charset=utf-8
+2019-06-26 21:03:20.063 +12:00 [INF] Connection id "0HLNQ2KGGKADA", Request id "0HLNQ2KGGKADA:00000001": the application completed without reading the entire request body.
+2019-06-26 21:03:41.779 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-06-26 21:03:44.670 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/lesson/GetLessonsForReceptionist/3/2019-06-26 application/json 48
+2019-06-26 21:03:44.698 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-06-26 21:03:44.825 +12:00 [INF] Route matched with {action = "GetLessonsForReceptionist", controller = "Lesson"}. Executing action Pegasus_backend.Controllers.LessonController.GetLessonsForReceptionist (Pegasus_backend)
+2019-06-26 21:03:44.937 +12:00 [INF] Executing action method Pegasus_backend.Controllers.LessonController.GetLessonsForReceptionist (Pegasus_backend) with arguments (["3","06/26/2019 00:00:00"]) - Validation state: "Valid"
+2019-06-26 21:03:45.711 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-06-26 21:03:46.401 +12:00 [INF] Executed DbCommand (42ms) [Parameters=[@__8__locals1_userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`staff_id`, `s`.`dob`, `s`.`email`, `s`.`expiry_date`, `s`.`first_name`, `s`.`gender`, `s`.`home_phone`, `s`.`id_number`, `s`.`id_photo`, `s`.`id_type`, `s`.`ird_number`, `s`.`is_activate`, `s`.`last_name`, `s`.`mobile_phone`, `s`.`photo`, `s`.`user_id`, `s`.`visa`
+FROM `ablemusic`.`staff` AS `s`
+WHERE `s`.`user_id` = @__8__locals1_userId_0
+LIMIT 1
+2019-06-26 21:03:46.574 +12:00 [INF] Executed DbCommand (37ms) [Parameters=[@__staff_StaffId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`staff_org_id`, `s`.`is_activate`, `s`.`org_id`, `s`.`staff_id`
+FROM `ablemusic`.`staff_org` AS `s`
+WHERE `s`.`staff_id` = @__staff_StaffId_0
+LIMIT 1
+2019-06-26 21:03:46.621 +12:00 [WRN] The Include operation for navigation '[s].CourseInstance' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:03:46.623 +12:00 [WRN] The Include operation for navigation '[s].Learner' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:03:46.623 +12:00 [WRN] The Include operation for navigation '[s].Teacher' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:03:46.623 +12:00 [WRN] The Include operation for navigation '[s].Room' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:03:46.623 +12:00 [WRN] The Include operation for navigation '[s].Org' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:03:46.623 +12:00 [WRN] The Include operation for navigation '[s].TrialCourse' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:03:46.623 +12:00 [WRN] The Include operation for navigation '[s].GroupCourseInstance.LearnerGroupCourse.Learner' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:03:46.678 +12:00 [WRN] The LINQ expression 'where ((((Convert(Convert([s].OrgId, Int32), Nullable`1) == Convert(__orgId_0, Nullable`1)) AndAlso (Convert([s].BeginTime, DateTime).Year == __8__locals1_date_Year_1)) AndAlso (Convert([s].BeginTime, DateTime).Month == __8__locals1_date_Month_2)) AndAlso (Convert([s].BeginTime, DateTime).Day == __8__locals1_date_Day_3))' could not be translated and will be evaluated locally.
+2019-06-26 21:03:46.873 +12:00 [INF] Executed DbCommand (75ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.CourseInstance`.`course_instance_id`, `s.CourseInstance`.`begin_date`, `s.CourseInstance`.`course_id`, `s.CourseInstance`.`end_date`, `s.CourseInstance`.`invoice_date`, `s.CourseInstance`.`learner_id`, `s.CourseInstance`.`org_id`, `s.CourseInstance`.`room_id`, `s.CourseInstance`.`teacher_id`, `s.GroupCourseInstance`.`group_course_instance_id`, `s.GroupCourseInstance`.`begin_date`, `s.GroupCourseInstance`.`course_id`, `s.GroupCourseInstance`.`end_date`, `s.GroupCourseInstance`.`is_activate`, `s.GroupCourseInstance`.`is_started`, `s.GroupCourseInstance`.`org_id`, `s.GroupCourseInstance`.`room_id`, `s.GroupCourseInstance`.`teacher_id`, `s`.`org_id` AS `OrgId`, `s`.`begin_time` AS `start`, `s`.`lesson_id` AS `id`, `s`.`room_id` AS `resourceId`, `s`.`end_time` AS `end`, `s.Teacher`.`first_name` AS `TeacherName`, `s`.`course_instance_id`, (
+    SELECT `q0`.`price`
+    FROM `ablemusic`.`course` AS `q0`
+    WHERE `q0`.`course_id` = `s.CourseInstance`.`course_id`
+    LIMIT 1
+), `s.Learner`.`first_name`, `s.Room`.`room_name` AS `RoomName`, `s.Org`.`org_name` AS `OrgName`, `s`.`teacher_id` AS `TeacherId`, `s.GroupCourseInstance.Course`.`course_name`, `s.TrialCourse`.`course_name`, `s.CourseInstance.Course`.`course_name`, `s.GroupCourseInstance.Course`.`course_id`, `s`.`trial_course_id`, `s.CourseInstance.Course`.`course_id`, `s`.`learner_id` AS `LearnerId`
+FROM `ablemusic`.`lesson` AS `s`
+LEFT JOIN `ablemusic`.`course` AS `s.TrialCourse` ON `s`.`trial_course_id` = `s.TrialCourse`.`course_id`
+INNER JOIN `ablemusic`.`org` AS `s.Org` ON `s`.`org_id` = `s.Org`.`org_id`
+LEFT JOIN `ablemusic`.`room` AS `s.Room` ON `s`.`room_id` = `s.Room`.`room_id`
+LEFT JOIN `ablemusic`.`learner` AS `s.Learner` ON `s`.`learner_id` = `s.Learner`.`learner_id`
+LEFT JOIN `ablemusic`.`teacher` AS `s.Teacher` ON `s`.`teacher_id` = `s.Teacher`.`teacher_id`
+LEFT JOIN `ablemusic`.`one2one_course_instance` AS `s.CourseInstance` ON `s`.`course_instance_id` = `s.CourseInstance`.`course_instance_id`
+LEFT JOIN `ablemusic`.`course` AS `s.CourseInstance.Course` ON `s.CourseInstance`.`course_id` = `s.CourseInstance.Course`.`course_id`
+LEFT JOIN `ablemusic`.`group_course_instance` AS `s.GroupCourseInstance` ON `s`.`group_course_instance_id` = `s.GroupCourseInstance`.`group_course_instance_id`
+LEFT JOIN `ablemusic`.`course` AS `s.GroupCourseInstance.Course` ON `s.GroupCourseInstance`.`course_id` = `s.GroupCourseInstance.Course`.`course_id`
+WHERE ((`s`.`is_canceled` <> 1) OR `s`.`is_canceled` IS NULL) AND ((`s`.`is_confirm` <> 1) OR `s`.`is_confirm` IS NULL)
+2019-06-26 21:03:46.941 +12:00 [INF] Executed action method Pegasus_backend.Controllers.LessonController.GetLessonsForReceptionist (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 1992.5312000000001ms.
+2019-06-26 21:03:46.946 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-06-26 21:03:46.994 +12:00 [INF] Executed action Pegasus_backend.Controllers.LessonController.GetLessonsForReceptionist (Pegasus_backend) in 2165.9172000000003ms
+2019-06-26 21:03:46.997 +12:00 [INF] Request finished in 2328.0379ms 200 application/json; charset=utf-8
+2019-06-26 21:03:47.005 +12:00 [INF] Connection id "0HLNQ2KOJ2KKG", Request id "0HLNQ2KOJ2KKG:00000001": the application completed without reading the entire request body.
+2019-06-26 21:04:17.178 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-06-26 21:04:19.167 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/lesson/GetLessonsForReceptionist/3/2019-06-26 application/json 48
+2019-06-26 21:04:19.194 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-06-26 21:04:19.319 +12:00 [INF] Route matched with {action = "GetLessonsForReceptionist", controller = "Lesson"}. Executing action Pegasus_backend.Controllers.LessonController.GetLessonsForReceptionist (Pegasus_backend)
+2019-06-26 21:04:19.435 +12:00 [INF] Executing action method Pegasus_backend.Controllers.LessonController.GetLessonsForReceptionist (Pegasus_backend) with arguments (["3","06/26/2019 00:00:00"]) - Validation state: "Valid"
+2019-06-26 21:04:20.202 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-06-26 21:04:20.976 +12:00 [INF] Executed DbCommand (40ms) [Parameters=[@__8__locals1_userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`staff_id`, `s`.`dob`, `s`.`email`, `s`.`expiry_date`, `s`.`first_name`, `s`.`gender`, `s`.`home_phone`, `s`.`id_number`, `s`.`id_photo`, `s`.`id_type`, `s`.`ird_number`, `s`.`is_activate`, `s`.`last_name`, `s`.`mobile_phone`, `s`.`photo`, `s`.`user_id`, `s`.`visa`
+FROM `ablemusic`.`staff` AS `s`
+WHERE `s`.`user_id` = @__8__locals1_userId_0
+LIMIT 1
+2019-06-26 21:04:21.153 +12:00 [INF] Executed DbCommand (39ms) [Parameters=[@__staff_StaffId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`staff_org_id`, `s`.`is_activate`, `s`.`org_id`, `s`.`staff_id`
+FROM `ablemusic`.`staff_org` AS `s`
+WHERE `s`.`staff_id` = @__staff_StaffId_0
+LIMIT 1
+2019-06-26 21:04:21.203 +12:00 [WRN] The Include operation for navigation '[s].CourseInstance' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:04:21.204 +12:00 [WRN] The Include operation for navigation '[s].Learner' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:04:21.205 +12:00 [WRN] The Include operation for navigation '[s].Teacher' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:04:21.205 +12:00 [WRN] The Include operation for navigation '[s].Room' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:04:21.205 +12:00 [WRN] The Include operation for navigation '[s].Org' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:04:21.205 +12:00 [WRN] The Include operation for navigation '[s].TrialCourse' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:04:21.205 +12:00 [WRN] The Include operation for navigation '[s].GroupCourseInstance.LearnerGroupCourse.Learner' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:04:21.259 +12:00 [WRN] The LINQ expression 'where ((((Convert(Convert([s].OrgId, Int32), Nullable`1) == Convert(__orgId_0, Nullable`1)) AndAlso (Convert([s].BeginTime, DateTime).Year == __8__locals1_date_Year_1)) AndAlso (Convert([s].BeginTime, DateTime).Month == __8__locals1_date_Month_2)) AndAlso (Convert([s].BeginTime, DateTime).Day == __8__locals1_date_Day_3))' could not be translated and will be evaluated locally.
+2019-06-26 21:04:21.445 +12:00 [INF] Executed DbCommand (61ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.CourseInstance`.`course_instance_id`, `s.CourseInstance`.`begin_date`, `s.CourseInstance`.`course_id`, `s.CourseInstance`.`end_date`, `s.CourseInstance`.`invoice_date`, `s.CourseInstance`.`learner_id`, `s.CourseInstance`.`org_id`, `s.CourseInstance`.`room_id`, `s.CourseInstance`.`teacher_id`, `s.GroupCourseInstance`.`group_course_instance_id`, `s.GroupCourseInstance`.`begin_date`, `s.GroupCourseInstance`.`course_id`, `s.GroupCourseInstance`.`end_date`, `s.GroupCourseInstance`.`is_activate`, `s.GroupCourseInstance`.`is_started`, `s.GroupCourseInstance`.`org_id`, `s.GroupCourseInstance`.`room_id`, `s.GroupCourseInstance`.`teacher_id`, `s`.`org_id` AS `OrgId`, `s`.`begin_time` AS `start`, `s`.`lesson_id` AS `id`, `s`.`room_id` AS `resourceId`, `s`.`end_time` AS `end`, `s.Teacher`.`first_name` AS `TeacherName`, `s`.`course_instance_id`, CASE
+    WHEN ((
+        SELECT `q1`.`balance`
+        FROM `ablemusic`.`fund` AS `q1`
+        WHERE `q1`.`learner_id` = `s`.`learner_id`
+        LIMIT 1
+    ) - (
+        SELECT `q2`.`price`
+        FROM `ablemusic`.`course` AS `q2`
+        WHERE `q2`.`course_id` = `s.CourseInstance`.`course_id`
+        LIMIT 1
+    )) <= 0
+    THEN ('1') ELSE ('0')
+END, `s.Learner`.`first_name`, `s.Room`.`room_name` AS `RoomName`, `s.Org`.`org_name` AS `OrgName`, `s`.`teacher_id` AS `TeacherId`, `s.GroupCourseInstance.Course`.`course_name`, `s.TrialCourse`.`course_name`, `s.CourseInstance.Course`.`course_name`, `s.GroupCourseInstance.Course`.`course_id`, `s`.`trial_course_id`, `s.CourseInstance.Course`.`course_id`, `s`.`learner_id` AS `LearnerId`
+FROM `ablemusic`.`lesson` AS `s`
+LEFT JOIN `ablemusic`.`course` AS `s.TrialCourse` ON `s`.`trial_course_id` = `s.TrialCourse`.`course_id`
+INNER JOIN `ablemusic`.`org` AS `s.Org` ON `s`.`org_id` = `s.Org`.`org_id`
+LEFT JOIN `ablemusic`.`room` AS `s.Room` ON `s`.`room_id` = `s.Room`.`room_id`
+LEFT JOIN `ablemusic`.`learner` AS `s.Learner` ON `s`.`learner_id` = `s.Learner`.`learner_id`
+LEFT JOIN `ablemusic`.`teacher` AS `s.Teacher` ON `s`.`teacher_id` = `s.Teacher`.`teacher_id`
+LEFT JOIN `ablemusic`.`one2one_course_instance` AS `s.CourseInstance` ON `s`.`course_instance_id` = `s.CourseInstance`.`course_instance_id`
+LEFT JOIN `ablemusic`.`course` AS `s.CourseInstance.Course` ON `s.CourseInstance`.`course_id` = `s.CourseInstance.Course`.`course_id`
+LEFT JOIN `ablemusic`.`group_course_instance` AS `s.GroupCourseInstance` ON `s`.`group_course_instance_id` = `s.GroupCourseInstance`.`group_course_instance_id`
+LEFT JOIN `ablemusic`.`course` AS `s.GroupCourseInstance.Course` ON `s.GroupCourseInstance`.`course_id` = `s.GroupCourseInstance.Course`.`course_id`
+WHERE ((`s`.`is_canceled` <> 1) OR `s`.`is_canceled` IS NULL) AND ((`s`.`is_confirm` <> 1) OR `s`.`is_confirm` IS NULL)
+2019-06-26 21:04:21.516 +12:00 [ERR] An exception occurred in the database while iterating the results of a query for context type 'Pegasus_backend.pegasusContext.ablemusicContext'.
+System.InvalidOperationException: No coercion operator is defined between types 'System.Int16' and 'System.Boolean'.
+   at System.Linq.Expressions.Expression.GetUserDefinedCoercionOrThrow(ExpressionType coercionType, Expression expression, Type convertToType)
+   at System.Linq.Expressions.Expression.Convert(Expression expression, Type type, MethodInfo method)
+   at System.Linq.Expressions.Expression.Convert(Expression expression, Type type)
+   at Microsoft.EntityFrameworkCore.Storage.TypedRelationalValueBufferFactoryFactory.CreateGetValueExpression(Expression dataReaderExpression, Expression indexExpression, TypeMaterializationInfo materializationInfo, Boolean box)
+   at Microsoft.EntityFrameworkCore.Storage.TypedRelationalValueBufferFactoryFactory.<>c.<CreateArrayInitializer>b__12_0(TypeMaterializationInfo mi, Int32 i)
+   at System.Linq.Enumerable.SelectIterator[TSource,TResult](IEnumerable`1 source, Func`3 selector)+MoveNext()
+   at System.Collections.Generic.LargeArrayBuilder`1.AddRange(IEnumerable`1 items)
+   at System.Collections.Generic.EnumerableHelpers.ToArray[T](IEnumerable`1 source)
+   at System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   at System.Dynamic.Utils.CollectionExtensions.ToReadOnly[T](IEnumerable`1 enumerable)
+   at System.Linq.Expressions.Expression.NewArrayInit(Type type, IEnumerable`1 initializers)
+   at Microsoft.EntityFrameworkCore.Storage.TypedRelationalValueBufferFactoryFactory.CreateArrayInitializer(CacheKey cacheKey)
+   at Microsoft.EntityFrameworkCore.Storage.TypedRelationalValueBufferFactoryFactory.<Create>b__10_0(CacheKey k)
+   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+   at Microsoft.EntityFrameworkCore.Storage.TypedRelationalValueBufferFactoryFactory.Create(IReadOnlyList`1 types)
+   at Microsoft.EntityFrameworkCore.Query.Sql.DefaultQuerySqlGenerator.CreateValueBufferFactory(IRelationalValueBufferFactoryFactory relationalValueBufferFactoryFactory, DbDataReader dataReader)
+   at Microsoft.EntityFrameworkCore.Query.Internal.ShaperCommandContext.<NotifyReaderCreated>b__14_0(FactoryAndReader s)
+   at Microsoft.EntityFrameworkCore.Internal.NonCapturingLazyInitializer.EnsureInitialized[TParam,TValue](TValue& target, TParam param, Func`2 valueFactory)
+   at Microsoft.EntityFrameworkCore.Query.Internal.ShaperCommandContext.NotifyReaderCreated(DbDataReader dataReader)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.BufferlessMoveNext(DbContext _, Boolean buffer, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.MoveNext(CancellationToken cancellationToken)
+   at System.Linq.AsyncEnumerable.WhereSelectEnumerableAsyncIterator`2.MoveNextCore(CancellationToken cancellationToken)
+   at System.Linq.AsyncEnumerable.AsyncIterator`1.MoveNext(CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncLinqOperatorProvider.ExceptionInterceptor`1.EnumeratorExceptionInterceptor.MoveNext(CancellationToken cancellationToken)
+System.InvalidOperationException: No coercion operator is defined between types 'System.Int16' and 'System.Boolean'.
+   at System.Linq.Expressions.Expression.GetUserDefinedCoercionOrThrow(ExpressionType coercionType, Expression expression, Type convertToType)
+   at System.Linq.Expressions.Expression.Convert(Expression expression, Type type, MethodInfo method)
+   at System.Linq.Expressions.Expression.Convert(Expression expression, Type type)
+   at Microsoft.EntityFrameworkCore.Storage.TypedRelationalValueBufferFactoryFactory.CreateGetValueExpression(Expression dataReaderExpression, Expression indexExpression, TypeMaterializationInfo materializationInfo, Boolean box)
+   at Microsoft.EntityFrameworkCore.Storage.TypedRelationalValueBufferFactoryFactory.<>c.<CreateArrayInitializer>b__12_0(TypeMaterializationInfo mi, Int32 i)
+   at System.Linq.Enumerable.SelectIterator[TSource,TResult](IEnumerable`1 source, Func`3 selector)+MoveNext()
+   at System.Collections.Generic.LargeArrayBuilder`1.AddRange(IEnumerable`1 items)
+   at System.Collections.Generic.EnumerableHelpers.ToArray[T](IEnumerable`1 source)
+   at System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   at System.Dynamic.Utils.CollectionExtensions.ToReadOnly[T](IEnumerable`1 enumerable)
+   at System.Linq.Expressions.Expression.NewArrayInit(Type type, IEnumerable`1 initializers)
+   at Microsoft.EntityFrameworkCore.Storage.TypedRelationalValueBufferFactoryFactory.CreateArrayInitializer(CacheKey cacheKey)
+   at Microsoft.EntityFrameworkCore.Storage.TypedRelationalValueBufferFactoryFactory.<Create>b__10_0(CacheKey k)
+   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+   at Microsoft.EntityFrameworkCore.Storage.TypedRelationalValueBufferFactoryFactory.Create(IReadOnlyList`1 types)
+   at Microsoft.EntityFrameworkCore.Query.Sql.DefaultQuerySqlGenerator.CreateValueBufferFactory(IRelationalValueBufferFactoryFactory relationalValueBufferFactoryFactory, DbDataReader dataReader)
+   at Microsoft.EntityFrameworkCore.Query.Internal.ShaperCommandContext.<NotifyReaderCreated>b__14_0(FactoryAndReader s)
+   at Microsoft.EntityFrameworkCore.Internal.NonCapturingLazyInitializer.EnsureInitialized[TParam,TValue](TValue& target, TParam param, Func`2 valueFactory)
+   at Microsoft.EntityFrameworkCore.Query.Internal.ShaperCommandContext.NotifyReaderCreated(DbDataReader dataReader)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.BufferlessMoveNext(DbContext _, Boolean buffer, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.MoveNext(CancellationToken cancellationToken)
+   at System.Linq.AsyncEnumerable.WhereSelectEnumerableAsyncIterator`2.MoveNextCore(CancellationToken cancellationToken)
+   at System.Linq.AsyncEnumerable.AsyncIterator`1.MoveNext(CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncLinqOperatorProvider.ExceptionInterceptor`1.EnumeratorExceptionInterceptor.MoveNext(CancellationToken cancellationToken)
+2019-06-26 21:04:21.521 +12:00 [INF] Executed action method Pegasus_backend.Controllers.LessonController.GetLessonsForReceptionist (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.BadRequestObjectResult in 2075.4624ms.
+2019-06-26 21:04:21.528 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-06-26 21:04:21.566 +12:00 [INF] Executed action Pegasus_backend.Controllers.LessonController.GetLessonsForReceptionist (Pegasus_backend) in 2244.837ms
+2019-06-26 21:04:21.570 +12:00 [INF] Request finished in 2404.3961ms 400 application/json; charset=utf-8
+2019-06-26 21:04:21.578 +12:00 [INF] Connection id "0HLNQ2L2S3HGO", Request id "0HLNQ2L2S3HGO:00000001": the application completed without reading the entire request body.
+2019-06-26 21:04:34.073 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-06-26 21:04:36.720 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/lesson/GetLessonsForReceptionist/3/2019-06-26 application/json 48
+2019-06-26 21:04:36.746 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-06-26 21:04:36.868 +12:00 [INF] Route matched with {action = "GetLessonsForReceptionist", controller = "Lesson"}. Executing action Pegasus_backend.Controllers.LessonController.GetLessonsForReceptionist (Pegasus_backend)
+2019-06-26 21:04:36.986 +12:00 [INF] Executing action method Pegasus_backend.Controllers.LessonController.GetLessonsForReceptionist (Pegasus_backend) with arguments (["3","06/26/2019 00:00:00"]) - Validation state: "Valid"
+2019-06-26 21:04:37.876 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-06-26 21:04:38.575 +12:00 [INF] Executed DbCommand (43ms) [Parameters=[@__8__locals1_userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`staff_id`, `s`.`dob`, `s`.`email`, `s`.`expiry_date`, `s`.`first_name`, `s`.`gender`, `s`.`home_phone`, `s`.`id_number`, `s`.`id_photo`, `s`.`id_type`, `s`.`ird_number`, `s`.`is_activate`, `s`.`last_name`, `s`.`mobile_phone`, `s`.`photo`, `s`.`user_id`, `s`.`visa`
+FROM `ablemusic`.`staff` AS `s`
+WHERE `s`.`user_id` = @__8__locals1_userId_0
+LIMIT 1
+2019-06-26 21:04:38.756 +12:00 [INF] Executed DbCommand (34ms) [Parameters=[@__staff_StaffId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`staff_org_id`, `s`.`is_activate`, `s`.`org_id`, `s`.`staff_id`
+FROM `ablemusic`.`staff_org` AS `s`
+WHERE `s`.`staff_id` = @__staff_StaffId_0
+LIMIT 1
+2019-06-26 21:04:38.805 +12:00 [WRN] The Include operation for navigation '[s].CourseInstance' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:04:38.806 +12:00 [WRN] The Include operation for navigation '[s].Learner' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:04:38.806 +12:00 [WRN] The Include operation for navigation '[s].Teacher' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:04:38.806 +12:00 [WRN] The Include operation for navigation '[s].Room' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:04:38.807 +12:00 [WRN] The Include operation for navigation '[s].Org' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:04:38.807 +12:00 [WRN] The Include operation for navigation '[s].TrialCourse' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:04:38.807 +12:00 [WRN] The Include operation for navigation '[s].GroupCourseInstance.LearnerGroupCourse.Learner' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:04:38.867 +12:00 [WRN] The LINQ expression 'where ((((Convert(Convert([s].OrgId, Int32), Nullable`1) == Convert(__orgId_0, Nullable`1)) AndAlso (Convert([s].BeginTime, DateTime).Year == __8__locals1_date_Year_1)) AndAlso (Convert([s].BeginTime, DateTime).Month == __8__locals1_date_Month_2)) AndAlso (Convert([s].BeginTime, DateTime).Day == __8__locals1_date_Day_3))' could not be translated and will be evaluated locally.
+2019-06-26 21:04:39.043 +12:00 [INF] Executed DbCommand (41ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.CourseInstance`.`course_instance_id`, `s.CourseInstance`.`begin_date`, `s.CourseInstance`.`course_id`, `s.CourseInstance`.`end_date`, `s.CourseInstance`.`invoice_date`, `s.CourseInstance`.`learner_id`, `s.CourseInstance`.`org_id`, `s.CourseInstance`.`room_id`, `s.CourseInstance`.`teacher_id`, `s.GroupCourseInstance`.`group_course_instance_id`, `s.GroupCourseInstance`.`begin_date`, `s.GroupCourseInstance`.`course_id`, `s.GroupCourseInstance`.`end_date`, `s.GroupCourseInstance`.`is_activate`, `s.GroupCourseInstance`.`is_started`, `s.GroupCourseInstance`.`org_id`, `s.GroupCourseInstance`.`room_id`, `s.GroupCourseInstance`.`teacher_id`, `s`.`org_id` AS `OrgId`, `s`.`begin_time` AS `start`, `s`.`lesson_id` AS `id`, `s`.`room_id` AS `resourceId`, `s`.`end_time` AS `end`, `s.Teacher`.`first_name` AS `TeacherName`, `s`.`course_instance_id`, CASE
+    WHEN ((
+        SELECT `q1`.`balance`
+        FROM `ablemusic`.`fund` AS `q1`
+        WHERE `q1`.`learner_id` = `s`.`learner_id`
+        LIMIT 1
+    ) - (
+        SELECT `q2`.`price`
+        FROM `ablemusic`.`course` AS `q2`
+        WHERE `q2`.`course_id` = `s.CourseInstance`.`course_id`
+        LIMIT 1
+    )) <= 0
+    THEN ('1') ELSE ('0')
+END, `s.Learner`.`first_name`, `s.Room`.`room_name` AS `RoomName`, `s.Org`.`org_name` AS `OrgName`, `s`.`teacher_id` AS `TeacherId`, `s.GroupCourseInstance.Course`.`course_name`, `s.TrialCourse`.`course_name`, `s.CourseInstance.Course`.`course_name`, `s.GroupCourseInstance.Course`.`course_id`, `s`.`trial_course_id`, `s.CourseInstance.Course`.`course_id`, `s`.`learner_id` AS `LearnerId`
+FROM `ablemusic`.`lesson` AS `s`
+LEFT JOIN `ablemusic`.`course` AS `s.TrialCourse` ON `s`.`trial_course_id` = `s.TrialCourse`.`course_id`
+INNER JOIN `ablemusic`.`org` AS `s.Org` ON `s`.`org_id` = `s.Org`.`org_id`
+LEFT JOIN `ablemusic`.`room` AS `s.Room` ON `s`.`room_id` = `s.Room`.`room_id`
+LEFT JOIN `ablemusic`.`learner` AS `s.Learner` ON `s`.`learner_id` = `s.Learner`.`learner_id`
+LEFT JOIN `ablemusic`.`teacher` AS `s.Teacher` ON `s`.`teacher_id` = `s.Teacher`.`teacher_id`
+LEFT JOIN `ablemusic`.`one2one_course_instance` AS `s.CourseInstance` ON `s`.`course_instance_id` = `s.CourseInstance`.`course_instance_id`
+LEFT JOIN `ablemusic`.`course` AS `s.CourseInstance.Course` ON `s.CourseInstance`.`course_id` = `s.CourseInstance.Course`.`course_id`
+LEFT JOIN `ablemusic`.`group_course_instance` AS `s.GroupCourseInstance` ON `s`.`group_course_instance_id` = `s.GroupCourseInstance`.`group_course_instance_id`
+LEFT JOIN `ablemusic`.`course` AS `s.GroupCourseInstance.Course` ON `s.GroupCourseInstance`.`course_id` = `s.GroupCourseInstance.Course`.`course_id`
+WHERE ((`s`.`is_canceled` <> 1) OR `s`.`is_canceled` IS NULL) AND ((`s`.`is_confirm` <> 1) OR `s`.`is_confirm` IS NULL)
+2019-06-26 21:04:39.090 +12:00 [ERR] An exception occurred in the database while iterating the results of a query for context type 'Pegasus_backend.pegasusContext.ablemusicContext'.
+System.InvalidOperationException: No coercion operator is defined between types 'System.Int16' and 'System.Boolean'.
+   at System.Linq.Expressions.Expression.GetUserDefinedCoercionOrThrow(ExpressionType coercionType, Expression expression, Type convertToType)
+   at System.Linq.Expressions.Expression.Convert(Expression expression, Type type, MethodInfo method)
+   at System.Linq.Expressions.Expression.Convert(Expression expression, Type type)
+   at Microsoft.EntityFrameworkCore.Storage.TypedRelationalValueBufferFactoryFactory.CreateGetValueExpression(Expression dataReaderExpression, Expression indexExpression, TypeMaterializationInfo materializationInfo, Boolean box)
+   at Microsoft.EntityFrameworkCore.Storage.TypedRelationalValueBufferFactoryFactory.<>c.<CreateArrayInitializer>b__12_0(TypeMaterializationInfo mi, Int32 i)
+   at System.Linq.Enumerable.SelectIterator[TSource,TResult](IEnumerable`1 source, Func`3 selector)+MoveNext()
+   at System.Collections.Generic.LargeArrayBuilder`1.AddRange(IEnumerable`1 items)
+   at System.Collections.Generic.EnumerableHelpers.ToArray[T](IEnumerable`1 source)
+   at System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   at System.Dynamic.Utils.CollectionExtensions.ToReadOnly[T](IEnumerable`1 enumerable)
+   at System.Linq.Expressions.Expression.NewArrayInit(Type type, IEnumerable`1 initializers)
+   at Microsoft.EntityFrameworkCore.Storage.TypedRelationalValueBufferFactoryFactory.CreateArrayInitializer(CacheKey cacheKey)
+   at Microsoft.EntityFrameworkCore.Storage.TypedRelationalValueBufferFactoryFactory.<Create>b__10_0(CacheKey k)
+   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+   at Microsoft.EntityFrameworkCore.Storage.TypedRelationalValueBufferFactoryFactory.Create(IReadOnlyList`1 types)
+   at Microsoft.EntityFrameworkCore.Query.Sql.DefaultQuerySqlGenerator.CreateValueBufferFactory(IRelationalValueBufferFactoryFactory relationalValueBufferFactoryFactory, DbDataReader dataReader)
+   at Microsoft.EntityFrameworkCore.Query.Internal.ShaperCommandContext.<NotifyReaderCreated>b__14_0(FactoryAndReader s)
+   at Microsoft.EntityFrameworkCore.Internal.NonCapturingLazyInitializer.EnsureInitialized[TParam,TValue](TValue& target, TParam param, Func`2 valueFactory)
+   at Microsoft.EntityFrameworkCore.Query.Internal.ShaperCommandContext.NotifyReaderCreated(DbDataReader dataReader)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.BufferlessMoveNext(DbContext _, Boolean buffer, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.MoveNext(CancellationToken cancellationToken)
+   at System.Linq.AsyncEnumerable.WhereSelectEnumerableAsyncIterator`2.MoveNextCore(CancellationToken cancellationToken)
+   at System.Linq.AsyncEnumerable.AsyncIterator`1.MoveNext(CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncLinqOperatorProvider.ExceptionInterceptor`1.EnumeratorExceptionInterceptor.MoveNext(CancellationToken cancellationToken)
+System.InvalidOperationException: No coercion operator is defined between types 'System.Int16' and 'System.Boolean'.
+   at System.Linq.Expressions.Expression.GetUserDefinedCoercionOrThrow(ExpressionType coercionType, Expression expression, Type convertToType)
+   at System.Linq.Expressions.Expression.Convert(Expression expression, Type type, MethodInfo method)
+   at System.Linq.Expressions.Expression.Convert(Expression expression, Type type)
+   at Microsoft.EntityFrameworkCore.Storage.TypedRelationalValueBufferFactoryFactory.CreateGetValueExpression(Expression dataReaderExpression, Expression indexExpression, TypeMaterializationInfo materializationInfo, Boolean box)
+   at Microsoft.EntityFrameworkCore.Storage.TypedRelationalValueBufferFactoryFactory.<>c.<CreateArrayInitializer>b__12_0(TypeMaterializationInfo mi, Int32 i)
+   at System.Linq.Enumerable.SelectIterator[TSource,TResult](IEnumerable`1 source, Func`3 selector)+MoveNext()
+   at System.Collections.Generic.LargeArrayBuilder`1.AddRange(IEnumerable`1 items)
+   at System.Collections.Generic.EnumerableHelpers.ToArray[T](IEnumerable`1 source)
+   at System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   at System.Dynamic.Utils.CollectionExtensions.ToReadOnly[T](IEnumerable`1 enumerable)
+   at System.Linq.Expressions.Expression.NewArrayInit(Type type, IEnumerable`1 initializers)
+   at Microsoft.EntityFrameworkCore.Storage.TypedRelationalValueBufferFactoryFactory.CreateArrayInitializer(CacheKey cacheKey)
+   at Microsoft.EntityFrameworkCore.Storage.TypedRelationalValueBufferFactoryFactory.<Create>b__10_0(CacheKey k)
+   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+   at Microsoft.EntityFrameworkCore.Storage.TypedRelationalValueBufferFactoryFactory.Create(IReadOnlyList`1 types)
+   at Microsoft.EntityFrameworkCore.Query.Sql.DefaultQuerySqlGenerator.CreateValueBufferFactory(IRelationalValueBufferFactoryFactory relationalValueBufferFactoryFactory, DbDataReader dataReader)
+   at Microsoft.EntityFrameworkCore.Query.Internal.ShaperCommandContext.<NotifyReaderCreated>b__14_0(FactoryAndReader s)
+   at Microsoft.EntityFrameworkCore.Internal.NonCapturingLazyInitializer.EnsureInitialized[TParam,TValue](TValue& target, TParam param, Func`2 valueFactory)
+   at Microsoft.EntityFrameworkCore.Query.Internal.ShaperCommandContext.NotifyReaderCreated(DbDataReader dataReader)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.BufferlessMoveNext(DbContext _, Boolean buffer, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.MoveNext(CancellationToken cancellationToken)
+   at System.Linq.AsyncEnumerable.WhereSelectEnumerableAsyncIterator`2.MoveNextCore(CancellationToken cancellationToken)
+   at System.Linq.AsyncEnumerable.AsyncIterator`1.MoveNext(CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncLinqOperatorProvider.ExceptionInterceptor`1.EnumeratorExceptionInterceptor.MoveNext(CancellationToken cancellationToken)
+2019-06-26 21:04:39.096 +12:00 [INF] Executed action method Pegasus_backend.Controllers.LessonController.GetLessonsForReceptionist (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.BadRequestObjectResult in 2097.7054000000003ms.
+2019-06-26 21:04:39.102 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-06-26 21:04:39.139 +12:00 [INF] Executed action Pegasus_backend.Controllers.LessonController.GetLessonsForReceptionist (Pegasus_backend) in 2268.0660000000003ms
+2019-06-26 21:04:39.142 +12:00 [INF] Request finished in 2423.4546ms 400 application/json; charset=utf-8
+2019-06-26 21:04:39.149 +12:00 [INF] Connection id "0HLNQ2L83ETQG", Request id "0HLNQ2L83ETQG:00000001": the application completed without reading the entire request body.
+2019-06-26 21:05:15.279 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-06-26 21:05:17.416 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/lesson/GetLessonsForReceptionist/3/2019-06-26 application/json 48
+2019-06-26 21:05:17.444 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-06-26 21:05:17.570 +12:00 [INF] Route matched with {action = "GetLessonsForReceptionist", controller = "Lesson"}. Executing action Pegasus_backend.Controllers.LessonController.GetLessonsForReceptionist (Pegasus_backend)
+2019-06-26 21:05:17.683 +12:00 [INF] Executing action method Pegasus_backend.Controllers.LessonController.GetLessonsForReceptionist (Pegasus_backend) with arguments (["3","06/26/2019 00:00:00"]) - Validation state: "Valid"
+2019-06-26 21:05:18.435 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-06-26 21:05:19.243 +12:00 [INF] Executed DbCommand (40ms) [Parameters=[@__8__locals1_userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`staff_id`, `s`.`dob`, `s`.`email`, `s`.`expiry_date`, `s`.`first_name`, `s`.`gender`, `s`.`home_phone`, `s`.`id_number`, `s`.`id_photo`, `s`.`id_type`, `s`.`ird_number`, `s`.`is_activate`, `s`.`last_name`, `s`.`mobile_phone`, `s`.`photo`, `s`.`user_id`, `s`.`visa`
+FROM `ablemusic`.`staff` AS `s`
+WHERE `s`.`user_id` = @__8__locals1_userId_0
+LIMIT 1
+2019-06-26 21:05:19.415 +12:00 [INF] Executed DbCommand (37ms) [Parameters=[@__staff_StaffId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`staff_org_id`, `s`.`is_activate`, `s`.`org_id`, `s`.`staff_id`
+FROM `ablemusic`.`staff_org` AS `s`
+WHERE `s`.`staff_id` = @__staff_StaffId_0
+LIMIT 1
+2019-06-26 21:05:19.466 +12:00 [WRN] The Include operation for navigation '[s].CourseInstance' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:05:19.467 +12:00 [WRN] The Include operation for navigation '[s].Learner' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:05:19.467 +12:00 [WRN] The Include operation for navigation '[s].Teacher' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:05:19.467 +12:00 [WRN] The Include operation for navigation '[s].Room' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:05:19.468 +12:00 [WRN] The Include operation for navigation '[s].Org' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:05:19.468 +12:00 [WRN] The Include operation for navigation '[s].TrialCourse' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:05:19.468 +12:00 [WRN] The Include operation for navigation '[s].GroupCourseInstance.LearnerGroupCourse.Learner' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:05:19.525 +12:00 [WRN] The LINQ expression 'where ((((Convert(Convert([s].OrgId, Int32), Nullable`1) == Convert(__orgId_0, Nullable`1)) AndAlso (Convert([s].BeginTime, DateTime).Year == __8__locals1_date_Year_1)) AndAlso (Convert([s].BeginTime, DateTime).Month == __8__locals1_date_Month_2)) AndAlso (Convert([s].BeginTime, DateTime).Day == __8__locals1_date_Day_3))' could not be translated and will be evaluated locally.
+2019-06-26 21:05:19.720 +12:00 [INF] Executed DbCommand (67ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.CourseInstance`.`course_instance_id`, `s.CourseInstance`.`begin_date`, `s.CourseInstance`.`course_id`, `s.CourseInstance`.`end_date`, `s.CourseInstance`.`invoice_date`, `s.CourseInstance`.`learner_id`, `s.CourseInstance`.`org_id`, `s.CourseInstance`.`room_id`, `s.CourseInstance`.`teacher_id`, `s.GroupCourseInstance`.`group_course_instance_id`, `s.GroupCourseInstance`.`begin_date`, `s.GroupCourseInstance`.`course_id`, `s.GroupCourseInstance`.`end_date`, `s.GroupCourseInstance`.`is_activate`, `s.GroupCourseInstance`.`is_started`, `s.GroupCourseInstance`.`org_id`, `s.GroupCourseInstance`.`room_id`, `s.GroupCourseInstance`.`teacher_id`, `s`.`org_id` AS `OrgId`, `s`.`begin_time` AS `start`, `s`.`lesson_id` AS `id`, `s`.`room_id` AS `resourceId`, `s`.`end_time` AS `end`, `s.Teacher`.`first_name` AS `TeacherName`, `s`.`course_instance_id`, (
+    SELECT `q1`.`balance`
+    FROM `ablemusic`.`fund` AS `q1`
+    WHERE `q1`.`learner_id` = `s`.`learner_id`
+    LIMIT 1
+) - (
+    SELECT `q2`.`price`
+    FROM `ablemusic`.`course` AS `q2`
+    WHERE `q2`.`course_id` = `s.CourseInstance`.`course_id`
+    LIMIT 1
+), `s.Learner`.`first_name`, `s.Room`.`room_name` AS `RoomName`, `s.Org`.`org_name` AS `OrgName`, `s`.`teacher_id` AS `TeacherId`, `s.GroupCourseInstance.Course`.`course_name`, `s.TrialCourse`.`course_name`, `s.CourseInstance.Course`.`course_name`, `s.GroupCourseInstance.Course`.`course_id`, `s`.`trial_course_id`, `s.CourseInstance.Course`.`course_id`, `s`.`learner_id` AS `LearnerId`
+FROM `ablemusic`.`lesson` AS `s`
+LEFT JOIN `ablemusic`.`course` AS `s.TrialCourse` ON `s`.`trial_course_id` = `s.TrialCourse`.`course_id`
+INNER JOIN `ablemusic`.`org` AS `s.Org` ON `s`.`org_id` = `s.Org`.`org_id`
+LEFT JOIN `ablemusic`.`room` AS `s.Room` ON `s`.`room_id` = `s.Room`.`room_id`
+LEFT JOIN `ablemusic`.`learner` AS `s.Learner` ON `s`.`learner_id` = `s.Learner`.`learner_id`
+LEFT JOIN `ablemusic`.`teacher` AS `s.Teacher` ON `s`.`teacher_id` = `s.Teacher`.`teacher_id`
+LEFT JOIN `ablemusic`.`one2one_course_instance` AS `s.CourseInstance` ON `s`.`course_instance_id` = `s.CourseInstance`.`course_instance_id`
+LEFT JOIN `ablemusic`.`course` AS `s.CourseInstance.Course` ON `s.CourseInstance`.`course_id` = `s.CourseInstance.Course`.`course_id`
+LEFT JOIN `ablemusic`.`group_course_instance` AS `s.GroupCourseInstance` ON `s`.`group_course_instance_id` = `s.GroupCourseInstance`.`group_course_instance_id`
+LEFT JOIN `ablemusic`.`course` AS `s.GroupCourseInstance.Course` ON `s.GroupCourseInstance`.`course_id` = `s.GroupCourseInstance.Course`.`course_id`
+WHERE ((`s`.`is_canceled` <> 1) OR `s`.`is_canceled` IS NULL) AND ((`s`.`is_confirm` <> 1) OR `s`.`is_confirm` IS NULL)
+2019-06-26 21:05:19.789 +12:00 [INF] Executed action method Pegasus_backend.Controllers.LessonController.GetLessonsForReceptionist (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 2094.6816ms.
+2019-06-26 21:05:19.794 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-06-26 21:05:19.844 +12:00 [INF] Executed action Pegasus_backend.Controllers.LessonController.GetLessonsForReceptionist (Pegasus_backend) in 2271.2196ms
+2019-06-26 21:05:19.848 +12:00 [INF] Request finished in 2432.6565ms 200 application/json; charset=utf-8
+2019-06-26 21:05:19.855 +12:00 [INF] Connection id "0HLNQ2LK7J1SQ", Request id "0HLNQ2LK7J1SQ:00000001": the application completed without reading the entire request body.
+2019-06-26 21:06:43.578 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-06-26 21:06:48.177 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/lesson/GetLessonsForReceptionist/3/2019-06-26 application/json 48
+2019-06-26 21:06:48.204 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-06-26 21:06:48.330 +12:00 [INF] Route matched with {action = "GetLessonsForReceptionist", controller = "Lesson"}. Executing action Pegasus_backend.Controllers.LessonController.GetLessonsForReceptionist (Pegasus_backend)
+2019-06-26 21:06:48.447 +12:00 [INF] Executing action method Pegasus_backend.Controllers.LessonController.GetLessonsForReceptionist (Pegasus_backend) with arguments (["3","06/26/2019 00:00:00"]) - Validation state: "Valid"
+2019-06-26 21:06:49.208 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-06-26 21:06:49.947 +12:00 [INF] Executed DbCommand (44ms) [Parameters=[@__8__locals1_userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`staff_id`, `s`.`dob`, `s`.`email`, `s`.`expiry_date`, `s`.`first_name`, `s`.`gender`, `s`.`home_phone`, `s`.`id_number`, `s`.`id_photo`, `s`.`id_type`, `s`.`ird_number`, `s`.`is_activate`, `s`.`last_name`, `s`.`mobile_phone`, `s`.`photo`, `s`.`user_id`, `s`.`visa`
+FROM `ablemusic`.`staff` AS `s`
+WHERE `s`.`user_id` = @__8__locals1_userId_0
+LIMIT 1
+2019-06-26 21:06:50.117 +12:00 [INF] Executed DbCommand (36ms) [Parameters=[@__staff_StaffId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`staff_org_id`, `s`.`is_activate`, `s`.`org_id`, `s`.`staff_id`
+FROM `ablemusic`.`staff_org` AS `s`
+WHERE `s`.`staff_id` = @__staff_StaffId_0
+LIMIT 1
+2019-06-26 21:06:50.167 +12:00 [WRN] The Include operation for navigation '[s].CourseInstance' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:06:50.168 +12:00 [WRN] The Include operation for navigation '[s].Learner' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:06:50.168 +12:00 [WRN] The Include operation for navigation '[s].Teacher' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:06:50.168 +12:00 [WRN] The Include operation for navigation '[s].Room' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:06:50.168 +12:00 [WRN] The Include operation for navigation '[s].Org' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:06:50.168 +12:00 [WRN] The Include operation for navigation '[s].TrialCourse' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:06:50.169 +12:00 [WRN] The Include operation for navigation '[s].GroupCourseInstance.LearnerGroupCourse.Learner' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:06:50.222 +12:00 [WRN] The LINQ expression 'where ((((Convert(Convert([s].OrgId, Int32), Nullable`1) == Convert(__orgId_0, Nullable`1)) AndAlso (Convert([s].BeginTime, DateTime).Year == __8__locals1_date_Year_1)) AndAlso (Convert([s].BeginTime, DateTime).Month == __8__locals1_date_Month_2)) AndAlso (Convert([s].BeginTime, DateTime).Day == __8__locals1_date_Day_3))' could not be translated and will be evaluated locally.
+2019-06-26 21:06:50.395 +12:00 [INF] Executed DbCommand (47ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.CourseInstance`.`course_instance_id`, `s.CourseInstance`.`begin_date`, `s.CourseInstance`.`course_id`, `s.CourseInstance`.`end_date`, `s.CourseInstance`.`invoice_date`, `s.CourseInstance`.`learner_id`, `s.CourseInstance`.`org_id`, `s.CourseInstance`.`room_id`, `s.CourseInstance`.`teacher_id`, `s.GroupCourseInstance`.`group_course_instance_id`, `s.GroupCourseInstance`.`begin_date`, `s.GroupCourseInstance`.`course_id`, `s.GroupCourseInstance`.`end_date`, `s.GroupCourseInstance`.`is_activate`, `s.GroupCourseInstance`.`is_started`, `s.GroupCourseInstance`.`org_id`, `s.GroupCourseInstance`.`room_id`, `s.GroupCourseInstance`.`teacher_id`, `s`.`org_id` AS `OrgId`, `s`.`begin_time` AS `start`, `s`.`lesson_id` AS `id`, `s`.`room_id` AS `resourceId`, `s`.`end_time` AS `end`, `s.Teacher`.`first_name` AS `TeacherName`, `s`.`course_instance_id`, CASE
+    WHEN ((
+        SELECT `q1`.`balance`
+        FROM `ablemusic`.`fund` AS `q1`
+        WHERE `q1`.`learner_id` = `s`.`learner_id`
+        LIMIT 1
+    ) - (
+        SELECT `q2`.`price`
+        FROM `ablemusic`.`course` AS `q2`
+        WHERE `q2`.`course_id` = `s.CourseInstance`.`course_id`
+        LIMIT 1
+    )) <= 0
+    THEN ('1') ELSE ('0')
+END, `s.Learner`.`first_name`, `s.Room`.`room_name` AS `RoomName`, `s.Org`.`org_name` AS `OrgName`, `s`.`teacher_id` AS `TeacherId`, `s.GroupCourseInstance.Course`.`course_name`, `s.TrialCourse`.`course_name`, `s.CourseInstance.Course`.`course_name`, `s.GroupCourseInstance.Course`.`course_id`, `s`.`trial_course_id`, `s.CourseInstance.Course`.`course_id`, `s`.`learner_id` AS `LearnerId`
+FROM `ablemusic`.`lesson` AS `s`
+LEFT JOIN `ablemusic`.`course` AS `s.TrialCourse` ON `s`.`trial_course_id` = `s.TrialCourse`.`course_id`
+INNER JOIN `ablemusic`.`org` AS `s.Org` ON `s`.`org_id` = `s.Org`.`org_id`
+LEFT JOIN `ablemusic`.`room` AS `s.Room` ON `s`.`room_id` = `s.Room`.`room_id`
+LEFT JOIN `ablemusic`.`learner` AS `s.Learner` ON `s`.`learner_id` = `s.Learner`.`learner_id`
+LEFT JOIN `ablemusic`.`teacher` AS `s.Teacher` ON `s`.`teacher_id` = `s.Teacher`.`teacher_id`
+LEFT JOIN `ablemusic`.`one2one_course_instance` AS `s.CourseInstance` ON `s`.`course_instance_id` = `s.CourseInstance`.`course_instance_id`
+LEFT JOIN `ablemusic`.`course` AS `s.CourseInstance.Course` ON `s.CourseInstance`.`course_id` = `s.CourseInstance.Course`.`course_id`
+LEFT JOIN `ablemusic`.`group_course_instance` AS `s.GroupCourseInstance` ON `s`.`group_course_instance_id` = `s.GroupCourseInstance`.`group_course_instance_id`
+LEFT JOIN `ablemusic`.`course` AS `s.GroupCourseInstance.Course` ON `s.GroupCourseInstance`.`course_id` = `s.GroupCourseInstance.Course`.`course_id`
+WHERE ((`s`.`is_canceled` <> 1) OR `s`.`is_canceled` IS NULL) AND ((`s`.`is_confirm` <> 1) OR `s`.`is_confirm` IS NULL)
+2019-06-26 21:06:50.449 +12:00 [ERR] An exception occurred in the database while iterating the results of a query for context type 'Pegasus_backend.pegasusContext.ablemusicContext'.
+System.InvalidOperationException: No coercion operator is defined between types 'System.Int16' and 'System.Boolean'.
+   at System.Linq.Expressions.Expression.GetUserDefinedCoercionOrThrow(ExpressionType coercionType, Expression expression, Type convertToType)
+   at System.Linq.Expressions.Expression.Convert(Expression expression, Type type, MethodInfo method)
+   at System.Linq.Expressions.Expression.Convert(Expression expression, Type type)
+   at Microsoft.EntityFrameworkCore.Storage.TypedRelationalValueBufferFactoryFactory.CreateGetValueExpression(Expression dataReaderExpression, Expression indexExpression, TypeMaterializationInfo materializationInfo, Boolean box)
+   at Microsoft.EntityFrameworkCore.Storage.TypedRelationalValueBufferFactoryFactory.<>c.<CreateArrayInitializer>b__12_0(TypeMaterializationInfo mi, Int32 i)
+   at System.Linq.Enumerable.SelectIterator[TSource,TResult](IEnumerable`1 source, Func`3 selector)+MoveNext()
+   at System.Collections.Generic.LargeArrayBuilder`1.AddRange(IEnumerable`1 items)
+   at System.Collections.Generic.EnumerableHelpers.ToArray[T](IEnumerable`1 source)
+   at System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   at System.Dynamic.Utils.CollectionExtensions.ToReadOnly[T](IEnumerable`1 enumerable)
+   at System.Linq.Expressions.Expression.NewArrayInit(Type type, IEnumerable`1 initializers)
+   at Microsoft.EntityFrameworkCore.Storage.TypedRelationalValueBufferFactoryFactory.CreateArrayInitializer(CacheKey cacheKey)
+   at Microsoft.EntityFrameworkCore.Storage.TypedRelationalValueBufferFactoryFactory.<Create>b__10_0(CacheKey k)
+   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+   at Microsoft.EntityFrameworkCore.Storage.TypedRelationalValueBufferFactoryFactory.Create(IReadOnlyList`1 types)
+   at Microsoft.EntityFrameworkCore.Query.Sql.DefaultQuerySqlGenerator.CreateValueBufferFactory(IRelationalValueBufferFactoryFactory relationalValueBufferFactoryFactory, DbDataReader dataReader)
+   at Microsoft.EntityFrameworkCore.Query.Internal.ShaperCommandContext.<NotifyReaderCreated>b__14_0(FactoryAndReader s)
+   at Microsoft.EntityFrameworkCore.Internal.NonCapturingLazyInitializer.EnsureInitialized[TParam,TValue](TValue& target, TParam param, Func`2 valueFactory)
+   at Microsoft.EntityFrameworkCore.Query.Internal.ShaperCommandContext.NotifyReaderCreated(DbDataReader dataReader)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.BufferlessMoveNext(DbContext _, Boolean buffer, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.MoveNext(CancellationToken cancellationToken)
+   at System.Linq.AsyncEnumerable.WhereSelectEnumerableAsyncIterator`2.MoveNextCore(CancellationToken cancellationToken)
+   at System.Linq.AsyncEnumerable.AsyncIterator`1.MoveNext(CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncLinqOperatorProvider.ExceptionInterceptor`1.EnumeratorExceptionInterceptor.MoveNext(CancellationToken cancellationToken)
+System.InvalidOperationException: No coercion operator is defined between types 'System.Int16' and 'System.Boolean'.
+   at System.Linq.Expressions.Expression.GetUserDefinedCoercionOrThrow(ExpressionType coercionType, Expression expression, Type convertToType)
+   at System.Linq.Expressions.Expression.Convert(Expression expression, Type type, MethodInfo method)
+   at System.Linq.Expressions.Expression.Convert(Expression expression, Type type)
+   at Microsoft.EntityFrameworkCore.Storage.TypedRelationalValueBufferFactoryFactory.CreateGetValueExpression(Expression dataReaderExpression, Expression indexExpression, TypeMaterializationInfo materializationInfo, Boolean box)
+   at Microsoft.EntityFrameworkCore.Storage.TypedRelationalValueBufferFactoryFactory.<>c.<CreateArrayInitializer>b__12_0(TypeMaterializationInfo mi, Int32 i)
+   at System.Linq.Enumerable.SelectIterator[TSource,TResult](IEnumerable`1 source, Func`3 selector)+MoveNext()
+   at System.Collections.Generic.LargeArrayBuilder`1.AddRange(IEnumerable`1 items)
+   at System.Collections.Generic.EnumerableHelpers.ToArray[T](IEnumerable`1 source)
+   at System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   at System.Dynamic.Utils.CollectionExtensions.ToReadOnly[T](IEnumerable`1 enumerable)
+   at System.Linq.Expressions.Expression.NewArrayInit(Type type, IEnumerable`1 initializers)
+   at Microsoft.EntityFrameworkCore.Storage.TypedRelationalValueBufferFactoryFactory.CreateArrayInitializer(CacheKey cacheKey)
+   at Microsoft.EntityFrameworkCore.Storage.TypedRelationalValueBufferFactoryFactory.<Create>b__10_0(CacheKey k)
+   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+   at Microsoft.EntityFrameworkCore.Storage.TypedRelationalValueBufferFactoryFactory.Create(IReadOnlyList`1 types)
+   at Microsoft.EntityFrameworkCore.Query.Sql.DefaultQuerySqlGenerator.CreateValueBufferFactory(IRelationalValueBufferFactoryFactory relationalValueBufferFactoryFactory, DbDataReader dataReader)
+   at Microsoft.EntityFrameworkCore.Query.Internal.ShaperCommandContext.<NotifyReaderCreated>b__14_0(FactoryAndReader s)
+   at Microsoft.EntityFrameworkCore.Internal.NonCapturingLazyInitializer.EnsureInitialized[TParam,TValue](TValue& target, TParam param, Func`2 valueFactory)
+   at Microsoft.EntityFrameworkCore.Query.Internal.ShaperCommandContext.NotifyReaderCreated(DbDataReader dataReader)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.BufferlessMoveNext(DbContext _, Boolean buffer, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.MoveNext(CancellationToken cancellationToken)
+   at System.Linq.AsyncEnumerable.WhereSelectEnumerableAsyncIterator`2.MoveNextCore(CancellationToken cancellationToken)
+   at System.Linq.AsyncEnumerable.AsyncIterator`1.MoveNext(CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncLinqOperatorProvider.ExceptionInterceptor`1.EnumeratorExceptionInterceptor.MoveNext(CancellationToken cancellationToken)
+2019-06-26 21:06:50.454 +12:00 [INF] Executed action method Pegasus_backend.Controllers.LessonController.GetLessonsForReceptionist (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.BadRequestObjectResult in 1996.4001ms.
+2019-06-26 21:06:50.461 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-06-26 21:06:50.495 +12:00 [INF] Executed action Pegasus_backend.Controllers.LessonController.GetLessonsForReceptionist (Pegasus_backend) in 2162.1253ms
+2019-06-26 21:06:50.499 +12:00 [INF] Request finished in 2322.5899ms 400 application/json; charset=utf-8
+2019-06-26 21:06:50.506 +12:00 [INF] Connection id "0HLNQ2MF93OS6", Request id "0HLNQ2MF93OS6:00000001": the application completed without reading the entire request body.
+2019-06-26 21:07:32.292 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-06-26 21:07:34.138 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/lesson/GetLessonsForReceptionist/3/2019-06-26 application/json 48
+2019-06-26 21:07:34.168 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-06-26 21:07:34.306 +12:00 [INF] Route matched with {action = "GetLessonsForReceptionist", controller = "Lesson"}. Executing action Pegasus_backend.Controllers.LessonController.GetLessonsForReceptionist (Pegasus_backend)
+2019-06-26 21:07:34.419 +12:00 [INF] Executing action method Pegasus_backend.Controllers.LessonController.GetLessonsForReceptionist (Pegasus_backend) with arguments (["3","06/26/2019 00:00:00"]) - Validation state: "Valid"
+2019-06-26 21:07:35.174 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-06-26 21:07:35.968 +12:00 [INF] Executed DbCommand (37ms) [Parameters=[@__8__locals1_userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`staff_id`, `s`.`dob`, `s`.`email`, `s`.`expiry_date`, `s`.`first_name`, `s`.`gender`, `s`.`home_phone`, `s`.`id_number`, `s`.`id_photo`, `s`.`id_type`, `s`.`ird_number`, `s`.`is_activate`, `s`.`last_name`, `s`.`mobile_phone`, `s`.`photo`, `s`.`user_id`, `s`.`visa`
+FROM `ablemusic`.`staff` AS `s`
+WHERE `s`.`user_id` = @__8__locals1_userId_0
+LIMIT 1
+2019-06-26 21:07:36.140 +12:00 [INF] Executed DbCommand (36ms) [Parameters=[@__staff_StaffId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`staff_org_id`, `s`.`is_activate`, `s`.`org_id`, `s`.`staff_id`
+FROM `ablemusic`.`staff_org` AS `s`
+WHERE `s`.`staff_id` = @__staff_StaffId_0
+LIMIT 1
+2019-06-26 21:07:36.190 +12:00 [WRN] The Include operation for navigation '[s].CourseInstance' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:07:36.192 +12:00 [WRN] The Include operation for navigation '[s].Learner' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:07:36.192 +12:00 [WRN] The Include operation for navigation '[s].Teacher' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:07:36.192 +12:00 [WRN] The Include operation for navigation '[s].Room' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:07:36.192 +12:00 [WRN] The Include operation for navigation '[s].Org' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:07:36.192 +12:00 [WRN] The Include operation for navigation '[s].TrialCourse' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:07:36.192 +12:00 [WRN] The Include operation for navigation '[s].GroupCourseInstance.LearnerGroupCourse.Learner' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:07:36.246 +12:00 [WRN] The LINQ expression 'where ((((Convert(Convert([s].OrgId, Int32), Nullable`1) == Convert(__orgId_0, Nullable`1)) AndAlso (Convert([s].BeginTime, DateTime).Year == __8__locals1_date_Year_1)) AndAlso (Convert([s].BeginTime, DateTime).Month == __8__locals1_date_Month_2)) AndAlso (Convert([s].BeginTime, DateTime).Day == __8__locals1_date_Day_3))' could not be translated and will be evaluated locally.
+2019-06-26 21:07:36.407 +12:00 [INF] Executed DbCommand (37ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.CourseInstance`.`course_instance_id`, `s.CourseInstance`.`begin_date`, `s.CourseInstance`.`course_id`, `s.CourseInstance`.`end_date`, `s.CourseInstance`.`invoice_date`, `s.CourseInstance`.`learner_id`, `s.CourseInstance`.`org_id`, `s.CourseInstance`.`room_id`, `s.CourseInstance`.`teacher_id`, `s.GroupCourseInstance`.`group_course_instance_id`, `s.GroupCourseInstance`.`begin_date`, `s.GroupCourseInstance`.`course_id`, `s.GroupCourseInstance`.`end_date`, `s.GroupCourseInstance`.`is_activate`, `s.GroupCourseInstance`.`is_started`, `s.GroupCourseInstance`.`org_id`, `s.GroupCourseInstance`.`room_id`, `s.GroupCourseInstance`.`teacher_id`, `s`.`org_id` AS `OrgId`, `s`.`begin_time` AS `start`, `s`.`lesson_id` AS `id`, `s`.`room_id` AS `resourceId`, `s`.`end_time` AS `end`, `s.Teacher`.`first_name` AS `TeacherName`, `s`.`course_instance_id`, CASE
+    WHEN ((
+        SELECT `q1`.`balance`
+        FROM `ablemusic`.`fund` AS `q1`
+        WHERE `q1`.`learner_id` = `s`.`learner_id`
+        LIMIT 1
+    ) - (
+        SELECT `q2`.`price`
+        FROM `ablemusic`.`course` AS `q2`
+        WHERE `q2`.`course_id` = `s.CourseInstance`.`course_id`
+        LIMIT 1
+    )) <= 0
+    THEN ('1') ELSE ('0')
+END, `s.Learner`.`first_name`, `s.Room`.`room_name` AS `RoomName`, `s.Org`.`org_name` AS `OrgName`, `s`.`teacher_id` AS `TeacherId`, `s.GroupCourseInstance.Course`.`course_name`, `s.TrialCourse`.`course_name`, `s.CourseInstance.Course`.`course_name`, `s.GroupCourseInstance.Course`.`course_id`, `s`.`trial_course_id`, `s.CourseInstance.Course`.`course_id`, `s`.`learner_id` AS `LearnerId`
+FROM `ablemusic`.`lesson` AS `s`
+LEFT JOIN `ablemusic`.`course` AS `s.TrialCourse` ON `s`.`trial_course_id` = `s.TrialCourse`.`course_id`
+INNER JOIN `ablemusic`.`org` AS `s.Org` ON `s`.`org_id` = `s.Org`.`org_id`
+LEFT JOIN `ablemusic`.`room` AS `s.Room` ON `s`.`room_id` = `s.Room`.`room_id`
+LEFT JOIN `ablemusic`.`learner` AS `s.Learner` ON `s`.`learner_id` = `s.Learner`.`learner_id`
+LEFT JOIN `ablemusic`.`teacher` AS `s.Teacher` ON `s`.`teacher_id` = `s.Teacher`.`teacher_id`
+LEFT JOIN `ablemusic`.`one2one_course_instance` AS `s.CourseInstance` ON `s`.`course_instance_id` = `s.CourseInstance`.`course_instance_id`
+LEFT JOIN `ablemusic`.`course` AS `s.CourseInstance.Course` ON `s.CourseInstance`.`course_id` = `s.CourseInstance.Course`.`course_id`
+LEFT JOIN `ablemusic`.`group_course_instance` AS `s.GroupCourseInstance` ON `s`.`group_course_instance_id` = `s.GroupCourseInstance`.`group_course_instance_id`
+LEFT JOIN `ablemusic`.`course` AS `s.GroupCourseInstance.Course` ON `s.GroupCourseInstance`.`course_id` = `s.GroupCourseInstance.Course`.`course_id`
+WHERE ((`s`.`is_canceled` <> 1) OR `s`.`is_canceled` IS NULL) AND ((`s`.`is_confirm` <> 1) OR `s`.`is_confirm` IS NULL)
+2019-06-26 21:07:36.451 +12:00 [ERR] An exception occurred in the database while iterating the results of a query for context type 'Pegasus_backend.pegasusContext.ablemusicContext'.
+System.InvalidOperationException: No coercion operator is defined between types 'System.Int16' and 'System.Boolean'.
+   at System.Linq.Expressions.Expression.GetUserDefinedCoercionOrThrow(ExpressionType coercionType, Expression expression, Type convertToType)
+   at System.Linq.Expressions.Expression.Convert(Expression expression, Type type, MethodInfo method)
+   at System.Linq.Expressions.Expression.Convert(Expression expression, Type type)
+   at Microsoft.EntityFrameworkCore.Storage.TypedRelationalValueBufferFactoryFactory.CreateGetValueExpression(Expression dataReaderExpression, Expression indexExpression, TypeMaterializationInfo materializationInfo, Boolean box)
+   at Microsoft.EntityFrameworkCore.Storage.TypedRelationalValueBufferFactoryFactory.<>c.<CreateArrayInitializer>b__12_0(TypeMaterializationInfo mi, Int32 i)
+   at System.Linq.Enumerable.SelectIterator[TSource,TResult](IEnumerable`1 source, Func`3 selector)+MoveNext()
+   at System.Collections.Generic.LargeArrayBuilder`1.AddRange(IEnumerable`1 items)
+   at System.Collections.Generic.EnumerableHelpers.ToArray[T](IEnumerable`1 source)
+   at System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   at System.Dynamic.Utils.CollectionExtensions.ToReadOnly[T](IEnumerable`1 enumerable)
+   at System.Linq.Expressions.Expression.NewArrayInit(Type type, IEnumerable`1 initializers)
+   at Microsoft.EntityFrameworkCore.Storage.TypedRelationalValueBufferFactoryFactory.CreateArrayInitializer(CacheKey cacheKey)
+   at Microsoft.EntityFrameworkCore.Storage.TypedRelationalValueBufferFactoryFactory.<Create>b__10_0(CacheKey k)
+   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+   at Microsoft.EntityFrameworkCore.Storage.TypedRelationalValueBufferFactoryFactory.Create(IReadOnlyList`1 types)
+   at Microsoft.EntityFrameworkCore.Query.Sql.DefaultQuerySqlGenerator.CreateValueBufferFactory(IRelationalValueBufferFactoryFactory relationalValueBufferFactoryFactory, DbDataReader dataReader)
+   at Microsoft.EntityFrameworkCore.Query.Internal.ShaperCommandContext.<NotifyReaderCreated>b__14_0(FactoryAndReader s)
+   at Microsoft.EntityFrameworkCore.Internal.NonCapturingLazyInitializer.EnsureInitialized[TParam,TValue](TValue& target, TParam param, Func`2 valueFactory)
+   at Microsoft.EntityFrameworkCore.Query.Internal.ShaperCommandContext.NotifyReaderCreated(DbDataReader dataReader)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.BufferlessMoveNext(DbContext _, Boolean buffer, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.MoveNext(CancellationToken cancellationToken)
+   at System.Linq.AsyncEnumerable.WhereSelectEnumerableAsyncIterator`2.MoveNextCore(CancellationToken cancellationToken)
+   at System.Linq.AsyncEnumerable.AsyncIterator`1.MoveNext(CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncLinqOperatorProvider.ExceptionInterceptor`1.EnumeratorExceptionInterceptor.MoveNext(CancellationToken cancellationToken)
+System.InvalidOperationException: No coercion operator is defined between types 'System.Int16' and 'System.Boolean'.
+   at System.Linq.Expressions.Expression.GetUserDefinedCoercionOrThrow(ExpressionType coercionType, Expression expression, Type convertToType)
+   at System.Linq.Expressions.Expression.Convert(Expression expression, Type type, MethodInfo method)
+   at System.Linq.Expressions.Expression.Convert(Expression expression, Type type)
+   at Microsoft.EntityFrameworkCore.Storage.TypedRelationalValueBufferFactoryFactory.CreateGetValueExpression(Expression dataReaderExpression, Expression indexExpression, TypeMaterializationInfo materializationInfo, Boolean box)
+   at Microsoft.EntityFrameworkCore.Storage.TypedRelationalValueBufferFactoryFactory.<>c.<CreateArrayInitializer>b__12_0(TypeMaterializationInfo mi, Int32 i)
+   at System.Linq.Enumerable.SelectIterator[TSource,TResult](IEnumerable`1 source, Func`3 selector)+MoveNext()
+   at System.Collections.Generic.LargeArrayBuilder`1.AddRange(IEnumerable`1 items)
+   at System.Collections.Generic.EnumerableHelpers.ToArray[T](IEnumerable`1 source)
+   at System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   at System.Dynamic.Utils.CollectionExtensions.ToReadOnly[T](IEnumerable`1 enumerable)
+   at System.Linq.Expressions.Expression.NewArrayInit(Type type, IEnumerable`1 initializers)
+   at Microsoft.EntityFrameworkCore.Storage.TypedRelationalValueBufferFactoryFactory.CreateArrayInitializer(CacheKey cacheKey)
+   at Microsoft.EntityFrameworkCore.Storage.TypedRelationalValueBufferFactoryFactory.<Create>b__10_0(CacheKey k)
+   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+   at Microsoft.EntityFrameworkCore.Storage.TypedRelationalValueBufferFactoryFactory.Create(IReadOnlyList`1 types)
+   at Microsoft.EntityFrameworkCore.Query.Sql.DefaultQuerySqlGenerator.CreateValueBufferFactory(IRelationalValueBufferFactoryFactory relationalValueBufferFactoryFactory, DbDataReader dataReader)
+   at Microsoft.EntityFrameworkCore.Query.Internal.ShaperCommandContext.<NotifyReaderCreated>b__14_0(FactoryAndReader s)
+   at Microsoft.EntityFrameworkCore.Internal.NonCapturingLazyInitializer.EnsureInitialized[TParam,TValue](TValue& target, TParam param, Func`2 valueFactory)
+   at Microsoft.EntityFrameworkCore.Query.Internal.ShaperCommandContext.NotifyReaderCreated(DbDataReader dataReader)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.BufferlessMoveNext(DbContext _, Boolean buffer, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.MoveNext(CancellationToken cancellationToken)
+   at System.Linq.AsyncEnumerable.WhereSelectEnumerableAsyncIterator`2.MoveNextCore(CancellationToken cancellationToken)
+   at System.Linq.AsyncEnumerable.AsyncIterator`1.MoveNext(CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncLinqOperatorProvider.ExceptionInterceptor`1.EnumeratorExceptionInterceptor.MoveNext(CancellationToken cancellationToken)
+2019-06-26 21:07:36.457 +12:00 [INF] Executed action method Pegasus_backend.Controllers.LessonController.GetLessonsForReceptionist (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.BadRequestObjectResult in 2026.2528000000002ms.
+2019-06-26 21:07:36.464 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-06-26 21:07:36.502 +12:00 [INF] Executed action Pegasus_backend.Controllers.LessonController.GetLessonsForReceptionist (Pegasus_backend) in 2193.5364ms
+2019-06-26 21:07:36.505 +12:00 [INF] Request finished in 2368.2786ms 400 application/json; charset=utf-8
+2019-06-26 21:07:36.512 +12:00 [INF] Connection id "0HLNQ2MSVDPTM", Request id "0HLNQ2MSVDPTM:00000001": the application completed without reading the entire request body.
+2019-06-26 21:09:50.169 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-06-26 21:09:53.882 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/lesson/GetLessonsForReceptionist/3/2019-06-26 application/json 48
+2019-06-26 21:09:53.913 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-06-26 21:09:54.041 +12:00 [INF] Route matched with {action = "GetLessonsForReceptionist", controller = "Lesson"}. Executing action Pegasus_backend.Controllers.LessonController.GetLessonsForReceptionist (Pegasus_backend)
+2019-06-26 21:09:54.155 +12:00 [INF] Executing action method Pegasus_backend.Controllers.LessonController.GetLessonsForReceptionist (Pegasus_backend) with arguments (["3","06/26/2019 00:00:00"]) - Validation state: "Valid"
+2019-06-26 21:09:54.900 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-06-26 21:09:55.650 +12:00 [INF] Executed DbCommand (42ms) [Parameters=[@__8__locals1_userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`staff_id`, `s`.`dob`, `s`.`email`, `s`.`expiry_date`, `s`.`first_name`, `s`.`gender`, `s`.`home_phone`, `s`.`id_number`, `s`.`id_photo`, `s`.`id_type`, `s`.`ird_number`, `s`.`is_activate`, `s`.`last_name`, `s`.`mobile_phone`, `s`.`photo`, `s`.`user_id`, `s`.`visa`
+FROM `ablemusic`.`staff` AS `s`
+WHERE `s`.`user_id` = @__8__locals1_userId_0
+LIMIT 1
+2019-06-26 21:09:55.822 +12:00 [INF] Executed DbCommand (36ms) [Parameters=[@__staff_StaffId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`staff_org_id`, `s`.`is_activate`, `s`.`org_id`, `s`.`staff_id`
+FROM `ablemusic`.`staff_org` AS `s`
+WHERE `s`.`staff_id` = @__staff_StaffId_0
+LIMIT 1
+2019-06-26 21:09:55.871 +12:00 [WRN] The Include operation for navigation '[s].CourseInstance' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:09:55.872 +12:00 [WRN] The Include operation for navigation '[s].Learner' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:09:55.872 +12:00 [WRN] The Include operation for navigation '[s].Teacher' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:09:55.873 +12:00 [WRN] The Include operation for navigation '[s].Room' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:09:55.873 +12:00 [WRN] The Include operation for navigation '[s].Org' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:09:55.873 +12:00 [WRN] The Include operation for navigation '[s].TrialCourse' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:09:55.873 +12:00 [WRN] The Include operation for navigation '[s].GroupCourseInstance.LearnerGroupCourse.Learner' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-06-26 21:09:55.930 +12:00 [WRN] The LINQ expression 'where ((((Convert(Convert([s].OrgId, Int32), Nullable`1) == Convert(__orgId_0, Nullable`1)) AndAlso (Convert([s].BeginTime, DateTime).Year == __8__locals1_date_Year_1)) AndAlso (Convert([s].BeginTime, DateTime).Month == __8__locals1_date_Month_2)) AndAlso (Convert([s].BeginTime, DateTime).Day == __8__locals1_date_Day_3))' could not be translated and will be evaluated locally.
+2019-06-26 21:09:56.098 +12:00 [INF] Executed DbCommand (42ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.CourseInstance`.`course_instance_id`, `s.CourseInstance`.`begin_date`, `s.CourseInstance`.`course_id`, `s.CourseInstance`.`end_date`, `s.CourseInstance`.`invoice_date`, `s.CourseInstance`.`learner_id`, `s.CourseInstance`.`org_id`, `s.CourseInstance`.`room_id`, `s.CourseInstance`.`teacher_id`, `s.GroupCourseInstance`.`group_course_instance_id`, `s.GroupCourseInstance`.`begin_date`, `s.GroupCourseInstance`.`course_id`, `s.GroupCourseInstance`.`end_date`, `s.GroupCourseInstance`.`is_activate`, `s.GroupCourseInstance`.`is_started`, `s.GroupCourseInstance`.`org_id`, `s.GroupCourseInstance`.`room_id`, `s.GroupCourseInstance`.`teacher_id`, `s`.`org_id` AS `OrgId`, `s`.`begin_time` AS `start`, `s`.`lesson_id` AS `id`, `s`.`room_id` AS `resourceId`, `s`.`end_time` AS `end`, `s.Teacher`.`first_name` AS `TeacherName`, `s`.`course_instance_id`, CASE
+    WHEN ((
+        SELECT `q1`.`balance`
+        FROM `ablemusic`.`fund` AS `q1`
+        WHERE `q1`.`learner_id` = `s`.`learner_id`
+        LIMIT 1
+    ) - (
+        SELECT `q2`.`price`
+        FROM `ablemusic`.`course` AS `q2`
+        WHERE `q2`.`course_id` = `s.CourseInstance`.`course_id`
+        LIMIT 1
+    )) <= 0
+    THEN ('1') ELSE ('0')
+END, `s.Learner`.`first_name`, `s.Room`.`room_name` AS `RoomName`, `s.Org`.`org_name` AS `OrgName`, `s`.`teacher_id` AS `TeacherId`, `s.GroupCourseInstance.Course`.`course_name`, `s.TrialCourse`.`course_name`, `s.CourseInstance.Course`.`course_name`, `s.GroupCourseInstance.Course`.`course_id`, `s`.`trial_course_id`, `s.CourseInstance.Course`.`course_id`, `s`.`learner_id` AS `LearnerId`
+FROM `ablemusic`.`lesson` AS `s`
+LEFT JOIN `ablemusic`.`course` AS `s.TrialCourse` ON `s`.`trial_course_id` = `s.TrialCourse`.`course_id`
+INNER JOIN `ablemusic`.`org` AS `s.Org` ON `s`.`org_id` = `s.Org`.`org_id`
+LEFT JOIN `ablemusic`.`room` AS `s.Room` ON `s`.`room_id` = `s.Room`.`room_id`
+LEFT JOIN `ablemusic`.`learner` AS `s.Learner` ON `s`.`learner_id` = `s.Learner`.`learner_id`
+LEFT JOIN `ablemusic`.`teacher` AS `s.Teacher` ON `s`.`teacher_id` = `s.Teacher`.`teacher_id`
+LEFT JOIN `ablemusic`.`one2one_course_instance` AS `s.CourseInstance` ON `s`.`course_instance_id` = `s.CourseInstance`.`course_instance_id`
+LEFT JOIN `ablemusic`.`course` AS `s.CourseInstance.Course` ON `s.CourseInstance`.`course_id` = `s.CourseInstance.Course`.`course_id`
+LEFT JOIN `ablemusic`.`group_course_instance` AS `s.GroupCourseInstance` ON `s`.`group_course_instance_id` = `s.GroupCourseInstance`.`group_course_instance_id`
+LEFT JOIN `ablemusic`.`course` AS `s.GroupCourseInstance.Course` ON `s.GroupCourseInstance`.`course_id` = `s.GroupCourseInstance.Course`.`course_id`
+WHERE ((`s`.`is_canceled` <> 1) OR `s`.`is_canceled` IS NULL) AND ((`s`.`is_confirm` <> 1) OR `s`.`is_confirm` IS NULL)
+2019-06-26 21:09:56.136 +12:00 [ERR] An exception occurred in the database while iterating the results of a query for context type 'Pegasus_backend.pegasusContext.ablemusicContext'.
+System.InvalidOperationException: No coercion operator is defined between types 'System.Int16' and 'System.Boolean'.
+   at System.Linq.Expressions.Expression.GetUserDefinedCoercionOrThrow(ExpressionType coercionType, Expression expression, Type convertToType)
+   at System.Linq.Expressions.Expression.Convert(Expression expression, Type type, MethodInfo method)
+   at System.Linq.Expressions.Expression.Convert(Expression expression, Type type)
+   at Microsoft.EntityFrameworkCore.Storage.TypedRelationalValueBufferFactoryFactory.CreateGetValueExpression(Expression dataReaderExpression, Expression indexExpression, TypeMaterializationInfo materializationInfo, Boolean box)
+   at Microsoft.EntityFrameworkCore.Storage.TypedRelationalValueBufferFactoryFactory.<>c.<CreateArrayInitializer>b__12_0(TypeMaterializationInfo mi, Int32 i)
+   at System.Linq.Enumerable.SelectIterator[TSource,TResult](IEnumerable`1 source, Func`3 selector)+MoveNext()
+   at System.Collections.Generic.LargeArrayBuilder`1.AddRange(IEnumerable`1 items)
+   at System.Collections.Generic.EnumerableHelpers.ToArray[T](IEnumerable`1 source)
+   at System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   at System.Dynamic.Utils.CollectionExtensions.ToReadOnly[T](IEnumerable`1 enumerable)
+   at System.Linq.Expressions.Expression.NewArrayInit(Type type, IEnumerable`1 initializers)
+   at Microsoft.EntityFrameworkCore.Storage.TypedRelationalValueBufferFactoryFactory.CreateArrayInitializer(CacheKey cacheKey)
+   at Microsoft.EntityFrameworkCore.Storage.TypedRelationalValueBufferFactoryFactory.<Create>b__10_0(CacheKey k)
+   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+   at Microsoft.EntityFrameworkCore.Storage.TypedRelationalValueBufferFactoryFactory.Create(IReadOnlyList`1 types)
+   at Microsoft.EntityFrameworkCore.Query.Sql.DefaultQuerySqlGenerator.CreateValueBufferFactory(IRelationalValueBufferFactoryFactory relationalValueBufferFactoryFactory, DbDataReader dataReader)
+   at Microsoft.EntityFrameworkCore.Query.Internal.ShaperCommandContext.<NotifyReaderCreated>b__14_0(FactoryAndReader s)
+   at Microsoft.EntityFrameworkCore.Internal.NonCapturingLazyInitializer.EnsureInitialized[TParam,TValue](TValue& target, TParam param, Func`2 valueFactory)
+   at Microsoft.EntityFrameworkCore.Query.Internal.ShaperCommandContext.NotifyReaderCreated(DbDataReader dataReader)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.BufferlessMoveNext(DbContext _, Boolean buffer, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.MoveNext(CancellationToken cancellationToken)
+   at System.Linq.AsyncEnumerable.WhereSelectEnumerableAsyncIterator`2.MoveNextCore(CancellationToken cancellationToken)
+   at System.Linq.AsyncEnumerable.AsyncIterator`1.MoveNext(CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncLinqOperatorProvider.ExceptionInterceptor`1.EnumeratorExceptionInterceptor.MoveNext(CancellationToken cancellationToken)
+System.InvalidOperationException: No coercion operator is defined between types 'System.Int16' and 'System.Boolean'.
+   at System.Linq.Expressions.Expression.GetUserDefinedCoercionOrThrow(ExpressionType coercionType, Expression expression, Type convertToType)
+   at System.Linq.Expressions.Expression.Convert(Expression expression, Type type, MethodInfo method)
+   at System.Linq.Expressions.Expression.Convert(Expression expression, Type type)
+   at Microsoft.EntityFrameworkCore.Storage.TypedRelationalValueBufferFactoryFactory.CreateGetValueExpression(Expression dataReaderExpression, Expression indexExpression, TypeMaterializationInfo materializationInfo, Boolean box)
+   at Microsoft.EntityFrameworkCore.Storage.TypedRelationalValueBufferFactoryFactory.<>c.<CreateArrayInitializer>b__12_0(TypeMaterializationInfo mi, Int32 i)
+   at System.Linq.Enumerable.SelectIterator[TSource,TResult](IEnumerable`1 source, Func`3 selector)+MoveNext()
+   at System.Collections.Generic.LargeArrayBuilder`1.AddRange(IEnumerable`1 items)
+   at System.Collections.Generic.EnumerableHelpers.ToArray[T](IEnumerable`1 source)
+   at System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   at System.Dynamic.Utils.CollectionExtensions.ToReadOnly[T](IEnumerable`1 enumerable)
+   at System.Linq.Expressions.Expression.NewArrayInit(Type type, IEnumerable`1 initializers)
+   at Microsoft.EntityFrameworkCore.Storage.TypedRelationalValueBufferFactoryFactory.CreateArrayInitializer(CacheKey cacheKey)
+   at Microsoft.EntityFrameworkCore.Storage.TypedRelationalValueBufferFactoryFactory.<Create>b__10_0(CacheKey k)
+   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+   at Microsoft.EntityFrameworkCore.Storage.TypedRelationalValueBufferFactoryFactory.Create(IReadOnlyList`1 types)
+   at Microsoft.EntityFrameworkCore.Query.Sql.DefaultQuerySqlGenerator.CreateValueBufferFactory(IRelationalValueBufferFactoryFactory relationalValueBufferFactoryFactory, DbDataReader dataReader)
+   at Microsoft.EntityFrameworkCore.Query.Internal.ShaperCommandContext.<NotifyReaderCreated>b__14_0(FactoryAndReader s)
+   at Microsoft.EntityFrameworkCore.Internal.NonCapturingLazyInitializer.EnsureInitialized[TParam,TValue](TValue& target, TParam param, Func`2 valueFactory)
+   at Microsoft.EntityFrameworkCore.Query.Internal.ShaperCommandContext.NotifyReaderCreated(DbDataReader dataReader)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.BufferlessMoveNext(DbContext _, Boolean buffer, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.MoveNext(CancellationToken cancellationToken)
+   at System.Linq.AsyncEnumerable.WhereSelectEnumerableAsyncIterator`2.MoveNextCore(CancellationToken cancellationToken)
+   at System.Linq.AsyncEnumerable.AsyncIterator`1.MoveNext(CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncLinqOperatorProvider.ExceptionInterceptor`1.EnumeratorExceptionInterceptor.MoveNext(CancellationToken cancellationToken)
+2019-06-26 21:09:56.141 +12:00 [INF] Executed action method Pegasus_backend.Controllers.LessonController.GetLessonsForReceptionist (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.BadRequestObjectResult in 1974.7732ms.
+2019-06-26 21:09:56.147 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-06-26 21:09:56.180 +12:00 [INF] Executed action Pegasus_backend.Controllers.LessonController.GetLessonsForReceptionist (Pegasus_backend) in 2137.1277ms
+2019-06-26 21:09:56.184 +12:00 [INF] Request finished in 2302.8922ms 400 application/json; charset=utf-8
+2019-06-26 21:09:56.191 +12:00 [INF] Connection id "0HLNQ2O6K39OS", Request id "0HLNQ2O6K39OS:00000001": the application completed without reading the entire request body.
