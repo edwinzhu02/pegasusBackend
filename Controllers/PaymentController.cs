@@ -723,5 +723,41 @@ namespace Pegasus_backend.Controllers
                 return BadRequest(result);
             }
         }
+
+        [HttpPut("{paymentId}")]
+        public async Task<IActionResult> Put(int paymentId)
+        {
+            var result = new Result<Payment>();
+            var payment = new Payment();
+            try
+            {
+                payment = await _ablemusicContext.Payment.Where(p => p.PaymentId == paymentId).FirstOrDefaultAsync();
+            }
+            catch(Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+            if(payment == null)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = "payment not found";
+                return BadRequest(result);
+            }
+            payment.IsConfirmed = 1;
+            try
+            {
+                await _ablemusicContext.SaveChangesAsync();
+            }
+            catch(Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+            result.Data = payment;
+            return Ok(result);
+        }
     }
 }
