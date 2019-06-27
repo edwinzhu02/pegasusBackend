@@ -722,7 +722,7 @@ namespace Pegasus_backend.Controllers
         }
 
         [HttpPut("{paymentId}")]
-        public async Task<IActionResult> Put(int paymentId)
+        public async Task<IActionResult> Put(int paymentId,[FromBody] string comment)
         {
             var result = new Result<Payment>();
             var payment = new Payment();
@@ -743,6 +743,7 @@ namespace Pegasus_backend.Controllers
                 return BadRequest(result);
             }
             payment.IsConfirmed = 1;
+            payment.Comment = comment;
             try
             {
                 await _ablemusicContext.SaveChangesAsync();
