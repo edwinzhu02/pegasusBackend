@@ -598,3 +598,40 @@ LIMIT 1
 2019-06-27 14:12:27.820 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
 2019-06-27 14:12:27.855 +12:00 [WRN] Failed to determine the https port for redirect.
 2019-06-27 14:12:28.047 +12:00 [INF] Request finished in 227.6656ms 404 
+2019-06-27 14:20:11.668 +12:00 [INF] User profile is available. Using 'C:\Users\Learnspace\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-06-27 14:20:13.090 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
+2019-06-27 14:20:13.127 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-06-27 14:20:13.329 +12:00 [INF] Request finished in 241.7823ms 404 
+2019-06-27 14:20:40.318 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/index.html  
+2019-06-27 14:20:40.429 +12:00 [INF] Request finished in 111.4763ms 200 text/html
+2019-06-27 14:20:40.457 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/swagger-ui.css  
+2019-06-27 14:20:40.465 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/swagger-ui-standalone-preset.js  
+2019-06-27 14:20:40.465 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/swagger-ui-bundle.js  
+2019-06-27 14:20:40.519 +12:00 [INF] Sending file. Request path: '/swagger-ui.css'. Physical path: 'N/A'
+2019-06-27 14:20:40.522 +12:00 [INF] Sending file. Request path: '/swagger-ui-standalone-preset.js'. Physical path: 'N/A'
+2019-06-27 14:20:40.532 +12:00 [INF] Request finished in 74.8866ms 200 text/css
+2019-06-27 14:20:40.532 +12:00 [INF] Request finished in 72.4439ms 200 application/javascript
+2019-06-27 14:20:40.549 +12:00 [INF] Sending file. Request path: '/swagger-ui-bundle.js'. Physical path: 'N/A'
+2019-06-27 14:20:40.550 +12:00 [INF] Request finished in 84.3326ms 200 application/javascript
+2019-06-27 14:20:41.016 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/v1/swagger.json  
+2019-06-27 14:20:41.090 +12:00 [ERR] An unhandled exception has occurred while executing the request.
+System.NotSupportedException: Ambiguous HTTP method for action - Pegasus_backend.Controllers.MobileControllers.ChatController.SeparateCourseIntoGroups (Pegasus_backend). Actions require an explicit HttpMethod binding for Swagger 2.0
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.CreatePathItem(IEnumerable`1 apiDescriptions, ISchemaRegistry schemaRegistry)
+   at System.Linq.Enumerable.ToDictionary[TSource,TKey,TElement](IEnumerable`1 source, Func`2 keySelector, Func`2 elementSelector, IEqualityComparer`1 comparer)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.CreatePathItems(IEnumerable`1 apiDescriptions, ISchemaRegistry schemaRegistry)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GetSwagger(String documentName, String host, String basePath, String[] schemes)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2019-06-27 14:20:41.149 +12:00 [INF] Request finished in 133.0411ms 500 text/html; charset=utf-8
+2019-06-27 14:21:51.092 +12:00 [INF] User profile is available. Using 'C:\Users\Learnspace\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-06-27 14:21:52.014 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
+2019-06-27 14:21:52.049 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-06-27 14:21:52.242 +12:00 [INF] Request finished in 229.5866ms 404 
+2019-06-27 14:21:55.073 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/index.html  
+2019-06-27 14:21:55.185 +12:00 [INF] Request finished in 112.0463ms 200 text/html
+2019-06-27 14:21:55.366 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/v1/swagger.json  
+2019-06-27 14:21:55.372 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/favicon-32x32.png  
+2019-06-27 14:21:55.382 +12:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+2019-06-27 14:21:55.382 +12:00 [INF] Request finished in 10.3949ms 200 image/png
+2019-06-27 14:21:55.684 +12:00 [INF] Request finished in 318.3414ms 200 application/json;charset=utf-8

@@ -138,7 +138,7 @@ namespace Pegasus_backend.Controllers.MobileControllers
         // if role = student, => getRelatedTeachers (only find the available courses)
         // if role = stuff, => get all the available courses of same org
 
-        public Tuple<List<Lesson>, List<Lesson>> SeparateCourseIntoGroups(List<Lesson> lessonList)
+        private Tuple<List<Lesson>, List<Lesson>> SeparateCourseIntoGroups(List<Lesson> lessonList)
         {
             List<Lesson> oneToOneLessons = new List<Lesson>();
             List<Lesson> groupLessons = new List<Lesson>();
