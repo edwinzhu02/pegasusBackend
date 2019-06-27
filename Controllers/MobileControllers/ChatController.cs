@@ -19,7 +19,6 @@ namespace Pegasus_backend.Controllers.MobileControllers
     [ApiController]
     public class ChatController : BasicController
     {
-        private readonly pegasusContext.ablemusicContext _pegasusContext;
         private readonly IMapper _mapper;
 
 
@@ -34,13 +33,13 @@ namespace Pegasus_backend.Controllers.MobileControllers
         public async Task<IActionResult> GetChatListOfTeacher(int id)
         {
             Result<IEnumerable<Lesson>> result = new Result<IEnumerable<Lesson>>();
-            var teacherDetail = await _pegasusContext.Teacher.Where(x => x.UserId == id).FirstOrDefaultAsync();
+            var teacherDetail = await _ablemusicContext.Teacher.Where(x => x.UserId == id).FirstOrDefaultAsync();
             if (teacherDetail == null)
             {
                 return NotFound("No such a teacher");
             }
             // find available courses of teacher
-            var lessionsOfTeacher = await _pegasusContext.Lesson
+            var lessionsOfTeacher = await _ablemusicContext.Lesson
                 .Where(x => x.TeacherId == teacherDetail.TeacherId && x.IsCanceled == 0 && x.IsTrial == 0 && x.EndTime >= DateTime.Now)
                 .Include(x=>x.Learner)
                 .Select(x => x).ToListAsync();
@@ -63,13 +62,13 @@ namespace Pegasus_backend.Controllers.MobileControllers
         public async Task<IActionResult> GetRelatedTeacher(int id)
         {
             Result<List<Teacher>> result = new Result<List<Teacher>>();
-            var learnerDetail = await _pegasusContext.Learner.Where(x => x.UserId == id).FirstOrDefaultAsync();
+            var learnerDetail = await _ablemusicContext.Learner.Where(x => x.UserId == id).FirstOrDefaultAsync();
             if (learnerDetail == null)
             {
                 return NotFound("No such a learner");
             }
 
-            var teachers = await _pegasusContext.Lesson.Where(x => x.LearnerId == learnerDetail.LearnerId).Select(x => x).ToListAsync();
+            var teachers = await _ablemusicContext.Lesson.Where(x => x.LearnerId == learnerDetail.LearnerId).Select(x => x).ToListAsync();
             if (teachers == null)
             {
                 return NotFound("No teachers yet");
@@ -88,7 +87,7 @@ namespace Pegasus_backend.Controllers.MobileControllers
             List<Teacher> teacherList = new List<Teacher>();
             foreach (var Id in teacherIdList)
             {
-                var detail = await _pegasusContext.Teacher.Where(x => x.TeacherId == Id)
+                var detail = await _ablemusicContext.Teacher.Where(x => x.TeacherId == Id)
                     .FirstOrDefaultAsync();
                 if (detail != null)
                 {
@@ -119,8 +118,8 @@ namespace Pegasus_backend.Controllers.MobileControllers
             try
             {
                 _mapper.Map(chatMessageModel, chatMessage);
-                await _pegasusContext.ChatMessage.AddAsync(chatMessage);
-                await _pegasusContext.SaveChangesAsync();
+                await _ablemusicContext.ChatMessage.AddAsync(chatMessage);
+                await _ablemusicContext.SaveChangesAsync();
             }
             catch (Exception e)
             {
