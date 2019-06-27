@@ -18,6 +18,31 @@ namespace Pegasus_backend.Controllers
         {
         }
 
+       [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteStock(int id)
+        {
+            Result<string> result = new Result<string>();
+            try
+            {
+                var stock = await _ablemusicContext.Stock.FirstOrDefaultAsync(s => s.StockId == id);
+                if (stock == null)
+                {
+                    throw new Exception("Learner does not exist");
+                }
+                _ablemusicContext.Remove(stock);
+                await _ablemusicContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+
+            result.Data = "delete successfully";
+            return Ok(result);
+        }
+
         // GET: api/Stock
         [HttpGet]
         public async Task<IActionResult> Get()
