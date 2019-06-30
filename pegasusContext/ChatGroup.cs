@@ -10,8 +10,10 @@ namespace Pegasus_backend.pegasusContext
             ChatMessage = new HashSet<ChatMessage>();
         }
 
-        public int ChatGroupId { get; set; }
+        public string ChatGroupId { get; set; }
         public short? UserId { get; set; }
+        public DateTime? CreatedAt { get; set; }
+        public short? IsActive { get; set; }
 
         public User User { get; set; }
         public ICollection<ChatMessage> ChatMessage { get; set; }
