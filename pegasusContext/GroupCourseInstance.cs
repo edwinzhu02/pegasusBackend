@@ -24,6 +24,7 @@ namespace Pegasus_backend.pegasusContext
         public int GroupCourseInstanceId { get; set; }
         public short? IsActivate { get; set; }
         public short? IsStarted { get; set; }
+        public DateTime? InvoiceDate { get; set; }
 
         public Course Course { get; set; }
         public Org Org { get; set; }
