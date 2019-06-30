@@ -9,7 +9,8 @@ namespace Pegasus_backend.pegasusContext
         {
             AskOff = new HashSet<AskOff>();
             ChatGroup = new HashSet<ChatGroup>();
-            ChatMessage = new HashSet<ChatMessage>();
+            ChatMessageReceiverUser = new HashSet<ChatMessage>();
+            ChatMessageSenderUser = new HashSet<ChatMessage>();
             Learner = new HashSet<Learner>();
             LoginLog = new HashSet<LoginLog>();
             Staff = new HashSet<Staff>();
@@ -29,7 +30,8 @@ namespace Pegasus_backend.pegasusContext
         public OnlineUser OnlineUser { get; set; }
         public ICollection<AskOff> AskOff { get; set; }
         public ICollection<ChatGroup> ChatGroup { get; set; }
-        public ICollection<ChatMessage> ChatMessage { get; set; }
+        public ICollection<ChatMessage> ChatMessageReceiverUser { get; set; }
+        public ICollection<ChatMessage> ChatMessageSenderUser { get; set; }
         public ICollection<Learner> Learner { get; set; }
         public ICollection<LoginLog> LoginLog { get; set; }
         public ICollection<Staff> Staff { get; set; }
