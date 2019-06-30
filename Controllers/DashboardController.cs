@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Pegasus_backend.pegasusContext;
 using Pegasus_backend.Models;
 using Pegasus_backend.Services;
+using Pegasus_backend.Utilities;
+
 
 namespace Pegasus_backend.Controllers
 {
@@ -24,35 +25,13 @@ namespace Pegasus_backend.Controllers
         public async Task<IActionResult> Get(string orgIDsStr)
         {
             var result = new Result<Object>();
-            string[] orgIDsArr;
-            List<int> orgIDs = new List<int>();
-            if (orgIDsStr.Length <= 0)
+            var orgIDsConvertResult = orgIDsStr.ToListOfID();
+            if (!orgIDsConvertResult.IsSuccess)
             {
-                orgIDsArr = new string[] { };
-                result.IsSuccess = false;
-                result.ErrorMessage = "orgID is required";
-                return BadRequest(result);
-            } else if(orgIDsStr.Length == 1)
-            {
-                orgIDsArr = new string[] { orgIDsStr };
-            } else
-            {
-                orgIDsArr = orgIDsStr.Split(new char[] { ',' });
-            }
-            for (var i = 0; i < orgIDsArr.Length; i++)
-            {
-                try
-                {
-                    orgIDs.Add(Int32.Parse(orgIDsArr[i]));
-                }
-                catch (Exception ex)
-                {
-                    result.IsSuccess = false;
-                    result.ErrorMessage = ex.Message;
-                    return BadRequest(result);
-                }
+                return BadRequest(orgIDsConvertResult);
             }
 
+            List<int> orgIDs = orgIDsConvertResult.Data;
             var dashboardService = new DashboardService(_ablemusicContext, _log, orgIDs);
 
             var lessonsForToday = await dashboardService.getLessonsForToday();

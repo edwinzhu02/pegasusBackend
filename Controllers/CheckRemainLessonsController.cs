@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Pegasus_backend.Models;
 using Pegasus_backend.pegasusContext;
 using Microsoft.Extensions.Logging;
+using Pegasus_backend.Utilities;
 
 namespace Pegasus_backend.Controllers
 {
@@ -23,36 +24,12 @@ namespace Pegasus_backend.Controllers
         public async Task<IActionResult> Get(string orgIDsStr, int termId)
         {
             var result = new Result<Dictionary<string, object>>();
-            string[] orgIDsArr;
-            List<int> orgIDs = new List<int>();
-            if (orgIDsStr.Length <= 0)
+            var orgIDsConvertResult = orgIDsStr.ToListOfID();
+            if (!orgIDsConvertResult.IsSuccess)
             {
-                orgIDsArr = new string[] { };
-                result.IsSuccess = false;
-                result.ErrorMessage = "orgID is required";
-                return BadRequest(result);
+                return BadRequest(orgIDsConvertResult);
             }
-            else if (orgIDsStr.Length == 1)
-            {
-                orgIDsArr = new string[] { orgIDsStr };
-            }
-            else
-            {
-                orgIDsArr = orgIDsStr.Split(new char[] { ',' });
-            }
-            for (var i = 0; i < orgIDsArr.Length; i++)
-            {
-                try
-                {
-                    orgIDs.Add(Int32.Parse(orgIDsArr[i]));
-                }
-                catch (Exception ex)
-                {
-                    result.IsSuccess = false;
-                    result.ErrorMessage = ex.Message;
-                    return BadRequest(result);
-                }
-            }
+            var orgIDs = orgIDsConvertResult.Data;            
 
             dynamic invoices;
             List<LessonRemain> lessonRemains;
