@@ -189,12 +189,16 @@ namespace Pegasus_backend.Controllers.MobileControllers
             staffList = await _ablemusicContext.Staff.Where(x=>x.UserId != id).Take(3).ToListAsync();
             
             // all teache teachers
-            List<Teacher> teacherList = new List<Teacher>();
-            teacherList = await _ablemusicContext.Teacher.Take(3).ToListAsync();
+            //List<Teacher> teacherList = new List<Teacher>();
+            var teacherList = await _ablemusicContext.Teacher.Take(3).Select(x => new Teacher 
+                    {TeacherId = x.TeacherId, FirstName = x.FirstName, LastName = x.LastName, Email = x.Email})
+                .ToListAsync();
 
             // Students having lesson in his org
-            var studentsIdHavingLesson = await _ablemusicContext.Lesson.Where(x => x.OrgId == orgIdOfStaff).Take(3).Include(x=>x.Learner)
-                .Select(x => x).Distinct().ToListAsync();
+            var studentsIdHavingLesson = await _ablemusicContext.Lesson.Where(x => x.OrgId == orgIdOfStaff).Take(3)
+                .Include(x=>x.Learner).Select(x => new Lesson 
+                    {LessonId = x.LessonId, LearnerId = x.LearnerId, Learner = x.Learner})
+                .ToListAsync();
 
             // students registered in his org
             var studentsRegisteredIn = await _ablemusicContext.Learner.Where(x=>x.OrgId == orgIdOfStaff).Take(3).ToListAsync();
