@@ -635,3 +635,40 @@ System.NotSupportedException: Ambiguous HTTP method for action - Pegasus_backend
 2019-06-27 14:21:55.382 +12:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
 2019-06-27 14:21:55.382 +12:00 [INF] Request finished in 10.3949ms 200 image/png
 2019-06-27 14:21:55.684 +12:00 [INF] Request finished in 318.3414ms 200 application/json;charset=utf-8
+2019-06-27 14:41:34.069 +12:00 [INF] User profile is available. Using 'C:\Users\Learnspace\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-06-27 14:41:35.353 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
+2019-06-27 14:41:35.387 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-06-27 14:41:35.587 +12:00 [INF] Request finished in 235.9263ms 404 
+2019-06-27 14:42:21.299 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/index.html  
+2019-06-27 14:42:21.398 +12:00 [INF] Request finished in 99.6253ms 200 text/html
+2019-06-27 14:42:21.764 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/v1/swagger.json  
+2019-06-27 14:42:21.773 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/favicon-32x32.png  
+2019-06-27 14:42:21.790 +12:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+2019-06-27 14:42:21.790 +12:00 [INF] Request finished in 17.7006ms 200 image/png
+2019-06-27 14:42:22.139 +12:00 [INF] Request finished in 375.0749ms 200 application/json;charset=utf-8
+2019-06-27 14:48:50.304 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Chat/GetChatListOfTeacher/10092  
+2019-06-27 14:48:50.369 +12:00 [INF] Route matched with {action = "GetChatListOfTeacher", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetChatListOfTeacher(Int32) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-06-27 14:48:50.527 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.GetChatListOfTeacher (Pegasus_backend) - Validation state: "Valid"
+2019-06-27 14:48:51.572 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-06-27 14:48:52.818 +12:00 [INF] Executed DbCommand (68ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`teacher_id`, `x`.`ability`, `x`.`comment`, `x`.`cv_url`, `x`.`dob`, `x`.`email`, `x`.`expiry_date`, `x`.`first_name`, `x`.`form_url`, `x`.`gender`, `x`.`home_phone`, `x`.`id_number`, `x`.`id_photo`, `x`.`id_type`, `x`.`invoice_template`, `x`.`ird_number`, `x`.`is_activate`, `x`.`is_contract`, `x`.`is_left`, `x`.`last_name`, `x`.`level`, `x`.`minimum_hours`, `x`.`mobile_phone`, `x`.`otherfile_url`, `x`.`photo`, `x`.`user_id`, `x`.`visa`
+FROM `ablemusic`.`teacher` AS `x`
+WHERE `x`.`user_id` = @__id_0
+LIMIT 1
+2019-06-27 14:48:52.984 +12:00 [WRN] The LINQ expression 'where ([x].EndTime >= Convert(DateTime.Now, Nullable`1))' could not be translated and will be evaluated locally.
+2019-06-27 14:48:53.220 +12:00 [INF] Executed DbCommand (82ms) [Parameters=[@__teacherDetail_TeacherId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`lesson_id`, `x`.`begin_time`, `x`.`course_instance_id`, `x`.`created_at`, `x`.`end_time`, `x`.`group_course_instance_id`, `x`.`invoice_id`, `x`.`is_canceled`, `x`.`is_changed`, `x`.`is_confirm`, `x`.`is_trial`, `x`.`learner_id`, `x`.`org_id`, `x`.`reason`, `x`.`room_id`, `x`.`teacher_id`, `x`.`trial_course_id`, `x.Learner`.`learner_id`, `x.Learner`.`address`, `x.Learner`.`contact_num`, `x.Learner`.`created_at`, `x.Learner`.`dob`, `x.Learner`.`email`, `x.Learner`.`enroll_date`, `x.Learner`.`first_name`, `x.Learner`.`form_url`, `x.Learner`.`g5_certification`, `x.Learner`.`gender`, `x.Learner`.`is_abrsm_g5`, `x.Learner`.`is_active`, `x.Learner`.`is_under_18`, `x.Learner`.`last_name`, `x.Learner`.`learner_level`, `x.Learner`.`level_type`, `x.Learner`.`middle_name`, `x.Learner`.`note`, `x.Learner`.`org_id`, `x.Learner`.`otherfile_url`, `x.Learner`.`payment_period`, `x.Learner`.`photo`, `x.Learner`.`referrer`, `x.Learner`.`referrer_learner_id`, `x.Learner`.`user_id`
+FROM `ablemusic`.`lesson` AS `x`
+LEFT JOIN `ablemusic`.`learner` AS `x.Learner` ON `x`.`learner_id` = `x.Learner`.`learner_id`
+WHERE ((`x`.`teacher_id` = @__teacherDetail_TeacherId_0) AND (`x`.`is_canceled` = 0)) AND (`x`.`is_trial` = 0)
+2019-06-27 14:48:53.339 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.GetChatListOfTeacher (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 2802.1344ms.
+2019-06-27 14:48:53.347 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Collections.Generic.IEnumerable`1[[Pegasus_backend.pegasusContext.Lesson, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-06-27 14:48:53.402 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.GetChatListOfTeacher (Pegasus_backend) in 3030.5925ms
+2019-06-27 14:48:53.402 +12:00 [INF] Request finished in 3104.2057ms 200 application/json; charset=utf-8
+2019-06-27 15:01:33.798 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/index.html  
+2019-06-27 15:01:33.831 +12:00 [INF] Request finished in 34.7218ms 200 text/html
+2019-06-27 15:01:34.162 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/v1/swagger.json  
+2019-06-27 15:01:34.165 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/favicon-32x32.png  
+2019-06-27 15:01:34.166 +12:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+2019-06-27 15:01:34.166 +12:00 [INF] Request finished in 1.0361ms 200 image/png
+2019-06-27 15:01:34.203 +12:00 [INF] Request finished in 41.1192ms 200 application/json;charset=utf-8
