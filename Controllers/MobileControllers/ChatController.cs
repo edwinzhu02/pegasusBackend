@@ -105,7 +105,7 @@ namespace Pegasus_backend.Controllers.MobileControllers
             return Ok(result);
         }
 
-        http://localhost:5000/api/Chat/GetChattingList/:userId
+        // http://localhost:5000/api/Chat/GetChattingList/:userId
         [Route("[action]/{id}")]
         [HttpGet]
         public async Task<IActionResult> GetChattingList(int id)
@@ -140,7 +140,7 @@ namespace Pegasus_backend.Controllers.MobileControllers
 
                         return Ok(result);
                     }
-                case "student":
+                case "learner":
                     var learnerDetail = await _ablemusicContext.Learner.Where(x => x.UserId == id).FirstOrDefaultAsync();
                     if (learnerDetail == null)
                     {
@@ -160,9 +160,26 @@ namespace Pegasus_backend.Controllers.MobileControllers
 
                         return Ok(result);
                     }
-                //get staff chatting list
+                // get staff chatting list
                 default:
-                    //find staffId
+                    var staffDetail = await _ablemusicContext.Staff.Where(x => x.UserId == id).FirstOrDefaultAsync();
+                    if (staffDetail == null)
+                    {
+                        return NotFound("Can not find staffId");
+                    }
+                    else
+                    {
+                        try
+                        {
+                            result.Data = await GetChatListOfStaff(staffDetail.StaffId);
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e);
+                            throw;
+                        }
+                    }
+
                     break;
             }
 
@@ -171,17 +188,18 @@ namespace Pegasus_backend.Controllers.MobileControllers
 
         public async Task<List<Staff>> GetAllStaff(int? staffId)
         {
-            List<Staff> staffList;
             if (staffId == null)
             {
-                staffList = await _ablemusicContext.Staff.Take(3).ToListAsync();
+               return await _ablemusicContext.Staff.Take(3).ToListAsync();
             }
-            else
-            {
-                staffList = await _ablemusicContext.Staff.Where(x=>x.StaffId != staffId).Take(3).ToListAsync();
-            }
+            return await _ablemusicContext.Staff.Where(x=>x.StaffId != staffId).Take(3).ToListAsync();
+        }
 
-            return staffList;
+        public async Task<List<Teacher>> GetAllTeacher()
+        {
+            return await _ablemusicContext.Teacher.Take(5).Select(x => new Teacher 
+                    {TeacherId = x.TeacherId, FirstName = x.FirstName, LastName = x.LastName, Email = x.Email})
+                .ToListAsync();
         }
 
         public async Task<ChatListModel> GetChatListOfLearner(int learnerId)
@@ -201,7 +219,8 @@ namespace Pegasus_backend.Controllers.MobileControllers
             ChatListModel chatList = new ChatListModel
             {
                 OneToOneCourseList = lessonList["oneToOneLessons"],
-                OneToManyCourseList = lessonList["groupLessons"]
+                OneToManyCourseList = lessonList["groupLessons"],
+                StaffList = await GetAllStaff(null)
             };
             return chatList;
 
@@ -225,7 +244,8 @@ namespace Pegasus_backend.Controllers.MobileControllers
             ChatListModel chatList = new ChatListModel
             {
                 OneToOneCourseList = lessonList["oneToOneLessons"],
-                OneToManyCourseList = lessonList["groupLessons"]
+                OneToManyCourseList = lessonList["groupLessons"],
+                StaffList = await GetAllStaff(null)
             };
             return chatList;
         }
@@ -250,6 +270,34 @@ namespace Pegasus_backend.Controllers.MobileControllers
             allLessons.Add("oneToOneLessons", oneToOneLessons);
             allLessons.Add("groupLessons", groupLessons);
             return allLessons;
+        }
+
+        private async Task<ChatListModel> GetChatListOfStaff(int staffId)
+        {
+            // find org of this stuff
+            var orgIdOfStaff = await _ablemusicContext.StaffOrg.Where(x => x.StaffId == staffId).Select(x=>x.OrgId)
+                .FirstOrDefaultAsync();
+            if (orgIdOfStaff == null)
+            {
+                throw new Exception("Staff's orgId not found");
+            }
+
+            // Students having lesson in his org
+            var studentsIdHavingLesson = await _ablemusicContext.Lesson.Where(x => x.OrgId == orgIdOfStaff).Take(5)
+                .Include(x=>x.Learner).Select(x => x.Learner).Distinct()
+                .ToListAsync();
+
+            // students registered in his org
+            var studentsRegisteredIn = await _ablemusicContext.Learner.Where(x=>x.OrgId == orgIdOfStaff).Take(3).ToListAsync();
+
+            // combine data
+            ChatListModel chatListModel = new ChatListModel
+            {
+                StaffList = await GetAllStaff(staffId),
+                TeacherList = await GetAllTeacher(),
+                LearnerList = studentsIdHavingLesson.Union(studentsRegisteredIn).ToList()
+            };
+            return chatListModel;
         }
     }
 }
