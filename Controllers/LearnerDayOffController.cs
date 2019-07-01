@@ -20,7 +20,7 @@ namespace Pegasus_backend.Controllers
     {
         private readonly IConfiguration _configuration;
 
-        public LearnerDayOffController(ablemusicContext ablemusicContext, ILogger<ValuesController> log, IConfiguration configuration) : base(ablemusicContext, log)
+        public LearnerDayOffController(ablemusicContext ablemusicContext, ILogger<LearnerDayOffController> log, IConfiguration configuration) : base(ablemusicContext, log)
         {
             _configuration = configuration;
         }

@@ -19,7 +19,7 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class SoldTranscationController : BasicController
     {
-    public SoldTranscationController(ablemusicContext ablemusicContext, ILogger<ValuesController> log) : base(ablemusicContext, log)
+    public SoldTranscationController(ablemusicContext ablemusicContext, ILogger<SoldTranscationController> log) : base(ablemusicContext, log)
         {
         }
         //GET: http://localhost:5000/api/SoldTranscation

@@ -20,7 +20,7 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class QualificationsLanguagesOrgsController: BasicController
     {
-        public QualificationsLanguagesOrgsController(ablemusicContext ablemusicContext, ILogger<ValuesController> log) : base(ablemusicContext, log)
+        public QualificationsLanguagesOrgsController(ablemusicContext ablemusicContext, ILogger<QualificationsLanguagesOrgsController> log) : base(ablemusicContext, log)
         {
         }
         

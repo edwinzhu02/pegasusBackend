@@ -23,7 +23,7 @@ namespace Pegasus_backend.Controllers
     {
         
         private readonly IMapper _mapper;
-        public LearnerController(ablemusicContext ablemusicContext, ILogger<ValuesController> log, IMapper mapper) : base(ablemusicContext, log)
+        public LearnerController(ablemusicContext ablemusicContext, ILogger<LearnerController> log, IMapper mapper) : base(ablemusicContext, log)
         {
             _mapper = mapper;
         }
@@ -66,6 +66,10 @@ namespace Pegasus_backend.Controllers
                     .Include(w => w.LearnerOthers)
                     .Include(w=>w.One2oneCourseInstance)
                     .ThenInclude(w=>w.Amendment)
+                    .ThenInclude(w=>w.Room)
+                    .Include(w=>w.One2oneCourseInstance)
+                    .ThenInclude(w=>w.Amendment)
+                    .ThenInclude(w=>w.Teacher)
                     .Include(w => w.One2oneCourseInstance)
                     .ThenInclude(w => w.Org)
                     .Include(w => w.One2oneCourseInstance)

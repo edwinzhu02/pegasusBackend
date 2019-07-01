@@ -20,17 +20,42 @@ namespace Pegasus_backend.Controllers
     public class PaymentController : BasicController
     {
         private IMapper _mapper;
-        public PaymentController(ablemusicContext ablemusicContext, ILogger<ValuesController> log, IMapper mapper) : base(ablemusicContext, log)
+        public PaymentController(ablemusicContext ablemusicContext, ILogger<PaymentController> log, IMapper mapper) : base(ablemusicContext, log)
         {
             _mapper = mapper;
         }
 
 
-        //POST: http://localhost:5000/api/payment/payInvoice
+        [HttpGet("[action]/{staffId}/{beginDate}/{endDate}")]
+        public async Task<IActionResult> PaymentByDate(short staffId,DateTime beginDate, DateTime endDate)
+        {
+            Result<Object> result = new Result<object>();
+            try
+             {
+                var orgs = await _ablemusicContext.StaffOrg.Where(o=>o.StaffId==staffId).Select(o=>o.OrgId).ToListAsync();
+                var payments = await _ablemusicContext.Payment
+                    .Where(d => d.CreatedAt >beginDate && d.CreatedAt <endDate
+                        && orgs.Contains(d.Staff.StaffOrg.FirstOrDefault().OrgId))
+                     .Include(p => p.Invoice)
+                     .Include(p => p.Learner)                     
+                     .Include(p => p.SoldTransaction ).ThenInclude(p => p.Product)
+                     .Include(t => t.Staff ).ToListAsync();
+ //&& orgs.Contains(d.Staff.StaffOrg.FirstOrDefault().OrgId)
+                result.Data = _mapper.Map<List<GetPaymentModel>>(payments);
 
+              }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorCode = ex.Message;
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
         [CheckModelFilter]
         [HttpPost]
         [Route("payInvoice")]
+        
         public async Task<IActionResult> SavePaymentDetails([FromBody] InvoicePay details)
         {
             Result<string> result = new Result<string>();
@@ -694,6 +719,43 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = ex.Message;
                 return BadRequest(result);
             }
+        }
+
+        [HttpPut("{paymentId}")]
+        public async Task<IActionResult> Put(int paymentId,[FromBody] string comment)
+        {
+            var result = new Result<Payment>();
+            var payment = new Payment();
+            try
+            {
+                payment = await _ablemusicContext.Payment.Where(p => p.PaymentId == paymentId).FirstOrDefaultAsync();
+            }
+            catch(Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+            if(payment == null)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = "payment not found";
+                return BadRequest(result);
+            }
+            payment.IsConfirmed = 1;
+            payment.Comment = comment;
+            try
+            {
+                await _ablemusicContext.SaveChangesAsync();
+            }
+            catch(Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+            result.Data = payment;
+            return Ok(result);
         }
     }
 }

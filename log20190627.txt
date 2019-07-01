@@ -1,0 +1,674 @@
+2019-06-27 10:41:02.044 +12:00 [INF] User profile is available. Using 'C:\Users\Learnspace\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-06-27 10:41:28.794 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Payment/PaymentByDate/1/2019-01-01/2019-07-01  
+2019-06-27 10:41:28.838 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-06-27 10:41:29.095 +12:00 [INF] Route matched with {action = "PaymentByDate", controller = "Payment"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] PaymentByDate(Int16, System.DateTime, System.DateTime) on controller Pegasus_backend.Controllers.PaymentController (Pegasus_backend).
+2019-06-27 10:41:29.768 +12:00 [INF] Executing action method Pegasus_backend.Controllers.PaymentController.PaymentByDate (Pegasus_backend) - Validation state: "Valid"
+2019-06-27 10:41:30.802 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-06-27 10:41:32.292 +12:00 [INF] Executed DbCommand (85ms) [Parameters=[@__8__locals1_staffId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `o`.`org_id`
+FROM `ablemusic`.`staff_org` AS `o`
+WHERE `o`.`staff_id` = @__8__locals1_staffId_0
+2019-06-27 10:41:32.342 +12:00 [WRN] Query: '(from StaffOrg <generated>_1 in [d].Staff.StaffOrg select [<generated>_1].OrgId).FirstOrDefault()' uses First/FirstOrDefault/Last/LastOrDefault operation without OrderBy and filter which may lead to unpredictable results.
+2019-06-27 10:41:32.342 +12:00 [WRN] Query: '(from StaffOrg <generated>_1 in [d].Staff.StaffOrg select [<generated>_1].OrgId).FirstOrDefault()' uses First/FirstOrDefault/Last/LastOrDefault operation without OrderBy and filter which may lead to unpredictable results.
+2019-06-27 10:41:32.736 +12:00 [INF] Executed DbCommand (96ms) [Parameters=[@__8__locals1_beginDate_0='?' (DbType = DateTime), @__8__locals1_endDate_1='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+SELECT `d`.`payment_id`, `d`.`after_balance`, `d`.`amount`, `d`.`before_balance`, `d`.`comment`, `d`.`created_at`, `d`.`invoice_id`, `d`.`is_confirmed`, `d`.`learner_id`, `d`.`payment_method`, `d`.`payment_type`, `d`.`staff_id`, `d.Learner`.`learner_id`, `d.Learner`.`address`, `d.Learner`.`contact_num`, `d.Learner`.`created_at`, `d.Learner`.`dob`, `d.Learner`.`email`, `d.Learner`.`enroll_date`, `d.Learner`.`first_name`, `d.Learner`.`form_url`, `d.Learner`.`g5_certification`, `d.Learner`.`gender`, `d.Learner`.`is_abrsm_g5`, `d.Learner`.`is_active`, `d.Learner`.`is_under_18`, `d.Learner`.`last_name`, `d.Learner`.`learner_level`, `d.Learner`.`level_type`, `d.Learner`.`middle_name`, `d.Learner`.`note`, `d.Learner`.`org_id`, `d.Learner`.`otherfile_url`, `d.Learner`.`payment_period`, `d.Learner`.`photo`, `d.Learner`.`referrer`, `d.Learner`.`referrer_learner_id`, `d.Learner`.`user_id`, `d.Invoice`.`invoice_id`, `d.Invoice`.`begin_date`, `d.Invoice`.`concert_fee`, `d.Invoice`.`concert_fee_name`, `d.Invoice`.`course_instance_id`, `d.Invoice`.`course_name`, `d.Invoice`.`created_at`, `d.Invoice`.`due_date`, `d.Invoice`.`end_date`, `d.Invoice`.`group_course_instance_id`, `d.Invoice`.`invoice_num`, `d.Invoice`.`is_active`, `d.Invoice`.`is_paid`, `d.Invoice`.`learner_id`, `d.Invoice`.`learner_name`, `d.Invoice`.`lesson_fee`, `d.Invoice`.`lesson_note_fee_name`, `d.Invoice`.`lesson_quantity`, `d.Invoice`.`note_fee`, `d.Invoice`.`other1_fee`, `d.Invoice`.`other1_fee_name`, `d.Invoice`.`other2_fee`, `d.Invoice`.`other2_fee_name`, `d.Invoice`.`other3_fee`, `d.Invoice`.`other3_fee_name`, `d.Invoice`.`owing_fee`, `d.Invoice`.`paid_fee`, `d.Invoice`.`term_id`, `d.Invoice`.`total_fee`, `d.Staff`.`staff_id`, `d.Staff`.`dob`, `d.Staff`.`email`, `d.Staff`.`expiry_date`, `d.Staff`.`first_name`, `d.Staff`.`gender`, `d.Staff`.`home_phone`, `d.Staff`.`id_number`, `d.Staff`.`id_photo`, `d.Staff`.`id_type`, `d.Staff`.`ird_number`, `d.Staff`.`is_activate`, `d.Staff`.`last_name`, `d.Staff`.`mobile_phone`, `d.Staff`.`photo`, `d.Staff`.`user_id`, `d.Staff`.`visa`
+FROM `ablemusic`.`payment` AS `d`
+LEFT JOIN `ablemusic`.`learner` AS `d.Learner` ON `d`.`learner_id` = `d.Learner`.`learner_id`
+LEFT JOIN `ablemusic`.`invoice` AS `d.Invoice` ON `d`.`invoice_id` = `d.Invoice`.`invoice_id`
+LEFT JOIN `ablemusic`.`staff` AS `d.Staff` ON `d`.`staff_id` = `d.Staff`.`staff_id`
+WHERE ((`d`.`created_at` > @__8__locals1_beginDate_0) AND (`d`.`created_at` < @__8__locals1_endDate_1)) AND (
+    SELECT `s`.`org_id`
+    FROM `ablemusic`.`staff_org` AS `s`
+    WHERE `d.Staff`.`staff_id` = `s`.`staff_id`
+    LIMIT 1
+) IN (1)
+ORDER BY `d`.`payment_id`
+2019-06-27 10:41:33.052 +12:00 [INF] Executed DbCommand (72ms) [Parameters=[@__8__locals1_beginDate_0='?' (DbType = DateTime), @__8__locals1_endDate_1='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+SELECT `d.SoldTransaction`.`tran_id`, `d.SoldTransaction`.`aflter_quantity`, `d.SoldTransaction`.`amount`, `d.SoldTransaction`.`balance`, `d.SoldTransaction`.`before_quantity`, `d.SoldTransaction`.`created_at`, `d.SoldTransaction`.`discount_amount`, `d.SoldTransaction`.`discount_rate`, `d.SoldTransaction`.`discounted_amount`, `d.SoldTransaction`.`learner_id`, `d.SoldTransaction`.`note`, `d.SoldTransaction`.`payment_id`, `d.SoldTransaction`.`product_id`, `d.SoldTransaction`.`sold_quantity`, `d.SoldTransaction`.`stock_id`, `s.Product`.`product_id`, `s.Product`.`brand`, `s.Product`.`model`, `s.Product`.`prod_type_id`, `s.Product`.`product_name`, `s.Product`.`sell_price`, `s.Product`.`wholesale_price`
+FROM `ablemusic`.`sold_transaction` AS `d.SoldTransaction`
+LEFT JOIN `ablemusic`.`product` AS `s.Product` ON `d.SoldTransaction`.`product_id` = `s.Product`.`product_id`
+INNER JOIN (
+    SELECT DISTINCT `d0`.`payment_id`
+    FROM `ablemusic`.`payment` AS `d0`
+    LEFT JOIN `ablemusic`.`learner` AS `d.Learner0` ON `d0`.`learner_id` = `d.Learner0`.`learner_id`
+    LEFT JOIN `ablemusic`.`invoice` AS `d.Invoice0` ON `d0`.`invoice_id` = `d.Invoice0`.`invoice_id`
+    LEFT JOIN `ablemusic`.`staff` AS `d.Staff0` ON `d0`.`staff_id` = `d.Staff0`.`staff_id`
+    WHERE ((`d0`.`created_at` > @__8__locals1_beginDate_0) AND (`d0`.`created_at` < @__8__locals1_endDate_1)) AND (
+        SELECT `s0`.`org_id`
+        FROM `ablemusic`.`staff_org` AS `s0`
+        WHERE `d.Staff0`.`staff_id` = `s0`.`staff_id`
+        LIMIT 1
+    ) IN (1)
+) AS `t` ON `d.SoldTransaction`.`payment_id` = `t`.`payment_id`
+ORDER BY `t`.`payment_id`
+2019-06-27 10:41:33.197 +12:00 [INF] Executed action method Pegasus_backend.Controllers.PaymentController.PaymentByDate (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 3420.8113000000003ms.
+2019-06-27 10:41:33.205 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-06-27 10:41:33.327 +12:00 [INF] Executed action Pegasus_backend.Controllers.PaymentController.PaymentByDate (Pegasus_backend) in 4229.5331000000006ms
+2019-06-27 10:41:33.331 +12:00 [INF] Request finished in 4538.284ms 200 application/json; charset=utf-8
+2019-06-27 10:45:57.700 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Payment/PaymentByDate/1/2019-01-01/2019-07-01  
+2019-06-27 10:45:57.760 +12:00 [INF] Route matched with {action = "PaymentByDate", controller = "Payment"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] PaymentByDate(Int16, System.DateTime, System.DateTime) on controller Pegasus_backend.Controllers.PaymentController (Pegasus_backend).
+2019-06-27 10:45:57.761 +12:00 [INF] Executing action method Pegasus_backend.Controllers.PaymentController.PaymentByDate (Pegasus_backend) - Validation state: "Valid"
+2019-06-27 10:45:57.762 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-06-27 10:45:58.749 +12:00 [INF] Executed DbCommand (49ms) [Parameters=[@__8__locals1_staffId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `o`.`org_id`
+FROM `ablemusic`.`staff_org` AS `o`
+WHERE `o`.`staff_id` = @__8__locals1_staffId_0
+2019-06-27 10:45:59.244 +12:00 [INF] Executed DbCommand (338ms) [Parameters=[@__8__locals1_beginDate_0='?' (DbType = DateTime), @__8__locals1_endDate_1='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+SELECT `d`.`payment_id`, `d`.`after_balance`, `d`.`amount`, `d`.`before_balance`, `d`.`comment`, `d`.`created_at`, `d`.`invoice_id`, `d`.`is_confirmed`, `d`.`learner_id`, `d`.`payment_method`, `d`.`payment_type`, `d`.`staff_id`, `d.Learner`.`learner_id`, `d.Learner`.`address`, `d.Learner`.`contact_num`, `d.Learner`.`created_at`, `d.Learner`.`dob`, `d.Learner`.`email`, `d.Learner`.`enroll_date`, `d.Learner`.`first_name`, `d.Learner`.`form_url`, `d.Learner`.`g5_certification`, `d.Learner`.`gender`, `d.Learner`.`is_abrsm_g5`, `d.Learner`.`is_active`, `d.Learner`.`is_under_18`, `d.Learner`.`last_name`, `d.Learner`.`learner_level`, `d.Learner`.`level_type`, `d.Learner`.`middle_name`, `d.Learner`.`note`, `d.Learner`.`org_id`, `d.Learner`.`otherfile_url`, `d.Learner`.`payment_period`, `d.Learner`.`photo`, `d.Learner`.`referrer`, `d.Learner`.`referrer_learner_id`, `d.Learner`.`user_id`, `d.Invoice`.`invoice_id`, `d.Invoice`.`begin_date`, `d.Invoice`.`concert_fee`, `d.Invoice`.`concert_fee_name`, `d.Invoice`.`course_instance_id`, `d.Invoice`.`course_name`, `d.Invoice`.`created_at`, `d.Invoice`.`due_date`, `d.Invoice`.`end_date`, `d.Invoice`.`group_course_instance_id`, `d.Invoice`.`invoice_num`, `d.Invoice`.`is_active`, `d.Invoice`.`is_paid`, `d.Invoice`.`learner_id`, `d.Invoice`.`learner_name`, `d.Invoice`.`lesson_fee`, `d.Invoice`.`lesson_note_fee_name`, `d.Invoice`.`lesson_quantity`, `d.Invoice`.`note_fee`, `d.Invoice`.`other1_fee`, `d.Invoice`.`other1_fee_name`, `d.Invoice`.`other2_fee`, `d.Invoice`.`other2_fee_name`, `d.Invoice`.`other3_fee`, `d.Invoice`.`other3_fee_name`, `d.Invoice`.`owing_fee`, `d.Invoice`.`paid_fee`, `d.Invoice`.`term_id`, `d.Invoice`.`total_fee`, `d.Staff`.`staff_id`, `d.Staff`.`dob`, `d.Staff`.`email`, `d.Staff`.`expiry_date`, `d.Staff`.`first_name`, `d.Staff`.`gender`, `d.Staff`.`home_phone`, `d.Staff`.`id_number`, `d.Staff`.`id_photo`, `d.Staff`.`id_type`, `d.Staff`.`ird_number`, `d.Staff`.`is_activate`, `d.Staff`.`last_name`, `d.Staff`.`mobile_phone`, `d.Staff`.`photo`, `d.Staff`.`user_id`, `d.Staff`.`visa`
+FROM `ablemusic`.`payment` AS `d`
+LEFT JOIN `ablemusic`.`learner` AS `d.Learner` ON `d`.`learner_id` = `d.Learner`.`learner_id`
+LEFT JOIN `ablemusic`.`invoice` AS `d.Invoice` ON `d`.`invoice_id` = `d.Invoice`.`invoice_id`
+LEFT JOIN `ablemusic`.`staff` AS `d.Staff` ON `d`.`staff_id` = `d.Staff`.`staff_id`
+WHERE ((`d`.`created_at` > @__8__locals1_beginDate_0) AND (`d`.`created_at` < @__8__locals1_endDate_1)) AND (
+    SELECT `s`.`org_id`
+    FROM `ablemusic`.`staff_org` AS `s`
+    WHERE `d.Staff`.`staff_id` = `s`.`staff_id`
+    LIMIT 1
+) IN (1)
+ORDER BY `d`.`payment_id`
+2019-06-27 10:46:01.033 +12:00 [INF] Executed DbCommand (1,008ms) [Parameters=[@__8__locals1_beginDate_0='?' (DbType = DateTime), @__8__locals1_endDate_1='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+SELECT `d.SoldTransaction`.`tran_id`, `d.SoldTransaction`.`aflter_quantity`, `d.SoldTransaction`.`amount`, `d.SoldTransaction`.`balance`, `d.SoldTransaction`.`before_quantity`, `d.SoldTransaction`.`created_at`, `d.SoldTransaction`.`discount_amount`, `d.SoldTransaction`.`discount_rate`, `d.SoldTransaction`.`discounted_amount`, `d.SoldTransaction`.`learner_id`, `d.SoldTransaction`.`note`, `d.SoldTransaction`.`payment_id`, `d.SoldTransaction`.`product_id`, `d.SoldTransaction`.`sold_quantity`, `d.SoldTransaction`.`stock_id`, `s.Product`.`product_id`, `s.Product`.`brand`, `s.Product`.`model`, `s.Product`.`prod_type_id`, `s.Product`.`product_name`, `s.Product`.`sell_price`, `s.Product`.`wholesale_price`
+FROM `ablemusic`.`sold_transaction` AS `d.SoldTransaction`
+LEFT JOIN `ablemusic`.`product` AS `s.Product` ON `d.SoldTransaction`.`product_id` = `s.Product`.`product_id`
+INNER JOIN (
+    SELECT DISTINCT `d0`.`payment_id`
+    FROM `ablemusic`.`payment` AS `d0`
+    LEFT JOIN `ablemusic`.`learner` AS `d.Learner0` ON `d0`.`learner_id` = `d.Learner0`.`learner_id`
+    LEFT JOIN `ablemusic`.`invoice` AS `d.Invoice0` ON `d0`.`invoice_id` = `d.Invoice0`.`invoice_id`
+    LEFT JOIN `ablemusic`.`staff` AS `d.Staff0` ON `d0`.`staff_id` = `d.Staff0`.`staff_id`
+    WHERE ((`d0`.`created_at` > @__8__locals1_beginDate_0) AND (`d0`.`created_at` < @__8__locals1_endDate_1)) AND (
+        SELECT `s0`.`org_id`
+        FROM `ablemusic`.`staff_org` AS `s0`
+        WHERE `d.Staff0`.`staff_id` = `s0`.`staff_id`
+        LIMIT 1
+    ) IN (1)
+) AS `t` ON `d.SoldTransaction`.`payment_id` = `t`.`payment_id`
+ORDER BY `t`.`payment_id`
+2019-06-27 10:49:56.609 +12:00 [INF] Executed action method Pegasus_backend.Controllers.PaymentController.PaymentByDate (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 238848.0013ms.
+2019-06-27 10:49:56.610 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-06-27 10:49:56.614 +12:00 [INF] Executed action Pegasus_backend.Controllers.PaymentController.PaymentByDate (Pegasus_backend) in 238853.7889ms
+2019-06-27 10:49:56.614 +12:00 [INF] Request finished in 238913.7819ms 200 application/json; charset=utf-8
+2019-06-27 10:52:19.896 +12:00 [INF] User profile is available. Using 'C:\Users\Learnspace\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-06-27 10:52:20.842 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
+2019-06-27 10:52:20.875 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-06-27 10:52:21.063 +12:00 [INF] Request finished in 222.4763ms 404 
+2019-06-27 10:52:28.970 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Payment/PaymentByDate/1/2019-01-01/2019-07-01  
+2019-06-27 10:52:29.042 +12:00 [INF] Route matched with {action = "PaymentByDate", controller = "Payment"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] PaymentByDate(Int16, System.DateTime, System.DateTime) on controller Pegasus_backend.Controllers.PaymentController (Pegasus_backend).
+2019-06-27 10:52:29.577 +12:00 [INF] Executing action method Pegasus_backend.Controllers.PaymentController.PaymentByDate (Pegasus_backend) - Validation state: "Valid"
+2019-06-27 10:52:30.558 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-06-27 10:52:31.838 +12:00 [INF] Executed DbCommand (61ms) [Parameters=[@__8__locals1_staffId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `o`.`org_id`
+FROM `ablemusic`.`staff_org` AS `o`
+WHERE `o`.`staff_id` = @__8__locals1_staffId_0
+2019-06-27 10:52:31.884 +12:00 [WRN] Query: '(from StaffOrg <generated>_1 in [d].Staff.StaffOrg select [<generated>_1].OrgId).FirstOrDefault()' uses First/FirstOrDefault/Last/LastOrDefault operation without OrderBy and filter which may lead to unpredictable results.
+2019-06-27 10:52:31.884 +12:00 [WRN] Query: '(from StaffOrg <generated>_1 in [d].Staff.StaffOrg select [<generated>_1].OrgId).FirstOrDefault()' uses First/FirstOrDefault/Last/LastOrDefault operation without OrderBy and filter which may lead to unpredictable results.
+2019-06-27 10:52:32.277 +12:00 [INF] Executed DbCommand (100ms) [Parameters=[@__8__locals1_beginDate_0='?' (DbType = DateTime), @__8__locals1_endDate_1='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+SELECT `d`.`payment_id`, `d`.`after_balance`, `d`.`amount`, `d`.`before_balance`, `d`.`comment`, `d`.`created_at`, `d`.`invoice_id`, `d`.`is_confirmed`, `d`.`learner_id`, `d`.`payment_method`, `d`.`payment_type`, `d`.`staff_id`, `d.Learner`.`learner_id`, `d.Learner`.`address`, `d.Learner`.`contact_num`, `d.Learner`.`created_at`, `d.Learner`.`dob`, `d.Learner`.`email`, `d.Learner`.`enroll_date`, `d.Learner`.`first_name`, `d.Learner`.`form_url`, `d.Learner`.`g5_certification`, `d.Learner`.`gender`, `d.Learner`.`is_abrsm_g5`, `d.Learner`.`is_active`, `d.Learner`.`is_under_18`, `d.Learner`.`last_name`, `d.Learner`.`learner_level`, `d.Learner`.`level_type`, `d.Learner`.`middle_name`, `d.Learner`.`note`, `d.Learner`.`org_id`, `d.Learner`.`otherfile_url`, `d.Learner`.`payment_period`, `d.Learner`.`photo`, `d.Learner`.`referrer`, `d.Learner`.`referrer_learner_id`, `d.Learner`.`user_id`, `d.Invoice`.`invoice_id`, `d.Invoice`.`begin_date`, `d.Invoice`.`concert_fee`, `d.Invoice`.`concert_fee_name`, `d.Invoice`.`course_instance_id`, `d.Invoice`.`course_name`, `d.Invoice`.`created_at`, `d.Invoice`.`due_date`, `d.Invoice`.`end_date`, `d.Invoice`.`group_course_instance_id`, `d.Invoice`.`invoice_num`, `d.Invoice`.`is_active`, `d.Invoice`.`is_paid`, `d.Invoice`.`learner_id`, `d.Invoice`.`learner_name`, `d.Invoice`.`lesson_fee`, `d.Invoice`.`lesson_note_fee_name`, `d.Invoice`.`lesson_quantity`, `d.Invoice`.`note_fee`, `d.Invoice`.`other1_fee`, `d.Invoice`.`other1_fee_name`, `d.Invoice`.`other2_fee`, `d.Invoice`.`other2_fee_name`, `d.Invoice`.`other3_fee`, `d.Invoice`.`other3_fee_name`, `d.Invoice`.`owing_fee`, `d.Invoice`.`paid_fee`, `d.Invoice`.`term_id`, `d.Invoice`.`total_fee`, `d.Staff`.`staff_id`, `d.Staff`.`dob`, `d.Staff`.`email`, `d.Staff`.`expiry_date`, `d.Staff`.`first_name`, `d.Staff`.`gender`, `d.Staff`.`home_phone`, `d.Staff`.`id_number`, `d.Staff`.`id_photo`, `d.Staff`.`id_type`, `d.Staff`.`ird_number`, `d.Staff`.`is_activate`, `d.Staff`.`last_name`, `d.Staff`.`mobile_phone`, `d.Staff`.`photo`, `d.Staff`.`user_id`, `d.Staff`.`visa`
+FROM `ablemusic`.`payment` AS `d`
+LEFT JOIN `ablemusic`.`learner` AS `d.Learner` ON `d`.`learner_id` = `d.Learner`.`learner_id`
+LEFT JOIN `ablemusic`.`invoice` AS `d.Invoice` ON `d`.`invoice_id` = `d.Invoice`.`invoice_id`
+LEFT JOIN `ablemusic`.`staff` AS `d.Staff` ON `d`.`staff_id` = `d.Staff`.`staff_id`
+WHERE (((`d`.`created_at` > @__8__locals1_beginDate_0) AND (`d`.`created_at` < @__8__locals1_endDate_1)) AND (
+    SELECT `s`.`org_id`
+    FROM `ablemusic`.`staff_org` AS `s`
+    WHERE `d.Staff`.`staff_id` = `s`.`staff_id`
+    LIMIT 1
+) IN (1)) AND (`d`.`payment_id` = 284)
+ORDER BY `d`.`payment_id`
+2019-06-27 10:52:32.581 +12:00 [INF] Executed DbCommand (74ms) [Parameters=[@__8__locals1_beginDate_0='?' (DbType = DateTime), @__8__locals1_endDate_1='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+SELECT `d.SoldTransaction`.`tran_id`, `d.SoldTransaction`.`aflter_quantity`, `d.SoldTransaction`.`amount`, `d.SoldTransaction`.`balance`, `d.SoldTransaction`.`before_quantity`, `d.SoldTransaction`.`created_at`, `d.SoldTransaction`.`discount_amount`, `d.SoldTransaction`.`discount_rate`, `d.SoldTransaction`.`discounted_amount`, `d.SoldTransaction`.`learner_id`, `d.SoldTransaction`.`note`, `d.SoldTransaction`.`payment_id`, `d.SoldTransaction`.`product_id`, `d.SoldTransaction`.`sold_quantity`, `d.SoldTransaction`.`stock_id`, `s.Product`.`product_id`, `s.Product`.`brand`, `s.Product`.`model`, `s.Product`.`prod_type_id`, `s.Product`.`product_name`, `s.Product`.`sell_price`, `s.Product`.`wholesale_price`
+FROM `ablemusic`.`sold_transaction` AS `d.SoldTransaction`
+LEFT JOIN `ablemusic`.`product` AS `s.Product` ON `d.SoldTransaction`.`product_id` = `s.Product`.`product_id`
+INNER JOIN (
+    SELECT DISTINCT `d0`.`payment_id`
+    FROM `ablemusic`.`payment` AS `d0`
+    LEFT JOIN `ablemusic`.`learner` AS `d.Learner0` ON `d0`.`learner_id` = `d.Learner0`.`learner_id`
+    LEFT JOIN `ablemusic`.`invoice` AS `d.Invoice0` ON `d0`.`invoice_id` = `d.Invoice0`.`invoice_id`
+    LEFT JOIN `ablemusic`.`staff` AS `d.Staff0` ON `d0`.`staff_id` = `d.Staff0`.`staff_id`
+    WHERE (((`d0`.`created_at` > @__8__locals1_beginDate_0) AND (`d0`.`created_at` < @__8__locals1_endDate_1)) AND (
+        SELECT `s0`.`org_id`
+        FROM `ablemusic`.`staff_org` AS `s0`
+        WHERE `d.Staff0`.`staff_id` = `s0`.`staff_id`
+        LIMIT 1
+    ) IN (1)) AND (`d0`.`payment_id` = 284)
+) AS `t` ON `d.SoldTransaction`.`payment_id` = `t`.`payment_id`
+ORDER BY `t`.`payment_id`
+2019-06-27 10:55:45.987 +12:00 [INF] User profile is available. Using 'C:\Users\Learnspace\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-06-27 10:55:46.877 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
+2019-06-27 10:55:46.914 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-06-27 10:55:47.109 +12:00 [INF] Request finished in 234.2735ms 404 
+2019-06-27 10:57:15.191 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Payment/PaymentByDate/1/2019-01-01/2019-07-01  
+2019-06-27 10:57:15.226 +12:00 [INF] Route matched with {action = "PaymentByDate", controller = "Payment"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] PaymentByDate(Int16, System.DateTime, System.DateTime) on controller Pegasus_backend.Controllers.PaymentController (Pegasus_backend).
+2019-06-27 10:57:15.752 +12:00 [INF] Executing action method Pegasus_backend.Controllers.PaymentController.PaymentByDate (Pegasus_backend) - Validation state: "Valid"
+2019-06-27 10:57:16.711 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-06-27 10:57:17.867 +12:00 [INF] Executed DbCommand (57ms) [Parameters=[@__8__locals1_staffId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `o`.`org_id`
+FROM `ablemusic`.`staff_org` AS `o`
+WHERE `o`.`staff_id` = @__8__locals1_staffId_0
+2019-06-27 10:57:17.908 +12:00 [WRN] Query: '(from StaffOrg <generated>_1 in [d].Staff.StaffOrg select [<generated>_1].OrgId).FirstOrDefault()' uses First/FirstOrDefault/Last/LastOrDefault operation without OrderBy and filter which may lead to unpredictable results.
+2019-06-27 10:57:17.909 +12:00 [WRN] Query: '(from StaffOrg <generated>_1 in [d].Staff.StaffOrg select [<generated>_1].OrgId).FirstOrDefault()' uses First/FirstOrDefault/Last/LastOrDefault operation without OrderBy and filter which may lead to unpredictable results.
+2019-06-27 10:57:18.296 +12:00 [INF] Executed DbCommand (97ms) [Parameters=[@__8__locals1_beginDate_0='?' (DbType = DateTime), @__8__locals1_endDate_1='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+SELECT `d`.`payment_id`, `d`.`after_balance`, `d`.`amount`, `d`.`before_balance`, `d`.`comment`, `d`.`created_at`, `d`.`invoice_id`, `d`.`is_confirmed`, `d`.`learner_id`, `d`.`payment_method`, `d`.`payment_type`, `d`.`staff_id`, `d.Learner`.`learner_id`, `d.Learner`.`address`, `d.Learner`.`contact_num`, `d.Learner`.`created_at`, `d.Learner`.`dob`, `d.Learner`.`email`, `d.Learner`.`enroll_date`, `d.Learner`.`first_name`, `d.Learner`.`form_url`, `d.Learner`.`g5_certification`, `d.Learner`.`gender`, `d.Learner`.`is_abrsm_g5`, `d.Learner`.`is_active`, `d.Learner`.`is_under_18`, `d.Learner`.`last_name`, `d.Learner`.`learner_level`, `d.Learner`.`level_type`, `d.Learner`.`middle_name`, `d.Learner`.`note`, `d.Learner`.`org_id`, `d.Learner`.`otherfile_url`, `d.Learner`.`payment_period`, `d.Learner`.`photo`, `d.Learner`.`referrer`, `d.Learner`.`referrer_learner_id`, `d.Learner`.`user_id`, `d.Invoice`.`invoice_id`, `d.Invoice`.`begin_date`, `d.Invoice`.`concert_fee`, `d.Invoice`.`concert_fee_name`, `d.Invoice`.`course_instance_id`, `d.Invoice`.`course_name`, `d.Invoice`.`created_at`, `d.Invoice`.`due_date`, `d.Invoice`.`end_date`, `d.Invoice`.`group_course_instance_id`, `d.Invoice`.`invoice_num`, `d.Invoice`.`is_active`, `d.Invoice`.`is_paid`, `d.Invoice`.`learner_id`, `d.Invoice`.`learner_name`, `d.Invoice`.`lesson_fee`, `d.Invoice`.`lesson_note_fee_name`, `d.Invoice`.`lesson_quantity`, `d.Invoice`.`note_fee`, `d.Invoice`.`other1_fee`, `d.Invoice`.`other1_fee_name`, `d.Invoice`.`other2_fee`, `d.Invoice`.`other2_fee_name`, `d.Invoice`.`other3_fee`, `d.Invoice`.`other3_fee_name`, `d.Invoice`.`owing_fee`, `d.Invoice`.`paid_fee`, `d.Invoice`.`term_id`, `d.Invoice`.`total_fee`, `d.Staff`.`staff_id`, `d.Staff`.`dob`, `d.Staff`.`email`, `d.Staff`.`expiry_date`, `d.Staff`.`first_name`, `d.Staff`.`gender`, `d.Staff`.`home_phone`, `d.Staff`.`id_number`, `d.Staff`.`id_photo`, `d.Staff`.`id_type`, `d.Staff`.`ird_number`, `d.Staff`.`is_activate`, `d.Staff`.`last_name`, `d.Staff`.`mobile_phone`, `d.Staff`.`photo`, `d.Staff`.`user_id`, `d.Staff`.`visa`
+FROM `ablemusic`.`payment` AS `d`
+LEFT JOIN `ablemusic`.`learner` AS `d.Learner` ON `d`.`learner_id` = `d.Learner`.`learner_id`
+LEFT JOIN `ablemusic`.`invoice` AS `d.Invoice` ON `d`.`invoice_id` = `d.Invoice`.`invoice_id`
+LEFT JOIN `ablemusic`.`staff` AS `d.Staff` ON `d`.`staff_id` = `d.Staff`.`staff_id`
+WHERE ((`d`.`created_at` > @__8__locals1_beginDate_0) AND (`d`.`created_at` < @__8__locals1_endDate_1)) AND (
+    SELECT `s`.`org_id`
+    FROM `ablemusic`.`staff_org` AS `s`
+    WHERE `d.Staff`.`staff_id` = `s`.`staff_id`
+    LIMIT 1
+) IN (1)
+ORDER BY `d`.`payment_id`
+2019-06-27 10:57:18.599 +12:00 [INF] Executed DbCommand (72ms) [Parameters=[@__8__locals1_beginDate_0='?' (DbType = DateTime), @__8__locals1_endDate_1='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+SELECT `d.SoldTransaction`.`tran_id`, `d.SoldTransaction`.`aflter_quantity`, `d.SoldTransaction`.`amount`, `d.SoldTransaction`.`balance`, `d.SoldTransaction`.`before_quantity`, `d.SoldTransaction`.`created_at`, `d.SoldTransaction`.`discount_amount`, `d.SoldTransaction`.`discount_rate`, `d.SoldTransaction`.`discounted_amount`, `d.SoldTransaction`.`learner_id`, `d.SoldTransaction`.`note`, `d.SoldTransaction`.`payment_id`, `d.SoldTransaction`.`product_id`, `d.SoldTransaction`.`sold_quantity`, `d.SoldTransaction`.`stock_id`, `s.Product`.`product_id`, `s.Product`.`brand`, `s.Product`.`model`, `s.Product`.`prod_type_id`, `s.Product`.`product_name`, `s.Product`.`sell_price`, `s.Product`.`wholesale_price`
+FROM `ablemusic`.`sold_transaction` AS `d.SoldTransaction`
+LEFT JOIN `ablemusic`.`product` AS `s.Product` ON `d.SoldTransaction`.`product_id` = `s.Product`.`product_id`
+INNER JOIN (
+    SELECT DISTINCT `d0`.`payment_id`
+    FROM `ablemusic`.`payment` AS `d0`
+    LEFT JOIN `ablemusic`.`learner` AS `d.Learner0` ON `d0`.`learner_id` = `d.Learner0`.`learner_id`
+    LEFT JOIN `ablemusic`.`invoice` AS `d.Invoice0` ON `d0`.`invoice_id` = `d.Invoice0`.`invoice_id`
+    LEFT JOIN `ablemusic`.`staff` AS `d.Staff0` ON `d0`.`staff_id` = `d.Staff0`.`staff_id`
+    WHERE ((`d0`.`created_at` > @__8__locals1_beginDate_0) AND (`d0`.`created_at` < @__8__locals1_endDate_1)) AND (
+        SELECT `s0`.`org_id`
+        FROM `ablemusic`.`staff_org` AS `s0`
+        WHERE `d.Staff0`.`staff_id` = `s0`.`staff_id`
+        LIMIT 1
+    ) IN (1)
+) AS `t` ON `d.SoldTransaction`.`payment_id` = `t`.`payment_id`
+ORDER BY `t`.`payment_id`
+2019-06-27 10:57:23.380 +12:00 [INF] Executed action method Pegasus_backend.Controllers.PaymentController.PaymentByDate (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 7618.9993ms.
+2019-06-27 10:57:23.387 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-06-27 10:57:23.470 +12:00 [INF] Executed action Pegasus_backend.Controllers.PaymentController.PaymentByDate (Pegasus_backend) in 8241.7002000000011ms
+2019-06-27 10:57:23.472 +12:00 [INF] Request finished in 8281.4185ms 200 application/json; charset=utf-8
+2019-06-27 11:05:37.568 +12:00 [INF] User profile is available. Using 'C:\Users\Learnspace\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-06-27 11:05:38.492 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
+2019-06-27 11:05:38.525 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-06-27 11:05:38.713 +12:00 [INF] Request finished in 223.4205ms 404 
+2019-06-27 11:05:52.832 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Payment/PaymentByDate/1/2019-01-01/2019-07-01  
+2019-06-27 11:05:52.869 +12:00 [INF] Route matched with {action = "PaymentByDate", controller = "Payment"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] PaymentByDate(Int16, System.DateTime, System.DateTime) on controller Pegasus_backend.Controllers.PaymentController (Pegasus_backend).
+2019-06-27 11:05:53.428 +12:00 [INF] Executing action method Pegasus_backend.Controllers.PaymentController.PaymentByDate (Pegasus_backend) - Validation state: "Valid"
+2019-06-27 11:05:54.358 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-06-27 11:05:55.737 +12:00 [INF] Executed DbCommand (69ms) [Parameters=[@__8__locals1_staffId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `o`.`org_id`
+FROM `ablemusic`.`staff_org` AS `o`
+WHERE `o`.`staff_id` = @__8__locals1_staffId_0
+2019-06-27 11:05:55.779 +12:00 [WRN] Query: '(from StaffOrg <generated>_1 in [d].Staff.StaffOrg select [<generated>_1].OrgId).FirstOrDefault()' uses First/FirstOrDefault/Last/LastOrDefault operation without OrderBy and filter which may lead to unpredictable results.
+2019-06-27 11:05:55.780 +12:00 [WRN] Query: '(from StaffOrg <generated>_1 in [d].Staff.StaffOrg select [<generated>_1].OrgId).FirstOrDefault()' uses First/FirstOrDefault/Last/LastOrDefault operation without OrderBy and filter which may lead to unpredictable results.
+2019-06-27 11:05:56.240 +12:00 [INF] Executed DbCommand (131ms) [Parameters=[@__8__locals1_beginDate_0='?' (DbType = DateTime), @__8__locals1_endDate_1='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+SELECT `d`.`payment_id`, `d`.`after_balance`, `d`.`amount`, `d`.`before_balance`, `d`.`comment`, `d`.`created_at`, `d`.`invoice_id`, `d`.`is_confirmed`, `d`.`learner_id`, `d`.`payment_method`, `d`.`payment_type`, `d`.`staff_id`, `d.Learner`.`learner_id`, `d.Learner`.`address`, `d.Learner`.`contact_num`, `d.Learner`.`created_at`, `d.Learner`.`dob`, `d.Learner`.`email`, `d.Learner`.`enroll_date`, `d.Learner`.`first_name`, `d.Learner`.`form_url`, `d.Learner`.`g5_certification`, `d.Learner`.`gender`, `d.Learner`.`is_abrsm_g5`, `d.Learner`.`is_active`, `d.Learner`.`is_under_18`, `d.Learner`.`last_name`, `d.Learner`.`learner_level`, `d.Learner`.`level_type`, `d.Learner`.`middle_name`, `d.Learner`.`note`, `d.Learner`.`org_id`, `d.Learner`.`otherfile_url`, `d.Learner`.`payment_period`, `d.Learner`.`photo`, `d.Learner`.`referrer`, `d.Learner`.`referrer_learner_id`, `d.Learner`.`user_id`, `d.Invoice`.`invoice_id`, `d.Invoice`.`begin_date`, `d.Invoice`.`concert_fee`, `d.Invoice`.`concert_fee_name`, `d.Invoice`.`course_instance_id`, `d.Invoice`.`course_name`, `d.Invoice`.`created_at`, `d.Invoice`.`due_date`, `d.Invoice`.`end_date`, `d.Invoice`.`group_course_instance_id`, `d.Invoice`.`invoice_num`, `d.Invoice`.`is_active`, `d.Invoice`.`is_paid`, `d.Invoice`.`learner_id`, `d.Invoice`.`learner_name`, `d.Invoice`.`lesson_fee`, `d.Invoice`.`lesson_note_fee_name`, `d.Invoice`.`lesson_quantity`, `d.Invoice`.`note_fee`, `d.Invoice`.`other1_fee`, `d.Invoice`.`other1_fee_name`, `d.Invoice`.`other2_fee`, `d.Invoice`.`other2_fee_name`, `d.Invoice`.`other3_fee`, `d.Invoice`.`other3_fee_name`, `d.Invoice`.`owing_fee`, `d.Invoice`.`paid_fee`, `d.Invoice`.`term_id`, `d.Invoice`.`total_fee`, `d.Staff`.`staff_id`, `d.Staff`.`dob`, `d.Staff`.`email`, `d.Staff`.`expiry_date`, `d.Staff`.`first_name`, `d.Staff`.`gender`, `d.Staff`.`home_phone`, `d.Staff`.`id_number`, `d.Staff`.`id_photo`, `d.Staff`.`id_type`, `d.Staff`.`ird_number`, `d.Staff`.`is_activate`, `d.Staff`.`last_name`, `d.Staff`.`mobile_phone`, `d.Staff`.`photo`, `d.Staff`.`user_id`, `d.Staff`.`visa`
+FROM `ablemusic`.`payment` AS `d`
+LEFT JOIN `ablemusic`.`learner` AS `d.Learner` ON `d`.`learner_id` = `d.Learner`.`learner_id`
+LEFT JOIN `ablemusic`.`invoice` AS `d.Invoice` ON `d`.`invoice_id` = `d.Invoice`.`invoice_id`
+LEFT JOIN `ablemusic`.`staff` AS `d.Staff` ON `d`.`staff_id` = `d.Staff`.`staff_id`
+WHERE (((`d`.`created_at` > @__8__locals1_beginDate_0) AND (`d`.`created_at` < @__8__locals1_endDate_1)) AND (`d`.`payment_id` > 200)) AND (
+    SELECT `s`.`org_id`
+    FROM `ablemusic`.`staff_org` AS `s`
+    WHERE `d.Staff`.`staff_id` = `s`.`staff_id`
+    LIMIT 1
+) IN (1)
+ORDER BY `d`.`payment_id`
+2019-06-27 11:05:56.539 +12:00 [INF] Executed DbCommand (81ms) [Parameters=[@__8__locals1_beginDate_0='?' (DbType = DateTime), @__8__locals1_endDate_1='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+SELECT `d.SoldTransaction`.`tran_id`, `d.SoldTransaction`.`aflter_quantity`, `d.SoldTransaction`.`amount`, `d.SoldTransaction`.`balance`, `d.SoldTransaction`.`before_quantity`, `d.SoldTransaction`.`created_at`, `d.SoldTransaction`.`discount_amount`, `d.SoldTransaction`.`discount_rate`, `d.SoldTransaction`.`discounted_amount`, `d.SoldTransaction`.`learner_id`, `d.SoldTransaction`.`note`, `d.SoldTransaction`.`payment_id`, `d.SoldTransaction`.`product_id`, `d.SoldTransaction`.`sold_quantity`, `d.SoldTransaction`.`stock_id`, `s.Product`.`product_id`, `s.Product`.`brand`, `s.Product`.`model`, `s.Product`.`prod_type_id`, `s.Product`.`product_name`, `s.Product`.`sell_price`, `s.Product`.`wholesale_price`
+FROM `ablemusic`.`sold_transaction` AS `d.SoldTransaction`
+LEFT JOIN `ablemusic`.`product` AS `s.Product` ON `d.SoldTransaction`.`product_id` = `s.Product`.`product_id`
+INNER JOIN (
+    SELECT DISTINCT `d0`.`payment_id`
+    FROM `ablemusic`.`payment` AS `d0`
+    LEFT JOIN `ablemusic`.`learner` AS `d.Learner0` ON `d0`.`learner_id` = `d.Learner0`.`learner_id`
+    LEFT JOIN `ablemusic`.`invoice` AS `d.Invoice0` ON `d0`.`invoice_id` = `d.Invoice0`.`invoice_id`
+    LEFT JOIN `ablemusic`.`staff` AS `d.Staff0` ON `d0`.`staff_id` = `d.Staff0`.`staff_id`
+    WHERE (((`d0`.`created_at` > @__8__locals1_beginDate_0) AND (`d0`.`created_at` < @__8__locals1_endDate_1)) AND (`d0`.`payment_id` > 200)) AND (
+        SELECT `s0`.`org_id`
+        FROM `ablemusic`.`staff_org` AS `s0`
+        WHERE `d.Staff0`.`staff_id` = `s0`.`staff_id`
+        LIMIT 1
+    ) IN (1)
+) AS `t` ON `d.SoldTransaction`.`payment_id` = `t`.`payment_id`
+ORDER BY `t`.`payment_id`
+2019-06-27 11:06:04.097 +12:00 [INF] Executed action method Pegasus_backend.Controllers.PaymentController.PaymentByDate (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 10660.621000000001ms.
+2019-06-27 11:06:04.105 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-06-27 11:06:04.218 +12:00 [INF] Executed action Pegasus_backend.Controllers.PaymentController.PaymentByDate (Pegasus_backend) in 11345.9115ms
+2019-06-27 11:06:04.220 +12:00 [INF] Request finished in 11387.5139ms 200 application/json; charset=utf-8
+2019-06-27 11:09:15.851 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Payment/PaymentByDate/1/2019-01-01/2019-07-01  
+2019-06-27 11:09:15.852 +12:00 [INF] Route matched with {action = "PaymentByDate", controller = "Payment"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] PaymentByDate(Int16, System.DateTime, System.DateTime) on controller Pegasus_backend.Controllers.PaymentController (Pegasus_backend).
+2019-06-27 11:09:15.854 +12:00 [INF] Executing action method Pegasus_backend.Controllers.PaymentController.PaymentByDate (Pegasus_backend) - Validation state: "Valid"
+2019-06-27 11:09:15.863 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-06-27 11:09:16.557 +12:00 [INF] Executed DbCommand (49ms) [Parameters=[@__8__locals1_staffId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `o`.`org_id`
+FROM `ablemusic`.`staff_org` AS `o`
+WHERE `o`.`staff_id` = @__8__locals1_staffId_0
+2019-06-27 11:09:16.778 +12:00 [INF] Executed DbCommand (90ms) [Parameters=[@__8__locals1_beginDate_0='?' (DbType = DateTime), @__8__locals1_endDate_1='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+SELECT `d`.`payment_id`, `d`.`after_balance`, `d`.`amount`, `d`.`before_balance`, `d`.`comment`, `d`.`created_at`, `d`.`invoice_id`, `d`.`is_confirmed`, `d`.`learner_id`, `d`.`payment_method`, `d`.`payment_type`, `d`.`staff_id`, `d.Learner`.`learner_id`, `d.Learner`.`address`, `d.Learner`.`contact_num`, `d.Learner`.`created_at`, `d.Learner`.`dob`, `d.Learner`.`email`, `d.Learner`.`enroll_date`, `d.Learner`.`first_name`, `d.Learner`.`form_url`, `d.Learner`.`g5_certification`, `d.Learner`.`gender`, `d.Learner`.`is_abrsm_g5`, `d.Learner`.`is_active`, `d.Learner`.`is_under_18`, `d.Learner`.`last_name`, `d.Learner`.`learner_level`, `d.Learner`.`level_type`, `d.Learner`.`middle_name`, `d.Learner`.`note`, `d.Learner`.`org_id`, `d.Learner`.`otherfile_url`, `d.Learner`.`payment_period`, `d.Learner`.`photo`, `d.Learner`.`referrer`, `d.Learner`.`referrer_learner_id`, `d.Learner`.`user_id`, `d.Invoice`.`invoice_id`, `d.Invoice`.`begin_date`, `d.Invoice`.`concert_fee`, `d.Invoice`.`concert_fee_name`, `d.Invoice`.`course_instance_id`, `d.Invoice`.`course_name`, `d.Invoice`.`created_at`, `d.Invoice`.`due_date`, `d.Invoice`.`end_date`, `d.Invoice`.`group_course_instance_id`, `d.Invoice`.`invoice_num`, `d.Invoice`.`is_active`, `d.Invoice`.`is_paid`, `d.Invoice`.`learner_id`, `d.Invoice`.`learner_name`, `d.Invoice`.`lesson_fee`, `d.Invoice`.`lesson_note_fee_name`, `d.Invoice`.`lesson_quantity`, `d.Invoice`.`note_fee`, `d.Invoice`.`other1_fee`, `d.Invoice`.`other1_fee_name`, `d.Invoice`.`other2_fee`, `d.Invoice`.`other2_fee_name`, `d.Invoice`.`other3_fee`, `d.Invoice`.`other3_fee_name`, `d.Invoice`.`owing_fee`, `d.Invoice`.`paid_fee`, `d.Invoice`.`term_id`, `d.Invoice`.`total_fee`, `d.Staff`.`staff_id`, `d.Staff`.`dob`, `d.Staff`.`email`, `d.Staff`.`expiry_date`, `d.Staff`.`first_name`, `d.Staff`.`gender`, `d.Staff`.`home_phone`, `d.Staff`.`id_number`, `d.Staff`.`id_photo`, `d.Staff`.`id_type`, `d.Staff`.`ird_number`, `d.Staff`.`is_activate`, `d.Staff`.`last_name`, `d.Staff`.`mobile_phone`, `d.Staff`.`photo`, `d.Staff`.`user_id`, `d.Staff`.`visa`
+FROM `ablemusic`.`payment` AS `d`
+LEFT JOIN `ablemusic`.`learner` AS `d.Learner` ON `d`.`learner_id` = `d.Learner`.`learner_id`
+LEFT JOIN `ablemusic`.`invoice` AS `d.Invoice` ON `d`.`invoice_id` = `d.Invoice`.`invoice_id`
+LEFT JOIN `ablemusic`.`staff` AS `d.Staff` ON `d`.`staff_id` = `d.Staff`.`staff_id`
+WHERE (((`d`.`created_at` > @__8__locals1_beginDate_0) AND (`d`.`created_at` < @__8__locals1_endDate_1)) AND (`d`.`payment_id` > 200)) AND (
+    SELECT `s`.`org_id`
+    FROM `ablemusic`.`staff_org` AS `s`
+    WHERE `d.Staff`.`staff_id` = `s`.`staff_id`
+    LIMIT 1
+) IN (1)
+ORDER BY `d`.`payment_id`
+2019-06-27 11:09:16.917 +12:00 [INF] Executed DbCommand (78ms) [Parameters=[@__8__locals1_beginDate_0='?' (DbType = DateTime), @__8__locals1_endDate_1='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+SELECT `d.SoldTransaction`.`tran_id`, `d.SoldTransaction`.`aflter_quantity`, `d.SoldTransaction`.`amount`, `d.SoldTransaction`.`balance`, `d.SoldTransaction`.`before_quantity`, `d.SoldTransaction`.`created_at`, `d.SoldTransaction`.`discount_amount`, `d.SoldTransaction`.`discount_rate`, `d.SoldTransaction`.`discounted_amount`, `d.SoldTransaction`.`learner_id`, `d.SoldTransaction`.`note`, `d.SoldTransaction`.`payment_id`, `d.SoldTransaction`.`product_id`, `d.SoldTransaction`.`sold_quantity`, `d.SoldTransaction`.`stock_id`, `s.Product`.`product_id`, `s.Product`.`brand`, `s.Product`.`model`, `s.Product`.`prod_type_id`, `s.Product`.`product_name`, `s.Product`.`sell_price`, `s.Product`.`wholesale_price`
+FROM `ablemusic`.`sold_transaction` AS `d.SoldTransaction`
+LEFT JOIN `ablemusic`.`product` AS `s.Product` ON `d.SoldTransaction`.`product_id` = `s.Product`.`product_id`
+INNER JOIN (
+    SELECT DISTINCT `d0`.`payment_id`
+    FROM `ablemusic`.`payment` AS `d0`
+    LEFT JOIN `ablemusic`.`learner` AS `d.Learner0` ON `d0`.`learner_id` = `d.Learner0`.`learner_id`
+    LEFT JOIN `ablemusic`.`invoice` AS `d.Invoice0` ON `d0`.`invoice_id` = `d.Invoice0`.`invoice_id`
+    LEFT JOIN `ablemusic`.`staff` AS `d.Staff0` ON `d0`.`staff_id` = `d.Staff0`.`staff_id`
+    WHERE (((`d0`.`created_at` > @__8__locals1_beginDate_0) AND (`d0`.`created_at` < @__8__locals1_endDate_1)) AND (`d0`.`payment_id` > 200)) AND (
+        SELECT `s0`.`org_id`
+        FROM `ablemusic`.`staff_org` AS `s0`
+        WHERE `d.Staff0`.`staff_id` = `s0`.`staff_id`
+        LIMIT 1
+    ) IN (1)
+) AS `t` ON `d.SoldTransaction`.`payment_id` = `t`.`payment_id`
+ORDER BY `t`.`payment_id`
+2019-06-27 11:09:21.257 +12:00 [INF] Executed action method Pegasus_backend.Controllers.PaymentController.PaymentByDate (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 5403.0435000000007ms.
+2019-06-27 11:09:21.258 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-06-27 11:09:21.261 +12:00 [INF] Executed action Pegasus_backend.Controllers.PaymentController.PaymentByDate (Pegasus_backend) in 5408.2902ms
+2019-06-27 11:09:21.269 +12:00 [INF] Request finished in 5411.2631ms 200 application/json; charset=utf-8
+2019-06-27 11:29:48.001 +12:00 [INF] User profile is available. Using 'C:\Users\Learnspace\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-06-27 11:29:49.399 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
+2019-06-27 11:29:49.435 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-06-27 11:29:49.645 +12:00 [INF] Request finished in 248.2007ms 404 
+2019-06-27 11:30:20.536 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Chat/GetChatListOfTeacher/10092  
+2019-06-27 11:30:20.594 +12:00 [INF] Route matched with {action = "GetChatListOfTeacher", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetChatListOfTeacher(Int32) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-06-27 11:30:20.777 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.GetChatListOfTeacher (Pegasus_backend) - Validation state: "Valid"
+2019-06-27 11:30:20.915 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.GetChatListOfTeacher (Pegasus_backend) in 318.73740000000004ms
+2019-06-27 11:30:20.918 +12:00 [ERR] An unhandled exception has occurred while executing the request.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Pegasus_backend.Controllers.MobileControllers.ChatController.GetChatListOfTeacher(Int32 id) in c:\Users\Learnspace\source\repos\pegasusBackend\Controllers\MobileControllers\ChatController.cs:line 37
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at System.Threading.Tasks.ValueTask`1.get_Result()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Cors.Infrastructure.CorsMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2019-06-27 11:30:21.048 +12:00 [INF] Request finished in 511.8655ms 500 text/html; charset=utf-8
+2019-06-27 11:30:37.263 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Chat/GetChatListOfTeacher/10092  
+2019-06-27 11:30:37.263 +12:00 [INF] Route matched with {action = "GetChatListOfTeacher", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetChatListOfTeacher(Int32) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-06-27 11:30:37.265 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.GetChatListOfTeacher (Pegasus_backend) - Validation state: "Valid"
+2019-06-27 11:30:59.011 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.GetChatListOfTeacher (Pegasus_backend) in 21747.882100000003ms
+2019-06-27 11:30:59.025 +12:00 [ERR] An unhandled exception has occurred while executing the request.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Pegasus_backend.Controllers.MobileControllers.ChatController.GetChatListOfTeacher(Int32 id) in c:\Users\Learnspace\source\repos\pegasusBackend\Controllers\MobileControllers\ChatController.cs:line 37
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at System.Threading.Tasks.ValueTask`1.get_Result()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Cors.Infrastructure.CorsMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2019-06-27 11:30:59.039 +12:00 [INF] Request finished in 21776.1915ms 500 text/html; charset=utf-8
+2019-06-27 11:40:20.842 +12:00 [INF] User profile is available. Using 'C:\Users\Learnspace\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-06-27 11:40:21.932 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
+2019-06-27 11:40:21.974 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-06-27 11:40:22.203 +12:00 [INF] Request finished in 273.7698ms 404 
+2019-06-27 11:40:29.632 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Chat/GetChatListOfTeacher/10092  
+2019-06-27 11:40:29.699 +12:00 [INF] Route matched with {action = "GetChatListOfTeacher", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetChatListOfTeacher(Int32) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-06-27 11:40:29.867 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.GetChatListOfTeacher (Pegasus_backend) - Validation state: "Valid"
+2019-06-27 11:40:35.014 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.GetChatListOfTeacher (Pegasus_backend) in 5311.1114000000007ms
+2019-06-27 11:40:35.033 +12:00 [ERR] An unhandled exception has occurred while executing the request.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Pegasus_backend.Controllers.MobileControllers.ChatController.GetChatListOfTeacher(Int32 id) in c:\Users\Learnspace\source\repos\pegasusBackend\Controllers\MobileControllers\ChatController.cs:line 37
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at System.Threading.Tasks.ValueTask`1.get_Result()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Cors.Infrastructure.CorsMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2019-06-27 11:40:35.125 +12:00 [INF] Request finished in 5494.2513ms 500 text/html; charset=utf-8
+2019-06-27 11:42:35.274 +12:00 [INF] User profile is available. Using 'C:\Users\Learnspace\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-06-27 11:42:36.314 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
+2019-06-27 11:42:36.349 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-06-27 11:42:36.547 +12:00 [INF] Request finished in 235.257ms 404 
+2019-06-27 11:42:44.855 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Chat/GetChatListOfTeacher/10092  
+2019-06-27 11:42:44.918 +12:00 [INF] Route matched with {action = "GetChatListOfTeacher", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetChatListOfTeacher(Int32) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-06-27 11:42:45.083 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.GetChatListOfTeacher (Pegasus_backend) - Validation state: "Valid"
+2019-06-27 11:42:48.578 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.GetChatListOfTeacher (Pegasus_backend) in 3657.2807000000003ms
+2019-06-27 11:42:48.592 +12:00 [ERR] An unhandled exception has occurred while executing the request.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Pegasus_backend.Controllers.MobileControllers.ChatController.GetChatListOfTeacher(Int32 id) in c:\Users\Learnspace\source\repos\pegasusBackend\Controllers\MobileControllers\ChatController.cs:line 37
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at System.Threading.Tasks.ValueTask`1.get_Result()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Cors.Infrastructure.CorsMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2019-06-27 11:42:48.681 +12:00 [INF] Request finished in 3826.7983ms 500 text/html; charset=utf-8
+2019-06-27 11:48:25.181 +12:00 [INF] User profile is available. Using 'C:\Users\Learnspace\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-06-27 11:48:26.102 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
+2019-06-27 11:48:26.139 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-06-27 11:48:26.341 +12:00 [INF] Request finished in 240.5956ms 404 
+2019-06-27 11:48:29.282 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Chat/GetChatListOfTeacher/10092  
+2019-06-27 11:48:29.352 +12:00 [INF] Route matched with {action = "GetChatListOfTeacher", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetChatListOfTeacher(Int32) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-06-27 11:48:29.524 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.GetChatListOfTeacher (Pegasus_backend) - Validation state: "Valid"
+2019-06-27 11:48:37.451 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.GetChatListOfTeacher (Pegasus_backend) in 8095.582ms
+2019-06-27 11:48:37.465 +12:00 [ERR] An unhandled exception has occurred while executing the request.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Pegasus_backend.Controllers.MobileControllers.ChatController.GetChatListOfTeacher(Int32 id) in c:\Users\Learnspace\source\repos\pegasusBackend\Controllers\MobileControllers\ChatController.cs:line 37
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at System.Threading.Tasks.ValueTask`1.get_Result()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Cors.Infrastructure.CorsMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2019-06-27 11:48:37.560 +12:00 [INF] Request finished in 8278.408ms 500 text/html; charset=utf-8
+2019-06-27 11:55:56.222 +12:00 [INF] User profile is available. Using 'C:\Users\Learnspace\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-06-27 11:55:57.325 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
+2019-06-27 11:55:57.361 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-06-27 11:55:57.590 +12:00 [INF] Request finished in 267.5255ms 404 
+2019-06-27 11:56:00.544 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Chat/GetChatListOfTeacher/10092  
+2019-06-27 11:56:00.600 +12:00 [INF] Route matched with {action = "GetChatListOfTeacher", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetChatListOfTeacher(Int32) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-06-27 11:56:00.777 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.GetChatListOfTeacher (Pegasus_backend) - Validation state: "Valid"
+2019-06-27 11:56:05.133 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.GetChatListOfTeacher (Pegasus_backend) in 4530.687ms
+2019-06-27 11:56:05.148 +12:00 [ERR] An unhandled exception has occurred while executing the request.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Pegasus_backend.Controllers.MobileControllers.ChatController.GetChatListOfTeacher(Int32 id) in c:\Users\Learnspace\source\repos\pegasusBackend\Controllers\MobileControllers\ChatController.cs:line 37
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at System.Threading.Tasks.ValueTask`1.get_Result()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Cors.Infrastructure.CorsMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2019-06-27 11:56:05.241 +12:00 [INF] Request finished in 4697.1795ms 500 text/html; charset=utf-8
+2019-06-27 11:58:01.250 +12:00 [INF] User profile is available. Using 'C:\Users\Learnspace\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-06-27 11:58:02.205 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
+2019-06-27 11:58:02.240 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-06-27 11:58:02.441 +12:00 [INF] Request finished in 237.3392ms 404 
+2019-06-27 11:58:06.682 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Chat/GetChatListOfTeacher/10092  
+2019-06-27 11:58:06.750 +12:00 [INF] Route matched with {action = "GetChatListOfTeacher", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetChatListOfTeacher(Int32) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-06-27 11:58:06.932 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.GetChatListOfTeacher (Pegasus_backend) - Validation state: "Valid"
+2019-06-27 11:58:10.665 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.GetChatListOfTeacher (Pegasus_backend) in 3911.3307ms
+2019-06-27 11:58:10.679 +12:00 [ERR] An unhandled exception has occurred while executing the request.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Pegasus_backend.Controllers.MobileControllers.ChatController.GetChatListOfTeacher(Int32 id) in c:\Users\Learnspace\source\repos\pegasusBackend\Controllers\MobileControllers\ChatController.cs:line 37
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at System.Threading.Tasks.ValueTask`1.get_Result()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Cors.Infrastructure.CorsMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2019-06-27 11:58:10.790 +12:00 [INF] Request finished in 4108.5333ms 500 text/html; charset=utf-8
+2019-06-27 11:58:58.132 +12:00 [INF] User profile is available. Using 'C:\Users\Learnspace\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-06-27 11:58:59.191 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
+2019-06-27 11:58:59.226 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-06-27 11:58:59.461 +12:00 [INF] Request finished in 271.4918ms 404 
+2019-06-27 11:59:03.801 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Chat/GetChatListOfTeacher/10092  
+2019-06-27 11:59:03.871 +12:00 [INF] Route matched with {action = "GetChatListOfTeacher", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetChatListOfTeacher(Int32) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-06-27 11:59:04.048 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.GetChatListOfTeacher (Pegasus_backend) - Validation state: "Valid"
+2019-06-27 11:59:10.655 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.GetChatListOfTeacher (Pegasus_backend) in 6781.7914ms
+2019-06-27 11:59:10.670 +12:00 [ERR] An unhandled exception has occurred while executing the request.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Pegasus_backend.Controllers.MobileControllers.ChatController.GetChatListOfTeacher(Int32 id) in c:\Users\Learnspace\source\repos\pegasusBackend\Controllers\MobileControllers\ChatController.cs:line 37
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at System.Threading.Tasks.ValueTask`1.get_Result()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Cors.Infrastructure.CorsMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2019-06-27 11:59:10.760 +12:00 [INF] Request finished in 6958.4548ms 500 text/html; charset=utf-8
+2019-06-27 12:00:01.812 +12:00 [INF] User profile is available. Using 'C:\Users\Learnspace\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-06-27 12:00:02.697 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
+2019-06-27 12:00:02.731 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-06-27 12:00:02.917 +12:00 [INF] Request finished in 221.3251ms 404 
+2019-06-27 12:00:09.739 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Chat/GetChatListOfTeacher/10092  
+2019-06-27 12:00:09.793 +12:00 [INF] Route matched with {action = "GetChatListOfTeacher", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetChatListOfTeacher(Int32) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-06-27 12:00:09.959 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.GetChatListOfTeacher (Pegasus_backend) - Validation state: "Valid"
+2019-06-27 12:00:14.336 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.GetChatListOfTeacher (Pegasus_backend) in 4540.1626000000006ms
+2019-06-27 12:00:14.350 +12:00 [ERR] An unhandled exception has occurred while executing the request.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Pegasus_backend.Controllers.MobileControllers.ChatController.GetChatListOfTeacher(Int32 id) in c:\Users\Learnspace\source\repos\pegasusBackend\Controllers\MobileControllers\ChatController.cs:line 37
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at System.Threading.Tasks.ValueTask`1.get_Result()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Cors.Infrastructure.CorsMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2019-06-27 12:00:14.439 +12:00 [INF] Request finished in 4700.1088ms 500 text/html; charset=utf-8
+2019-06-27 12:02:14.898 +12:00 [INF] User profile is available. Using 'C:\Users\Learnspace\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-06-27 12:02:15.798 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
+2019-06-27 12:02:15.833 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-06-27 12:02:16.027 +12:00 [INF] Request finished in 230.6103ms 404 
+2019-06-27 12:02:19.682 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Chat/GetChatListOfTeacher/10092  
+2019-06-27 12:02:19.741 +12:00 [INF] Route matched with {action = "GetChatListOfTeacher", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetChatListOfTeacher(Int32) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-06-27 12:02:19.916 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.GetChatListOfTeacher (Pegasus_backend) - Validation state: "Valid"
+2019-06-27 12:02:26.486 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-06-27 12:02:26.510 +12:00 [WRN] Query: '(from Teacher <generated>_1 in DbSet<Teacher> select [<generated>_1]).FirstOrDefault()' uses First/FirstOrDefault/Last/LastOrDefault operation without OrderBy and filter which may lead to unpredictable results.
+2019-06-27 12:02:27.768 +12:00 [INF] Executed DbCommand (62ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `t`.`teacher_id`, `t`.`ability`, `t`.`comment`, `t`.`cv_url`, `t`.`dob`, `t`.`email`, `t`.`expiry_date`, `t`.`first_name`, `t`.`form_url`, `t`.`gender`, `t`.`home_phone`, `t`.`id_number`, `t`.`id_photo`, `t`.`id_type`, `t`.`invoice_template`, `t`.`ird_number`, `t`.`is_activate`, `t`.`is_contract`, `t`.`is_left`, `t`.`last_name`, `t`.`level`, `t`.`minimum_hours`, `t`.`mobile_phone`, `t`.`otherfile_url`, `t`.`photo`, `t`.`user_id`, `t`.`visa`
+FROM `ablemusic`.`teacher` AS `t`
+LIMIT 1
+2019-06-27 12:02:33.610 +12:00 [INF] Executed DbCommand (274ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`teacher_id`, `x`.`ability`, `x`.`comment`, `x`.`cv_url`, `x`.`dob`, `x`.`email`, `x`.`expiry_date`, `x`.`first_name`, `x`.`form_url`, `x`.`gender`, `x`.`home_phone`, `x`.`id_number`, `x`.`id_photo`, `x`.`id_type`, `x`.`invoice_template`, `x`.`ird_number`, `x`.`is_activate`, `x`.`is_contract`, `x`.`is_left`, `x`.`last_name`, `x`.`level`, `x`.`minimum_hours`, `x`.`mobile_phone`, `x`.`otherfile_url`, `x`.`photo`, `x`.`user_id`, `x`.`visa`
+FROM `ablemusic`.`teacher` AS `x`
+WHERE `x`.`user_id` = @__id_0
+LIMIT 1
+2019-06-27 14:12:26.481 +12:00 [INF] User profile is available. Using 'C:\Users\Learnspace\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-06-27 14:12:27.820 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
+2019-06-27 14:12:27.855 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-06-27 14:12:28.047 +12:00 [INF] Request finished in 227.6656ms 404 
+2019-06-27 14:20:11.668 +12:00 [INF] User profile is available. Using 'C:\Users\Learnspace\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-06-27 14:20:13.090 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
+2019-06-27 14:20:13.127 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-06-27 14:20:13.329 +12:00 [INF] Request finished in 241.7823ms 404 
+2019-06-27 14:20:40.318 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/index.html  
+2019-06-27 14:20:40.429 +12:00 [INF] Request finished in 111.4763ms 200 text/html
+2019-06-27 14:20:40.457 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/swagger-ui.css  
+2019-06-27 14:20:40.465 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/swagger-ui-standalone-preset.js  
+2019-06-27 14:20:40.465 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/swagger-ui-bundle.js  
+2019-06-27 14:20:40.519 +12:00 [INF] Sending file. Request path: '/swagger-ui.css'. Physical path: 'N/A'
+2019-06-27 14:20:40.522 +12:00 [INF] Sending file. Request path: '/swagger-ui-standalone-preset.js'. Physical path: 'N/A'
+2019-06-27 14:20:40.532 +12:00 [INF] Request finished in 74.8866ms 200 text/css
+2019-06-27 14:20:40.532 +12:00 [INF] Request finished in 72.4439ms 200 application/javascript
+2019-06-27 14:20:40.549 +12:00 [INF] Sending file. Request path: '/swagger-ui-bundle.js'. Physical path: 'N/A'
+2019-06-27 14:20:40.550 +12:00 [INF] Request finished in 84.3326ms 200 application/javascript
+2019-06-27 14:20:41.016 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/v1/swagger.json  
+2019-06-27 14:20:41.090 +12:00 [ERR] An unhandled exception has occurred while executing the request.
+System.NotSupportedException: Ambiguous HTTP method for action - Pegasus_backend.Controllers.MobileControllers.ChatController.SeparateCourseIntoGroups (Pegasus_backend). Actions require an explicit HttpMethod binding for Swagger 2.0
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.CreatePathItem(IEnumerable`1 apiDescriptions, ISchemaRegistry schemaRegistry)
+   at System.Linq.Enumerable.ToDictionary[TSource,TKey,TElement](IEnumerable`1 source, Func`2 keySelector, Func`2 elementSelector, IEqualityComparer`1 comparer)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.CreatePathItems(IEnumerable`1 apiDescriptions, ISchemaRegistry schemaRegistry)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GetSwagger(String documentName, String host, String basePath, String[] schemes)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2019-06-27 14:20:41.149 +12:00 [INF] Request finished in 133.0411ms 500 text/html; charset=utf-8
+2019-06-27 14:21:51.092 +12:00 [INF] User profile is available. Using 'C:\Users\Learnspace\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-06-27 14:21:52.014 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
+2019-06-27 14:21:52.049 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-06-27 14:21:52.242 +12:00 [INF] Request finished in 229.5866ms 404 
+2019-06-27 14:21:55.073 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/index.html  
+2019-06-27 14:21:55.185 +12:00 [INF] Request finished in 112.0463ms 200 text/html
+2019-06-27 14:21:55.366 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/v1/swagger.json  
+2019-06-27 14:21:55.372 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/favicon-32x32.png  
+2019-06-27 14:21:55.382 +12:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+2019-06-27 14:21:55.382 +12:00 [INF] Request finished in 10.3949ms 200 image/png
+2019-06-27 14:21:55.684 +12:00 [INF] Request finished in 318.3414ms 200 application/json;charset=utf-8
+2019-06-27 14:41:34.069 +12:00 [INF] User profile is available. Using 'C:\Users\Learnspace\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-06-27 14:41:35.353 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
+2019-06-27 14:41:35.387 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-06-27 14:41:35.587 +12:00 [INF] Request finished in 235.9263ms 404 
+2019-06-27 14:42:21.299 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/index.html  
+2019-06-27 14:42:21.398 +12:00 [INF] Request finished in 99.6253ms 200 text/html
+2019-06-27 14:42:21.764 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/v1/swagger.json  
+2019-06-27 14:42:21.773 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/favicon-32x32.png  
+2019-06-27 14:42:21.790 +12:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+2019-06-27 14:42:21.790 +12:00 [INF] Request finished in 17.7006ms 200 image/png
+2019-06-27 14:42:22.139 +12:00 [INF] Request finished in 375.0749ms 200 application/json;charset=utf-8
+2019-06-27 14:48:50.304 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Chat/GetChatListOfTeacher/10092  
+2019-06-27 14:48:50.369 +12:00 [INF] Route matched with {action = "GetChatListOfTeacher", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetChatListOfTeacher(Int32) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-06-27 14:48:50.527 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.GetChatListOfTeacher (Pegasus_backend) - Validation state: "Valid"
+2019-06-27 14:48:51.572 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-06-27 14:48:52.818 +12:00 [INF] Executed DbCommand (68ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`teacher_id`, `x`.`ability`, `x`.`comment`, `x`.`cv_url`, `x`.`dob`, `x`.`email`, `x`.`expiry_date`, `x`.`first_name`, `x`.`form_url`, `x`.`gender`, `x`.`home_phone`, `x`.`id_number`, `x`.`id_photo`, `x`.`id_type`, `x`.`invoice_template`, `x`.`ird_number`, `x`.`is_activate`, `x`.`is_contract`, `x`.`is_left`, `x`.`last_name`, `x`.`level`, `x`.`minimum_hours`, `x`.`mobile_phone`, `x`.`otherfile_url`, `x`.`photo`, `x`.`user_id`, `x`.`visa`
+FROM `ablemusic`.`teacher` AS `x`
+WHERE `x`.`user_id` = @__id_0
+LIMIT 1
+2019-06-27 14:48:52.984 +12:00 [WRN] The LINQ expression 'where ([x].EndTime >= Convert(DateTime.Now, Nullable`1))' could not be translated and will be evaluated locally.
+2019-06-27 14:48:53.220 +12:00 [INF] Executed DbCommand (82ms) [Parameters=[@__teacherDetail_TeacherId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`lesson_id`, `x`.`begin_time`, `x`.`course_instance_id`, `x`.`created_at`, `x`.`end_time`, `x`.`group_course_instance_id`, `x`.`invoice_id`, `x`.`is_canceled`, `x`.`is_changed`, `x`.`is_confirm`, `x`.`is_trial`, `x`.`learner_id`, `x`.`org_id`, `x`.`reason`, `x`.`room_id`, `x`.`teacher_id`, `x`.`trial_course_id`, `x.Learner`.`learner_id`, `x.Learner`.`address`, `x.Learner`.`contact_num`, `x.Learner`.`created_at`, `x.Learner`.`dob`, `x.Learner`.`email`, `x.Learner`.`enroll_date`, `x.Learner`.`first_name`, `x.Learner`.`form_url`, `x.Learner`.`g5_certification`, `x.Learner`.`gender`, `x.Learner`.`is_abrsm_g5`, `x.Learner`.`is_active`, `x.Learner`.`is_under_18`, `x.Learner`.`last_name`, `x.Learner`.`learner_level`, `x.Learner`.`level_type`, `x.Learner`.`middle_name`, `x.Learner`.`note`, `x.Learner`.`org_id`, `x.Learner`.`otherfile_url`, `x.Learner`.`payment_period`, `x.Learner`.`photo`, `x.Learner`.`referrer`, `x.Learner`.`referrer_learner_id`, `x.Learner`.`user_id`
+FROM `ablemusic`.`lesson` AS `x`
+LEFT JOIN `ablemusic`.`learner` AS `x.Learner` ON `x`.`learner_id` = `x.Learner`.`learner_id`
+WHERE ((`x`.`teacher_id` = @__teacherDetail_TeacherId_0) AND (`x`.`is_canceled` = 0)) AND (`x`.`is_trial` = 0)
+2019-06-27 14:48:53.339 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.GetChatListOfTeacher (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 2802.1344ms.
+2019-06-27 14:48:53.347 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Collections.Generic.IEnumerable`1[[Pegasus_backend.pegasusContext.Lesson, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-06-27 14:48:53.402 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.GetChatListOfTeacher (Pegasus_backend) in 3030.5925ms
+2019-06-27 14:48:53.402 +12:00 [INF] Request finished in 3104.2057ms 200 application/json; charset=utf-8
+2019-06-27 15:01:33.798 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/index.html  
+2019-06-27 15:01:33.831 +12:00 [INF] Request finished in 34.7218ms 200 text/html
+2019-06-27 15:01:34.162 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/v1/swagger.json  
+2019-06-27 15:01:34.165 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/favicon-32x32.png  
+2019-06-27 15:01:34.166 +12:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+2019-06-27 15:01:34.166 +12:00 [INF] Request finished in 1.0361ms 200 image/png
+2019-06-27 15:01:34.203 +12:00 [INF] Request finished in 41.1192ms 200 application/json;charset=utf-8

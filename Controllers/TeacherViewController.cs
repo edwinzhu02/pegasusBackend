@@ -24,7 +24,7 @@ namespace Pegasus_backend.Controllers
     public class TeacherViewController:BasicController
     {
         private readonly DataService _service;
-        public TeacherViewController(ablemusicContext ablemusicContext, ILogger<ValuesController> log) : base(ablemusicContext, log)
+        public TeacherViewController(ablemusicContext ablemusicContext, ILogger<TeacherViewController> log) : base(ablemusicContext, log)
         {
             _service = new DataService(_ablemusicContext);
         }

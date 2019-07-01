@@ -18,7 +18,7 @@ namespace Pegasus_backend.Controllers
     {
         private readonly IMapper _mapper;
 
-        public CoursesController(ablemusicContext ablemusicContext, IMapper mapper, ILogger<ValuesController> log) : base(ablemusicContext, log)
+        public CoursesController(ablemusicContext ablemusicContext, IMapper mapper, ILogger<CoursesController> log) : base(ablemusicContext, log)
         {
             _mapper = mapper;
         }

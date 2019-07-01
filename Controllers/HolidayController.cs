@@ -16,7 +16,7 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class HolidayController: BasicController
     {
-        public HolidayController(ablemusicContext ablemusicContext, ILogger<ValuesController> log) : base(ablemusicContext, log)
+        public HolidayController(ablemusicContext ablemusicContext, ILogger<HolidayController> log) : base(ablemusicContext, log)
         {
         }
         

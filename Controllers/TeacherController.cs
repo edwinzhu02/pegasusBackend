@@ -28,7 +28,7 @@ namespace Pegasus_backend.Controllers
         private TeacherQualificatiion newTeacherQualification;
         private AvailableDays DayList;
 
-        public TeacherController(ablemusicContext ablemusicContext, ILogger<ValuesController> log, IMapper mapper) : base(ablemusicContext, log)
+        public TeacherController(ablemusicContext ablemusicContext, ILogger<TeacherController> log, IMapper mapper) : base(ablemusicContext, log)
         {
             _mapper = mapper;
         }

@@ -90,7 +90,7 @@ namespace Pegasus_backend.Services
                             IsConfirmed = p.IsConfirmed,
                             Comment = p.Comment,
                             SoldTransaction = p.SoldTransaction,
-                            Staff = s.FirstOrDefault()
+                            Staff = p.PaymentMethod !=1?s.FirstOrDefault():null
                         }).GroupJoin(_context.Learner,
                         p=>p.LearnerId,
                         l=>l.LearnerId,
@@ -208,7 +208,7 @@ namespace Pegasus_backend.Services
                             IsConfirmed = p.IsConfirmed,
                             Comment = p.Comment,
                             SoldTransaction = p.SoldTransaction,
-                            Staff = s.FirstOrDefault()
+                            Staff = p.PaymentMethod!=1? s.FirstOrDefault():null
                         }).GroupJoin(_context.Learner,
                         p=>p.LearnerId,
                         l=>l.LearnerId,
@@ -313,7 +313,7 @@ namespace Pegasus_backend.Services
                             IsConfirmed = p.IsConfirmed,
                             Comment = p.Comment,
                             SoldTransaction = p.SoldTransaction,
-                            Staff = s.FirstOrDefault()
+                            Staff = p.PaymentMethod!=1? s.FirstOrDefault():null
                         }).GroupJoin(_context.Learner,
                         p=>p.LearnerId,
                         l=>l.LearnerId,
@@ -420,7 +420,7 @@ namespace Pegasus_backend.Services
                             IsConfirmed = p.IsConfirmed,
                             Comment = p.Comment,
                             SoldTransaction = p.SoldTransaction,
-                            Staff = s.FirstOrDefault()
+                            Staff = p.PaymentMethod!=1? s.FirstOrDefault():null
                         }).GroupJoin(_context.Learner,
                         p=>p.LearnerId,
                         l=>l.LearnerId,
@@ -525,7 +525,7 @@ namespace Pegasus_backend.Services
                             IsConfirmed = p.IsConfirmed,
                             Comment = p.Comment,
                             SoldTransaction = p.SoldTransaction,
-                            Staff = s.FirstOrDefault()
+                            Staff = p.PaymentMethod!=1? s.FirstOrDefault():null
                         }).GroupJoin(_context.Learner,
                         p=>p.LearnerId,
                         l=>l.LearnerId,

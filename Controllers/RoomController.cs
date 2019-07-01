@@ -15,7 +15,7 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class RoomController: BasicController
     {
-        public RoomController(ablemusicContext ablemusicContext, ILogger<ValuesController> log) : base(ablemusicContext, log)
+        public RoomController(ablemusicContext ablemusicContext, ILogger<RoomController> log) : base(ablemusicContext, log)
         {       
         }
         

@@ -70,8 +70,8 @@ namespace Pegasus_backend
             services.AddDbContext<ablemusicContext>(options =>
                 options.UseMySQL(Configuration.GetConnectionString("AblemusicDatabase")));
             services.AddTransient<pegasusContext.ablemusicContext>();
-            services.AddCors();
-            services.AddHostedService<TimedHostedService>();
+            // services.AddCors();
+            // services.AddHostedService<TimedHostedService>();
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
@@ -140,8 +140,7 @@ namespace Pegasus_backend
                     Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images")),
                 RequestPath = "/images"
             });
-            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-//            app.UseCors(x => x.WithOrigins("http://localhost:8100").AllowAnyMethod().AllowAnyHeader().AllowCredentials());
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials());
             app.UseSignalR(routes => { routes.MapHub<Chatroom>("/chat"); });
             app.UseHttpsRedirection();
             app.UseAuthentication();

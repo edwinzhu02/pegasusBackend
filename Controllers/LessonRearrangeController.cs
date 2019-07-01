@@ -22,7 +22,7 @@ namespace Pegasus_backend.Controllers
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
 
-        public LessonRearrangeController(ablemusicContext ablemusicContext, ILogger<ValuesController> log, IMapper mapper, IConfiguration configuration) : base(ablemusicContext, log)
+        public LessonRearrangeController(ablemusicContext ablemusicContext, ILogger<LessonRearrangeController> log, IMapper mapper, IConfiguration configuration) : base(ablemusicContext, log)
         {
             _mapper = mapper;
             _configuration = configuration;
@@ -64,13 +64,8 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = "Goupe course is not allow to rearrange";
                 return BadRequest(result);
             }
-            if(newLesson.BeginTime >= newLesson.EndTime)
-            {
-                result.IsSuccess = false;
-                result.ErrorMessage = "Begin time must earlier than end time!";
-                return BadRequest(result);
-            }
-
+            TimeSpan lessonDuration = oldLesson.EndTime.Value.Subtract(oldLesson.BeginTime.Value);
+            newLesson.EndTime = newLesson.BeginTime.Value.Add(lessonDuration);
             List<Lesson> conflictRooms = new List<Lesson>();
             List<Lesson> conflictTeacherLessons = new List<Lesson>();
             try
@@ -298,6 +293,7 @@ namespace Pegasus_backend.Controllers
             newLesson.IsTrial = oldLesson.IsTrial;
             newLesson.TrialCourseId = oldLesson.TrialCourseId;
             newLesson.InvoiceId = oldLesson.InvoiceId;
+            newLesson.IsChanged = 1;
 
             ////oldLesson.LearnerId = newLesson.LearnerId;
             //oldLesson.RoomId = newLesson.RoomId;

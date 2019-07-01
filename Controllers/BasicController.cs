@@ -21,9 +21,9 @@ namespace Pegasus_backend.Controllers
     public abstract class BasicController: ControllerBase
     {
         protected readonly ablemusicContext _ablemusicContext;
-        protected readonly ILogger<ValuesController> _log;
+        protected readonly ILogger<Object> _log;
 
-        public BasicController(ablemusicContext ablemusicContext, ILogger<ValuesController> log)
+        public BasicController(ablemusicContext ablemusicContext, ILogger<Object> log)
         {
             _ablemusicContext = ablemusicContext;
             _log = log;
@@ -79,7 +79,8 @@ namespace Pegasus_backend.Controllers
                     firstname = user.Staff.ToList()[0].FirstName, lastname = user.Staff.ToList()[0].LastName,
                     position = positionToClient,
                     OrgName = user.Staff.ToList()[0].StaffOrg.ToList().Select(s => s.Org.OrgName),
-                    OrgId = user.Staff.ToList()[0].StaffOrg.ToList().Select(s => s.Org.OrgId)
+                    OrgId = user.Staff.ToList()[0].StaffOrg.ToList().Select(s => s.Org.OrgId),
+                    StaffId =  user.Staff.FirstOrDefault().StaffId
                 };
             }
 
@@ -138,21 +139,23 @@ namespace Pegasus_backend.Controllers
         }
         protected DateTime toNZTimezone(DateTime utc)
         {
-            DateTime nzTime = utc;
+            DateTime nzTime = new DateTime();
             try
             {
-                TimeZoneInfo cstZone = TimeZoneInfo.FindSystemTimeZoneById("New Zealand Standard Time");
-                nzTime = TimeZoneInfo.ConvertTimeFromUtc(utc, cstZone);
+                TimeZoneInfo nztZone = TimeZoneInfo.FindSystemTimeZoneById("New Zealand Standard Time");
+                nzTime = TimeZoneInfo.ConvertTimeFromUtc(utc, nztZone);
                 return nzTime;
             }
             catch (TimeZoneNotFoundException)
             {
-                Console.WriteLine("The registry does not define the Central Standard Time zone.");
+                TimeZoneInfo nztZone = TimeZoneInfo.FindSystemTimeZoneById("Pacific/Auckland");
+                nzTime = TimeZoneInfo.ConvertTimeFromUtc(utc, nztZone);
                 return nzTime;
             }
             catch (InvalidTimeZoneException)
             {
-                Console.WriteLine("Registry data on the Central Standard Time zone has been corrupted.");
+                TimeZoneInfo nztZone = TimeZoneInfo.FindSystemTimeZoneById("Pacific/Auckland");
+                nzTime = TimeZoneInfo.ConvertTimeFromUtc(utc, nztZone);
                 return nzTime;
             }
         }

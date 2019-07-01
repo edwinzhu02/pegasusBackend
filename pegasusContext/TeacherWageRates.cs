@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
 
 namespace Pegasus_backend.pegasusContext
 {
@@ -15,7 +14,6 @@ namespace Pegasus_backend.pegasusContext
         public DateTime? CreateAt { get; set; }
         public short? IsActivate { get; set; }
 
-        [JsonIgnore]
         public Teacher Teacher { get; set; }
     }
 }

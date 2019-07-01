@@ -15,7 +15,7 @@ namespace Pegasus_backend.Controllers
     public class LessonConflictCheckController : BasicController
     {
 
-        public LessonConflictCheckController(ablemusicContext ablemusicContext, ILogger<ValuesController> log) : base(ablemusicContext, log)
+        public LessonConflictCheckController(ablemusicContext ablemusicContext, ILogger<LessonConflictCheckController> log) : base(ablemusicContext, log)
         {
         }
 

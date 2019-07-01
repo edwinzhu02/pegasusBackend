@@ -1,7 +1,6 @@
 using AutoMapper;
 using Pegasus_backend.pegasusContext;
 using Pegasus_backend.Models;
-using Parent = Pegasus_backend.Models.Parent;
 
 namespace Pegasus_backend.Mappings
 {
@@ -35,7 +34,7 @@ namespace Pegasus_backend.Mappings
             
             //Start: Get Learner Model
             CreateMap<GetLearnerModel, Learner>();
-            CreateMap<GetLearnerParentModel, Parent>();
+            CreateMap<GetLearnerParentModel, pegasusContext.Parent>();
             CreateMap<GetLearnerLearnerOthers, LearnerOthers>();
             CreateMap<GetLearnerOnetoOneCourseInstance, One2oneCourseInstance>();
             CreateMap<GetLearnerOnetoOneCourseInstanceOrg, pegasusContext.Org>();
@@ -51,6 +50,15 @@ namespace Pegasus_backend.Mappings
             CreateMap<GetLearnerLearnerGroupCourseGroupCourseInstanceCourse, Course>();
             CreateMap<GetLearnerLearnerGroupCourseGroupCourseInstanceRoom, Room>();
             //End
+            //Payment
+            CreateMap<GetPaymentModel, Payment>();
+            CreateMap<PaymentInvoiceModel, Invoice>();
+            CreateMap<PaymentLearnerModel, Learner>();            
+            CreateMap<PaymentSoldTransaction, SoldTransaction>();            
+            CreateMap<PaymentProductModel, Product>();  
+            CreateMap<PaymentStaffModel, Staff>(); 
+
+            CreateMap<ChatMessageModel, ChatMessage>();
         }
     }
 }

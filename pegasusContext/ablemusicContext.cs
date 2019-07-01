@@ -75,7 +75,7 @@ namespace Pegasus_backend.pegasusContext
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseMySQL("Server=gradspace.org;UserId=dbuser;Password=qwer1234;Database=ablemusic");
+                optionsBuilder.UseMySQL("server=gradspace.org;User Id=dbuser;Password=qwer1234;Database=ablemusic");
             }
         }
 
@@ -296,8 +296,15 @@ namespace Pegasus_backend.pegasusContext
 
                 entity.Property(e => e.ChatGroupId)
                     .HasColumnName("chat_group_id")
-                    .HasColumnType("int(11)")
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
                     .ValueGeneratedNever();
+
+                entity.Property(e => e.CreatedAt).HasColumnName("created_at");
+
+                entity.Property(e => e.IsActive)
+                    .HasColumnName("is_active")
+                    .HasColumnType("bit(1)");
 
                 entity.Property(e => e.UserId)
                     .HasColumnName("user_id")
@@ -316,7 +323,10 @@ namespace Pegasus_backend.pegasusContext
                 entity.HasIndex(e => e.ChatGroupId)
                     .HasName("R_122");
 
-                entity.HasIndex(e => e.UserId)
+                entity.HasIndex(e => e.ReceiverUserId)
+                    .HasName("R_128");
+
+                entity.HasIndex(e => e.SenderUserId)
                     .HasName("R_123");
 
                 entity.Property(e => e.ChatMessageId)
@@ -326,7 +336,8 @@ namespace Pegasus_backend.pegasusContext
 
                 entity.Property(e => e.ChatGroupId)
                     .HasColumnName("chat_group_id")
-                    .HasColumnType("int(11)");
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.CreateAt)
                     .HasColumnName("create_at")
@@ -337,8 +348,12 @@ namespace Pegasus_backend.pegasusContext
                     .HasMaxLength(2000)
                     .IsUnicode(false);
 
-                entity.Property(e => e.UserId)
-                    .HasColumnName("user_id")
+                entity.Property(e => e.ReceiverUserId)
+                    .HasColumnName("receiver_user_id")
+                    .HasColumnType("smallint(6)");
+
+                entity.Property(e => e.SenderUserId)
+                    .HasColumnName("sender_user_id")
                     .HasColumnType("smallint(6)");
 
                 entity.HasOne(d => d.ChatGroup)
@@ -346,9 +361,14 @@ namespace Pegasus_backend.pegasusContext
                     .HasForeignKey(d => d.ChatGroupId)
                     .HasConstraintName("R_122");
 
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.ChatMessage)
-                    .HasForeignKey(d => d.UserId)
+                entity.HasOne(d => d.ReceiverUser)
+                    .WithMany(p => p.ChatMessageReceiverUser)
+                    .HasForeignKey(d => d.ReceiverUserId)
+                    .HasConstraintName("R_128");
+
+                entity.HasOne(d => d.SenderUser)
+                    .WithMany(p => p.ChatMessageSenderUser)
+                    .HasForeignKey(d => d.SenderUserId)
                     .HasConstraintName("R_123");
             });
 
@@ -501,6 +521,10 @@ namespace Pegasus_backend.pegasusContext
 
                 entity.Property(e => e.EndDate)
                     .HasColumnName("end_date")
+                    .HasColumnType("date");
+
+                entity.Property(e => e.InvoiceDate)
+                    .HasColumnName("invoice_date")
                     .HasColumnType("date");
 
                 entity.Property(e => e.IsActivate)
@@ -1316,6 +1340,10 @@ namespace Pegasus_backend.pegasusContext
 
                 entity.Property(e => e.IsCanceled)
                     .HasColumnName("is_canceled")
+                    .HasColumnType("bit(1)");
+
+                entity.Property(e => e.IsChanged)
+                    .HasColumnName("is_changed")
                     .HasColumnType("bit(1)");
 
                 entity.Property(e => e.IsConfirm)
@@ -2946,6 +2974,11 @@ namespace Pegasus_backend.pegasusContext
                     .HasColumnName("end_date")
                     .HasColumnType("date");
 
+                entity.Property(e => e.TermName)
+                    .HasColumnName("term_name")
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.TermType)
                     .HasColumnName("term_type")
                     .HasColumnType("tinyint(4)");
@@ -3042,6 +3075,9 @@ namespace Pegasus_backend.pegasusContext
 
                 entity.HasIndex(e => e.RoleId)
                     .HasName("R_57");
+
+                entity.HasIndex(e => e.UserName)
+                    .HasName("idx_username");
 
                 entity.Property(e => e.UserId)
                     .HasColumnName("user_id")

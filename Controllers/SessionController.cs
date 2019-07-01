@@ -20,7 +20,7 @@ namespace Pegasus_backend.Controllers
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
 
-        public SessionController(ablemusicContext ablemusicContext, ILogger<ValuesController> log, IMapper mapper, IConfiguration configuration) : base(ablemusicContext, log)
+        public SessionController(ablemusicContext ablemusicContext, ILogger<SessionController> log, IMapper mapper, IConfiguration configuration) : base(ablemusicContext, log)
         {
             _mapper = mapper;
             _configuration = configuration;
