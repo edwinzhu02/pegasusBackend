@@ -34,87 +34,6 @@ namespace Pegasus_backend.Controllers.MobileControllers
             return Ok(chatMessageModel);
         }
 
-        //GET: http://localhost:5000/api/Chat/GetChatListOfTeacher/:userId
-        // Get chat list of teacher
-        [Route("[action]/{id}")]
-        [HttpGet]
-        public async Task<IActionResult> GetChatListOfTeacher(int id)
-        {
-            Result<IEnumerable<Lesson>> result = new Result<IEnumerable<Lesson>>();
-            var teacherDetail = await _ablemusicContext.Teacher.Where(x => x.UserId == id).FirstOrDefaultAsync();
-            if (teacherDetail == null)
-            {
-                return NotFound("No such a teacher");
-            }
-            // find available courses of teacher
-            var lessionsOfTeacher = await _ablemusicContext.Lesson
-                .Where(x => x.TeacherId == teacherDetail.TeacherId && x.IsCanceled == 0 && x.IsTrial == 0 && x.EndTime >= DateTime.Now)
-                .Include(x=>x.Learner)
-                .Select(x => x).ToListAsync();
-            if (lessionsOfTeacher == null)
-            {
-                return NotFound("No available courses right now.");
-            }
-
-            List<Lesson> oneToOneLessons = SeparateCourseIntoGroups(lessionsOfTeacher).Item1;
-            List<Lesson> groupLessons = SeparateCourseIntoGroups(lessionsOfTeacher).Item1;
-
-            result.Data = oneToOneLessons.Concat(groupLessons);
-            return Ok(result);
-        }
-
-        //GET: http://localhost:5000/api/Chat/GetRelatedTeacher/:userId
-        // Get teacherList
-        [Route("[action]/{id}")]
-        [HttpGet]
-        public async Task<IActionResult> GetRelatedTeacher(int id)
-        {
-            Result<List<Teacher>> result = new Result<List<Teacher>>();
-            var learnerDetail = await _ablemusicContext.Learner.Where(x => x.UserId == id).FirstOrDefaultAsync();
-            if (learnerDetail == null)
-            {
-                return NotFound("No such a learner");
-            }
-
-            var teachers = await _ablemusicContext.Lesson.Where(x => x.LearnerId == learnerDetail.LearnerId).Select(x => x).ToListAsync();
-            if (teachers == null)
-            {
-                return NotFound("No teachers yet");
-            }
-
-            // Remove the duplicated teachdId
-            List<int?> teacherIdList = new List<int?>();
-            foreach (var teacher in teachers)
-            {
-                if (!teacherIdList.Contains(teacher.TeacherId))
-                {
-                    teacherIdList.Add(teacher.TeacherId);
-                }
-            }
-
-            List<Teacher> teacherList = new List<Teacher>();
-            foreach (var Id in teacherIdList)
-            {
-                var detail = await _ablemusicContext.Teacher.Where(x => x.TeacherId == Id)
-                    .FirstOrDefaultAsync();
-                if (detail != null)
-                {
-                    teacherList.Add(detail);
-                }
-                else
-                {
-                    return NotFound("Teacher not found");
-                }
-            }
-
-            if (teacherList.Count == 0)
-            {
-                return NotFound("No teachers yet");
-            }
-
-            result.Data = teacherList;
-            return Ok(result);
-        }
 
         // Post new message to database
         [HttpPost]
@@ -138,31 +57,6 @@ namespace Pegasus_backend.Controllers.MobileControllers
 
             result.Data = chatMessageModel;
             return Ok(result);
-        }
-
-        // Get userId and role from front-end
-        // find available courses => before the end time, not a trial, not canceled
-        // if role = tutor, => getRelatedStudents (only find the available courses)
-        // if role = student, => getRelatedTeachers (only find the available courses)
-        // if role = stuff, => get all the available courses of same org
-
-        private Tuple<List<Lesson>, List<Lesson>> SeparateCourseIntoGroups(List<Lesson> lessonList)
-        {
-            List<Lesson> oneToOneLessons = new List<Lesson>();
-            List<Lesson> groupLessons = new List<Lesson>();
-            foreach (var lesson in lessonList)
-            {
-                if (lesson.CourseInstanceId != null)
-                {
-                    oneToOneLessons.Add(lesson);
-                }
-
-                if (lesson.GroupCourseInstance != null && !groupLessons.Contains(lesson))
-                {
-                    groupLessons.Add(lesson);
-                }
-            }
-            return Tuple.Create(oneToOneLessons, groupLessons);
         }
 
         // pass in userId
@@ -209,6 +103,153 @@ namespace Pegasus_backend.Controllers.MobileControllers
                 Data = Tuple.Create(staffList, teacherList, studentsIdHavingLesson, studentsRegisteredIn)
             };
             return Ok(result);
+        }
+
+        http://localhost:5000/api/Chat/GetChattingList/:userId
+        [Route("[action]/{id}")]
+        [HttpGet]
+        public async Task<IActionResult> GetChattingList(int id)
+        {
+            Result<ChatListModel> result = new Result<ChatListModel>();
+
+            //validate role
+            var userDetail = await _ablemusicContext.User.Where(x => x.UserId == id).Include(x=>x.Role).FirstOrDefaultAsync();
+            if (userDetail.RoleId == null)
+            {
+                return NotFound("Can not find roleId");
+            }
+            switch (userDetail.Role.RoleName)
+            {
+                case "teacher":
+                    var teacherDetail = await _ablemusicContext.Teacher.Where(x => x.UserId == id).FirstOrDefaultAsync();
+                    if (teacherDetail == null)
+                    {
+                        return NotFound("Can not find teacherId");
+                    }
+                    else
+                    {
+                        try
+                        {
+                            result.Data = await GetChatListOfTeacher(teacherDetail.TeacherId);
+                        }
+                        catch (Exception e)
+                        {
+                            result.ErrorMessage = e.Message;
+                            return BadRequest(result);
+                        }
+
+                        return Ok(result);
+                    }
+                case "student":
+                    var learnerDetail = await _ablemusicContext.Learner.Where(x => x.UserId == id).FirstOrDefaultAsync();
+                    if (learnerDetail == null)
+                    {
+                        return NotFound("Can not find learnerId");
+                    }
+                    else
+                    {
+                        try
+                        {
+                            result.Data = await GetChatListOfLearner(learnerDetail.LearnerId);
+                        }
+                        catch (Exception e)
+                        {
+                            result.ErrorMessage = e.Message;
+                            return BadRequest(result);
+                        }
+
+                        return Ok(result);
+                    }
+                //get staff chatting list
+                default:
+                    //find staffId
+                    break;
+            }
+
+            return Ok();
+        }
+
+        public async Task<List<Staff>> GetAllStaff(int? staffId)
+        {
+            List<Staff> staffList;
+            if (staffId == null)
+            {
+                staffList = await _ablemusicContext.Staff.Take(3).ToListAsync();
+            }
+            else
+            {
+                staffList = await _ablemusicContext.Staff.Where(x=>x.StaffId != staffId).Take(3).ToListAsync();
+            }
+
+            return staffList;
+        }
+
+        public async Task<ChatListModel> GetChatListOfLearner(int learnerId)
+        {
+            var lessonsOfLearner = await _ablemusicContext.Lesson
+                .Where(x => x.LearnerId == learnerId && x.IsCanceled == 0 && x.IsTrial == 0 && x.EndTime >= DateTime.Now)
+                .Include(x=>x.Learner)
+                .Select(x => x).ToListAsync();
+            if (lessonsOfLearner == null)
+            {
+                throw new Exception("No courses for this learner at the moment");
+            }
+
+            // add data to return
+            var lessonList = SeparateCourseIntoGroups(lessonsOfLearner);
+            var staffs = await GetAllStaff(null);
+            ChatListModel chatList = new ChatListModel
+            {
+                OneToOneCourseList = lessonList["oneToOneLessons"],
+                OneToManyCourseList = lessonList["groupLessons"]
+            };
+            return chatList;
+
+        }
+
+        public async Task<ChatListModel> GetChatListOfTeacher(int teacherId)
+        {
+            // find available courses of teacher
+            var lessonsOfTeacher = await _ablemusicContext.Lesson
+                .Where(x => x.TeacherId == teacherId && x.IsCanceled == 0 && x.IsTrial == 0 && x.EndTime >= DateTime.Now)
+                .Include(x=>x.Learner)
+                .Select(x => x).ToListAsync();
+            if (lessonsOfTeacher == null)
+            {
+                throw new Exception("No courses for this teacher right now");
+            }
+
+            // add data to return
+            var lessonList = SeparateCourseIntoGroups(lessonsOfTeacher);
+            var staffs = await GetAllStaff(null);
+            ChatListModel chatList = new ChatListModel
+            {
+                OneToOneCourseList = lessonList["oneToOneLessons"],
+                OneToManyCourseList = lessonList["groupLessons"]
+            };
+            return chatList;
+        }
+
+        private Dictionary<string, List<Lesson>> SeparateCourseIntoGroups(List<Lesson> lessonList)
+        {
+            Dictionary<string, List<Lesson>> allLessons = new Dictionary<string, List<Lesson>>();
+            List<Lesson> oneToOneLessons = new List<Lesson>();
+            List<Lesson> groupLessons = new List<Lesson>();
+            foreach (var lesson in lessonList)
+            {
+                if (lesson.CourseInstanceId != null)
+                {
+                    oneToOneLessons.Add(lesson);
+                }
+
+                if (lesson.GroupCourseInstance != null && !groupLessons.Contains(lesson))
+                {
+                    groupLessons.Add(lesson);
+                }
+            }
+            allLessons.Add("oneToOneLessons", oneToOneLessons);
+            allLessons.Add("groupLessons", groupLessons);
+            return allLessons;
         }
     }
 }
