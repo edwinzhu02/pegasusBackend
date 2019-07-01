@@ -11,7 +11,7 @@ namespace Pegasus_backend.Controllers.MobileControllers
     public class Chatroom : Hub
     {
 
-        public async Task SendMessage(string name, string message)
+        public async Task SendMessage(string groupId, string message)
         {
             // receive the message from the client and then broadcast that same message to
             // all the clients that listen on the Broadcastchatdata event
@@ -22,12 +22,18 @@ namespace Pegasus_backend.Controllers.MobileControllers
 //                SendAt = DateTime.Now
 //            };
 
-            await Clients.All.SendAsync("SendMessage",name, message);
+//            await Clients.All.SendAsync("SendMessage", groupId, message);
+
+            // add user into group
+            await Groups.AddToGroupAsync(Context.ConnectionId, groupId);
+            await Clients.Group(groupId).SendAsync("SendMessage", $"Hello {groupId}");
+
+        }
+
+        // name of receiver
+        public async Task SendMessageOneToOne(string name, string message)
+        {
+            await Clients.User(name).SendAsync("SendMessageOneToOne", message);
         }
     }
-
-//    public interface ITypedHubClient
-//    {
-//        Task SendMessageToClient(string name, string message);
-//    }
 }

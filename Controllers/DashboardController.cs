@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Pegasus_backend.pegasusContext;
 using Pegasus_backend.Models;
 using Pegasus_backend.Services;
+using Pegasus_backend.Utilities;
+
 
 namespace Pegasus_backend.Controllers
 {
@@ -24,35 +25,13 @@ namespace Pegasus_backend.Controllers
         public async Task<IActionResult> Get(string orgIDsStr)
         {
             var result = new Result<Object>();
-            string[] orgIDsArr;
-            List<int> orgIDs = new List<int>();
-            if (orgIDsStr.Length <= 0)
+            var orgIDsConvertResult = orgIDsStr.ToListOfID();
+            if (!orgIDsConvertResult.IsSuccess)
             {
-                orgIDsArr = new string[] { };
-                result.IsSuccess = false;
-                result.ErrorMessage = "orgID is required";
-                return BadRequest(result);
-            } else if(orgIDsStr.Length == 1)
-            {
-                orgIDsArr = new string[] { orgIDsStr };
-            } else
-            {
-                orgIDsArr = orgIDsStr.Split(new char[] { ',' });
-            }
-            for (var i = 0; i < orgIDsArr.Length; i++)
-            {
-                try
-                {
-                    orgIDs.Add(Int32.Parse(orgIDsArr[i]));
-                }
-                catch (Exception ex)
-                {
-                    result.IsSuccess = false;
-                    result.ErrorMessage = ex.Message;
-                    return BadRequest(result);
-                }
+                return BadRequest(orgIDsConvertResult);
             }
 
+            List<int> orgIDs = orgIDsConvertResult.Data;
             var dashboardService = new DashboardService(_ablemusicContext, _log, orgIDs);
 
             var lessonsForToday = await dashboardService.getLessonsForToday();
@@ -70,35 +49,60 @@ namespace Pegasus_backend.Controllers
             var newEnrolledStudentsForRecent8Weeks = await dashboardService.getRecentNewRegisteredLearner(8);
 
             var lessonsForRecent14DaysCount = new Dictionary<string, int>();
-            foreach(var l in lessonsForRecent14Days)
+            if (lessonsForRecent14Days.IsSuccess)
             {
-                lessonsForRecent14DaysCount.Add(l.Key.ToString("MM/dd/yyyy"), l.Value.Count);
+                foreach (var l in lessonsForRecent14Days.Data)
+                {
+                    lessonsForRecent14DaysCount.Add(l.Key.ToString("MM/dd/yyyy"), l.Value.Count);
+                }
+            } else
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = lessonsForRecent14Days.ErrorMessage;
+                return BadRequest(result);
             }
+            
             var newEnrolledStudentsForRecent8WeeksCount = new Dictionary<string, int>();
-            foreach(var ns in newEnrolledStudentsForRecent8Weeks)
+            if (newEnrolledStudentsForRecent8Weeks.IsSuccess)
             {
-                newEnrolledStudentsForRecent8WeeksCount.Add(ns.Key, ns.Value.Count);
+                foreach (var ns in newEnrolledStudentsForRecent8Weeks.Data)
+                {
+                    newEnrolledStudentsForRecent8WeeksCount.Add(ns.Key, ns.Value.Count);
+                }
+            }
+            else
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = newEnrolledStudentsForRecent8Weeks.ErrorMessage;
+                return BadRequest(result);
             }
 
-
-            result.Data = new
+            try
             {
-                lessonsForToday = lessonsForToday.Count(),
-                trialLessonsForToday = trialLessonsForToday.Count(),
-                newStudentsForToday = newStudentsForToday.Count(),
-                waitingInvoices = waitingInvoices.Count(),
-                canceledLessonsForToday = canceledLessonsForToday.Count(),
-                rearrangedLessonsForToday = rearrangedLessonsForToday.Count(),
-                expiredDayOffForToday = expiredDayOffForToday.Count(),
-                expiredRearrangedLessonForToday = expiredRearrangedLessonForToday.Count(),
-                studentWith0RemainLessonForToday = studentWith0RemainLessonForToday.Count(),
-                studentWith1RemainLessonForToday = studentWith1RemainLessonForToday.Count(),
-                studentWith2RemainLessonsForToday = studentWith2RemainLessonsForToday.Count(),
-
-                lessonsForRecent7Days = lessonsForRecent14DaysCount,
-                newEnrolledStudentsForRecent8Weeks = newEnrolledStudentsForRecent8WeeksCount,
-                applyedOrgIds = orgIDs
-            };
+                result.Data = new
+                {
+                    lessonsForToday = lessonsForToday.IsSuccess == true ? lessonsForToday.Data.Count() : throw new Exception(lessonsForToday.ErrorMessage),
+                    trialLessonsForToday = trialLessonsForToday.IsSuccess == true ? trialLessonsForToday.Data.Count() : throw new Exception(trialLessonsForToday.ErrorMessage),
+                    newStudentsForToday = newStudentsForToday.IsSuccess == true ? newStudentsForToday.Data.Count() : throw new Exception(newStudentsForToday.ErrorMessage),
+                    waitingInvoices = waitingInvoices.IsSuccess == true ? waitingInvoices.Data.Count() : throw new Exception(waitingInvoices.ErrorMessage),
+                    canceledLessonsForToday = canceledLessonsForToday.IsSuccess == true ? canceledLessonsForToday.Data.Count() : throw new Exception(canceledLessonsForToday.ErrorMessage),
+                    rearrangedLessonsForToday = rearrangedLessonsForToday.IsSuccess == true ? rearrangedLessonsForToday.Data.Count() : throw new Exception(rearrangedLessonsForToday.ErrorMessage),
+                    expiredDayOffForToday = expiredDayOffForToday.IsSuccess == true ? expiredDayOffForToday.Data.Count() : throw new Exception(expiredDayOffForToday.ErrorMessage),
+                    expiredRearrangedLessonForToday = expiredRearrangedLessonForToday.IsSuccess == true ? expiredRearrangedLessonForToday.Data.Count() : throw new Exception(expiredRearrangedLessonForToday.ErrorMessage),
+                    studentWith0RemainLessonForToday = studentWith0RemainLessonForToday.IsSuccess == true ? studentWith0RemainLessonForToday.Data.Count() : throw new Exception(studentWith0RemainLessonForToday.ErrorMessage),
+                    studentWith1RemainLessonForToday = studentWith1RemainLessonForToday.IsSuccess == true ? studentWith1RemainLessonForToday.Data.Count() : throw new Exception(studentWith1RemainLessonForToday.ErrorMessage),
+                    studentWith2RemainLessonsForToday = studentWith2RemainLessonsForToday.IsSuccess == true ? studentWith2RemainLessonsForToday.Data.Count() : throw new Exception(studentWith2RemainLessonsForToday.ErrorMessage),
+                    lessonsForRecent14Days = lessonsForRecent14DaysCount,
+                    newEnrolledStudentsForRecent8Weeks = newEnrolledStudentsForRecent8WeeksCount,
+                    applyedOrgIds = orgIDs
+                };
+            }
+            catch(Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.ToString();
+                return BadRequest(result);
+            }
 
             return Ok(result);
         }

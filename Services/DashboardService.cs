@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Pegasus_backend.pegasusContext;
 using Microsoft.EntityFrameworkCore;
-
+using Pegasus_backend.Models;
+using Pegasus_backend.Utilities;
 
 namespace Pegasus_backend.Services
 {
@@ -21,75 +22,74 @@ namespace Pegasus_backend.Services
             _ablemusciContext = ablemusicContext;
             _log = log;
             _orgIds = orgIds;
-            try
-            {
-                TimeZoneInfo nztZone = TimeZoneInfo.FindSystemTimeZoneById("New Zealand Standard Time");
-                _today = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, nztZone);
-            }
-            catch (TimeZoneNotFoundException)
-            {
-                TimeZoneInfo nztZone = TimeZoneInfo.FindSystemTimeZoneById("Pacific/Auckland");
-                _today = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, nztZone);
-            }
-            catch (InvalidTimeZoneException)
-            {
-                TimeZoneInfo nztZone = TimeZoneInfo.FindSystemTimeZoneById("Pacific/Auckland");
-                _today = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, nztZone);
-            }
+            _today = DateTime.UtcNow.ToNZTimezone();
         }
 
-        public async Task<List<Lesson>> getLessonsForToday()
+        public async Task<Result<List<Lesson>>> getLessonsForToday()
         {
-            var result = new List<Lesson>();
+            var result = new Result<List<Lesson>>();
+            result.Data = new List<Lesson>();
             try
             {
-                result = await _ablemusciContext.Lesson.Where(l => l.BeginTime.HasValue && l.BeginTime.Value.Date == _today.Date && 
+                result.Data = await _ablemusciContext.Lesson.Where(l => l.BeginTime.HasValue && l.BeginTime.Value.Date == _today.Date && 
                 _orgIds.Contains(l.OrgId) && l.IsCanceled != 1).ToListAsync();
             }
             catch(Exception ex)
             {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
                 _log.LogError(ex.Message);
+                return result;
             }
             return result;
         }
 
-        public async Task<List<Lesson>> getTrialLessonsForToday()
+        public async Task<Result<List<Lesson>>> getTrialLessonsForToday()
         {
-            var result = new List<Lesson>();
+            var result = new Result<List<Lesson>>();
+            result.Data = new List<Lesson>();
             try
             {
-                result = await _ablemusciContext.Lesson.Where(l => l.BeginTime.HasValue && l.BeginTime.Value.Date == _today.Date && 
+                result.Data = await _ablemusciContext.Lesson.Where(l => l.BeginTime.HasValue && l.BeginTime.Value.Date == _today.Date && 
                 l.IsTrial == 1 && _orgIds.Contains(l.OrgId) && l.IsCanceled != 1).ToListAsync();
             }
             catch(Exception ex)
             {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
                 _log.LogError(ex.Message);
+                return result;
             }
             return result;
         }
 
-        public async Task<List<Learner>> getNewStudentsForToday()
+        public async Task<Result<List<Learner>>> getNewStudentsForToday()
         {
-            var result = new List<Learner>();
+            var result = new Result<List<Learner>>();
+            result.Data = new List<Learner>();
             try
             {
-                result = await _ablemusciContext.Learner.Where(l => l.EnrollDate.HasValue && _today.Date == l.EnrollDate.Value.Date && 
+                result.Data = await _ablemusciContext.Learner.Where(l => l.EnrollDate.HasValue && _today.Date == l.EnrollDate.Value.Date && 
                 _orgIds.Contains((int)l.OrgId)).ToListAsync();
                 Console.WriteLine(_today.Date);
             }
             catch(Exception ex)
             {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
                 _log.LogError(ex.Message);
+                return result;
             }
             return result;
         }
 
-        public async Task<List<InvoiceWaitingConfirm>> getUnConfirmedWaitingInvoice()
+        public async Task<Result<List<InvoiceWaitingConfirm>>> getUnConfirmedWaitingInvoice()
         {
-            var result = new List<InvoiceWaitingConfirm>();
+            var result = new Result<List<InvoiceWaitingConfirm>>();
+            result.Data = new List<InvoiceWaitingConfirm>();
             try
             {
-                result = await (from w in _ablemusciContext.InvoiceWaitingConfirm
+                result.Data = await (from w in _ablemusciContext.InvoiceWaitingConfirm
                                 join l in _ablemusciContext.Learner on w.LearnerId equals l.LearnerId
                                 where _orgIds.Contains((int)l.OrgId) && w.IsConfirmed == 0
                                 select w
@@ -97,81 +97,108 @@ namespace Pegasus_backend.Services
             }
             catch(Exception ex)
             {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
                 _log.LogError(ex.Message);
+                return result;
             }
             return result;
         }
 
-        public async Task<List<Lesson>> getCanceledLessonsForToday()
+        public async Task<Result<List<Lesson>>> getCanceledLessonsForToday()
         {
-            var result = new List<Lesson>();
+            var result = new Result<List<Lesson>>();
+            result.Data = new List<Lesson>();
             try
             {
-                result = await _ablemusciContext.Lesson.Where(l => l.BeginTime.HasValue && l.IsCanceled == 1 && _orgIds.Contains(l.OrgId) && 
+                result.Data = await _ablemusciContext.Lesson.Where(l => l.BeginTime.HasValue && l.IsCanceled == 1 && _orgIds.Contains(l.OrgId) && 
                 l.BeginTime.Value.Date == _today.Date).ToListAsync();
             }
             catch(Exception ex)
             {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
                 _log.LogError(ex.Message);
+                return result;
             }
             return result;
         }
 
-        public async Task<List<Lesson>> getRearrangedLessonsForToday()
+        public async Task<Result<List<Lesson>>> getRearrangedLessonsForToday()
         {
-            var result = new List<Lesson>();
+            var result = new Result<List<Lesson>>();
+            result.Data = new List<Lesson>();
             try
             {
-                result = await _ablemusciContext.Lesson.Where(l => l.BeginTime.HasValue && _orgIds.Contains(l.OrgId) && l.IsCanceled != 1 && 
+                result.Data = await _ablemusciContext.Lesson.Where(l => l.BeginTime.HasValue && _orgIds.Contains(l.OrgId) && l.IsCanceled != 1 && 
                 l.IsChanged == 1 && l.BeginTime.Value.Date == _today.Date).ToListAsync();
             }
             catch(Exception ex)
             {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
                 _log.LogError(ex.Message);
+                return result;
             }
             return result;
         }
 
-        public async Task<List<Amendment>> getExpiredDayOffForToday()
+        public async Task<Result<List<Amendment>>> getExpiredDayOffForToday()
         {
-            var result = new List<Amendment>();
+            var result = new Result<List<Amendment>>();
+            result.Data = new List<Amendment>();
             try
             {
-                result = await _ablemusciContext.Amendment.Where(a => a.EndDate.HasValue && a.AmendType == 1 && 
+                result.Data = await _ablemusciContext.Amendment.Where(a => a.EndDate.HasValue && a.AmendType == 1 && 
                 _today.Date == a.EndDate.Value.Date && _orgIds.Contains((int)a.OrgId)).ToListAsync();
             }
             catch(Exception ex)
             {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
                 _log.LogError(ex.Message);
+                return result;
             }
             return result;
         }
 
-        public async Task<List<Amendment>> getExpiredRearrangedLessonsForToday()
+        public async Task<Result<List<Amendment>>> getExpiredRearrangedLessonsForToday()
         {
-            var result = new List<Amendment> ();
+            var result = new Result<List<Amendment>> ();
+            result.Data = new List<Amendment>();
             try
             {
-                result = await _ablemusciContext.Amendment.Where(a => a.EndDate.HasValue && a.AmendType == 2 && 
+                result.Data = await _ablemusciContext.Amendment.Where(a => a.EndDate.HasValue && a.AmendType == 2 && 
                 _today.Date == a.EndDate.Value.Date && _orgIds.Contains((int)a.OrgId)).ToListAsync();
             }
             catch(Exception ex)
             {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
                 _log.LogError(ex.Message);
+                return result;
             }
             return result;
         }
 
-        public async Task<List<Learner>> getLearnerWithRemainLessonsForToday(int numOfRemainLesson)
+        public async Task<Result<List<Learner>>> getLearnerWithRemainLessonsForToday(int numOfRemainLesson)
         {
+            var result = new Result<List<Learner>>();
+            result.Data = new List<Learner>();
             var lessonsForToday = await getLessonsForToday();
+            if (!lessonsForToday.IsSuccess)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = lessonsForToday.ErrorMessage;
+                return result;
+            } 
+
             var learnerIdForToday = new List<int>();
-            foreach(var lft in lessonsForToday)
+            foreach(var lft in lessonsForToday.Data)
             {
                 learnerIdForToday.Add(lft.LearnerId.Value);
             }
 
-            var result = new List<Learner>();
             var repeatedLearners = new List<Learner>();
             try
             {
@@ -183,7 +210,10 @@ namespace Pegasus_backend.Services
             }
             catch(Exception ex)
             {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
                 _log.LogError(ex.Message);
+                return result;
             }
 
             while (repeatedLearners.Count > 0)
@@ -200,7 +230,7 @@ namespace Pegasus_backend.Services
                 
                 if(counter == numOfRemainLesson + 1)
                 {
-                    result.Add(repeatedLearners.Find(rl => rl.LearnerId == currentLearnerId));
+                    result.Data.Add(repeatedLearners.Find(rl => rl.LearnerId == currentLearnerId));
                 }
                 repeatedLearners.RemoveAll(rl => rl.LearnerId == currentLearnerId);
             }
@@ -208,9 +238,10 @@ namespace Pegasus_backend.Services
             return result;
         }
 
-        public async Task<Dictionary<DateTime, List<Lesson>>> getRecentLessons(int numOfDays, DateTime calculateDate)
+        public async Task<Result<Dictionary<DateTime, List<Lesson>>>> getRecentLessons(int numOfDays, DateTime calculateDate)
         {
-            var result = new Dictionary<DateTime, List<Lesson>>();
+            var result = new Result<Dictionary<DateTime, List<Lesson>>>();
+            result.Data = new Dictionary<DateTime, List<Lesson>>();
             var daysBefore = numOfDays % 2 == 0 ? numOfDays / 2 : (numOfDays - 1) / 2;
             var daysLater = numOfDays % 2 == 0 ? (numOfDays / 2) - 1 : (numOfDays - 1) / 2;
             DateTime beginDate = calculateDate.AddDays(-daysBefore);
@@ -223,7 +254,10 @@ namespace Pegasus_backend.Services
             }
             catch (Exception ex)
             {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
                 _log.LogError(ex.Message);
+                return result;
             }
             
             var currentDate = beginDate;
@@ -237,16 +271,17 @@ namespace Pegasus_backend.Services
                         eachDayLessons.Add(tl);
                     }
                 }
-                result.Add(currentDate, eachDayLessons);
+                result.Data.Add(currentDate, eachDayLessons);
                 currentDate = currentDate.AddDays(1);
             }
 
             return result;
         }
 
-        public async Task<Dictionary<string, List<Learner>>> getRecentNewRegisteredLearner(int numOfWeeks)
+        public async Task<Result<Dictionary<string, List<Learner>>>> getRecentNewRegisteredLearner(int numOfWeeks)
         {
-            var result = new Dictionary<string, List<Learner>>();
+            var result = new Result<Dictionary<string, List<Learner>>>();
+            result.Data = new Dictionary<string, List<Learner>>();
             int totalDays = numOfWeeks * 7;
             DateTime beginTime = _today.AddDays(-totalDays);
             var totalLearners = new List<Learner>();
@@ -257,7 +292,10 @@ namespace Pegasus_backend.Services
             }
             catch(Exception ex)
             {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
                 _log.LogError(ex.Message);
+                return result;
             }
             var weekBeginDate = beginTime;
             for(int i = 0; i < numOfWeeks; i++)
@@ -271,7 +309,7 @@ namespace Pegasus_backend.Services
                         eachWeekLearner.Add(tl);
                     }
                 }
-                result.Add(weekDuration, eachWeekLearner);
+                result.Data.Add(weekDuration, eachWeekLearner);
                 weekBeginDate = weekBeginDate.AddDays(7);
             }
 
