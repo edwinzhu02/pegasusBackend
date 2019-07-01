@@ -1,795 +1,567 @@
-2019-07-01 00:06:28.016 +12:00 [INF] User profile is available. Using 'C:\Users\lgx95\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
-2019-07-01 00:06:29.772 +12:00 [INF] Request starting HTTP/1.1 DEBUG http://localhost:5000/  0
-2019-07-01 00:06:29.772 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/values  
-2019-07-01 00:06:29.831 +12:00 [INF] Request finished in 61.5828ms 200 
-2019-07-01 00:06:29.927 +12:00 [WRN] Failed to determine the https port for redirect.
-2019-07-01 00:06:30.928 +12:00 [INF] Route matched with {action = "Get", controller = "Values"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Get() on controller Pegasus_backend.Controllers.ValuesController (Pegasus_backend).
-2019-07-01 00:06:32.091 +12:00 [INF] Executing action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) - Validation state: "Valid"
-2019-07-01 00:06:32.689 +12:00 [ERR] ValuesController LogErrorToFile: System.Exception: Exception of type 'System.Exception' was thrown.
-   at Pegasus_backend.Controllers.ValuesController.Get() in C:\angular\pegasusBackend\Controllers\ValuesController.cs:line 26
-2019-07-01 00:06:32.690 +12:00 [INF] ValuesController LogInfoToFile: hello
-2019-07-01 00:06:32.701 +12:00 [INF] Executed action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 572.49290000000008ms.
-2019-07-01 00:06:32.741 +12:00 [INF] Executing ObjectResult, writing value of type 'System.DateTime'.
-2019-07-01 00:06:32.928 +12:00 [INF] Executed action Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) in 1990.6487000000002ms
-2019-07-01 00:06:32.944 +12:00 [INF] Request finished in 3179.529ms 200 application/json; charset=utf-8
-2019-07-01 00:10:36.924 +12:00 [INF] User profile is available. Using 'C:\Users\lgx95\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
-2019-07-01 00:10:38.582 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/values  
-2019-07-01 00:10:38.582 +12:00 [INF] Request starting HTTP/1.1 DEBUG http://localhost:5000/  0
-2019-07-01 00:10:38.631 +12:00 [INF] Request finished in 48.2977ms 200 
-2019-07-01 00:10:38.720 +12:00 [WRN] Failed to determine the https port for redirect.
-2019-07-01 00:10:39.213 +12:00 [INF] Route matched with {action = "Get", controller = "Values"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Get() on controller Pegasus_backend.Controllers.ValuesController (Pegasus_backend).
-2019-07-01 00:10:39.491 +12:00 [INF] Executing action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) - Validation state: "Valid"
-2019-07-01 00:10:39.746 +12:00 [ERR] ValuesController LogErrorToFile: System.Exception: Exception of type 'System.Exception' was thrown.
-   at Pegasus_backend.Controllers.ValuesController.Get() in C:\angular\pegasusBackend\Controllers\ValuesController.cs:line 26
-2019-07-01 00:10:39.747 +12:00 [INF] ValuesController LogInfoToFile: hello
-2019-07-01 00:10:39.760 +12:00 [INF] Executed action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 246.51930000000002ms.
-2019-07-01 00:10:39.785 +12:00 [INF] Executing ObjectResult, writing value of type 'System.DateTime'.
-2019-07-01 00:10:39.891 +12:00 [INF] Executed action Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) in 667.0331ms
-2019-07-01 00:10:39.905 +12:00 [INF] Request finished in 1327.7791ms 200 application/json; charset=utf-8
-2019-07-01 00:10:45.197 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Chat/GetStuffChattingList/10060 application/json 65
-2019-07-01 00:10:45.242 +12:00 [INF] Route matched with {action = "GetStuffChattingList", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetStuffChattingList(Int32) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
-2019-07-01 00:10:45.278 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.GetStuffChattingList (Pegasus_backend) - Validation state: "Valid"
-2019-07-01 00:10:47.355 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
-2019-07-01 00:10:48.855 +12:00 [INF] Executed DbCommand (47ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`staff_id`, `x`.`dob`, `x`.`email`, `x`.`expiry_date`, `x`.`first_name`, `x`.`gender`, `x`.`home_phone`, `x`.`id_number`, `x`.`id_photo`, `x`.`id_type`, `x`.`ird_number`, `x`.`is_activate`, `x`.`last_name`, `x`.`mobile_phone`, `x`.`photo`, `x`.`user_id`, `x`.`visa`
-FROM `ablemusic`.`staff` AS `x`
-WHERE `x`.`user_id` = @__id_0
+2019-07-01 11:22:16.271 +12:00 [INF] User profile is available. Using 'C:\Users\Learnspace\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-07-01 11:22:23.944 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
+2019-07-01 11:22:23.981 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-07-01 11:22:24.208 +12:00 [INF] Request finished in 265.3493ms 404 
+2019-07-01 11:23:53.245 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/login  
+2019-07-01 11:23:53.251 +12:00 [INF] Policy execution successful.
+2019-07-01 11:23:53.262 +12:00 [INF] Request finished in 16.7585ms 204 
+2019-07-01 11:23:53.265 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/login application/json 41
+2019-07-01 11:23:53.265 +12:00 [INF] Policy execution successful.
+2019-07-01 11:23:53.319 +12:00 [INF] Route matched with {action = "Login", controller = "Login"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(Pegasus_backend.Models.UsrAndPass) on controller Pegasus_backend.Controllers.Authorization.LoginController (Pegasus_backend).
+2019-07-01 11:23:53.611 +12:00 [INF] Executing action method Pegasus_backend.Controllers.Authorization.LoginController.Login (Pegasus_backend) - Validation state: "Valid"
+2019-07-01 11:23:54.642 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-01 11:23:56.112 +12:00 [INF] Executed DbCommand (74ms) [Parameters=[@__model_UserName_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`user_id`, `s`.`created_at`, `s`.`is_activate`, `s`.`password`, `s`.`role_id`, `s`.`unread_message_id`, `s`.`user_name`, `s.Role`.`role_id`, `s.Role`.`role_name`
+FROM `ablemusic`.`user` AS `s`
+LEFT JOIN `ablemusic`.`role` AS `s.Role` ON `s`.`role_id` = `s.Role`.`role_id`
+WHERE `s`.`user_name` = @__model_UserName_0
+ORDER BY `s`.`user_id`
 LIMIT 1
-2019-07-01 00:10:49.010 +12:00 [WRN] Query: '(from Staff x in DbSet<Staff> where (Nullable<int>)[x].UserId != (Nullable<int>)__id_0 select [x]).T...' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
-2019-07-01 00:10:49.134 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[@__id_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`staff_id`, `x`.`dob`, `x`.`email`, `x`.`expiry_date`, `x`.`first_name`, `x`.`gender`, `x`.`home_phone`, `x`.`id_number`, `x`.`id_photo`, `x`.`id_type`, `x`.`ird_number`, `x`.`is_activate`, `x`.`last_name`, `x`.`mobile_phone`, `x`.`photo`, `x`.`user_id`, `x`.`visa`
-FROM `ablemusic`.`staff` AS `x`
-WHERE (`x`.`user_id` <> @__id_0) OR `x`.`user_id` IS NULL
-LIMIT @__p_1
-2019-07-01 00:10:49.147 +12:00 [WRN] Query: '(from Teacher <generated>_1 in DbSet<Teacher> select [<generated>_1]).Take(__p_0)' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
-2019-07-01 00:10:49.261 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `t`.`teacher_id`, `t`.`ability`, `t`.`comment`, `t`.`cv_url`, `t`.`dob`, `t`.`email`, `t`.`expiry_date`, `t`.`first_name`, `t`.`form_url`, `t`.`gender`, `t`.`home_phone`, `t`.`id_number`, `t`.`id_photo`, `t`.`id_type`, `t`.`invoice_template`, `t`.`ird_number`, `t`.`is_activate`, `t`.`is_contract`, `t`.`is_left`, `t`.`last_name`, `t`.`level`, `t`.`minimum_hours`, `t`.`mobile_phone`, `t`.`otherfile_url`, `t`.`photo`, `t`.`user_id`, `t`.`visa`
-FROM `ablemusic`.`teacher` AS `t`
-LIMIT @__p_0
-2019-07-01 00:10:49.539 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[@__staffDetial_StaffId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`org_id`
-FROM `ablemusic`.`staff_org` AS `x`
-WHERE `x`.`staff_id` = @__staffDetial_StaffId_0
+2019-07-01 11:23:56.303 +12:00 [INF] Executed DbCommand (74ms) [Parameters=[@__model_UserName_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.Learner`.`learner_id`, `s.Learner`.`address`, `s.Learner`.`contact_num`, `s.Learner`.`created_at`, `s.Learner`.`dob`, `s.Learner`.`email`, `s.Learner`.`enroll_date`, `s.Learner`.`first_name`, `s.Learner`.`form_url`, `s.Learner`.`g5_certification`, `s.Learner`.`gender`, `s.Learner`.`is_abrsm_g5`, `s.Learner`.`is_active`, `s.Learner`.`is_under_18`, `s.Learner`.`last_name`, `s.Learner`.`learner_level`, `s.Learner`.`level_type`, `s.Learner`.`middle_name`, `s.Learner`.`note`, `s.Learner`.`org_id`, `s.Learner`.`otherfile_url`, `s.Learner`.`payment_period`, `s.Learner`.`photo`, `s.Learner`.`referrer`, `s.Learner`.`referrer_learner_id`, `s.Learner`.`user_id`
+FROM `ablemusic`.`learner` AS `s.Learner`
+INNER JOIN (
+    SELECT DISTINCT `t`.*
+    FROM (
+        SELECT `s0`.`user_id`
+        FROM `ablemusic`.`user` AS `s0`
+        LEFT JOIN `ablemusic`.`role` AS `s.Role0` ON `s0`.`role_id` = `s.Role0`.`role_id`
+        WHERE `s0`.`user_name` = @__model_UserName_0
+        ORDER BY `s0`.`user_id`
+        LIMIT 1
+    ) AS `t`
+) AS `t0` ON `s.Learner`.`user_id` = `t0`.`user_id`
+ORDER BY `t0`.`user_id`
+2019-07-01 11:23:56.518 +12:00 [INF] Executed DbCommand (67ms) [Parameters=[@__model_UserName_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.Teacher`.`teacher_id`, `s.Teacher`.`ability`, `s.Teacher`.`comment`, `s.Teacher`.`cv_url`, `s.Teacher`.`dob`, `s.Teacher`.`email`, `s.Teacher`.`expiry_date`, `s.Teacher`.`first_name`, `s.Teacher`.`form_url`, `s.Teacher`.`gender`, `s.Teacher`.`home_phone`, `s.Teacher`.`id_number`, `s.Teacher`.`id_photo`, `s.Teacher`.`id_type`, `s.Teacher`.`invoice_template`, `s.Teacher`.`ird_number`, `s.Teacher`.`is_activate`, `s.Teacher`.`is_contract`, `s.Teacher`.`is_left`, `s.Teacher`.`last_name`, `s.Teacher`.`level`, `s.Teacher`.`minimum_hours`, `s.Teacher`.`mobile_phone`, `s.Teacher`.`otherfile_url`, `s.Teacher`.`photo`, `s.Teacher`.`user_id`, `s.Teacher`.`visa`
+FROM `ablemusic`.`teacher` AS `s.Teacher`
+INNER JOIN (
+    SELECT DISTINCT `t1`.*
+    FROM (
+        SELECT `s1`.`user_id`
+        FROM `ablemusic`.`user` AS `s1`
+        LEFT JOIN `ablemusic`.`role` AS `s.Role1` ON `s1`.`role_id` = `s.Role1`.`role_id`
+        WHERE `s1`.`user_name` = @__model_UserName_0
+        ORDER BY `s1`.`user_id`
+        LIMIT 1
+    ) AS `t1`
+) AS `t2` ON `s.Teacher`.`user_id` = `t2`.`user_id`
+ORDER BY `t2`.`user_id`
+2019-07-01 11:23:56.743 +12:00 [INF] Executed DbCommand (67ms) [Parameters=[@__model_UserName_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.Staff`.`staff_id`, `s.Staff`.`dob`, `s.Staff`.`email`, `s.Staff`.`expiry_date`, `s.Staff`.`first_name`, `s.Staff`.`gender`, `s.Staff`.`home_phone`, `s.Staff`.`id_number`, `s.Staff`.`id_photo`, `s.Staff`.`id_type`, `s.Staff`.`ird_number`, `s.Staff`.`is_activate`, `s.Staff`.`last_name`, `s.Staff`.`mobile_phone`, `s.Staff`.`photo`, `s.Staff`.`user_id`, `s.Staff`.`visa`
+FROM `ablemusic`.`staff` AS `s.Staff`
+INNER JOIN (
+    SELECT DISTINCT `t3`.*
+    FROM (
+        SELECT `s2`.`user_id`
+        FROM `ablemusic`.`user` AS `s2`
+        LEFT JOIN `ablemusic`.`role` AS `s.Role2` ON `s2`.`role_id` = `s.Role2`.`role_id`
+        WHERE `s2`.`user_name` = @__model_UserName_0
+        ORDER BY `s2`.`user_id`
+        LIMIT 1
+    ) AS `t3`
+) AS `t4` ON `s.Staff`.`user_id` = `t4`.`user_id`
+ORDER BY `t4`.`user_id`, `s.Staff`.`staff_id`
+2019-07-01 11:23:56.853 +12:00 [INF] Executed DbCommand (75ms) [Parameters=[@__model_UserName_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.Staff.StaffOrg`.`staff_org_id`, `s.Staff.StaffOrg`.`is_activate`, `s.Staff.StaffOrg`.`org_id`, `s.Staff.StaffOrg`.`staff_id`, `s.Org`.`org_id`, `s.Org`.`abbr`, `s.Org`.`address`, `s.Org`.`email`, `s.Org`.`is_activate`, `s.Org`.`is_headoffice`, `s.Org`.`localtion_x`, `s.Org`.`localtion_y`, `s.Org`.`org_name`, `s.Org`.`phone`
+FROM `ablemusic`.`staff_org` AS `s.Staff.StaffOrg`
+LEFT JOIN `ablemusic`.`org` AS `s.Org` ON `s.Staff.StaffOrg`.`org_id` = `s.Org`.`org_id`
+INNER JOIN (
+    SELECT DISTINCT `s.Staff0`.`staff_id`, `t6`.`user_id`
+    FROM `ablemusic`.`staff` AS `s.Staff0`
+    INNER JOIN (
+        SELECT DISTINCT `t5`.*
+        FROM (
+            SELECT `s3`.`user_id`
+            FROM `ablemusic`.`user` AS `s3`
+            LEFT JOIN `ablemusic`.`role` AS `s.Role3` ON `s3`.`role_id` = `s.Role3`.`role_id`
+            WHERE `s3`.`user_name` = @__model_UserName_0
+            ORDER BY `s3`.`user_id`
+            LIMIT 1
+        ) AS `t5`
+    ) AS `t6` ON `s.Staff0`.`user_id` = `t6`.`user_id`
+) AS `t7` ON `s.Staff.StaffOrg`.`staff_id` = `t7`.`staff_id`
+ORDER BY `t7`.`user_id`, `t7`.`staff_id`
+2019-07-01 11:23:56.952 +12:00 [INF] Executed action method Pegasus_backend.Controllers.Authorization.LoginController.Login (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 3332.7719ms.
+2019-07-01 11:23:56.961 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-07-01 11:23:56.985 +12:00 [INF] Executed action Pegasus_backend.Controllers.Authorization.LoginController.Login (Pegasus_backend) in 3663.7137000000002ms
+2019-07-01 11:23:56.987 +12:00 [INF] Request finished in 3721.9939ms 200 application/json; charset=utf-8
+2019-07-01 11:23:57.036 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/page  
+2019-07-01 11:23:57.036 +12:00 [INF] Policy execution successful.
+2019-07-01 11:23:57.040 +12:00 [INF] Route matched with {action = "GetRolePage", controller = "Page"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetRolePage() on controller Pegasus_backend.Controllers.PageController (Pegasus_backend).
+2019-07-01 11:23:57.041 +12:00 [INF] Executing action method Pegasus_backend.Controllers.PageController.GetRolePage (Pegasus_backend) - Validation state: "Valid"
+2019-07-01 11:23:57.044 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-01 11:23:57.053 +12:00 [WRN] The Include operation for navigation '[s].Page' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-07-01 11:23:57.703 +12:00 [INF] Executed DbCommand (59ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`role_id` AS `RoleId`, `s.Page`.`url`
+FROM `ablemusic`.`role_access` AS `s`
+LEFT JOIN `ablemusic`.`page` AS `s.Page` ON `s`.`page_id` = `s.Page`.`page_id`
+2019-07-01 11:23:57.711 +12:00 [INF] Executed action method Pegasus_backend.Controllers.PageController.GetRolePage (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 670.14960000000008ms.
+2019-07-01 11:23:57.712 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-07-01 11:23:57.719 +12:00 [INF] Executed action Pegasus_backend.Controllers.PageController.GetRolePage (Pegasus_backend) in 678.6681ms
+2019-07-01 11:23:57.720 +12:00 [INF] Request finished in 684.2401ms 200 application/json; charset=utf-8
+2019-07-01 11:23:57.767 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/lookups  
+2019-07-01 11:23:57.767 +12:00 [INF] Policy execution successful.
+2019-07-01 11:23:57.767 +12:00 [INF] Request finished in 0.5123ms 204 
+2019-07-01 11:23:57.769 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/navitems  
+2019-07-01 11:23:57.769 +12:00 [INF] Policy execution successful.
+2019-07-01 11:23:57.770 +12:00 [INF] Request finished in 0.3664ms 204 
+2019-07-01 11:23:57.794 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/todolist/3  
+2019-07-01 11:23:57.794 +12:00 [INF] Policy execution successful.
+2019-07-01 11:23:57.794 +12:00 [INF] Request finished in 0.3386ms 204 
+2019-07-01 11:23:57.897 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/images/staff/Photos/2190613092457108.jpg  
+2019-07-01 11:23:57.900 +12:00 [INF] Request finished in 2.8758ms 404 
+2019-07-01 11:23:57.947 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/lookups  
+2019-07-01 11:23:57.947 +12:00 [INF] Policy execution successful.
+2019-07-01 11:23:57.952 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/navitems  
+2019-07-01 11:23:57.952 +12:00 [INF] Policy execution successful.
+2019-07-01 11:23:57.953 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/todolist/3  
+2019-07-01 11:23:57.953 +12:00 [INF] Policy execution successful.
+2019-07-01 11:23:57.961 +12:00 [INF] Successfully validated the token.
+2019-07-01 11:23:57.961 +12:00 [INF] Successfully validated the token.
+2019-07-01 11:23:57.961 +12:00 [INF] Successfully validated the token.
+2019-07-01 11:23:57.967 +12:00 [INF] Route matched with {action = "GetNavItems", controller = "NavItems"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetNavItems() on controller Pegasus_backend.Controllers.NavItemsController (Pegasus_backend).
+2019-07-01 11:23:57.968 +12:00 [INF] Route matched with {action = "GetLookups", controller = "Lookups"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetLookups() on controller Pegasus_backend.Controllers.LookupsController (Pegasus_backend).
+2019-07-01 11:23:57.970 +12:00 [INF] Executing action method Pegasus_backend.Controllers.LookupsController.GetLookups (Pegasus_backend) - Validation state: "Valid"
+2019-07-01 11:23:57.973 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-01 11:23:57.981 +12:00 [INF] Route matched with {action = "Get", controller = "TodoList"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Get(Int16) on controller Pegasus_backend.Controllers.TodoListController (Pegasus_backend).
+2019-07-01 11:23:57.981 +12:00 [INF] Authorization was successful.
+2019-07-01 11:23:57.982 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NavItemsController.GetNavItems (Pegasus_backend) - Validation state: "Valid"
+2019-07-01 11:23:57.983 +12:00 [INF] Executing action method Pegasus_backend.Controllers.TodoListController.Get (Pegasus_backend) - Validation state: "Valid"
+2019-07-01 11:23:57.986 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-01 11:23:57.988 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-01 11:23:57.994 +12:00 [WRN] The LINQ expression 'where ([t].TodoDate == Convert(value(Pegasus_backend.Controllers.TodoListController).toNZTimezone(DateTime.UtcNow).Date, Nullable`1))' could not be translated and will be evaluated locally.
+2019-07-01 11:23:58.204 +12:00 [INF] Executed DbCommand (52ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `l`.`lookup_id`, `l`.`description`, `l`.`lookup_type`, `l`.`prop_name`, `l`.`prop_value`
+FROM `ablemusic`.`lookup` AS `l`
+2019-07-01 11:23:58.228 +12:00 [INF] Executed action method Pegasus_backend.Controllers.LookupsController.GetLookups (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 258.18080000000003ms.
+2019-07-01 11:23:58.228 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Lookup, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-07-01 11:23:58.235 +12:00 [INF] Executed action Pegasus_backend.Controllers.LookupsController.GetLookups (Pegasus_backend) in 265.82140000000004ms
+2019-07-01 11:23:58.235 +12:00 [INF] Request finished in 287.857ms 200 application/json; charset=utf-8
+2019-07-01 11:23:58.710 +12:00 [INF] Executed DbCommand (54ms) [Parameters=[@__userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`user_id`, `s`.`created_at`, `s`.`is_activate`, `s`.`password`, `s`.`role_id`, `s`.`unread_message_id`, `s`.`user_name`
+FROM `ablemusic`.`user` AS `s`
+WHERE `s`.`user_id` = @__userId_0
 LIMIT 1
-2019-07-01 00:10:49.586 +12:00 [WRN] Query: '(from Lesson x in DbSet<Lesson> where (Nullable<int>)(int)[x].OrgId == (Nullable<int>)__orgIdOfStaff...' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
-2019-07-01 00:10:49.720 +12:00 [INF] Executed DbCommand (31ms) [Parameters=[@__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT DISTINCT `t`.*
-FROM (
-    SELECT `x`.`learner_id`
-    FROM `ablemusic`.`lesson` AS `x`
-    WHERE `x`.`org_id` IS NULL
-    LIMIT @__p_1
-) AS `t`
-2019-07-01 00:10:49.732 +12:00 [WRN] Query: '(from Learner x in DbSet<Learner> where (Nullable<int>)[x].OrgId == (Nullable<int>)__orgIdOfStaff_0 ...' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
-2019-07-01 00:10:49.857 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[@__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`learner_id`, `x`.`address`, `x`.`contact_num`, `x`.`created_at`, `x`.`dob`, `x`.`email`, `x`.`enroll_date`, `x`.`first_name`, `x`.`form_url`, `x`.`g5_certification`, `x`.`gender`, `x`.`is_abrsm_g5`, `x`.`is_active`, `x`.`is_under_18`, `x`.`last_name`, `x`.`learner_level`, `x`.`level_type`, `x`.`middle_name`, `x`.`note`, `x`.`org_id`, `x`.`otherfile_url`, `x`.`payment_period`, `x`.`photo`, `x`.`referrer`, `x`.`referrer_learner_id`, `x`.`user_id`
-FROM `ablemusic`.`learner` AS `x`
-WHERE `x`.`org_id` IS NULL
-LIMIT @__p_1
-2019-07-01 00:10:49.987 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.GetStuffChattingList (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 4708.3287ms.
-2019-07-01 00:10:49.988 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Tuple`4[[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Staff, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Teacher, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.List`1[[System.Nullable`1[[System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Learner, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
-2019-07-01 00:10:50.207 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.GetStuffChattingList (Pegasus_backend) in 4963.8068ms
-2019-07-01 00:10:50.208 +12:00 [INF] Request finished in 5011.3581ms 200 application/json; charset=utf-8
-2019-07-01 00:10:50.238 +12:00 [INF] Connection id "0HLNTAFRC3D7K", Request id "0HLNTAFRC3D7K:00000002": the application completed without reading the entire request body.
-2019-07-01 00:44:26.944 +12:00 [INF] User profile is available. Using 'C:\Users\lgx95\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
-2019-07-01 00:44:28.127 +12:00 [INF] Request starting HTTP/1.1 DEBUG http://localhost:5000/  0
-2019-07-01 00:44:28.127 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/values  
-2019-07-01 00:44:28.167 +12:00 [INF] Request finished in 42.0362ms 200 
-2019-07-01 00:44:28.226 +12:00 [WRN] Failed to determine the https port for redirect.
-2019-07-01 00:44:28.656 +12:00 [INF] Route matched with {action = "Get", controller = "Values"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Get() on controller Pegasus_backend.Controllers.ValuesController (Pegasus_backend).
-2019-07-01 00:44:28.979 +12:00 [INF] Executing action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) - Validation state: "Valid"
-2019-07-01 00:44:29.257 +12:00 [ERR] ValuesController LogErrorToFile: System.Exception: Exception of type 'System.Exception' was thrown.
-   at Pegasus_backend.Controllers.ValuesController.Get() in C:\angular\pegasusBackend\Controllers\ValuesController.cs:line 26
-2019-07-01 00:44:29.258 +12:00 [INF] ValuesController LogInfoToFile: hello
-2019-07-01 00:44:29.265 +12:00 [INF] Executed action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 263.9697ms.
-2019-07-01 00:44:29.280 +12:00 [INF] Executing ObjectResult, writing value of type 'System.DateTime'.
-2019-07-01 00:44:29.369 +12:00 [INF] Executed action Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) in 707.04450000000008ms
-2019-07-01 00:44:29.377 +12:00 [INF] Request finished in 1255.9535ms 200 application/json; charset=utf-8
-2019-07-01 00:44:30.794 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Chat/GetStuffChattingList/10060 application/json 65
-2019-07-01 00:44:30.843 +12:00 [INF] Route matched with {action = "GetStuffChattingList", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetStuffChattingList(Int32) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
-2019-07-01 00:44:30.886 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.GetStuffChattingList (Pegasus_backend) - Validation state: "Valid"
-2019-07-01 00:44:32.830 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
-2019-07-01 00:44:34.148 +12:00 [INF] Executed DbCommand (42ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`staff_id`, `x`.`dob`, `x`.`email`, `x`.`expiry_date`, `x`.`first_name`, `x`.`gender`, `x`.`home_phone`, `x`.`id_number`, `x`.`id_photo`, `x`.`id_type`, `x`.`ird_number`, `x`.`is_activate`, `x`.`last_name`, `x`.`mobile_phone`, `x`.`photo`, `x`.`user_id`, `x`.`visa`
-FROM `ablemusic`.`staff` AS `x`
-WHERE `x`.`user_id` = @__id_0
+2019-07-01 11:23:58.727 +12:00 [INF] Executed DbCommand (72ms) [Parameters=[@__userId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `t`.`list_id`, `t`.`created_at`, `t`.`learner_id`, `t`.`lesson_id`, `t`.`list_content`, `t`.`list_name`, `t`.`process_flag`, `t`.`processed_at`, `t`.`teacher_id`, `t`.`todo_date`, `t`.`user_id`
+FROM `ablemusic`.`todo_list` AS `t`
+WHERE `t`.`user_id` = @__userId_0
+2019-07-01 11:23:58.892 +12:00 [INF] Executed DbCommand (52ms) [Parameters=[@__roleId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`page_id`
+FROM `ablemusic`.`role_access` AS `s`
+WHERE `s`.`role_id` = @__roleId_0
+2019-07-01 11:23:58.929 +12:00 [INF] Executed action method Pegasus_backend.Controllers.TodoListController.Get (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 945.8857ms.
+2019-07-01 11:23:58.929 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.TodoList, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-07-01 11:23:58.948 +12:00 [INF] Executed action Pegasus_backend.Controllers.TodoListController.Get (Pegasus_backend) in 967.13830000000007ms
+2019-07-01 11:23:58.948 +12:00 [INF] Request finished in 995.727ms 200 application/json; charset=utf-8
+2019-07-01 11:23:59.099 +12:00 [INF] Executed DbCommand (51ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`page_group_id`, `s`.`display_order`, `s`.`icon`, `s`.`page_group_name`
+FROM `ablemusic`.`page_group` AS `s`
+ORDER BY `s`.`page_group_id`
+2019-07-01 11:23:59.181 +12:00 [INF] Executed DbCommand (57ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.Page`.`page_id`, `s.Page`.`display_order`, `s.Page`.`icon`, `s.Page`.`is_activate`, `s.Page`.`page_group_id`, `s.Page`.`page_name`, `s.Page`.`para`, `s.Page`.`para_flag`, `s.Page`.`url`
+FROM `ablemusic`.`page` AS `s.Page`
+INNER JOIN (
+    SELECT `s0`.`page_group_id`
+    FROM `ablemusic`.`page_group` AS `s0`
+) AS `t` ON `s.Page`.`page_group_id` = `t`.`page_group_id`
+ORDER BY `t`.`page_group_id`
+2019-07-01 11:23:59.226 +12:00 [INF] Executed action method Pegasus_backend.Controllers.NavItemsController.GetNavItems (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 1244.3199ms.
+2019-07-01 11:23:59.226 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-07-01 11:23:59.237 +12:00 [INF] Executed action Pegasus_backend.Controllers.NavItemsController.GetNavItems (Pegasus_backend) in 1269.1539ms
+2019-07-01 11:23:59.237 +12:00 [INF] Request finished in 1285.2202ms 200 application/json; charset=utf-8
+2019-07-01 11:24:13.871 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/login  
+2019-07-01 11:24:13.871 +12:00 [INF] Policy execution successful.
+2019-07-01 11:24:13.871 +12:00 [INF] Request finished in 0.3699ms 204 
+2019-07-01 11:24:13.917 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/login application/json 41
+2019-07-01 11:24:13.918 +12:00 [INF] Policy execution successful.
+2019-07-01 11:24:13.918 +12:00 [INF] Route matched with {action = "Login", controller = "Login"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(Pegasus_backend.Models.UsrAndPass) on controller Pegasus_backend.Controllers.Authorization.LoginController (Pegasus_backend).
+2019-07-01 11:24:13.919 +12:00 [INF] Executing action method Pegasus_backend.Controllers.Authorization.LoginController.Login (Pegasus_backend) - Validation state: "Valid"
+2019-07-01 11:24:13.920 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-01 11:24:14.485 +12:00 [INF] Executed DbCommand (53ms) [Parameters=[@__model_UserName_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`user_id`, `s`.`created_at`, `s`.`is_activate`, `s`.`password`, `s`.`role_id`, `s`.`unread_message_id`, `s`.`user_name`, `s.Role`.`role_id`, `s.Role`.`role_name`
+FROM `ablemusic`.`user` AS `s`
+LEFT JOIN `ablemusic`.`role` AS `s.Role` ON `s`.`role_id` = `s.Role`.`role_id`
+WHERE `s`.`user_name` = @__model_UserName_0
+ORDER BY `s`.`user_id`
 LIMIT 1
-2019-07-01 00:44:34.342 +12:00 [WRN] Query: '(from Staff x in DbSet<Staff> where (Nullable<int>)[x].UserId != (Nullable<int>)__id_0 select [x]).T...' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
-2019-07-01 00:44:34.462 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[@__id_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`staff_id`, `x`.`dob`, `x`.`email`, `x`.`expiry_date`, `x`.`first_name`, `x`.`gender`, `x`.`home_phone`, `x`.`id_number`, `x`.`id_photo`, `x`.`id_type`, `x`.`ird_number`, `x`.`is_activate`, `x`.`last_name`, `x`.`mobile_phone`, `x`.`photo`, `x`.`user_id`, `x`.`visa`
-FROM `ablemusic`.`staff` AS `x`
-WHERE (`x`.`user_id` <> @__id_0) OR `x`.`user_id` IS NULL
-LIMIT @__p_1
-2019-07-01 00:44:34.472 +12:00 [WRN] Query: '(from Teacher <generated>_1 in DbSet<Teacher> select [<generated>_1]).Take(__p_0)' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
-2019-07-01 00:44:34.588 +12:00 [INF] Executed DbCommand (37ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `t`.`teacher_id`, `t`.`ability`, `t`.`comment`, `t`.`cv_url`, `t`.`dob`, `t`.`email`, `t`.`expiry_date`, `t`.`first_name`, `t`.`form_url`, `t`.`gender`, `t`.`home_phone`, `t`.`id_number`, `t`.`id_photo`, `t`.`id_type`, `t`.`invoice_template`, `t`.`ird_number`, `t`.`is_activate`, `t`.`is_contract`, `t`.`is_left`, `t`.`last_name`, `t`.`level`, `t`.`minimum_hours`, `t`.`mobile_phone`, `t`.`otherfile_url`, `t`.`photo`, `t`.`user_id`, `t`.`visa`
-FROM `ablemusic`.`teacher` AS `t`
-LIMIT @__p_0
-2019-07-01 00:44:34.857 +12:00 [INF] Executed DbCommand (36ms) [Parameters=[@__staffDetial_StaffId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`org_id`
-FROM `ablemusic`.`staff_org` AS `x`
-WHERE `x`.`staff_id` = @__staffDetial_StaffId_0
+2019-07-01 11:24:14.551 +12:00 [INF] Executed DbCommand (64ms) [Parameters=[@__model_UserName_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.Learner`.`learner_id`, `s.Learner`.`address`, `s.Learner`.`contact_num`, `s.Learner`.`created_at`, `s.Learner`.`dob`, `s.Learner`.`email`, `s.Learner`.`enroll_date`, `s.Learner`.`first_name`, `s.Learner`.`form_url`, `s.Learner`.`g5_certification`, `s.Learner`.`gender`, `s.Learner`.`is_abrsm_g5`, `s.Learner`.`is_active`, `s.Learner`.`is_under_18`, `s.Learner`.`last_name`, `s.Learner`.`learner_level`, `s.Learner`.`level_type`, `s.Learner`.`middle_name`, `s.Learner`.`note`, `s.Learner`.`org_id`, `s.Learner`.`otherfile_url`, `s.Learner`.`payment_period`, `s.Learner`.`photo`, `s.Learner`.`referrer`, `s.Learner`.`referrer_learner_id`, `s.Learner`.`user_id`
+FROM `ablemusic`.`learner` AS `s.Learner`
+INNER JOIN (
+    SELECT DISTINCT `t`.*
+    FROM (
+        SELECT `s0`.`user_id`
+        FROM `ablemusic`.`user` AS `s0`
+        LEFT JOIN `ablemusic`.`role` AS `s.Role0` ON `s0`.`role_id` = `s.Role0`.`role_id`
+        WHERE `s0`.`user_name` = @__model_UserName_0
+        ORDER BY `s0`.`user_id`
+        LIMIT 1
+    ) AS `t`
+) AS `t0` ON `s.Learner`.`user_id` = `t0`.`user_id`
+ORDER BY `t0`.`user_id`
+2019-07-01 11:24:14.748 +12:00 [INF] Executed DbCommand (67ms) [Parameters=[@__model_UserName_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.Teacher`.`teacher_id`, `s.Teacher`.`ability`, `s.Teacher`.`comment`, `s.Teacher`.`cv_url`, `s.Teacher`.`dob`, `s.Teacher`.`email`, `s.Teacher`.`expiry_date`, `s.Teacher`.`first_name`, `s.Teacher`.`form_url`, `s.Teacher`.`gender`, `s.Teacher`.`home_phone`, `s.Teacher`.`id_number`, `s.Teacher`.`id_photo`, `s.Teacher`.`id_type`, `s.Teacher`.`invoice_template`, `s.Teacher`.`ird_number`, `s.Teacher`.`is_activate`, `s.Teacher`.`is_contract`, `s.Teacher`.`is_left`, `s.Teacher`.`last_name`, `s.Teacher`.`level`, `s.Teacher`.`minimum_hours`, `s.Teacher`.`mobile_phone`, `s.Teacher`.`otherfile_url`, `s.Teacher`.`photo`, `s.Teacher`.`user_id`, `s.Teacher`.`visa`
+FROM `ablemusic`.`teacher` AS `s.Teacher`
+INNER JOIN (
+    SELECT DISTINCT `t1`.*
+    FROM (
+        SELECT `s1`.`user_id`
+        FROM `ablemusic`.`user` AS `s1`
+        LEFT JOIN `ablemusic`.`role` AS `s.Role1` ON `s1`.`role_id` = `s.Role1`.`role_id`
+        WHERE `s1`.`user_name` = @__model_UserName_0
+        ORDER BY `s1`.`user_id`
+        LIMIT 1
+    ) AS `t1`
+) AS `t2` ON `s.Teacher`.`user_id` = `t2`.`user_id`
+ORDER BY `t2`.`user_id`
+2019-07-01 11:24:14.936 +12:00 [INF] Executed DbCommand (60ms) [Parameters=[@__model_UserName_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.Staff`.`staff_id`, `s.Staff`.`dob`, `s.Staff`.`email`, `s.Staff`.`expiry_date`, `s.Staff`.`first_name`, `s.Staff`.`gender`, `s.Staff`.`home_phone`, `s.Staff`.`id_number`, `s.Staff`.`id_photo`, `s.Staff`.`id_type`, `s.Staff`.`ird_number`, `s.Staff`.`is_activate`, `s.Staff`.`last_name`, `s.Staff`.`mobile_phone`, `s.Staff`.`photo`, `s.Staff`.`user_id`, `s.Staff`.`visa`
+FROM `ablemusic`.`staff` AS `s.Staff`
+INNER JOIN (
+    SELECT DISTINCT `t3`.*
+    FROM (
+        SELECT `s2`.`user_id`
+        FROM `ablemusic`.`user` AS `s2`
+        LEFT JOIN `ablemusic`.`role` AS `s.Role2` ON `s2`.`role_id` = `s.Role2`.`role_id`
+        WHERE `s2`.`user_name` = @__model_UserName_0
+        ORDER BY `s2`.`user_id`
+        LIMIT 1
+    ) AS `t3`
+) AS `t4` ON `s.Staff`.`user_id` = `t4`.`user_id`
+ORDER BY `t4`.`user_id`, `s.Staff`.`staff_id`
+2019-07-01 11:24:14.999 +12:00 [INF] Executed DbCommand (63ms) [Parameters=[@__model_UserName_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.Staff.StaffOrg`.`staff_org_id`, `s.Staff.StaffOrg`.`is_activate`, `s.Staff.StaffOrg`.`org_id`, `s.Staff.StaffOrg`.`staff_id`, `s.Org`.`org_id`, `s.Org`.`abbr`, `s.Org`.`address`, `s.Org`.`email`, `s.Org`.`is_activate`, `s.Org`.`is_headoffice`, `s.Org`.`localtion_x`, `s.Org`.`localtion_y`, `s.Org`.`org_name`, `s.Org`.`phone`
+FROM `ablemusic`.`staff_org` AS `s.Staff.StaffOrg`
+LEFT JOIN `ablemusic`.`org` AS `s.Org` ON `s.Staff.StaffOrg`.`org_id` = `s.Org`.`org_id`
+INNER JOIN (
+    SELECT DISTINCT `s.Staff0`.`staff_id`, `t6`.`user_id`
+    FROM `ablemusic`.`staff` AS `s.Staff0`
+    INNER JOIN (
+        SELECT DISTINCT `t5`.*
+        FROM (
+            SELECT `s3`.`user_id`
+            FROM `ablemusic`.`user` AS `s3`
+            LEFT JOIN `ablemusic`.`role` AS `s.Role3` ON `s3`.`role_id` = `s.Role3`.`role_id`
+            WHERE `s3`.`user_name` = @__model_UserName_0
+            ORDER BY `s3`.`user_id`
+            LIMIT 1
+        ) AS `t5`
+    ) AS `t6` ON `s.Staff0`.`user_id` = `t6`.`user_id`
+) AS `t7` ON `s.Staff.StaffOrg`.`staff_id` = `t7`.`staff_id`
+ORDER BY `t7`.`user_id`, `t7`.`staff_id`
+2019-07-01 11:24:15.001 +12:00 [INF] Executed action method Pegasus_backend.Controllers.Authorization.LoginController.Login (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 1081.6470000000002ms.
+2019-07-01 11:24:15.001 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-07-01 11:24:15.002 +12:00 [INF] Executed action Pegasus_backend.Controllers.Authorization.LoginController.Login (Pegasus_backend) in 1083.8293ms
+2019-07-01 11:24:15.002 +12:00 [INF] Request finished in 1084.8795ms 200 application/json; charset=utf-8
+2019-07-01 11:24:15.011 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/page  
+2019-07-01 11:24:15.012 +12:00 [INF] Policy execution successful.
+2019-07-01 11:24:15.012 +12:00 [INF] Route matched with {action = "GetRolePage", controller = "Page"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetRolePage() on controller Pegasus_backend.Controllers.PageController (Pegasus_backend).
+2019-07-01 11:24:15.013 +12:00 [INF] Executing action method Pegasus_backend.Controllers.PageController.GetRolePage (Pegasus_backend) - Validation state: "Valid"
+2019-07-01 11:24:15.014 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-01 11:24:15.073 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/todolist/3  
+2019-07-01 11:24:15.073 +12:00 [INF] Policy execution successful.
+2019-07-01 11:24:15.073 +12:00 [INF] Request finished in 0.4152ms 204 
+2019-07-01 11:24:15.148 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/images/staff/Photos/2190613092457108.jpg  
+2019-07-01 11:24:15.149 +12:00 [INF] Request finished in 0.6307ms 404 
+2019-07-01 11:24:15.195 +12:00 [INF] Executed DbCommand (51ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`role_id` AS `RoleId`, `s.Page`.`url`
+FROM `ablemusic`.`role_access` AS `s`
+LEFT JOIN `ablemusic`.`page` AS `s.Page` ON `s`.`page_id` = `s.Page`.`page_id`
+2019-07-01 11:24:15.196 +12:00 [INF] Executed action method Pegasus_backend.Controllers.PageController.GetRolePage (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 182.7092ms.
+2019-07-01 11:24:15.196 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-07-01 11:24:15.196 +12:00 [INF] Executed action Pegasus_backend.Controllers.PageController.GetRolePage (Pegasus_backend) in 183.7201ms
+2019-07-01 11:24:15.196 +12:00 [INF] Request finished in 185.0851ms 200 application/json; charset=utf-8
+2019-07-01 11:24:15.243 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/todolist/3  
+2019-07-01 11:24:15.243 +12:00 [INF] Policy execution successful.
+2019-07-01 11:24:15.243 +12:00 [INF] Successfully validated the token.
+2019-07-01 11:24:15.244 +12:00 [INF] Route matched with {action = "Get", controller = "TodoList"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Get(Int16) on controller Pegasus_backend.Controllers.TodoListController (Pegasus_backend).
+2019-07-01 11:24:15.244 +12:00 [INF] Executing action method Pegasus_backend.Controllers.TodoListController.Get (Pegasus_backend) - Validation state: "Valid"
+2019-07-01 11:24:15.245 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-01 11:24:15.249 +12:00 [WRN] The LINQ expression 'where ([t].TodoDate == Convert(value(Pegasus_backend.Controllers.TodoListController).toNZTimezone(DateTime.UtcNow).Date, Nullable`1))' could not be translated and will be evaluated locally.
+2019-07-01 11:24:15.432 +12:00 [INF] Executed DbCommand (53ms) [Parameters=[@__userId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `t`.`list_id`, `t`.`created_at`, `t`.`learner_id`, `t`.`lesson_id`, `t`.`list_content`, `t`.`list_name`, `t`.`process_flag`, `t`.`processed_at`, `t`.`teacher_id`, `t`.`todo_date`, `t`.`user_id`
+FROM `ablemusic`.`todo_list` AS `t`
+WHERE `t`.`user_id` = @__userId_0
+2019-07-01 11:24:15.557 +12:00 [INF] Executed action method Pegasus_backend.Controllers.TodoListController.Get (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 312.63030000000003ms.
+2019-07-01 11:24:15.557 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.TodoList, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-07-01 11:24:15.558 +12:00 [INF] Executed action Pegasus_backend.Controllers.TodoListController.Get (Pegasus_backend) in 313.7704ms
+2019-07-01 11:24:15.558 +12:00 [INF] Request finished in 315.1089ms 200 application/json; charset=utf-8
+2019-07-01 11:24:38.597 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/learner/mike  
+2019-07-01 11:24:38.597 +12:00 [INF] Policy execution successful.
+2019-07-01 11:24:38.602 +12:00 [INF] Route matched with {action = "GetLearner", controller = "Learner"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetLearner(System.String) on controller Pegasus_backend.Controllers.LearnerController (Pegasus_backend).
+2019-07-01 11:24:39.017 +12:00 [INF] Executing action method Pegasus_backend.Controllers.LearnerController.GetLearner (Pegasus_backend) - Validation state: "Valid"
+2019-07-01 11:24:39.020 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-01 11:24:39.285 +12:00 [INF] Executed DbCommand (63ms) [Parameters=[@__name_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`learner_id`, `s`.`address`, `s`.`contact_num`, `s`.`created_at`, `s`.`dob`, `s`.`email`, `s`.`enroll_date`, `s`.`first_name`, `s`.`form_url`, `s`.`g5_certification`, `s`.`gender`, `s`.`is_abrsm_g5`, `s`.`is_active`, `s`.`is_under_18`, `s`.`last_name`, `s`.`learner_level`, `s`.`level_type`, `s`.`middle_name`, `s`.`note`, `s`.`org_id`, `s`.`otherfile_url`, `s`.`payment_period`, `s`.`photo`, `s`.`referrer`, `s`.`referrer_learner_id`, `s`.`user_id`
+FROM `ablemusic`.`learner` AS `s`
+WHERE (`s`.`is_active` = 1) AND `s`.`first_name` LIKE concat('%', @__name_0, '%')
+ORDER BY `s`.`learner_id`
+2019-07-01 11:24:39.418 +12:00 [INF] Executed DbCommand (62ms) [Parameters=[@__name_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.LearnerOthers`.`learner_others_id`, `s.LearnerOthers`.`learner_id`, `s.LearnerOthers`.`learner_level`, `s.LearnerOthers`.`others_type`, `s.LearnerOthers`.`others_value`
+FROM `ablemusic`.`learner_others` AS `s.LearnerOthers`
+INNER JOIN (
+    SELECT `s0`.`learner_id`
+    FROM `ablemusic`.`learner` AS `s0`
+    WHERE (`s0`.`is_active` = 1) AND `s0`.`first_name` LIKE concat('%', @__name_0, '%')
+) AS `t` ON `s.LearnerOthers`.`learner_id` = `t`.`learner_id`
+ORDER BY `t`.`learner_id`
+2019-07-01 11:24:39.490 +12:00 [INF] Executed DbCommand (60ms) [Parameters=[@__name_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.Parent`.`parent_id`, `s.Parent`.`contact_num`, `s.Parent`.`created_at`, `s.Parent`.`email`, `s.Parent`.`first_name`, `s.Parent`.`last_name`, `s.Parent`.`learner_id`, `s.Parent`.`relationship`
+FROM `ablemusic`.`parent` AS `s.Parent`
+INNER JOIN (
+    SELECT `s1`.`learner_id`
+    FROM `ablemusic`.`learner` AS `s1`
+    WHERE (`s1`.`is_active` = 1) AND `s1`.`first_name` LIKE concat('%', @__name_0, '%')
+) AS `t0` ON `s.Parent`.`learner_id` = `t0`.`learner_id`
+ORDER BY `t0`.`learner_id`
+2019-07-01 11:24:39.564 +12:00 [INF] Executed DbCommand (60ms) [Parameters=[@__name_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.One2oneCourseInstance`.`course_instance_id`, `s.One2oneCourseInstance`.`begin_date`, `s.One2oneCourseInstance`.`course_id`, `s.One2oneCourseInstance`.`end_date`, `s.One2oneCourseInstance`.`invoice_date`, `s.One2oneCourseInstance`.`learner_id`, `s.One2oneCourseInstance`.`org_id`, `s.One2oneCourseInstance`.`room_id`, `s.One2oneCourseInstance`.`teacher_id`
+FROM `ablemusic`.`one2one_course_instance` AS `s.One2oneCourseInstance`
+INNER JOIN (
+    SELECT `s2`.`learner_id`
+    FROM `ablemusic`.`learner` AS `s2`
+    WHERE (`s2`.`is_active` = 1) AND `s2`.`first_name` LIKE concat('%', @__name_0, '%')
+) AS `t1` ON `s.One2oneCourseInstance`.`learner_id` = `t1`.`learner_id`
+ORDER BY `t1`.`learner_id`
+2019-07-01 11:24:39.659 +12:00 [INF] Executed DbCommand (61ms) [Parameters=[@__name_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.LearnerGroupCourse`.`learner_group_course_id`, `s.LearnerGroupCourse`.`begin_date`, `s.LearnerGroupCourse`.`comment`, `s.LearnerGroupCourse`.`created_at`, `s.LearnerGroupCourse`.`end_date`, `s.LearnerGroupCourse`.`group_course_instance_id`, `s.LearnerGroupCourse`.`invoice_date`, `s.LearnerGroupCourse`.`is_activate`, `s.LearnerGroupCourse`.`learner_id`
+FROM `ablemusic`.`learner_group_course` AS `s.LearnerGroupCourse`
+INNER JOIN (
+    SELECT `s3`.`learner_id`
+    FROM `ablemusic`.`learner` AS `s3`
+    WHERE (`s3`.`is_active` = 1) AND `s3`.`first_name` LIKE concat('%', @__name_0, '%')
+) AS `t2` ON `s.LearnerGroupCourse`.`learner_id` = `t2`.`learner_id`
+ORDER BY `t2`.`learner_id`
+2019-07-01 11:24:39.673 +12:00 [INF] Executed action method Pegasus_backend.Controllers.LearnerController.GetLearner (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 655.8388ms.
+2019-07-01 11:24:39.673 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Collections.Generic.IEnumerable`1[[Pegasus_backend.pegasusContext.Learner, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-07-01 11:24:39.732 +12:00 [INF] Executed action Pegasus_backend.Controllers.LearnerController.GetLearner (Pegasus_backend) in 1129.9993ms
+2019-07-01 11:24:39.732 +12:00 [INF] Request finished in 1135.5535ms 200 application/json; charset=utf-8
+2019-07-01 12:39:58.950 +12:00 [INF] User profile is available. Using 'C:\Users\Learnspace\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-07-01 12:40:00.637 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
+2019-07-01 12:40:00.674 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-07-01 12:40:00.888 +12:00 [INF] Request finished in 252.3966ms 404 
+2019-07-01 13:16:07.137 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/login  
+2019-07-01 13:16:07.153 +12:00 [INF] Policy execution successful.
+2019-07-01 13:16:07.154 +12:00 [INF] Request finished in 16.9946ms 204 
+2019-07-01 13:16:07.164 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/login application/json 41
+2019-07-01 13:16:07.164 +12:00 [INF] Policy execution successful.
+2019-07-01 13:16:07.229 +12:00 [INF] Route matched with {action = "Login", controller = "Login"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(Pegasus_backend.Models.UsrAndPass) on controller Pegasus_backend.Controllers.Authorization.LoginController (Pegasus_backend).
+2019-07-01 13:16:07.470 +12:00 [INF] Executing action method Pegasus_backend.Controllers.Authorization.LoginController.Login (Pegasus_backend) - Validation state: "Valid"
+2019-07-01 13:16:08.490 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-01 13:16:10.213 +12:00 [INF] Executed DbCommand (67ms) [Parameters=[@__model_UserName_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`user_id`, `s`.`created_at`, `s`.`is_activate`, `s`.`password`, `s`.`role_id`, `s`.`unread_message_id`, `s`.`user_name`, `s.Role`.`role_id`, `s.Role`.`role_name`
+FROM `ablemusic`.`user` AS `s`
+LEFT JOIN `ablemusic`.`role` AS `s.Role` ON `s`.`role_id` = `s.Role`.`role_id`
+WHERE `s`.`user_name` = @__model_UserName_0
+ORDER BY `s`.`user_id`
 LIMIT 1
-2019-07-01 00:44:34.917 +12:00 [WRN] Query: '(from Lesson x in DbSet<Lesson> where (Nullable<int>)(int)[x].OrgId == (Nullable<int>)__orgIdOfStaff...' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
-2019-07-01 00:44:35.064 +12:00 [INF] Executed DbCommand (35ms) [Parameters=[@__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT DISTINCT `t`.*
-FROM (
-    SELECT `x`.`learner_id`
-    FROM `ablemusic`.`lesson` AS `x`
-    WHERE `x`.`org_id` IS NULL
-    LIMIT @__p_1
-) AS `t`
-2019-07-01 00:46:43.417 +12:00 [WRN] Query: '(from Learner x in DbSet<Learner> where (Nullable<int>)[x].OrgId == (Nullable<int>)__orgIdOfStaff_0 ...' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
-2019-07-01 00:46:43.618 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[@__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`learner_id`, `x`.`address`, `x`.`contact_num`, `x`.`created_at`, `x`.`dob`, `x`.`email`, `x`.`enroll_date`, `x`.`first_name`, `x`.`form_url`, `x`.`g5_certification`, `x`.`gender`, `x`.`is_abrsm_g5`, `x`.`is_active`, `x`.`is_under_18`, `x`.`last_name`, `x`.`learner_level`, `x`.`level_type`, `x`.`middle_name`, `x`.`note`, `x`.`org_id`, `x`.`otherfile_url`, `x`.`payment_period`, `x`.`photo`, `x`.`referrer`, `x`.`referrer_learner_id`, `x`.`user_id`
-FROM `ablemusic`.`learner` AS `x`
-WHERE `x`.`org_id` IS NULL
-LIMIT @__p_1
-2019-07-01 00:46:43.797 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.GetStuffChattingList (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 132910.89070000002ms.
-2019-07-01 00:46:43.798 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Tuple`4[[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Staff, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Teacher, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.List`1[[System.Nullable`1[[System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Learner, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
-2019-07-01 00:46:44.081 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.GetStuffChattingList (Pegasus_backend) in 133237.4785ms
-2019-07-01 00:46:44.084 +12:00 [INF] Request finished in 133289.5361ms 200 application/json; charset=utf-8
-2019-07-01 00:46:44.108 +12:00 [INF] Connection id "0HLNTB2O7JMK8", Request id "0HLNTB2O7JMK8:00000002": the application completed without reading the entire request body.
-2019-07-01 00:48:23.354 +12:00 [INF] User profile is available. Using 'C:\Users\lgx95\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
-2019-07-01 00:48:24.549 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/values  
-2019-07-01 00:48:24.549 +12:00 [INF] Request starting HTTP/1.1 DEBUG http://localhost:5000/  0
-2019-07-01 00:48:24.611 +12:00 [INF] Request finished in 63.1436ms 200 
-2019-07-01 00:48:24.690 +12:00 [WRN] Failed to determine the https port for redirect.
-2019-07-01 00:48:25.172 +12:00 [INF] Route matched with {action = "Get", controller = "Values"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Get() on controller Pegasus_backend.Controllers.ValuesController (Pegasus_backend).
-2019-07-01 00:48:25.582 +12:00 [INF] Executing action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) - Validation state: "Valid"
-2019-07-01 00:48:25.820 +12:00 [ERR] ValuesController LogErrorToFile: System.Exception: Exception of type 'System.Exception' was thrown.
-   at Pegasus_backend.Controllers.ValuesController.Get() in C:\angular\pegasusBackend\Controllers\ValuesController.cs:line 26
-2019-07-01 00:48:25.823 +12:00 [INF] ValuesController LogInfoToFile: hello
-2019-07-01 00:48:25.830 +12:00 [INF] Executed action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 230.6533ms.
-2019-07-01 00:48:25.849 +12:00 [INF] Executing ObjectResult, writing value of type 'System.DateTime'.
-2019-07-01 00:48:25.972 +12:00 [INF] Executed action Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) in 789.3141ms
-2019-07-01 00:48:25.988 +12:00 [INF] Request finished in 1446.5725ms 200 application/json; charset=utf-8
-2019-07-01 00:48:39.369 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Chat/GetStuffChattingList/10060 application/json 65
-2019-07-01 00:48:39.434 +12:00 [INF] Route matched with {action = "GetStuffChattingList", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetStuffChattingList(Int32) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
-2019-07-01 00:48:39.493 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.GetStuffChattingList (Pegasus_backend) - Validation state: "Valid"
-2019-07-01 00:48:41.413 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
-2019-07-01 00:48:42.707 +12:00 [INF] Executed DbCommand (41ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`staff_id`, `x`.`dob`, `x`.`email`, `x`.`expiry_date`, `x`.`first_name`, `x`.`gender`, `x`.`home_phone`, `x`.`id_number`, `x`.`id_photo`, `x`.`id_type`, `x`.`ird_number`, `x`.`is_activate`, `x`.`last_name`, `x`.`mobile_phone`, `x`.`photo`, `x`.`user_id`, `x`.`visa`
-FROM `ablemusic`.`staff` AS `x`
-WHERE `x`.`user_id` = @__id_0
+2019-07-01 13:16:10.405 +12:00 [INF] Executed DbCommand (65ms) [Parameters=[@__model_UserName_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.Learner`.`learner_id`, `s.Learner`.`address`, `s.Learner`.`contact_num`, `s.Learner`.`created_at`, `s.Learner`.`dob`, `s.Learner`.`email`, `s.Learner`.`enroll_date`, `s.Learner`.`first_name`, `s.Learner`.`form_url`, `s.Learner`.`g5_certification`, `s.Learner`.`gender`, `s.Learner`.`is_abrsm_g5`, `s.Learner`.`is_active`, `s.Learner`.`is_under_18`, `s.Learner`.`last_name`, `s.Learner`.`learner_level`, `s.Learner`.`level_type`, `s.Learner`.`middle_name`, `s.Learner`.`note`, `s.Learner`.`org_id`, `s.Learner`.`otherfile_url`, `s.Learner`.`payment_period`, `s.Learner`.`photo`, `s.Learner`.`referrer`, `s.Learner`.`referrer_learner_id`, `s.Learner`.`user_id`
+FROM `ablemusic`.`learner` AS `s.Learner`
+INNER JOIN (
+    SELECT DISTINCT `t`.*
+    FROM (
+        SELECT `s0`.`user_id`
+        FROM `ablemusic`.`user` AS `s0`
+        LEFT JOIN `ablemusic`.`role` AS `s.Role0` ON `s0`.`role_id` = `s.Role0`.`role_id`
+        WHERE `s0`.`user_name` = @__model_UserName_0
+        ORDER BY `s0`.`user_id`
+        LIMIT 1
+    ) AS `t`
+) AS `t0` ON `s.Learner`.`user_id` = `t0`.`user_id`
+ORDER BY `t0`.`user_id`
+2019-07-01 13:16:10.635 +12:00 [INF] Executed DbCommand (65ms) [Parameters=[@__model_UserName_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.Teacher`.`teacher_id`, `s.Teacher`.`ability`, `s.Teacher`.`comment`, `s.Teacher`.`cv_url`, `s.Teacher`.`dob`, `s.Teacher`.`email`, `s.Teacher`.`expiry_date`, `s.Teacher`.`first_name`, `s.Teacher`.`form_url`, `s.Teacher`.`gender`, `s.Teacher`.`home_phone`, `s.Teacher`.`id_number`, `s.Teacher`.`id_photo`, `s.Teacher`.`id_type`, `s.Teacher`.`invoice_template`, `s.Teacher`.`ird_number`, `s.Teacher`.`is_activate`, `s.Teacher`.`is_contract`, `s.Teacher`.`is_left`, `s.Teacher`.`last_name`, `s.Teacher`.`level`, `s.Teacher`.`minimum_hours`, `s.Teacher`.`mobile_phone`, `s.Teacher`.`otherfile_url`, `s.Teacher`.`photo`, `s.Teacher`.`user_id`, `s.Teacher`.`visa`
+FROM `ablemusic`.`teacher` AS `s.Teacher`
+INNER JOIN (
+    SELECT DISTINCT `t1`.*
+    FROM (
+        SELECT `s1`.`user_id`
+        FROM `ablemusic`.`user` AS `s1`
+        LEFT JOIN `ablemusic`.`role` AS `s.Role1` ON `s1`.`role_id` = `s.Role1`.`role_id`
+        WHERE `s1`.`user_name` = @__model_UserName_0
+        ORDER BY `s1`.`user_id`
+        LIMIT 1
+    ) AS `t1`
+) AS `t2` ON `s.Teacher`.`user_id` = `t2`.`user_id`
+ORDER BY `t2`.`user_id`
+2019-07-01 13:16:10.846 +12:00 [INF] Executed DbCommand (61ms) [Parameters=[@__model_UserName_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.Staff`.`staff_id`, `s.Staff`.`dob`, `s.Staff`.`email`, `s.Staff`.`expiry_date`, `s.Staff`.`first_name`, `s.Staff`.`gender`, `s.Staff`.`home_phone`, `s.Staff`.`id_number`, `s.Staff`.`id_photo`, `s.Staff`.`id_type`, `s.Staff`.`ird_number`, `s.Staff`.`is_activate`, `s.Staff`.`last_name`, `s.Staff`.`mobile_phone`, `s.Staff`.`photo`, `s.Staff`.`user_id`, `s.Staff`.`visa`
+FROM `ablemusic`.`staff` AS `s.Staff`
+INNER JOIN (
+    SELECT DISTINCT `t3`.*
+    FROM (
+        SELECT `s2`.`user_id`
+        FROM `ablemusic`.`user` AS `s2`
+        LEFT JOIN `ablemusic`.`role` AS `s.Role2` ON `s2`.`role_id` = `s.Role2`.`role_id`
+        WHERE `s2`.`user_name` = @__model_UserName_0
+        ORDER BY `s2`.`user_id`
+        LIMIT 1
+    ) AS `t3`
+) AS `t4` ON `s.Staff`.`user_id` = `t4`.`user_id`
+ORDER BY `t4`.`user_id`, `s.Staff`.`staff_id`
+2019-07-01 13:16:10.944 +12:00 [INF] Executed DbCommand (64ms) [Parameters=[@__model_UserName_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.Staff.StaffOrg`.`staff_org_id`, `s.Staff.StaffOrg`.`is_activate`, `s.Staff.StaffOrg`.`org_id`, `s.Staff.StaffOrg`.`staff_id`, `s.Org`.`org_id`, `s.Org`.`abbr`, `s.Org`.`address`, `s.Org`.`email`, `s.Org`.`is_activate`, `s.Org`.`is_headoffice`, `s.Org`.`localtion_x`, `s.Org`.`localtion_y`, `s.Org`.`org_name`, `s.Org`.`phone`
+FROM `ablemusic`.`staff_org` AS `s.Staff.StaffOrg`
+LEFT JOIN `ablemusic`.`org` AS `s.Org` ON `s.Staff.StaffOrg`.`org_id` = `s.Org`.`org_id`
+INNER JOIN (
+    SELECT DISTINCT `s.Staff0`.`staff_id`, `t6`.`user_id`
+    FROM `ablemusic`.`staff` AS `s.Staff0`
+    INNER JOIN (
+        SELECT DISTINCT `t5`.*
+        FROM (
+            SELECT `s3`.`user_id`
+            FROM `ablemusic`.`user` AS `s3`
+            LEFT JOIN `ablemusic`.`role` AS `s.Role3` ON `s3`.`role_id` = `s.Role3`.`role_id`
+            WHERE `s3`.`user_name` = @__model_UserName_0
+            ORDER BY `s3`.`user_id`
+            LIMIT 1
+        ) AS `t5`
+    ) AS `t6` ON `s.Staff0`.`user_id` = `t6`.`user_id`
+) AS `t7` ON `s.Staff.StaffOrg`.`staff_id` = `t7`.`staff_id`
+ORDER BY `t7`.`user_id`, `t7`.`staff_id`
+2019-07-01 13:16:11.023 +12:00 [INF] Executed action method Pegasus_backend.Controllers.Authorization.LoginController.Login (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 3543.5619ms.
+2019-07-01 13:16:11.032 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-07-01 13:16:11.056 +12:00 [INF] Executed action Pegasus_backend.Controllers.Authorization.LoginController.Login (Pegasus_backend) in 3824.4207ms
+2019-07-01 13:16:11.057 +12:00 [INF] Request finished in 3893.4859ms 200 application/json; charset=utf-8
+2019-07-01 13:16:11.103 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/page  
+2019-07-01 13:16:11.104 +12:00 [INF] Policy execution successful.
+2019-07-01 13:16:11.108 +12:00 [INF] Route matched with {action = "GetRolePage", controller = "Page"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetRolePage() on controller Pegasus_backend.Controllers.PageController (Pegasus_backend).
+2019-07-01 13:16:11.110 +12:00 [INF] Executing action method Pegasus_backend.Controllers.PageController.GetRolePage (Pegasus_backend) - Validation state: "Valid"
+2019-07-01 13:16:11.116 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-01 13:16:11.125 +12:00 [WRN] The Include operation for navigation '[s].Page' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-07-01 13:16:11.325 +12:00 [INF] Executed DbCommand (53ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`role_id` AS `RoleId`, `s.Page`.`url`
+FROM `ablemusic`.`role_access` AS `s`
+LEFT JOIN `ablemusic`.`page` AS `s.Page` ON `s`.`page_id` = `s.Page`.`page_id`
+2019-07-01 13:16:11.328 +12:00 [INF] Executed action method Pegasus_backend.Controllers.PageController.GetRolePage (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 218.47400000000002ms.
+2019-07-01 13:16:11.329 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-07-01 13:16:11.332 +12:00 [INF] Executed action Pegasus_backend.Controllers.PageController.GetRolePage (Pegasus_backend) in 223.69420000000002ms
+2019-07-01 13:16:11.332 +12:00 [INF] Request finished in 229.1906ms 200 application/json; charset=utf-8
+2019-07-01 13:16:11.343 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/lookups  
+2019-07-01 13:16:11.343 +12:00 [INF] Policy execution successful.
+2019-07-01 13:16:11.344 +12:00 [INF] Request finished in 0.511ms 204 
+2019-07-01 13:16:11.346 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/navitems  
+2019-07-01 13:16:11.346 +12:00 [INF] Policy execution successful.
+2019-07-01 13:16:11.346 +12:00 [INF] Request finished in 0.3108ms 204 
+2019-07-01 13:16:11.371 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/todolist/3  
+2019-07-01 13:16:11.372 +12:00 [INF] Policy execution successful.
+2019-07-01 13:16:11.372 +12:00 [INF] Request finished in 0.3566ms 204 
+2019-07-01 13:16:11.433 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/images/staff/Photos/2190613092457108.jpg  
+2019-07-01 13:16:11.436 +12:00 [INF] Request finished in 2.328ms 404 
+2019-07-01 13:16:11.463 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/lookups  
+2019-07-01 13:16:11.463 +12:00 [INF] Policy execution successful.
+2019-07-01 13:16:11.464 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/navitems  
+2019-07-01 13:16:11.464 +12:00 [INF] Policy execution successful.
+2019-07-01 13:16:11.466 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/todolist/3  
+2019-07-01 13:16:11.466 +12:00 [INF] Policy execution successful.
+2019-07-01 13:16:11.475 +12:00 [INF] Successfully validated the token.
+2019-07-01 13:16:11.475 +12:00 [INF] Successfully validated the token.
+2019-07-01 13:16:11.475 +12:00 [INF] Successfully validated the token.
+2019-07-01 13:16:11.481 +12:00 [INF] Route matched with {action = "Get", controller = "TodoList"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Get(Int16) on controller Pegasus_backend.Controllers.TodoListController (Pegasus_backend).
+2019-07-01 13:16:11.481 +12:00 [INF] Route matched with {action = "GetLookups", controller = "Lookups"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetLookups() on controller Pegasus_backend.Controllers.LookupsController (Pegasus_backend).
+2019-07-01 13:16:11.481 +12:00 [INF] Route matched with {action = "GetNavItems", controller = "NavItems"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetNavItems() on controller Pegasus_backend.Controllers.NavItemsController (Pegasus_backend).
+2019-07-01 13:16:11.482 +12:00 [INF] Executing action method Pegasus_backend.Controllers.LookupsController.GetLookups (Pegasus_backend) - Validation state: "Valid"
+2019-07-01 13:16:11.482 +12:00 [INF] Executing action method Pegasus_backend.Controllers.TodoListController.Get (Pegasus_backend) - Validation state: "Valid"
+2019-07-01 13:16:11.485 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-01 13:16:11.486 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-01 13:16:11.494 +12:00 [WRN] The LINQ expression 'where ([t].TodoDate == Convert(value(Pegasus_backend.Controllers.TodoListController).toNZTimezone(DateTime.UtcNow).Date, Nullable`1))' could not be translated and will be evaluated locally.
+2019-07-01 13:16:11.496 +12:00 [INF] Authorization was successful.
+2019-07-01 13:16:11.497 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NavItemsController.GetNavItems (Pegasus_backend) - Validation state: "Valid"
+2019-07-01 13:16:11.503 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-01 13:16:11.674 +12:00 [INF] Executed DbCommand (55ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `l`.`lookup_id`, `l`.`description`, `l`.`lookup_type`, `l`.`prop_name`, `l`.`prop_value`
+FROM `ablemusic`.`lookup` AS `l`
+2019-07-01 13:16:11.702 +12:00 [INF] Executed action method Pegasus_backend.Controllers.LookupsController.GetLookups (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 220.2423ms.
+2019-07-01 13:16:11.702 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Lookup, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-07-01 13:16:11.708 +12:00 [INF] Executed action Pegasus_backend.Controllers.LookupsController.GetLookups (Pegasus_backend) in 226.69580000000002ms
+2019-07-01 13:16:11.708 +12:00 [INF] Request finished in 245.3962ms 200 application/json; charset=utf-8
+2019-07-01 13:16:12.164 +12:00 [INF] Executed DbCommand (56ms) [Parameters=[@__userId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `t`.`list_id`, `t`.`created_at`, `t`.`learner_id`, `t`.`lesson_id`, `t`.`list_content`, `t`.`list_name`, `t`.`process_flag`, `t`.`processed_at`, `t`.`teacher_id`, `t`.`todo_date`, `t`.`user_id`
+FROM `ablemusic`.`todo_list` AS `t`
+WHERE `t`.`user_id` = @__userId_0
+2019-07-01 13:16:12.202 +12:00 [INF] Executed DbCommand (54ms) [Parameters=[@__userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`user_id`, `s`.`created_at`, `s`.`is_activate`, `s`.`password`, `s`.`role_id`, `s`.`unread_message_id`, `s`.`user_name`
+FROM `ablemusic`.`user` AS `s`
+WHERE `s`.`user_id` = @__userId_0
 LIMIT 1
-2019-07-01 00:48:42.875 +12:00 [WRN] Query: '(from Staff x in DbSet<Staff> where (Nullable<int>)[x].UserId != (Nullable<int>)__id_0 select [x]).T...' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
-2019-07-01 00:48:42.987 +12:00 [INF] Executed DbCommand (31ms) [Parameters=[@__id_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`staff_id`, `x`.`dob`, `x`.`email`, `x`.`expiry_date`, `x`.`first_name`, `x`.`gender`, `x`.`home_phone`, `x`.`id_number`, `x`.`id_photo`, `x`.`id_type`, `x`.`ird_number`, `x`.`is_activate`, `x`.`last_name`, `x`.`mobile_phone`, `x`.`photo`, `x`.`user_id`, `x`.`visa`
-FROM `ablemusic`.`staff` AS `x`
-WHERE (`x`.`user_id` <> @__id_0) OR `x`.`user_id` IS NULL
-LIMIT @__p_1
-2019-07-01 00:48:42.998 +12:00 [WRN] Query: '(from Teacher <generated>_1 in DbSet<Teacher> select [<generated>_1]).Take(__p_0)' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
-2019-07-01 00:48:43.105 +12:00 [INF] Executed DbCommand (30ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `t`.`teacher_id`, `t`.`ability`, `t`.`comment`, `t`.`cv_url`, `t`.`dob`, `t`.`email`, `t`.`expiry_date`, `t`.`first_name`, `t`.`form_url`, `t`.`gender`, `t`.`home_phone`, `t`.`id_number`, `t`.`id_photo`, `t`.`id_type`, `t`.`invoice_template`, `t`.`ird_number`, `t`.`is_activate`, `t`.`is_contract`, `t`.`is_left`, `t`.`last_name`, `t`.`level`, `t`.`minimum_hours`, `t`.`mobile_phone`, `t`.`otherfile_url`, `t`.`photo`, `t`.`user_id`, `t`.`visa`
-FROM `ablemusic`.`teacher` AS `t`
-LIMIT @__p_0
-2019-07-01 00:48:43.352 +12:00 [INF] Executed DbCommand (31ms) [Parameters=[@__staffDetial_StaffId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`org_id`
-FROM `ablemusic`.`staff_org` AS `x`
-WHERE `x`.`staff_id` = @__staffDetial_StaffId_0
-LIMIT 1
-2019-07-01 00:48:43.364 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.GetStuffChattingList (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.NotFoundObjectResult in 3870.3681ms.
-2019-07-01 00:48:43.365 +12:00 [INF] Executing ObjectResult, writing value of type 'System.String'.
-2019-07-01 00:48:43.366 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.GetStuffChattingList (Pegasus_backend) in 3931.1959ms
-2019-07-01 00:48:43.367 +12:00 [INF] Request finished in 3998.1263ms 404 text/plain; charset=utf-8
-2019-07-01 00:48:43.392 +12:00 [INF] Connection id "0HLNTB4UM6I3T", Request id "0HLNTB4UM6I3T:00000002": the application completed without reading the entire request body.
-2019-07-01 00:49:38.552 +12:00 [INF] User profile is available. Using 'C:\Users\lgx95\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
-2019-07-01 00:49:39.332 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Chat/GetStuffChattingList/10065 application/json 65
-2019-07-01 00:49:39.401 +12:00 [WRN] Failed to determine the https port for redirect.
-2019-07-01 00:49:39.691 +12:00 [INF] Route matched with {action = "GetStuffChattingList", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetStuffChattingList(Int32) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
-2019-07-01 00:49:39.920 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.GetStuffChattingList (Pegasus_backend) - Validation state: "Valid"
-2019-07-01 00:49:41.665 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
-2019-07-01 00:49:42.772 +12:00 [INF] Executed DbCommand (46ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`staff_id`, `x`.`dob`, `x`.`email`, `x`.`expiry_date`, `x`.`first_name`, `x`.`gender`, `x`.`home_phone`, `x`.`id_number`, `x`.`id_photo`, `x`.`id_type`, `x`.`ird_number`, `x`.`is_activate`, `x`.`last_name`, `x`.`mobile_phone`, `x`.`photo`, `x`.`user_id`, `x`.`visa`
-FROM `ablemusic`.`staff` AS `x`
-WHERE `x`.`user_id` = @__id_0
-LIMIT 1
-2019-07-01 00:49:43.109 +12:00 [INF] Executed DbCommand (35ms) [Parameters=[@__staffDetial_StaffId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`org_id`
-FROM `ablemusic`.`staff_org` AS `x`
-WHERE `x`.`staff_id` = @__staffDetial_StaffId_0
-LIMIT 1
-2019-07-01 00:49:43.128 +12:00 [WRN] Query: '(from Staff x in DbSet<Staff> where (Nullable<int>)[x].UserId != (Nullable<int>)__id_0 select [x]).T...' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
-2019-07-01 00:49:43.241 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[@__id_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`staff_id`, `x`.`dob`, `x`.`email`, `x`.`expiry_date`, `x`.`first_name`, `x`.`gender`, `x`.`home_phone`, `x`.`id_number`, `x`.`id_photo`, `x`.`id_type`, `x`.`ird_number`, `x`.`is_activate`, `x`.`last_name`, `x`.`mobile_phone`, `x`.`photo`, `x`.`user_id`, `x`.`visa`
-FROM `ablemusic`.`staff` AS `x`
-WHERE (`x`.`user_id` <> @__id_0) OR `x`.`user_id` IS NULL
-LIMIT @__p_1
-2019-07-01 00:49:43.252 +12:00 [WRN] Query: '(from Teacher <generated>_1 in DbSet<Teacher> select [<generated>_1]).Take(__p_0)' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
-2019-07-01 00:49:43.362 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `t`.`teacher_id`, `t`.`ability`, `t`.`comment`, `t`.`cv_url`, `t`.`dob`, `t`.`email`, `t`.`expiry_date`, `t`.`first_name`, `t`.`form_url`, `t`.`gender`, `t`.`home_phone`, `t`.`id_number`, `t`.`id_photo`, `t`.`id_type`, `t`.`invoice_template`, `t`.`ird_number`, `t`.`is_activate`, `t`.`is_contract`, `t`.`is_left`, `t`.`last_name`, `t`.`level`, `t`.`minimum_hours`, `t`.`mobile_phone`, `t`.`otherfile_url`, `t`.`photo`, `t`.`user_id`, `t`.`visa`
-FROM `ablemusic`.`teacher` AS `t`
-LIMIT @__p_0
-2019-07-01 00:49:43.495 +12:00 [WRN] Query: '(from Lesson x in DbSet<Lesson> where (Nullable<int>)(int)[x].OrgId == (Nullable<int>)__orgIdOfStaff...' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
-2019-07-01 00:49:43.625 +12:00 [INF] Executed DbCommand (35ms) [Parameters=[@__orgIdOfStaff_0='?' (DbType = Int16), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT DISTINCT `t`.*
-FROM (
-    SELECT `x`.`learner_id`
-    FROM `ablemusic`.`lesson` AS `x`
-    WHERE `x`.`org_id` = @__orgIdOfStaff_0
-    LIMIT @__p_1
-) AS `t`
-2019-07-01 00:49:43.640 +12:00 [WRN] Query: '(from Learner x in DbSet<Learner> where (Nullable<int>)[x].OrgId == (Nullable<int>)__orgIdOfStaff_0 ...' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
-2019-07-01 00:49:43.757 +12:00 [INF] Executed DbCommand (36ms) [Parameters=[@__orgIdOfStaff_0='?' (DbType = Int16), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`learner_id`, `x`.`address`, `x`.`contact_num`, `x`.`created_at`, `x`.`dob`, `x`.`email`, `x`.`enroll_date`, `x`.`first_name`, `x`.`form_url`, `x`.`g5_certification`, `x`.`gender`, `x`.`is_abrsm_g5`, `x`.`is_active`, `x`.`is_under_18`, `x`.`last_name`, `x`.`learner_level`, `x`.`level_type`, `x`.`middle_name`, `x`.`note`, `x`.`org_id`, `x`.`otherfile_url`, `x`.`payment_period`, `x`.`photo`, `x`.`referrer`, `x`.`referrer_learner_id`, `x`.`user_id`
-FROM `ablemusic`.`learner` AS `x`
-WHERE `x`.`org_id` = @__orgIdOfStaff_0
-LIMIT @__p_1
-2019-07-01 00:49:43.868 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.GetStuffChattingList (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 3932.2124000000003ms.
-2019-07-01 00:49:43.881 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Tuple`4[[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Staff, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Teacher, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.List`1[[System.Nullable`1[[System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Learner, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
-2019-07-01 00:49:44.145 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.GetStuffChattingList (Pegasus_backend) in 4448.831ms
-2019-07-01 00:49:44.155 +12:00 [INF] Request finished in 4825.2416ms 200 application/json; charset=utf-8
-2019-07-01 00:49:44.192 +12:00 [INF] Connection id "0HLNTB5L0AN3J", Request id "0HLNTB5L0AN3J:00000001": the application completed without reading the entire request body.
-2019-07-01 01:21:33.150 +12:00 [INF] User profile is available. Using 'C:\Users\lgx95\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
-2019-07-01 01:21:34.619 +12:00 [INF] Request starting HTTP/1.1 DEBUG http://localhost:5000/  0
-2019-07-01 01:21:34.619 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/values  
-2019-07-01 01:21:34.665 +12:00 [INF] Request finished in 45.1104ms 200 
-2019-07-01 01:21:34.732 +12:00 [WRN] Failed to determine the https port for redirect.
-2019-07-01 01:21:35.299 +12:00 [INF] Route matched with {action = "Get", controller = "Values"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Get() on controller Pegasus_backend.Controllers.ValuesController (Pegasus_backend).
-2019-07-01 01:21:35.735 +12:00 [INF] Executing action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) - Validation state: "Valid"
-2019-07-01 01:21:35.945 +12:00 [ERR] ValuesController LogErrorToFile: System.Exception: Exception of type 'System.Exception' was thrown.
-   at Pegasus_backend.Controllers.ValuesController.Get() in C:\angular\pegasusBackend\Controllers\ValuesController.cs:line 26
-2019-07-01 01:21:35.946 +12:00 [INF] ValuesController LogInfoToFile: hello
-2019-07-01 01:21:35.952 +12:00 [INF] Executed action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 198.352ms.
-2019-07-01 01:21:35.968 +12:00 [INF] Executing ObjectResult, writing value of type 'System.DateTime'.
-2019-07-01 01:21:36.048 +12:00 [INF] Executed action Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) in 739.1024ms
-2019-07-01 01:21:36.054 +12:00 [INF] Request finished in 1441.3197ms 200 application/json; charset=utf-8
-2019-07-01 01:21:44.846 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Chat/GetStuffChattingList/10065 application/json 65
-2019-07-01 01:21:44.849 +12:00 [INF] Request finished in 4.1218ms 404 
-2019-07-01 01:21:44.896 +12:00 [INF] Connection id "0HLNTBNFOJPAF", Request id "0HLNTBNFOJPAF:00000002": the application completed without reading the entire request body.
-2019-07-01 01:21:50.215 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Chat/GetStuffChattingList/10065 application/json 65
-2019-07-01 01:21:50.216 +12:00 [INF] Request finished in 1.4777ms 404 
-2019-07-01 01:21:50.223 +12:00 [INF] Connection id "0HLNTBNFOJPAE", Request id "0HLNTBNFOJPAE:00000002": the application completed without reading the entire request body.
-2019-07-01 01:22:02.214 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Chat/GetStuffChattingList/10065 application/json 65
-2019-07-01 01:22:02.215 +12:00 [INF] Request finished in 1.2773ms 404 
-2019-07-01 01:22:02.220 +12:00 [INF] Connection id "0HLNTBNFOJPAF", Request id "0HLNTBNFOJPAF:00000003": the application completed without reading the entire request body.
-2019-07-01 01:22:14.983 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Chat/GetStaffChattingList/10065 application/json 65
-2019-07-01 01:22:15.031 +12:00 [INF] Route matched with {action = "GetStaffChattingList", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetStaffChattingList(Int32) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
-2019-07-01 01:22:15.081 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.GetStaffChattingList (Pegasus_backend) - Validation state: "Valid"
-2019-07-01 01:22:17.427 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
-2019-07-01 01:22:18.846 +12:00 [INF] Executed DbCommand (40ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`staff_id`, `x`.`dob`, `x`.`email`, `x`.`expiry_date`, `x`.`first_name`, `x`.`gender`, `x`.`home_phone`, `x`.`id_number`, `x`.`id_photo`, `x`.`id_type`, `x`.`ird_number`, `x`.`is_activate`, `x`.`last_name`, `x`.`mobile_phone`, `x`.`photo`, `x`.`user_id`, `x`.`visa`
-FROM `ablemusic`.`staff` AS `x`
-WHERE `x`.`user_id` = @__id_0
-LIMIT 1
-2019-07-01 01:22:19.176 +12:00 [INF] Executed DbCommand (31ms) [Parameters=[@__staffDetial_StaffId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`org_id`
-FROM `ablemusic`.`staff_org` AS `x`
-WHERE `x`.`staff_id` = @__staffDetial_StaffId_0
-LIMIT 1
-2019-07-01 01:22:19.205 +12:00 [WRN] Query: '(from Staff x in DbSet<Staff> where (Nullable<int>)[x].UserId != (Nullable<int>)__id_0 select [x]).T...' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
-2019-07-01 01:22:19.328 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[@__id_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`staff_id`, `x`.`dob`, `x`.`email`, `x`.`expiry_date`, `x`.`first_name`, `x`.`gender`, `x`.`home_phone`, `x`.`id_number`, `x`.`id_photo`, `x`.`id_type`, `x`.`ird_number`, `x`.`is_activate`, `x`.`last_name`, `x`.`mobile_phone`, `x`.`photo`, `x`.`user_id`, `x`.`visa`
-FROM `ablemusic`.`staff` AS `x`
-WHERE (`x`.`user_id` <> @__id_0) OR `x`.`user_id` IS NULL
-LIMIT @__p_1
-2019-07-01 01:22:19.344 +12:00 [WRN] Query: '(from Teacher <generated>_1 in DbSet<Teacher> select [<generated>_1]).Take(__p_0)' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
-2019-07-01 01:22:19.487 +12:00 [INF] Executed DbCommand (38ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `t`.`teacher_id`, `t`.`ability`, `t`.`comment`, `t`.`cv_url`, `t`.`dob`, `t`.`email`, `t`.`expiry_date`, `t`.`first_name`, `t`.`form_url`, `t`.`gender`, `t`.`home_phone`, `t`.`id_number`, `t`.`id_photo`, `t`.`id_type`, `t`.`invoice_template`, `t`.`ird_number`, `t`.`is_activate`, `t`.`is_contract`, `t`.`is_left`, `t`.`last_name`, `t`.`level`, `t`.`minimum_hours`, `t`.`mobile_phone`, `t`.`otherfile_url`, `t`.`photo`, `t`.`user_id`, `t`.`visa`
-FROM `ablemusic`.`teacher` AS `t`
-LIMIT @__p_0
-2019-07-01 01:22:19.643 +12:00 [WRN] Query: '(from Lesson x in DbSet<Lesson> where (Nullable<int>)(int)[x].OrgId == (Nullable<int>)__orgIdOfStaff...' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
-2019-07-01 01:22:19.644 +12:00 [WRN] The Include operation for navigation '[x].Learner' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
-2019-07-01 01:22:19.776 +12:00 [INF] Executed DbCommand (29ms) [Parameters=[@__orgIdOfStaff_0='?' (DbType = Int16), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT DISTINCT `t`.*
-FROM (
-    SELECT `x`.`learner_id`
-    FROM `ablemusic`.`lesson` AS `x`
-    WHERE `x`.`org_id` = @__orgIdOfStaff_0
-    LIMIT @__p_1
-) AS `t`
-2019-07-01 01:22:19.794 +12:00 [WRN] Query: '(from Learner x in DbSet<Learner> where (Nullable<int>)[x].OrgId == (Nullable<int>)__orgIdOfStaff_0 ...' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
-2019-07-01 01:22:19.911 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[@__orgIdOfStaff_0='?' (DbType = Int16), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`learner_id`, `x`.`address`, `x`.`contact_num`, `x`.`created_at`, `x`.`dob`, `x`.`email`, `x`.`enroll_date`, `x`.`first_name`, `x`.`form_url`, `x`.`g5_certification`, `x`.`gender`, `x`.`is_abrsm_g5`, `x`.`is_active`, `x`.`is_under_18`, `x`.`last_name`, `x`.`learner_level`, `x`.`level_type`, `x`.`middle_name`, `x`.`note`, `x`.`org_id`, `x`.`otherfile_url`, `x`.`payment_period`, `x`.`photo`, `x`.`referrer`, `x`.`referrer_learner_id`, `x`.`user_id`
-FROM `ablemusic`.`learner` AS `x`
-WHERE `x`.`org_id` = @__orgIdOfStaff_0
-LIMIT @__p_1
-2019-07-01 01:22:20.054 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.GetStaffChattingList (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 4972.5422ms.
-2019-07-01 01:22:20.055 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Tuple`4[[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Staff, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Teacher, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.List`1[[System.Nullable`1[[System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Learner, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
-2019-07-01 01:22:20.279 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.GetStaffChattingList (Pegasus_backend) in 5247.5421000000006ms
-2019-07-01 01:22:20.280 +12:00 [INF] Request finished in 5296.991ms 200 application/json; charset=utf-8
-2019-07-01 01:22:20.280 +12:00 [INF] Connection id "0HLNTBNFOJPAE", Request id "0HLNTBNFOJPAE:00000003": the application completed without reading the entire request body.
-2019-07-01 01:25:19.178 +12:00 [INF] User profile is available. Using 'C:\Users\lgx95\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
-2019-07-01 01:25:20.517 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/values  
-2019-07-01 01:25:20.517 +12:00 [INF] Request starting HTTP/1.1 DEBUG http://localhost:5000/  0
-2019-07-01 01:25:20.559 +12:00 [INF] Request finished in 42.3129ms 200 
-2019-07-01 01:25:20.622 +12:00 [WRN] Failed to determine the https port for redirect.
-2019-07-01 01:25:21.055 +12:00 [INF] Route matched with {action = "Get", controller = "Values"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Get() on controller Pegasus_backend.Controllers.ValuesController (Pegasus_backend).
-2019-07-01 01:25:21.445 +12:00 [INF] Executing action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) - Validation state: "Valid"
-2019-07-01 01:25:21.771 +12:00 [ERR] ValuesController LogErrorToFile: System.Exception: Exception of type 'System.Exception' was thrown.
-   at Pegasus_backend.Controllers.ValuesController.Get() in C:\angular\pegasusBackend\Controllers\ValuesController.cs:line 26
-2019-07-01 01:25:21.773 +12:00 [INF] ValuesController LogInfoToFile: hello
-2019-07-01 01:25:21.787 +12:00 [INF] Executed action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 311.5899ms.
-2019-07-01 01:25:21.821 +12:00 [INF] Executing ObjectResult, writing value of type 'System.DateTime'.
-2019-07-01 01:25:21.933 +12:00 [INF] Executed action Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) in 870.64550000000008ms
-2019-07-01 01:25:21.954 +12:00 [INF] Request finished in 1440.9135ms 200 application/json; charset=utf-8
-2019-07-01 01:26:11.571 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Chat/GetStaffChattingList/10065 application/json 65
-2019-07-01 01:26:11.665 +12:00 [INF] Route matched with {action = "GetStaffChattingList", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetStaffChattingList(Int32) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
-2019-07-01 01:26:11.711 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.GetStaffChattingList (Pegasus_backend) - Validation state: "Valid"
-2019-07-01 01:26:13.742 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
-2019-07-01 01:26:15.249 +12:00 [INF] Executed DbCommand (54ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`staff_id`, `x`.`dob`, `x`.`email`, `x`.`expiry_date`, `x`.`first_name`, `x`.`gender`, `x`.`home_phone`, `x`.`id_number`, `x`.`id_photo`, `x`.`id_type`, `x`.`ird_number`, `x`.`is_activate`, `x`.`last_name`, `x`.`mobile_phone`, `x`.`photo`, `x`.`user_id`, `x`.`visa`
-FROM `ablemusic`.`staff` AS `x`
-WHERE `x`.`user_id` = @__id_0
-LIMIT 1
-2019-07-01 01:26:15.652 +12:00 [INF] Executed DbCommand (34ms) [Parameters=[@__staffDetial_StaffId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`org_id`
-FROM `ablemusic`.`staff_org` AS `x`
-WHERE `x`.`staff_id` = @__staffDetial_StaffId_0
-LIMIT 1
-2019-07-01 01:26:15.673 +12:00 [WRN] Query: '(from Staff x in DbSet<Staff> where (Nullable<int>)[x].UserId != (Nullable<int>)__id_0 select [x]).T...' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
-2019-07-01 01:26:15.789 +12:00 [INF] Executed DbCommand (31ms) [Parameters=[@__id_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`staff_id`, `x`.`dob`, `x`.`email`, `x`.`expiry_date`, `x`.`first_name`, `x`.`gender`, `x`.`home_phone`, `x`.`id_number`, `x`.`id_photo`, `x`.`id_type`, `x`.`ird_number`, `x`.`is_activate`, `x`.`last_name`, `x`.`mobile_phone`, `x`.`photo`, `x`.`user_id`, `x`.`visa`
-FROM `ablemusic`.`staff` AS `x`
-WHERE (`x`.`user_id` <> @__id_0) OR `x`.`user_id` IS NULL
-LIMIT @__p_1
-2019-07-01 01:26:15.799 +12:00 [WRN] Query: '(from Teacher <generated>_1 in DbSet<Teacher> select [<generated>_1]).Take(__p_0)' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
-2019-07-01 01:26:15.912 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `t`.`teacher_id`, `t`.`ability`, `t`.`comment`, `t`.`cv_url`, `t`.`dob`, `t`.`email`, `t`.`expiry_date`, `t`.`first_name`, `t`.`form_url`, `t`.`gender`, `t`.`home_phone`, `t`.`id_number`, `t`.`id_photo`, `t`.`id_type`, `t`.`invoice_template`, `t`.`ird_number`, `t`.`is_activate`, `t`.`is_contract`, `t`.`is_left`, `t`.`last_name`, `t`.`level`, `t`.`minimum_hours`, `t`.`mobile_phone`, `t`.`otherfile_url`, `t`.`photo`, `t`.`user_id`, `t`.`visa`
-FROM `ablemusic`.`teacher` AS `t`
-LIMIT @__p_0
-2019-07-01 01:26:16.053 +12:00 [WRN] Query: '(from Lesson x in DbSet<Lesson> where (Nullable<int>)(int)[x].OrgId == (Nullable<int>)__orgIdOfStaff...' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
-2019-07-01 01:26:16.279 +12:00 [INF] Executed DbCommand (54ms) [Parameters=[@__orgIdOfStaff_0='?' (DbType = Int16), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT DISTINCT `t`.*
-FROM (
-    SELECT `x`.`lesson_id`, `x`.`begin_time`, `x`.`course_instance_id`, `x`.`created_at`, `x`.`end_time`, `x`.`group_course_instance_id`, `x`.`invoice_id`, `x`.`is_canceled`, `x`.`is_changed`, `x`.`is_confirm`, `x`.`is_trial`, `x`.`learner_id`, `x`.`org_id`, `x`.`reason`, `x`.`room_id`, `x`.`teacher_id`, `x`.`trial_course_id`, `x.Learner`.`learner_id` AS `learner_id0`, `x.Learner`.`address`, `x.Learner`.`contact_num`, `x.Learner`.`created_at` AS `created_at0`, `x.Learner`.`dob`, `x.Learner`.`email`, `x.Learner`.`enroll_date`, `x.Learner`.`first_name`, `x.Learner`.`form_url`, `x.Learner`.`g5_certification`, `x.Learner`.`gender`, `x.Learner`.`is_abrsm_g5`, `x.Learner`.`is_active`, `x.Learner`.`is_under_18`, `x.Learner`.`last_name`, `x.Learner`.`learner_level`, `x.Learner`.`level_type`, `x.Learner`.`middle_name`, `x.Learner`.`note`, `x.Learner`.`org_id` AS `org_id0`, `x.Learner`.`otherfile_url`, `x.Learner`.`payment_period`, `x.Learner`.`photo`, `x.Learner`.`referrer`, `x.Learner`.`referrer_learner_id`, `x.Learner`.`user_id`
-    FROM `ablemusic`.`lesson` AS `x`
-    LEFT JOIN `ablemusic`.`learner` AS `x.Learner` ON `x`.`learner_id` = `x.Learner`.`learner_id`
-    WHERE `x`.`org_id` = @__orgIdOfStaff_0
-    LIMIT @__p_1
-) AS `t`
-2019-07-01 01:26:16.519 +12:00 [WRN] Query: '(from Learner x in DbSet<Learner> where (Nullable<int>)[x].OrgId == (Nullable<int>)__orgIdOfStaff_0 ...' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
-2019-07-01 01:26:16.638 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[@__orgIdOfStaff_0='?' (DbType = Int16), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`learner_id`, `x`.`address`, `x`.`contact_num`, `x`.`created_at`, `x`.`dob`, `x`.`email`, `x`.`enroll_date`, `x`.`first_name`, `x`.`form_url`, `x`.`g5_certification`, `x`.`gender`, `x`.`is_abrsm_g5`, `x`.`is_active`, `x`.`is_under_18`, `x`.`last_name`, `x`.`learner_level`, `x`.`level_type`, `x`.`middle_name`, `x`.`note`, `x`.`org_id`, `x`.`otherfile_url`, `x`.`payment_period`, `x`.`photo`, `x`.`referrer`, `x`.`referrer_learner_id`, `x`.`user_id`
-FROM `ablemusic`.`learner` AS `x`
-WHERE `x`.`org_id` = @__orgIdOfStaff_0
-LIMIT @__p_1
-2019-07-01 01:26:16.656 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.GetStaffChattingList (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 4944.1307000000006ms.
-2019-07-01 01:26:16.657 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Tuple`4[[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Staff, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Teacher, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Lesson, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Learner, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
-2019-07-01 01:26:16.893 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.GetStaffChattingList (Pegasus_backend) in 5228.0390000000007ms
-2019-07-01 01:26:16.895 +12:00 [INF] Request finished in 5324.5692ms 200 application/json; charset=utf-8
-2019-07-01 01:26:16.916 +12:00 [INF] Connection id "0HLNTBPJ3BR55", Request id "0HLNTBPJ3BR55:00000002": the application completed without reading the entire request body.
-2019-07-01 10:04:37.308 +12:00 [INF] User profile is available. Using 'C:\Users\lgx95\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
-2019-07-01 10:04:38.320 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/values  
-2019-07-01 10:04:59.987 +12:00 [INF] User profile is available. Using 'C:\Users\lgx95\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
-2019-07-01 10:05:00.838 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Chat/GetStaffChattingList/10065 application/json 65
-2019-07-01 10:05:00.922 +12:00 [WRN] Failed to determine the https port for redirect.
-2019-07-01 10:05:01.261 +12:00 [INF] Route matched with {action = "GetStaffChattingList", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetStaffChattingList(Int32) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
-2019-07-01 10:05:01.534 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.GetStaffChattingList (Pegasus_backend) - Validation state: "Valid"
-2019-07-01 10:05:03.297 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
-2019-07-01 10:05:04.551 +12:00 [INF] Executed DbCommand (44ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`staff_id`, `x`.`dob`, `x`.`email`, `x`.`expiry_date`, `x`.`first_name`, `x`.`gender`, `x`.`home_phone`, `x`.`id_number`, `x`.`id_photo`, `x`.`id_type`, `x`.`ird_number`, `x`.`is_activate`, `x`.`last_name`, `x`.`mobile_phone`, `x`.`photo`, `x`.`user_id`, `x`.`visa`
-FROM `ablemusic`.`staff` AS `x`
-WHERE `x`.`user_id` = @__id_0
-LIMIT 1
-2019-07-01 10:05:04.887 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[@__staffDetial_StaffId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`org_id`
-FROM `ablemusic`.`staff_org` AS `x`
-WHERE `x`.`staff_id` = @__staffDetial_StaffId_0
-LIMIT 1
-2019-07-01 10:05:04.908 +12:00 [WRN] Query: '(from Staff x in DbSet<Staff> where (Nullable<int>)[x].UserId != (Nullable<int>)__id_0 select [x]).T...' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
-2019-07-01 10:05:05.016 +12:00 [INF] Executed DbCommand (31ms) [Parameters=[@__id_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`staff_id`, `x`.`dob`, `x`.`email`, `x`.`expiry_date`, `x`.`first_name`, `x`.`gender`, `x`.`home_phone`, `x`.`id_number`, `x`.`id_photo`, `x`.`id_type`, `x`.`ird_number`, `x`.`is_activate`, `x`.`last_name`, `x`.`mobile_phone`, `x`.`photo`, `x`.`user_id`, `x`.`visa`
-FROM `ablemusic`.`staff` AS `x`
-WHERE (`x`.`user_id` <> @__id_0) OR `x`.`user_id` IS NULL
-LIMIT @__p_1
-2019-07-01 10:05:05.027 +12:00 [WRN] Query: '(from Teacher <generated>_1 in DbSet<Teacher> select [<generated>_1]).Take(__p_0)' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
-2019-07-01 10:05:05.134 +12:00 [INF] Executed DbCommand (30ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `t`.`teacher_id`, `t`.`ability`, `t`.`comment`, `t`.`cv_url`, `t`.`dob`, `t`.`email`, `t`.`expiry_date`, `t`.`first_name`, `t`.`form_url`, `t`.`gender`, `t`.`home_phone`, `t`.`id_number`, `t`.`id_photo`, `t`.`id_type`, `t`.`invoice_template`, `t`.`ird_number`, `t`.`is_activate`, `t`.`is_contract`, `t`.`is_left`, `t`.`last_name`, `t`.`level`, `t`.`minimum_hours`, `t`.`mobile_phone`, `t`.`otherfile_url`, `t`.`photo`, `t`.`user_id`, `t`.`visa`
-FROM `ablemusic`.`teacher` AS `t`
-LIMIT @__p_0
-2019-07-01 10:05:05.225 +12:00 [WRN] Query: '(from Lesson x in DbSet<Lesson> where (Nullable<int>)(int)[x].OrgId == (Nullable<int>)__orgIdOfStaff...' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
-2019-07-01 10:05:05.440 +12:00 [INF] Executed DbCommand (50ms) [Parameters=[@__orgIdOfStaff_0='?' (DbType = Int16), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`lesson_id`, `x`.`begin_time`, `x`.`course_instance_id`, `x`.`created_at`, `x`.`end_time`, `x`.`group_course_instance_id`, `x`.`invoice_id`, `x`.`is_canceled`, `x`.`is_changed`, `x`.`is_confirm`, `x`.`is_trial`, `x`.`learner_id`, `x`.`org_id`, `x`.`reason`, `x`.`room_id`, `x`.`teacher_id`, `x`.`trial_course_id`, `x.Learner`.`learner_id`, `x.Learner`.`address`, `x.Learner`.`contact_num`, `x.Learner`.`created_at`, `x.Learner`.`dob`, `x.Learner`.`email`, `x.Learner`.`enroll_date`, `x.Learner`.`first_name`, `x.Learner`.`form_url`, `x.Learner`.`g5_certification`, `x.Learner`.`gender`, `x.Learner`.`is_abrsm_g5`, `x.Learner`.`is_active`, `x.Learner`.`is_under_18`, `x.Learner`.`last_name`, `x.Learner`.`learner_level`, `x.Learner`.`level_type`, `x.Learner`.`middle_name`, `x.Learner`.`note`, `x.Learner`.`org_id`, `x.Learner`.`otherfile_url`, `x.Learner`.`payment_period`, `x.Learner`.`photo`, `x.Learner`.`referrer`, `x.Learner`.`referrer_learner_id`, `x.Learner`.`user_id`
-FROM `ablemusic`.`lesson` AS `x`
-LEFT JOIN `ablemusic`.`learner` AS `x.Learner` ON `x`.`learner_id` = `x.Learner`.`learner_id`
-WHERE `x`.`org_id` = @__orgIdOfStaff_0
-LIMIT @__p_1
-2019-07-01 10:05:05.666 +12:00 [WRN] Query: '(from Learner x in DbSet<Learner> where (Nullable<int>)[x].OrgId == (Nullable<int>)__orgIdOfStaff_0 ...' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
-2019-07-01 10:05:05.788 +12:00 [INF] Executed DbCommand (37ms) [Parameters=[@__orgIdOfStaff_0='?' (DbType = Int16), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`learner_id`, `x`.`address`, `x`.`contact_num`, `x`.`created_at`, `x`.`dob`, `x`.`email`, `x`.`enroll_date`, `x`.`first_name`, `x`.`form_url`, `x`.`g5_certification`, `x`.`gender`, `x`.`is_abrsm_g5`, `x`.`is_active`, `x`.`is_under_18`, `x`.`last_name`, `x`.`learner_level`, `x`.`level_type`, `x`.`middle_name`, `x`.`note`, `x`.`org_id`, `x`.`otherfile_url`, `x`.`payment_period`, `x`.`photo`, `x`.`referrer`, `x`.`referrer_learner_id`, `x`.`user_id`
-FROM `ablemusic`.`learner` AS `x`
-WHERE `x`.`org_id` = @__orgIdOfStaff_0
-LIMIT @__p_1
-2019-07-01 10:05:05.810 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.GetStaffChattingList (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 4260.1027ms.
-2019-07-01 10:05:05.827 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Tuple`4[[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Staff, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Teacher, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Lesson, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Learner, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
-2019-07-01 10:05:06.105 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.GetStaffChattingList (Pegasus_backend) in 4838.7889000000005ms
-2019-07-01 10:05:06.115 +12:00 [INF] Request finished in 5280.0277ms 200 application/json; charset=utf-8
-2019-07-01 10:05:06.135 +12:00 [INF] Connection id "0HLNTKRVJ01U6", Request id "0HLNTKRVJ01U6:00000001": the application completed without reading the entire request body.
-2019-07-01 10:08:24.625 +12:00 [INF] Request starting HTTP/1.1 POST http://127.0.0.1:10425/iisintegration  0
-2019-07-01 10:08:24.629 +12:00 [INF] Request finished in 4.383ms 202 
-2019-07-01 10:26:07.568 +12:00 [INF] User profile is available. Using 'C:\Users\lgx95\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
-2019-07-01 10:26:09.154 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/values  
-2019-07-01 10:26:09.154 +12:00 [INF] Request starting HTTP/1.1 DEBUG http://localhost:5000/  0
-2019-07-01 10:26:09.204 +12:00 [INF] Request finished in 48.8907ms 200 
-2019-07-01 10:26:09.263 +12:00 [WRN] Failed to determine the https port for redirect.
-2019-07-01 10:26:09.693 +12:00 [INF] Route matched with {action = "Get", controller = "Values"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Get() on controller Pegasus_backend.Controllers.ValuesController (Pegasus_backend).
-2019-07-01 10:26:10.232 +12:00 [INF] Executing action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) - Validation state: "Valid"
-2019-07-01 10:26:10.557 +12:00 [ERR] ValuesController LogErrorToFile: System.Exception: Exception of type 'System.Exception' was thrown.
-   at Pegasus_backend.Controllers.ValuesController.Get() in C:\angular\pegasusBackend\Controllers\ValuesController.cs:line 26
-2019-07-01 10:26:10.558 +12:00 [INF] ValuesController LogInfoToFile: hello
-2019-07-01 10:26:10.565 +12:00 [INF] Executed action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 302.85470000000004ms.
-2019-07-01 10:26:10.582 +12:00 [INF] Executing ObjectResult, writing value of type 'System.DateTime'.
-2019-07-01 10:26:10.705 +12:00 [INF] Executed action Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) in 1000.7376ms
-2019-07-01 10:26:10.719 +12:00 [INF] Request finished in 1570.5146ms 200 application/json; charset=utf-8
-2019-07-01 10:26:12.305 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/favicon.ico  
-2019-07-01 10:26:12.313 +12:00 [INF] Request finished in 8.2973ms 404 
-2019-07-01 10:26:14.346 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Chat/GetStaffChattingList/1 application/json 65
-2019-07-01 10:26:14.392 +12:00 [INF] Route matched with {action = "GetStaffChattingList", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetStaffChattingList(Int32) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
-2019-07-01 10:26:14.430 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.GetStaffChattingList (Pegasus_backend) - Validation state: "Valid"
-2019-07-01 10:26:16.481 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
-2019-07-01 10:26:17.824 +12:00 [INF] Executed DbCommand (48ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`staff_id`, `x`.`dob`, `x`.`email`, `x`.`expiry_date`, `x`.`first_name`, `x`.`gender`, `x`.`home_phone`, `x`.`id_number`, `x`.`id_photo`, `x`.`id_type`, `x`.`ird_number`, `x`.`is_activate`, `x`.`last_name`, `x`.`mobile_phone`, `x`.`photo`, `x`.`user_id`, `x`.`visa`
-FROM `ablemusic`.`staff` AS `x`
-WHERE `x`.`user_id` = @__id_0
-LIMIT 1
-2019-07-01 10:26:18.229 +12:00 [INF] Executed DbCommand (34ms) [Parameters=[@__staffDetial_StaffId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`org_id`
-FROM `ablemusic`.`staff_org` AS `x`
-WHERE `x`.`staff_id` = @__staffDetial_StaffId_0
-LIMIT 1
-2019-07-01 10:26:18.253 +12:00 [WRN] Query: '(from Staff x in DbSet<Staff> where (Nullable<int>)[x].UserId != (Nullable<int>)__id_0 select [x]).T...' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
-2019-07-01 10:26:18.369 +12:00 [INF] Executed DbCommand (34ms) [Parameters=[@__id_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`staff_id`, `x`.`dob`, `x`.`email`, `x`.`expiry_date`, `x`.`first_name`, `x`.`gender`, `x`.`home_phone`, `x`.`id_number`, `x`.`id_photo`, `x`.`id_type`, `x`.`ird_number`, `x`.`is_activate`, `x`.`last_name`, `x`.`mobile_phone`, `x`.`photo`, `x`.`user_id`, `x`.`visa`
-FROM `ablemusic`.`staff` AS `x`
-WHERE (`x`.`user_id` <> @__id_0) OR `x`.`user_id` IS NULL
-LIMIT @__p_1
-2019-07-01 10:26:18.382 +12:00 [WRN] Query: '(from Teacher <generated>_1 in DbSet<Teacher> select [<generated>_1]).Take(__p_0)' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
-2019-07-01 10:26:18.498 +12:00 [INF] Executed DbCommand (31ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `t`.`teacher_id`, `t`.`ability`, `t`.`comment`, `t`.`cv_url`, `t`.`dob`, `t`.`email`, `t`.`expiry_date`, `t`.`first_name`, `t`.`form_url`, `t`.`gender`, `t`.`home_phone`, `t`.`id_number`, `t`.`id_photo`, `t`.`id_type`, `t`.`invoice_template`, `t`.`ird_number`, `t`.`is_activate`, `t`.`is_contract`, `t`.`is_left`, `t`.`last_name`, `t`.`level`, `t`.`minimum_hours`, `t`.`mobile_phone`, `t`.`otherfile_url`, `t`.`photo`, `t`.`user_id`, `t`.`visa`
-FROM `ablemusic`.`teacher` AS `t`
-LIMIT @__p_0
-2019-07-01 10:26:18.593 +12:00 [WRN] Query: '(from Lesson x in DbSet<Lesson> where (Nullable<int>)(int)[x].OrgId == (Nullable<int>)__orgIdOfStaff...' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
-2019-07-01 10:26:18.807 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[@__orgIdOfStaff_0='?' (DbType = Int16), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`lesson_id`, `x`.`begin_time`, `x`.`course_instance_id`, `x`.`created_at`, `x`.`end_time`, `x`.`group_course_instance_id`, `x`.`invoice_id`, `x`.`is_canceled`, `x`.`is_changed`, `x`.`is_confirm`, `x`.`is_trial`, `x`.`learner_id`, `x`.`org_id`, `x`.`reason`, `x`.`room_id`, `x`.`teacher_id`, `x`.`trial_course_id`, `x.Learner`.`learner_id`, `x.Learner`.`address`, `x.Learner`.`contact_num`, `x.Learner`.`created_at`, `x.Learner`.`dob`, `x.Learner`.`email`, `x.Learner`.`enroll_date`, `x.Learner`.`first_name`, `x.Learner`.`form_url`, `x.Learner`.`g5_certification`, `x.Learner`.`gender`, `x.Learner`.`is_abrsm_g5`, `x.Learner`.`is_active`, `x.Learner`.`is_under_18`, `x.Learner`.`last_name`, `x.Learner`.`learner_level`, `x.Learner`.`level_type`, `x.Learner`.`middle_name`, `x.Learner`.`note`, `x.Learner`.`org_id`, `x.Learner`.`otherfile_url`, `x.Learner`.`payment_period`, `x.Learner`.`photo`, `x.Learner`.`referrer`, `x.Learner`.`referrer_learner_id`, `x.Learner`.`user_id`
-FROM `ablemusic`.`lesson` AS `x`
-LEFT JOIN `ablemusic`.`learner` AS `x.Learner` ON `x`.`learner_id` = `x.Learner`.`learner_id`
-WHERE `x`.`org_id` = @__orgIdOfStaff_0
-LIMIT @__p_1
-2019-07-01 10:26:19.017 +12:00 [WRN] Query: '(from Learner x in DbSet<Learner> where (Nullable<int>)[x].OrgId == (Nullable<int>)__orgIdOfStaff_0 ...' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
-2019-07-01 10:26:19.139 +12:00 [INF] Executed DbCommand (39ms) [Parameters=[@__orgIdOfStaff_0='?' (DbType = Int16), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`learner_id`, `x`.`address`, `x`.`contact_num`, `x`.`created_at`, `x`.`dob`, `x`.`email`, `x`.`enroll_date`, `x`.`first_name`, `x`.`form_url`, `x`.`g5_certification`, `x`.`gender`, `x`.`is_abrsm_g5`, `x`.`is_active`, `x`.`is_under_18`, `x`.`last_name`, `x`.`learner_level`, `x`.`level_type`, `x`.`middle_name`, `x`.`note`, `x`.`org_id`, `x`.`otherfile_url`, `x`.`payment_period`, `x`.`photo`, `x`.`referrer`, `x`.`referrer_learner_id`, `x`.`user_id`
-FROM `ablemusic`.`learner` AS `x`
-WHERE `x`.`org_id` = @__orgIdOfStaff_0
-LIMIT @__p_1
-2019-07-01 10:26:19.157 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.GetStaffChattingList (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 4727.0264000000006ms.
-2019-07-01 10:26:19.159 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Tuple`4[[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Staff, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Teacher, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Lesson, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Learner, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
-2019-07-01 10:26:19.435 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.GetStaffChattingList (Pegasus_backend) in 5043.3341ms
-2019-07-01 10:26:19.437 +12:00 [INF] Request finished in 5091.0619ms 200 application/json; charset=utf-8
-2019-07-01 10:26:19.458 +12:00 [INF] Connection id "0HLNTL7PGQ8O5", Request id "0HLNTL7PGQ8O5:00000002": the application completed without reading the entire request body.
-2019-07-01 10:36:06.983 +12:00 [INF] Request starting HTTP/1.1 POST http://127.0.0.1:20881/iisintegration  0
-2019-07-01 10:36:06.985 +12:00 [INF] Request finished in 1.6056ms 202 
-2019-07-01 10:48:57.785 +12:00 [INF] User profile is available. Using 'C:\Users\lgx95\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
-2019-07-01 10:48:58.491 +12:00 [INF] Request starting HTTP/1.1 DEBUG http://localhost:5000/  0
-2019-07-01 10:48:58.491 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/values  
-2019-07-01 10:48:58.515 +12:00 [INF] Request finished in 24.3186ms 200 
-2019-07-01 10:48:58.550 +12:00 [WRN] Failed to determine the https port for redirect.
-2019-07-01 10:48:58.818 +12:00 [INF] Route matched with {action = "Get", controller = "Values"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Get() on controller Pegasus_backend.Controllers.ValuesController (Pegasus_backend).
-2019-07-01 10:48:59.022 +12:00 [INF] Executing action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) - Validation state: "Valid"
-2019-07-01 10:48:59.197 +12:00 [ERR] ValuesController LogErrorToFile: System.Exception: Exception of type 'System.Exception' was thrown.
-   at Pegasus_backend.Controllers.ValuesController.Get() in C:\angular\pegasusBackend\Controllers\ValuesController.cs:line 26
-2019-07-01 10:48:59.198 +12:00 [INF] ValuesController LogInfoToFile: hello
-2019-07-01 10:48:59.203 +12:00 [INF] Executed action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 166.7242ms.
-2019-07-01 10:48:59.215 +12:00 [INF] Executing ObjectResult, writing value of type 'System.DateTime'.
-2019-07-01 10:48:59.298 +12:00 [INF] Executed action Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) in 472.85580000000004ms
-2019-07-01 10:48:59.307 +12:00 [INF] Request finished in 818.9805ms 200 application/json; charset=utf-8
-2019-07-01 10:49:01.471 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Chat/GetStaffChattingList/1 application/json 65
-2019-07-01 10:49:01.515 +12:00 [INF] Route matched with {action = "GetStaffChattingList", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetStaffChattingList(Int32) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
-2019-07-01 10:49:01.538 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.GetStaffChattingList (Pegasus_backend) - Validation state: "Valid"
-2019-07-01 10:49:02.856 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
-2019-07-01 10:49:03.864 +12:00 [INF] Executed DbCommand (45ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`staff_id`, `x`.`dob`, `x`.`email`, `x`.`expiry_date`, `x`.`first_name`, `x`.`gender`, `x`.`home_phone`, `x`.`id_number`, `x`.`id_photo`, `x`.`id_type`, `x`.`ird_number`, `x`.`is_activate`, `x`.`last_name`, `x`.`mobile_phone`, `x`.`photo`, `x`.`user_id`, `x`.`visa`
-FROM `ablemusic`.`staff` AS `x`
-WHERE `x`.`user_id` = @__id_0
-LIMIT 1
-2019-07-01 10:49:04.144 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[@__staffDetial_StaffId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`org_id`
-FROM `ablemusic`.`staff_org` AS `x`
-WHERE `x`.`staff_id` = @__staffDetial_StaffId_0
-LIMIT 1
-2019-07-01 10:49:04.160 +12:00 [WRN] Query: '(from Staff x in DbSet<Staff> where (Nullable<int>)[x].UserId != (Nullable<int>)__id_0 select [x]).T...' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
-2019-07-01 10:49:04.272 +12:00 [INF] Executed DbCommand (34ms) [Parameters=[@__id_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`staff_id`, `x`.`dob`, `x`.`email`, `x`.`expiry_date`, `x`.`first_name`, `x`.`gender`, `x`.`home_phone`, `x`.`id_number`, `x`.`id_photo`, `x`.`id_type`, `x`.`ird_number`, `x`.`is_activate`, `x`.`last_name`, `x`.`mobile_phone`, `x`.`photo`, `x`.`user_id`, `x`.`visa`
-FROM `ablemusic`.`staff` AS `x`
-WHERE (`x`.`user_id` <> @__id_0) OR `x`.`user_id` IS NULL
-LIMIT @__p_1
-2019-07-01 10:49:04.281 +12:00 [WRN] Query: '(from Teacher x in DbSet<Teacher> select new Teacher{ { 
-    TeacherId = [x].TeacherId, , 
-    Fir...' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
-2019-07-01 10:49:04.397 +12:00 [INF] Executed DbCommand (41ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`teacher_id` AS `TeacherId`, `x`.`first_name` AS `FirstName`, `x`.`last_name` AS `LastName`, `x`.`email`
-FROM `ablemusic`.`teacher` AS `x`
-LIMIT @__p_0
-2019-07-01 10:49:04.409 +12:00 [WRN] Query: '(from Lesson x in DbSet<Lesson> where (Nullable<int>)(int)[x].OrgId == (Nullable<int>)__orgIdOfStaff...' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
-2019-07-01 10:49:04.592 +12:00 [INF] Executed DbCommand (36ms) [Parameters=[@__orgIdOfStaff_0='?' (DbType = Int16), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`lesson_id`, `x`.`begin_time`, `x`.`course_instance_id`, `x`.`created_at`, `x`.`end_time`, `x`.`group_course_instance_id`, `x`.`invoice_id`, `x`.`is_canceled`, `x`.`is_changed`, `x`.`is_confirm`, `x`.`is_trial`, `x`.`learner_id`, `x`.`org_id`, `x`.`reason`, `x`.`room_id`, `x`.`teacher_id`, `x`.`trial_course_id`, `x.Learner`.`learner_id`, `x.Learner`.`address`, `x.Learner`.`contact_num`, `x.Learner`.`created_at`, `x.Learner`.`dob`, `x.Learner`.`email`, `x.Learner`.`enroll_date`, `x.Learner`.`first_name`, `x.Learner`.`form_url`, `x.Learner`.`g5_certification`, `x.Learner`.`gender`, `x.Learner`.`is_abrsm_g5`, `x.Learner`.`is_active`, `x.Learner`.`is_under_18`, `x.Learner`.`last_name`, `x.Learner`.`learner_level`, `x.Learner`.`level_type`, `x.Learner`.`middle_name`, `x.Learner`.`note`, `x.Learner`.`org_id`, `x.Learner`.`otherfile_url`, `x.Learner`.`payment_period`, `x.Learner`.`photo`, `x.Learner`.`referrer`, `x.Learner`.`referrer_learner_id`, `x.Learner`.`user_id`
-FROM `ablemusic`.`lesson` AS `x`
-LEFT JOIN `ablemusic`.`learner` AS `x.Learner` ON `x`.`learner_id` = `x.Learner`.`learner_id`
-WHERE `x`.`org_id` = @__orgIdOfStaff_0
-LIMIT @__p_1
-2019-07-01 10:49:04.748 +12:00 [WRN] Query: '(from Learner x in DbSet<Learner> where (Nullable<int>)[x].OrgId == (Nullable<int>)__orgIdOfStaff_0 ...' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
-2019-07-01 10:49:04.889 +12:00 [INF] Executed DbCommand (61ms) [Parameters=[@__orgIdOfStaff_0='?' (DbType = Int16), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`learner_id`, `x`.`address`, `x`.`contact_num`, `x`.`created_at`, `x`.`dob`, `x`.`email`, `x`.`enroll_date`, `x`.`first_name`, `x`.`form_url`, `x`.`g5_certification`, `x`.`gender`, `x`.`is_abrsm_g5`, `x`.`is_active`, `x`.`is_under_18`, `x`.`last_name`, `x`.`learner_level`, `x`.`level_type`, `x`.`middle_name`, `x`.`note`, `x`.`org_id`, `x`.`otherfile_url`, `x`.`payment_period`, `x`.`photo`, `x`.`referrer`, `x`.`referrer_learner_id`, `x`.`user_id`
-FROM `ablemusic`.`learner` AS `x`
-WHERE `x`.`org_id` = @__orgIdOfStaff_0
-LIMIT @__p_1
-2019-07-01 10:49:04.902 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.GetStaffChattingList (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 3363.6924000000004ms.
-2019-07-01 10:49:04.903 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Tuple`4[[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Staff, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Teacher, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Lesson, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Learner, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
-2019-07-01 10:49:05.083 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.GetStaffChattingList (Pegasus_backend) in 3566.793ms
-2019-07-01 10:49:05.084 +12:00 [INF] Request finished in 3612.4672ms 200 application/json; charset=utf-8
-2019-07-01 10:49:05.100 +12:00 [INF] Connection id "0HLNTLKHLFE6O", Request id "0HLNTLKHLFE6O:00000002": the application completed without reading the entire request body.
-2019-07-01 10:50:16.313 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Chat/GetStaffChattingList/10065 application/json 65
-2019-07-01 10:50:16.315 +12:00 [INF] Route matched with {action = "GetStaffChattingList", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetStaffChattingList(Int32) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
-2019-07-01 10:50:16.318 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.GetStaffChattingList (Pegasus_backend) - Validation state: "Valid"
-2019-07-01 10:50:16.331 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
-2019-07-01 10:50:16.437 +12:00 [INF] Executed DbCommand (34ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`staff_id`, `x`.`dob`, `x`.`email`, `x`.`expiry_date`, `x`.`first_name`, `x`.`gender`, `x`.`home_phone`, `x`.`id_number`, `x`.`id_photo`, `x`.`id_type`, `x`.`ird_number`, `x`.`is_activate`, `x`.`last_name`, `x`.`mobile_phone`, `x`.`photo`, `x`.`user_id`, `x`.`visa`
-FROM `ablemusic`.`staff` AS `x`
-WHERE `x`.`user_id` = @__id_0
-LIMIT 1
-2019-07-01 10:50:16.536 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[@__staffDetial_StaffId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`org_id`
-FROM `ablemusic`.`staff_org` AS `x`
-WHERE `x`.`staff_id` = @__staffDetial_StaffId_0
-LIMIT 1
-2019-07-01 10:50:16.633 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[@__id_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`staff_id`, `x`.`dob`, `x`.`email`, `x`.`expiry_date`, `x`.`first_name`, `x`.`gender`, `x`.`home_phone`, `x`.`id_number`, `x`.`id_photo`, `x`.`id_type`, `x`.`ird_number`, `x`.`is_activate`, `x`.`last_name`, `x`.`mobile_phone`, `x`.`photo`, `x`.`user_id`, `x`.`visa`
-FROM `ablemusic`.`staff` AS `x`
-WHERE (`x`.`user_id` <> @__id_0) OR `x`.`user_id` IS NULL
-LIMIT @__p_1
-2019-07-01 10:50:16.729 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`teacher_id` AS `TeacherId`, `x`.`first_name` AS `FirstName`, `x`.`last_name` AS `LastName`, `x`.`email`
-FROM `ablemusic`.`teacher` AS `x`
-LIMIT @__p_0
-2019-07-01 10:50:16.827 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[@__orgIdOfStaff_0='?' (DbType = Int16), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`lesson_id`, `x`.`begin_time`, `x`.`course_instance_id`, `x`.`created_at`, `x`.`end_time`, `x`.`group_course_instance_id`, `x`.`invoice_id`, `x`.`is_canceled`, `x`.`is_changed`, `x`.`is_confirm`, `x`.`is_trial`, `x`.`learner_id`, `x`.`org_id`, `x`.`reason`, `x`.`room_id`, `x`.`teacher_id`, `x`.`trial_course_id`, `x.Learner`.`learner_id`, `x.Learner`.`address`, `x.Learner`.`contact_num`, `x.Learner`.`created_at`, `x.Learner`.`dob`, `x.Learner`.`email`, `x.Learner`.`enroll_date`, `x.Learner`.`first_name`, `x.Learner`.`form_url`, `x.Learner`.`g5_certification`, `x.Learner`.`gender`, `x.Learner`.`is_abrsm_g5`, `x.Learner`.`is_active`, `x.Learner`.`is_under_18`, `x.Learner`.`last_name`, `x.Learner`.`learner_level`, `x.Learner`.`level_type`, `x.Learner`.`middle_name`, `x.Learner`.`note`, `x.Learner`.`org_id`, `x.Learner`.`otherfile_url`, `x.Learner`.`payment_period`, `x.Learner`.`photo`, `x.Learner`.`referrer`, `x.Learner`.`referrer_learner_id`, `x.Learner`.`user_id`
-FROM `ablemusic`.`lesson` AS `x`
-LEFT JOIN `ablemusic`.`learner` AS `x.Learner` ON `x`.`learner_id` = `x.Learner`.`learner_id`
-WHERE `x`.`org_id` = @__orgIdOfStaff_0
-LIMIT @__p_1
-2019-07-01 10:50:16.926 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[@__orgIdOfStaff_0='?' (DbType = Int16), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`learner_id`, `x`.`address`, `x`.`contact_num`, `x`.`created_at`, `x`.`dob`, `x`.`email`, `x`.`enroll_date`, `x`.`first_name`, `x`.`form_url`, `x`.`g5_certification`, `x`.`gender`, `x`.`is_abrsm_g5`, `x`.`is_active`, `x`.`is_under_18`, `x`.`last_name`, `x`.`learner_level`, `x`.`level_type`, `x`.`middle_name`, `x`.`note`, `x`.`org_id`, `x`.`otherfile_url`, `x`.`payment_period`, `x`.`photo`, `x`.`referrer`, `x`.`referrer_learner_id`, `x`.`user_id`
-FROM `ablemusic`.`learner` AS `x`
-WHERE `x`.`org_id` = @__orgIdOfStaff_0
-LIMIT @__p_1
-2019-07-01 10:50:16.927 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.GetStaffChattingList (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 608.45120000000009ms.
-2019-07-01 10:50:16.927 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Tuple`4[[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Staff, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Teacher, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Lesson, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Learner, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
-2019-07-01 10:50:16.928 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.GetStaffChattingList (Pegasus_backend) in 612.2821ms
-2019-07-01 10:50:16.928 +12:00 [INF] Request finished in 615.2546ms 200 application/json; charset=utf-8
-2019-07-01 10:50:16.929 +12:00 [INF] Connection id "0HLNTLKHLFE6P", Request id "0HLNTLKHLFE6P:00000001": the application completed without reading the entire request body.
-2019-07-01 10:51:30.978 +12:00 [INF] User profile is available. Using 'C:\Users\lgx95\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
-2019-07-01 10:51:31.768 +12:00 [INF] Request starting HTTP/1.1 DEBUG http://localhost:5000/  0
-2019-07-01 10:51:31.768 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/values  
-2019-07-01 10:51:31.797 +12:00 [INF] Request finished in 27.2667ms 200 
-2019-07-01 10:51:31.836 +12:00 [WRN] Failed to determine the https port for redirect.
-2019-07-01 10:51:32.120 +12:00 [INF] Route matched with {action = "Get", controller = "Values"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Get() on controller Pegasus_backend.Controllers.ValuesController (Pegasus_backend).
-2019-07-01 10:51:32.312 +12:00 [INF] Executing action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) - Validation state: "Valid"
-2019-07-01 10:51:32.466 +12:00 [ERR] ValuesController LogErrorToFile: System.Exception: Exception of type 'System.Exception' was thrown.
-   at Pegasus_backend.Controllers.ValuesController.Get() in C:\angular\pegasusBackend\Controllers\ValuesController.cs:line 26
-2019-07-01 10:51:32.467 +12:00 [INF] ValuesController LogInfoToFile: hello
-2019-07-01 10:51:32.473 +12:00 [INF] Executed action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 147.0446ms.
-2019-07-01 10:51:32.483 +12:00 [INF] Executing ObjectResult, writing value of type 'System.DateTime'.
-2019-07-01 10:51:32.547 +12:00 [INF] Executed action Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) in 423.3333ms
-2019-07-01 10:51:32.552 +12:00 [INF] Request finished in 786.9277ms 200 application/json; charset=utf-8
-2019-07-01 10:52:08.283 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Chat/GetStaffChattingList/10065 application/json 65
-2019-07-01 10:52:08.356 +12:00 [INF] Route matched with {action = "GetStaffChattingList", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetStaffChattingList(Int32) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
-2019-07-01 10:52:08.379 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.GetStaffChattingList (Pegasus_backend) - Validation state: "Valid"
-2019-07-01 10:52:09.800 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
-2019-07-01 10:52:10.776 +12:00 [INF] Executed DbCommand (37ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`staff_id`, `x`.`dob`, `x`.`email`, `x`.`expiry_date`, `x`.`first_name`, `x`.`gender`, `x`.`home_phone`, `x`.`id_number`, `x`.`id_photo`, `x`.`id_type`, `x`.`ird_number`, `x`.`is_activate`, `x`.`last_name`, `x`.`mobile_phone`, `x`.`photo`, `x`.`user_id`, `x`.`visa`
-FROM `ablemusic`.`staff` AS `x`
-WHERE `x`.`user_id` = @__id_0
-LIMIT 1
-2019-07-01 10:52:11.040 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[@__staffDetial_StaffId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`org_id`
-FROM `ablemusic`.`staff_org` AS `x`
-WHERE `x`.`staff_id` = @__staffDetial_StaffId_0
-LIMIT 1
-2019-07-01 10:52:11.054 +12:00 [WRN] Query: '(from Staff x in DbSet<Staff> where (Nullable<int>)[x].UserId != (Nullable<int>)__id_0 select [x]).T...' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
-2019-07-01 10:52:11.163 +12:00 [INF] Executed DbCommand (31ms) [Parameters=[@__id_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`staff_id`, `x`.`dob`, `x`.`email`, `x`.`expiry_date`, `x`.`first_name`, `x`.`gender`, `x`.`home_phone`, `x`.`id_number`, `x`.`id_photo`, `x`.`id_type`, `x`.`ird_number`, `x`.`is_activate`, `x`.`last_name`, `x`.`mobile_phone`, `x`.`photo`, `x`.`user_id`, `x`.`visa`
-FROM `ablemusic`.`staff` AS `x`
-WHERE (`x`.`user_id` <> @__id_0) OR `x`.`user_id` IS NULL
-LIMIT @__p_1
-2019-07-01 10:52:11.184 +12:00 [WRN] Query: '(from Teacher x in DbSet<Teacher> select new Teacher{ { 
-    TeacherId = [x].TeacherId, , 
-    Fir...' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
-2019-07-01 10:52:11.292 +12:00 [INF] Executed DbCommand (30ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`teacher_id` AS `TeacherId`, `x`.`first_name` AS `FirstName`, `x`.`last_name` AS `LastName`, `x`.`email`
-FROM `ablemusic`.`teacher` AS `x`
-LIMIT @__p_0
-2019-07-01 10:52:11.303 +12:00 [WRN] Query: '(from Lesson x in DbSet<Lesson> where (Nullable<int>)(int)[x].OrgId == (Nullable<int>)__orgIdOfStaff...' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
-2019-07-01 10:52:11.477 +12:00 [INF] Executed DbCommand (31ms) [Parameters=[@__orgIdOfStaff_0='?' (DbType = Int16), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`lesson_id`, `x`.`begin_time`, `x`.`course_instance_id`, `x`.`created_at`, `x`.`end_time`, `x`.`group_course_instance_id`, `x`.`invoice_id`, `x`.`is_canceled`, `x`.`is_changed`, `x`.`is_confirm`, `x`.`is_trial`, `x`.`learner_id`, `x`.`org_id`, `x`.`reason`, `x`.`room_id`, `x`.`teacher_id`, `x`.`trial_course_id`, `x.Learner`.`learner_id`, `x.Learner`.`address`, `x.Learner`.`contact_num`, `x.Learner`.`created_at`, `x.Learner`.`dob`, `x.Learner`.`email`, `x.Learner`.`enroll_date`, `x.Learner`.`first_name`, `x.Learner`.`form_url`, `x.Learner`.`g5_certification`, `x.Learner`.`gender`, `x.Learner`.`is_abrsm_g5`, `x.Learner`.`is_active`, `x.Learner`.`is_under_18`, `x.Learner`.`last_name`, `x.Learner`.`learner_level`, `x.Learner`.`level_type`, `x.Learner`.`middle_name`, `x.Learner`.`note`, `x.Learner`.`org_id`, `x.Learner`.`otherfile_url`, `x.Learner`.`payment_period`, `x.Learner`.`photo`, `x.Learner`.`referrer`, `x.Learner`.`referrer_learner_id`, `x.Learner`.`user_id`
-FROM `ablemusic`.`lesson` AS `x`
-LEFT JOIN `ablemusic`.`learner` AS `x.Learner` ON `x`.`learner_id` = `x.Learner`.`learner_id`
-WHERE `x`.`org_id` = @__orgIdOfStaff_0
-LIMIT @__p_1
-2019-07-01 10:52:11.654 +12:00 [WRN] Query: '(from Learner x in DbSet<Learner> where (Nullable<int>)[x].OrgId == (Nullable<int>)__orgIdOfStaff_0 ...' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
-2019-07-01 10:52:11.759 +12:00 [INF] Executed DbCommand (30ms) [Parameters=[@__orgIdOfStaff_0='?' (DbType = Int16), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`learner_id`, `x`.`address`, `x`.`contact_num`, `x`.`created_at`, `x`.`dob`, `x`.`email`, `x`.`enroll_date`, `x`.`first_name`, `x`.`form_url`, `x`.`g5_certification`, `x`.`gender`, `x`.`is_abrsm_g5`, `x`.`is_active`, `x`.`is_under_18`, `x`.`last_name`, `x`.`learner_level`, `x`.`level_type`, `x`.`middle_name`, `x`.`note`, `x`.`org_id`, `x`.`otherfile_url`, `x`.`payment_period`, `x`.`photo`, `x`.`referrer`, `x`.`referrer_learner_id`, `x`.`user_id`
-FROM `ablemusic`.`learner` AS `x`
-WHERE `x`.`org_id` = @__orgIdOfStaff_0
-LIMIT @__p_1
-2019-07-01 10:52:11.771 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.GetStaffChattingList (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 3391.5584000000003ms.
-2019-07-01 10:52:11.771 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Tuple`4[[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Staff, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Teacher, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Lesson, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Learner, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
-2019-07-01 10:52:11.949 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.GetStaffChattingList (Pegasus_backend) in 3592.5759000000003ms
-2019-07-01 10:52:11.950 +12:00 [INF] Request finished in 3667.1374ms 200 application/json; charset=utf-8
-2019-07-01 10:52:11.965 +12:00 [INF] Connection id "0HLNTLLVB9714", Request id "0HLNTLLVB9714:00000002": the application completed without reading the entire request body.
-2019-07-01 10:54:27.626 +12:00 [INF] User profile is available. Using 'C:\Users\lgx95\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
-2019-07-01 10:54:28.544 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/values  
-2019-07-01 10:54:28.544 +12:00 [INF] Request starting HTTP/1.1 DEBUG http://localhost:5000/  0
-2019-07-01 10:54:28.567 +12:00 [INF] Request finished in 24.404ms 200 
-2019-07-01 10:54:28.602 +12:00 [WRN] Failed to determine the https port for redirect.
-2019-07-01 10:54:28.878 +12:00 [INF] Route matched with {action = "Get", controller = "Values"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Get() on controller Pegasus_backend.Controllers.ValuesController (Pegasus_backend).
-2019-07-01 10:54:29.096 +12:00 [INF] Executing action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) - Validation state: "Valid"
-2019-07-01 10:54:29.237 +12:00 [ERR] ValuesController LogErrorToFile: System.Exception: Exception of type 'System.Exception' was thrown.
-   at Pegasus_backend.Controllers.ValuesController.Get() in C:\angular\pegasusBackend\Controllers\ValuesController.cs:line 26
-2019-07-01 10:54:29.238 +12:00 [INF] ValuesController LogInfoToFile: hello
-2019-07-01 10:54:29.242 +12:00 [INF] Executed action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 133.01080000000002ms.
-2019-07-01 10:54:29.253 +12:00 [INF] Executing ObjectResult, writing value of type 'System.DateTime'.
-2019-07-01 10:54:29.311 +12:00 [INF] Executed action Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) in 428.8725ms
-2019-07-01 10:54:29.318 +12:00 [INF] Request finished in 777.654ms 200 application/json; charset=utf-8
-2019-07-01 10:54:51.111 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Chat/GetStaffChattingList/10065 application/json 65
-2019-07-01 10:54:51.166 +12:00 [INF] Route matched with {action = "GetStaffChattingList", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetStaffChattingList(Int32) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
-2019-07-01 10:54:51.190 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.GetStaffChattingList (Pegasus_backend) - Validation state: "Valid"
-2019-07-01 10:54:52.723 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
-2019-07-01 10:54:53.753 +12:00 [INF] Executed DbCommand (37ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`staff_id`, `x`.`dob`, `x`.`email`, `x`.`expiry_date`, `x`.`first_name`, `x`.`gender`, `x`.`home_phone`, `x`.`id_number`, `x`.`id_photo`, `x`.`id_type`, `x`.`ird_number`, `x`.`is_activate`, `x`.`last_name`, `x`.`mobile_phone`, `x`.`photo`, `x`.`user_id`, `x`.`visa`
-FROM `ablemusic`.`staff` AS `x`
-WHERE `x`.`user_id` = @__id_0
-LIMIT 1
-2019-07-01 10:54:54.022 +12:00 [INF] Executed DbCommand (31ms) [Parameters=[@__staffDetial_StaffId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`org_id`
-FROM `ablemusic`.`staff_org` AS `x`
-WHERE `x`.`staff_id` = @__staffDetial_StaffId_0
-LIMIT 1
-2019-07-01 10:54:54.039 +12:00 [WRN] Query: '(from Staff x in DbSet<Staff> where (Nullable<int>)[x].UserId != (Nullable<int>)__id_0 select [x]).T...' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
-2019-07-01 10:54:54.143 +12:00 [INF] Executed DbCommand (30ms) [Parameters=[@__id_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`staff_id`, `x`.`dob`, `x`.`email`, `x`.`expiry_date`, `x`.`first_name`, `x`.`gender`, `x`.`home_phone`, `x`.`id_number`, `x`.`id_photo`, `x`.`id_type`, `x`.`ird_number`, `x`.`is_activate`, `x`.`last_name`, `x`.`mobile_phone`, `x`.`photo`, `x`.`user_id`, `x`.`visa`
-FROM `ablemusic`.`staff` AS `x`
-WHERE (`x`.`user_id` <> @__id_0) OR `x`.`user_id` IS NULL
-LIMIT @__p_1
-2019-07-01 10:54:54.156 +12:00 [WRN] Query: '(from Teacher x in DbSet<Teacher> select new Teacher{ { 
-    TeacherId = [x].TeacherId, , 
-    Fir...' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
-2019-07-01 10:54:54.264 +12:00 [INF] Executed DbCommand (36ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`teacher_id` AS `TeacherId`, `x`.`first_name` AS `FirstName`, `x`.`last_name` AS `LastName`, `x`.`email`
-FROM `ablemusic`.`teacher` AS `x`
-LIMIT @__p_0
-2019-07-01 10:54:54.276 +12:00 [WRN] Query: '(from Lesson x in DbSet<Lesson> where (Nullable<int>)(int)[x].OrgId == (Nullable<int>)__orgIdOfStaff...' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
-2019-07-01 10:54:54.460 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[@__orgIdOfStaff_0='?' (DbType = Int16), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`lesson_id`, `x`.`begin_time`, `x`.`course_instance_id`, `x`.`created_at`, `x`.`end_time`, `x`.`group_course_instance_id`, `x`.`invoice_id`, `x`.`is_canceled`, `x`.`is_changed`, `x`.`is_confirm`, `x`.`is_trial`, `x`.`learner_id`, `x`.`org_id`, `x`.`reason`, `x`.`room_id`, `x`.`teacher_id`, `x`.`trial_course_id`, `x.Learner`.`learner_id`, `x.Learner`.`address`, `x.Learner`.`contact_num`, `x.Learner`.`created_at`, `x.Learner`.`dob`, `x.Learner`.`email`, `x.Learner`.`enroll_date`, `x.Learner`.`first_name`, `x.Learner`.`form_url`, `x.Learner`.`g5_certification`, `x.Learner`.`gender`, `x.Learner`.`is_abrsm_g5`, `x.Learner`.`is_active`, `x.Learner`.`is_under_18`, `x.Learner`.`last_name`, `x.Learner`.`learner_level`, `x.Learner`.`level_type`, `x.Learner`.`middle_name`, `x.Learner`.`note`, `x.Learner`.`org_id`, `x.Learner`.`otherfile_url`, `x.Learner`.`payment_period`, `x.Learner`.`photo`, `x.Learner`.`referrer`, `x.Learner`.`referrer_learner_id`, `x.Learner`.`user_id`
-FROM `ablemusic`.`lesson` AS `x`
-LEFT JOIN `ablemusic`.`learner` AS `x.Learner` ON `x`.`learner_id` = `x.Learner`.`learner_id`
-WHERE `x`.`org_id` = @__orgIdOfStaff_0
-LIMIT @__p_1
-2019-07-01 10:54:54.643 +12:00 [WRN] Query: '(from Learner x in DbSet<Learner> where (Nullable<int>)[x].OrgId == (Nullable<int>)__orgIdOfStaff_0 ...' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
-2019-07-01 10:54:54.751 +12:00 [INF] Executed DbCommand (29ms) [Parameters=[@__orgIdOfStaff_0='?' (DbType = Int16), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`learner_id`, `x`.`address`, `x`.`contact_num`, `x`.`created_at`, `x`.`dob`, `x`.`email`, `x`.`enroll_date`, `x`.`first_name`, `x`.`form_url`, `x`.`g5_certification`, `x`.`gender`, `x`.`is_abrsm_g5`, `x`.`is_active`, `x`.`is_under_18`, `x`.`last_name`, `x`.`learner_level`, `x`.`level_type`, `x`.`middle_name`, `x`.`note`, `x`.`org_id`, `x`.`otherfile_url`, `x`.`payment_period`, `x`.`photo`, `x`.`referrer`, `x`.`referrer_learner_id`, `x`.`user_id`
-FROM `ablemusic`.`learner` AS `x`
-WHERE `x`.`org_id` = @__orgIdOfStaff_0
-LIMIT @__p_1
-2019-07-01 10:54:54.765 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.GetStaffChattingList (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 3574.8505ms.
-2019-07-01 10:54:54.766 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Tuple`4[[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Staff, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Teacher, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Lesson, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Learner, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
-2019-07-01 10:54:54.986 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.GetStaffChattingList (Pegasus_backend) in 3819.6872000000003ms
-2019-07-01 10:54:54.987 +12:00 [INF] Request finished in 3875.792ms 200 application/json; charset=utf-8
-2019-07-01 10:54:55.000 +12:00 [INF] Connection id "0HLNTLNK12CG3", Request id "0HLNTLNK12CG3:00000002": the application completed without reading the entire request body.
-2019-07-01 10:57:34.038 +12:00 [INF] User profile is available. Using 'C:\Users\lgx95\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
-2019-07-01 10:57:34.846 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/values  
-2019-07-01 10:57:34.846 +12:00 [INF] Request starting HTTP/1.1 DEBUG http://localhost:5000/  0
-2019-07-01 10:57:34.868 +12:00 [INF] Request finished in 23.0261ms 200 
-2019-07-01 10:57:34.904 +12:00 [WRN] Failed to determine the https port for redirect.
-2019-07-01 10:57:35.203 +12:00 [INF] Route matched with {action = "Get", controller = "Values"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Get() on controller Pegasus_backend.Controllers.ValuesController (Pegasus_backend).
-2019-07-01 10:57:35.400 +12:00 [INF] Executing action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) - Validation state: "Valid"
-2019-07-01 10:57:35.553 +12:00 [ERR] ValuesController LogErrorToFile: System.Exception: Exception of type 'System.Exception' was thrown.
-   at Pegasus_backend.Controllers.ValuesController.Get() in C:\angular\pegasusBackend\Controllers\ValuesController.cs:line 26
-2019-07-01 10:57:35.554 +12:00 [INF] ValuesController LogInfoToFile: hello
-2019-07-01 10:57:35.563 +12:00 [INF] Executed action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 146.7457ms.
-2019-07-01 10:57:35.575 +12:00 [INF] Executing ObjectResult, writing value of type 'System.DateTime'.
-2019-07-01 10:57:35.647 +12:00 [INF] Executed action Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) in 439.3398ms
-2019-07-01 10:57:35.653 +12:00 [INF] Request finished in 810.6103ms 200 application/json; charset=utf-8
-2019-07-01 10:57:48.363 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Chat/GetStaffChattingList/10065 application/json 65
-2019-07-01 10:57:48.398 +12:00 [INF] Route matched with {action = "GetStaffChattingList", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetStaffChattingList(Int32) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
-2019-07-01 10:57:48.420 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.GetStaffChattingList (Pegasus_backend) - Validation state: "Valid"
-2019-07-01 10:57:49.794 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
-2019-07-01 10:57:50.755 +12:00 [INF] Executed DbCommand (39ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`staff_id`, `x`.`dob`, `x`.`email`, `x`.`expiry_date`, `x`.`first_name`, `x`.`gender`, `x`.`home_phone`, `x`.`id_number`, `x`.`id_photo`, `x`.`id_type`, `x`.`ird_number`, `x`.`is_activate`, `x`.`last_name`, `x`.`mobile_phone`, `x`.`photo`, `x`.`user_id`, `x`.`visa`
-FROM `ablemusic`.`staff` AS `x`
-WHERE `x`.`user_id` = @__id_0
-LIMIT 1
-2019-07-01 10:57:51.008 +12:00 [INF] Executed DbCommand (30ms) [Parameters=[@__staffDetial_StaffId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`org_id`
-FROM `ablemusic`.`staff_org` AS `x`
-WHERE `x`.`staff_id` = @__staffDetial_StaffId_0
-LIMIT 1
-2019-07-01 10:57:51.028 +12:00 [WRN] Query: '(from Staff x in DbSet<Staff> where (Nullable<int>)[x].UserId != (Nullable<int>)__id_0 select [x]).T...' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
-2019-07-01 10:57:51.134 +12:00 [INF] Executed DbCommand (30ms) [Parameters=[@__id_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`staff_id`, `x`.`dob`, `x`.`email`, `x`.`expiry_date`, `x`.`first_name`, `x`.`gender`, `x`.`home_phone`, `x`.`id_number`, `x`.`id_photo`, `x`.`id_type`, `x`.`ird_number`, `x`.`is_activate`, `x`.`last_name`, `x`.`mobile_phone`, `x`.`photo`, `x`.`user_id`, `x`.`visa`
-FROM `ablemusic`.`staff` AS `x`
-WHERE (`x`.`user_id` <> @__id_0) OR `x`.`user_id` IS NULL
-LIMIT @__p_1
-2019-07-01 10:57:51.140 +12:00 [WRN] Query: '(from Teacher <generated>_1 in DbSet<Teacher> select [<generated>_1]).Take(__p_0)' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
-2019-07-01 10:57:51.249 +12:00 [INF] Executed DbCommand (37ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `t`.`teacher_id`, `t`.`ability`, `t`.`comment`, `t`.`cv_url`, `t`.`dob`, `t`.`email`, `t`.`expiry_date`, `t`.`first_name`, `t`.`form_url`, `t`.`gender`, `t`.`home_phone`, `t`.`id_number`, `t`.`id_photo`, `t`.`id_type`, `t`.`invoice_template`, `t`.`ird_number`, `t`.`is_activate`, `t`.`is_contract`, `t`.`is_left`, `t`.`last_name`, `t`.`level`, `t`.`minimum_hours`, `t`.`mobile_phone`, `t`.`otherfile_url`, `t`.`photo`, `t`.`user_id`, `t`.`visa`
-FROM `ablemusic`.`teacher` AS `t`
-LIMIT @__p_0
-2019-07-01 10:57:51.326 +12:00 [WRN] Query: '(from Lesson x in DbSet<Lesson> where (Nullable<int>)(int)[x].OrgId == (Nullable<int>)__orgIdOfStaff...' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
-2019-07-01 10:57:51.503 +12:00 [INF] Executed DbCommand (31ms) [Parameters=[@__orgIdOfStaff_0='?' (DbType = Int16), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`lesson_id`, `x`.`begin_time`, `x`.`course_instance_id`, `x`.`created_at`, `x`.`end_time`, `x`.`group_course_instance_id`, `x`.`invoice_id`, `x`.`is_canceled`, `x`.`is_changed`, `x`.`is_confirm`, `x`.`is_trial`, `x`.`learner_id`, `x`.`org_id`, `x`.`reason`, `x`.`room_id`, `x`.`teacher_id`, `x`.`trial_course_id`, `x.Learner`.`learner_id`, `x.Learner`.`address`, `x.Learner`.`contact_num`, `x.Learner`.`created_at`, `x.Learner`.`dob`, `x.Learner`.`email`, `x.Learner`.`enroll_date`, `x.Learner`.`first_name`, `x.Learner`.`form_url`, `x.Learner`.`g5_certification`, `x.Learner`.`gender`, `x.Learner`.`is_abrsm_g5`, `x.Learner`.`is_active`, `x.Learner`.`is_under_18`, `x.Learner`.`last_name`, `x.Learner`.`learner_level`, `x.Learner`.`level_type`, `x.Learner`.`middle_name`, `x.Learner`.`note`, `x.Learner`.`org_id`, `x.Learner`.`otherfile_url`, `x.Learner`.`payment_period`, `x.Learner`.`photo`, `x.Learner`.`referrer`, `x.Learner`.`referrer_learner_id`, `x.Learner`.`user_id`
-FROM `ablemusic`.`lesson` AS `x`
-LEFT JOIN `ablemusic`.`learner` AS `x.Learner` ON `x`.`learner_id` = `x.Learner`.`learner_id`
-WHERE `x`.`org_id` = @__orgIdOfStaff_0
-LIMIT @__p_1
-2019-07-01 10:57:51.666 +12:00 [WRN] Query: '(from Learner x in DbSet<Learner> where (Nullable<int>)[x].OrgId == (Nullable<int>)__orgIdOfStaff_0 ...' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
-2019-07-01 10:57:51.778 +12:00 [INF] Executed DbCommand (37ms) [Parameters=[@__orgIdOfStaff_0='?' (DbType = Int16), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`learner_id`, `x`.`address`, `x`.`contact_num`, `x`.`created_at`, `x`.`dob`, `x`.`email`, `x`.`enroll_date`, `x`.`first_name`, `x`.`form_url`, `x`.`g5_certification`, `x`.`gender`, `x`.`is_abrsm_g5`, `x`.`is_active`, `x`.`is_under_18`, `x`.`last_name`, `x`.`learner_level`, `x`.`level_type`, `x`.`middle_name`, `x`.`note`, `x`.`org_id`, `x`.`otherfile_url`, `x`.`payment_period`, `x`.`photo`, `x`.`referrer`, `x`.`referrer_learner_id`, `x`.`user_id`
-FROM `ablemusic`.`learner` AS `x`
-WHERE `x`.`org_id` = @__orgIdOfStaff_0
-LIMIT @__p_1
-2019-07-01 10:57:51.790 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.GetStaffChattingList (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 3370.3334ms.
-2019-07-01 10:57:51.791 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Tuple`4[[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Staff, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Teacher, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Lesson, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Learner, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
-2019-07-01 10:57:51.960 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.GetStaffChattingList (Pegasus_backend) in 3561.3990000000003ms
-2019-07-01 10:57:51.961 +12:00 [INF] Request finished in 3597.896ms 200 application/json; charset=utf-8
-2019-07-01 10:57:51.974 +12:00 [INF] Connection id "0HLNTLPBHPJC7", Request id "0HLNTLPBHPJC7:00000002": the application completed without reading the entire request body.
-2019-07-01 11:03:37.489 +12:00 [INF] User profile is available. Using 'C:\Users\lgx95\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
-2019-07-01 11:03:38.198 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/values  
-2019-07-01 11:03:38.198 +12:00 [INF] Request starting HTTP/1.1 DEBUG http://localhost:5000/  0
-2019-07-01 11:03:38.218 +12:00 [INF] Request finished in 19.0164ms 200 
-2019-07-01 11:03:38.244 +12:00 [WRN] Failed to determine the https port for redirect.
-2019-07-01 11:03:38.437 +12:00 [INF] Route matched with {action = "Get", controller = "Values"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Get() on controller Pegasus_backend.Controllers.ValuesController (Pegasus_backend).
-2019-07-01 11:03:38.624 +12:00 [INF] Executing action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) - Validation state: "Valid"
-2019-07-01 11:03:38.750 +12:00 [ERR] ValuesController LogErrorToFile: System.Exception: Exception of type 'System.Exception' was thrown.
-   at Pegasus_backend.Controllers.ValuesController.Get() in C:\angular\pegasusBackend\Controllers\ValuesController.cs:line 26
-2019-07-01 11:03:38.751 +12:00 [INF] ValuesController LogInfoToFile: hello
-2019-07-01 11:03:38.755 +12:00 [INF] Executed action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 122.11250000000001ms.
-2019-07-01 11:03:38.764 +12:00 [INF] Executing ObjectResult, writing value of type 'System.DateTime'.
-2019-07-01 11:03:38.809 +12:00 [INF] Executed action Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) in 369.2796ms
-2019-07-01 11:03:38.813 +12:00 [INF] Request finished in 617.2976ms 200 application/json; charset=utf-8
-2019-07-01 11:03:40.222 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Chat/GetStaffChattingList/10065 application/json 65
-2019-07-01 11:03:40.244 +12:00 [INF] Route matched with {action = "GetStaffChattingList", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetStaffChattingList(Int32) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
-2019-07-01 11:03:40.261 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.GetStaffChattingList (Pegasus_backend) - Validation state: "Valid"
-2019-07-01 11:03:41.229 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
-2019-07-01 11:03:42.691 +12:00 [INF] Executed DbCommand (43ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`staff_id`, `x`.`dob`, `x`.`email`, `x`.`expiry_date`, `x`.`first_name`, `x`.`gender`, `x`.`home_phone`, `x`.`id_number`, `x`.`id_photo`, `x`.`id_type`, `x`.`ird_number`, `x`.`is_activate`, `x`.`last_name`, `x`.`mobile_phone`, `x`.`photo`, `x`.`user_id`, `x`.`visa`
-FROM `ablemusic`.`staff` AS `x`
-WHERE `x`.`user_id` = @__id_0
-LIMIT 1
-2019-07-01 11:03:42.912 +12:00 [INF] Executed DbCommand (35ms) [Parameters=[@__staffDetial_StaffId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`org_id`
-FROM `ablemusic`.`staff_org` AS `x`
-WHERE `x`.`staff_id` = @__staffDetial_StaffId_0
-LIMIT 1
-2019-07-01 11:03:42.925 +12:00 [WRN] Query: '(from Staff x in DbSet<Staff> where (Nullable<int>)[x].UserId != (Nullable<int>)__id_0 select [x]).T...' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
-2019-07-01 11:03:43.031 +12:00 [INF] Executed DbCommand (37ms) [Parameters=[@__id_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`staff_id`, `x`.`dob`, `x`.`email`, `x`.`expiry_date`, `x`.`first_name`, `x`.`gender`, `x`.`home_phone`, `x`.`id_number`, `x`.`id_photo`, `x`.`id_type`, `x`.`ird_number`, `x`.`is_activate`, `x`.`last_name`, `x`.`mobile_phone`, `x`.`photo`, `x`.`user_id`, `x`.`visa`
-FROM `ablemusic`.`staff` AS `x`
-WHERE (`x`.`user_id` <> @__id_0) OR `x`.`user_id` IS NULL
-LIMIT @__p_1
-2019-07-01 11:03:43.042 +12:00 [WRN] Query: '(from Teacher x in DbSet<Teacher> select new Teacher{ { 
-    TeacherId = [x].TeacherId, , 
-    Fir...' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
-2019-07-01 11:03:43.140 +12:00 [INF] Executed DbCommand (31ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`teacher_id` AS `TeacherId`, `x`.`first_name` AS `FirstName`, `x`.`last_name` AS `LastName`, `x`.`email`
-FROM `ablemusic`.`teacher` AS `x`
-LIMIT @__p_0
-2019-07-01 11:03:43.150 +12:00 [WRN] Query: '(from Lesson x in DbSet<Lesson> where (Nullable<int>)(int)[x].OrgId == (Nullable<int>)__orgIdOfStaff...' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
-2019-07-01 11:03:43.153 +12:00 [WRN] The Include operation for navigation '[x].Learner' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
-2019-07-01 11:03:43.367 +12:00 [INF] Executed DbCommand (105ms) [Parameters=[@__orgIdOfStaff_0='?' (DbType = Int16), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x.Learner`.`learner_id`, `x.Learner`.`address`, `x.Learner`.`contact_num`, `x.Learner`.`created_at`, `x.Learner`.`dob`, `x.Learner`.`email`, `x.Learner`.`enroll_date`, `x.Learner`.`first_name`, `x.Learner`.`form_url`, `x.Learner`.`g5_certification`, `x.Learner`.`gender`, `x.Learner`.`is_abrsm_g5`, `x.Learner`.`is_active`, `x.Learner`.`is_under_18`, `x.Learner`.`last_name`, `x.Learner`.`learner_level`, `x.Learner`.`level_type`, `x.Learner`.`middle_name`, `x.Learner`.`note`, `x.Learner`.`org_id`, `x.Learner`.`otherfile_url`, `x.Learner`.`payment_period`, `x.Learner`.`photo`, `x.Learner`.`referrer`, `x.Learner`.`referrer_learner_id`, `x.Learner`.`user_id`, `x`.`lesson_id` AS `LessonId`, `x`.`learner_id` AS `LearnerId`
-FROM `ablemusic`.`lesson` AS `x`
-LEFT JOIN `ablemusic`.`learner` AS `x.Learner` ON `x`.`learner_id` = `x.Learner`.`learner_id`
-WHERE `x`.`org_id` = @__orgIdOfStaff_0
-LIMIT @__p_1
-2019-07-01 11:03:43.451 +12:00 [WRN] Query: '(from Learner x in DbSet<Learner> where (Nullable<int>)[x].OrgId == (Nullable<int>)__orgIdOfStaff_0 ...' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
-2019-07-01 11:03:43.558 +12:00 [INF] Executed DbCommand (39ms) [Parameters=[@__orgIdOfStaff_0='?' (DbType = Int16), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `x`.`learner_id`, `x`.`address`, `x`.`contact_num`, `x`.`created_at`, `x`.`dob`, `x`.`email`, `x`.`enroll_date`, `x`.`first_name`, `x`.`form_url`, `x`.`g5_certification`, `x`.`gender`, `x`.`is_abrsm_g5`, `x`.`is_active`, `x`.`is_under_18`, `x`.`last_name`, `x`.`learner_level`, `x`.`level_type`, `x`.`middle_name`, `x`.`note`, `x`.`org_id`, `x`.`otherfile_url`, `x`.`payment_period`, `x`.`photo`, `x`.`referrer`, `x`.`referrer_learner_id`, `x`.`user_id`
-FROM `ablemusic`.`learner` AS `x`
-WHERE `x`.`org_id` = @__orgIdOfStaff_0
-LIMIT @__p_1
-2019-07-01 11:03:43.568 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.GetStaffChattingList (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 3306.8307ms.
-2019-07-01 11:03:43.569 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Tuple`4[[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Staff, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Teacher, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Lesson, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Learner, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
-2019-07-01 11:03:43.702 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.GetStaffChattingList (Pegasus_backend) in 3457.6664ms
-2019-07-01 11:03:43.703 +12:00 [INF] Request finished in 3481.111ms 200 application/json; charset=utf-8
-2019-07-01 11:03:43.713 +12:00 [INF] Connection id "0HLNTLSNR8HOP", Request id "0HLNTLSNR8HOP:00000002": the application completed without reading the entire request body.
+2019-07-01 13:16:12.365 +12:00 [INF] Executed action method Pegasus_backend.Controllers.TodoListController.Get (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 882.1933ms.
+2019-07-01 13:16:12.365 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.TodoList, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-07-01 13:16:12.382 +12:00 [INF] Executed action Pegasus_backend.Controllers.TodoListController.Get (Pegasus_backend) in 900.9088ms
+2019-07-01 13:16:12.382 +12:00 [INF] Request finished in 916.136ms 200 application/json; charset=utf-8
+2019-07-01 13:16:12.408 +12:00 [INF] Executed DbCommand (59ms) [Parameters=[@__roleId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`page_id`
+FROM `ablemusic`.`role_access` AS `s`
+WHERE `s`.`role_id` = @__roleId_0
+2019-07-01 13:16:12.612 +12:00 [INF] Executed DbCommand (51ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`page_group_id`, `s`.`display_order`, `s`.`icon`, `s`.`page_group_name`
+FROM `ablemusic`.`page_group` AS `s`
+ORDER BY `s`.`page_group_id`
+2019-07-01 13:16:12.695 +12:00 [INF] Executed DbCommand (55ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.Page`.`page_id`, `s.Page`.`display_order`, `s.Page`.`icon`, `s.Page`.`is_activate`, `s.Page`.`page_group_id`, `s.Page`.`page_name`, `s.Page`.`para`, `s.Page`.`para_flag`, `s.Page`.`url`
+FROM `ablemusic`.`page` AS `s.Page`
+INNER JOIN (
+    SELECT `s0`.`page_group_id`
+    FROM `ablemusic`.`page_group` AS `s0`
+) AS `t` ON `s.Page`.`page_group_id` = `t`.`page_group_id`
+ORDER BY `t`.`page_group_id`
+2019-07-01 13:16:12.725 +12:00 [INF] Executed action method Pegasus_backend.Controllers.NavItemsController.GetNavItems (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 1228.1245000000001ms.
+2019-07-01 13:16:12.725 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-07-01 13:16:12.734 +12:00 [INF] Executed action Pegasus_backend.Controllers.NavItemsController.GetNavItems (Pegasus_backend) in 1252.3804ms
+2019-07-01 13:16:12.734 +12:00 [INF] Request finished in 1269.7043ms 200 application/json; charset=utf-8
+2019-07-01 13:16:37.742 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/learner/mike  
+2019-07-01 13:16:37.742 +12:00 [INF] Policy execution successful.
+2019-07-01 13:16:37.748 +12:00 [INF] Route matched with {action = "GetLearner", controller = "Learner"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetLearner(System.String) on controller Pegasus_backend.Controllers.LearnerController (Pegasus_backend).
+2019-07-01 13:16:38.135 +12:00 [INF] Executing action method Pegasus_backend.Controllers.LearnerController.GetLearner (Pegasus_backend) - Validation state: "Valid"
+2019-07-01 13:16:38.139 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-01 13:16:38.393 +12:00 [INF] Executed DbCommand (60ms) [Parameters=[@__name_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`learner_id`, `s`.`address`, `s`.`contact_num`, `s`.`created_at`, `s`.`dob`, `s`.`email`, `s`.`enroll_date`, `s`.`first_name`, `s`.`form_url`, `s`.`g5_certification`, `s`.`gender`, `s`.`is_abrsm_g5`, `s`.`is_active`, `s`.`is_under_18`, `s`.`last_name`, `s`.`learner_level`, `s`.`level_type`, `s`.`middle_name`, `s`.`note`, `s`.`org_id`, `s`.`otherfile_url`, `s`.`payment_period`, `s`.`photo`, `s`.`referrer`, `s`.`referrer_learner_id`, `s`.`user_id`
+FROM `ablemusic`.`learner` AS `s`
+WHERE (`s`.`is_active` = 1) AND `s`.`first_name` LIKE concat('%', @__name_0, '%')
+ORDER BY `s`.`learner_id`
+2019-07-01 13:16:38.512 +12:00 [INF] Executed DbCommand (55ms) [Parameters=[@__name_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.LearnerOthers`.`learner_others_id`, `s.LearnerOthers`.`learner_id`, `s.LearnerOthers`.`learner_level`, `s.LearnerOthers`.`others_type`, `s.LearnerOthers`.`others_value`
+FROM `ablemusic`.`learner_others` AS `s.LearnerOthers`
+INNER JOIN (
+    SELECT `s0`.`learner_id`
+    FROM `ablemusic`.`learner` AS `s0`
+    WHERE (`s0`.`is_active` = 1) AND `s0`.`first_name` LIKE concat('%', @__name_0, '%')
+) AS `t` ON `s.LearnerOthers`.`learner_id` = `t`.`learner_id`
+ORDER BY `t`.`learner_id`
+2019-07-01 13:16:38.587 +12:00 [INF] Executed DbCommand (55ms) [Parameters=[@__name_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.Parent`.`parent_id`, `s.Parent`.`contact_num`, `s.Parent`.`created_at`, `s.Parent`.`email`, `s.Parent`.`first_name`, `s.Parent`.`last_name`, `s.Parent`.`learner_id`, `s.Parent`.`relationship`
+FROM `ablemusic`.`parent` AS `s.Parent`
+INNER JOIN (
+    SELECT `s1`.`learner_id`
+    FROM `ablemusic`.`learner` AS `s1`
+    WHERE (`s1`.`is_active` = 1) AND `s1`.`first_name` LIKE concat('%', @__name_0, '%')
+) AS `t0` ON `s.Parent`.`learner_id` = `t0`.`learner_id`
+ORDER BY `t0`.`learner_id`
+2019-07-01 13:16:38.658 +12:00 [INF] Executed DbCommand (60ms) [Parameters=[@__name_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.One2oneCourseInstance`.`course_instance_id`, `s.One2oneCourseInstance`.`begin_date`, `s.One2oneCourseInstance`.`course_id`, `s.One2oneCourseInstance`.`end_date`, `s.One2oneCourseInstance`.`invoice_date`, `s.One2oneCourseInstance`.`learner_id`, `s.One2oneCourseInstance`.`org_id`, `s.One2oneCourseInstance`.`room_id`, `s.One2oneCourseInstance`.`teacher_id`
+FROM `ablemusic`.`one2one_course_instance` AS `s.One2oneCourseInstance`
+INNER JOIN (
+    SELECT `s2`.`learner_id`
+    FROM `ablemusic`.`learner` AS `s2`
+    WHERE (`s2`.`is_active` = 1) AND `s2`.`first_name` LIKE concat('%', @__name_0, '%')
+) AS `t1` ON `s.One2oneCourseInstance`.`learner_id` = `t1`.`learner_id`
+ORDER BY `t1`.`learner_id`
+2019-07-01 13:16:38.765 +12:00 [INF] Executed DbCommand (59ms) [Parameters=[@__name_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.LearnerGroupCourse`.`learner_group_course_id`, `s.LearnerGroupCourse`.`begin_date`, `s.LearnerGroupCourse`.`comment`, `s.LearnerGroupCourse`.`created_at`, `s.LearnerGroupCourse`.`end_date`, `s.LearnerGroupCourse`.`group_course_instance_id`, `s.LearnerGroupCourse`.`invoice_date`, `s.LearnerGroupCourse`.`is_activate`, `s.LearnerGroupCourse`.`learner_id`
+FROM `ablemusic`.`learner_group_course` AS `s.LearnerGroupCourse`
+INNER JOIN (
+    SELECT `s3`.`learner_id`
+    FROM `ablemusic`.`learner` AS `s3`
+    WHERE (`s3`.`is_active` = 1) AND `s3`.`first_name` LIKE concat('%', @__name_0, '%')
+) AS `t2` ON `s.LearnerGroupCourse`.`learner_id` = `t2`.`learner_id`
+ORDER BY `t2`.`learner_id`
+2019-07-01 13:16:38.779 +12:00 [INF] Executed action method Pegasus_backend.Controllers.LearnerController.GetLearner (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 643.5361ms.
+2019-07-01 13:16:38.779 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Collections.Generic.IEnumerable`1[[Pegasus_backend.pegasusContext.Learner, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-07-01 13:16:38.837 +12:00 [INF] Executed action Pegasus_backend.Controllers.LearnerController.GetLearner (Pegasus_backend) in 1088.6132ms
+2019-07-01 13:16:38.837 +12:00 [INF] Request finished in 1094.9914ms 200 application/json; charset=utf-8
+2019-07-01 13:29:21.584 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/index.html  
+2019-07-01 13:29:21.622 +12:00 [INF] Request finished in 37.2346ms 200 text/html
+2019-07-01 13:29:21.849 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/v1/swagger.json  
+2019-07-01 13:29:22.193 +12:00 [INF] Request finished in 343.822ms 200 application/json;charset=utf-8
