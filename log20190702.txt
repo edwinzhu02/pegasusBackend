@@ -1,0 +1,15 @@
+2019-07-02 11:51:51.185 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/index.html  
+2019-07-02 11:51:51.214 +12:00 [INF] Request finished in 55.8324ms 200 text/html
+2019-07-02 11:51:51.443 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/v1/swagger.json  
+2019-07-02 11:51:51.512 +12:00 [INF] Request finished in 69.1708ms 200 application/json;charset=utf-8
+2019-07-02 11:54:44.234 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/PageGroup  
+2019-07-02 11:54:44.265 +12:00 [INF] Route matched with {action = "GetPageGroup", controller = "PageGroup"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetPageGroup() on controller Pegasus_backend.Controllers.PageGroupController (Pegasus_backend).
+2019-07-02 11:54:44.277 +12:00 [INF] Executing action method Pegasus_backend.Controllers.PageGroupController.GetPageGroup (Pegasus_backend) - Validation state: "Valid"
+2019-07-02 11:54:44.282 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-02 11:54:45.047 +12:00 [INF] Executed DbCommand (52ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `p`.`page_group_id`, `p`.`display_order`, `p`.`icon`, `p`.`page_group_name`
+FROM `ablemusic`.`page_group` AS `p`
+2019-07-02 11:54:45.049 +12:00 [INF] Executed action method Pegasus_backend.Controllers.PageGroupController.GetPageGroup (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 771.80910000000006ms.
+2019-07-02 11:54:45.050 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-07-02 11:54:45.054 +12:00 [INF] Executed action Pegasus_backend.Controllers.PageGroupController.GetPageGroup (Pegasus_backend) in 779.2218ms
+2019-07-02 11:54:45.054 +12:00 [INF] Request finished in 820.155ms 200 application/json; charset=utf-8
