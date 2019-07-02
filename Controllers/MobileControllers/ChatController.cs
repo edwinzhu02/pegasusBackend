@@ -182,8 +182,8 @@ namespace Pegasus_backend.Controllers.MobileControllers
                     return Ok(result);
             }
         }
-
-        public async Task<List<Staff>> GetAllStaff(int? staffId)
+       
+        private async Task<List<Staff>> GetAllStaff(int? staffId)
         {
             if (staffId == null)
             {
@@ -192,14 +192,14 @@ namespace Pegasus_backend.Controllers.MobileControllers
             return await _ablemusicContext.Staff.Where(x=>x.StaffId != staffId).Take(3).ToListAsync();
         }
 
-        public async Task<List<Teacher>> GetAllTeacher()
+        private async Task<List<Teacher>> GetAllTeacher()
         {
             return await _ablemusicContext.Teacher.Take(5).Select(x => new Teacher 
                     {TeacherId = x.TeacherId, FirstName = x.FirstName, LastName = x.LastName, Email = x.Email})
                 .ToListAsync();
         }
 
-        public async Task<ChatListModel> GetChatListOfLearner(int learnerId)
+        private async Task<ChatListModel> GetChatListOfLearner(int learnerId)
         {
             var lessonsOfLearner = await _ablemusicContext.Lesson
                 .Where(x => x.LearnerId == learnerId && x.IsCanceled == 0 && x.IsTrial == 0 && x.EndTime >= DateTime.Now)
@@ -223,7 +223,7 @@ namespace Pegasus_backend.Controllers.MobileControllers
 
         }
 
-        public async Task<ChatListModel> GetChatListOfTeacher(int teacherId)
+        private async Task<ChatListModel> GetChatListOfTeacher(int teacherId)
         {
             // find available courses of teacher
             var lessonsOfTeacher = await _ablemusicContext.Lesson

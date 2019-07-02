@@ -7,6 +7,7 @@ namespace Pegasus_backend.pegasusContext
     {
         public Product()
         {
+            ApplicationDetails = new HashSet<ApplicationDetails>();
             SoldTransaction = new HashSet<SoldTransaction>();
             Stock = new HashSet<Stock>();
             StockOrder = new HashSet<StockOrder>();
@@ -21,6 +22,7 @@ namespace Pegasus_backend.pegasusContext
         public short? ProdTypeId { get; set; }
 
         public ProdType ProdType { get; set; }
+        public ICollection<ApplicationDetails> ApplicationDetails { get; set; }
         public ICollection<SoldTransaction> SoldTransaction { get; set; }
         public ICollection<Stock> Stock { get; set; }
         public ICollection<StockOrder> StockOrder { get; set; }

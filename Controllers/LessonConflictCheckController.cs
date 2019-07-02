@@ -27,7 +27,53 @@ namespace Pegasus_backend.Controllers
             List<Lesson> lessons = new List<Lesson>();
             try
             {
-                lessons = await _ablemusicContext.Lesson.Where(l => l.IsCanceled != 1).ToListAsync();
+                lessons = await (from l in _ablemusicContext.Lesson
+                                 join t in _ablemusicContext.Teacher on l.TeacherId equals t.TeacherId
+                                 join lr in _ablemusicContext.Learner on l.LearnerId equals lr.LearnerId
+                                 join o in _ablemusicContext.Org on l.OrgId equals o.OrgId
+                                 join r in _ablemusicContext.Room on l.RoomId equals r.RoomId
+                                 where l.IsCanceled != 1
+                                 select new Lesson
+                                 {
+                                     LessonId = l.LessonId,
+                                     LearnerId = l.LearnerId,
+                                     RoomId = l.RoomId,
+                                     TeacherId = l.TeacherId,
+                                     OrgId = l.OrgId,
+                                     CreatedAt = l.CreatedAt,
+                                     CourseInstanceId = l.CourseInstanceId,
+                                     GroupCourseInstanceId = l.GroupCourseInstanceId,
+                                     IsTrial = l.IsTrial,
+                                     BeginTime = l.BeginTime,
+                                     EndTime = l.EndTime,
+                                     InvoiceId = l.InvoiceId,
+                                     IsConfirm = l.IsConfirm,
+                                     TrialCourseId = l.TrialCourseId,
+                                     IsChanged = l.IsChanged,
+                                     Teacher = new Teacher
+                                     {
+                                         TeacherId = t.TeacherId,
+                                         FirstName = t.FirstName,
+                                         LastName = t.LastName,
+                                     },
+                                     Learner = new Learner
+                                     {
+                                         LearnerId = lr.LearnerId,
+                                         FirstName = lr.FirstName,
+                                         LastName = lr.LastName,
+                                     },
+                                     Org = new pegasusContext.Org
+                                     {
+                                         OrgId = o.OrgId,
+                                         OrgName = o.OrgName,
+                                     },
+                                     Room = new Room
+                                     {
+                                         RoomId = r.RoomId,
+                                         RoomName = r.RoomName
+                                     }
+                                 }
+                                 ).ToListAsync();
             }
             catch(Exception ex)
             {
@@ -47,16 +93,16 @@ namespace Pegasus_backend.Controllers
 
             foreach(var lesson in lessons)
             {
-                bool isChecded = false;
+                bool isChecked = false;
                 foreach(var roomConflictLesson in roomConflictLessons)
                 {
                     foreach(var rcl in roomConflictLesson)
                     {
-                        if (rcl.LessonId == lesson.LessonId) isChecded = true;
+                        if (rcl.LessonId == lesson.LessonId) isChecked = true;
                     }
                 }
 
-                if (!isChecded)
+                if (!isChecked)
                 {
                     List<Lesson> conflicts = lessons.FindAll(l => l.OrgId == lesson.OrgId && l.LessonId != lesson.LessonId && l.RoomId == lesson.RoomId &&
                         ((l.BeginTime > lesson.BeginTime && l.BeginTime < lesson.EndTime) ||
@@ -77,16 +123,16 @@ namespace Pegasus_backend.Controllers
 
             foreach (var lesson in lessons)
             {
-                bool isChecded = false;
+                bool isChecked = false;
                 foreach (var teacherConflictLesson in teacherConflictLessons)
                 {
                     foreach (var tcl in teacherConflictLesson)
                     {
-                        if (tcl.LessonId == lesson.LessonId) isChecded = true;
+                        if (tcl.LessonId == lesson.LessonId) isChecked = true;
                     }
                 }
 
-                if (!isChecded)
+                if (!isChecked)
                 {
                     DateTime expandBeginTime = lesson.BeginTime.Value.AddMinutes(-60);
                     DateTime expandEndTime = lesson.EndTime.Value.AddMinutes(60);
@@ -107,10 +153,73 @@ namespace Pegasus_backend.Controllers
                 }
             }
 
+            var roomConflictLessonsView = new List<List<object>>();
+            foreach(var rcl in roomConflictLessons)
+            {
+                var temp = new List<object>();
+                foreach(var r in rcl)
+                {
+                    temp.Add(new
+                    {
+                        LessonId = r.LessonId,
+                        LearnerId = r.LearnerId,
+                        RoomId = r.RoomId,
+                        TeacherId = r.TeacherId,
+                        OrgId = r.OrgId,
+                        CreatedAt = r.CreatedAt,
+                        CourseInstanceId = r.CourseInstanceId,
+                        GroupCourseInstanceId = r.GroupCourseInstanceId,
+                        IsTrial = r.IsTrial,
+                        BeginTime = r.BeginTime,
+                        EndTime = r.EndTime,
+                        InvoiceId = r.InvoiceId,
+                        IsConfirm = r.IsConfirm,
+                        TrialCourseId = r.TrialCourseId,
+                        IsChanged = r.IsChanged,
+                        TeacherName = r.Teacher.FirstName + " " + r.Teacher.LastName,
+                        LearnerName = r.Learner.FirstName + " " + r.Learner.LastName,
+                        OrgName = r.Org.OrgName,
+                        RoomName = r.Room.RoomName,
+                    });
+                }
+                roomConflictLessonsView.Add(temp);
+            }
+            var teacherConflictLessonsView = new List<List<object>>();
+            foreach(var tcl in teacherConflictLessons)
+            {
+                var temp = new List<object>();
+                foreach(var t in tcl)
+                {
+                    temp.Add(new
+                    {
+                        LessonId = t.LessonId,
+                        LearnerId = t.LearnerId,
+                        RoomId = t.RoomId,
+                        TeacherId = t.TeacherId,
+                        OrgId = t.OrgId,
+                        CreatedAt = t.CreatedAt,
+                        CourseInstanceId = t.CourseInstanceId,
+                        GroupCourseInstanceId = t.GroupCourseInstanceId,
+                        IsTrial = t.IsTrial,
+                        BeginTime = t.BeginTime,
+                        EndTime = t.EndTime,
+                        InvoiceId = t.InvoiceId,
+                        IsConfirm = t.IsConfirm,
+                        TrialCourseId = t.TrialCourseId,
+                        IsChanged = t.IsChanged,
+                        TeacherName = t.Teacher.FirstName + " " + t.Teacher.LastName,
+                        LearnerName = t.Learner.FirstName + " " + t.Learner.LastName,
+                        OrgName = t.Org.OrgName,
+                        RoomName = t.Room.RoomName,
+                    });
+                }
+                teacherConflictLessonsView.Add(temp);
+            }
+
             result.Data = new
             {
-                RoomConflict = roomConflictLessons,
-                TeacherConflict = teacherConflictLessons,
+                RoomConflict = roomConflictLessonsView,
+                TeacherConflict = teacherConflictLessonsView,
             };
 
             return Ok(result);
