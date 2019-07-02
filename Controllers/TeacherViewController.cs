@@ -9,6 +9,7 @@ using System.Net.Http.Headers;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Web.Http;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 //using System.Web.Http.ModelBinding;
 using Microsoft.AspNetCore.Mvc;
@@ -24,9 +25,9 @@ namespace Pegasus_backend.Controllers
     public class TeacherViewController:BasicController
     {
         private readonly DataService _service;
-        public TeacherViewController(ablemusicContext ablemusicContext, ILogger<TeacherViewController> log) : base(ablemusicContext, log)
+        public TeacherViewController(ablemusicContext ablemusicContext, IMapper mapper, ILogger<TeacherViewController> log) : base(ablemusicContext, log)
         {
-            _service = new DataService(_ablemusicContext);
+            _service = new DataService(_ablemusicContext,mapper);
         }
 
 

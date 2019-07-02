@@ -24,17 +24,17 @@ namespace Pegasus_backend.Controllers
 
         public CourseRemainingController(ablemusicContext context, IMapper mapper)
         {
-            _dataService = new DataService(context);
-            _mapper = mapper;
+            _dataService = new DataService(context,mapper);
+            
         }
 
         [HttpGet("{studentId}")]
 
-        public Result<IEnumerable<LessonRemain>> GetRemainLessons(int studentId)
+        public Result<IEnumerable<CourseRemain>> GetRemainLessons(int studentId)
         {
             var uc = _dataService.GetUnconfirmedLessons(studentId);
             var lr = _dataService.GetRemainLesson(studentId);
-            var result = new Result<IEnumerable<LessonRemain>>();
+            var result = new Result<IEnumerable<CourseRemain>>();
             if (!uc.IsSuccess)
             {
                 result.IsSuccess = false;
@@ -52,11 +52,16 @@ namespace Pegasus_backend.Controllers
              
         }
 
-        
-        
-            
-        
-        
-        
+        [HttpGet("test")]
+        public Result<IEnumerable<CourseRemain>> test()
+        {
+            return _dataService.GetRemainLesson(10070);
+        }
+
+
+
+
+
+
     }
 }

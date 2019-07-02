@@ -36,6 +36,11 @@ namespace Pegasus_backend.Services
                     //remindLog.ReceivedFlag = 1;
                     //ablemusicContext.SaveChanges();
                     //ablemusicContext.Dispose();
+                    Console.WriteLine("Email has been sent");
+                    Console.WriteLine("Mail To: " + mailTo);
+                    Console.WriteLine("Mail Title: " + mailTitle);
+                    Console.WriteLine("Mail Content: " + mailContent);
+                    Console.WriteLine("Remind Log ID: " + remindLogId.ToString());
                 }
                 catch (Exception e)
                 {

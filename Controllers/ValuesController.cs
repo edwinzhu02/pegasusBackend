@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Pegasus_backend.pegasusContext;
+using Pegasus_backend.Services;
 
 namespace Pegasus_backend.Controllers
 {
@@ -21,6 +22,9 @@ namespace Pegasus_backend.Controllers
         [HttpGet]
         public IActionResult Get()
         {
+            var arg = new NotificationEventArgs("Jesse","Say Hi","Details",1);
+            _notificationObservable.send(arg);
+
             try
             {
                 throw new Exception();

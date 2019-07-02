@@ -22,10 +22,12 @@ namespace Pegasus_backend.Services
     public class DataService
     {
         private readonly ablemusicContext _context;
+        private readonly IMapper _mapper;
 
-        public DataService(ablemusicContext context)
+        public DataService(ablemusicContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public async Task<Result<IEnumerable<Lesson>>> GetLessons(int studentId)
@@ -138,72 +140,34 @@ namespace Pegasus_backend.Services
            
         }
         
-        public Result<IEnumerable<LessonRemain>> GetRemainLesson(int studentId)
+        public Result<IEnumerable<CourseRemain>> GetRemainLesson(int studentId)
         {
-            var result = new Result<IEnumerable<LessonRemain>>();
+            var result = new Result<IEnumerable<CourseRemain>>();
             IEnumerable<LessonRemain> remainLessons;
+            IEnumerable<CourseRemain> returnResults = new CourseRemain[]{};
             try
             {
                 remainLessons = _context.LessonRemain.Where(lr => lr.LearnerId == studentId)
-                    .Include(lr => lr.Term)
-                    .Include(lr => lr.CourseInstance)
-                    .ThenInclude(o2o => o2o.Course)
-                    .Include(lr => lr.GroupCourseInstance)
-                    .ThenInclude(gci => gci.Course);
-
-
-                /*
-                remainLessons = from lr in _context.LessonRemain.ToList()
-                    join t in _context.Term.ToList() on lr.TermId equals t.TermId
+                    .Include(lr=>lr.Term)
                     
-                    join ci in _context.One2oneCourseInstance on lr.CourseInstanceId equals ci.CourseInstanceId into cicGroup
-                    from cicG in cicGroup.DefaultIfEmpty()    
-                    join cic in _context.Course on cicG.CourseId equals cic.CourseId into ciccGroup
-                    from ciccG in ciccGroup.DefaultIfEmpty()  
-                    join gci in _context.GroupCourseInstance on lr.GroupCourseInstanceId equals gci
-                        .GroupCourseInstanceId into gciGroup
-                    from gciG in gciGroup.DefaultIfEmpty()
-                    join gc in _context.Course on gciG.CourseId equals gc.CourseId into gcGroup
-                    from gcG in gcGroup.DefaultIfEmpty()  
-                    where lr.LearnerId == studentId
-                    select new LessonRemain
-                    {
-                        LessonRemainId = lr.LessonRemainId,
-                        Quantity = lr.Quantity,
-                        TermId = lr.TermId,
-                        Term = new Term
-                        {
-                            TermId = t.TermId
-                            
-                        },
-                        ExpiryDate = lr.ExpiryDate,
-                        LearnerId = lr.LearnerId,
-                        CourseInstanceId = cicG.CourseInstanceId,
-                        CourseInstance = new One2oneCourseInstance
-                        {
-                            CourseInstanceId = cicG.CourseInstanceId,
-                            CourseId = cicG.CourseId,
-                            Course = new Course
-                            {
-                                CourseId = ciccG.CourseId,
-                                CourseName = ciccG.CourseName
-                            }
-                        },
-                        GroupCourseInstanceId = gciG.GroupCourseInstanceId,
-                        GroupCourseInstance = new GroupCourseInstance
-                        {
-                            GroupCourseInstanceId = gciG.GroupCourseInstanceId,
-                            Course = new Course
-                            {
-                                CourseId = gcG.CourseId,
-                                CourseName = gcG.CourseName
-                            }
-                        }
-                        
-                    };
-                */
-
-
+                .Include(lr => lr.CourseInstance)
+                .ThenInclude(o2o => o2o.Course)
+                .Include(lr => lr.GroupCourseInstance)
+                .ThenInclude(gci => gci.Course);
+                //var returnResult = _mapper.Map<IEnumerable<CourseRemain>>(remainLessons);
+                foreach (var instance in remainLessons)
+                {
+                    var returnResult = _mapper.Map<CourseRemain>(instance);
+                    returnResult.CourseName = instance.CourseInstanceId != null
+                        ? instance.CourseInstance.Course
+                            .CourseName
+                        : instance.GroupCourseInstance.Course.CourseName;
+                    returnResult.Term.LessonRemain = null;
+                    returnResult.Term.Invoice = null;
+                    returnResults = returnResults.Append(returnResult);
+                }
+                
+                
 
             }
             catch (Exception ex)
@@ -214,16 +178,17 @@ namespace Pegasus_backend.Services
             }
             
             result.IsSuccess = true;
-            result.Data = remainLessons;
+            
+            result.Data = returnResults;
             return result;
             
         }
 
-        public Result<IEnumerable<LessonRemain>> CalculateQuantity(IEnumerable<Lesson> unconfirmedLessons, IEnumerable<LessonRemain> lr)
+        public Result<IEnumerable<CourseRemain>> CalculateQuantity(IEnumerable<Lesson> unconfirmedLessons, IEnumerable<CourseRemain> lr)
         {
-            IEnumerable<LessonRemain> result = new LessonRemain[]{};
+            IEnumerable<CourseRemain> result = new CourseRemain[]{};
             var lessonWithTerm = TermFilter(unconfirmedLessons);
-            var returnResult = new Result<IEnumerable<LessonRemain>>();
+            var returnResult = new Result<IEnumerable<CourseRemain>>();
             if (!lessonWithTerm.IsSuccess)
             {
                 returnResult.IsSuccess = false;
@@ -252,6 +217,11 @@ namespace Pegasus_backend.Services
                 }
 
                 lessonRemain.Quantity =  lessonRemain.Quantity - unconfirm ;
+                lessonRemain.Term.Invoice = null;
+                lessonRemain.UnconfirmLessons = unconfirm;
+                //var appendResult = _mapper.Map<CourseRemain, LessonRemainWithUnfonfirmLessons>(lessonRemain);
+                //appendResult.UnconfirmLessons = unconfirm;
+                
                 result = result.Append(lessonRemain);
             }
 
