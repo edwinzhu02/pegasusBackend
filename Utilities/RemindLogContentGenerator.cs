@@ -21,5 +21,23 @@ namespace Pegasus_backend.Utilities
                   " to " + lesson.EndTime.ToString() + " has been cancelled due to " + reason +
                   "\n Please click the following link to confirm. \n";
         }
+
+        public static string RearrangedSingleLessonWithoutOldLessonForLearner(Learner learner, Lesson lesson, pegasusContext.Org org, Room room, Teacher teacher)
+        {
+            string content;
+            content = "Inform learner " + learner.FirstName + " " + learner.LastName + "new lesson has been arranged at " + org.OrgName + " " +
+                room.RoomName + " from " + lesson.BeginTime.ToString() + " to " + lesson.EndTime.ToString() + " given by teacher " +
+                teacher.FirstName + " " + teacher.LastName;
+            return content;
+        }
+
+        public static string RearrangedSingleLessonWithoutOldLessonForTeacher(Learner learner, Lesson lesson, pegasusContext.Org org, Room room, Teacher teacher)
+        {
+            string content;
+            content = "Inform teacher " + teacher.FirstName + " " + teacher.LastName + "new lesson has been arranged at " + org.OrgName + " " +
+                room.RoomName + " from " + lesson.BeginTime.ToString() + " to " + lesson.EndTime.ToString() + " for learner " +
+                teacher.FirstName + " " + teacher.LastName;
+            return content;
+        }
     }
 }
