@@ -30,6 +30,8 @@ namespace Pegasus_backend.Controllers
             
         }
 
+        
+        
         [HttpGet("{id}")]
         public Result<IEnumerable<Payment>> GetStudentPayment(int id)
         {

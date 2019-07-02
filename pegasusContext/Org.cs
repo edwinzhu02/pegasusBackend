@@ -17,6 +17,7 @@ namespace Pegasus_backend.pegasusContext
             Room = new HashSet<Room>();
             StaffOrg = new HashSet<StaffOrg>();
             Stock = new HashSet<Stock>();
+            StockApplication = new HashSet<StockApplication>();
             StockOrder = new HashSet<StockOrder>();
         }
 
@@ -41,6 +42,7 @@ namespace Pegasus_backend.pegasusContext
         public ICollection<Room> Room { get; set; }
         public ICollection<StaffOrg> StaffOrg { get; set; }
         public ICollection<Stock> Stock { get; set; }
+        public ICollection<StockApplication> StockApplication { get; set; }
         public ICollection<StockOrder> StockOrder { get; set; }
     }
 }
