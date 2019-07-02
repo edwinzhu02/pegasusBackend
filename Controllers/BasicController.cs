@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Pegasus_backend.pegasusContext;
 using Microsoft.Extensions.Logging;
+using Pegasus_backend.Services;
 
 namespace Pegasus_backend.Controllers
 {
@@ -22,11 +23,19 @@ namespace Pegasus_backend.Controllers
     {
         protected readonly ablemusicContext _ablemusicContext;
         protected readonly ILogger<Object> _log;
+        protected readonly NotificationObservable _notificationObservable;
 
         public BasicController(ablemusicContext ablemusicContext, ILogger<Object> log)
         {
             _ablemusicContext = ablemusicContext;
             _log = log;
+            _notificationObservable = new NotificationObservable();
+            _notificationObservable.SendNotification += SendNotification;
+        }
+
+        private void SendNotification(object sender, NotificationEventArgs e)
+        {
+            Task mailTask = MailSenderService.SendMailAsync(e.mailTo, e.mailTitle, e.mailContent, e.remindLogId);
         }
 
         protected TimeSpan GetEndTimeForOnetoOneCourseSchedule(TimeSpan beginTime, short? durationType)
