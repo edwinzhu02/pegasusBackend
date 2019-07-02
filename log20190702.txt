@@ -13,3 +13,90 @@ FROM `ablemusic`.`page_group` AS `p`
 2019-07-02 11:54:45.050 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
 2019-07-02 11:54:45.054 +12:00 [INF] Executed action Pegasus_backend.Controllers.PageGroupController.GetPageGroup (Pegasus_backend) in 779.2218ms
 2019-07-02 11:54:45.054 +12:00 [INF] Request finished in 820.155ms 200 application/json; charset=utf-8
+2019-07-02 12:23:28.089 +12:00 [INF] User profile is available. Using 'C:\Users\Learnspace\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-07-02 12:23:29.755 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
+2019-07-02 12:23:29.791 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-07-02 12:23:29.994 +12:00 [INF] Request finished in 240.1962ms 404 
+2019-07-02 12:24:42.620 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/index.html  
+2019-07-02 12:24:42.751 +12:00 [INF] Request finished in 131.4858ms 200 text/html
+2019-07-02 12:24:43.072 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/v1/swagger.json  
+2019-07-02 12:24:43.080 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/favicon-32x32.png  
+2019-07-02 12:24:43.102 +12:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+2019-07-02 12:24:43.103 +12:00 [INF] Request finished in 23.1076ms 200 image/png
+2019-07-02 12:24:43.141 +12:00 [ERR] An unhandled exception has occurred while executing the request.
+System.NotSupportedException: Ambiguous HTTP method for action - Pegasus_backend.Controllers.MobileControllers.ChatController.GetAllStaff (Pegasus_backend). Actions require an explicit HttpMethod binding for Swagger 2.0
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.CreatePathItem(IEnumerable`1 apiDescriptions, ISchemaRegistry schemaRegistry)
+   at System.Linq.Enumerable.ToDictionary[TSource,TKey,TElement](IEnumerable`1 source, Func`2 keySelector, Func`2 elementSelector, IEqualityComparer`1 comparer)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.CreatePathItems(IEnumerable`1 apiDescriptions, ISchemaRegistry schemaRegistry)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GetSwagger(String documentName, String host, String basePath, String[] schemes)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2019-07-02 12:24:43.219 +12:00 [INF] Request finished in 147.0889ms 500 text/html; charset=utf-8
+2019-07-02 12:31:30.502 +12:00 [INF] User profile is available. Using 'C:\Users\Learnspace\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-07-02 12:31:31.266 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/index.html  
+2019-07-02 12:31:31.430 +12:00 [INF] Request finished in 167.0992ms 200 text/html
+2019-07-02 12:31:31.740 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
+2019-07-02 12:31:31.748 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-07-02 12:31:31.907 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/v1/swagger.json  
+2019-07-02 12:31:31.913 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/favicon-32x32.png  
+2019-07-02 12:31:31.927 +12:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+2019-07-02 12:31:31.927 +12:00 [INF] Request finished in 14.4553ms 200 image/png
+2019-07-02 12:31:31.977 +12:00 [INF] Request finished in 236.4612ms 404 
+2019-07-02 12:31:32.186 +12:00 [ERR] An unhandled exception has occurred while executing the request.
+System.NotSupportedException: Ambiguous HTTP method for action - Pegasus_backend.Controllers.MobileControllers.ChatController.GetAllTeacher (Pegasus_backend). Actions require an explicit HttpMethod binding for Swagger 2.0
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.CreatePathItem(IEnumerable`1 apiDescriptions, ISchemaRegistry schemaRegistry)
+   at System.Linq.Enumerable.ToDictionary[TSource,TKey,TElement](IEnumerable`1 source, Func`2 keySelector, Func`2 elementSelector, IEqualityComparer`1 comparer)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.CreatePathItems(IEnumerable`1 apiDescriptions, ISchemaRegistry schemaRegistry)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GetSwagger(String documentName, String host, String basePath, String[] schemes)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2019-07-02 12:31:32.239 +12:00 [INF] Request finished in 332.408ms 500 text/html; charset=utf-8
+2019-07-02 12:31:35.529 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/index.html  
+2019-07-02 12:31:35.531 +12:00 [INF] Request finished in 1.6741ms 200 text/html
+2019-07-02 12:31:35.655 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/v1/swagger.json  
+2019-07-02 12:31:35.660 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/favicon-32x32.png  
+2019-07-02 12:31:35.661 +12:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+2019-07-02 12:31:35.661 +12:00 [INF] Request finished in 1.1571ms 200 image/png
+2019-07-02 12:31:35.674 +12:00 [ERR] An unhandled exception has occurred while executing the request.
+System.NotSupportedException: Ambiguous HTTP method for action - Pegasus_backend.Controllers.MobileControllers.ChatController.GetAllTeacher (Pegasus_backend). Actions require an explicit HttpMethod binding for Swagger 2.0
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.CreatePathItem(IEnumerable`1 apiDescriptions, ISchemaRegistry schemaRegistry)
+   at System.Linq.Enumerable.ToDictionary[TSource,TKey,TElement](IEnumerable`1 source, Func`2 keySelector, Func`2 elementSelector, IEqualityComparer`1 comparer)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.CreatePathItems(IEnumerable`1 apiDescriptions, ISchemaRegistry schemaRegistry)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GetSwagger(String documentName, String host, String basePath, String[] schemes)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2019-07-02 12:31:35.680 +12:00 [INF] Request finished in 25.6722ms 500 text/html; charset=utf-8
+2019-07-02 12:32:04.891 +12:00 [INF] User profile is available. Using 'C:\Users\Learnspace\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-07-02 12:32:05.798 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
+2019-07-02 12:32:05.831 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-07-02 12:32:06.020 +12:00 [INF] Request finished in 223.7579ms 404 
+2019-07-02 12:38:20.710 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/index.html  
+2019-07-02 12:38:20.809 +12:00 [INF] Request finished in 99.5598ms 200 text/html
+2019-07-02 12:38:21.003 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/v1/swagger.json  
+2019-07-02 12:38:21.004 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/favicon-32x32.png  
+2019-07-02 12:38:21.012 +12:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+2019-07-02 12:38:21.012 +12:00 [INF] Request finished in 7.8723ms 200 image/png
+2019-07-02 12:38:21.175 +12:00 [ERR] An unhandled exception has occurred while executing the request.
+System.NotSupportedException: Ambiguous HTTP method for action - Pegasus_backend.Controllers.MobileControllers.ChatController.GetAllTeacher (Pegasus_backend). Actions require an explicit HttpMethod binding for Swagger 2.0
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.CreatePathItem(IEnumerable`1 apiDescriptions, ISchemaRegistry schemaRegistry)
+   at System.Linq.Enumerable.ToDictionary[TSource,TKey,TElement](IEnumerable`1 source, Func`2 keySelector, Func`2 elementSelector, IEqualityComparer`1 comparer)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.CreatePathItems(IEnumerable`1 apiDescriptions, ISchemaRegistry schemaRegistry)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GetSwagger(String documentName, String host, String basePath, String[] schemes)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2019-07-02 12:38:21.229 +12:00 [INF] Request finished in 226.3327ms 500 text/html; charset=utf-8
+2019-07-02 12:38:53.246 +12:00 [INF] User profile is available. Using 'C:\Users\Learnspace\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-07-02 12:38:54.557 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
+2019-07-02 12:38:54.590 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-07-02 12:38:54.780 +12:00 [INF] Request finished in 224.7329ms 404 
+2019-07-02 12:40:35.320 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/index.html  
+2019-07-02 12:40:35.460 +12:00 [INF] Request finished in 150.6041ms 200 text/html
+2019-07-02 12:40:35.662 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/v1/swagger.json  
+2019-07-02 12:40:35.669 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/favicon-32x32.png  
+2019-07-02 12:40:35.697 +12:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+2019-07-02 12:40:35.697 +12:00 [INF] Request finished in 28.7764ms 200 image/png
+2019-07-02 12:40:35.977 +12:00 [INF] Request finished in 314.3498ms 200 application/json;charset=utf-8
