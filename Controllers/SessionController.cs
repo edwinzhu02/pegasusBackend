@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Pegasus_backend.ActionFilter;
 using Pegasus_backend.Models;
 using Pegasus_backend.pegasusContext;
 using Pegasus_backend.Services;
@@ -24,6 +25,162 @@ namespace Pegasus_backend.Controllers
         {
             _mapper = mapper;
             _configuration = configuration;
+        }
+
+        [CheckModelFilter]
+        [HttpPost("{userId}")]
+        public async Task<IActionResult> Post(int userId, [FromBody] LessonViewModel lessonViewModel)
+        {
+            var result = new Result<Lesson>();
+            var lesson = _mapper.Map(lessonViewModel, new Lesson());
+            var lessonRemains = new List<LessonRemain>();
+            var course = new Course();
+            try
+            {
+                lessonRemains = await _ablemusicContext.LessonRemain.Where(lr => lr.CourseInstanceId == lesson.CourseInstanceId && 
+                lr.LearnerId == lesson.LearnerId).ToListAsync();
+                course = await (from oto in _ablemusicContext.One2oneCourseInstance
+                                join c in _ablemusicContext.Course on oto.CourseId equals c.CourseId
+                                where oto.CourseInstanceId == lesson.CourseInstanceId
+                                select new Course
+                                {
+                                    CourseId = c.CourseId,
+                                    CourseName = c.CourseName,
+                                    Duration = c.Duration,
+                                }).FirstOrDefaultAsync();
+            }
+            catch(Exception ex)
+            {
+                LogErrorToFile(ex.Message);
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+            if(lessonRemains.Count <= 0)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = "Lesson Remain not found";
+                return BadRequest(result);
+            }
+            if(course == null)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = "Course not found";
+                return BadRequest(result);
+            }
+
+            TimeSpan duration;
+            switch (course.Duration)
+            {
+                case 1: duration = TimeSpan.FromMinutes(30);
+                    break;
+                case 2: duration = TimeSpan.FromMinutes(45);
+                    break;
+                case 3: duration = TimeSpan.FromMinutes(60);
+                    break;
+                default: duration = TimeSpan.FromMinutes(0);
+                    break;
+            }
+            lesson.EndTime = lesson.BeginTime.Value.Add(duration);
+            int termId = 0;
+            foreach(var lr in lessonRemains)
+            {
+                if(lr.Quantity > 0)
+                {
+                    termId = (int)lr.TermId;
+                }
+            }
+            if(termId == 0)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = "Lesson Remain not found";
+                return BadRequest(result);
+            }
+
+            List<Lesson> conflictRooms = new List<Lesson>();
+            List<Lesson> conflictTeacherLessons = new List<Lesson>();
+            var invoice = new Invoice();
+            try
+            {
+                invoice = await _ablemusicContext.Invoice.Where(i => i.TermId == termId && i.LearnerId == lesson.LearnerId && 
+                i.CourseInstanceId == lesson.CourseInstanceId).FirstOrDefaultAsync();
+
+                conflictRooms = await _ablemusicContext.Lesson.Where(l => l.RoomId == lesson.RoomId &&
+                    l.OrgId == lesson.OrgId && l.IsCanceled != 1 && l.LessonId != lesson.LessonId &&
+                    ((l.BeginTime > lesson.BeginTime && l.BeginTime < lesson.EndTime) ||
+                    (l.EndTime > lesson.BeginTime && l.EndTime < lesson.EndTime) ||
+                    (l.BeginTime <= lesson.BeginTime && l.EndTime >= lesson.EndTime)))
+                    .ToListAsync();
+
+                DateTime beginTime = lesson.BeginTime.Value.AddMinutes(-60);
+                DateTime endTime = lesson.EndTime.Value.AddMinutes(60);
+
+                conflictTeacherLessons = await _ablemusicContext.Lesson.Where(l => l.TeacherId == lesson.TeacherId &&
+                l.IsCanceled != 1 && l.LessonId != lesson.LessonId &&
+                ((l.BeginTime > beginTime && l.BeginTime < endTime) ||
+                (l.EndTime > beginTime && l.EndTime < endTime) ||
+                (l.BeginTime <= beginTime && l.EndTime >= endTime)))
+                .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+            if(invoice == null)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = "Lesson Remain not found";
+                return BadRequest(result);
+            }
+            if (conflictRooms.Count > 0)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = "Room is not available";
+                return BadRequest(result);
+            }
+            if (conflictTeacherLessons.Count > 0)
+            {
+                foreach (var c in conflictTeacherLessons)
+                {
+                    if (c.OrgId != lesson.OrgId ||
+                        (c.BeginTime > lesson.BeginTime && c.BeginTime < lesson.EndTime) ||
+                        (c.EndTime > lesson.BeginTime && c.EndTime < lesson.EndTime) ||
+                        (c.BeginTime <= lesson.BeginTime && c.EndTime >= lesson.EndTime))
+                    {
+                        result.IsSuccess = false;
+                        result.ErrorMessage = "Teacher is not available";
+                        return BadRequest(result);
+                    }
+                }
+            }
+
+            lesson.LessonId = 0;
+            lesson.IsCanceled = 0;
+            lesson.Reason = null;
+            lesson.CreatedAt = toNZTimezone(DateTime.UtcNow);
+            lesson.GroupCourseInstanceId = null;
+            lesson.IsTrial = 0;
+            lesson.InvoiceId = invoice.InvoiceId;
+            lesson.IsConfirm = 0;
+            lesson.TrialCourseId = null;
+            lesson.IsChanged = 0;
+
+            try
+            {
+                await _ablemusicContext.Lesson.AddAsync(lesson);
+                await _ablemusicContext.SaveChangesAsync();
+            }
+            catch(Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+            result.Data = lesson;
+
+            return Ok(result);
         }
 
         [HttpPut("[action]/{lessonId}/{reason}")]
