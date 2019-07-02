@@ -25,6 +25,8 @@ namespace Pegasus_backend.Models
         public int? LearnerId { get; set; }
         public string CourseName { get; set; }
         
+        public int? UnconfirmLessons { get; set; }
+        
         public Term Term { get; set; }
     }
 }

@@ -17,6 +17,7 @@ namespace Pegasus_backend.Mappings
             CreateMap<ProductModel, Product>();
             CreateMap<PaymentTranModel, Payment>();
             CreateMap<LessonRemain,CourseRemain>();
+            //CreateMap<CourseRemain, LessonRemainWithUnfonfirmLessons>();
             //CreateMap<PaymentTranModel, SoldTransaction>();
             CreateMap<SoldTransactionModel, SoldTransaction>();
             CreateMap<CourseViewModel, Course>();
