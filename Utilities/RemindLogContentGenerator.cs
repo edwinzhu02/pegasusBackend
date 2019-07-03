@@ -92,5 +92,29 @@ namespace Pegasus_backend.Utilities
                 newLesson.EndTime.ToString() + " at " + newOrg.OrgName + " " + newRoom.RoomName;
             return content;
         }
+
+        public static string LessonRescheduleForLearner(Lesson lesson, Learner learner, List<Lesson> appendLessons, string courseName)
+        {
+            string content = "Inform learner " + learner.FirstName + " " + learner.LastName +
+                " the " + courseName + " lesson from " + lesson.BeginTime.ToString() + " to " + lesson.EndTime.ToString() +
+                " has been rescheduled. Lesson remain hours are append to the following lessions: \n";
+            foreach (var appendLesson in appendLessons)
+            {
+                content += "Lesson from " + appendLesson.BeginTime + " to " + appendLesson.EndTime + "\n";
+            }
+            return content;
+        }
+
+        public static string LessonRescheduleForTeacher(Lesson lesson, List<Lesson> appendLessons, Teacher teacher, string courseName)
+        {
+            string content = "Inform teacher " + teacher.FirstName + " " + teacher.LastName +
+                " the " + courseName + " lesson from " + lesson.BeginTime.ToString() + " to " + lesson.EndTime.ToString() +
+                " has been rescheduled. Lesson Remain hours are append to the following lessons: \n";
+            foreach (var appendLesson in appendLessons)
+            {
+                content += "Lesson from " + appendLesson.BeginTime + " to " + appendLesson.EndTime + "\n";
+            }
+            return content;
+        }
     }
 }
