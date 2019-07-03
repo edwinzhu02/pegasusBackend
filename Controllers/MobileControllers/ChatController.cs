@@ -189,13 +189,19 @@ namespace Pegasus_backend.Controllers.MobileControllers
             {
                return await _ablemusicContext.Staff.Take(3).ToListAsync();
             }
-            return await _ablemusicContext.Staff.Where(x=>x.StaffId != staffId).Take(3).ToListAsync();
+            return await _ablemusicContext.Staff.Where(x=>x.StaffId != staffId).Take(3).Select(x => new Staff
+            {
+                FirstName = x.FirstName,
+                LastName = x.LastName,
+                UserId = x.UserId,
+                Photo = x.Photo
+            }).ToListAsync();
         }
 
         private async Task<List<Teacher>> GetAllTeacher()
         {
             return await _ablemusicContext.Teacher.Take(5).Select(x => new Teacher 
-                    {TeacherId = x.TeacherId, FirstName = x.FirstName, LastName = x.LastName, Email = x.Email})
+                    {TeacherId = x.TeacherId, FirstName = x.FirstName, LastName = x.LastName, Photo = x.Photo, UserId = x.UserId})
                 .ToListAsync();
         }
 
@@ -212,7 +218,6 @@ namespace Pegasus_backend.Controllers.MobileControllers
 
             // add data to return
             var lessonList = SeparateCourseIntoGroups(lessonsOfLearner);
-            var staffs = await GetAllStaff(null);
             ChatListModel chatList = new ChatListModel
             {
                 OneToOneCourseList = lessonList["oneToOneLessons"],
@@ -220,7 +225,6 @@ namespace Pegasus_backend.Controllers.MobileControllers
                 StaffList = await GetAllStaff(null)
             };
             return chatList;
-
         }
 
         private async Task<ChatListModel> GetChatListOfTeacher(int teacherId)
@@ -228,8 +232,15 @@ namespace Pegasus_backend.Controllers.MobileControllers
             // find available courses of teacher
             var lessonsOfTeacher = await _ablemusicContext.Lesson
                 .Where(x => x.TeacherId == teacherId && x.IsCanceled == 0 && x.IsTrial == 0 && x.EndTime >= DateTime.Now)
-                .Include(x=>x.Learner)
-                .Select(x => x).ToListAsync();
+                .Select(x => new Lesson
+                {
+                    LessonId = x.LessonId,
+                    LearnerId = x.LearnerId,
+                    TeacherId = x.TeacherId,
+                    CourseInstanceId = x.CourseInstanceId,
+                    GroupCourseInstance = x.GroupCourseInstance
+                })
+                .ToListAsync();
             if (lessonsOfTeacher == null)
             {
                 throw new Exception("No courses for this teacher right now");
@@ -237,7 +248,6 @@ namespace Pegasus_backend.Controllers.MobileControllers
 
             // add data to return
             var lessonList = SeparateCourseIntoGroups(lessonsOfTeacher);
-            var staffs = await GetAllStaff(null);
             ChatListModel chatList = new ChatListModel
             {
                 OneToOneCourseList = lessonList["oneToOneLessons"],
@@ -259,7 +269,7 @@ namespace Pegasus_backend.Controllers.MobileControllers
                     oneToOneLessons.Add(lesson);
                 }
 
-                if (lesson.GroupCourseInstance != null && !groupLessons.Contains(lesson))
+                if (lesson.GroupCourseInstanceId != null)
                 {
                     groupLessons.Add(lesson);
                 }
@@ -281,23 +291,31 @@ namespace Pegasus_backend.Controllers.MobileControllers
 
             // Students having lesson in his org
             var studentsIdHavingLesson = await _ablemusicContext.Lesson.Where(x => x.OrgId == orgIdOfStaff).Take(5)
-                .Include(x=>x.Learner).Select(x => x.Learner).Distinct()
-                .ToListAsync();
+                .Include(x=>x.Learner).Select(x=> new Learner
+                {
+                    LearnerId = x.Learner.LearnerId,
+                    FirstName = x.Learner.FirstName,
+                    LastName = x.Learner.LastName,
+                    UserId = x.Learner.UserId,
+                    Photo = x.Learner.Photo
+                }).Distinct().ToListAsync();
 
             // students registered in his org
-            var studentsRegisteredIn = await _ablemusicContext.Learner.Where(x=>x.OrgId == orgIdOfStaff).Select(x => new Learner
+            var studentsRegisteredIn = await _ablemusicContext.Learner.Where(x=>x.OrgId == orgIdOfStaff).Take(5).Select(x => new Learner
             {
+                LearnerId = x.LearnerId,
                 FirstName = x.FirstName,
                 LastName = x.LastName,
-                UserId = x.UserId
-            }).Take(3).ToListAsync();
+                UserId = x.UserId,
+                Photo = x.Photo
+            }).Distinct().ToListAsync();
 
             // combine data
             ChatListModel chatListModel = new ChatListModel
             {
                 StaffList = await GetAllStaff(staffId),
                 TeacherList = await GetAllTeacher(),
-                LearnerList = studentsIdHavingLesson.Union(studentsRegisteredIn).ToList()
+                LearnerList = studentsIdHavingLesson.Union(studentsRegisteredIn).Distinct().ToList()
             };
             return chatListModel;
         }
