@@ -16,6 +16,7 @@ namespace Pegasus_backend.pegasusContext
         }
 
         public virtual DbSet<Amendment> Amendment { get; set; }
+        public virtual DbSet<ApplicationDetails> ApplicationDetails { get; set; }
         public virtual DbSet<AskOff> AskOff { get; set; }
         public virtual DbSet<AvailableDays> AvailableDays { get; set; }
         public virtual DbSet<ChatGroup> ChatGroup { get; set; }
@@ -59,6 +60,7 @@ namespace Pegasus_backend.pegasusContext
         public virtual DbSet<Staff> Staff { get; set; }
         public virtual DbSet<StaffOrg> StaffOrg { get; set; }
         public virtual DbSet<Stock> Stock { get; set; }
+        public virtual DbSet<StockApplication> StockApplication { get; set; }
         public virtual DbSet<StockOrder> StockOrder { get; set; }
         public virtual DbSet<Teacher> Teacher { get; set; }
         public virtual DbSet<TeacherCourse> TeacherCourse { get; set; }
@@ -75,7 +77,7 @@ namespace Pegasus_backend.pegasusContext
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseMySQL("server=gradspace.org;User Id=dbuser;Password=qwer1234;Database=ablemusic");
+                optionsBuilder.UseMySQL("server=www.gradspace.org;uid=dbuser;pwd=qwer1234;database=ablemusic");
             }
         }
 
@@ -191,6 +193,54 @@ namespace Pegasus_backend.pegasusContext
                     .WithMany(p => p.Amendment)
                     .HasForeignKey(d => d.TeacherId)
                     .HasConstraintName("R_111");
+            });
+
+            modelBuilder.Entity<ApplicationDetails>(entity =>
+            {
+                entity.HasKey(e => e.DetaillsId);
+
+                entity.ToTable("application_details", "ablemusic");
+
+                entity.HasIndex(e => e.ApplicationId)
+                    .HasName("R_133");
+
+                entity.HasIndex(e => e.ProductId)
+                    .HasName("R_134");
+
+                entity.Property(e => e.DetaillsId)
+                    .HasColumnName("detaills_id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.ApplicationId)
+                    .HasColumnName("application_id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.AppliedQty)
+                    .HasColumnName("applied_qty")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.DeliveredQty)
+                    .HasColumnName("delivered_qty")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.ProductId)
+                    .HasColumnName("product_id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.ReceivedQty)
+                    .HasColumnName("received_qty")
+                    .HasColumnType("int(11)");
+
+                entity.HasOne(d => d.Application)
+                    .WithMany(p => p.ApplicationDetails)
+                    .HasForeignKey(d => d.ApplicationId)
+                    .HasConstraintName("R_133");
+
+                entity.HasOne(d => d.Product)
+                    .WithMany(p => p.ApplicationDetails)
+                    .HasForeignKey(d => d.ProductId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("R_134");
             });
 
             modelBuilder.Entity<AskOff>(entity =>
@@ -2540,6 +2590,70 @@ namespace Pegasus_backend.pegasusContext
                     .WithMany(p => p.Stock)
                     .HasForeignKey(d => d.ProductId)
                     .HasConstraintName("R_46");
+            });
+
+            modelBuilder.Entity<StockApplication>(entity =>
+            {
+                entity.HasKey(e => e.ApplicationId);
+
+                entity.ToTable("stock_application", "ablemusic");
+
+                entity.HasIndex(e => e.ApplyStaffId)
+                    .HasName("R_132");
+
+                entity.HasIndex(e => e.OrgId)
+                    .HasName("R_131");
+
+                entity.Property(e => e.ApplicationId)
+                    .HasColumnName("application_id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.ApplyAt).HasColumnName("apply_at");
+
+                entity.Property(e => e.ApplyReason)
+                    .HasColumnName("apply_reason")
+                    .HasMaxLength(1000)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ApplyStaffId)
+                    .HasColumnName("apply_staff_id")
+                    .HasColumnType("smallint(6)");
+
+                entity.Property(e => e.DeliverAt)
+                    .HasColumnName("deliver_at")
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.IsDisputed)
+                    .HasColumnName("is_disputed")
+                    .HasColumnType("bit(1)");
+
+                entity.Property(e => e.OrgId)
+                    .HasColumnName("org_id")
+                    .HasColumnType("smallint(6)");
+
+                entity.Property(e => e.ProcessStatus)
+                    .HasColumnName("process_status")
+                    .HasColumnType("bit(1)");
+
+                entity.Property(e => e.RecieveAt).HasColumnName("recieve_at");
+
+                entity.Property(e => e.ReplyAt).HasColumnName("reply_at");
+
+                entity.Property(e => e.ReplyContent)
+                    .HasColumnName("reply_content")
+                    .HasMaxLength(1000)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.ApplyStaff)
+                    .WithMany(p => p.StockApplication)
+                    .HasForeignKey(d => d.ApplyStaffId)
+                    .HasConstraintName("R_132");
+
+                entity.HasOne(d => d.Org)
+                    .WithMany(p => p.StockApplication)
+                    .HasForeignKey(d => d.OrgId)
+                    .HasConstraintName("R_131");
             });
 
             modelBuilder.Entity<StockOrder>(entity =>

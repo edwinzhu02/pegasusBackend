@@ -149,6 +149,7 @@ namespace Pegasus_backend.Services
             {
                 remainLessons = _context.LessonRemain.Where(lr => lr.LearnerId == studentId)
                     .Include(lr=>lr.Term)
+                    
                 .Include(lr => lr.CourseInstance)
                 .ThenInclude(o2o => o2o.Course)
                 .Include(lr => lr.GroupCourseInstance)
@@ -217,7 +218,10 @@ namespace Pegasus_backend.Services
 
                 lessonRemain.Quantity =  lessonRemain.Quantity - unconfirm ;
                 lessonRemain.Term.Invoice = null;
-                lessonRemain.Term.InvoiceWaitingConfirm = null;
+                lessonRemain.UnconfirmLessons = unconfirm;
+                //var appendResult = _mapper.Map<CourseRemain, LessonRemainWithUnfonfirmLessons>(lessonRemain);
+                //appendResult.UnconfirmLessons = unconfirm;
+                
                 result = result.Append(lessonRemain);
             }
 

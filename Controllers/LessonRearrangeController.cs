@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +10,8 @@ using Pegasus_backend.ActionFilter;
 using Pegasus_backend.Models;
 using Pegasus_backend.pegasusContext;
 using Pegasus_backend.Services;
+using Pegasus_backend.Utilities;
+using Pegasus_backend.Repositories;
 using Microsoft.Extensions.Logging;
 
 namespace Pegasus_backend.Controllers
@@ -70,28 +71,6 @@ namespace Pegasus_backend.Controllers
             List<Lesson> conflictTeacherLessons = new List<Lesson>();
             try
             {
-                //if (newLesson.RoomId != oldLesson.RoomId || newLesson.OrgId != oldLesson.OrgId ||
-                //newLesson.BeginTime != oldLesson.BeginTime || newLesson.EndTime != oldLesson.EndTime)
-                //{
-                //    conflictRooms = await _ablemusicContext.Lesson.Where(l => l.RoomId == newLesson.RoomId &&
-                //    l.OrgId == newLesson.OrgId && l.IsCanceled != 1 && l.LessonId != newLesson.LessonId &&
-                //    ((l.BeginTime > newLesson.BeginTime && l.BeginTime < newLesson.EndTime) ||
-                //    (l.EndTime > newLesson.BeginTime && l.EndTime < newLesson.EndTime) ||
-                //    (l.BeginTime <= newLesson.BeginTime && l.EndTime >= newLesson.EndTime)))
-                //    .ToListAsync();
-                //}
-                //if (newLesson.TeacherId != oldLesson.TeacherId || newLesson.BeginTime != oldLesson.BeginTime ||
-                //    newLesson.EndTime != oldLesson.EndTime)
-                //{
-                //    DateTime beginTime = newLesson.BeginTime.Value.AddMinutes(-60);
-                //    DateTime endTime = newLesson.EndTime.Value.AddMinutes(60);
-                //    conflictTeacherLessons = await _ablemusicContext.Lesson.Where(l => l.TeacherId == newLesson.TeacherId &&
-                //    l.IsCanceled != 1 && l.LessonId != newLesson.LessonId &&
-                //    ((l.BeginTime > beginTime && l.BeginTime < endTime) ||
-                //    (l.EndTime > beginTime && l.EndTime < endTime) ||
-                //    (l.BeginTime <= beginTime && l.EndTime >= endTime)))
-                //    .ToListAsync();
-                //}
                 conflictRooms = await _ablemusicContext.Lesson.Where(l => l.RoomId == newLesson.RoomId &&
                     l.OrgId == newLesson.OrgId && l.IsCanceled != 1 && l.LessonId != newLesson.LessonId &&
                     ((l.BeginTime > newLesson.BeginTime && l.BeginTime < newLesson.EndTime) ||
@@ -137,8 +116,8 @@ namespace Pegasus_backend.Controllers
 
             Teacher newTeacher;
             Teacher oldTeacher;
-            Pegasus_backend.pegasusContext.Org oldOrg;
-            Pegasus_backend.pegasusContext.Org newOrg;
+            pegasusContext.Org oldOrg;
+            pegasusContext.Org newOrg;
             Room oldRoom;
             Room newRoom;
             Course course;
@@ -200,86 +179,6 @@ namespace Pegasus_backend.Controllers
                 }
             }
 
-            TodoList todolistForLearner = TodoListForLearnerCreater(oldLesson, newLesson, userId, learner, oldTeacher, 
-                newTeacher, oldOrg,newOrg, oldRoom, newRoom, newTodoDate);
-            TodoList todolistForOldTeacher = TodoListForOldTeacherCreater(oldLesson, newLesson, userId, learner, oldTeacher,
-                newTeacher, oldOrg, newOrg, oldRoom, newRoom, newTodoDate);
-            TodoList todolistForNewTeacher = TodoListForNewTeacherCreater(oldLesson, newLesson, userId, learner, oldTeacher,
-                newTeacher, oldOrg, newOrg, oldRoom, newRoom, newTodoDate);
-
-            TodoList todolistForLearnerAtCancelTime = TodoListForLearnerCreater(oldLesson, newLesson, userId, learner, oldTeacher,
-                newTeacher, oldOrg, newOrg, oldRoom, newRoom, newTodoDate);
-            todolistForLearnerAtCancelTime.TodoDate = oldTodoDate;
-            TodoList todolistForOldTeacherAtCancelTime = TodoListForOldTeacherCreater(oldLesson, newLesson, userId, learner, oldTeacher,
-                newTeacher, oldOrg, newOrg, oldRoom, newRoom, newTodoDate);
-            todolistForOldTeacherAtCancelTime.TodoDate = oldTodoDate;
-            TodoList todolistForNewTeacherAtCancelTime = TodoListForNewTeacherCreater(oldLesson, newLesson, userId, learner, oldTeacher,
-                newTeacher, oldOrg, newOrg, oldRoom, newRoom, newTodoDate);
-            todolistForNewTeacherAtCancelTime.TodoDate = oldTodoDate;
-
-            RemindLog remindLogForLearner = RemindLogForLearnerCreater(oldLesson, newLesson, userId, learner, oldTeacher,
-                newTeacher, oldOrg, newOrg, oldRoom, newRoom, newTodoDate, courseName);
-            RemindLog remindLogForOldTeacher = RemindLogForOldTeacherCreater(oldLesson, newLesson, userId, learner, oldTeacher,
-                newTeacher, oldOrg, newOrg, oldRoom, newRoom, newTodoDate, courseName);
-            RemindLog remindLogForNewTeacher = RemindLogForNewTeacherCreater(oldLesson, newLesson, userId, learner, oldTeacher,
-                newTeacher, oldOrg, newOrg, oldRoom, newRoom, newTodoDate, courseName);
-
-            try
-            {
-                await _ablemusicContext.TodoList.AddAsync(todolistForLearner);
-                await _ablemusicContext.TodoList.AddAsync(todolistForOldTeacher);
-                await _ablemusicContext.RemindLog.AddAsync(remindLogForLearner);
-                await _ablemusicContext.RemindLog.AddAsync(remindLogForOldTeacher);
-                if(newLesson.TeacherId != oldLesson.TeacherId)
-                {
-                    await _ablemusicContext.TodoList.AddAsync(todolistForNewTeacher);
-                    await _ablemusicContext.RemindLog.AddAsync(remindLogForNewTeacher);
-                }
-                if (oldTodoDate.Date != newTodoDate.Date)
-                {
-                    if(newLesson.TeacherId == oldLesson.TeacherId)
-                    {
-                        await _ablemusicContext.TodoList.AddAsync(todolistForLearnerAtCancelTime);
-                        await _ablemusicContext.TodoList.AddAsync(todolistForOldTeacherAtCancelTime);
-                    } else
-                    {
-                        await _ablemusicContext.TodoList.AddAsync(todolistForLearnerAtCancelTime);
-                        await _ablemusicContext.TodoList.AddAsync(todolistForOldTeacherAtCancelTime);
-                        await _ablemusicContext.TodoList.AddAsync(todolistForNewTeacherAtCancelTime);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                result.IsSuccess = false;
-                result.ErrorMessage = ex.ToString();
-                return BadRequest(result);
-            }
-
-            //sending Email
-            string mailTitle = "Lesson Rearragement Confirm";
-            string confirmURLForLearner = userConfirmUrlPrefix + todolistForLearner.ListId + "/" + remindLogForLearner.RemindId;
-            string receiverName = learner.LastName + " " + learner.LastName;
-            string mailContentForLearner = MailContentGenerator(receiverName, courseName, confirmURLForLearner, oldLesson, newLesson, userId, 
-                learner, oldTeacher, newTeacher, oldOrg, newOrg,  oldRoom,  newRoom,  newTodoDate);
-            Task learnerMailSenderTask = MailSenderService.SendMailAsync(remindLogForLearner.Email, mailTitle, mailContentForLearner, remindLogForLearner.RemindId);
-
-            string confirmURLForOldTeacher = userConfirmUrlPrefix + todolistForOldTeacher.ListId + "/" + remindLogForOldTeacher.RemindId;
-            receiverName = oldTeacher.LastName + " " + oldTeacher.LastName;
-            string mailContentForOldTeacher = MailContentGenerator(receiverName, courseName, confirmURLForOldTeacher, oldLesson, newLesson, userId,
-                learner, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom, newTodoDate);
-            Task oldTeacherMailSenderTask = MailSenderService.SendMailAsync(remindLogForOldTeacher.Email, mailTitle, mailContentForOldTeacher, remindLogForOldTeacher.RemindId);
-
-            if (newLesson.TeacherId != oldLesson.TeacherId)
-            {
-                //sending Email
-                string confirmURLForNewTeacher = userConfirmUrlPrefix + todolistForNewTeacher.ListId + "/" + remindLogForNewTeacher.RemindId;
-                receiverName = newTeacher.LastName + " " + newTeacher.LastName;
-                string mailContentForNewTeacher = MailContentGenerator(receiverName, courseName, confirmURLForNewTeacher, oldLesson, newLesson, userId,
-                    learner, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom, newTodoDate);
-                Task newTeacherMailSenderTask = MailSenderService.SendMailAsync(remindLogForNewTeacher.Email, mailTitle, mailContentForNewTeacher, remindLogForNewTeacher.RemindId);
-            }
-
             oldLesson.IsCanceled = 1;
             oldLesson.Reason = newLesson.Reason;
 
@@ -295,30 +194,98 @@ namespace Pegasus_backend.Controllers
             newLesson.InvoiceId = oldLesson.InvoiceId;
             newLesson.IsChanged = 1;
 
-            ////oldLesson.LearnerId = newLesson.LearnerId;
-            //oldLesson.RoomId = newLesson.RoomId;
-            //oldLesson.TeacherId = newLesson.TeacherId;
-            //oldLesson.OrgId = newLesson.OrgId;
-            ////oldLesson.IsCanceled = newLesson.IsCanceled;
-            //oldLesson.Reason = newLesson.Reason;
-            ////oldLesson.CreatedAt = newLesson.CreatedAt;
-            ////oldLesson.CourseInstanceId = newLesson.CourseInstanceId;
-            ////oldLesson.GroupCourseInstanceId = newLesson.GroupCourseInstanceId;
-            ////oldLesson.IsTrial = newLesson.IsTrial;
-            //oldLesson.BeginTime = newLesson.BeginTime.Value;
-            //oldLesson.EndTime = newLesson.EndTime.Value;
-            ////oldLesson.InvoiceId = newLesson.InvoiceId;
-
             try
             {
                 await _ablemusicContext.Lesson.AddAsync(newLesson);
                 await _ablemusicContext.SaveChangesAsync();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 result.IsSuccess = false;
                 result.ErrorMessage = ex.ToString();
                 return BadRequest(result);
+            }
+
+            TodoRepository todoRepository = new TodoRepository();
+            todoRepository.AddSingleTodoList("Lesson Rearrangement to Remind", TodoListContentGenerator.RearrangedSingleLessonWithOldLessonForLearner(
+                oldLesson, newLesson, learner, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom), userId, newTodoDate, newLesson.LessonId, learner.LearnerId, null);
+            todoRepository.AddSingleTodoList("Lesson Rearrangement to Remind", TodoListContentGenerator.RearrangedSingleLessonWithOldLessonForOldTeacher(
+                oldLesson, newLesson, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom), userId, newTodoDate, newLesson.LessonId, null, oldTeacher.TeacherId);
+            todoRepository.AddSingleTodoList("Lesson Rearrangement to Remind", TodoListContentGenerator.RearrangedSingleLessonWithOldLessonForNewTeacher(
+                oldLesson, newLesson, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom), userId, newTodoDate, newLesson.LessonId, null, newTeacher.TeacherId);
+            todoRepository.AddSingleTodoList("Lesson Rearrangement to Remind", TodoListContentGenerator.RearrangedSingleLessonWithOldLessonForLearner(
+                oldLesson, newLesson, learner, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom), userId, oldTodoDate, oldLesson.LessonId, learner.LearnerId, null);
+            todoRepository.AddSingleTodoList("Lesson Rearrangement to Remind", TodoListContentGenerator.RearrangedSingleLessonWithOldLessonForOldTeacher(
+                oldLesson, newLesson, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom), userId, oldTodoDate, oldLesson.LessonId, null, oldTeacher.TeacherId);
+            todoRepository.AddSingleTodoList("Lesson Rearrangement to Remind", TodoListContentGenerator.RearrangedSingleLessonWithOldLessonForNewTeacher(
+                oldLesson, newLesson, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom), userId, oldTodoDate, oldLesson.LessonId, null, newTeacher.TeacherId);
+            var saveTodoResult = await todoRepository.SaveTodoListsAsync();
+            if (!saveTodoResult.IsSuccess)
+            {
+                try
+                {
+                    oldLesson.IsCanceled = 0;
+                    oldLesson.Reason = "";
+                    _ablemusicContext.Lesson.Remove(newLesson);
+                    await _ablemusicContext.SaveChangesAsync();
+                }
+                catch(Exception ex)
+                {
+                    result.IsSuccess = false;
+                    result.ErrorMessage = ex.Message + "\n" + saveTodoResult.ErrorMessage;
+                    return BadRequest(result);
+                }
+                return BadRequest(saveTodoResult);
+            }
+
+            RemindLogRepository remindLogRepository = new RemindLogRepository();
+            remindLogRepository.AddSingleRemindLog(learner.LearnerId, learner.Email, RemindLogContentGenerator.RearrangedSingleLessonWithOldLessonForLearner(
+                oldLesson, newLesson, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom, courseName), null, "Lesson Rearrangement Remind", newLesson.LessonId);
+            remindLogRepository.AddSingleRemindLog(null, oldTeacher.Email, RemindLogContentGenerator.RearrangedSingleLessonWithOldLessonForOldTeacher(
+                oldLesson, newLesson, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom, courseName), oldTeacher.TeacherId, "Lesson Rearrangement Remind", oldLesson.LessonId);
+            remindLogRepository.AddSingleRemindLog(null, newTeacher.Email, RemindLogContentGenerator.RearrangedSingleLessonWithOldLessonForNewTeacher(
+                oldLesson, newLesson, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom, courseName), newTeacher.TeacherId, "Lesson Rearrangement Remind", newLesson.LessonId);
+            var saveRemindLogResult = await remindLogRepository.SaveRemindLogAsync();
+            if (!saveRemindLogResult.IsSuccess)
+            {
+                try
+                {
+                    oldLesson.IsCanceled = 0;
+                    oldLesson.Reason = "";
+                    _ablemusicContext.Lesson.Remove(newLesson);
+                    await _ablemusicContext.SaveChangesAsync();
+                }
+                catch (Exception ex)
+                {
+                    result.IsSuccess = false;
+                    result.ErrorMessage = ex.Message + "\n" + saveTodoResult.ErrorMessage;
+                    return BadRequest(result);
+                }
+                return BadRequest(saveRemindLogResult);
+            }
+
+            //sending Email
+            List<NotificationEventArgs> notifications = new List<NotificationEventArgs>();
+            foreach (var remind in saveRemindLogResult.Data)
+            {
+                var todo = saveTodoResult.Data.Find(t => t.LearnerId == remind.LearnerId && t.TeacherId == remind.TeacherId && t.TodoDate == newTodoDate);
+                string currentPersonName;
+                if (remind.TeacherId == null)
+                {
+                    currentPersonName = learner.FirstName + " " + learner.LastName;
+                }
+                else
+                {
+                    currentPersonName = remind.TeacherId == newTeacher.TeacherId ? newTeacher.FirstName + " " + newTeacher.LastName : oldTeacher.FirstName + " " + oldTeacher.LastName;
+                }
+                string confirmURL = userConfirmUrlPrefix + todo.ListId + "/" + remind.RemindId;
+                string mailContent = EmailContentGenerator.RearrangeLessonWithOld(currentPersonName, courseName, confirmURL, oldLesson, oldTeacher,
+                    newTeacher, oldOrg, newOrg, oldRoom, newRoom);
+                notifications.Add(new NotificationEventArgs(remind.Email, "Lesson Rearrange Confirm", mailContent, remind.RemindId));
+            }
+            foreach (var mail in notifications)
+            {
+                _notificationObservable.send(mail);
             }
 
             result.IsSuccess = true;
@@ -328,162 +295,6 @@ namespace Pegasus_backend.Controllers
         private bool LessonExists(int id)
         {
             return _ablemusicContext.Lesson.Any(e => e.LessonId == id);
-        }
-
-        private TodoList TodoListForLearnerCreater(Lesson oldLesson, Lesson newLesson, short userId, Learner learner, 
-            Teacher oldTeacher, Teacher newTeacher, Pegasus_backend.pegasusContext.Org oldOrg, 
-            Pegasus_backend.pegasusContext.Org newOrg, Room oldRoom, Room newRoom, DateTime newTodoDate)
-        {
-            TodoList todolistForLearner = new TodoList();
-            todolistForLearner.ListName = "Lesson rearrangement to Remind";
-            todolistForLearner.ListContent = "Inform learner " + learner.FirstName + " " + learner.LastName +
-                " session given by teacher " + oldTeacher.FirstName + " " + oldTeacher.LastName + " from " +
-                oldLesson.BeginTime.ToString() + " to " + oldLesson.EndTime.ToString() + " at " + oldOrg.OrgName +
-                " " + oldRoom.RoomName + " has been rearanged to be given by teacher " + newTeacher.FirstName + " " +
-                newTeacher.LastName + " from " + newLesson.BeginTime.ToString() + " to " + newLesson.EndTime.ToString() +
-                " at " + newOrg.OrgName + " " + newRoom.RoomName;
-            todolistForLearner.CreatedAt = toNZTimezone(DateTime.UtcNow);
-            todolistForLearner.ProcessedAt = null;
-            todolistForLearner.ProcessFlag = 0;
-            todolistForLearner.UserId = userId;
-            todolistForLearner.TodoDate = newTodoDate;
-            todolistForLearner.LearnerId = learner.LearnerId;
-            todolistForLearner.LessonId = newLesson.LessonId;
-            todolistForLearner.TeacherId = null;
-            return todolistForLearner;
-        }
-
-        private TodoList TodoListForNewTeacherCreater(Lesson oldLesson, Lesson newLesson, short userId, Learner learner,
-            Teacher oldTeacher, Teacher newTeacher, Pegasus_backend.pegasusContext.Org oldOrg,
-            Pegasus_backend.pegasusContext.Org newOrg, Room oldRoom, Room newRoom, DateTime newTodoDate)
-        {
-            TodoList todolistForNewTeacher = new TodoList();
-            todolistForNewTeacher.ListName = "Lesson rearrangement to Remind";
-            todolistForNewTeacher.ListContent = "Inform teacher " + newTeacher.FirstName + " " + newTeacher.LastName +
-                " session given by teacher " + oldTeacher.FirstName + " " + oldTeacher.LastName + " from " +
-                oldLesson.BeginTime.ToString() + " to " + oldLesson.EndTime.ToString() + " at " + oldOrg.OrgName +
-                " " + oldRoom.RoomName + " has been rearanged to be given by " + newTeacher.FirstName + " " +
-                newTeacher.LastName + " from " + newLesson.BeginTime.ToString() + " to " +
-                newLesson.EndTime.ToString() + " at " + newOrg.OrgName + " " + newRoom.RoomName;
-            todolistForNewTeacher.CreatedAt = toNZTimezone(DateTime.UtcNow);
-            todolistForNewTeacher.ProcessedAt = null;
-            todolistForNewTeacher.ProcessFlag = 0;
-            todolistForNewTeacher.UserId = userId;
-            todolistForNewTeacher.TodoDate = newTodoDate;
-            todolistForNewTeacher.LearnerId = null;
-            todolistForNewTeacher.LessonId = newLesson.LessonId;
-            todolistForNewTeacher.TeacherId = newTeacher.TeacherId;
-            return todolistForNewTeacher;
-        }
-
-        private TodoList TodoListForOldTeacherCreater(Lesson oldLesson, Lesson newLesson, short userId, Learner learner,
-            Teacher oldTeacher, Teacher newTeacher, Pegasus_backend.pegasusContext.Org oldOrg,
-            Pegasus_backend.pegasusContext.Org newOrg, Room oldRoom, Room newRoom, DateTime newTodoDate)
-        {
-            TodoList todolistForOldTeacher = new TodoList();
-            todolistForOldTeacher.ListName = "Lesson rearrangement to Remind";
-            todolistForOldTeacher.ListContent = "Inform teacher " + oldTeacher.FirstName + " " + oldTeacher.LastName +
-                " session given by teacher " + oldTeacher.FirstName + " " + oldTeacher.LastName + " from " +
-                oldLesson.BeginTime.ToString() + " to " + oldLesson.EndTime.ToString() + " at " + oldOrg.OrgName +
-                " " + oldRoom.RoomName + " has been rearanged to be given by " + newTeacher.FirstName + " " +
-                newTeacher.LastName + " from " + newLesson.BeginTime.ToString() + " to " +
-                newLesson.EndTime.ToString() + " at " + newOrg.OrgName + " " + newRoom.RoomName;
-            todolistForOldTeacher.CreatedAt = toNZTimezone(DateTime.UtcNow);
-            todolistForOldTeacher.ProcessedAt = null;
-            todolistForOldTeacher.ProcessFlag = 0;
-            todolistForOldTeacher.UserId = userId;
-            todolistForOldTeacher.TodoDate = newTodoDate;
-            todolistForOldTeacher.LearnerId = null;
-            todolistForOldTeacher.LessonId = newLesson.LessonId;
-            todolistForOldTeacher.TeacherId = oldTeacher.TeacherId;
-            return todolistForOldTeacher;
-        }
-
-        private RemindLog RemindLogForLearnerCreater(Lesson oldLesson, Lesson newLesson, short userId, Learner learner,
-            Teacher oldTeacher, Teacher newTeacher, Pegasus_backend.pegasusContext.Org oldOrg,
-            Pegasus_backend.pegasusContext.Org newOrg, Room oldRoom, Room newRoom, DateTime newTodoDate, string courseName)
-        {
-            RemindLog remindLogLearner = new RemindLog();
-            remindLogLearner.LearnerId = learner.LearnerId;
-            remindLogLearner.Email = learner.Email;
-            remindLogLearner.RemindType = 1;
-            remindLogLearner.RemindContent = "Your " + courseName + " lesson given by " + oldTeacher.FirstName + " " +
-                oldTeacher.LastName + " from " + oldLesson.BeginTime.ToString() + " to " + oldLesson.EndTime.ToString() +
-                " at " + oldOrg.OrgName + " " + oldRoom.RoomName + " has been rearranged to be given by teacher " +
-                newTeacher.FirstName + " " + newTeacher.LastName + " from " + newLesson.BeginTime.ToString() + " to " +
-                newLesson.EndTime.ToString() + " at " + newOrg.OrgName + " " + newRoom.RoomName;
-            remindLogLearner.CreatedAt = toNZTimezone(DateTime.UtcNow);
-            remindLogLearner.TeacherId = null;
-            remindLogLearner.IsLearner = 1;
-            remindLogLearner.ProcessFlag = 0;
-            remindLogLearner.EmailAt = null;
-            remindLogLearner.RemindTitle = "Lesson Rearrangement Remind";
-            remindLogLearner.ReceivedFlag = 0;
-            remindLogLearner.LessonId = newLesson.LessonId;
-            return remindLogLearner;
-        }
-
-        private RemindLog RemindLogForOldTeacherCreater(Lesson oldLesson, Lesson newLesson, short userId, Learner learner,
-            Teacher oldTeacher, Teacher newTeacher, Pegasus_backend.pegasusContext.Org oldOrg,
-            Pegasus_backend.pegasusContext.Org newOrg, Room oldRoom, Room newRoom, DateTime newTodoDate, string courseName)
-        {
-            RemindLog remindLogForOldTeacher = new RemindLog();
-            remindLogForOldTeacher.LearnerId = null;
-            remindLogForOldTeacher.Email = oldTeacher.Email;
-            remindLogForOldTeacher.RemindType = 1;
-            remindLogForOldTeacher.RemindContent = "The " + courseName + " lesson given by " + oldTeacher.FirstName + " " +
-                oldTeacher.LastName + " from " + oldLesson.BeginTime.ToString() + " to " + oldLesson.EndTime.ToString() +
-                " at " + oldOrg.OrgName + " " + oldRoom.RoomName + " has been rearranged to be given by teacher " +
-                newTeacher.FirstName + " " + newTeacher.LastName + " from " + newLesson.BeginTime.ToString() + " to " +
-                newLesson.EndTime.ToString() + " at " + newOrg.OrgName + " " + newRoom.RoomName;
-            remindLogForOldTeacher.CreatedAt = toNZTimezone(DateTime.UtcNow);
-            remindLogForOldTeacher.TeacherId = oldLesson.TeacherId;
-            remindLogForOldTeacher.IsLearner = 0;
-            remindLogForOldTeacher.ProcessFlag = 0;
-            remindLogForOldTeacher.EmailAt = null;
-            remindLogForOldTeacher.RemindTitle = "Lesson Rearrangement Remind";
-            remindLogForOldTeacher.ReceivedFlag = 0;
-            remindLogForOldTeacher.LessonId = oldLesson.LessonId;
-            return remindLogForOldTeacher;
-        }
-
-        private RemindLog RemindLogForNewTeacherCreater(Lesson oldLesson, Lesson newLesson, short userId, Learner learner,
-            Teacher oldTeacher, Teacher newTeacher, Pegasus_backend.pegasusContext.Org oldOrg,
-            Pegasus_backend.pegasusContext.Org newOrg, Room oldRoom, Room newRoom, DateTime newTodoDate, string courseName)
-        {
-            RemindLog remindLogForNewTeacher = new RemindLog();
-            remindLogForNewTeacher.LearnerId = null;
-            remindLogForNewTeacher.Email = newTeacher.Email;
-            remindLogForNewTeacher.RemindType = 1;
-            remindLogForNewTeacher.RemindContent = "The " + courseName + " lesson given by " + oldTeacher.FirstName + " " +
-                oldTeacher.LastName + " from " + oldLesson.BeginTime.ToString() + " to " + oldLesson.EndTime.ToString() +
-                " at " + oldOrg.OrgName + " " + oldRoom.RoomName + " has been rearranged to be given by teacher " +
-                newTeacher.FirstName + " " + newTeacher.LastName + " from " + newLesson.BeginTime.ToString() + " to " +
-                newLesson.EndTime.ToString() + " at " + newOrg.OrgName + " " + newRoom.RoomName;
-            remindLogForNewTeacher.CreatedAt = toNZTimezone(DateTime.UtcNow);
-            remindLogForNewTeacher.TeacherId = newLesson.TeacherId;
-            remindLogForNewTeacher.IsLearner = 0;
-            remindLogForNewTeacher.ProcessFlag = 0;
-            remindLogForNewTeacher.EmailAt = null;
-            remindLogForNewTeacher.RemindTitle = "Lesson Rearrangement Remind";
-            remindLogForNewTeacher.ReceivedFlag = 0;
-            remindLogForNewTeacher.LessonId = oldLesson.LessonId;
-            return remindLogForNewTeacher;
-        }
-
-        private string MailContentGenerator(string name, string courseName, string confirmURL, Lesson oldLesson, Lesson newLesson, short userId, Learner learner,
-            Teacher oldTeacher, Teacher newTeacher, Pegasus_backend.pegasusContext.Org oldOrg,
-            Pegasus_backend.pegasusContext.Org newOrg, Room oldRoom, Room newRoom, DateTime newTodoDate)
-        {
-            string mailContent = "<div><p>Dear " + name + "</p>" + "<p>The " +
-                    courseName + " lesson given by " + oldTeacher.FirstName + " " + oldTeacher.LastName + " from " + 
-                    oldLesson.BeginTime.ToString() + " to " + oldLesson.EndTime.ToString() + " at " + oldOrg.OrgName + 
-                    " " + oldRoom.RoomName + 
-                    " has been rearranged to be given by" + newTeacher.FirstName + " " + newTeacher.LastName + " at " +
-                    newOrg.OrgName + " " + newRoom.RoomName + ". Please click the following button to confirm. </p>" +
-                    "<a style='background-color:#4CAF50; color:#FFFFFF' href='" + confirmURL +
-                    "' target='_blank'>Confirm</a></div>";
-            return mailContent;
         }
     }
 }
