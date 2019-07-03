@@ -39,5 +39,22 @@ namespace Pegasus_backend.Utilities
                 teacher.FirstName + " " + teacher.LastName;
             return content;
         }
+
+        public static string DayOffForLearner(dynamic courseSchedule, string endDate)
+        {
+            string content;
+            content = "Inform learner " + courseSchedule.LearnerFirstName + " " + courseSchedule.LearnerLastName +
+                " the period of dayoff for the course: " + courseSchedule.CourseName + " will finish soon by " + endDate;
+            return content;
+        }
+
+        public static string DayOffForTeacher(dynamic courseSchedule, string endDate)
+        {
+            string content;
+            content = "Inform teacher " + courseSchedule.TeacherFirstName + " " + courseSchedule.TeacherLastName +
+                " the learner " + courseSchedule.LearnerFirstName + " " + courseSchedule.LearnerLastName + "'s dayoff for the course " +
+                courseSchedule.CourseName + " will finish soon by " + endDate;
+            return content;
+        }
     }
 }

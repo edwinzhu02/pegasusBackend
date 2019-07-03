@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Pegasus_backend.ActionFilter;
@@ -11,6 +10,8 @@ using Pegasus_backend.Models;
 using Pegasus_backend.pegasusContext;
 using Pegasus_backend.Services;
 using Microsoft.Extensions.Logging;
+using Pegasus_backend.Repositories;
+using Pegasus_backend.Utilities;
 
 namespace Pegasus_backend.Controllers
 {
@@ -142,23 +143,35 @@ namespace Pegasus_backend.Controllers
                 }
             }
 
-            TodoList learnerTodo = TodoListForLearnerCreater(courseSchedules[0], inputObj, todoDate);
-            List<TodoList> teacherTodos = TodoListForTeachersCreater(courseSchedules, inputObj, todoDate);
-            RemindLog learnerRemindLog = RemindLogForLearnerCreater(courseSchedules[0], inputObj);
-            List<RemindLog> teacherRemindLogs = RemindLogsForTeachersCreater(courseSchedules, inputObj);
+            var teacherIdMapTodoContent = new Dictionary<short, string>();
+            var teacherMapRemindLogContent = new Dictionary<Teacher, string>();
+
+            foreach (var cs in courseSchedules)
+            {
+                teacherIdMapTodoContent.Add(cs.TeacherId, TodoListContentGenerator.DayOffForTeacher(cs, inputObj.EndDate.ToString()));
+                teacherMapRemindLogContent.Add(new Teacher
+                {
+                    TeacherId = cs.TeacherId,
+                    Email = cs.TeacherEmail
+                }, RemindLogContentGenerator.DayOffForTeacher(cs, inputObj.EndDate.ToString()));
+            }
+
+            TodoRepository todoRepository = new TodoRepository();
+            todoRepository.AddSingleTodoList("Period Dayoff Remind", TodoListContentGenerator.DayOffForLearner(courseSchedules[0],
+                inputObj.EndDate.ToString()), inputObj.UserId, todoDate, null, courseSchedules[0].LearnerId, null);
+            todoRepository.AddMutipleTodoLists("Period Dayoff Remind", teacherIdMapTodoContent, inputObj.UserId, todoDate, null, null);
+            var saveTodoResult = await todoRepository.SaveTodoListsAsync();
+            if (!saveTodoResult.IsSuccess) return BadRequest(saveTodoResult);
+
+            RemindLogRepository remindLogRepository = new RemindLogRepository();
+            remindLogRepository.AddSingleRemindLog(courseSchedules[0].LearnerId, courseSchedules[0].LearnerEmail,
+                RemindLogContentGenerator.DayOffForLearner(courseSchedules[0], inputObj.EndDate.ToString()), null, "Period Dayoff Remind", null);
+            remindLogRepository.AddMultipleRemindLogs(teacherMapRemindLogContent, null, "Period Dayoff Remind", null);
+            var saveRemindLogResult = await remindLogRepository.SaveRemindLogAsync();
+            if (!saveRemindLogResult.IsSuccess) return BadRequest(saveRemindLogResult);
 
             try
             {
-                await _ablemusicContext.TodoList.AddAsync(learnerTodo);
-                foreach (var teacherTodo in teacherTodos)
-                {
-                    await _ablemusicContext.TodoList.AddAsync(teacherTodo);
-                }
-                await _ablemusicContext.RemindLog.AddAsync(learnerRemindLog);
-                foreach (var teacherRemind in teacherRemindLogs)
-                {
-                    await _ablemusicContext.RemindLog.AddAsync(teacherRemind);
-                }
                 foreach (var amendment in amendments)
                 {
                     await _ablemusicContext.Amendment.AddAsync(amendment);
@@ -174,19 +187,42 @@ namespace Pegasus_backend.Controllers
 
             string userConfirmUrlPrefix = _configuration.GetSection("UrlPrefix").Value;
             //sending Email
-            string mailTitle = "Dayoff is expired";
-            List<Task> teacherMailSenderTasks = new List<Task>();
-            for (int i = 0; i < teacherRemindLogs.Count; i++)
+            List<NotificationEventArgs> notifications = new List<NotificationEventArgs>();
+            foreach (var todo in saveTodoResult.Data)
             {
-                string confirmURLForTeacher = userConfirmUrlPrefix + teacherRemindLogs[i].RemindId;
-                string teacherName = courseSchedules[i].TeacherFirstName + " " + courseSchedules[i].TeacherLastName;
-                string mailContentForTeacher = MailContentGenerator(teacherName, courseSchedules[i], inputObj, confirmURLForTeacher);
-                teacherMailSenderTasks.Add(MailSenderService.SendMailAsync(teacherRemindLogs[i].Email, mailTitle, mailContentForTeacher, teacherRemindLogs[i].RemindId));
+                var remind = saveRemindLogResult.Data.Find(r => r.LearnerId == todo.LearnerId && r.TeacherId == todo.TeacherId);
+                string currentPersonName = "";
+                dynamic currentCourseSchedule = null;
+                if (todo.TeacherId == null)
+                {
+                    foreach(var cs in courseSchedules)
+                    {
+                        if (todo.LearnerId == cs.LearnerId)
+                        {
+                            currentPersonName = cs.LearnerFirstName + " " + cs.LearnerLastName;
+                            currentCourseSchedule = cs;
+                        }
+                    }
+                }
+                else
+                {
+                    foreach(var cs in courseSchedules)
+                    {
+                        if (todo.TeacherId == cs.TeacherId)
+                        {
+                            currentPersonName = cs.TeacherFirstName + " " + cs.TeacherLastName;
+                            currentCourseSchedule = cs;
+                        }
+                    }
+                }
+                string confirmURL = userConfirmUrlPrefix + todo.ListId + "/" + remind.RemindId;
+                string mailContent = EmailContentGenerator.Dayoff(currentPersonName, currentCourseSchedule, inputObj, confirmURL);
+                notifications.Add(new NotificationEventArgs(remind.Email, "Dayoff is expired", mailContent, remind.RemindId));
             }
-            string confirmURLForLearner = userConfirmUrlPrefix + learnerRemindLog.RemindId;
-            string learnerName = courseSchedules[0].LearnerFirstName + " " + courseSchedules[0].LearnerLastName;
-            string mailContentForLearner = MailContentGenerator(learnerName, courseSchedules[0], inputObj, confirmURLForLearner);
-            Task learnerMailSenderTask = MailSenderService.SendMailAsync(learnerRemindLog.Email, mailTitle, mailContentForLearner, learnerRemindLog.RemindId);
+            foreach (var mail in notifications)
+            {
+                _notificationObservable.send(mail);
+            }
 
             foreach(var amendment in amendments)
             {
@@ -194,112 +230,6 @@ namespace Pegasus_backend.Controllers
             }
             result.Data = amendments;
             return Ok(result);
-        }
-
-        private TodoList TodoListForLearnerCreater(dynamic courseSchedule, LearnerDayoffViewModel inputObj, DateTime todoDate)
-        {
-            TodoList todolistForLearner = new TodoList();
-            todolistForLearner.ListName = "Period Dayoff Remind";
-            todolistForLearner.ListContent = "Inform learner " + courseSchedule.LearnerFirstName + " " + courseSchedule.LearnerLastName +
-                " the period of dayoff for the course: " + courseSchedule.CourseName + " will finish soon by " + inputObj.EndDate.ToString();
-            todolistForLearner.CreatedAt = toNZTimezone(DateTime.UtcNow);
-            todolistForLearner.ProcessedAt = null;
-            todolistForLearner.ProcessFlag = 0;
-            todolistForLearner.UserId = inputObj.UserId;
-            todolistForLearner.TodoDate = todoDate;
-            todolistForLearner.LearnerId = courseSchedule.LearnerId;
-            todolistForLearner.LessonId = null;
-            todolistForLearner.TeacherId = null;
-            return todolistForLearner;
-        }
-
-        private TodoList TodoListForTeacherCreater(dynamic courseSchedule, LearnerDayoffViewModel inputObj, DateTime todoDate)
-        {
-            TodoList todolistForTeacher = new TodoList();
-            todolistForTeacher.ListName = "Period Dayoff Remind";
-            todolistForTeacher.ListContent = "Inform teacher " + courseSchedule.TeacherFirstName + " " + courseSchedule.TeacherLastName +
-                " the learner " + courseSchedule.LearnerFirstName + " " + courseSchedule.LearnerLastName + "'s dayoff for the course " + 
-                courseSchedule.CourseName + " will finish soon by " + inputObj.EndDate.ToString();
-            todolistForTeacher.CreatedAt = toNZTimezone(DateTime.UtcNow);
-            todolistForTeacher.ProcessedAt = null;
-            todolistForTeacher.ProcessFlag = 0;
-            todolistForTeacher.UserId = inputObj.UserId;
-            todolistForTeacher.TodoDate = todoDate;
-            todolistForTeacher.LearnerId = null;
-            todolistForTeacher.LessonId = null;
-            todolistForTeacher.TeacherId = courseSchedule.TeacherId;
-            return todolistForTeacher;
-        }
-
-        private List<TodoList> TodoListForTeachersCreater(dynamic courseSchedules, LearnerDayoffViewModel inputObj, DateTime todoDate)
-        {
-            List<TodoList> todoListsForTeachers = new List<TodoList>();
-            foreach(var courseSchedule in courseSchedules)
-            {
-                todoListsForTeachers.Add(TodoListForTeacherCreater(courseSchedule, inputObj, todoDate));
-            }
-            return todoListsForTeachers;
-        }
-
-        private RemindLog RemindLogForLearnerCreater(dynamic courseSchedule, LearnerDayoffViewModel inputObj)
-        {
-            RemindLog remindLogLearner = new RemindLog();
-            remindLogLearner.LearnerId = courseSchedule.LearnerId;
-            remindLogLearner.Email = courseSchedule.LearnerEmail;
-            remindLogLearner.RemindType = 1;
-            remindLogLearner.RemindContent = "Inform learner " + courseSchedule.LearnerFirstName + " " + courseSchedule.LearnerLastName +
-                " the period of dayoff for the course: " + courseSchedule.CourseName + " will finish soon by " + inputObj.EndDate.ToString();
-            remindLogLearner.CreatedAt = toNZTimezone(DateTime.UtcNow);
-            remindLogLearner.TeacherId = null;
-            remindLogLearner.IsLearner = 1;
-            remindLogLearner.ProcessFlag = 0;
-            remindLogLearner.EmailAt = null;
-            remindLogLearner.RemindTitle = "Period Dayoff Remind";
-            remindLogLearner.ReceivedFlag = 0;
-            remindLogLearner.LessonId = null;
-            return remindLogLearner;
-        }
-
-        private RemindLog RemindLogForTeacherCreater(dynamic courseSchedule, LearnerDayoffViewModel inputObj)
-        {
-            RemindLog remindLogForTeacher = new RemindLog();
-            remindLogForTeacher.LearnerId = null;
-            remindLogForTeacher.Email = courseSchedule.TeacherEmail;
-            remindLogForTeacher.RemindType = 1;
-            remindLogForTeacher.RemindContent = "Inform teacher " + courseSchedule.TeacherFirstName + " " + courseSchedule.TeacherLastName + 
-                " the learner " +courseSchedule.LearnerFirstName + " " + courseSchedule.LearnerLastName + "'s dayoff for the course " + 
-                courseSchedule.CourseName + " will finish soon by " + inputObj.EndDate.ToString();
-            remindLogForTeacher.CreatedAt = toNZTimezone(DateTime.UtcNow);
-            remindLogForTeacher.TeacherId = courseSchedule.TeacherId;
-            remindLogForTeacher.IsLearner = 0;
-            remindLogForTeacher.ProcessFlag = 0;
-            remindLogForTeacher.EmailAt = null;
-            remindLogForTeacher.RemindTitle = "Period Dayoff Remind";
-            remindLogForTeacher.ReceivedFlag = 0;
-            remindLogForTeacher.LessonId = null;
-            return remindLogForTeacher;
-        }
-
-        private List<RemindLog> RemindLogsForTeachersCreater(dynamic courseSchedules, LearnerDayoffViewModel inputObj)
-        {
-            List<RemindLog> remindLogsForTeachers = new List<RemindLog>();
-            foreach (var courseSchedule in courseSchedules)
-            {
-                remindLogsForTeachers.Add(RemindLogForTeacherCreater(courseSchedule, inputObj));
-            }
-            return remindLogsForTeachers;
-        }
-
-        private string MailContentGenerator(string name, dynamic courseSchedule, LearnerDayoffViewModel inputObj, string confirmURL)
-        {
-            string mailContent = "<div><p>Dear " + name + "</p>" + "<p>This is to inform you that the learner " + courseSchedule.LearnerFirstName +
-                " " + courseSchedule.LearnerLastName + " has been taken the dayoff from " + inputObj.BeginDate.ToString() + " to " +
-                inputObj.EndDate.ToString() + ". The course " + courseSchedule.CourseName + " in the period is canceled. </p>"; 
-
-            mailContent += "<p> Please click the following button to confirm. </p>" +
-                    "<a style='background-color:#4CAF50; color:#FFFFFF' href='" + confirmURL +
-                    "' target='_blank'>Confirm</a></div>";
-            return mailContent;
         }
     }
 }

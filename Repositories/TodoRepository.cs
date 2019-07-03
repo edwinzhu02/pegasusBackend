@@ -19,7 +19,7 @@ namespace Pegasus_backend.Repositories
 
         public List<TodoList> _todoLists { get; }
 
-        public void AddSingleTodoList(string listName, string listContent, short userId, DateTime todoDate, int lessonId, int? learnerId, short? teacherId)
+        public void AddSingleTodoList(string listName, string listContent, short userId, DateTime todoDate, int? lessonId, int? learnerId, short? teacherId)
         {
             _todoLists.Add(new TodoList
             {
@@ -36,7 +36,7 @@ namespace Pegasus_backend.Repositories
             });
         }
 
-        public void AddMutipleTodoLists(string listName, Dictionary<int,string>learnerIdContent, short userId, DateTime todoDate, int lessonId, short? teacherId)
+        public void AddMutipleTodoLists(string listName, Dictionary<int,string>learnerIdContent, short userId, DateTime todoDate, int? lessonId, short? teacherId)
         {
             foreach(KeyValuePair<int, string> lc in learnerIdContent)
             {
@@ -44,7 +44,7 @@ namespace Pegasus_backend.Repositories
             }
         }
 
-        public void AddMutipleTodoLists(string listName, Dictionary<short, string> teacherIdContent, short userId, DateTime todoDate, int lessonId, int? learnerId)
+        public void AddMutipleTodoLists(string listName, Dictionary<short, string> teacherIdContent, short userId, DateTime todoDate, int? lessonId, int? learnerId)
         {
             foreach(KeyValuePair<short, string> tc in teacherIdContent)
             {

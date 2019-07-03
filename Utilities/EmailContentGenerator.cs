@@ -1,4 +1,5 @@
-﻿using Pegasus_backend.pegasusContext;
+﻿using Pegasus_backend.Models;
+using Pegasus_backend.pegasusContext;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,18 @@ namespace Pegasus_backend.Utilities
             string mailContent = "<div><p>Dear " + name + "</p>" + "<p>You have a new rearranged lesson " +
                     courseName + " from " + lesson.BeginTime.ToString() + " to " + lesson.EndTime.ToString() +
                     " at " + org.OrgName + " " + room.RoomName + ".</p><p>Please click the following button to confirm. </p>" +
+                    "<a style='background-color:#4CAF50; color:#FFFFFF' href='" + confirmURL +
+                    "' target='_blank'>Confirm</a></div>";
+            return mailContent;
+        }
+
+        public static string Dayoff(string name, dynamic courseSchedule, LearnerDayoffViewModel inputObj, string confirmURL)
+        {
+            string mailContent = "<div><p>Dear " + name + "</p>" + "<p>This is to inform you that the learner " + courseSchedule.LearnerFirstName +
+                " " + courseSchedule.LearnerLastName + " has been taken the dayoff from " + inputObj.BeginDate.ToString() + " to " +
+                inputObj.EndDate.ToString() + ". The course " + courseSchedule.CourseName + " in the period is canceled. </p>";
+
+            mailContent += "<p> Please click the following button to confirm. </p>" +
                     "<a style='background-color:#4CAF50; color:#FFFFFF' href='" + confirmURL +
                     "' target='_blank'>Confirm</a></div>";
             return mailContent;
