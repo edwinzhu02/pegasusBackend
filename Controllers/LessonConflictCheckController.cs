@@ -219,17 +219,21 @@ namespace Pegasus_backend.Controllers
                 foreach(var r in rcl)
                 {
                     string courseName = "Not Found";
+                    int? courseId = -1;
                     
                     if(r.CourseInstanceId != null)
                     {
+                        courseId = r.CourseInstance.CourseId;
                         courseName = courses.Find(c => c.CourseId == r.CourseInstance.CourseId).CourseName;
                     } 
                     if(r.GroupCourseInstanceId != null)
                     {
+                        courseId = r.GroupCourseInstance.CourseId;
                         courseName = courses.Find(c => c.CourseId == r.GroupCourseInstance.CourseId).CourseName;
                     } 
                     if(r.IsTrial == 1 && r.CourseInstanceId == null && r.GroupCourseInstanceId == null)
                     {
+                        courseId = r.TrialCourseId;
                         courseName = courses.Find(c => c.CourseId == r.TrialCourseId).CourseName;
                     } 
                     temp.Add(new
@@ -254,6 +258,7 @@ namespace Pegasus_backend.Controllers
                         OrgName = r.Org.OrgName,
                         RoomName = r.Room.RoomName,
                         CourseName = courseName,
+                        CourseId = courseId,
                     });
                 }
                 roomConflictLessonsView.Add(temp);
@@ -265,17 +270,21 @@ namespace Pegasus_backend.Controllers
                 foreach(var t in tcl)
                 {
                     string courseName = "Not Found";
+                    int? courseId = -1;
 
                     if (t.CourseInstanceId != null)
                     {
+                        courseId = t.CourseInstance.CourseId;
                         courseName = courses.Find(c => c.CourseId == t.CourseInstance.CourseId).CourseName;
                     }
                     if (t.GroupCourseInstanceId != null)
                     {
+                        courseId = t.GroupCourseInstance.CourseId;
                         courseName = courses.Find(c => c.CourseId == t.GroupCourseInstance.CourseId).CourseName;
                     }
                     if (t.IsTrial == 1 && t.CourseInstanceId == null && t.GroupCourseInstanceId == null)
                     {
+                        courseId = t.TrialCourseId;
                         courseName = courses.Find(c => c.CourseId == t.TrialCourseId).CourseName;
                     }
                     temp.Add(new
@@ -300,6 +309,7 @@ namespace Pegasus_backend.Controllers
                         OrgName = t.Org.OrgName,
                         RoomName = t.Room.RoomName,
                         CourseName = courseName,
+                        CourseId = courseId
                     });
                 }
                 teacherConflictLessonsView.Add(temp);
