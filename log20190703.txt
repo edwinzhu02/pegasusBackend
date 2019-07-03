@@ -1,273 +1,140 @@
-2019-07-03 10:01:24.563 +12:00 [INF] User profile is available. Using 'C:\Users\Administrator\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
-2019-07-03 10:01:25.464 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
-2019-07-03 10:01:25.523 +12:00 [WRN] Failed to determine the https port for redirect.
-2019-07-03 10:01:25.686 +12:00 [ERR] An unhandled exception has occurred while executing the request.
-System.InvalidOperationException: Action 'Pegasus_backend.Controllers.StockApplicationController.UpdateProcess2 (Pegasus_backend)' has more than one parameter that was specified or inferred as bound from request body. Only one parameter per action may be bound from body. Inspect the following parameters, and use 'FromQueryAttribute' to specify bound from query, 'FromRouteAttribute' to specify bound from route, and 'FromBodyAttribute' for parameters to be bound from body:
-StockApplication stockapplication
-ApplicationDetails applicationdetails
-   at Microsoft.AspNetCore.Mvc.Internal.ApiBehaviorApplicationModelProvider.InferParameterBindingSources(ActionModel actionModel)
-   at Microsoft.AspNetCore.Mvc.Internal.ApiBehaviorApplicationModelProvider.OnProvidersExecuting(ApplicationModelProviderContext context)
-   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionDescriptorProvider.BuildModel()
-   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionDescriptorProvider.GetDescriptors()
-   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionDescriptorProvider.OnProvidersExecuting(ActionDescriptorProviderContext context)
-   at Microsoft.AspNetCore.Mvc.Internal.ActionDescriptorCollectionProvider.UpdateCollection()
-   at Microsoft.AspNetCore.Mvc.Internal.ActionDescriptorCollectionProvider.get_ActionDescriptors()
-   at Microsoft.AspNetCore.Mvc.Internal.AttributeRoute.GetTreeRouter()
-   at Microsoft.AspNetCore.Mvc.Internal.AttributeRoute.RouteAsync(RouteContext context)
-   at Microsoft.AspNetCore.Routing.RouteCollection.RouteAsync(RouteContext context)
-   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
-   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
-   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
-   at Microsoft.AspNetCore.Cors.Infrastructure.CorsMiddleware.Invoke(HttpContext context)
-   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
-   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
-   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
-   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
-   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
-   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
-2019-07-03 10:01:25.788 +12:00 [INF] Request finished in 328.6887ms 500 text/html; charset=utf-8
-2019-07-03 10:01:25.901 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/favicon.ico  
-2019-07-03 10:01:25.952 +12:00 [ERR] An unhandled exception has occurred while executing the request.
-System.InvalidOperationException: Action 'Pegasus_backend.Controllers.StockApplicationController.UpdateProcess2 (Pegasus_backend)' has more than one parameter that was specified or inferred as bound from request body. Only one parameter per action may be bound from body. Inspect the following parameters, and use 'FromQueryAttribute' to specify bound from query, 'FromRouteAttribute' to specify bound from route, and 'FromBodyAttribute' for parameters to be bound from body:
-StockApplication stockapplication
-ApplicationDetails applicationdetails
-   at Microsoft.AspNetCore.Mvc.Internal.ApiBehaviorApplicationModelProvider.InferParameterBindingSources(ActionModel actionModel)
-   at Microsoft.AspNetCore.Mvc.Internal.ApiBehaviorApplicationModelProvider.OnProvidersExecuting(ApplicationModelProviderContext context)
-   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionDescriptorProvider.BuildModel()
-   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionDescriptorProvider.GetDescriptors()
-   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionDescriptorProvider.OnProvidersExecuting(ActionDescriptorProviderContext context)
-   at Microsoft.AspNetCore.Mvc.Internal.ActionDescriptorCollectionProvider.UpdateCollection()
-   at Microsoft.AspNetCore.Mvc.Internal.ActionDescriptorCollectionProvider.get_ActionDescriptors()
-   at Microsoft.AspNetCore.Mvc.Internal.AttributeRoute.GetTreeRouter()
-   at Microsoft.AspNetCore.Mvc.Internal.AttributeRoute.RouteAsync(RouteContext context)
-   at Microsoft.AspNetCore.Routing.RouteCollection.RouteAsync(RouteContext context)
-   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
-   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
-   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
-   at Microsoft.AspNetCore.Cors.Infrastructure.CorsMiddleware.Invoke(HttpContext context)
-   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
-   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
-   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
-   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
-   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
-   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
-2019-07-03 10:01:25.965 +12:00 [INF] Request finished in 63.768ms 500 text/html; charset=utf-8
-2019-07-03 10:01:29.218 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/StockApplication  ?beginDate=&endDate=  
-2019-07-03 10:01:29.261 +12:00 [ERR] An unhandled exception has occurred while executing the request.
-System.InvalidOperationException: Action 'Pegasus_backend.Controllers.StockApplicationController.UpdateProcess2 (Pegasus_backend)' has more than one parameter that was specified or inferred as bound from request body. Only one parameter per action may be bound from body. Inspect the following parameters, and use 'FromQueryAttribute' to specify bound from query, 'FromRouteAttribute' to specify bound from route, and 'FromBodyAttribute' for parameters to be bound from body:
-StockApplication stockapplication
-ApplicationDetails applicationdetails
-   at Microsoft.AspNetCore.Mvc.Internal.ApiBehaviorApplicationModelProvider.InferParameterBindingSources(ActionModel actionModel)
-   at Microsoft.AspNetCore.Mvc.Internal.ApiBehaviorApplicationModelProvider.OnProvidersExecuting(ApplicationModelProviderContext context)
-   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionDescriptorProvider.BuildModel()
-   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionDescriptorProvider.GetDescriptors()
-   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionDescriptorProvider.OnProvidersExecuting(ActionDescriptorProviderContext context)
-   at Microsoft.AspNetCore.Mvc.Internal.ActionDescriptorCollectionProvider.UpdateCollection()
-   at Microsoft.AspNetCore.Mvc.Internal.ActionDescriptorCollectionProvider.get_ActionDescriptors()
-   at Microsoft.AspNetCore.Mvc.Internal.AttributeRoute.GetTreeRouter()
-   at Microsoft.AspNetCore.Mvc.Internal.AttributeRoute.RouteAsync(RouteContext context)
-   at Microsoft.AspNetCore.Routing.RouteCollection.RouteAsync(RouteContext context)
-   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
-   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
-   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
-   at Microsoft.AspNetCore.Cors.Infrastructure.CorsMiddleware.Invoke(HttpContext context)
-   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
-   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
-   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
-   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
-   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
-   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
-2019-07-03 10:01:29.275 +12:00 [INF] Request finished in 56.7924ms 500 text/html; charset=utf-8
-2019-07-03 10:09:01.894 +12:00 [INF] User profile is available. Using 'C:\Users\Administrator\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
-2019-07-03 10:09:02.555 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
-2019-07-03 10:09:02.612 +12:00 [WRN] Failed to determine the https port for redirect.
-2019-07-03 10:09:02.748 +12:00 [ERR] An unhandled exception has occurred while executing the request.
-System.InvalidOperationException: Action 'Pegasus_backend.Controllers.StockApplicationController.UpdateProcess2 (Pegasus_backend)' has more than one parameter that was specified or inferred as bound from request body. Only one parameter per action may be bound from body. Inspect the following parameters, and use 'FromQueryAttribute' to specify bound from query, 'FromRouteAttribute' to specify bound from route, and 'FromBodyAttribute' for parameters to be bound from body:
-StockApplication stockapplication
-ApplicationDetails applicationdetails
-   at Microsoft.AspNetCore.Mvc.Internal.ApiBehaviorApplicationModelProvider.InferParameterBindingSources(ActionModel actionModel)
-   at Microsoft.AspNetCore.Mvc.Internal.ApiBehaviorApplicationModelProvider.OnProvidersExecuting(ApplicationModelProviderContext context)
-   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionDescriptorProvider.BuildModel()
-   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionDescriptorProvider.GetDescriptors()
-   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionDescriptorProvider.OnProvidersExecuting(ActionDescriptorProviderContext context)
-   at Microsoft.AspNetCore.Mvc.Internal.ActionDescriptorCollectionProvider.UpdateCollection()
-   at Microsoft.AspNetCore.Mvc.Internal.ActionDescriptorCollectionProvider.get_ActionDescriptors()
-   at Microsoft.AspNetCore.Mvc.Internal.AttributeRoute.GetTreeRouter()
-   at Microsoft.AspNetCore.Mvc.Internal.AttributeRoute.RouteAsync(RouteContext context)
-   at Microsoft.AspNetCore.Routing.RouteCollection.RouteAsync(RouteContext context)
-   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
-   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
-   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
-   at Microsoft.AspNetCore.Cors.Infrastructure.CorsMiddleware.Invoke(HttpContext context)
-   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
-   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
-   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
-   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
-   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
-   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
-2019-07-03 10:09:02.811 +12:00 [INF] Request finished in 260.0102ms 500 text/html; charset=utf-8
-2019-07-03 10:09:02.926 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/favicon.ico  
-2019-07-03 10:09:02.991 +12:00 [ERR] An unhandled exception has occurred while executing the request.
-System.InvalidOperationException: Action 'Pegasus_backend.Controllers.StockApplicationController.UpdateProcess2 (Pegasus_backend)' has more than one parameter that was specified or inferred as bound from request body. Only one parameter per action may be bound from body. Inspect the following parameters, and use 'FromQueryAttribute' to specify bound from query, 'FromRouteAttribute' to specify bound from route, and 'FromBodyAttribute' for parameters to be bound from body:
-StockApplication stockapplication
-ApplicationDetails applicationdetails
-   at Microsoft.AspNetCore.Mvc.Internal.ApiBehaviorApplicationModelProvider.InferParameterBindingSources(ActionModel actionModel)
-   at Microsoft.AspNetCore.Mvc.Internal.ApiBehaviorApplicationModelProvider.OnProvidersExecuting(ApplicationModelProviderContext context)
-   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionDescriptorProvider.BuildModel()
-   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionDescriptorProvider.GetDescriptors()
-   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionDescriptorProvider.OnProvidersExecuting(ActionDescriptorProviderContext context)
-   at Microsoft.AspNetCore.Mvc.Internal.ActionDescriptorCollectionProvider.UpdateCollection()
-   at Microsoft.AspNetCore.Mvc.Internal.ActionDescriptorCollectionProvider.get_ActionDescriptors()
-   at Microsoft.AspNetCore.Mvc.Internal.AttributeRoute.GetTreeRouter()
-   at Microsoft.AspNetCore.Mvc.Internal.AttributeRoute.RouteAsync(RouteContext context)
-   at Microsoft.AspNetCore.Routing.RouteCollection.RouteAsync(RouteContext context)
-   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
-   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
-   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
-   at Microsoft.AspNetCore.Cors.Infrastructure.CorsMiddleware.Invoke(HttpContext context)
-   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
-   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
-   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
-   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
-   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
-   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
-2019-07-03 10:09:03.001 +12:00 [INF] Request finished in 74.3012ms 500 text/html; charset=utf-8
-2019-07-03 10:09:43.084 +12:00 [INF] User profile is available. Using 'C:\Users\Administrator\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
-2019-07-03 10:09:43.719 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
-2019-07-03 10:09:43.792 +12:00 [WRN] Failed to determine the https port for redirect.
-2019-07-03 10:09:43.923 +12:00 [ERR] An unhandled exception has occurred while executing the request.
-System.InvalidOperationException: Action 'Pegasus_backend.Controllers.StockApplicationController.UpdateProcess2 (Pegasus_backend)' has more than one parameter that was specified or inferred as bound from request body. Only one parameter per action may be bound from body. Inspect the following parameters, and use 'FromQueryAttribute' to specify bound from query, 'FromRouteAttribute' to specify bound from route, and 'FromBodyAttribute' for parameters to be bound from body:
-StockApplication stockapplication
-ApplicationDetails applicationdetails
-   at Microsoft.AspNetCore.Mvc.Internal.ApiBehaviorApplicationModelProvider.InferParameterBindingSources(ActionModel actionModel)
-   at Microsoft.AspNetCore.Mvc.Internal.ApiBehaviorApplicationModelProvider.OnProvidersExecuting(ApplicationModelProviderContext context)
-   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionDescriptorProvider.BuildModel()
-   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionDescriptorProvider.GetDescriptors()
-   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionDescriptorProvider.OnProvidersExecuting(ActionDescriptorProviderContext context)
-   at Microsoft.AspNetCore.Mvc.Internal.ActionDescriptorCollectionProvider.UpdateCollection()
-   at Microsoft.AspNetCore.Mvc.Internal.ActionDescriptorCollectionProvider.get_ActionDescriptors()
-   at Microsoft.AspNetCore.Mvc.Internal.AttributeRoute.GetTreeRouter()
-   at Microsoft.AspNetCore.Mvc.Internal.AttributeRoute.RouteAsync(RouteContext context)
-   at Microsoft.AspNetCore.Routing.RouteCollection.RouteAsync(RouteContext context)
-   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
-   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
-   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
-   at Microsoft.AspNetCore.Cors.Infrastructure.CorsMiddleware.Invoke(HttpContext context)
-   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
-   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
-   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
-   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
-   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
-   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
-2019-07-03 10:09:43.991 +12:00 [INF] Request finished in 275.4679ms 500 text/html; charset=utf-8
-2019-07-03 10:09:44.093 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/favicon.ico  
-2019-07-03 10:09:44.140 +12:00 [ERR] An unhandled exception has occurred while executing the request.
-System.InvalidOperationException: Action 'Pegasus_backend.Controllers.StockApplicationController.UpdateProcess2 (Pegasus_backend)' has more than one parameter that was specified or inferred as bound from request body. Only one parameter per action may be bound from body. Inspect the following parameters, and use 'FromQueryAttribute' to specify bound from query, 'FromRouteAttribute' to specify bound from route, and 'FromBodyAttribute' for parameters to be bound from body:
-StockApplication stockapplication
-ApplicationDetails applicationdetails
-   at Microsoft.AspNetCore.Mvc.Internal.ApiBehaviorApplicationModelProvider.InferParameterBindingSources(ActionModel actionModel)
-   at Microsoft.AspNetCore.Mvc.Internal.ApiBehaviorApplicationModelProvider.OnProvidersExecuting(ApplicationModelProviderContext context)
-   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionDescriptorProvider.BuildModel()
-   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionDescriptorProvider.GetDescriptors()
-   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionDescriptorProvider.OnProvidersExecuting(ActionDescriptorProviderContext context)
-   at Microsoft.AspNetCore.Mvc.Internal.ActionDescriptorCollectionProvider.UpdateCollection()
-   at Microsoft.AspNetCore.Mvc.Internal.ActionDescriptorCollectionProvider.get_ActionDescriptors()
-   at Microsoft.AspNetCore.Mvc.Internal.AttributeRoute.GetTreeRouter()
-   at Microsoft.AspNetCore.Mvc.Internal.AttributeRoute.RouteAsync(RouteContext context)
-   at Microsoft.AspNetCore.Routing.RouteCollection.RouteAsync(RouteContext context)
-   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
-   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
-   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
-   at Microsoft.AspNetCore.Cors.Infrastructure.CorsMiddleware.Invoke(HttpContext context)
-   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
-   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
-   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
-   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
-   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
-   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
-2019-07-03 10:09:44.151 +12:00 [INF] Request finished in 57.3877ms 500 text/html; charset=utf-8
-2019-07-03 10:10:37.009 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/StockApplication  
-2019-07-03 10:10:37.057 +12:00 [ERR] An unhandled exception has occurred while executing the request.
-System.InvalidOperationException: Action 'Pegasus_backend.Controllers.StockApplicationController.UpdateProcess2 (Pegasus_backend)' has more than one parameter that was specified or inferred as bound from request body. Only one parameter per action may be bound from body. Inspect the following parameters, and use 'FromQueryAttribute' to specify bound from query, 'FromRouteAttribute' to specify bound from route, and 'FromBodyAttribute' for parameters to be bound from body:
-StockApplication stockapplication
-ApplicationDetails applicationdetails
-   at Microsoft.AspNetCore.Mvc.Internal.ApiBehaviorApplicationModelProvider.InferParameterBindingSources(ActionModel actionModel)
-   at Microsoft.AspNetCore.Mvc.Internal.ApiBehaviorApplicationModelProvider.OnProvidersExecuting(ApplicationModelProviderContext context)
-   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionDescriptorProvider.BuildModel()
-   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionDescriptorProvider.GetDescriptors()
-   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionDescriptorProvider.OnProvidersExecuting(ActionDescriptorProviderContext context)
-   at Microsoft.AspNetCore.Mvc.Internal.ActionDescriptorCollectionProvider.UpdateCollection()
-   at Microsoft.AspNetCore.Mvc.Internal.ActionDescriptorCollectionProvider.get_ActionDescriptors()
-   at Microsoft.AspNetCore.Mvc.Internal.AttributeRoute.GetTreeRouter()
-   at Microsoft.AspNetCore.Mvc.Internal.AttributeRoute.RouteAsync(RouteContext context)
-   at Microsoft.AspNetCore.Routing.RouteCollection.RouteAsync(RouteContext context)
-   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
-   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
-   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
-   at Microsoft.AspNetCore.Cors.Infrastructure.CorsMiddleware.Invoke(HttpContext context)
-   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
-   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
-   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
-   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
-   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
-   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
-2019-07-03 10:10:37.069 +12:00 [INF] Request finished in 60.0249ms 500 text/html; charset=utf-8
-2019-07-03 10:10:37.089 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/favicon.ico  
-2019-07-03 10:10:37.123 +12:00 [ERR] An unhandled exception has occurred while executing the request.
-System.InvalidOperationException: Action 'Pegasus_backend.Controllers.StockApplicationController.UpdateProcess2 (Pegasus_backend)' has more than one parameter that was specified or inferred as bound from request body. Only one parameter per action may be bound from body. Inspect the following parameters, and use 'FromQueryAttribute' to specify bound from query, 'FromRouteAttribute' to specify bound from route, and 'FromBodyAttribute' for parameters to be bound from body:
-StockApplication stockapplication
-ApplicationDetails applicationdetails
-   at Microsoft.AspNetCore.Mvc.Internal.ApiBehaviorApplicationModelProvider.InferParameterBindingSources(ActionModel actionModel)
-   at Microsoft.AspNetCore.Mvc.Internal.ApiBehaviorApplicationModelProvider.OnProvidersExecuting(ApplicationModelProviderContext context)
-   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionDescriptorProvider.BuildModel()
-   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionDescriptorProvider.GetDescriptors()
-   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionDescriptorProvider.OnProvidersExecuting(ActionDescriptorProviderContext context)
-   at Microsoft.AspNetCore.Mvc.Internal.ActionDescriptorCollectionProvider.UpdateCollection()
-   at Microsoft.AspNetCore.Mvc.Internal.ActionDescriptorCollectionProvider.get_ActionDescriptors()
-   at Microsoft.AspNetCore.Mvc.Internal.AttributeRoute.GetTreeRouter()
-   at Microsoft.AspNetCore.Mvc.Internal.AttributeRoute.RouteAsync(RouteContext context)
-   at Microsoft.AspNetCore.Routing.RouteCollection.RouteAsync(RouteContext context)
-   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
-   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
-   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
-   at Microsoft.AspNetCore.Cors.Infrastructure.CorsMiddleware.Invoke(HttpContext context)
-   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
-   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
-   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
-   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
-   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
-   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
-2019-07-03 10:10:37.134 +12:00 [INF] Request finished in 45.8097ms 500 text/html; charset=utf-8
-2019-07-03 10:11:50.417 +12:00 [INF] User profile is available. Using 'C:\Users\Administrator\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
-2019-07-03 10:11:51.129 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
-2019-07-03 10:11:51.203 +12:00 [WRN] Failed to determine the https port for redirect.
-2019-07-03 10:11:51.371 +12:00 [INF] Request finished in 244.4678ms 404 
-2019-07-03 10:11:57.272 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/StockApplication  ?beginDate=&endDate=  
-2019-07-03 10:11:57.274 +12:00 [INF] Request finished in 1.3733ms 404 
-2019-07-03 10:13:13.737 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger  
-2019-07-03 10:13:13.738 +12:00 [INF] Request finished in 0.8534ms 301 
-2019-07-03 10:13:13.740 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/index.html  
-2019-07-03 10:13:13.824 +12:00 [INF] Request finished in 83.7965ms 200 text/html
-2019-07-03 10:13:13.842 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/swagger-ui.css  
-2019-07-03 10:13:13.842 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/swagger-ui-bundle.js  
-2019-07-03 10:13:13.844 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/swagger-ui-standalone-preset.js  
-2019-07-03 10:13:13.874 +12:00 [INF] Sending file. Request path: '/swagger-ui-standalone-preset.js'. Physical path: 'N/A'
-2019-07-03 10:13:13.874 +12:00 [INF] Sending file. Request path: '/swagger-ui.css'. Physical path: 'N/A'
-2019-07-03 10:13:13.880 +12:00 [INF] Request finished in 37.525ms 200 text/css
-2019-07-03 10:13:13.880 +12:00 [INF] Request finished in 36.5074ms 200 application/javascript
-2019-07-03 10:13:13.883 +12:00 [INF] Sending file. Request path: '/swagger-ui-bundle.js'. Physical path: 'N/A'
-2019-07-03 10:13:13.884 +12:00 [INF] Request finished in 41.3898ms 200 application/javascript
-2019-07-03 10:13:15.984 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/v1/swagger.json  
-2019-07-03 10:13:16.009 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/favicon-32x32.png  
-2019-07-03 10:13:16.010 +12:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
-2019-07-03 10:13:16.010 +12:00 [INF] Request finished in 1.1158ms 200 image/png
-2019-07-03 10:13:16.065 +12:00 [ERR] An unhandled exception has occurred while executing the request.
-System.NotSupportedException: Ambiguous HTTP method for action - Pegasus_backend.Controllers.MobileControllers.ChatController.GetAllStaff (Pegasus_backend). Actions require an explicit HttpMethod binding for Swagger 2.0
-   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.CreatePathItem(IEnumerable`1 apiDescriptions, ISchemaRegistry schemaRegistry)
-   at System.Linq.Enumerable.ToDictionary[TSource,TKey,TElement](IEnumerable`1 source, Func`2 keySelector, Func`2 elementSelector, IEqualityComparer`1 comparer)
-   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.CreatePathItems(IEnumerable`1 apiDescriptions, ISchemaRegistry schemaRegistry)
-   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GetSwagger(String documentName, String host, String basePath, String[] schemes)
-   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
-   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
-   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
-2019-07-03 10:13:16.123 +12:00 [INF] Request finished in 139.0798ms 500 text/html; charset=utf-8
+2019-07-03 11:42:48.872 +12:00 [INF] User profile is available. Using 'C:\Users\lgx95\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-07-03 11:42:49.766 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/values  
+2019-07-03 11:42:49.766 +12:00 [INF] Request starting HTTP/1.1 DEBUG http://localhost:5000/  0
+2019-07-03 11:42:49.809 +12:00 [INF] Request finished in 41.4301ms 200 
+2019-07-03 11:42:49.866 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-07-03 11:42:50.361 +12:00 [INF] Route matched with {action = "Get", controller = "Values"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Get() on controller Pegasus_backend.Controllers.ValuesController (Pegasus_backend).
+2019-07-03 11:42:50.716 +12:00 [INF] Executing action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) - Validation state: "Valid"
+2019-07-03 11:42:50.953 +12:00 [ERR] ValuesController LogErrorToFile: System.Exception: Exception of type 'System.Exception' was thrown.
+   at Pegasus_backend.Controllers.ValuesController.Get() in C:\angular\pegasusBackend\Controllers\ValuesController.cs:line 26
+2019-07-03 11:42:50.954 +12:00 [INF] ValuesController LogInfoToFile: hello
+2019-07-03 11:42:50.964 +12:00 [INF] Executed action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 231.048ms.
+2019-07-03 11:42:50.982 +12:00 [INF] Executing ObjectResult, writing value of type 'System.DateTime'.
+2019-07-03 11:42:51.105 +12:00 [INF] Executed action Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) in 736.2172ms
+2019-07-03 11:42:51.113 +12:00 [INF] Request finished in 1350.579ms 200 application/json; charset=utf-8
+2019-07-03 11:42:51.792 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/favicon.ico  
+2019-07-03 11:42:51.797 +12:00 [INF] Request finished in 4.9464ms 404 
+2019-07-03 11:43:05.171 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Chat/GetChattingList/1 application/json 65
+2019-07-03 11:43:05.202 +12:00 [INF] Route matched with {action = "GetChattingList", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetChattingList(Int32) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-07-03 11:43:05.228 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.GetChattingList (Pegasus_backend) - Validation state: "Valid"
+2019-07-03 11:43:09.418 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-03 11:43:10.704 +12:00 [INF] Executed DbCommand (78ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`user_id`, `x`.`created_at`, `x`.`is_activate`, `x`.`password`, `x`.`role_id`, `x`.`unread_message_id`, `x`.`user_name`, `x.Role`.`role_id`, `x.Role`.`role_name`
+FROM `ablemusic`.`user` AS `x`
+LEFT JOIN `ablemusic`.`role` AS `x.Role` ON `x`.`role_id` = `x.Role`.`role_id`
+WHERE `x`.`user_id` = @__id_0
+LIMIT 1
+2019-07-03 11:43:18.218 +12:00 [INF] Executed DbCommand (55ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`staff_id`, `x`.`dob`, `x`.`email`, `x`.`expiry_date`, `x`.`first_name`, `x`.`gender`, `x`.`home_phone`, `x`.`id_number`, `x`.`id_photo`, `x`.`id_type`, `x`.`ird_number`, `x`.`is_activate`, `x`.`last_name`, `x`.`mobile_phone`, `x`.`photo`, `x`.`user_id`, `x`.`visa`
+FROM `ablemusic`.`staff` AS `x`
+WHERE `x`.`user_id` = @__id_0
+LIMIT 1
+2019-07-03 11:43:27.985 +12:00 [INF] Executed DbCommand (53ms) [Parameters=[@__staffId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`org_id`
+FROM `ablemusic`.`staff_org` AS `x`
+WHERE `x`.`staff_id` = @__staffId_0
+LIMIT 1
+2019-07-03 11:43:28.004 +12:00 [WRN] Query: '(from Lesson x in DbSet<Lesson> where (Nullable<int>)(int)[x].OrgId == (Nullable<int>)__orgIdOfStaff...' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
+2019-07-03 11:43:28.007 +12:00 [WRN] The Include operation for navigation '[x].Learner' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-07-03 11:43:28.246 +12:00 [INF] Executed DbCommand (88ms) [Parameters=[@__orgIdOfStaff_0='?' (DbType = Int16), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT DISTINCT `t`.*
+FROM (
+    SELECT `x.Learner`.`learner_id`, `x.Learner`.`address`, `x.Learner`.`contact_num`, `x.Learner`.`created_at`, `x.Learner`.`dob`, `x.Learner`.`email`, `x.Learner`.`enroll_date`, `x.Learner`.`first_name`, `x.Learner`.`form_url`, `x.Learner`.`g5_certification`, `x.Learner`.`gender`, `x.Learner`.`is_abrsm_g5`, `x.Learner`.`is_active`, `x.Learner`.`is_under_18`, `x.Learner`.`last_name`, `x.Learner`.`learner_level`, `x.Learner`.`level_type`, `x.Learner`.`middle_name`, `x.Learner`.`note`, `x.Learner`.`org_id`, `x.Learner`.`otherfile_url`, `x.Learner`.`payment_period`, `x.Learner`.`photo`, `x.Learner`.`referrer`, `x.Learner`.`referrer_learner_id`, `x.Learner`.`user_id`
+    FROM `ablemusic`.`lesson` AS `x`
+    LEFT JOIN `ablemusic`.`learner` AS `x.Learner` ON `x`.`learner_id` = `x.Learner`.`learner_id`
+    WHERE `x`.`org_id` = @__orgIdOfStaff_0
+    LIMIT @__p_1
+) AS `t`
+2019-07-03 11:43:28.319 +12:00 [WRN] Query: '(from Learner x in DbSet<Learner> where (Nullable<int>)[x].OrgId == (Nullable<int>)__orgIdOfStaff_0 ...' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
+2019-07-03 11:43:28.508 +12:00 [INF] Executed DbCommand (78ms) [Parameters=[@__orgIdOfStaff_0='?' (DbType = Int16), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`learner_id`, `x`.`address`, `x`.`contact_num`, `x`.`created_at`, `x`.`dob`, `x`.`email`, `x`.`enroll_date`, `x`.`first_name`, `x`.`form_url`, `x`.`g5_certification`, `x`.`gender`, `x`.`is_abrsm_g5`, `x`.`is_active`, `x`.`is_under_18`, `x`.`last_name`, `x`.`learner_level`, `x`.`level_type`, `x`.`middle_name`, `x`.`note`, `x`.`org_id`, `x`.`otherfile_url`, `x`.`payment_period`, `x`.`photo`, `x`.`referrer`, `x`.`referrer_learner_id`, `x`.`user_id`
+FROM `ablemusic`.`learner` AS `x`
+WHERE `x`.`org_id` = @__orgIdOfStaff_0
+LIMIT @__p_1
+2019-07-03 11:43:28.513 +12:00 [WRN] Query: '(from Staff x in DbSet<Staff> where (Nullable<int>)(int)[x].StaffId != __staffId_0 select [x]).Take(...' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
+2019-07-03 11:43:28.791 +12:00 [INF] Executed DbCommand (105ms) [Parameters=[@__staffId_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`staff_id`, `x`.`dob`, `x`.`email`, `x`.`expiry_date`, `x`.`first_name`, `x`.`gender`, `x`.`home_phone`, `x`.`id_number`, `x`.`id_photo`, `x`.`id_type`, `x`.`ird_number`, `x`.`is_activate`, `x`.`last_name`, `x`.`mobile_phone`, `x`.`photo`, `x`.`user_id`, `x`.`visa`
+FROM `ablemusic`.`staff` AS `x`
+WHERE `x`.`staff_id` <> @__staffId_0
+LIMIT @__p_1
+2019-07-03 11:43:28.802 +12:00 [WRN] Query: '(from Teacher x in DbSet<Teacher> select new Teacher{ { 
+    TeacherId = [x].TeacherId, , 
+    Fir...' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
+2019-07-03 11:43:28.976 +12:00 [INF] Executed DbCommand (64ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`teacher_id` AS `TeacherId`, `x`.`first_name` AS `FirstName`, `x`.`last_name` AS `LastName`, `x`.`email`
+FROM `ablemusic`.`teacher` AS `x`
+LIMIT @__p_0
+2019-07-03 11:43:55.227 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.GetChattingList (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkResult in 49998.402ms.
+2019-07-03 11:43:55.231 +12:00 [INF] Executing HttpStatusCodeResult, setting HTTP status code 200
+2019-07-03 11:43:55.231 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.GetChattingList (Pegasus_backend) in 50029.2365ms
+2019-07-03 11:43:55.232 +12:00 [INF] Request finished in 50061.3554ms 200 
+2019-07-03 11:43:55.246 +12:00 [INF] Connection id "0HLNV8RV2AE6E", Request id "0HLNV8RV2AE6E:00000002": the application completed without reading the entire request body.
+2019-07-03 11:45:23.177 +12:00 [INF] User profile is available. Using 'C:\Users\lgx95\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-07-03 11:45:24.036 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/values  
+2019-07-03 11:45:24.036 +12:00 [INF] Request starting HTTP/1.1 DEBUG http://localhost:5000/  0
+2019-07-03 11:45:24.070 +12:00 [INF] Request finished in 36.0292ms 200 
+2019-07-03 11:45:24.111 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-07-03 11:45:24.325 +12:00 [INF] Route matched with {action = "Get", controller = "Values"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Get() on controller Pegasus_backend.Controllers.ValuesController (Pegasus_backend).
+2019-07-03 11:45:24.486 +12:00 [INF] Executing action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) - Validation state: "Valid"
+2019-07-03 11:45:24.611 +12:00 [ERR] ValuesController LogErrorToFile: System.Exception: Exception of type 'System.Exception' was thrown.
+   at Pegasus_backend.Controllers.ValuesController.Get() in C:\angular\pegasusBackend\Controllers\ValuesController.cs:line 26
+2019-07-03 11:45:24.611 +12:00 [INF] ValuesController LogInfoToFile: hello
+2019-07-03 11:45:24.616 +12:00 [INF] Executed action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 117.76660000000001ms.
+2019-07-03 11:45:24.627 +12:00 [INF] Executing ObjectResult, writing value of type 'System.DateTime'.
+2019-07-03 11:45:24.694 +12:00 [INF] Executed action Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) in 365.35920000000004ms
+2019-07-03 11:45:24.699 +12:00 [INF] Request finished in 666.9507ms 200 application/json; charset=utf-8
+2019-07-03 11:45:26.911 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Chat/GetChattingList/1 application/json 65
+2019-07-03 11:45:26.943 +12:00 [INF] Route matched with {action = "GetChattingList", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetChattingList(Int32) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-07-03 11:45:26.959 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.GetChattingList (Pegasus_backend) - Validation state: "Valid"
+2019-07-03 11:45:31.843 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-03 11:45:32.996 +12:00 [INF] Executed DbCommand (59ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`user_id`, `x`.`created_at`, `x`.`is_activate`, `x`.`password`, `x`.`role_id`, `x`.`unread_message_id`, `x`.`user_name`, `x.Role`.`role_id`, `x.Role`.`role_name`
+FROM `ablemusic`.`user` AS `x`
+LEFT JOIN `ablemusic`.`role` AS `x.Role` ON `x`.`role_id` = `x.Role`.`role_id`
+WHERE `x`.`user_id` = @__id_0
+LIMIT 1
+2019-07-03 11:45:33.322 +12:00 [INF] Executed DbCommand (58ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`staff_id`, `x`.`dob`, `x`.`email`, `x`.`expiry_date`, `x`.`first_name`, `x`.`gender`, `x`.`home_phone`, `x`.`id_number`, `x`.`id_photo`, `x`.`id_type`, `x`.`ird_number`, `x`.`is_activate`, `x`.`last_name`, `x`.`mobile_phone`, `x`.`photo`, `x`.`user_id`, `x`.`visa`
+FROM `ablemusic`.`staff` AS `x`
+WHERE `x`.`user_id` = @__id_0
+LIMIT 1
+2019-07-03 11:45:33.560 +12:00 [INF] Executed DbCommand (67ms) [Parameters=[@__staffId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`org_id`
+FROM `ablemusic`.`staff_org` AS `x`
+WHERE `x`.`staff_id` = @__staffId_0
+LIMIT 1
+2019-07-03 11:45:33.580 +12:00 [WRN] Query: '(from Lesson x in DbSet<Lesson> where (Nullable<int>)(int)[x].OrgId == (Nullable<int>)__orgIdOfStaff...' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
+2019-07-03 11:45:33.583 +12:00 [WRN] The Include operation for navigation '[x].Learner' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-07-03 11:45:33.806 +12:00 [INF] Executed DbCommand (64ms) [Parameters=[@__orgIdOfStaff_0='?' (DbType = Int16), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT DISTINCT `t`.*
+FROM (
+    SELECT `x.Learner`.`learner_id`, `x.Learner`.`address`, `x.Learner`.`contact_num`, `x.Learner`.`created_at`, `x.Learner`.`dob`, `x.Learner`.`email`, `x.Learner`.`enroll_date`, `x.Learner`.`first_name`, `x.Learner`.`form_url`, `x.Learner`.`g5_certification`, `x.Learner`.`gender`, `x.Learner`.`is_abrsm_g5`, `x.Learner`.`is_active`, `x.Learner`.`is_under_18`, `x.Learner`.`last_name`, `x.Learner`.`learner_level`, `x.Learner`.`level_type`, `x.Learner`.`middle_name`, `x.Learner`.`note`, `x.Learner`.`org_id`, `x.Learner`.`otherfile_url`, `x.Learner`.`payment_period`, `x.Learner`.`photo`, `x.Learner`.`referrer`, `x.Learner`.`referrer_learner_id`, `x.Learner`.`user_id`
+    FROM `ablemusic`.`lesson` AS `x`
+    LEFT JOIN `ablemusic`.`learner` AS `x.Learner` ON `x`.`learner_id` = `x.Learner`.`learner_id`
+    WHERE `x`.`org_id` = @__orgIdOfStaff_0
+    LIMIT @__p_1
+) AS `t`
+2019-07-03 11:45:33.895 +12:00 [WRN] Query: '(from Learner x in DbSet<Learner> where (Nullable<int>)[x].OrgId == (Nullable<int>)__orgIdOfStaff_0 ...' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
+2019-07-03 11:45:34.062 +12:00 [INF] Executed DbCommand (60ms) [Parameters=[@__orgIdOfStaff_0='?' (DbType = Int16), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`learner_id`, `x`.`address`, `x`.`contact_num`, `x`.`created_at`, `x`.`dob`, `x`.`email`, `x`.`enroll_date`, `x`.`first_name`, `x`.`form_url`, `x`.`g5_certification`, `x`.`gender`, `x`.`is_abrsm_g5`, `x`.`is_active`, `x`.`is_under_18`, `x`.`last_name`, `x`.`learner_level`, `x`.`level_type`, `x`.`middle_name`, `x`.`note`, `x`.`org_id`, `x`.`otherfile_url`, `x`.`payment_period`, `x`.`photo`, `x`.`referrer`, `x`.`referrer_learner_id`, `x`.`user_id`
+FROM `ablemusic`.`learner` AS `x`
+WHERE `x`.`org_id` = @__orgIdOfStaff_0
+LIMIT @__p_1
+2019-07-03 11:45:34.067 +12:00 [WRN] Query: '(from Staff x in DbSet<Staff> where (Nullable<int>)(int)[x].StaffId != __staffId_0 select [x]).Take(...' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
+2019-07-03 11:45:34.251 +12:00 [INF] Executed DbCommand (55ms) [Parameters=[@__staffId_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`staff_id`, `x`.`dob`, `x`.`email`, `x`.`expiry_date`, `x`.`first_name`, `x`.`gender`, `x`.`home_phone`, `x`.`id_number`, `x`.`id_photo`, `x`.`id_type`, `x`.`ird_number`, `x`.`is_activate`, `x`.`last_name`, `x`.`mobile_phone`, `x`.`photo`, `x`.`user_id`, `x`.`visa`
+FROM `ablemusic`.`staff` AS `x`
+WHERE `x`.`staff_id` <> @__staffId_0
+LIMIT @__p_1
+2019-07-03 11:45:34.259 +12:00 [WRN] Query: '(from Teacher x in DbSet<Teacher> select new Teacher{ { 
+    TeacherId = [x].TeacherId, , 
+    Fir...' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
+2019-07-03 11:45:34.414 +12:00 [INF] Executed DbCommand (49ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`teacher_id` AS `TeacherId`, `x`.`first_name` AS `FirstName`, `x`.`last_name` AS `LastName`, `x`.`email`
+FROM `ablemusic`.`teacher` AS `x`
+LIMIT @__p_0
+2019-07-03 11:45:34.420 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.GetChattingList (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 7460.8152ms.
+2019-07-03 11:45:34.421 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[Pegasus_backend.Models.ChatListModel, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2019-07-03 11:45:34.558 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.GetChattingList (Pegasus_backend) in 7615.0105ms
+2019-07-03 11:45:34.559 +12:00 [INF] Request finished in 7648.0902ms 200 application/json; charset=utf-8
+2019-07-03 11:45:34.568 +12:00 [INF] Connection id "0HLNV8TD1O4RF", Request id "0HLNV8TD1O4RF:00000002": the application completed without reading the entire request body.

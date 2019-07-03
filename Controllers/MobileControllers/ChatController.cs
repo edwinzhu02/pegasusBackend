@@ -175,15 +175,12 @@ namespace Pegasus_backend.Controllers.MobileControllers
                         }
                         catch (Exception e)
                         {
-                            Console.WriteLine(e);
-                            throw;
+                            result.ErrorMessage = e.Message;
+                            return BadRequest(result);
                         }
                     }
-
-                    break;
+                    return Ok(result);
             }
-
-            return Ok();
         }
        
         private async Task<List<Staff>> GetAllStaff(int? staffId)
@@ -288,7 +285,12 @@ namespace Pegasus_backend.Controllers.MobileControllers
                 .ToListAsync();
 
             // students registered in his org
-            var studentsRegisteredIn = await _ablemusicContext.Learner.Where(x=>x.OrgId == orgIdOfStaff).Take(3).ToListAsync();
+            var studentsRegisteredIn = await _ablemusicContext.Learner.Where(x=>x.OrgId == orgIdOfStaff).Select(x => new Learner
+            {
+                FirstName = x.FirstName,
+                LastName = x.LastName,
+                UserId = x.UserId
+            }).Take(3).ToListAsync();
 
             // combine data
             ChatListModel chatListModel = new ChatListModel
