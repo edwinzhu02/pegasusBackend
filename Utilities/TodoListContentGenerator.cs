@@ -56,5 +56,44 @@ namespace Pegasus_backend.Utilities
                 courseSchedule.CourseName + " will finish soon by " + endDate;
             return content;
         }
+
+        public static string RearrangedSingleLessonWithOldLessonForLearner(Lesson oldLesson, Lesson newLesson, Learner learner,
+            Teacher oldTeacher, Teacher newTeacher, pegasusContext.Org oldOrg, pegasusContext.Org newOrg, Room oldRoom, Room newRoom)
+        {
+            string content;
+            content = "Inform learner " + learner.FirstName + " " + learner.LastName +
+                " session given by teacher " + oldTeacher.FirstName + " " + oldTeacher.LastName + " from " +
+                oldLesson.BeginTime.ToString() + " to " + oldLesson.EndTime.ToString() + " at " + oldOrg.OrgName +
+                " " + oldRoom.RoomName + " has been rearanged to be given by teacher " + newTeacher.FirstName + " " +
+                newTeacher.LastName + " from " + newLesson.BeginTime.ToString() + " to " + newLesson.EndTime.ToString() +
+                " at " + newOrg.OrgName + " " + newRoom.RoomName;
+            return content;
+        }
+
+        public static string RearrangedSingleLessonWithOldLessonForNewTeacher(Lesson oldLesson, Lesson newLesson,
+            Teacher oldTeacher, Teacher newTeacher, pegasusContext.Org oldOrg, pegasusContext.Org newOrg, Room oldRoom, Room newRoom)
+        {
+            string content;
+            content = "Inform teacher " + newTeacher.FirstName + " " + newTeacher.LastName +
+                " session given by teacher " + oldTeacher.FirstName + " " + oldTeacher.LastName + " from " +
+                oldLesson.BeginTime.ToString() + " to " + oldLesson.EndTime.ToString() + " at " + oldOrg.OrgName +
+                " " + oldRoom.RoomName + " has been rearanged to be given by " + newTeacher.FirstName + " " +
+                newTeacher.LastName + " from " + newLesson.BeginTime.ToString() + " to " +
+                newLesson.EndTime.ToString() + " at " + newOrg.OrgName + " " + newRoom.RoomName;
+            return content;
+        }
+
+        public static string RearrangedSingleLessonWithOldLessonForOldTeacher(Lesson oldLesson, Lesson newLesson,
+            Teacher oldTeacher, Teacher newTeacher, pegasusContext.Org oldOrg, pegasusContext.Org newOrg, Room oldRoom, Room newRoom)
+        {
+            string content;
+            content = "Inform teacher " + oldTeacher.FirstName + " " + oldTeacher.LastName +
+                " session given by teacher " + oldTeacher.FirstName + " " + oldTeacher.LastName + " from " +
+                oldLesson.BeginTime.ToString() + " to " + oldLesson.EndTime.ToString() + " at " + oldOrg.OrgName +
+                " " + oldRoom.RoomName + " has been rearanged to be given by " + newTeacher.FirstName + " " +
+                newTeacher.LastName + " from " + newLesson.BeginTime.ToString() + " to " +
+                newLesson.EndTime.ToString() + " at " + newOrg.OrgName + " " + newRoom.RoomName;
+            return content;
+        }
     }
 }

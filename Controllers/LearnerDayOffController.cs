@@ -161,14 +161,20 @@ namespace Pegasus_backend.Controllers
                 inputObj.EndDate.ToString()), inputObj.UserId, todoDate, null, courseSchedules[0].LearnerId, null);
             todoRepository.AddMutipleTodoLists("Period Dayoff Remind", teacherIdMapTodoContent, inputObj.UserId, todoDate, null, null);
             var saveTodoResult = await todoRepository.SaveTodoListsAsync();
-            if (!saveTodoResult.IsSuccess) return BadRequest(saveTodoResult);
+            if (!saveTodoResult.IsSuccess)
+            {
+                return BadRequest(saveTodoResult);
+            }
 
             RemindLogRepository remindLogRepository = new RemindLogRepository();
             remindLogRepository.AddSingleRemindLog(courseSchedules[0].LearnerId, courseSchedules[0].LearnerEmail,
                 RemindLogContentGenerator.DayOffForLearner(courseSchedules[0], inputObj.EndDate.ToString()), null, "Period Dayoff Remind", null);
             remindLogRepository.AddMultipleRemindLogs(teacherMapRemindLogContent, null, "Period Dayoff Remind", null);
             var saveRemindLogResult = await remindLogRepository.SaveRemindLogAsync();
-            if (!saveRemindLogResult.IsSuccess) return BadRequest(saveRemindLogResult);
+            if (!saveRemindLogResult.IsSuccess)
+            {
+                return BadRequest(saveRemindLogResult);
+            }
 
             try
             {

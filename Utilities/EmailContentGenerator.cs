@@ -40,5 +40,20 @@ namespace Pegasus_backend.Utilities
                     "' target='_blank'>Confirm</a></div>";
             return mailContent;
         }
+
+        public static string RearrangeLessonWithOld(string name, string courseName, string confirmURL, Lesson oldLesson, Teacher oldTeacher, 
+            Teacher newTeacher, pegasusContext.Org oldOrg, pegasusContext.Org newOrg, Room oldRoom, Room newRoom)
+        {
+            string mailContent = "<div><p>Dear " + name + "</p>" + "<p>The " +
+                    courseName + " lesson given by " + oldTeacher.FirstName + " " + oldTeacher.LastName + " from " +
+                    oldLesson.BeginTime.ToString() + " to " + oldLesson.EndTime.ToString() + " at " + oldOrg.OrgName +
+                    " " + oldRoom.RoomName +
+                    " has been rearranged to be given by" + newTeacher.FirstName + " " + newTeacher.LastName + " at " +
+                    newOrg.OrgName + " " + newRoom.RoomName + ". Please click the following button to confirm. </p>" +
+                    "<a style='background-color:#4CAF50; color:#FFFFFF' href='" + confirmURL +
+                    "' target='_blank'>Confirm</a></div>";
+
+            return mailContent;
+        }
     }
 }
