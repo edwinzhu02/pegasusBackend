@@ -55,5 +55,20 @@ namespace Pegasus_backend.Utilities
 
             return mailContent;
         }
+
+        public static string LessonReschedule(string name, string courseName, Lesson lesson, string reason, string confirmURL, List<Lesson> appendLessons)
+        {
+            string mailContent = "<div><p>Dear " + name + "</p>" + "<p>Your " +
+                    courseName + " lesson from " + lesson.BeginTime.ToString() + " to " + lesson.EndTime.ToString() +
+                    " has been rescheduled due to " + reason + ". Lesson Remain hours are append to the following lessons: \n";
+            foreach (var appendLesson in appendLessons)
+            {
+                mailContent += "Lesson from " + appendLesson.BeginTime + " to " + appendLesson.EndTime + "\n";
+            }
+            mailContent += "\nPlease click the following button to confirm. </p>" +
+                    "<a style='background-color:#4CAF50; color:#FFFFFF' href='" + confirmURL +
+                    "' target='_blank'>Confirm</a></div>";
+            return mailContent;
+        }
     }
 }
