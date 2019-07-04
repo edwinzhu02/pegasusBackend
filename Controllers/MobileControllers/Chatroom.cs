@@ -10,6 +10,11 @@ namespace Pegasus_backend.Controllers.MobileControllers
 {
     public class Chatroom : Hub
     {
+//        public override Task OnConnectedAsync()
+//        {
+//            var username = Context.GetHttpContext().Request.Query["name"];
+//            return base.OnConnectedAsync();
+//        }
 
         public async Task SendMessage(string groupId, string message)
         {
@@ -33,7 +38,9 @@ namespace Pegasus_backend.Controllers.MobileControllers
         // name of receiver
         public async Task SendMessageOneToOne(string name, string message)
         {
+            //var connectionId = Context.ConnectionId;
             await Clients.User(name).SendAsync("SendMessageOneToOne", message);
+            //await Clients.User(connectionId).SendAsync("SendMessageOneToOne", message);
         }
     }
 }

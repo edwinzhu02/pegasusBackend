@@ -17,6 +17,7 @@ using Newtonsoft.Json.Serialization;
 using Pegasus_backend;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Pegasus_backend.Models;
@@ -66,6 +67,7 @@ namespace Pegasus_backend
             
             services.AddDirectoryBrowser();
             services.AddSignalR();
+            services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddDbContext<ablemusicContext>(options =>
                 options.UseMySQL(Configuration.GetConnectionString("AblemusicDatabase")));

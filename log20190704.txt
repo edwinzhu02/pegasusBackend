@@ -1,0 +1,641 @@
+2019-07-04 10:55:26.724 +12:00 [INF] User profile is available. Using 'C:\Users\lgx95\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-07-04 10:55:28.678 +12:00 [INF] Request starting HTTP/1.1 DEBUG http://localhost:5000/  0
+2019-07-04 10:55:28.677 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/values  
+2019-07-04 10:55:28.724 +12:00 [INF] Request finished in 47.2291ms 200 
+2019-07-04 10:55:28.784 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-07-04 10:55:29.435 +12:00 [INF] Route matched with {action = "Get", controller = "Values"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Get() on controller Pegasus_backend.Controllers.ValuesController (Pegasus_backend).
+2019-07-04 10:55:30.383 +12:00 [INF] Executing action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) - Validation state: "Valid"
+2019-07-04 10:55:30.702 +12:00 [ERR] ValuesController LogErrorToFile: System.Exception: Exception of type 'System.Exception' was thrown.
+   at Pegasus_backend.Controllers.ValuesController.Get() in C:\angular\pegasusBackend\Controllers\ValuesController.cs:line 30
+2019-07-04 10:55:30.703 +12:00 [INF] ValuesController LogInfoToFile: hello
+2019-07-04 10:55:30.707 +12:00 [INF] Executed action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 308.2144ms.
+2019-07-04 10:55:30.716 +12:00 [INF] Executing ObjectResult, writing value of type 'System.DateTime'.
+2019-07-04 10:55:30.784 +12:00 [INF] Executed action Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) in 1342.4709ms
+2019-07-04 10:55:30.789 +12:00 [INF] Request finished in 2116.9164ms 200 application/json; charset=utf-8
+2019-07-04 10:55:32.271 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/favicon.ico  
+2019-07-04 10:55:32.275 +12:00 [INF] Request finished in 4.0742ms 404 
+2019-07-04 10:57:30.764 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/chat/negotiate?name%20=%20{Emily}  
+2019-07-04 10:57:30.766 +12:00 [INF] Policy execution successful.
+2019-07-04 10:57:30.767 +12:00 [INF] Request finished in 2.8735ms 204 
+2019-07-04 10:57:30.819 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/chat/negotiate?name%20=%20{Emily} text/plain;charset=UTF-8 0
+2019-07-04 10:57:30.819 +12:00 [INF] Policy execution successful.
+2019-07-04 10:57:30.841 +12:00 [INF] Request finished in 21.9507ms 200 application/json
+2019-07-04 10:57:30.856 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/chat?name%20=%20{Emily}&id=9WqWusi4CUVpY8n-lrGClw  
+2019-07-04 10:57:30.857 +12:00 [INF] Policy execution successful.
+2019-07-04 10:57:30.979 +12:00 [INF] Completed connection handshake. Using HubProtocol 'json'.
+2019-07-04 10:59:11.642 +12:00 [INF] Request finished in 100785.5282ms 101 
+2019-07-04 10:59:13.050 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/chat/negotiate?name=null  
+2019-07-04 10:59:13.050 +12:00 [INF] Policy execution successful.
+2019-07-04 10:59:13.050 +12:00 [INF] Request finished in 0.6923ms 204 
+2019-07-04 10:59:13.405 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/chat/negotiate?name=null text/plain;charset=UTF-8 0
+2019-07-04 10:59:13.405 +12:00 [INF] Policy execution successful.
+2019-07-04 10:59:13.406 +12:00 [INF] Request finished in 1.6837ms 200 application/json
+2019-07-04 10:59:13.430 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/chat?name=null&id=By6IS0FsUyugyc3n96VTjQ  
+2019-07-04 10:59:13.430 +12:00 [INF] Policy execution successful.
+2019-07-04 10:59:13.446 +12:00 [INF] Completed connection handshake. Using HubProtocol 'json'.
+2019-07-04 10:59:40.108 +12:00 [INF] Request finished in 26678.7439ms 101 
+2019-07-04 10:59:45.638 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/chat/negotiate?name=Emily  
+2019-07-04 10:59:45.639 +12:00 [INF] Policy execution successful.
+2019-07-04 10:59:45.639 +12:00 [INF] Request finished in 0.7684ms 204 
+2019-07-04 10:59:45.869 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/chat/negotiate?name=Emily text/plain;charset=UTF-8 0
+2019-07-04 10:59:45.870 +12:00 [INF] Policy execution successful.
+2019-07-04 10:59:45.870 +12:00 [INF] Request finished in 1.669ms 200 application/json
+2019-07-04 10:59:45.899 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/chat?name=Emily&id=hqCZqbNQEIJbVsUKFS71WA  
+2019-07-04 10:59:45.899 +12:00 [INF] Policy execution successful.
+2019-07-04 10:59:46.189 +12:00 [INF] Completed connection handshake. Using HubProtocol 'json'.
+2019-07-04 11:00:01.961 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/Chat/TestMessage  
+2019-07-04 11:00:01.962 +12:00 [INF] Policy execution successful.
+2019-07-04 11:00:01.962 +12:00 [INF] Request finished in 0.6312ms 204 
+2019-07-04 11:00:01.968 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/Chat/TestMessage application/json 82
+2019-07-04 11:00:01.968 +12:00 [INF] Policy execution successful.
+2019-07-04 11:00:07.238 +12:00 [INF] Route matched with {action = "TestMessage", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] TestMessage(Pegasus_backend.Models.ChatMessageModel) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-07-04 11:00:07.300 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend) - Validation state: "Valid"
+2019-07-04 11:00:07.303 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 2.8245ms.
+2019-07-04 11:00:07.303 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.ChatMessageModel'.
+2019-07-04 11:00:07.307 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend) in 68.1932ms
+2019-07-04 11:00:07.307 +12:00 [INF] Request finished in 5339.0187ms 200 application/json; charset=utf-8
+2019-07-04 11:00:23.842 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/Chat/TestMessage  
+2019-07-04 11:00:23.843 +12:00 [INF] Policy execution successful.
+2019-07-04 11:00:23.844 +12:00 [INF] Request finished in 1.2941ms 204 
+2019-07-04 11:00:23.858 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/Chat/TestMessage application/json 82
+2019-07-04 11:00:23.858 +12:00 [INF] Policy execution successful.
+2019-07-04 11:00:23.859 +12:00 [INF] Route matched with {action = "TestMessage", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] TestMessage(Pegasus_backend.Models.ChatMessageModel) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-07-04 11:00:23.862 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend) - Validation state: "Valid"
+2019-07-04 11:00:23.862 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 0.0381ms.
+2019-07-04 11:00:23.862 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.ChatMessageModel'.
+2019-07-04 11:00:23.863 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend) in 3.0918ms
+2019-07-04 11:00:23.863 +12:00 [INF] Request finished in 4.624ms 200 application/json; charset=utf-8
+2019-07-04 11:01:47.411 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/Chat/TestMessage  
+2019-07-04 11:01:47.411 +12:00 [INF] Policy execution successful.
+2019-07-04 11:01:47.412 +12:00 [INF] Request finished in 0.6254ms 204 
+2019-07-04 11:01:47.420 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/Chat/TestMessage application/json 82
+2019-07-04 11:01:47.420 +12:00 [INF] Policy execution successful.
+2019-07-04 11:01:47.420 +12:00 [INF] Route matched with {action = "TestMessage", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] TestMessage(Pegasus_backend.Models.ChatMessageModel) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-07-04 11:01:47.421 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend) - Validation state: "Valid"
+2019-07-04 11:01:47.421 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 0.0084000000000000012ms.
+2019-07-04 11:01:47.421 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.ChatMessageModel'.
+2019-07-04 11:01:47.422 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend) in 1.1294ms
+2019-07-04 11:01:47.422 +12:00 [INF] Request finished in 1.7969ms 200 application/json; charset=utf-8
+2019-07-04 11:01:58.162 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/Chat/TestMessage  
+2019-07-04 11:01:58.162 +12:00 [INF] Policy execution successful.
+2019-07-04 11:01:58.162 +12:00 [INF] Request finished in 0.4244ms 204 
+2019-07-04 11:01:58.168 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/Chat/TestMessage application/json 82
+2019-07-04 11:01:58.168 +12:00 [INF] Policy execution successful.
+2019-07-04 11:01:58.168 +12:00 [INF] Route matched with {action = "TestMessage", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] TestMessage(Pegasus_backend.Models.ChatMessageModel) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-07-04 11:01:58.169 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend) - Validation state: "Valid"
+2019-07-04 11:01:58.169 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 0.010700000000000001ms.
+2019-07-04 11:01:58.169 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.ChatMessageModel'.
+2019-07-04 11:01:58.169 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend) in 0.9733ms
+2019-07-04 11:01:58.169 +12:00 [INF] Request finished in 1.6367ms 200 application/json; charset=utf-8
+2019-07-04 11:02:11.900 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/Chat/TestMessage  
+2019-07-04 11:02:11.901 +12:00 [INF] Policy execution successful.
+2019-07-04 11:02:11.901 +12:00 [INF] Request finished in 0.7059ms 204 
+2019-07-04 11:02:11.909 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/Chat/TestMessage application/json 82
+2019-07-04 11:02:11.909 +12:00 [INF] Policy execution successful.
+2019-07-04 11:02:11.909 +12:00 [INF] Route matched with {action = "TestMessage", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] TestMessage(Pegasus_backend.Models.ChatMessageModel) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-07-04 11:02:11.910 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend) - Validation state: "Valid"
+2019-07-04 11:02:11.910 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 0.0075000000000000006ms.
+2019-07-04 11:02:11.910 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.ChatMessageModel'.
+2019-07-04 11:02:11.910 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend) in 1.1746ms
+2019-07-04 11:02:11.910 +12:00 [INF] Request finished in 1.8833ms 200 application/json; charset=utf-8
+2019-07-04 11:02:36.544 +12:00 [INF] Request finished in 170644.6528ms 101 
+2019-07-04 11:02:39.524 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/chat/negotiate?name=Emily  
+2019-07-04 11:02:39.524 +12:00 [INF] Policy execution successful.
+2019-07-04 11:02:39.524 +12:00 [INF] Request finished in 0.6352ms 204 
+2019-07-04 11:02:39.715 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/chat/negotiate?name=Emily text/plain;charset=UTF-8 0
+2019-07-04 11:02:39.716 +12:00 [INF] Policy execution successful.
+2019-07-04 11:02:39.719 +12:00 [INF] Request finished in 3.7775ms 200 application/json
+2019-07-04 11:02:39.789 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/chat?name=Emily&id=EEXBonpH20z-yAY8VAsGFg  
+2019-07-04 11:02:39.789 +12:00 [INF] Policy execution successful.
+2019-07-04 11:02:40.221 +12:00 [INF] Completed connection handshake. Using HubProtocol 'json'.
+2019-07-04 11:02:51.912 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/chat/negotiate?name=Kevin  
+2019-07-04 11:02:51.912 +12:00 [INF] Policy execution successful.
+2019-07-04 11:02:51.912 +12:00 [INF] Request finished in 0.5388ms 204 
+2019-07-04 11:02:52.190 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/chat/negotiate?name=Kevin text/plain;charset=UTF-8 0
+2019-07-04 11:02:52.191 +12:00 [INF] Policy execution successful.
+2019-07-04 11:02:52.191 +12:00 [INF] Request finished in 1.1048ms 200 application/json
+2019-07-04 11:02:52.221 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/chat?name=Kevin&id=WpWWn30pdxom0HBqwj9M3A  
+2019-07-04 11:02:52.221 +12:00 [INF] Policy execution successful.
+2019-07-04 11:02:52.502 +12:00 [INF] Completed connection handshake. Using HubProtocol 'json'.
+2019-07-04 11:03:11.955 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/Chat/TestMessage  
+2019-07-04 11:03:11.955 +12:00 [INF] Policy execution successful.
+2019-07-04 11:03:11.955 +12:00 [INF] Request finished in 0.3825ms 204 
+2019-07-04 11:03:11.961 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/Chat/TestMessage application/json 82
+2019-07-04 11:03:11.961 +12:00 [INF] Policy execution successful.
+2019-07-04 11:03:11.962 +12:00 [INF] Route matched with {action = "TestMessage", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] TestMessage(Pegasus_backend.Models.ChatMessageModel) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-07-04 11:03:11.963 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend) - Validation state: "Valid"
+2019-07-04 11:03:11.963 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 0.0181ms.
+2019-07-04 11:03:11.963 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.ChatMessageModel'.
+2019-07-04 11:03:11.963 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend) in 1.5238ms
+2019-07-04 11:03:11.963 +12:00 [INF] Request finished in 2.2221ms 200 application/json; charset=utf-8
+2019-07-04 11:03:19.251 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/Chat/TestMessage  
+2019-07-04 11:03:19.252 +12:00 [INF] Policy execution successful.
+2019-07-04 11:03:19.253 +12:00 [INF] Request finished in 1.2692ms 204 
+2019-07-04 11:03:19.259 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/Chat/TestMessage application/json 82
+2019-07-04 11:03:19.259 +12:00 [INF] Policy execution successful.
+2019-07-04 11:03:19.260 +12:00 [INF] Route matched with {action = "TestMessage", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] TestMessage(Pegasus_backend.Models.ChatMessageModel) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-07-04 11:03:19.261 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend) - Validation state: "Valid"
+2019-07-04 11:03:19.262 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 0.0131ms.
+2019-07-04 11:03:19.262 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.ChatMessageModel'.
+2019-07-04 11:03:19.262 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend) in 2.0039000000000002ms
+2019-07-04 11:03:19.263 +12:00 [INF] Request finished in 3.5217ms 200 application/json; charset=utf-8
+2019-07-04 11:05:49.424 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/Chat/TestMessage  
+2019-07-04 11:05:49.424 +12:00 [INF] Policy execution successful.
+2019-07-04 11:05:49.425 +12:00 [INF] Request finished in 2.4351ms 204 
+2019-07-04 11:05:49.445 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/Chat/TestMessage application/json 82
+2019-07-04 11:05:49.445 +12:00 [INF] Policy execution successful.
+2019-07-04 11:05:49.446 +12:00 [INF] Route matched with {action = "TestMessage", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] TestMessage(Pegasus_backend.Models.ChatMessageModel) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-07-04 11:05:49.447 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend) - Validation state: "Valid"
+2019-07-04 11:05:49.447 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 0.012100000000000001ms.
+2019-07-04 11:05:49.447 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.ChatMessageModel'.
+2019-07-04 11:05:49.448 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend) in 1.6457000000000002ms
+2019-07-04 11:05:49.448 +12:00 [INF] Request finished in 2.8249ms 200 application/json; charset=utf-8
+2019-07-04 11:12:44.390 +12:00 [INF] User profile is available. Using 'C:\Users\lgx95\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-07-04 11:12:45.242 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/values  
+2019-07-04 11:12:45.243 +12:00 [INF] Request starting HTTP/1.1 DEBUG http://localhost:5000/  0
+2019-07-04 11:12:45.264 +12:00 [INF] Request finished in 20.8613ms 200 
+2019-07-04 11:12:45.288 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-07-04 11:12:45.507 +12:00 [INF] Route matched with {action = "Get", controller = "Values"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Get() on controller Pegasus_backend.Controllers.ValuesController (Pegasus_backend).
+2019-07-04 11:12:45.671 +12:00 [INF] Executing action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) - Validation state: "Valid"
+2019-07-04 11:12:45.797 +12:00 [ERR] ValuesController LogErrorToFile: System.Exception: Exception of type 'System.Exception' was thrown.
+   at Pegasus_backend.Controllers.ValuesController.Get() in C:\angular\pegasusBackend\Controllers\ValuesController.cs:line 30
+2019-07-04 11:12:45.798 +12:00 [INF] ValuesController LogInfoToFile: hello
+2019-07-04 11:12:45.804 +12:00 [INF] Executed action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 122.5432ms.
+2019-07-04 11:12:45.813 +12:00 [INF] Executing ObjectResult, writing value of type 'System.DateTime'.
+2019-07-04 11:12:45.864 +12:00 [INF] Executed action Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) in 353.8811ms
+2019-07-04 11:12:45.870 +12:00 [INF] Request finished in 630.3384ms 200 application/json; charset=utf-8
+2019-07-04 11:13:39.544 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/chat/negotiate?name=Emily  
+2019-07-04 11:13:39.551 +12:00 [INF] Policy execution successful.
+2019-07-04 11:13:39.552 +12:00 [INF] Request finished in 8.578ms 204 
+2019-07-04 11:13:39.717 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/chat/negotiate?name=Emily text/plain;charset=UTF-8 0
+2019-07-04 11:13:39.718 +12:00 [INF] Policy execution successful.
+2019-07-04 11:13:39.737 +12:00 [INF] Request finished in 19.7471ms 200 application/json
+2019-07-04 11:13:39.835 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/chat?name=Emily&id=NJ3KbPDoVx7UZUI3s3a5ng  
+2019-07-04 11:13:39.835 +12:00 [INF] Policy execution successful.
+2019-07-04 11:13:40.221 +12:00 [INF] Completed connection handshake. Using HubProtocol 'json'.
+2019-07-04 11:13:44.997 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/Chat/TestMessage  
+2019-07-04 11:13:44.998 +12:00 [INF] Policy execution successful.
+2019-07-04 11:13:44.998 +12:00 [INF] Request finished in 0.473ms 204 
+2019-07-04 11:13:45.005 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/Chat/TestMessage application/json 82
+2019-07-04 11:13:45.005 +12:00 [INF] Policy execution successful.
+2019-07-04 11:13:48.956 +12:00 [INF] Route matched with {action = "TestMessage", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] TestMessage(Pegasus_backend.Models.ChatMessageModel) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-07-04 11:13:49.003 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend) - Validation state: "Valid"
+2019-07-04 11:13:49.005 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 2.091ms.
+2019-07-04 11:13:49.006 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.ChatMessageModel'.
+2019-07-04 11:13:49.009 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend) in 52.328300000000006ms
+2019-07-04 11:13:49.009 +12:00 [INF] Request finished in 4004.2043ms 200 application/json; charset=utf-8
+2019-07-04 11:14:11.717 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/Chat/TestMessage  
+2019-07-04 11:14:11.718 +12:00 [INF] Policy execution successful.
+2019-07-04 11:14:11.719 +12:00 [INF] Request finished in 1.1794ms 204 
+2019-07-04 11:14:11.727 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/Chat/TestMessage application/json 82
+2019-07-04 11:14:11.727 +12:00 [INF] Policy execution successful.
+2019-07-04 11:14:11.728 +12:00 [INF] Route matched with {action = "TestMessage", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] TestMessage(Pegasus_backend.Models.ChatMessageModel) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-07-04 11:14:11.730 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend) - Validation state: "Valid"
+2019-07-04 11:14:11.731 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 0.0714ms.
+2019-07-04 11:14:11.731 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.ChatMessageModel'.
+2019-07-04 11:14:11.731 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend) in 2.4898000000000002ms
+2019-07-04 11:14:11.731 +12:00 [INF] Request finished in 4.4074ms 200 application/json; charset=utf-8
+2019-07-04 11:14:55.465 +12:00 [INF] Request finished in 75629.8322ms 101 
+2019-07-04 11:15:46.911 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/chat/negotiate?name=Emily  
+2019-07-04 11:15:46.911 +12:00 [INF] Policy execution successful.
+2019-07-04 11:15:46.912 +12:00 [INF] Request finished in 0.6963ms 204 
+2019-07-04 11:15:47.109 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/chat/negotiate?name=Emily text/plain;charset=UTF-8 0
+2019-07-04 11:15:47.109 +12:00 [INF] Policy execution successful.
+2019-07-04 11:15:47.110 +12:00 [INF] Request finished in 1.0727ms 200 application/json
+2019-07-04 11:15:47.154 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/chat?name=Emily&id=J8seoVoC6-X45OzF7mKLJQ  
+2019-07-04 11:15:47.154 +12:00 [INF] Policy execution successful.
+2019-07-04 11:15:47.511 +12:00 [INF] Completed connection handshake. Using HubProtocol 'json'.
+2019-07-04 11:15:54.549 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/chat/negotiate?name=Kevin  
+2019-07-04 11:15:54.549 +12:00 [INF] Policy execution successful.
+2019-07-04 11:15:54.549 +12:00 [INF] Request finished in 0.547ms 204 
+2019-07-04 11:15:54.766 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/chat/negotiate?name=Kevin text/plain;charset=UTF-8 0
+2019-07-04 11:15:54.766 +12:00 [INF] Policy execution successful.
+2019-07-04 11:15:54.767 +12:00 [INF] Request finished in 0.9203ms 200 application/json
+2019-07-04 11:15:54.809 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/chat?name=Kevin&id=htAAYKNVA34lz5gL6BSjhw  
+2019-07-04 11:15:54.809 +12:00 [INF] Policy execution successful.
+2019-07-04 11:15:55.128 +12:00 [INF] Completed connection handshake. Using HubProtocol 'json'.
+2019-07-04 11:15:59.982 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/Chat/TestMessage  
+2019-07-04 11:15:59.983 +12:00 [INF] Policy execution successful.
+2019-07-04 11:15:59.983 +12:00 [INF] Request finished in 0.7724ms 204 
+2019-07-04 11:16:00.008 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/Chat/TestMessage application/json 82
+2019-07-04 11:16:00.009 +12:00 [INF] Policy execution successful.
+2019-07-04 11:16:00.010 +12:00 [INF] Route matched with {action = "TestMessage", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] TestMessage(Pegasus_backend.Models.ChatMessageModel) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-07-04 11:16:00.012 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend) - Validation state: "Valid"
+2019-07-04 11:16:00.013 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 0.0204ms.
+2019-07-04 11:16:00.013 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.ChatMessageModel'.
+2019-07-04 11:16:00.013 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend) in 3.45ms
+2019-07-04 11:16:00.014 +12:00 [INF] Request finished in 5.4796ms 200 application/json; charset=utf-8
+2019-07-04 11:16:15.539 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/Chat/TestMessage  
+2019-07-04 11:16:15.540 +12:00 [INF] Policy execution successful.
+2019-07-04 11:16:15.541 +12:00 [INF] Request finished in 1.6945ms 204 
+2019-07-04 11:16:15.569 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/Chat/TestMessage application/json 82
+2019-07-04 11:16:15.569 +12:00 [INF] Policy execution successful.
+2019-07-04 11:16:15.569 +12:00 [INF] Route matched with {action = "TestMessage", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] TestMessage(Pegasus_backend.Models.ChatMessageModel) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-07-04 11:16:15.571 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend) - Validation state: "Valid"
+2019-07-04 11:16:15.571 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 0.0166ms.
+2019-07-04 11:16:15.572 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.ChatMessageModel'.
+2019-07-04 11:16:15.572 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend) in 2.6475ms
+2019-07-04 11:16:15.573 +12:00 [INF] Request finished in 3.9952ms 200 application/json; charset=utf-8
+2019-07-04 11:17:02.620 +12:00 [INF] Request finished in 75464.4103ms 101 
+2019-07-04 11:17:02.620 +12:00 [INF] Request finished in 67811.1659ms 101 
+2019-07-04 11:17:06.015 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/chat/negotiate?name=Emily  
+2019-07-04 11:17:06.015 +12:00 [INF] Policy execution successful.
+2019-07-04 11:17:06.016 +12:00 [INF] Request finished in 1.1902ms 204 
+2019-07-04 11:17:06.200 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/chat/negotiate?name=Emily text/plain;charset=UTF-8 0
+2019-07-04 11:17:06.201 +12:00 [INF] Policy execution successful.
+2019-07-04 11:17:06.201 +12:00 [INF] Request finished in 1.2517ms 200 application/json
+2019-07-04 11:17:06.265 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/chat?name=Emily&id=qlEf6P77g0RG1UnUX7nN9A  
+2019-07-04 11:17:06.266 +12:00 [INF] Policy execution successful.
+2019-07-04 11:17:06.634 +12:00 [INF] Completed connection handshake. Using HubProtocol 'json'.
+2019-07-04 11:17:09.425 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/chat/negotiate?name=Kevin  
+2019-07-04 11:17:09.425 +12:00 [INF] Policy execution successful.
+2019-07-04 11:17:09.425 +12:00 [INF] Request finished in 1.0483ms 204 
+2019-07-04 11:17:09.671 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/chat/negotiate?name=Kevin text/plain;charset=UTF-8 0
+2019-07-04 11:17:09.671 +12:00 [INF] Policy execution successful.
+2019-07-04 11:17:09.672 +12:00 [INF] Request finished in 0.9698ms 200 application/json
+2019-07-04 11:17:09.717 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/chat?name=Kevin&id=wNm6KU4tj8oWQM9X8THpvA  
+2019-07-04 11:17:09.718 +12:00 [INF] Policy execution successful.
+2019-07-04 11:17:10.028 +12:00 [INF] Completed connection handshake. Using HubProtocol 'json'.
+2019-07-04 11:17:13.022 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/Chat/TestMessage  
+2019-07-04 11:17:13.023 +12:00 [INF] Policy execution successful.
+2019-07-04 11:17:13.023 +12:00 [INF] Request finished in 0.4895ms 204 
+2019-07-04 11:17:13.030 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/Chat/TestMessage application/json 82
+2019-07-04 11:17:13.030 +12:00 [INF] Policy execution successful.
+2019-07-04 11:17:13.030 +12:00 [INF] Route matched with {action = "TestMessage", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] TestMessage(Pegasus_backend.Models.ChatMessageModel) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-07-04 11:17:13.031 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend) - Validation state: "Valid"
+2019-07-04 11:17:13.031 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 0.0095ms.
+2019-07-04 11:17:13.032 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.ChatMessageModel'.
+2019-07-04 11:17:13.032 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend) in 1.3581ms
+2019-07-04 11:17:13.032 +12:00 [INF] Request finished in 2.312ms 200 application/json; charset=utf-8
+2019-07-04 11:17:17.792 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/Chat/TestMessage  
+2019-07-04 11:17:17.792 +12:00 [INF] Policy execution successful.
+2019-07-04 11:17:17.792 +12:00 [INF] Request finished in 0.4777ms 204 
+2019-07-04 11:17:17.798 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/Chat/TestMessage application/json 82
+2019-07-04 11:17:17.799 +12:00 [INF] Policy execution successful.
+2019-07-04 11:17:17.799 +12:00 [INF] Route matched with {action = "TestMessage", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] TestMessage(Pegasus_backend.Models.ChatMessageModel) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-07-04 11:17:17.800 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend) - Validation state: "Valid"
+2019-07-04 11:17:17.800 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 0.0081ms.
+2019-07-04 11:17:17.800 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.ChatMessageModel'.
+2019-07-04 11:17:17.800 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend) in 1.1259000000000001ms
+2019-07-04 11:17:17.800 +12:00 [INF] Request finished in 1.9545ms 200 application/json; charset=utf-8
+2019-07-04 11:17:18.567 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/Chat/TestMessage application/json 82
+2019-07-04 11:17:18.567 +12:00 [INF] Policy execution successful.
+2019-07-04 11:17:18.568 +12:00 [INF] Route matched with {action = "TestMessage", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] TestMessage(Pegasus_backend.Models.ChatMessageModel) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-07-04 11:17:18.569 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend) - Validation state: "Valid"
+2019-07-04 11:17:18.569 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 0.0106ms.
+2019-07-04 11:17:18.569 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.ChatMessageModel'.
+2019-07-04 11:17:18.569 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend) in 1.4422000000000001ms
+2019-07-04 11:17:18.570 +12:00 [INF] Request finished in 2.5601ms 200 application/json; charset=utf-8
+2019-07-04 11:17:19.598 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/Chat/TestMessage  
+2019-07-04 11:17:19.598 +12:00 [INF] Policy execution successful.
+2019-07-04 11:17:19.599 +12:00 [INF] Request finished in 0.4555ms 204 
+2019-07-04 11:17:19.604 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/Chat/TestMessage application/json 82
+2019-07-04 11:17:19.604 +12:00 [INF] Policy execution successful.
+2019-07-04 11:17:19.605 +12:00 [INF] Route matched with {action = "TestMessage", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] TestMessage(Pegasus_backend.Models.ChatMessageModel) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-07-04 11:17:19.606 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend) - Validation state: "Valid"
+2019-07-04 11:17:19.606 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 0.013900000000000001ms.
+2019-07-04 11:17:19.606 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.ChatMessageModel'.
+2019-07-04 11:17:19.606 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend) in 1.35ms
+2019-07-04 11:17:19.606 +12:00 [INF] Request finished in 2.1973ms 200 application/json; charset=utf-8
+2019-07-04 11:28:24.091 +12:00 [INF] User profile is available. Using 'C:\Users\lgx95\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-07-04 11:28:24.925 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/values  
+2019-07-04 11:28:24.925 +12:00 [INF] Request starting HTTP/1.1 DEBUG http://localhost:5000/  0
+2019-07-04 11:28:24.944 +12:00 [INF] Request finished in 20.8135ms 200 
+2019-07-04 11:28:24.973 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-07-04 11:28:25.212 +12:00 [INF] Route matched with {action = "Get", controller = "Values"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Get() on controller Pegasus_backend.Controllers.ValuesController (Pegasus_backend).
+2019-07-04 11:28:25.443 +12:00 [INF] Executing action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) - Validation state: "Valid"
+2019-07-04 11:28:25.585 +12:00 [ERR] ValuesController LogErrorToFile: System.Exception: Exception of type 'System.Exception' was thrown.
+   at Pegasus_backend.Controllers.ValuesController.Get() in C:\angular\pegasusBackend\Controllers\ValuesController.cs:line 30
+2019-07-04 11:28:25.586 +12:00 [INF] ValuesController LogInfoToFile: hello
+2019-07-04 11:28:25.592 +12:00 [INF] Executed action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 136.5483ms.
+2019-07-04 11:28:25.601 +12:00 [INF] Executing ObjectResult, writing value of type 'System.DateTime'.
+2019-07-04 11:28:25.672 +12:00 [INF] Executed action Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) in 455.8159ms
+2019-07-04 11:28:25.678 +12:00 [INF] Request finished in 756.6548ms 200 application/json; charset=utf-8
+2019-07-04 11:28:31.154 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/chat/negotiate?name=Emily  
+2019-07-04 11:28:31.156 +12:00 [INF] Policy execution successful.
+2019-07-04 11:28:31.158 +12:00 [INF] Request finished in 3.8908ms 204 
+2019-07-04 11:28:31.345 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/chat/negotiate?name=Emily text/plain;charset=UTF-8 0
+2019-07-04 11:28:31.346 +12:00 [INF] Policy execution successful.
+2019-07-04 11:28:31.368 +12:00 [INF] Request finished in 23.3676ms 200 application/json
+2019-07-04 11:28:31.469 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/chat?name=Emily&id=dH449FmExYFd8HPL-37w0A  
+2019-07-04 11:28:31.469 +12:00 [INF] Policy execution successful.
+2019-07-04 11:28:31.788 +12:00 [INF] Completed connection handshake. Using HubProtocol 'json'.
+2019-07-04 11:28:33.915 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/Chat/TestMessage  
+2019-07-04 11:28:33.915 +12:00 [INF] Policy execution successful.
+2019-07-04 11:28:33.915 +12:00 [INF] Request finished in 0.6481ms 204 
+2019-07-04 11:28:33.924 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/Chat/TestMessage application/json 79
+2019-07-04 11:28:33.924 +12:00 [INF] Policy execution successful.
+2019-07-04 11:28:33.958 +12:00 [INF] Route matched with {action = "TestMessage", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] TestMessage(Pegasus_backend.Models.ChatMessageModel) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-07-04 11:28:34.000 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend) - Validation state: "Valid"
+2019-07-04 11:28:34.002 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 1.6483ms.
+2019-07-04 11:28:34.002 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.ChatMessageModel'.
+2019-07-04 11:28:34.005 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend) in 46.3278ms
+2019-07-04 11:28:34.005 +12:00 [INF] Request finished in 81.6016ms 200 application/json; charset=utf-8
+2019-07-04 11:36:49.936 +12:00 [INF] User profile is available. Using 'C:\Users\lgx95\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-07-04 11:36:50.562 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/values  
+2019-07-04 11:36:50.562 +12:00 [INF] Request starting HTTP/1.1 DEBUG http://localhost:5000/  0
+2019-07-04 11:36:50.580 +12:00 [INF] Request finished in 18.5128ms 200 
+2019-07-04 11:36:50.613 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-07-04 11:36:50.838 +12:00 [INF] Route matched with {action = "Get", controller = "Values"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Get() on controller Pegasus_backend.Controllers.ValuesController (Pegasus_backend).
+2019-07-04 11:36:51.014 +12:00 [INF] Executing action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) - Validation state: "Valid"
+2019-07-04 11:36:51.134 +12:00 [ERR] ValuesController LogErrorToFile: System.Exception: Exception of type 'System.Exception' was thrown.
+   at Pegasus_backend.Controllers.ValuesController.Get() in C:\angular\pegasusBackend\Controllers\ValuesController.cs:line 30
+2019-07-04 11:36:51.134 +12:00 [INF] ValuesController LogInfoToFile: hello
+2019-07-04 11:36:51.137 +12:00 [INF] Executed action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 108.7245ms.
+2019-07-04 11:36:51.146 +12:00 [INF] Executing ObjectResult, writing value of type 'System.DateTime'.
+2019-07-04 11:36:51.192 +12:00 [INF] Executed action Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) in 350.5025ms
+2019-07-04 11:36:51.197 +12:00 [INF] Request finished in 637.1794ms 200 application/json; charset=utf-8
+2019-07-04 11:37:20.181 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/chat/negotiate?name=Emily  
+2019-07-04 11:37:20.183 +12:00 [INF] Policy execution successful.
+2019-07-04 11:37:20.184 +12:00 [INF] Request finished in 3.5533ms 204 
+2019-07-04 11:37:20.368 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/chat/negotiate?name=Emily text/plain;charset=UTF-8 0
+2019-07-04 11:37:20.369 +12:00 [INF] Policy execution successful.
+2019-07-04 11:37:20.386 +12:00 [INF] Request finished in 18.1125ms 200 application/json
+2019-07-04 11:37:20.508 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/chat?name=Emily&id=4e-foXYIZHR2I4AeAKbC3w  
+2019-07-04 11:37:20.509 +12:00 [INF] Policy execution successful.
+2019-07-04 11:37:20.776 +12:00 [INF] Completed connection handshake. Using HubProtocol 'json'.
+2019-07-04 11:37:24.767 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/Chat/TestMessage  
+2019-07-04 11:37:24.767 +12:00 [INF] Policy execution successful.
+2019-07-04 11:37:24.768 +12:00 [INF] Request finished in 0.5006ms 204 
+2019-07-04 11:37:24.775 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/Chat/TestMessage application/json 82
+2019-07-04 11:37:24.775 +12:00 [INF] Policy execution successful.
+2019-07-04 11:37:24.810 +12:00 [INF] Route matched with {action = "TestMessage", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] TestMessage(Pegasus_backend.Models.ChatMessageModel) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-07-04 11:37:24.849 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend) - Validation state: "Valid"
+2019-07-04 11:37:24.851 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 1.5030000000000001ms.
+2019-07-04 11:37:24.851 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.ChatMessageModel'.
+2019-07-04 11:37:24.854 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend) in 43.758500000000005ms
+2019-07-04 11:37:24.854 +12:00 [INF] Request finished in 79.0404ms 200 application/json; charset=utf-8
+2019-07-04 11:37:27.000 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/Chat/TestMessage application/json 82
+2019-07-04 11:37:27.000 +12:00 [INF] Policy execution successful.
+2019-07-04 11:37:27.001 +12:00 [INF] Route matched with {action = "TestMessage", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] TestMessage(Pegasus_backend.Models.ChatMessageModel) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-07-04 11:37:27.004 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend) - Validation state: "Valid"
+2019-07-04 11:37:27.004 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 0.1208ms.
+2019-07-04 11:37:27.004 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.ChatMessageModel'.
+2019-07-04 11:37:27.005 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend) in 3.2003000000000004ms
+2019-07-04 11:37:27.005 +12:00 [INF] Request finished in 4.9375ms 200 application/json; charset=utf-8
+2019-07-04 11:38:06.121 +12:00 [INF] User profile is available. Using 'C:\Users\lgx95\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-07-04 11:38:06.783 +12:00 [INF] Request starting HTTP/1.1 DEBUG http://localhost:5000/  0
+2019-07-04 11:38:06.783 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/values  
+2019-07-04 11:38:06.807 +12:00 [INF] Request finished in 22.2402ms 200 
+2019-07-04 11:38:06.841 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-07-04 11:38:07.069 +12:00 [INF] Route matched with {action = "Get", controller = "Values"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Get() on controller Pegasus_backend.Controllers.ValuesController (Pegasus_backend).
+2019-07-04 11:38:07.220 +12:00 [INF] Executing action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) - Validation state: "Valid"
+2019-07-04 11:38:07.340 +12:00 [ERR] ValuesController LogErrorToFile: System.Exception: Exception of type 'System.Exception' was thrown.
+   at Pegasus_backend.Controllers.ValuesController.Get() in C:\angular\pegasusBackend\Controllers\ValuesController.cs:line 30
+2019-07-04 11:38:07.341 +12:00 [INF] ValuesController LogInfoToFile: hello
+2019-07-04 11:38:07.347 +12:00 [INF] Executed action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 115.5353ms.
+2019-07-04 11:38:07.355 +12:00 [INF] Executing ObjectResult, writing value of type 'System.DateTime'.
+2019-07-04 11:38:07.407 +12:00 [INF] Executed action Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) in 334.3573ms
+2019-07-04 11:38:07.415 +12:00 [INF] Request finished in 635.4514ms 200 application/json; charset=utf-8
+2019-07-04 11:38:58.420 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/chat/negotiate?name=Emily  
+2019-07-04 11:38:58.432 +12:00 [INF] Policy execution successful.
+2019-07-04 11:38:58.433 +12:00 [INF] Request finished in 13.2475ms 204 
+2019-07-04 11:38:58.642 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/chat/negotiate?name=Emily text/plain;charset=UTF-8 0
+2019-07-04 11:38:58.643 +12:00 [INF] Policy execution successful.
+2019-07-04 11:38:58.661 +12:00 [INF] Request finished in 18.6595ms 200 application/json
+2019-07-04 11:38:58.724 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/chat?name=Emily&id=W-QzUoGtViUoLfwnauK1KA  
+2019-07-04 11:38:58.725 +12:00 [INF] Policy execution successful.
+2019-07-04 11:38:59.129 +12:00 [INF] Completed connection handshake. Using HubProtocol 'json'.
+2019-07-04 11:39:03.646 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/chat/negotiate?name=Kevin  
+2019-07-04 11:39:03.646 +12:00 [INF] Policy execution successful.
+2019-07-04 11:39:03.646 +12:00 [INF] Request finished in 0.4721ms 204 
+2019-07-04 11:39:03.860 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/chat/negotiate?name=Kevin text/plain;charset=UTF-8 0
+2019-07-04 11:39:03.861 +12:00 [INF] Policy execution successful.
+2019-07-04 11:39:03.862 +12:00 [INF] Request finished in 1.4606ms 200 application/json
+2019-07-04 11:39:03.903 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/chat?name=Kevin&id=tkQkRdO6gGjiYjyoW26QUw  
+2019-07-04 11:39:03.904 +12:00 [INF] Policy execution successful.
+2019-07-04 11:39:04.284 +12:00 [INF] Completed connection handshake. Using HubProtocol 'json'.
+2019-07-04 11:39:07.526 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/Chat/TestMessage  
+2019-07-04 11:39:07.526 +12:00 [INF] Policy execution successful.
+2019-07-04 11:39:07.526 +12:00 [INF] Request finished in 0.4406ms 204 
+2019-07-04 11:39:07.533 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/Chat/TestMessage application/json 82
+2019-07-04 11:39:07.534 +12:00 [INF] Policy execution successful.
+2019-07-04 11:39:07.551 +12:00 [INF] Route matched with {action = "TestMessage", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] TestMessage(Pegasus_backend.Models.ChatMessageModel) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-07-04 11:39:07.593 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend) - Validation state: "Valid"
+2019-07-04 11:39:07.595 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 2.0287ms.
+2019-07-04 11:39:07.596 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.ChatMessageModel'.
+2019-07-04 11:39:07.599 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend) in 47.3235ms
+2019-07-04 11:39:07.599 +12:00 [INF] Request finished in 65.9462ms 200 application/json; charset=utf-8
+2019-07-04 11:39:12.747 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/Chat/TestMessage  
+2019-07-04 11:39:12.747 +12:00 [INF] Policy execution successful.
+2019-07-04 11:39:12.748 +12:00 [INF] Request finished in 0.3924ms 204 
+2019-07-04 11:39:12.754 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/Chat/TestMessage application/json 82
+2019-07-04 11:39:12.754 +12:00 [INF] Policy execution successful.
+2019-07-04 11:39:12.755 +12:00 [INF] Route matched with {action = "TestMessage", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] TestMessage(Pegasus_backend.Models.ChatMessageModel) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-07-04 11:39:12.756 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend) - Validation state: "Valid"
+2019-07-04 11:39:12.757 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 0.034800000000000005ms.
+2019-07-04 11:39:12.757 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.ChatMessageModel'.
+2019-07-04 11:39:12.757 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend) in 2.2264ms
+2019-07-04 11:39:12.757 +12:00 [INF] Request finished in 3.2415ms 200 application/json; charset=utf-8
+2019-07-04 14:47:24.448 +12:00 [INF] User profile is available. Using 'C:\Users\lgx95\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-07-04 14:47:26.081 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/values  
+2019-07-04 14:47:26.081 +12:00 [INF] Request starting HTTP/1.1 DEBUG http://localhost:5000/  0
+2019-07-04 14:47:26.125 +12:00 [INF] Request finished in 44.5092ms 200 
+2019-07-04 14:47:26.205 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-07-04 14:47:26.659 +12:00 [INF] Route matched with {action = "Get", controller = "Values"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Get() on controller Pegasus_backend.Controllers.ValuesController (Pegasus_backend).
+2019-07-04 14:47:26.952 +12:00 [INF] Executing action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) - Validation state: "Valid"
+2019-07-04 14:47:27.180 +12:00 [ERR] ValuesController LogErrorToFile: System.Exception: Exception of type 'System.Exception' was thrown.
+   at Pegasus_backend.Controllers.ValuesController.Get() in C:\angular\pegasusBackend\Controllers\ValuesController.cs:line 30
+2019-07-04 14:47:27.181 +12:00 [INF] ValuesController LogInfoToFile: hello
+2019-07-04 14:47:27.189 +12:00 [INF] Executed action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 219.05540000000002ms.
+2019-07-04 14:47:27.215 +12:00 [INF] Executing ObjectResult, writing value of type 'System.DateTime'.
+2019-07-04 14:47:27.332 +12:00 [INF] Executed action Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) in 665.1547ms
+2019-07-04 14:47:27.346 +12:00 [INF] Request finished in 1270.7205ms 200 application/json; charset=utf-8
+2019-07-04 14:47:34.301 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/MobileLoginLogs/GetLastCheck/1  
+2019-07-04 14:47:34.301 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/MobileLoginLogs/GetLastCheck/0  
+2019-07-04 14:47:34.304 +12:00 [INF] Policy execution successful.
+2019-07-04 14:47:34.304 +12:00 [INF] Policy execution successful.
+2019-07-04 14:47:34.340 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/MobileLoginLogs/GetRecentLoginLog  
+2019-07-04 14:47:34.341 +12:00 [INF] Policy execution successful.
+2019-07-04 14:47:34.349 +12:00 [INF] Route matched with {action = "GetRecentLoginLog", controller = "MobileLoginLogs"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetRecentLoginLog() on controller Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController (Pegasus_backend).
+2019-07-04 14:47:34.353 +12:00 [INF] Route matched with {action = "GetLastCheck", controller = "MobileLoginLogs"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetLastCheck(Int32) on controller Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController (Pegasus_backend).
+2019-07-04 14:47:34.354 +12:00 [INF] Route matched with {action = "GetLastCheck", controller = "MobileLoginLogs"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetLastCheck(Int32) on controller Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController (Pegasus_backend).
+2019-07-04 14:47:35.474 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController.GetRecentLoginLog (Pegasus_backend) - Validation state: "Valid"
+2019-07-04 14:47:35.541 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController.GetLastCheck (Pegasus_backend) - Validation state: "Valid"
+2019-07-04 14:47:35.541 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController.GetLastCheck (Pegasus_backend) - Validation state: "Valid"
+2019-07-04 14:47:38.766 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-04 14:47:38.766 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-04 14:47:38.766 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-04 14:47:39.009 +12:00 [WRN] The LINQ expression 'LastOrDefault()' could not be translated and will be evaluated locally.
+2019-07-04 14:47:40.717 +12:00 [INF] Executed DbCommand (43ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM `ablemusic`.`login_log` AS `l`
+2019-07-04 14:47:40.725 +12:00 [INF] Executed DbCommand (46ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`login_log_id`, `x`.`created_at`, `x`.`log_type`, `x`.`org_id`, `x`.`user_id`
+FROM `ablemusic`.`login_log` AS `x`
+WHERE `x`.`log_type` = @__id_0
+2019-07-04 14:47:40.725 +12:00 [INF] Executed DbCommand (46ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`login_log_id`, `x`.`created_at`, `x`.`log_type`, `x`.`org_id`, `x`.`user_id`
+FROM `ablemusic`.`login_log` AS `x`
+WHERE `x`.`log_type` = @__id_0
+2019-07-04 14:47:40.953 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController.GetLastCheck (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 5411.7095ms.
+2019-07-04 14:47:40.953 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController.GetLastCheck (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 5411.5596000000005ms.
+2019-07-04 14:47:40.956 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[Pegasus_backend.pegasusContext.LoginLog, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2019-07-04 14:47:40.956 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[Pegasus_backend.pegasusContext.LoginLog, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2019-07-04 14:47:41.012 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController.GetLastCheck (Pegasus_backend) in 6657.536ms
+2019-07-04 14:47:41.012 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController.GetLastCheck (Pegasus_backend) in 6658.2676ms
+2019-07-04 14:47:41.014 +12:00 [INF] Request finished in 6713.1395ms 200 application/json; charset=utf-8
+2019-07-04 14:47:41.014 +12:00 [INF] Request finished in 6713.1498ms 200 application/json; charset=utf-8
+2019-07-04 14:47:41.140 +12:00 [INF] Executed DbCommand (38ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`login_log_id`, `x`.`created_at`, `x`.`log_type`, `x`.`org_id`, `x`.`user_id`, `x.Org`.`org_id`, `x.Org`.`abbr`, `x.Org`.`address`, `x.Org`.`email`, `x.Org`.`is_activate`, `x.Org`.`is_headoffice`, `x.Org`.`localtion_x`, `x.Org`.`localtion_y`, `x.Org`.`org_name`, `x.Org`.`phone`
+FROM `ablemusic`.`login_log` AS `x`
+LEFT JOIN `ablemusic`.`org` AS `x.Org` ON `x`.`org_id` = `x.Org`.`org_id`
+ORDER BY `x`.`login_log_id` DESC
+LIMIT @__p_0
+2019-07-04 14:47:41.290 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/chat/negotiate?name=Emily  
+2019-07-04 14:47:41.291 +12:00 [INF] Policy execution successful.
+2019-07-04 14:47:41.293 +12:00 [INF] Request finished in 3.4124ms 204 
+2019-07-04 14:47:41.407 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/chat/negotiate?name=Emily text/plain;charset=UTF-8 0
+2019-07-04 14:47:41.407 +12:00 [INF] Policy execution successful.
+2019-07-04 14:47:41.422 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController.GetRecentLoginLog (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 5946.8545ms.
+2019-07-04 14:47:41.424 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.LoginLog, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-07-04 14:47:41.448 +12:00 [INF] Request finished in 40.7947ms 200 application/json
+2019-07-04 14:47:41.482 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/chat?name=Emily&id=9DV2IP71b20jAcf2tP3-uw  
+2019-07-04 14:47:41.483 +12:00 [INF] Policy execution successful.
+2019-07-04 14:47:41.636 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController.GetRecentLoginLog (Pegasus_backend) in 7285.9828000000007ms
+2019-07-04 14:47:41.637 +12:00 [INF] Request finished in 7296.7222ms 200 application/json; charset=utf-8
+2019-07-04 14:47:52.076 +12:00 [INF] Completed connection handshake. Using HubProtocol 'json'.
+2019-07-04 14:48:21.312 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/Chat/TestMessage  
+2019-07-04 14:48:21.313 +12:00 [INF] Policy execution successful.
+2019-07-04 14:48:21.313 +12:00 [INF] Request finished in 1.2979ms 204 
+2019-07-04 14:48:21.328 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/Chat/TestMessage application/json 82
+2019-07-04 14:48:21.328 +12:00 [INF] Policy execution successful.
+2019-07-04 14:48:21.341 +12:00 [INF] Route matched with {action = "TestMessage", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] TestMessage(Pegasus_backend.Models.ChatMessageModel) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-07-04 14:48:24.251 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend) - Validation state: "Valid"
+2019-07-04 14:48:24.254 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 1.6640000000000001ms.
+2019-07-04 14:48:24.255 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.ChatMessageModel'.
+2019-07-04 14:48:24.260 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend) in 2918.2734ms
+2019-07-04 14:48:24.262 +12:00 [INF] Request finished in 2934.0346ms 200 application/json; charset=utf-8
+2019-07-04 14:49:44.844 +12:00 [INF] User profile is available. Using 'C:\Users\lgx95\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-07-04 14:49:46.358 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/values  
+2019-07-04 14:49:46.358 +12:00 [INF] Request starting HTTP/1.1 DEBUG http://localhost:5000/  0
+2019-07-04 14:49:46.404 +12:00 [INF] Request finished in 45.7143ms 200 
+2019-07-04 14:49:46.473 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-07-04 14:49:46.923 +12:00 [INF] Route matched with {action = "Get", controller = "Values"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Get() on controller Pegasus_backend.Controllers.ValuesController (Pegasus_backend).
+2019-07-04 14:49:47.277 +12:00 [INF] Executing action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) - Validation state: "Valid"
+2019-07-04 14:49:47.559 +12:00 [ERR] ValuesController LogErrorToFile: System.Exception: Exception of type 'System.Exception' was thrown.
+   at Pegasus_backend.Controllers.ValuesController.Get() in C:\angular\pegasusBackend\Controllers\ValuesController.cs:line 30
+2019-07-04 14:49:47.561 +12:00 [INF] ValuesController LogInfoToFile: hello
+2019-07-04 14:49:47.569 +12:00 [INF] Executed action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 269.91ms.
+2019-07-04 14:49:47.589 +12:00 [INF] Executing ObjectResult, writing value of type 'System.DateTime'.
+2019-07-04 14:49:47.677 +12:00 [INF] Executed action Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) in 748.8469ms
+2019-07-04 14:49:47.689 +12:00 [INF] Request finished in 1337.8481ms 200 application/json; charset=utf-8
+2019-07-04 14:49:56.118 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/chat/negotiate?name=Emily  
+2019-07-04 14:49:56.121 +12:00 [INF] Policy execution successful.
+2019-07-04 14:49:56.125 +12:00 [INF] Request finished in 6.9576ms 204 
+2019-07-04 14:49:56.494 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/chat/negotiate?name=Emily text/plain;charset=UTF-8 0
+2019-07-04 14:49:56.496 +12:00 [INF] Policy execution successful.
+2019-07-04 14:49:56.526 +12:00 [INF] Request finished in 32.0172ms 200 application/json
+2019-07-04 14:49:56.677 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/chat?name=Emily&id=NsiLrOL_cRq4Z4TmU5s96w  
+2019-07-04 14:49:56.678 +12:00 [INF] Policy execution successful.
+2019-07-04 14:50:01.871 +12:00 [INF] Completed connection handshake. Using HubProtocol 'json'.
+2019-07-04 14:50:09.516 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/Chat/TestMessage  
+2019-07-04 14:50:09.517 +12:00 [INF] Policy execution successful.
+2019-07-04 14:50:09.517 +12:00 [INF] Request finished in 0.9931ms 204 
+2019-07-04 14:50:09.533 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/Chat/TestMessage application/json 82
+2019-07-04 14:50:09.533 +12:00 [INF] Policy execution successful.
+2019-07-04 14:50:13.359 +12:00 [INF] Route matched with {action = "TestMessage", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] TestMessage(Pegasus_backend.Models.ChatMessageModel) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-07-04 14:50:13.451 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend) - Validation state: "Valid"
+2019-07-04 14:50:13.457 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 5.543ms.
+2019-07-04 14:50:13.459 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.ChatMessageModel'.
+2019-07-04 14:50:13.465 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend) in 105.27990000000001ms
+2019-07-04 14:50:13.465 +12:00 [INF] Request finished in 3932.5996ms 200 application/json; charset=utf-8
+2019-07-04 14:51:17.692 +12:00 [INF] User profile is available. Using 'C:\Users\lgx95\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-07-04 14:51:19.125 +12:00 [INF] Request starting HTTP/1.1 DEBUG http://localhost:5000/  0
+2019-07-04 14:51:19.125 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/values  
+2019-07-04 14:51:19.163 +12:00 [INF] Request finished in 37.8079ms 200 
+2019-07-04 14:51:19.215 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-07-04 14:51:19.798 +12:00 [INF] Route matched with {action = "Get", controller = "Values"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Get() on controller Pegasus_backend.Controllers.ValuesController (Pegasus_backend).
+2019-07-04 14:51:20.266 +12:00 [INF] Executing action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) - Validation state: "Valid"
+2019-07-04 14:51:20.565 +12:00 [ERR] ValuesController LogErrorToFile: System.Exception: Exception of type 'System.Exception' was thrown.
+   at Pegasus_backend.Controllers.ValuesController.Get() in C:\angular\pegasusBackend\Controllers\ValuesController.cs:line 30
+2019-07-04 14:51:20.567 +12:00 [INF] ValuesController LogInfoToFile: hello
+2019-07-04 14:51:20.577 +12:00 [INF] Executed action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 286.1084ms.
+2019-07-04 14:51:20.597 +12:00 [INF] Executing ObjectResult, writing value of type 'System.DateTime'.
+2019-07-04 14:51:20.746 +12:00 [INF] Executed action Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) in 941.28140000000008ms
+2019-07-04 14:51:20.760 +12:00 [INF] Request finished in 1640.7477ms 200 application/json; charset=utf-8
+2019-07-04 14:51:22.334 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/MobileLoginLogs/GetLastCheck/1  
+2019-07-04 14:51:22.334 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/MobileLoginLogs/GetLastCheck/0  
+2019-07-04 14:51:22.337 +12:00 [INF] Policy execution successful.
+2019-07-04 14:51:22.337 +12:00 [INF] Policy execution successful.
+2019-07-04 14:51:22.397 +12:00 [INF] Route matched with {action = "GetLastCheck", controller = "MobileLoginLogs"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetLastCheck(Int32) on controller Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController (Pegasus_backend).
+2019-07-04 14:51:22.399 +12:00 [INF] Route matched with {action = "GetLastCheck", controller = "MobileLoginLogs"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetLastCheck(Int32) on controller Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController (Pegasus_backend).
+2019-07-04 14:51:22.443 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/MobileLoginLogs/GetRecentLoginLog  
+2019-07-04 14:51:22.444 +12:00 [INF] Policy execution successful.
+2019-07-04 14:51:22.462 +12:00 [INF] Route matched with {action = "GetRecentLoginLog", controller = "MobileLoginLogs"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetRecentLoginLog() on controller Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController (Pegasus_backend).
+2019-07-04 14:51:23.577 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController.GetRecentLoginLog (Pegasus_backend) - Validation state: "Valid"
+2019-07-04 14:51:23.673 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController.GetLastCheck (Pegasus_backend) - Validation state: "Valid"
+2019-07-04 14:51:23.673 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController.GetLastCheck (Pegasus_backend) - Validation state: "Valid"
+2019-07-04 14:51:26.072 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-04 14:51:26.072 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-04 14:51:26.072 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-04 14:51:26.305 +12:00 [WRN] The LINQ expression 'LastOrDefault()' could not be translated and will be evaluated locally.
+2019-07-04 14:51:27.531 +12:00 [INF] Executed DbCommand (45ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM `ablemusic`.`login_log` AS `l`
+2019-07-04 14:51:27.539 +12:00 [INF] Executed DbCommand (44ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`login_log_id`, `x`.`created_at`, `x`.`log_type`, `x`.`org_id`, `x`.`user_id`
+FROM `ablemusic`.`login_log` AS `x`
+WHERE `x`.`log_type` = @__id_0
+2019-07-04 14:51:27.539 +12:00 [INF] Executed DbCommand (44ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`login_log_id`, `x`.`created_at`, `x`.`log_type`, `x`.`org_id`, `x`.`user_id`
+FROM `ablemusic`.`login_log` AS `x`
+WHERE `x`.`log_type` = @__id_0
+2019-07-04 14:51:27.662 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController.GetLastCheck (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 3987.9695ms.
+2019-07-04 14:51:27.662 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController.GetLastCheck (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 3988.0745ms.
+2019-07-04 14:51:27.663 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[Pegasus_backend.pegasusContext.LoginLog, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2019-07-04 14:51:27.663 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[Pegasus_backend.pegasusContext.LoginLog, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2019-07-04 14:51:27.724 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController.GetLastCheck (Pegasus_backend) in 5326.5153ms
+2019-07-04 14:51:27.724 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController.GetLastCheck (Pegasus_backend) in 5323.8371000000006ms
+2019-07-04 14:51:27.726 +12:00 [INF] Request finished in 5391.9028ms 200 application/json; charset=utf-8
+2019-07-04 14:51:27.726 +12:00 [INF] Request finished in 5392.0115ms 200 application/json; charset=utf-8
+2019-07-04 14:51:27.860 +12:00 [INF] Executed DbCommand (36ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`login_log_id`, `x`.`created_at`, `x`.`log_type`, `x`.`org_id`, `x`.`user_id`, `x.Org`.`org_id`, `x.Org`.`abbr`, `x.Org`.`address`, `x.Org`.`email`, `x.Org`.`is_activate`, `x.Org`.`is_headoffice`, `x.Org`.`localtion_x`, `x.Org`.`localtion_y`, `x.Org`.`org_name`, `x.Org`.`phone`
+FROM `ablemusic`.`login_log` AS `x`
+LEFT JOIN `ablemusic`.`org` AS `x.Org` ON `x`.`org_id` = `x.Org`.`org_id`
+ORDER BY `x`.`login_log_id` DESC
+LIMIT @__p_0
+2019-07-04 14:51:28.038 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController.GetRecentLoginLog (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 4460.781ms.
+2019-07-04 14:51:28.039 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.LoginLog, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-07-04 14:51:28.138 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController.GetRecentLoginLog (Pegasus_backend) in 5675.1935ms
+2019-07-04 14:51:28.138 +12:00 [INF] Request finished in 5695.1162ms 200 application/json; charset=utf-8
+2019-07-04 14:51:28.859 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/chat/negotiate?name=Emily  
+2019-07-04 14:51:28.860 +12:00 [INF] Policy execution successful.
+2019-07-04 14:51:28.863 +12:00 [INF] Request finished in 4.6256ms 204 
+2019-07-04 14:51:28.974 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/chat/negotiate?name=Emily text/plain;charset=UTF-8 0
+2019-07-04 14:51:28.974 +12:00 [INF] Policy execution successful.
+2019-07-04 14:51:29.023 +12:00 [INF] Request finished in 49.2207ms 200 application/json
+2019-07-04 14:51:29.046 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/chat?name=Emily&id=VT2Xr5HZHI8TPXr7jVFc8A  
+2019-07-04 14:51:29.046 +12:00 [INF] Policy execution successful.
+2019-07-04 14:51:36.356 +12:00 [INF] Completed connection handshake. Using HubProtocol 'json'.
+2019-07-04 14:51:59.854 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/chat/negotiate?name=Kevin  
+2019-07-04 14:51:59.857 +12:00 [INF] Policy execution successful.
+2019-07-04 14:51:59.858 +12:00 [INF] Request finished in 4.2312ms 204 
+2019-07-04 14:52:00.183 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/chat/negotiate?name=Kevin text/plain;charset=UTF-8 0
+2019-07-04 14:52:00.184 +12:00 [INF] Policy execution successful.
+2019-07-04 14:52:00.186 +12:00 [INF] Request finished in 2.3874ms 200 application/json
+2019-07-04 14:52:00.271 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/chat?name=Kevin&id=AQl8qeLZwX6mXCTXFZN0Xw  
+2019-07-04 14:52:00.272 +12:00 [INF] Policy execution successful.
+2019-07-04 14:52:00.843 +12:00 [INF] Completed connection handshake. Using HubProtocol 'json'.
+2019-07-04 14:52:06.612 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/Chat/TestMessage  
+2019-07-04 14:52:06.612 +12:00 [INF] Policy execution successful.
+2019-07-04 14:52:06.613 +12:00 [INF] Request finished in 0.9263ms 204 
+2019-07-04 14:52:06.624 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/Chat/TestMessage application/json 82
+2019-07-04 14:52:06.625 +12:00 [INF] Policy execution successful.
+2019-07-04 14:52:06.635 +12:00 [INF] Route matched with {action = "TestMessage", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] TestMessage(Pegasus_backend.Models.ChatMessageModel) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-07-04 14:52:06.670 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend) - Validation state: "Valid"
+2019-07-04 14:52:06.672 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 1.3469ms.
+2019-07-04 14:52:06.672 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.ChatMessageModel'.
+2019-07-04 14:52:06.675 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend) in 39.5906ms
+2019-07-04 14:52:06.676 +12:00 [INF] Request finished in 51.5183ms 200 application/json; charset=utf-8
+2019-07-04 14:52:17.184 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/Chat/TestMessage  
+2019-07-04 14:52:17.185 +12:00 [INF] Policy execution successful.
+2019-07-04 14:52:17.185 +12:00 [INF] Request finished in 0.8713ms 204 
+2019-07-04 14:52:17.195 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/Chat/TestMessage application/json 82
+2019-07-04 14:52:17.195 +12:00 [INF] Policy execution successful.
+2019-07-04 14:52:17.196 +12:00 [INF] Route matched with {action = "TestMessage", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] TestMessage(Pegasus_backend.Models.ChatMessageModel) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-07-04 14:52:17.200 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend) - Validation state: "Valid"
+2019-07-04 14:52:17.200 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 0.0298ms.
+2019-07-04 14:52:17.200 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.ChatMessageModel'.
+2019-07-04 14:52:17.201 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend) in 4.1157ms
+2019-07-04 14:52:17.201 +12:00 [INF] Request finished in 6.7226ms 200 application/json; charset=utf-8
