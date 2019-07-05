@@ -639,3 +639,13 @@ LIMIT @__p_0
 2019-07-04 14:52:17.200 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.ChatMessageModel'.
 2019-07-04 14:52:17.201 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.TestMessage (Pegasus_backend) in 4.1157ms
 2019-07-04 14:52:17.201 +12:00 [INF] Request finished in 6.7226ms 200 application/json; charset=utf-8
+2019-07-04 14:56:07.815 +12:00 [INF] User profile is available. Using 'C:\Users\lgx95\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-07-04 14:56:09.035 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/chat/negotiate?userId=null  
+2019-07-04 14:56:09.243 +12:00 [INF] Policy execution successful.
+2019-07-04 14:56:09.284 +12:00 [INF] Request finished in 253.8394ms 204 
+2019-07-04 15:03:52.636 +12:00 [INF] User profile is available. Using 'C:\Users\lgx95\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-07-04 15:03:53.740 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/chat/negotiate?userId=null  
+2019-07-04 15:03:53.843 +12:00 [INF] Policy execution successful.
+2019-07-04 15:03:53.862 +12:00 [INF] Request finished in 126.1022ms 204 
+2019-07-04 16:51:10.440 +12:00 [INF] Request starting HTTP/1.1 POST http://127.0.0.1:24939/iisintegration  0
+2019-07-04 16:51:10.441 +12:00 [INF] Request finished in 0.8757ms 202 

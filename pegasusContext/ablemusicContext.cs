@@ -77,7 +77,7 @@ namespace Pegasus_backend.pegasusContext
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseMySQL("server=www.gradspace.org;uid=dbuser;pwd=qwer1234;database=ablemusic");
+                optionsBuilder.UseMySQL("server=www.gradspace.org;port=3306;user=dbuser;password=qwer1234;database=ablemusic");
             }
         }
 
@@ -1002,6 +1002,11 @@ namespace Pegasus_backend.pegasusContext
                 entity.Property(e => e.Address)
                     .HasColumnName("address")
                     .HasMaxLength(60)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Comment)
+                    .HasColumnName("comment")
+                    .HasMaxLength(1000)
                     .IsUnicode(false);
 
                 entity.Property(e => e.ContactNum)
@@ -2619,10 +2624,7 @@ namespace Pegasus_backend.pegasusContext
                     .HasColumnName("apply_staff_id")
                     .HasColumnType("smallint(6)");
 
-                entity.Property(e => e.DeliverAt)
-                    .HasColumnName("deliver_at")
-                    .HasMaxLength(20)
-                    .IsUnicode(false);
+                entity.Property(e => e.DeliverAt).HasColumnName("deliver_at");
 
                 entity.Property(e => e.IsDisputed)
                     .HasColumnName("is_disputed")
@@ -3203,6 +3205,10 @@ namespace Pegasus_backend.pegasusContext
                     .HasColumnName("is_activate")
                     .HasColumnType("bit(1)");
 
+                entity.Property(e => e.IsOnline)
+                    .HasColumnName("is_online")
+                    .HasColumnType("bit(1)");
+
                 entity.Property(e => e.Password)
                     .HasColumnName("password")
                     .HasMaxLength(20)
@@ -3211,6 +3217,11 @@ namespace Pegasus_backend.pegasusContext
                 entity.Property(e => e.RoleId)
                     .HasColumnName("role_id")
                     .HasColumnType("smallint(6)");
+
+                entity.Property(e => e.Signature)
+                    .HasColumnName("signature")
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.UnreadMessageId)
                     .HasColumnName("unread_message_id")
