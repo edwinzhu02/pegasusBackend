@@ -1,0 +1,348 @@
+2019-07-05 12:35:47.327 +12:00 [INF] User profile is available. Using 'C:\Users\lgx95\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-07-05 12:35:48.872 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/values  
+2019-07-05 12:35:48.872 +12:00 [INF] Request starting HTTP/1.1 DEBUG http://localhost:5000/  0
+2019-07-05 12:35:48.924 +12:00 [INF] Request finished in 54.1045ms 200 
+2019-07-05 12:35:49.035 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-07-05 12:35:49.743 +12:00 [INF] Route matched with {action = "Get", controller = "Values"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Get() on controller Pegasus_backend.Controllers.ValuesController (Pegasus_backend).
+2019-07-05 12:35:50.402 +12:00 [INF] Executing action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) - Validation state: "Valid"
+2019-07-05 12:35:50.622 +12:00 [ERR] ValuesController LogErrorToFile: System.Exception: Exception of type 'System.Exception' was thrown.
+   at Pegasus_backend.Controllers.ValuesController.Get() in C:\angular\pegasusBackend\Controllers\ValuesController.cs:line 30
+2019-07-05 12:35:50.624 +12:00 [INF] ValuesController LogInfoToFile: hello
+2019-07-05 12:35:50.629 +12:00 [INF] Executed action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 214.1785ms.
+2019-07-05 12:35:50.643 +12:00 [INF] Executing ObjectResult, writing value of type 'System.DateTime'.
+2019-07-05 12:35:50.748 +12:00 [INF] Executed action Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) in 997.5701ms
+2019-07-05 12:35:50.756 +12:00 [INF] Request finished in 1890.2019ms 200 application/json; charset=utf-8
+2019-07-05 12:35:52.268 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/favicon.ico  
+2019-07-05 12:35:52.277 +12:00 [INF] Request finished in 8.6436ms 404 
+2019-07-05 12:36:19.768 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/MobileLoginLogs/GetLastCheck/0  
+2019-07-05 12:36:19.775 +12:00 [INF] Policy execution successful.
+2019-07-05 12:36:19.775 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/MobileLoginLogs/GetLastCheck/1  
+2019-07-05 12:36:19.776 +12:00 [INF] Policy execution successful.
+2019-07-05 12:36:19.802 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/MobileLoginLogs/GetRecentLoginLog  
+2019-07-05 12:36:19.802 +12:00 [INF] Policy execution successful.
+2019-07-05 12:36:19.809 +12:00 [INF] Route matched with {action = "GetRecentLoginLog", controller = "MobileLoginLogs"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetRecentLoginLog() on controller Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController (Pegasus_backend).
+2019-07-05 12:36:19.819 +12:00 [INF] Route matched with {action = "GetLastCheck", controller = "MobileLoginLogs"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetLastCheck(Int32) on controller Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController (Pegasus_backend).
+2019-07-05 12:36:19.819 +12:00 [INF] Route matched with {action = "GetLastCheck", controller = "MobileLoginLogs"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetLastCheck(Int32) on controller Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController (Pegasus_backend).
+2019-07-05 12:36:20.307 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController.GetRecentLoginLog (Pegasus_backend) - Validation state: "Valid"
+2019-07-05 12:36:20.337 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController.GetLastCheck (Pegasus_backend) - Validation state: "Valid"
+2019-07-05 12:36:20.337 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController.GetLastCheck (Pegasus_backend) - Validation state: "Valid"
+2019-07-05 12:36:21.378 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-05 12:36:21.378 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-05 12:36:21.378 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-05 12:36:21.464 +12:00 [WRN] The LINQ expression 'LastOrDefault()' could not be translated and will be evaluated locally.
+2019-07-05 12:36:22.804 +12:00 [INF] Executed DbCommand (53ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM `ablemusic`.`login_log` AS `l`
+2019-07-05 12:36:22.812 +12:00 [INF] Executed DbCommand (56ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`login_log_id`, `x`.`created_at`, `x`.`log_type`, `x`.`org_id`, `x`.`user_id`
+FROM `ablemusic`.`login_log` AS `x`
+WHERE `x`.`log_type` = @__id_0
+2019-07-05 12:36:22.812 +12:00 [INF] Executed DbCommand (56ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`login_log_id`, `x`.`created_at`, `x`.`log_type`, `x`.`org_id`, `x`.`user_id`
+FROM `ablemusic`.`login_log` AS `x`
+WHERE `x`.`log_type` = @__id_0
+2019-07-05 12:36:22.880 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController.GetLastCheck (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 2543.3920000000003ms.
+2019-07-05 12:36:22.880 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController.GetLastCheck (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 2543.4945000000002ms.
+2019-07-05 12:36:22.881 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[Pegasus_backend.pegasusContext.LoginLog, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2019-07-05 12:36:22.882 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[Pegasus_backend.pegasusContext.LoginLog, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2019-07-05 12:36:22.915 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController.GetLastCheck (Pegasus_backend) in 3090.7392ms
+2019-07-05 12:36:22.915 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController.GetLastCheck (Pegasus_backend) in 3096.4449ms
+2019-07-05 12:36:22.917 +12:00 [INF] Request finished in 3141.1584ms 200 application/json; charset=utf-8
+2019-07-05 12:36:22.917 +12:00 [INF] Request finished in 3148.8925ms 200 application/json; charset=utf-8
+2019-07-05 12:36:23.112 +12:00 [INF] Executed DbCommand (57ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`login_log_id`, `x`.`created_at`, `x`.`log_type`, `x`.`org_id`, `x`.`user_id`, `x.Org`.`org_id`, `x.Org`.`abbr`, `x.Org`.`address`, `x.Org`.`email`, `x.Org`.`is_activate`, `x.Org`.`is_headoffice`, `x.Org`.`localtion_x`, `x.Org`.`localtion_y`, `x.Org`.`org_name`, `x.Org`.`phone`
+FROM `ablemusic`.`login_log` AS `x`
+LEFT JOIN `ablemusic`.`org` AS `x.Org` ON `x`.`org_id` = `x.Org`.`org_id`
+ORDER BY `x`.`login_log_id` DESC
+LIMIT @__p_0
+2019-07-05 12:36:23.237 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController.GetRecentLoginLog (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 2929.1413000000002ms.
+2019-07-05 12:36:23.237 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.LoginLog, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-07-05 12:36:23.317 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController.GetRecentLoginLog (Pegasus_backend) in 3507.385ms
+2019-07-05 12:36:23.317 +12:00 [INF] Request finished in 3515.1104ms 200 application/json; charset=utf-8
+2019-07-05 12:36:28.054 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/chat/negotiate?userId=Emily  
+2019-07-05 12:36:28.054 +12:00 [INF] Policy execution successful.
+2019-07-05 12:36:28.057 +12:00 [INF] Request finished in 2.7072ms 204 
+2019-07-05 12:36:28.082 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/chat/negotiate?userId=Emily text/plain;charset=UTF-8 0
+2019-07-05 12:36:28.083 +12:00 [INF] Policy execution successful.
+2019-07-05 12:36:28.105 +12:00 [INF] Request finished in 23.2771ms 200 application/json
+2019-07-05 12:36:28.120 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/chat?userId=Emily&id=TKMfCra6q9HM3rKL0RTjiw  
+2019-07-05 12:36:28.120 +12:00 [INF] Policy execution successful.
+2019-07-05 12:36:28.233 +12:00 [INF] Completed connection handshake. Using HubProtocol 'json'.
+2019-07-05 12:37:04.247 +12:00 [INF] Request finished in 36127.097ms 101 
+2019-07-05 12:52:01.973 +12:00 [INF] User profile is available. Using 'C:\Users\lgx95\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-07-05 12:52:02.824 +12:00 [INF] Request starting HTTP/1.1 DEBUG http://localhost:5000/  0
+2019-07-05 12:52:02.824 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/values  
+2019-07-05 12:52:02.862 +12:00 [INF] Request finished in 42.9223ms 200 
+2019-07-05 12:52:02.937 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-07-05 12:52:03.339 +12:00 [INF] Route matched with {action = "Get", controller = "Values"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Get() on controller Pegasus_backend.Controllers.ValuesController (Pegasus_backend).
+2019-07-05 12:52:03.672 +12:00 [INF] Executing action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) - Validation state: "Valid"
+2019-07-05 12:52:04.079 +12:00 [ERR] ValuesController LogErrorToFile: System.Exception: Exception of type 'System.Exception' was thrown.
+   at Pegasus_backend.Controllers.ValuesController.Get() in C:\angular\pegasusBackend\Controllers\ValuesController.cs:line 30
+2019-07-05 12:52:04.081 +12:00 [INF] ValuesController LogInfoToFile: hello
+2019-07-05 12:52:04.093 +12:00 [INF] Executed action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 394.5976ms.
+2019-07-05 12:52:04.117 +12:00 [INF] Executing ObjectResult, writing value of type 'System.DateTime'.
+2019-07-05 12:52:04.239 +12:00 [INF] Executed action Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) in 890.4333ms
+2019-07-05 12:52:04.251 +12:00 [INF] Request finished in 1435.5166ms 200 application/json; charset=utf-8
+2019-07-05 12:52:16.923 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/MobileLoginLogs/GetLastCheck/0  
+2019-07-05 12:52:16.923 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/MobileLoginLogs/GetLastCheck/1  
+2019-07-05 12:52:16.924 +12:00 [INF] Policy execution successful.
+2019-07-05 12:52:16.924 +12:00 [INF] Policy execution successful.
+2019-07-05 12:52:16.949 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/MobileLoginLogs/GetRecentLoginLog  
+2019-07-05 12:52:16.950 +12:00 [INF] Policy execution successful.
+2019-07-05 12:52:16.950 +12:00 [INF] Route matched with {action = "GetLastCheck", controller = "MobileLoginLogs"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetLastCheck(Int32) on controller Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController (Pegasus_backend).
+2019-07-05 12:52:16.951 +12:00 [INF] Route matched with {action = "GetLastCheck", controller = "MobileLoginLogs"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetLastCheck(Int32) on controller Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController (Pegasus_backend).
+2019-07-05 12:52:16.993 +12:00 [INF] Route matched with {action = "GetRecentLoginLog", controller = "MobileLoginLogs"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetRecentLoginLog() on controller Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController (Pegasus_backend).
+2019-07-05 12:52:17.622 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController.GetRecentLoginLog (Pegasus_backend) - Validation state: "Valid"
+2019-07-05 12:52:17.661 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController.GetLastCheck (Pegasus_backend) - Validation state: "Valid"
+2019-07-05 12:52:17.661 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController.GetLastCheck (Pegasus_backend) - Validation state: "Valid"
+2019-07-05 12:52:18.675 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-05 12:52:18.675 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-05 12:52:18.675 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-05 12:52:18.766 +12:00 [WRN] The LINQ expression 'LastOrDefault()' could not be translated and will be evaluated locally.
+2019-07-05 12:52:19.825 +12:00 [INF] Executed DbCommand (51ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM `ablemusic`.`login_log` AS `l`
+2019-07-05 12:52:19.831 +12:00 [INF] Executed DbCommand (54ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`login_log_id`, `x`.`created_at`, `x`.`log_type`, `x`.`org_id`, `x`.`user_id`
+FROM `ablemusic`.`login_log` AS `x`
+WHERE `x`.`log_type` = @__id_0
+2019-07-05 12:52:19.832 +12:00 [INF] Executed DbCommand (56ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`login_log_id`, `x`.`created_at`, `x`.`log_type`, `x`.`org_id`, `x`.`user_id`
+FROM `ablemusic`.`login_log` AS `x`
+WHERE `x`.`log_type` = @__id_0
+2019-07-05 12:52:19.898 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController.GetLastCheck (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 2236.1692000000003ms.
+2019-07-05 12:52:19.898 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[Pegasus_backend.pegasusContext.LoginLog, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2019-07-05 12:52:19.899 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController.GetLastCheck (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 2236.7652000000003ms.
+2019-07-05 12:52:19.899 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[Pegasus_backend.pegasusContext.LoginLog, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2019-07-05 12:52:19.927 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController.GetLastCheck (Pegasus_backend) in 2976.184ms
+2019-07-05 12:52:19.927 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController.GetLastCheck (Pegasus_backend) in 2975.8377ms
+2019-07-05 12:52:19.928 +12:00 [INF] Request finished in 3005.3317ms 200 application/json; charset=utf-8
+2019-07-05 12:52:19.928 +12:00 [INF] Request finished in 3004.6866ms 200 application/json; charset=utf-8
+2019-07-05 12:52:20.117 +12:00 [INF] Executed DbCommand (56ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`login_log_id`, `x`.`created_at`, `x`.`log_type`, `x`.`org_id`, `x`.`user_id`, `x.Org`.`org_id`, `x.Org`.`abbr`, `x.Org`.`address`, `x.Org`.`email`, `x.Org`.`is_activate`, `x.Org`.`is_headoffice`, `x.Org`.`localtion_x`, `x.Org`.`localtion_y`, `x.Org`.`org_name`, `x.Org`.`phone`
+FROM `ablemusic`.`login_log` AS `x`
+LEFT JOIN `ablemusic`.`org` AS `x.Org` ON `x`.`org_id` = `x.Org`.`org_id`
+ORDER BY `x`.`login_log_id` DESC
+LIMIT @__p_0
+2019-07-05 12:52:20.210 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController.GetRecentLoginLog (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 2587.9128ms.
+2019-07-05 12:52:20.210 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.LoginLog, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-07-05 12:52:20.256 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController.GetRecentLoginLog (Pegasus_backend) in 3263.4019000000003ms
+2019-07-05 12:52:20.257 +12:00 [INF] Request finished in 3307.6001ms 200 application/json; charset=utf-8
+2019-07-05 12:52:52.279 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/MobileLoginLogs/GetLastCheck/0  
+2019-07-05 12:52:52.279 +12:00 [INF] Policy execution successful.
+2019-07-05 12:52:52.285 +12:00 [INF] Route matched with {action = "GetLastCheck", controller = "MobileLoginLogs"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetLastCheck(Int32) on controller Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController (Pegasus_backend).
+2019-07-05 12:52:52.285 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/MobileLoginLogs/GetLastCheck/1  
+2019-07-05 12:52:52.286 +12:00 [INF] Policy execution successful.
+2019-07-05 12:52:52.286 +12:00 [INF] Route matched with {action = "GetLastCheck", controller = "MobileLoginLogs"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetLastCheck(Int32) on controller Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController (Pegasus_backend).
+2019-07-05 12:52:52.286 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController.GetLastCheck (Pegasus_backend) - Validation state: "Valid"
+2019-07-05 12:52:52.287 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController.GetLastCheck (Pegasus_backend) - Validation state: "Valid"
+2019-07-05 12:52:52.288 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-05 12:52:52.288 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-05 12:52:52.537 +12:00 [INF] Executed DbCommand (74ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`login_log_id`, `x`.`created_at`, `x`.`log_type`, `x`.`org_id`, `x`.`user_id`
+FROM `ablemusic`.`login_log` AS `x`
+WHERE `x`.`log_type` = @__id_0
+2019-07-05 12:52:52.538 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController.GetLastCheck (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 251.1587ms.
+2019-07-05 12:52:52.538 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[Pegasus_backend.pegasusContext.LoginLog, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2019-07-05 12:52:52.539 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController.GetLastCheck (Pegasus_backend) in 252.4592ms
+2019-07-05 12:52:52.539 +12:00 [INF] Request finished in 253.8597ms 200 application/json; charset=utf-8
+2019-07-05 12:52:52.539 +12:00 [INF] Executed DbCommand (76ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`login_log_id`, `x`.`created_at`, `x`.`log_type`, `x`.`org_id`, `x`.`user_id`
+FROM `ablemusic`.`login_log` AS `x`
+WHERE `x`.`log_type` = @__id_0
+2019-07-05 12:52:52.540 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController.GetLastCheck (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 253.31300000000002ms.
+2019-07-05 12:52:52.540 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[Pegasus_backend.pegasusContext.LoginLog, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2019-07-05 12:52:52.540 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.MobileLoginLogsController.GetLastCheck (Pegasus_backend) in 255.4018ms
+2019-07-05 12:52:52.541 +12:00 [INF] Request finished in 262.0301ms 200 application/json; charset=utf-8
+2019-07-05 12:53:04.294 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/login  
+2019-07-05 12:53:04.295 +12:00 [INF] Policy execution successful.
+2019-07-05 12:53:04.296 +12:00 [INF] Request finished in 1.897ms 204 
+2019-07-05 12:53:04.304 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/login application/json 45
+2019-07-05 12:53:04.305 +12:00 [INF] Policy execution successful.
+2019-07-05 12:53:04.314 +12:00 [INF] Route matched with {action = "Login", controller = "Login"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(Pegasus_backend.Models.UsrAndPass) on controller Pegasus_backend.Controllers.Authorization.LoginController (Pegasus_backend).
+2019-07-05 12:53:04.364 +12:00 [INF] Executing action method Pegasus_backend.Controllers.Authorization.LoginController.Login (Pegasus_backend) - Validation state: "Valid"
+2019-07-05 12:53:04.371 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-05 12:53:04.750 +12:00 [INF] Executed DbCommand (77ms) [Parameters=[@__model_UserName_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`user_id`, `s`.`created_at`, `s`.`is_activate`, `s`.`is_online`, `s`.`password`, `s`.`role_id`, `s`.`signature`, `s`.`unread_message_id`, `s`.`user_name`, `s.Role`.`role_id`, `s.Role`.`role_name`
+FROM `ablemusic`.`user` AS `s`
+LEFT JOIN `ablemusic`.`role` AS `s.Role` ON `s`.`role_id` = `s.Role`.`role_id`
+WHERE `s`.`user_name` = @__model_UserName_0
+ORDER BY `s`.`user_id`
+LIMIT 1
+2019-07-05 12:53:04.889 +12:00 [INF] Executed DbCommand (72ms) [Parameters=[@__model_UserName_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.Learner`.`learner_id`, `s.Learner`.`address`, `s.Learner`.`comment`, `s.Learner`.`contact_num`, `s.Learner`.`created_at`, `s.Learner`.`dob`, `s.Learner`.`email`, `s.Learner`.`enroll_date`, `s.Learner`.`first_name`, `s.Learner`.`form_url`, `s.Learner`.`g5_certification`, `s.Learner`.`gender`, `s.Learner`.`is_abrsm_g5`, `s.Learner`.`is_active`, `s.Learner`.`is_under_18`, `s.Learner`.`last_name`, `s.Learner`.`learner_level`, `s.Learner`.`level_type`, `s.Learner`.`middle_name`, `s.Learner`.`note`, `s.Learner`.`org_id`, `s.Learner`.`otherfile_url`, `s.Learner`.`payment_period`, `s.Learner`.`photo`, `s.Learner`.`referrer`, `s.Learner`.`referrer_learner_id`, `s.Learner`.`user_id`
+FROM `ablemusic`.`learner` AS `s.Learner`
+INNER JOIN (
+    SELECT DISTINCT `t`.*
+    FROM (
+        SELECT `s0`.`user_id`
+        FROM `ablemusic`.`user` AS `s0`
+        LEFT JOIN `ablemusic`.`role` AS `s.Role0` ON `s0`.`role_id` = `s.Role0`.`role_id`
+        WHERE `s0`.`user_name` = @__model_UserName_0
+        ORDER BY `s0`.`user_id`
+        LIMIT 1
+    ) AS `t`
+) AS `t0` ON `s.Learner`.`user_id` = `t0`.`user_id`
+ORDER BY `t0`.`user_id`
+2019-07-05 12:53:05.144 +12:00 [INF] Executed DbCommand (69ms) [Parameters=[@__model_UserName_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.Teacher`.`teacher_id`, `s.Teacher`.`ability`, `s.Teacher`.`comment`, `s.Teacher`.`cv_url`, `s.Teacher`.`dob`, `s.Teacher`.`email`, `s.Teacher`.`expiry_date`, `s.Teacher`.`first_name`, `s.Teacher`.`form_url`, `s.Teacher`.`gender`, `s.Teacher`.`home_phone`, `s.Teacher`.`id_number`, `s.Teacher`.`id_photo`, `s.Teacher`.`id_type`, `s.Teacher`.`invoice_template`, `s.Teacher`.`ird_number`, `s.Teacher`.`is_activate`, `s.Teacher`.`is_contract`, `s.Teacher`.`is_left`, `s.Teacher`.`last_name`, `s.Teacher`.`level`, `s.Teacher`.`minimum_hours`, `s.Teacher`.`mobile_phone`, `s.Teacher`.`otherfile_url`, `s.Teacher`.`photo`, `s.Teacher`.`user_id`, `s.Teacher`.`visa`
+FROM `ablemusic`.`teacher` AS `s.Teacher`
+INNER JOIN (
+    SELECT DISTINCT `t1`.*
+    FROM (
+        SELECT `s1`.`user_id`
+        FROM `ablemusic`.`user` AS `s1`
+        LEFT JOIN `ablemusic`.`role` AS `s.Role1` ON `s1`.`role_id` = `s.Role1`.`role_id`
+        WHERE `s1`.`user_name` = @__model_UserName_0
+        ORDER BY `s1`.`user_id`
+        LIMIT 1
+    ) AS `t1`
+) AS `t2` ON `s.Teacher`.`user_id` = `t2`.`user_id`
+ORDER BY `t2`.`user_id`
+2019-07-05 12:53:05.347 +12:00 [INF] Executed DbCommand (67ms) [Parameters=[@__model_UserName_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.Staff`.`staff_id`, `s.Staff`.`dob`, `s.Staff`.`email`, `s.Staff`.`expiry_date`, `s.Staff`.`first_name`, `s.Staff`.`gender`, `s.Staff`.`home_phone`, `s.Staff`.`id_number`, `s.Staff`.`id_photo`, `s.Staff`.`id_type`, `s.Staff`.`ird_number`, `s.Staff`.`is_activate`, `s.Staff`.`last_name`, `s.Staff`.`mobile_phone`, `s.Staff`.`photo`, `s.Staff`.`user_id`, `s.Staff`.`visa`
+FROM `ablemusic`.`staff` AS `s.Staff`
+INNER JOIN (
+    SELECT DISTINCT `t3`.*
+    FROM (
+        SELECT `s2`.`user_id`
+        FROM `ablemusic`.`user` AS `s2`
+        LEFT JOIN `ablemusic`.`role` AS `s.Role2` ON `s2`.`role_id` = `s.Role2`.`role_id`
+        WHERE `s2`.`user_name` = @__model_UserName_0
+        ORDER BY `s2`.`user_id`
+        LIMIT 1
+    ) AS `t3`
+) AS `t4` ON `s.Staff`.`user_id` = `t4`.`user_id`
+ORDER BY `t4`.`user_id`, `s.Staff`.`staff_id`
+2019-07-05 12:53:05.414 +12:00 [INF] Executed action method Pegasus_backend.Controllers.Authorization.LoginController.Login (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 1049.8339ms.
+2019-07-05 12:53:05.418 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-07-05 12:53:05.422 +12:00 [INF] Executed action Pegasus_backend.Controllers.Authorization.LoginController.Login (Pegasus_backend) in 1108.1575ms
+2019-07-05 12:53:05.423 +12:00 [INF] Request finished in 1118.5229ms 401 application/json; charset=utf-8
+2019-07-05 12:53:14.543 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/login  
+2019-07-05 12:53:14.544 +12:00 [INF] Policy execution successful.
+2019-07-05 12:53:14.544 +12:00 [INF] Request finished in 0.501ms 204 
+2019-07-05 12:53:14.556 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/login application/json 43
+2019-07-05 12:53:14.557 +12:00 [INF] Policy execution successful.
+2019-07-05 12:53:14.557 +12:00 [INF] Route matched with {action = "Login", controller = "Login"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(Pegasus_backend.Models.UsrAndPass) on controller Pegasus_backend.Controllers.Authorization.LoginController (Pegasus_backend).
+2019-07-05 12:53:14.560 +12:00 [INF] Executing action method Pegasus_backend.Controllers.Authorization.LoginController.Login (Pegasus_backend) - Validation state: "Valid"
+2019-07-05 12:53:14.561 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-05 12:53:14.739 +12:00 [INF] Executed DbCommand (51ms) [Parameters=[@__model_UserName_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`user_id`, `s`.`created_at`, `s`.`is_activate`, `s`.`is_online`, `s`.`password`, `s`.`role_id`, `s`.`signature`, `s`.`unread_message_id`, `s`.`user_name`, `s.Role`.`role_id`, `s.Role`.`role_name`
+FROM `ablemusic`.`user` AS `s`
+LEFT JOIN `ablemusic`.`role` AS `s.Role` ON `s`.`role_id` = `s.Role`.`role_id`
+WHERE `s`.`user_name` = @__model_UserName_0
+ORDER BY `s`.`user_id`
+LIMIT 1
+2019-07-05 12:53:14.803 +12:00 [INF] Executed DbCommand (63ms) [Parameters=[@__model_UserName_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.Learner`.`learner_id`, `s.Learner`.`address`, `s.Learner`.`comment`, `s.Learner`.`contact_num`, `s.Learner`.`created_at`, `s.Learner`.`dob`, `s.Learner`.`email`, `s.Learner`.`enroll_date`, `s.Learner`.`first_name`, `s.Learner`.`form_url`, `s.Learner`.`g5_certification`, `s.Learner`.`gender`, `s.Learner`.`is_abrsm_g5`, `s.Learner`.`is_active`, `s.Learner`.`is_under_18`, `s.Learner`.`last_name`, `s.Learner`.`learner_level`, `s.Learner`.`level_type`, `s.Learner`.`middle_name`, `s.Learner`.`note`, `s.Learner`.`org_id`, `s.Learner`.`otherfile_url`, `s.Learner`.`payment_period`, `s.Learner`.`photo`, `s.Learner`.`referrer`, `s.Learner`.`referrer_learner_id`, `s.Learner`.`user_id`
+FROM `ablemusic`.`learner` AS `s.Learner`
+INNER JOIN (
+    SELECT DISTINCT `t`.*
+    FROM (
+        SELECT `s0`.`user_id`
+        FROM `ablemusic`.`user` AS `s0`
+        LEFT JOIN `ablemusic`.`role` AS `s.Role0` ON `s0`.`role_id` = `s.Role0`.`role_id`
+        WHERE `s0`.`user_name` = @__model_UserName_0
+        ORDER BY `s0`.`user_id`
+        LIMIT 1
+    ) AS `t`
+) AS `t0` ON `s.Learner`.`user_id` = `t0`.`user_id`
+ORDER BY `t0`.`user_id`
+2019-07-05 12:53:14.991 +12:00 [INF] Executed DbCommand (66ms) [Parameters=[@__model_UserName_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.Teacher`.`teacher_id`, `s.Teacher`.`ability`, `s.Teacher`.`comment`, `s.Teacher`.`cv_url`, `s.Teacher`.`dob`, `s.Teacher`.`email`, `s.Teacher`.`expiry_date`, `s.Teacher`.`first_name`, `s.Teacher`.`form_url`, `s.Teacher`.`gender`, `s.Teacher`.`home_phone`, `s.Teacher`.`id_number`, `s.Teacher`.`id_photo`, `s.Teacher`.`id_type`, `s.Teacher`.`invoice_template`, `s.Teacher`.`ird_number`, `s.Teacher`.`is_activate`, `s.Teacher`.`is_contract`, `s.Teacher`.`is_left`, `s.Teacher`.`last_name`, `s.Teacher`.`level`, `s.Teacher`.`minimum_hours`, `s.Teacher`.`mobile_phone`, `s.Teacher`.`otherfile_url`, `s.Teacher`.`photo`, `s.Teacher`.`user_id`, `s.Teacher`.`visa`
+FROM `ablemusic`.`teacher` AS `s.Teacher`
+INNER JOIN (
+    SELECT DISTINCT `t1`.*
+    FROM (
+        SELECT `s1`.`user_id`
+        FROM `ablemusic`.`user` AS `s1`
+        LEFT JOIN `ablemusic`.`role` AS `s.Role1` ON `s1`.`role_id` = `s.Role1`.`role_id`
+        WHERE `s1`.`user_name` = @__model_UserName_0
+        ORDER BY `s1`.`user_id`
+        LIMIT 1
+    ) AS `t1`
+) AS `t2` ON `s.Teacher`.`user_id` = `t2`.`user_id`
+ORDER BY `t2`.`user_id`
+2019-07-05 12:53:15.170 +12:00 [INF] Executed DbCommand (57ms) [Parameters=[@__model_UserName_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.Staff`.`staff_id`, `s.Staff`.`dob`, `s.Staff`.`email`, `s.Staff`.`expiry_date`, `s.Staff`.`first_name`, `s.Staff`.`gender`, `s.Staff`.`home_phone`, `s.Staff`.`id_number`, `s.Staff`.`id_photo`, `s.Staff`.`id_type`, `s.Staff`.`ird_number`, `s.Staff`.`is_activate`, `s.Staff`.`last_name`, `s.Staff`.`mobile_phone`, `s.Staff`.`photo`, `s.Staff`.`user_id`, `s.Staff`.`visa`
+FROM `ablemusic`.`staff` AS `s.Staff`
+INNER JOIN (
+    SELECT DISTINCT `t3`.*
+    FROM (
+        SELECT `s2`.`user_id`
+        FROM `ablemusic`.`user` AS `s2`
+        LEFT JOIN `ablemusic`.`role` AS `s.Role2` ON `s2`.`role_id` = `s.Role2`.`role_id`
+        WHERE `s2`.`user_name` = @__model_UserName_0
+        ORDER BY `s2`.`user_id`
+        LIMIT 1
+    ) AS `t3`
+) AS `t4` ON `s.Staff`.`user_id` = `t4`.`user_id`
+ORDER BY `t4`.`user_id`, `s.Staff`.`staff_id`
+2019-07-05 12:53:15.212 +12:00 [INF] Executed action method Pegasus_backend.Controllers.Authorization.LoginController.Login (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 652.274ms.
+2019-07-05 12:53:15.213 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-07-05 12:53:15.213 +12:00 [INF] Executed action Pegasus_backend.Controllers.Authorization.LoginController.Login (Pegasus_backend) in 655.6226ms
+2019-07-05 12:53:15.213 +12:00 [INF] Request finished in 657.1644ms 401 application/json; charset=utf-8
+2019-07-05 12:54:18.336 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/login  
+2019-07-05 12:54:18.348 +12:00 [INF] Policy execution successful.
+2019-07-05 12:54:18.352 +12:00 [INF] Request finished in 15.8836ms 204 
+2019-07-05 12:54:18.372 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/login application/json 47
+2019-07-05 12:54:18.372 +12:00 [INF] Policy execution successful.
+2019-07-05 12:54:18.373 +12:00 [INF] Route matched with {action = "Login", controller = "Login"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(Pegasus_backend.Models.UsrAndPass) on controller Pegasus_backend.Controllers.Authorization.LoginController (Pegasus_backend).
+2019-07-05 12:54:18.374 +12:00 [INF] Executing action method Pegasus_backend.Controllers.Authorization.LoginController.Login (Pegasus_backend) - Validation state: "Valid"
+2019-07-05 12:54:18.375 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-05 12:54:18.764 +12:00 [INF] Executed DbCommand (129ms) [Parameters=[@__model_UserName_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`user_id`, `s`.`created_at`, `s`.`is_activate`, `s`.`is_online`, `s`.`password`, `s`.`role_id`, `s`.`signature`, `s`.`unread_message_id`, `s`.`user_name`, `s.Role`.`role_id`, `s.Role`.`role_name`
+FROM `ablemusic`.`user` AS `s`
+LEFT JOIN `ablemusic`.`role` AS `s.Role` ON `s`.`role_id` = `s.Role`.`role_id`
+WHERE `s`.`user_name` = @__model_UserName_0
+ORDER BY `s`.`user_id`
+LIMIT 1
+2019-07-05 12:54:18.905 +12:00 [INF] Executed DbCommand (141ms) [Parameters=[@__model_UserName_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.Learner`.`learner_id`, `s.Learner`.`address`, `s.Learner`.`comment`, `s.Learner`.`contact_num`, `s.Learner`.`created_at`, `s.Learner`.`dob`, `s.Learner`.`email`, `s.Learner`.`enroll_date`, `s.Learner`.`first_name`, `s.Learner`.`form_url`, `s.Learner`.`g5_certification`, `s.Learner`.`gender`, `s.Learner`.`is_abrsm_g5`, `s.Learner`.`is_active`, `s.Learner`.`is_under_18`, `s.Learner`.`last_name`, `s.Learner`.`learner_level`, `s.Learner`.`level_type`, `s.Learner`.`middle_name`, `s.Learner`.`note`, `s.Learner`.`org_id`, `s.Learner`.`otherfile_url`, `s.Learner`.`payment_period`, `s.Learner`.`photo`, `s.Learner`.`referrer`, `s.Learner`.`referrer_learner_id`, `s.Learner`.`user_id`
+FROM `ablemusic`.`learner` AS `s.Learner`
+INNER JOIN (
+    SELECT DISTINCT `t`.*
+    FROM (
+        SELECT `s0`.`user_id`
+        FROM `ablemusic`.`user` AS `s0`
+        LEFT JOIN `ablemusic`.`role` AS `s.Role0` ON `s0`.`role_id` = `s.Role0`.`role_id`
+        WHERE `s0`.`user_name` = @__model_UserName_0
+        ORDER BY `s0`.`user_id`
+        LIMIT 1
+    ) AS `t`
+) AS `t0` ON `s.Learner`.`user_id` = `t0`.`user_id`
+ORDER BY `t0`.`user_id`
+2019-07-05 12:54:19.325 +12:00 [INF] Executed DbCommand (140ms) [Parameters=[@__model_UserName_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.Teacher`.`teacher_id`, `s.Teacher`.`ability`, `s.Teacher`.`comment`, `s.Teacher`.`cv_url`, `s.Teacher`.`dob`, `s.Teacher`.`email`, `s.Teacher`.`expiry_date`, `s.Teacher`.`first_name`, `s.Teacher`.`form_url`, `s.Teacher`.`gender`, `s.Teacher`.`home_phone`, `s.Teacher`.`id_number`, `s.Teacher`.`id_photo`, `s.Teacher`.`id_type`, `s.Teacher`.`invoice_template`, `s.Teacher`.`ird_number`, `s.Teacher`.`is_activate`, `s.Teacher`.`is_contract`, `s.Teacher`.`is_left`, `s.Teacher`.`last_name`, `s.Teacher`.`level`, `s.Teacher`.`minimum_hours`, `s.Teacher`.`mobile_phone`, `s.Teacher`.`otherfile_url`, `s.Teacher`.`photo`, `s.Teacher`.`user_id`, `s.Teacher`.`visa`
+FROM `ablemusic`.`teacher` AS `s.Teacher`
+INNER JOIN (
+    SELECT DISTINCT `t1`.*
+    FROM (
+        SELECT `s1`.`user_id`
+        FROM `ablemusic`.`user` AS `s1`
+        LEFT JOIN `ablemusic`.`role` AS `s.Role1` ON `s1`.`role_id` = `s.Role1`.`role_id`
+        WHERE `s1`.`user_name` = @__model_UserName_0
+        ORDER BY `s1`.`user_id`
+        LIMIT 1
+    ) AS `t1`
+) AS `t2` ON `s.Teacher`.`user_id` = `t2`.`user_id`
+ORDER BY `t2`.`user_id`
+2019-07-05 12:54:19.747 +12:00 [INF] Executed DbCommand (139ms) [Parameters=[@__model_UserName_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.Staff`.`staff_id`, `s.Staff`.`dob`, `s.Staff`.`email`, `s.Staff`.`expiry_date`, `s.Staff`.`first_name`, `s.Staff`.`gender`, `s.Staff`.`home_phone`, `s.Staff`.`id_number`, `s.Staff`.`id_photo`, `s.Staff`.`id_type`, `s.Staff`.`ird_number`, `s.Staff`.`is_activate`, `s.Staff`.`last_name`, `s.Staff`.`mobile_phone`, `s.Staff`.`photo`, `s.Staff`.`user_id`, `s.Staff`.`visa`
+FROM `ablemusic`.`staff` AS `s.Staff`
+INNER JOIN (
+    SELECT DISTINCT `t3`.*
+    FROM (
+        SELECT `s2`.`user_id`
+        FROM `ablemusic`.`user` AS `s2`
+        LEFT JOIN `ablemusic`.`role` AS `s.Role2` ON `s2`.`role_id` = `s.Role2`.`role_id`
+        WHERE `s2`.`user_name` = @__model_UserName_0
+        ORDER BY `s2`.`user_id`
+        LIMIT 1
+    ) AS `t3`
+) AS `t4` ON `s.Staff`.`user_id` = `t4`.`user_id`
+ORDER BY `t4`.`user_id`, `s.Staff`.`staff_id`
+2019-07-05 12:54:19.760 +12:00 [INF] Executed action method Pegasus_backend.Controllers.Authorization.LoginController.Login (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 1385.2396ms.
+2019-07-05 12:54:19.760 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-07-05 12:54:19.771 +12:00 [INF] Executed action Pegasus_backend.Controllers.Authorization.LoginController.Login (Pegasus_backend) in 1398.0102000000002ms
+2019-07-05 12:54:19.772 +12:00 [INF] Request finished in 1399.5411ms 200 application/json; charset=utf-8

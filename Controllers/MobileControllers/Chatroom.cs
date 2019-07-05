@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Security.Principal;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 using Org.BouncyCastle.Security;
@@ -12,7 +13,7 @@ namespace Pegasus_backend.Controllers.MobileControllers
     {
 //        public override Task OnConnectedAsync()
 //        {
-//            var username = Context.GetHttpContext().Request.Query["name"];
+//            var username = Context.UserIdentifier.
 //            return base.OnConnectedAsync();
 //        }
 

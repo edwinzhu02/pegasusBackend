@@ -10,7 +10,7 @@ namespace Pegasus_backend.Controllers.MobileControllers
     {
         public string GetUserId (HubConnectionContext  connectionContext)
         {
-            var username = connectionContext.GetHttpContext().Request.Query["name"];
+            var username = connectionContext.GetHttpContext().Request.Query["userId"];
             return username;
         }
     }
