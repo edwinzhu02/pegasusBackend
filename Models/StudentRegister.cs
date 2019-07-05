@@ -36,6 +36,7 @@ namespace Pegasus_backend.Models
         [JsonProperty(Required = Required.Always)]
         public short IsUnder18 { get; set; }
         public string Note { get; set; }
+        public string Comment { get; set; }
         public string Referrer { get; set; }
         public byte PaymentPeriod { get; set; }
         public List<Parent> Parent { get; set; }
