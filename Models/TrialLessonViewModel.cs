@@ -25,7 +25,7 @@ namespace Pegasus_backend.Models
         public DateTime? BeginTime { get; set; }
         [Required(ErrorMessage = "EndTime is required")]
         public DateTime? EndTime { get; set; }
-        [Required(ErrorMessage = "PaymentMethod is required")]
+       // [Required(ErrorMessage = "PaymentMethod is required")]
         public byte? PaymentMethod { get; set; }
         [Required(ErrorMessage = "Amount is required")]
         public decimal? Amount { get; set; }
@@ -35,6 +35,7 @@ namespace Pegasus_backend.Models
         [Range(0, int.MaxValue, ErrorMessage = "Id must greater than 0")]
         [Required(ErrorMessage = "TrialCourseId is required")]
         public int? TrialCourseId { get; set; }
-
+        [Required(ErrorMessage = "IsPayNow is required")]
+        public Boolean IsPayNow { get; set; }
     }
 }
