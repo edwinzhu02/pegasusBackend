@@ -67,51 +67,23 @@ namespace Pegasus_backend.Controllers
             }
             TimeSpan lessonDuration = oldLesson.EndTime.Value.Subtract(oldLesson.BeginTime.Value);
             newLesson.EndTime = newLesson.BeginTime.Value.Add(lessonDuration);
-            List<Lesson> conflictRooms = new List<Lesson>();
-            List<Lesson> conflictTeacherLessons = new List<Lesson>();
+
+            var lessonConflictCheckerService = new LessonConflictCheckerService(newLesson.BeginTime.Value, 
+                newLesson.EndTime.Value, newLesson.RoomId.Value, newLesson.OrgId, (int)newLesson.TeacherId, oldLesson.LessonId);
+            Result<List<object>> lessonConflictCheckResult;
             try
             {
-                conflictRooms = await _ablemusicContext.Lesson.Where(l => l.RoomId == newLesson.RoomId &&
-                    l.OrgId == newLesson.OrgId && l.IsCanceled != 1 && l.LessonId != newLesson.LessonId &&
-                    ((l.BeginTime > newLesson.BeginTime && l.BeginTime < newLesson.EndTime) ||
-                    (l.EndTime > newLesson.BeginTime && l.EndTime < newLesson.EndTime) ||
-                    (l.BeginTime <= newLesson.BeginTime && l.EndTime >= newLesson.EndTime)))
-                    .ToListAsync();
-                DateTime beginTime = newLesson.BeginTime.Value.AddMinutes(-60);
-                DateTime endTime = newLesson.EndTime.Value.AddMinutes(60);
-                conflictTeacherLessons = await _ablemusicContext.Lesson.Where(l => l.TeacherId == newLesson.TeacherId &&
-                l.IsCanceled != 1 && l.LessonId != newLesson.LessonId &&
-                ((l.BeginTime > beginTime && l.BeginTime < endTime) ||
-                (l.EndTime > beginTime && l.EndTime < endTime) ||
-                (l.BeginTime <= beginTime && l.EndTime >= endTime)))
-                .ToListAsync();
+                lessonConflictCheckResult = await lessonConflictCheckerService.CheckBothRoomAndTeacher();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 result.IsSuccess = false;
-                result.ErrorMessage = ex.ToString();
+                result.ErrorMessage = ex.Message;
                 return BadRequest(result);
             }
-            if(conflictRooms.Count > 0)
+            if (!lessonConflictCheckResult.IsSuccess)
             {
-                result.IsSuccess = false;
-                result.ErrorMessage = "Room is not available";
-                return BadRequest(result);
-            }
-            if(conflictTeacherLessons.Count > 0)
-            {
-                foreach(var c in conflictTeacherLessons)
-                {
-                    if (c.OrgId != newLesson.OrgId ||
-                        (c.BeginTime > newLesson.BeginTime && c.BeginTime < newLesson.EndTime) ||
-                        (c.EndTime > newLesson.BeginTime && c.EndTime < newLesson.EndTime) ||
-                        (c.BeginTime <= newLesson.BeginTime && c.EndTime >= newLesson.EndTime))
-                    {
-                        result.IsSuccess = false;
-                        result.ErrorMessage = "Teacher is not available";
-                        return BadRequest(result);
-                    }
-                }
+                return BadRequest(lessonConflictCheckResult);
             }
 
             Teacher newTeacher;

@@ -136,74 +136,27 @@ namespace Pegasus_backend.Controllers
                 return BadRequest(result);
             }
             string courseName = courses[0].CourseName;
-            List<Lesson> conflictRemainLessons = new List<Lesson>();
             List<Lesson> lessonsToBeAppend = new List<Lesson>();
             int i = numOfSchedulesToBeAdd;
             foreach (var remainLesson in remainLessons)
             {
                 if (i <= 0) break;
-                List<Lesson> conflictRooms = new List<Lesson>();
-                List<Lesson> conflictTeacherLessons = new List<Lesson>();
+                var lessonConflictCheckerService = new LessonConflictCheckerService(remainLesson);
+                Result<List<object>> lessonConflictCheckResult;
                 try
                 {
-                    conflictRooms = await _ablemusicContext.Lesson.Where(l => l.RoomId == remainLesson.RoomId &&
-                        l.OrgId == remainLesson.OrgId && remainLesson.LessonId != l.LessonId && l.IsCanceled != 1 &&
-                        ((l.BeginTime > remainLesson.BeginTime && l.BeginTime < remainLesson.EndTime) ||
-                        (l.EndTime > remainLesson.BeginTime && l.EndTime < remainLesson.EndTime) ||
-                        (l.BeginTime <= remainLesson.BeginTime && l.EndTime >= remainLesson.EndTime)))
-                        .ToListAsync();
-
-                    DateTime beginTime = remainLesson.BeginTime.Value.AddMinutes(-60);
-                    DateTime endTime = remainLesson.EndTime.Value.AddMinutes(75);
-                    conflictTeacherLessons = await _ablemusicContext.Lesson.Where(l => l.TeacherId == remainLesson.TeacherId &&
-                    l.LessonId != remainLesson.LessonId &&
-                    ((l.BeginTime > beginTime && l.BeginTime < endTime) ||
-                    (l.EndTime > beginTime && l.EndTime < endTime) ||
-                    (l.BeginTime <= beginTime && l.EndTime >= endTime)))
-                    .ToListAsync();
-
-                    if (conflictRooms.Count > 0)
-                    {
-                        conflictRemainLessons.Add(remainLesson);
-                    }
-                    else
-                    {
-                        if (conflictTeacherLessons.Count > 0)
-                        {
-                            bool teacherHasConflict = false;
-                            foreach (var c in conflictTeacherLessons)
-                            {
-                                if (c.OrgId != remainLesson.OrgId ||
-                                    (c.BeginTime > remainLesson.BeginTime && c.BeginTime < remainLesson.EndTime) ||
-                                    (c.EndTime > remainLesson.BeginTime && c.EndTime < remainLesson.EndTime) ||
-                                    (c.BeginTime <= remainLesson.BeginTime && c.EndTime >= remainLesson.EndTime))
-                                {
-                                    teacherHasConflict = true;
-                                    break;
-                                }
-                            }
-                            if (teacherHasConflict)
-                            {
-                                conflictRemainLessons.Add(remainLesson);
-                            }
-                            else
-                            {
-                                lessonsToBeAppend.Add(remainLesson);
-                                i--;
-                            }
-                        }
-                        else
-                        {
-                            lessonsToBeAppend.Add(remainLesson);
-                            i--;
-                        }
-                    }
+                    lessonConflictCheckResult = await lessonConflictCheckerService.CheckBothRoomAndTeacher();
                 }
                 catch (Exception ex)
                 {
                     result.IsSuccess = false;
-                    result.ErrorMessage = ex.ToString();
+                    result.ErrorMessage = ex.Message;
                     return BadRequest(result);
+                }
+                if (lessonConflictCheckResult.IsSuccess)
+                {
+                    lessonsToBeAppend.Add(remainLesson);
+                    i--;
                 }
             }
 

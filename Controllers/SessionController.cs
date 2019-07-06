@@ -100,8 +100,6 @@ namespace Pegasus_backend.Controllers
                 return BadRequest(result);
             }
 
-            List<Lesson> conflictRooms = new List<Lesson>();
-            List<Lesson> conflictTeacherLessons = new List<Lesson>();
             Teacher teacher = new Teacher();
             var invoice = new Invoice();
             var holidays = new List<Holiday>();
@@ -116,24 +114,8 @@ namespace Pegasus_backend.Controllers
                 org = await _ablemusicContext.Org.Where(o => o.OrgId == lesson.OrgId).FirstOrDefaultAsync();
                 room = await _ablemusicContext.Room.Where(r => r.RoomId == lesson.RoomId).FirstOrDefaultAsync();
                 learner = await _ablemusicContext.Learner.Where(l => l.LearnerId == lesson.LearnerId).FirstOrDefaultAsync();
-                conflictRooms = await _ablemusicContext.Lesson.Where(l => l.RoomId == lesson.RoomId &&
-                    l.OrgId == lesson.OrgId && l.IsCanceled != 1 && l.LessonId != lesson.LessonId &&
-                    ((l.BeginTime > lesson.BeginTime && l.BeginTime < lesson.EndTime) ||
-                    (l.EndTime > lesson.BeginTime && l.EndTime < lesson.EndTime) ||
-                    (l.BeginTime <= lesson.BeginTime && l.EndTime >= lesson.EndTime)))
-                    .ToListAsync();
-
                 holidays = await _ablemusicContext.Holiday.ToListAsync();
 
-                DateTime beginTime = lesson.BeginTime.Value.AddMinutes(-60);
-                DateTime endTime = lesson.EndTime.Value.AddMinutes(60);
-
-                conflictTeacherLessons = await _ablemusicContext.Lesson.Where(l => l.TeacherId == lesson.TeacherId &&
-                l.IsCanceled != 1 && l.LessonId != lesson.LessonId &&
-                ((l.BeginTime > beginTime && l.BeginTime < endTime) ||
-                (l.EndTime > beginTime && l.EndTime < endTime) ||
-                (l.BeginTime <= beginTime && l.EndTime >= endTime)))
-                .ToListAsync();
             }
             catch (Exception ex)
             {
@@ -171,26 +153,22 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = "Lesson Remain not found";
                 return BadRequest(result);
             }
-            if (conflictRooms.Count > 0)
+
+            var lessonConflictCheckerService = new LessonConflictCheckerService(lesson);
+            Result<List<object>> lessonConflictCheckResult;
+            try
+            {
+                lessonConflictCheckResult = await lessonConflictCheckerService.CheckBothRoomAndTeacher();
+            }
+            catch (Exception ex)
             {
                 result.IsSuccess = false;
-                result.ErrorMessage = "Room is not available";
+                result.ErrorMessage = ex.Message;
                 return BadRequest(result);
             }
-            if (conflictTeacherLessons.Count > 0)
+            if (!lessonConflictCheckResult.IsSuccess)
             {
-                foreach (var c in conflictTeacherLessons)
-                {
-                    if (c.OrgId != lesson.OrgId ||
-                        (c.BeginTime > lesson.BeginTime && c.BeginTime < lesson.EndTime) ||
-                        (c.EndTime > lesson.BeginTime && c.EndTime < lesson.EndTime) ||
-                        (c.BeginTime <= lesson.BeginTime && c.EndTime >= lesson.EndTime))
-                    {
-                        result.IsSuccess = false;
-                        result.ErrorMessage = "Teacher is not available";
-                        return BadRequest(result);
-                    }
-                }
+                return BadRequest(lessonConflictCheckResult);
             }
 
             DateTime todoDate = lesson.BeginTime.Value.AddDays(-1);

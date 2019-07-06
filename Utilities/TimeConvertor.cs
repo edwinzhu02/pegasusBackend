@@ -27,6 +27,12 @@ namespace Pegasus_backend.Utilities
             }
         }
 
+        public static int ToDayOfWeek(this DateTime inputTime)
+        {
+            int dayOfWeek = inputTime.DayOfWeek == 0 ? 7 : (int)inputTime.DayOfWeek;
+            return dayOfWeek;
+        }
+
         public static string getDayOfWeek(int value)
         {
             switch (value)
