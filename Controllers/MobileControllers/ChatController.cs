@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -183,26 +184,21 @@ namespace Pegasus_backend.Controllers.MobileControllers
             }
         }
        
-        private async Task<List<Staff>> GetAllStaff(int? staffId)
+        private async Task<IList> GetAllStaff(int? staffId)
         {
             if (staffId == null)
             {
-               return await _ablemusicContext.Staff.Take(3).ToListAsync();
+               return await _ablemusicContext.Staff.Take(3).Select(x => new
+                   {x.FirstName, x.LastName, x.UserId, x.Photo}).ToListAsync();
             }
-            return await _ablemusicContext.Staff.Where(x=>x.StaffId != staffId).Take(3).Select(x => new Staff
-            {
-                FirstName = x.FirstName,
-                LastName = x.LastName,
-                UserId = x.UserId,
-                Photo = x.Photo
-            }).ToListAsync();
+            return await _ablemusicContext.Staff.Where(x=>x.StaffId != staffId).Take(3).Select(x => new
+            {x.FirstName, x.LastName, x.UserId, x.Photo}).ToListAsync();
         }
 
-        private async Task<List<Teacher>> GetAllTeacher()
+        private async Task<IList> GetAllTeacher()
         {
-            return await _ablemusicContext.Teacher.Take(5).Select(x => new Teacher 
-                    {TeacherId = x.TeacherId, FirstName = x.FirstName, LastName = x.LastName, Photo = x.Photo, UserId = x.UserId})
-                .ToListAsync();
+            return await _ablemusicContext.Teacher.Take(5).Select(x => new  
+                    {x.TeacherId, x.FirstName, x.LastName, x.Photo, x.UserId}).ToListAsync();
         }
 
         private async Task<ChatListModel> GetChatListOfLearner(int learnerId)
@@ -210,7 +206,10 @@ namespace Pegasus_backend.Controllers.MobileControllers
             var lessonsOfLearner = await _ablemusicContext.Lesson
                 .Where(x => x.LearnerId == learnerId && x.IsCanceled == 0 && x.IsTrial == 0 && x.EndTime >= DateTime.Now)
                 .Include(x=>x.Learner)
-                .Select(x => x).ToListAsync();
+                .Select(x => new
+                {
+                    x.LessonId, x.LearnerId, x.OrgId, x.TeacherId, x.CourseInstanceId, x.GroupCourseInstanceId
+                }).ToListAsync();
             if (lessonsOfLearner == null)
             {
                 throw new Exception("No courses for this learner at the moment");
@@ -232,13 +231,9 @@ namespace Pegasus_backend.Controllers.MobileControllers
             // find available courses of teacher
             var lessonsOfTeacher = await _ablemusicContext.Lesson
                 .Where(x => x.TeacherId == teacherId && x.IsCanceled == 0 && x.IsTrial == 0 && x.EndTime >= DateTime.Now)
-                .Select(x => new Lesson
+                .Select(x => new
                 {
-                    LessonId = x.LessonId,
-                    LearnerId = x.LearnerId,
-                    TeacherId = x.TeacherId,
-                    CourseInstanceId = x.CourseInstanceId,
-                    GroupCourseInstance = x.GroupCourseInstance
+                    x.LessonId, x.LearnerId, x.OrgId, x.TeacherId, x.CourseInstanceId, x.GroupCourseInstanceId
                 })
                 .ToListAsync();
             if (lessonsOfTeacher == null)
@@ -257,19 +252,19 @@ namespace Pegasus_backend.Controllers.MobileControllers
             return chatList;
         }
 
-        private Dictionary<string, List<Lesson>> SeparateCourseIntoGroups(List<Lesson> lessonList)
+        private Dictionary<string, IList> SeparateCourseIntoGroups(IList lessonList)
         {
-            Dictionary<string, List<Lesson>> allLessons = new Dictionary<string, List<Lesson>>();
-            List<Lesson> oneToOneLessons = new List<Lesson>();
-            List<Lesson> groupLessons = new List<Lesson>();
+            Dictionary<string, IList> allLessons = new Dictionary<string, IList>();
+            List<dynamic> oneToOneLessons = new List<dynamic>();
+            List<dynamic> groupLessons = new List<dynamic>();
             foreach (var lesson in lessonList)
             {
-                if (lesson.CourseInstanceId != null)
+                if (lesson.GetType().GetProperty("CourseInstanceId").GetValue(lesson) != null)
                 {
                     oneToOneLessons.Add(lesson);
                 }
 
-                if (lesson.GroupCourseInstanceId != null)
+                if (lesson.GetType().GetProperty("GroupCourseInstanceId").GetValue(lesson) != null)
                 {
                     groupLessons.Add(lesson);
                 }
@@ -291,23 +286,23 @@ namespace Pegasus_backend.Controllers.MobileControllers
 
             // Students having lesson in his org
             var studentsIdHavingLesson = await _ablemusicContext.Lesson.Where(x => x.OrgId == orgIdOfStaff).Take(5)
-                .Include(x=>x.Learner).Select(x=> new Learner
+                .Include(x=>x.Learner).Select(x=> new
                 {
-                    LearnerId = x.Learner.LearnerId,
-                    FirstName = x.Learner.FirstName,
-                    LastName = x.Learner.LastName,
-                    UserId = x.Learner.UserId,
-                    Photo = x.Learner.Photo
+                    x.Learner.LearnerId,
+                    x.Learner.FirstName,
+                    x.Learner.LastName,
+                    x.Learner.UserId,
+                    x.Learner.Photo
                 }).Distinct().ToListAsync();
 
             // students registered in his org
-            var studentsRegisteredIn = await _ablemusicContext.Learner.Where(x=>x.OrgId == orgIdOfStaff).Take(5).Select(x => new Learner
+            var studentsRegisteredIn = await _ablemusicContext.Learner.Where(x=>x.OrgId == orgIdOfStaff).Take(5).Select(x => new
             {
-                LearnerId = x.LearnerId,
-                FirstName = x.FirstName,
-                LastName = x.LastName,
-                UserId = x.UserId,
-                Photo = x.Photo
+                x.LearnerId,
+                x.FirstName,
+                x.LastName,
+                x.UserId,
+                x.Photo
             }).Distinct().ToListAsync();
 
             // combine data
