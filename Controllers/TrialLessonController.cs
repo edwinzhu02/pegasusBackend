@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Pegasus_backend.ActionFilter;
 using Pegasus_backend.Models;
@@ -10,6 +9,7 @@ using Pegasus_backend.pegasusContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using AutoMapper;
+using Pegasus_backend.Services;
 
 namespace Pegasus_backend.Controllers
 {
@@ -88,21 +88,11 @@ namespace Pegasus_backend.Controllers
             List<Lesson> conflictTeacherLessons = new List<Lesson>();
             DateTime beginTime = lesson.BeginTime.Value.AddMinutes(-60);
             DateTime endTime = lesson.EndTime.Value.AddMinutes(60);
+            var lessonConflictCheckerService = new LessonConflictCheckerService(lesson);
+            Result<List<object>> lessonConflictCheckResult;
             try
             {
-                conflictRooms = await _ablemusicContext.Lesson.Where(l => l.RoomId == lesson.RoomId &&
-                    l.OrgId == lesson.OrgId && l.IsCanceled != 1 && l.LessonId != lesson.LessonId &&
-                    ((l.BeginTime > lesson.BeginTime && l.BeginTime < lesson.EndTime) ||
-                    (l.EndTime > lesson.BeginTime && l.EndTime < lesson.EndTime) ||
-                    (l.BeginTime <= lesson.BeginTime && l.EndTime >= lesson.EndTime) ||
-                    (l.BeginTime > lesson.BeginTime && l.EndTime < lesson.EndTime)))
-                    .ToListAsync();
-                conflictTeacherLessons = await _ablemusicContext.Lesson.Where(l => l.TeacherId == lesson.TeacherId &&
-                    l.IsCanceled != 1 && l.LessonId != lesson.LessonId &&
-                    ((l.BeginTime > beginTime && l.BeginTime < endTime) ||
-                    (l.EndTime > beginTime && l.EndTime < endTime) ||
-                    (l.BeginTime <= beginTime && l.EndTime >= endTime)))
-                    .ToListAsync();
+                lessonConflictCheckResult = await lessonConflictCheckerService.CheckBothRoomAndTeacher();
             }
             catch(Exception ex)
             {
@@ -110,26 +100,9 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = ex.Message;
                 return BadRequest(result);
             }
-            if (conflictRooms.Count > 0)
+            if (!lessonConflictCheckResult.IsSuccess)
             {
-                result.IsSuccess = false;
-                result.ErrorMessage = "Room is not available";
-                return BadRequest(result);
-            }
-            if (conflictTeacherLessons.Count > 0)
-            {
-                foreach (var c in conflictTeacherLessons)
-                {
-                    if (c.OrgId != lesson.OrgId ||
-                        (c.BeginTime > lesson.BeginTime && c.BeginTime < lesson.EndTime) ||
-                        (c.EndTime > lesson.BeginTime && c.EndTime < lesson.EndTime) ||
-                        (c.BeginTime <= lesson.BeginTime && c.EndTime >= lesson.EndTime))
-                    {
-                        result.IsSuccess = false;
-                        result.ErrorMessage = "Teacher is not available";
-                        return BadRequest(result);
-                    }
-                }
+                return BadRequest(lessonConflictCheckResult);
             }
 
             try

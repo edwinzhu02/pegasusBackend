@@ -1,4 +1,5 @@
-﻿using Pegasus_backend.pegasusContext;
+﻿using Pegasus_backend.Models;
+using Pegasus_backend.pegasusContext;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -114,6 +115,26 @@ namespace Pegasus_backend.Utilities
             {
                 content += "Lesson from " + appendLesson.BeginTime + " to " + appendLesson.EndTime + "\n";
             }
+            return content;
+        }
+
+        public static string PeriodCourseChangeForLearner(dynamic courseInfo, dynamic newCourseInfo, PeriodCourseChangeViewModel inputObj)
+        {
+            string content = "Inform learner " + courseInfo.LearnerFirstName + " " + courseInfo.LearnerLastName +
+                " the course " + courseInfo.CourseName + " at " + courseInfo.OrgName + " " + courseInfo.RoomName + " from " +
+                TimeConvertor.getDayOfWeek(courseInfo.DayOfWeek) + " " + courseInfo.BeginTime + " to " + courseInfo.EndTime + " has been changed to " +
+                newCourseInfo.newOrg.OrgName + " " + newCourseInfo.newRoom.RoomName + " from " + inputObj.BeginTime + " to " + inputObj.EndTime +
+                "on " + TimeConvertor.getDayOfWeek(inputObj.DayOfWeek) + " ";
+            return content;
+        }
+
+        public static string PeriodCourseChangeForTeacher(dynamic courseInfo, dynamic newCourseInfo, PeriodCourseChangeViewModel inputObj)
+        {
+            string content = "Inform teacher " + courseInfo.TeacherFirstName + " " + courseInfo.TeacherLastName +
+                " the course " + courseInfo.CourseName + " at " + courseInfo.OrgName + " " + courseInfo.RoomName + " from " +
+                TimeConvertor.getDayOfWeek(courseInfo.DayOfWeek) + " " + courseInfo.BeginTime + " to " + courseInfo.EndTime + " has been changed to " +
+                newCourseInfo.newOrg.OrgName + " " + newCourseInfo.newRoom.RoomName + " from " + inputObj.BeginTime + " to " + inputObj.EndTime +
+                "on " + TimeConvertor.getDayOfWeek(inputObj.DayOfWeek) + " ";
             return content;
         }
     }

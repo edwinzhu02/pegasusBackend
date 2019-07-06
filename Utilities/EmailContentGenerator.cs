@@ -70,5 +70,16 @@ namespace Pegasus_backend.Utilities
                     "' target='_blank'>Confirm</a></div>";
             return mailContent;
         }
+
+        public static string PeriodCourseChange(string name, dynamic courseInfo, dynamic newCourseInfo, PeriodCourseChangeViewModel inputObj)
+        {
+            string mailContent = "<div><p>Dear " + name + "</p>" + "<p>This is to inform you that the course " + courseInfo.CourseName + " at " + courseInfo.OrgName + " " + courseInfo.RoomName + " from " +
+                TimeConvertor.getDayOfWeek(courseInfo.DayOfWeek) + " " + courseInfo.BeginTime + " to " + courseInfo.EndTime + " has been changed to " +
+                newCourseInfo.newOrg.OrgName + " " + newCourseInfo.newRoom.RoomName + " from " + inputObj.BeginTime + " to " + inputObj.EndTime +
+                "on " + TimeConvertor.getDayOfWeek(inputObj.DayOfWeek) + " ";
+            mailContent += inputObj.IsTemporary == 1 ? "for the period between " + inputObj.BeginDate + " to " +
+                inputObj.EndDate + " Temporarily" : "from " + inputObj.BeginDate + "permanently</p>";
+            return mailContent;
+        }
     }
 }
