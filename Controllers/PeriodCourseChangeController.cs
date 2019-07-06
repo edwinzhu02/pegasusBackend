@@ -160,6 +160,52 @@ namespace Pegasus_backend.Controllers
             amendment.TeacherId = inputObj.TeacherId;
             amendment.CourseScheduleId = inputObj.CourseScheduleId;
 
+            var visualLessonsForCheckingConflict = new List<Lesson>();
+
+            if(inputObj.IsTemporary == 1)
+            {
+                DateTime currentDate = amendment.BeginDate.Value;
+                int currentDayOfWeek = currentDate.DayOfWeek == 0 ? 7 : (int)currentDate.DayOfWeek;
+                while (currentDayOfWeek != amendment.DayOfWeek)
+                {
+                    currentDate = currentDate.AddDays(1);
+                    currentDayOfWeek = currentDate.DayOfWeek == 0 ? 7 : (int)currentDate.DayOfWeek;
+                }
+                while (currentDate <= amendment.EndDate.Value)
+                {
+                    visualLessonsForCheckingConflict.Add(new Lesson
+                    {
+                        RoomId = amendment.RoomId,
+                        TeacherId = amendment.TeacherId,
+                        OrgId = amendment.OrgId.Value,
+                        BeginTime = currentDate.Add(amendment.BeginTime.Value),
+                        EndTime = currentDate.Add(amendment.EndTime.Value),
+                    });
+                    currentDate = currentDate.AddDays(7);
+                    currentDayOfWeek = currentDate.DayOfWeek == 0 ? 7 : (int)currentDate.DayOfWeek;
+                }
+            }
+
+            foreach(var lesson in visualLessonsForCheckingConflict)
+            {
+                var lessonConflictCheckerService = new LessonConflictCheckerService(lesson);
+                Result<List<object>> lessonConflictCheckResult;
+                try
+                {
+                    lessonConflictCheckResult = await lessonConflictCheckerService.CheckBothRoomAndTeacher();
+                }
+                catch (Exception ex)
+                {
+                    result.IsSuccess = false;
+                    result.ErrorMessage = ex.Message;
+                    return BadRequest(result);
+                }
+                if (!lessonConflictCheckResult.IsSuccess)
+                {
+                    return BadRequest(lessonConflictCheckResult);
+                }
+            }
+            
             foreach (var holiday in holidays)
             {
                 if (holiday.HolidayDate.Date == todoDateBegin.Date)
