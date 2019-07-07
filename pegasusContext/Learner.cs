@@ -49,6 +49,7 @@ namespace Pegasus_backend.pegasusContext
         public string Referrer { get; set; }
         public string FormUrl { get; set; }
         public string OtherfileUrl { get; set; }
+        public string Comment { get; set; }
 
         public Org Org { get; set; }
         public User User { get; set; }

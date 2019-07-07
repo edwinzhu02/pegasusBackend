@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using Pegasus_backend.pegasusContext;
 using Microsoft.EntityFrameworkCore;
 using Pegasus_backend.Models;
+using Pegasus_backend.Utilities;
 
 namespace Pegasus_backend.Services
 {
@@ -21,21 +22,7 @@ namespace Pegasus_backend.Services
             _ablemusciContext = ablemusicContext;
             _log = log;
             _orgIds = orgIds;
-            try
-            {
-                TimeZoneInfo nztZone = TimeZoneInfo.FindSystemTimeZoneById("New Zealand Standard Time");
-                _today = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, nztZone);
-            }
-            catch (TimeZoneNotFoundException)
-            {
-                TimeZoneInfo nztZone = TimeZoneInfo.FindSystemTimeZoneById("Pacific/Auckland");
-                _today = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, nztZone);
-            }
-            catch (InvalidTimeZoneException)
-            {
-                TimeZoneInfo nztZone = TimeZoneInfo.FindSystemTimeZoneById("Pacific/Auckland");
-                _today = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, nztZone);
-            }
+            _today = DateTime.UtcNow.ToNZTimezone();
         }
 
         public async Task<Result<List<Lesson>>> getLessonsForToday()

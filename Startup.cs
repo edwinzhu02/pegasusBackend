@@ -17,6 +17,7 @@ using Newtonsoft.Json.Serialization;
 using Pegasus_backend;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Pegasus_backend.Models;
@@ -66,6 +67,7 @@ namespace Pegasus_backend
             
             services.AddDirectoryBrowser();
             services.AddSignalR();
+            services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddDbContext<ablemusicContext>(options =>
                 options.UseMySQL(Configuration.GetConnectionString("AblemusicDatabase")));
@@ -140,8 +142,7 @@ namespace Pegasus_backend
                     Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images")),
                 RequestPath = "/images"
             });
-            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-//            app.UseCors(x => x.WithOrigins("http://localhost:8100").AllowAnyMethod().AllowAnyHeader().AllowCredentials());
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials());
             app.UseSignalR(routes => { routes.MapHub<Chatroom>("/chat"); });
             app.UseHttpsRedirection();
             app.UseAuthentication();

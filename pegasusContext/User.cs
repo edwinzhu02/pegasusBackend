@@ -25,6 +25,8 @@ namespace Pegasus_backend.pegasusContext
         public short? RoleId { get; set; }
         public short? IsActivate { get; set; }
         public int? UnreadMessageId { get; set; }
+        public string Signature { get; set; }
+        public short? IsOnline { get; set; }
 
         public Role Role { get; set; }
         public OnlineUser OnlineUser { get; set; }

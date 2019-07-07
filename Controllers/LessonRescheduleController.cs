@@ -9,6 +9,8 @@ using Pegasus_backend.Models;
 using Pegasus_backend.pegasusContext;
 using Pegasus_backend.Services;
 using Microsoft.Extensions.Logging;
+using Pegasus_backend.Utilities;
+using Pegasus_backend.Repositories;
 
 namespace Pegasus_backend.Controllers
 {
@@ -37,6 +39,10 @@ namespace Pegasus_backend.Controllers
             try
             {
                 lesson = await _ablemusicContext.Lesson.Where(l => l.LessonId == lessonId).Include(l => l.Invoice).FirstOrDefaultAsync();
+                if(lesson.Invoice == null)
+                {
+                    throw new Exception("Invoice not found under the give lesson id");
+                }
                 courses = await (from c in _ablemusicContext.Course
                                  join oto in _ablemusicContext.One2oneCourseInstance on c.CourseId equals oto.CourseId
                                  where oto.CourseInstanceId == lesson.CourseInstanceId
@@ -130,74 +136,27 @@ namespace Pegasus_backend.Controllers
                 return BadRequest(result);
             }
             string courseName = courses[0].CourseName;
-            List<Lesson> conflictRemainLessons = new List<Lesson>();
             List<Lesson> lessonsToBeAppend = new List<Lesson>();
             int i = numOfSchedulesToBeAdd;
             foreach (var remainLesson in remainLessons)
             {
                 if (i <= 0) break;
-                List<Lesson> conflictRooms = new List<Lesson>();
-                List<Lesson> conflictTeacherLessons = new List<Lesson>();
+                var lessonConflictCheckerService = new LessonConflictCheckerService(remainLesson);
+                Result<List<object>> lessonConflictCheckResult;
                 try
                 {
-                    conflictRooms = await _ablemusicContext.Lesson.Where(l => l.RoomId == remainLesson.RoomId &&
-                        l.OrgId == remainLesson.OrgId && remainLesson.LessonId != l.LessonId && l.IsCanceled != 1 &&
-                        ((l.BeginTime > remainLesson.BeginTime && l.BeginTime < remainLesson.EndTime) ||
-                        (l.EndTime > remainLesson.BeginTime && l.EndTime < remainLesson.EndTime) ||
-                        (l.BeginTime <= remainLesson.BeginTime && l.EndTime >= remainLesson.EndTime)))
-                        .ToListAsync();
-
-                    DateTime beginTime = remainLesson.BeginTime.Value.AddMinutes(-60);
-                    DateTime endTime = remainLesson.EndTime.Value.AddMinutes(75);
-                    conflictTeacherLessons = await _ablemusicContext.Lesson.Where(l => l.TeacherId == remainLesson.TeacherId &&
-                    l.LessonId != remainLesson.LessonId &&
-                    ((l.BeginTime > beginTime && l.BeginTime < endTime) ||
-                    (l.EndTime > beginTime && l.EndTime < endTime) ||
-                    (l.BeginTime <= beginTime && l.EndTime >= endTime)))
-                    .ToListAsync();
-
-                    if (conflictRooms.Count > 0)
-                    {
-                        conflictRemainLessons.Add(remainLesson);
-                    }
-                    else
-                    {
-                        if (conflictTeacherLessons.Count > 0)
-                        {
-                            bool teacherHasConflict = false;
-                            foreach (var c in conflictTeacherLessons)
-                            {
-                                if (c.OrgId != remainLesson.OrgId ||
-                                    (c.BeginTime > remainLesson.BeginTime && c.BeginTime < remainLesson.EndTime) ||
-                                    (c.EndTime > remainLesson.BeginTime && c.EndTime < remainLesson.EndTime) ||
-                                    (c.BeginTime <= remainLesson.BeginTime && c.EndTime >= remainLesson.EndTime))
-                                {
-                                    teacherHasConflict = true;
-                                    break;
-                                }
-                            }
-                            if (teacherHasConflict)
-                            {
-                                conflictRemainLessons.Add(remainLesson);
-                            }
-                            else
-                            {
-                                lessonsToBeAppend.Add(remainLesson);
-                                i--;
-                            }
-                        }
-                        else
-                        {
-                            lessonsToBeAppend.Add(remainLesson);
-                            i--;
-                        }
-                    }
+                    lessonConflictCheckResult = await lessonConflictCheckerService.CheckBothRoomAndTeacher();
                 }
                 catch (Exception ex)
                 {
                     result.IsSuccess = false;
-                    result.ErrorMessage = ex.ToString();
+                    result.ErrorMessage = ex.Message;
                     return BadRequest(result);
+                }
+                if (lessonConflictCheckResult.IsSuccess)
+                {
+                    lessonsToBeAppend.Add(remainLesson);
+                    i--;
                 }
             }
 
@@ -220,28 +179,41 @@ namespace Pegasus_backend.Controllers
             List<Teacher> effectedTeachers = new List<Teacher>();
             foreach (var lessonAppend in lessonsToBeAppend)
             {
-                if (!effectedTeachers.Contains(lessonAppend.Teacher))
+                if (effectedTeachers.Find(et => et.TeacherId == lessonAppend.Teacher.TeacherId) == null)
                 {
                     effectedTeachers.Add(lessonAppend.Teacher);
                 }
             }
 
-            TodoList todoForLearner = TodoListForLearnerCreater(lesson, userId, learner, todoDate, lessonsToBeAppend, courseName);
-            List<TodoList> todoForTeachers = new List<TodoList>();
-            foreach (var teacher in effectedTeachers)
+            var teacherIdMapTodoContent = new Dictionary<short, string>();
+            var teacherMapRemindLogContent = new Dictionary<Teacher, string>();
+            foreach(var teacher in effectedTeachers)
             {
-                todoForTeachers.Add(TodoListForTeacherCreater(lesson, userId, learner, todoDate, lessonsToBeAppend, teacher, courseName));
+                teacherIdMapTodoContent.Add(teacher.TeacherId, TodoListContentGenerator.LessonRescheduleForTeacher(lesson, lessonsToBeAppend, teacher, courseName));
+                teacherMapRemindLogContent.Add(teacher, RemindLogContentGenerator.LessonRescheduleForTeacher(lesson, lessonsToBeAppend, teacher, courseName));
             }
 
-            RemindLog remindLogForLearner = RemindLogForLearnerCreater(lesson, learner, lessonsToBeAppend, courseName);
-            List<RemindLog> remindLogsForTeachers = new List<RemindLog>();
-            foreach (var teacher in effectedTeachers)
+            TodoRepository todoRepository = new TodoRepository();
+            todoRepository.AddSingleTodoList("Lesson Reschedule Remind", TodoListContentGenerator.LessonRescheduleForLearner(lesson, learner,
+                lessonsToBeAppend, courseName), userId, todoDate, lesson.LessonId, learner.LearnerId, null);
+            todoRepository.AddMutipleTodoLists("Lesson Reschedule Remind", teacherIdMapTodoContent, userId, todoDate, lesson.LessonId, null);
+            var saveTodoResult = await todoRepository.SaveTodoListsAsync();
+            if (!saveTodoResult.IsSuccess)
             {
-                remindLogsForTeachers.Add(RemindLogForTeacherCreater(lesson, lessonsToBeAppend, teacher, courseName));
+                return BadRequest(saveTodoResult);
+            }
+
+            RemindLogRepository remindLogRepository = new RemindLogRepository();
+            remindLogRepository.AddSingleRemindLog(learner.LearnerId, learner.Email, RemindLogContentGenerator.LessonRescheduleForLearner(lesson, learner,
+                lessonsToBeAppend, courseName), null, "Lesson Reschedule Remind", lesson.LessonId);
+            remindLogRepository.AddMultipleRemindLogs(teacherMapRemindLogContent, null, "Lesson Reschedule Remind", lesson.LessonId);
+            var saveRemindLogResult = await remindLogRepository.SaveRemindLogAsync();
+            if (!saveRemindLogResult.IsSuccess)
+            {
+                return BadRequest(saveRemindLogResult);
             }
 
             result.Data = new List<Lesson>();
-
             foreach (var lessonAppend in lessonsToBeAppend)
             {
                 lessonAppend.EndTime = lessonAppend.EndTime.Value.AddMinutes(15);
@@ -267,21 +239,10 @@ namespace Pegasus_backend.Controllers
 
             lesson.IsCanceled = 1;
             lesson.Reason = reason;
-
             lessonRemain.Quantity -= 1;
 
             try
             {
-                await _ablemusicContext.TodoList.AddAsync(todoForLearner);
-                await _ablemusicContext.RemindLog.AddAsync(remindLogForLearner);
-                foreach (var t in todoForTeachers)
-                {
-                    await _ablemusicContext.TodoList.AddAsync(t);
-                }
-                foreach (var r in remindLogsForTeachers)
-                {
-                    await _ablemusicContext.RemindLog.AddAsync(r);
-                }
                 await _ablemusicContext.SaveChangesAsync();
             }
             catch (Exception ex)
@@ -293,127 +254,30 @@ namespace Pegasus_backend.Controllers
 
             string userConfirmUrlPrefix = _configuration.GetSection("UrlPrefix").Value;
             //sending Email
-            string mailTitle = "Lesson Reschedule Confirm";
-            List<Task> teacherMailSenderTasks = new List<Task>();
-            for (int j = 0; j < remindLogsForTeachers.Count; j++)
+            List<NotificationEventArgs> notifications = new List<NotificationEventArgs>();
+            foreach (var todo in saveTodoResult.Data)
             {
-                string confirmURLForTeacher = userConfirmUrlPrefix + todoForTeachers[j].ListId + "/" + remindLogsForTeachers[j].RemindId;
-                string mailContentForTeacher = MailContentGenerator(effectedTeachers[j].FirstName + " " + effectedTeachers[j].LastName, courseName, lesson, reason, confirmURLForTeacher, lessonsToBeAppend);
-                teacherMailSenderTasks.Add(MailSenderService.SendMailAsync(remindLogsForTeachers[j].Email, mailTitle, mailContentForTeacher, remindLogsForTeachers[j].RemindId));
+                var remind = saveRemindLogResult.Data.Find(r => r.LearnerId == todo.LearnerId && r.TeacherId == todo.TeacherId);
+                string currentPersonName;
+                if (todo.TeacherId == null)
+                {
+                    currentPersonName = learner.FirstName + " " + learner.LastName;
+                }
+                else
+                {
+                    var currentTeacher = effectedTeachers.Find(t => t.TeacherId == todo.TeacherId);
+                    currentPersonName = currentTeacher.FirstName + " " + currentTeacher.LastName;
+                }
+                string confirmURL = userConfirmUrlPrefix + todo.ListId + "/" + remind.RemindId;
+                string mailContent = EmailContentGenerator.LessonReschedule(currentPersonName, courseName, lesson, reason, confirmURL, lessonsToBeAppend);
+                notifications.Add(new NotificationEventArgs(remind.Email, "Lesson Reschedule Confirm", mailContent, remind.RemindId));
             }
-            string confirmURLForLearner = userConfirmUrlPrefix + todoForLearner.ListId + "/" + remindLogForLearner.RemindId;
-            string mailContentForLearner = MailContentGenerator(learner.FirstName + " " + learner.LastName, courseName, lesson, reason, confirmURLForLearner, lessonsToBeAppend);
-            Task learnerMailSenderTask = MailSenderService.SendMailAsync(remindLogForLearner.Email, mailTitle, mailContentForLearner, remindLogForLearner.RemindId);
+            foreach (var mail in notifications)
+            {
+                _notificationObservable.send(mail);
+            }
 
             return Ok(result);
-        }
-
-        private TodoList TodoListForLearnerCreater(Lesson lesson, short userId, Learner learner, DateTime todoDate,
-            List<Lesson> appendLessons, string courseName)
-        {
-            TodoList todolistForLearner = new TodoList();
-            todolistForLearner.ListName = "Lesson Reschedule Remind";
-            todolistForLearner.ListContent = "Inform learner " + learner.FirstName + " " + learner.LastName +
-                " the " + courseName + " lession from " + lesson.BeginTime.ToString() + " to " + lesson.EndTime.ToString() +
-                " has been rescheduled. Lesson remain hours are append to the following lessions: \n";
-            foreach (var appendLesson in appendLessons)
-            {
-                todolistForLearner.ListContent += "Lesson from " + appendLesson.BeginTime + " to " + appendLesson.EndTime + "\n";
-            }
-            todolistForLearner.CreatedAt = toNZTimezone(DateTime.UtcNow);
-            todolistForLearner.ProcessedAt = null;
-            todolistForLearner.ProcessFlag = 0;
-            todolistForLearner.UserId = userId;
-            todolistForLearner.TodoDate = todoDate;
-            todolistForLearner.LearnerId = learner.LearnerId;
-            todolistForLearner.LessonId = lesson.LessonId;
-            todolistForLearner.TeacherId = null;
-            return todolistForLearner;
-        }
-
-        private TodoList TodoListForTeacherCreater(Lesson lesson, short userId, Learner learner, DateTime todoDate,
-            List<Lesson> appendLessons, Teacher teacher, string courseName)
-        {
-            TodoList todolistForTeacher = new TodoList();
-            todolistForTeacher.ListName = "Lesson Reschedule Remind";
-            todolistForTeacher.ListContent = "Inform teacher " + teacher.FirstName + " " + teacher.LastName +
-                " the " + courseName + " lession from " + lesson.BeginTime.ToString() + " to " + lesson.EndTime.ToString() +
-                " has been rescheduled. Lesson Remain hours are append to the following lessons: \n";
-            foreach (var appendLesson in appendLessons)
-            {
-                todolistForTeacher.ListContent += "Lesson from " + appendLesson.BeginTime + " to " + appendLesson.EndTime + "\n";
-            }
-            todolistForTeacher.CreatedAt = toNZTimezone(DateTime.UtcNow);
-            todolistForTeacher.ProcessedAt = null;
-            todolistForTeacher.ProcessFlag = 0;
-            todolistForTeacher.UserId = userId;
-            todolistForTeacher.TodoDate = todoDate;
-            todolistForTeacher.LearnerId = null;
-            todolistForTeacher.LessonId = lesson.LessonId;
-            todolistForTeacher.TeacherId = teacher.TeacherId;
-            return todolistForTeacher;
-        }
-
-        private RemindLog RemindLogForLearnerCreater(Lesson lesson, Learner learner, List<Lesson> appendLessons, string courseName)
-        {
-            RemindLog remindLogLearner = new RemindLog();
-            remindLogLearner.LearnerId = learner.LearnerId;
-            remindLogLearner.Email = learner.Email;
-            remindLogLearner.RemindType = 1;
-            remindLogLearner.RemindContent = "Inform learner " + learner.FirstName + " " + learner.LastName +
-                " the " + courseName + " lesson from " + lesson.BeginTime.ToString() + " to " + lesson.EndTime.ToString() +
-                " has been rescheduled. Lesson remain hours are append to the following lessions: \n";
-            foreach (var appendLesson in appendLessons)
-            {
-                remindLogLearner.RemindContent += "Lesson from " + appendLesson.BeginTime + " to " + appendLesson.EndTime + "\n";
-            }
-            remindLogLearner.CreatedAt = toNZTimezone(DateTime.UtcNow);
-            remindLogLearner.TeacherId = null;
-            remindLogLearner.IsLearner = 1;
-            remindLogLearner.ProcessFlag = 0;
-            remindLogLearner.EmailAt = null;
-            remindLogLearner.RemindTitle = "Lesson Reschedule Remind";
-            remindLogLearner.ReceivedFlag = 0;
-            remindLogLearner.LessonId = lesson.LessonId;
-            return remindLogLearner;
-        }
-
-        private RemindLog RemindLogForTeacherCreater(Lesson lesson, List<Lesson> appendLessons, Teacher teacher, string courseName)
-        {
-            RemindLog remindLogForTeacher = new RemindLog();
-            remindLogForTeacher.LearnerId = null;
-            remindLogForTeacher.Email = teacher.Email;
-            remindLogForTeacher.RemindType = 1;
-            remindLogForTeacher.RemindContent = "Inform teacher " + teacher.FirstName + " " + teacher.LastName +
-                " the " + courseName + " lesson from " + lesson.BeginTime.ToString() + " to " + lesson.EndTime.ToString() +
-                " has been rescheduled. Lesson Remain hours are append to the following lessons: \n";
-            foreach (var appendLesson in appendLessons)
-            {
-                remindLogForTeacher.RemindContent += "Lesson from " + appendLesson.BeginTime + " to " + appendLesson.EndTime + "\n";
-            }
-            remindLogForTeacher.CreatedAt = toNZTimezone(DateTime.UtcNow);
-            remindLogForTeacher.TeacherId = teacher.TeacherId;
-            remindLogForTeacher.IsLearner = 0;
-            remindLogForTeacher.ProcessFlag = 0;
-            remindLogForTeacher.EmailAt = null;
-            remindLogForTeacher.RemindTitle = "Lesson Reschedule Remind";
-            remindLogForTeacher.ReceivedFlag = 0;
-            remindLogForTeacher.LessonId = lesson.LessonId;
-            return remindLogForTeacher;
-        }
-        private string MailContentGenerator(string name, string courseName, Lesson lesson, string reason, string confirmURL, List<Lesson> appendLessons)
-        {
-            string mailContent = "<div><p>Dear " + name + "</p>" + "<p>Your " +
-                    courseName + " lesson from " + lesson.BeginTime.ToString() + " to " + lesson.EndTime.ToString() +
-                    " has been rescheduled due to " + reason + ". Lesson Remain hours are append to the following lessons: \n";
-            foreach (var appendLesson in appendLessons)
-            {
-                mailContent += "Lesson from " + appendLesson.BeginTime + " to " + appendLesson.EndTime + "\n";
-            }
-            mailContent += "\nPlease click the following button to confirm. </p>" +
-                    "<a style='background-color:#4CAF50; color:#FFFFFF' href='" + confirmURL +
-                    "' target='_blank'>Confirm</a></div>";
-            return mailContent;
         }
     }
 }

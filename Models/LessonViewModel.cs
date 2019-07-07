@@ -6,9 +6,8 @@ namespace Pegasus_backend.Models
 {
     public class LessonViewModel
     {
-        [Required(ErrorMessage = "LessonId is required")]
         public int? LessonId { get; set; }
-        [Required(ErrorMessage = "LearnerId is required")]
+        //[Required(ErrorMessage = "LearnerId is required")]
         public int? LearnerId { get; set; }
         [Required(ErrorMessage = "RoomId is required")]
         public short? RoomId { get; set; }
