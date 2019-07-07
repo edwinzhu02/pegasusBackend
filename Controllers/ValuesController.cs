@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Pegasus_backend.Models;
 using Pegasus_backend.pegasusContext;
 
 namespace Pegasus_backend.Controllers
@@ -21,17 +22,10 @@ namespace Pegasus_backend.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            try
-            {
-                throw new Exception();
-            }
-            catch(Exception ex)
-            {
-                LogErrorToFile(ex.ToString());
-            }
-
-            LogInfoToFile("hello");
-            return Ok(toNZTimezone(DateTime.UtcNow));
+            var models = new List<InvoicePdfGeneratorModel>();
+            models.Add(new InvoicePdfGeneratorModel{title = "Hello",amount = 100});
+            InvoiceGenerator("Able music School","Oliver Deng",100,models,"oliverInvoice");
+            return Ok();
         }
 
         // GET api/values/5

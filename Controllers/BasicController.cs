@@ -15,6 +15,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Pegasus_backend.pegasusContext;
 using Microsoft.Extensions.Logging;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 
 namespace Pegasus_backend.Controllers
 {
@@ -29,6 +31,90 @@ namespace Pegasus_backend.Controllers
             _log = log;
         }
 
+        //InovoiceTitle: PDF 标题， invoiceName：给谁发invoice，invoicemount：总共的amount， infos：看models文件夹，这个list里的东西全放在pdf里的table里、
+        //filename 文件保存的名字
+        protected static void InvoiceGenerator(string invoiceTitle, string invoiceName, decimal invoiceAmount, List<InvoicePdfGeneratorModel> infos,string filename)
+        {
+            //title
+            
+            PdfPTable title = new PdfPTable(1);
+            title.WidthPercentage = 80;
+            title.DefaultCell.HorizontalAlignment = Element.ALIGN_CENTER;
+            title.DefaultCell.VerticalAlignment = Element.ALIGN_CENTER;
+            title.DefaultCell.BorderWidth = 0;
+            Chunk titleChunk = new Chunk(invoiceTitle, FontFactory.GetFont("Times New Roman"));
+            titleChunk.Font.Color = new iTextSharp.text.BaseColor(0,0,0);
+            titleChunk.Font.SetStyle(0);
+            titleChunk.Font.Size = 18;
+            Phrase titlePhrase = new Phrase();
+            titlePhrase.Add(titleChunk);
+            title.AddCell(titlePhrase);
+            
+            //blank
+            PdfPTable pdfTableBlank = new PdfPTable(1);
+            pdfTableBlank.DefaultCell.BorderWidth = 0;
+            pdfTableBlank.DefaultCell.Border = 0;
+            pdfTableBlank.AddCell(new Phrase(" "));
+            
+            //invoice to (who)
+            PdfPTable name = new PdfPTable(1);
+            name.WidthPercentage = 80;
+            name.DefaultCell.BorderWidth = 0;
+            Chunk nameChunk = new Chunk("Invoice To: "+invoiceName  , FontFactory.GetFont("Times New Roman"));
+            nameChunk.Font.Color = new iTextSharp.text.BaseColor(0,0,0);
+            nameChunk.Font.SetStyle(0);
+            nameChunk.Font.Size = 10;
+            Phrase namePhrase = new Phrase();
+            namePhrase.Add(nameChunk);
+            name.AddCell(namePhrase);
+            
+            //detail table
+            PdfPTable table = new PdfPTable(2);
+            table.DefaultCell.Padding = 5;
+            table.WidthPercentage = 80;
+            table.DefaultCell.BorderWidth = 0.5f;
+            table.AddCell(new Phrase("Title"));
+            table.AddCell(new Phrase("Amount"));
+            infos.ForEach(s =>
+            {
+                table.AddCell(s.title);
+                table.AddCell("$ " + s.amount);
+            });
+            
+            //Total Amount
+            PdfPTable amount = new PdfPTable(1);
+            amount.WidthPercentage = 80;
+            amount.DefaultCell.BorderWidth = 0;
+            Chunk amountchunk = new Chunk("Total Amount: $ "+invoiceAmount  , FontFactory.GetFont("Times New Roman"));
+            amountchunk.Font.Color = new iTextSharp.text.BaseColor(0,0,0);
+            amountchunk.Font.SetStyle(0);
+            amountchunk.Font.Size = 14;
+            Phrase amountPhrase = new Phrase();
+            amountPhrase.Add(amountchunk);
+            amount.AddCell(amountPhrase);
+
+
+            var filenameToKeep = filename + ".pdf";
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images","invoice",filenameToKeep);
+            using (FileStream stream = new FileStream(path, FileMode.Create))
+            {
+                Document pdfDoc = new Document(PageSize.A4,10f,10f,10f,0f);
+                PdfWriter.GetInstance(pdfDoc, stream);
+                pdfDoc.Open();
+
+                pdfDoc.Add(title);
+                pdfDoc.Add(pdfTableBlank);
+                pdfDoc.Add(name);
+                pdfDoc.Add(pdfTableBlank);
+                pdfDoc.Add(table);
+                pdfDoc.Add(pdfTableBlank);
+                pdfDoc.Add(amount);
+                pdfDoc.Close();
+                stream.Close();
+            }
+        }
+        
+        
         protected TimeSpan GetEndTimeForOnetoOneCourseSchedule(TimeSpan beginTime, short? durationType)
         {
             switch (durationType)
