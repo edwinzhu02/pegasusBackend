@@ -39,6 +39,7 @@ namespace Pegasus_backend.Controllers
             Amendment amendment = new Amendment();
             DateTime? todoDateEnd = null;
             DateTime todoDateBegin = inputObj.BeginDate;
+            List<Term> terms;
             dynamic courseInfo;
             dynamic newCourseInfo;
 
@@ -54,7 +55,7 @@ namespace Pegasus_backend.Controllers
                     exsitingLessons = await _ablemusicContext.Lesson.Where(l => l.LearnerId == inputObj.LearnerId &&
                     l.BeginTime.Value.Date > inputObj.BeginDate.Date).ToListAsync();
                 }
-                
+                terms = await _ablemusicContext.Term.ToListAsync();
                 courseInfo = await (from i in _ablemusicContext.One2oneCourseInstance
                                     join cs in _ablemusicContext.CourseSchedule on i.CourseInstanceId equals cs.CourseInstanceId
                                     join l in _ablemusicContext.Learner on i.LearnerId equals l.LearnerId
@@ -160,33 +161,78 @@ namespace Pegasus_backend.Controllers
             amendment.TeacherId = inputObj.TeacherId;
             amendment.CourseScheduleId = inputObj.CourseScheduleId;
 
-            var visualLessonsForCheckingConflict = new List<Lesson>();
-
+            DateTime endDate;
+            
             if(inputObj.IsTemporary == 1)
             {
-                DateTime currentDate = amendment.BeginDate.Value;
-                int currentDayOfWeek = currentDate.DayOfWeek == 0 ? 7 : (int)currentDate.DayOfWeek;
-                while (currentDayOfWeek != amendment.DayOfWeek)
+                endDate = inputObj.EndDate.Value;
+            }
+            else
+            {
+                Term currentTerm = null;
+                Term nextTerm = null;
+                DateTime lastDateInAllTerms = inputObj.BeginDate;
+                foreach (var t in terms)
                 {
-                    currentDate = currentDate.AddDays(1);
-                    currentDayOfWeek = currentDate.DayOfWeek == 0 ? 7 : (int)currentDate.DayOfWeek;
-                }
-                while (currentDate <= amendment.EndDate.Value)
-                {
-                    visualLessonsForCheckingConflict.Add(new Lesson
+                    lastDateInAllTerms = lastDateInAllTerms >= t.EndDate.Value ? lastDateInAllTerms : t.EndDate.Value;
+                    if(amendment.BeginDate.Value > t.BeginDate.Value && amendment.BeginDate.Value < t.EndDate.Value)
                     {
-                        RoomId = amendment.RoomId,
-                        TeacherId = amendment.TeacherId,
-                        OrgId = amendment.OrgId.Value,
-                        BeginTime = currentDate.Add(amendment.BeginTime.Value),
-                        EndTime = currentDate.Add(amendment.EndTime.Value),
-                    });
-                    currentDate = currentDate.AddDays(7);
-                    currentDayOfWeek = currentDate.DayOfWeek == 0 ? 7 : (int)currentDate.DayOfWeek;
+                        currentTerm = t;
+                    }
+                }
+                if (currentTerm == null)
+                {
+                    result.IsSuccess = false;
+                    result.ErrorMessage = "Term not found";
+                    return BadRequest(result);
+                }
+                DateTime currentDay = currentTerm.EndDate.Value.AddDays(1);
+                while (currentDay < lastDateInAllTerms)
+                {
+                    nextTerm = terms.Find(t => t.BeginDate.Value < currentDay && t.EndDate.Value > currentDay);
+                    if (nextTerm != null)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        currentDay = currentDay.AddDays(1);
+                    }
+                }
+                if(nextTerm == null)
+                {
+                    endDate = currentTerm.EndDate.Value;
+                }
+                else
+                {
+                    endDate = nextTerm.EndDate.Value;
                 }
             }
+            
+            var visualLessonsForCheckingConflict = new List<Lesson>();
 
-            foreach(var lesson in visualLessonsForCheckingConflict)
+            DateTime currentDate = amendment.BeginDate.Value;
+            int currentDayOfWeek = currentDate.DayOfWeek == 0 ? 7 : (int)currentDate.DayOfWeek;
+            while (currentDayOfWeek != amendment.DayOfWeek)
+            {
+                currentDate = currentDate.AddDays(1);
+                currentDayOfWeek = currentDate.DayOfWeek == 0 ? 7 : (int)currentDate.DayOfWeek;
+            }
+            while (currentDate <= endDate)
+            {
+                visualLessonsForCheckingConflict.Add(new Lesson
+                {
+                    RoomId = amendment.RoomId,
+                    TeacherId = amendment.TeacherId,
+                    OrgId = amendment.OrgId.Value,
+                    BeginTime = currentDate.Add(amendment.BeginTime.Value),
+                    EndTime = currentDate.Add(amendment.EndTime.Value),
+                });
+                currentDate = currentDate.AddDays(7);
+                currentDayOfWeek = currentDate.DayOfWeek == 0 ? 7 : (int)currentDate.DayOfWeek;
+            }
+
+            foreach (var lesson in visualLessonsForCheckingConflict)
             {
                 var lessonConflictCheckerService = new LessonConflictCheckerService(lesson);
                 Result<List<object>> lessonConflictCheckResult;
