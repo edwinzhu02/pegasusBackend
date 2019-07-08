@@ -6,8 +6,6 @@ namespace Pegasus_backend.Models
 {
     public class InvoiceWaitingConfirmViewModel
     {
-        [Required(ErrorMessage = "Waiting id is required")]
-        public int WaitingId { get; set; }
         [Required(ErrorMessage = "InvoiceNum id is required")]
         public string InvoiceNum { get; set; }
         public decimal? LessonFee { get; set; }
