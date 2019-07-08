@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Pegasus_backend.Models;
 using Pegasus_backend.pegasusContext;
 using Pegasus_backend.Services;
 using Pegasus_backend.Models;
@@ -25,16 +26,16 @@ namespace Pegasus_backend.Controllers
         public async Task<IActionResult> Get()
         {
             Result<object> result = new Result<object>();
-            List<InvoiceWaitingConfirm> invoiceWaitingConfirms1;
-            List<InvoiceWaitingConfirm> invoiceWaitingConfirms2;
-            DateTime firstExecutionStart;
-            DateTime firstExecutionEnd;
-            DateTime secondExecutionStart;
-            DateTime secondExecutionEnd;
+            //List<InvoiceWaitingConfirm> invoiceWaitingConfirms1;
+            //List<InvoiceWaitingConfirm> invoiceWaitingConfirms2;
+            //DateTime firstExecutionStart;
+            //DateTime firstExecutionEnd;
+            //DateTime secondExecutionStart;
+            //DateTime secondExecutionEnd;
 
             try
             {
-                firstExecutionStart = DateTime.Now;
+                //firstExecutionStart = DateTime.Now;
                 //invoiceWaitingConfirms1 = await (from s in _ablemusicContext.Staff
                 //                                join so in _ablemusicContext.StaffOrg on s.StaffId equals so.StaffId
                 //                                join l in _ablemusicContext.Learner on so.OrgId equals l.OrgId

@@ -8,6 +8,7 @@ using Pegasus_backend.Models;
 using Pegasus_backend.pegasusContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using AutoMapper;
 using Pegasus_backend.Services;
 
 namespace Pegasus_backend.Controllers
@@ -16,8 +17,10 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class TrialLessonController : BasicController
     {
-        public TrialLessonController(ablemusicContext ablemusicContext, ILogger<TrialLessonController> log) : base(ablemusicContext, log)
+        private readonly IMapper _mapper;
+        public TrialLessonController(ablemusicContext ablemusicContext, IMapper mapper, ILogger<TrialLessonController> log) : base(ablemusicContext, log)
         {
+            _mapper = mapper;
         }
 
         // POST: api/TrialLesson
@@ -28,6 +31,8 @@ namespace Pegasus_backend.Controllers
             var result = new Result<Lesson>();
             var lesson = new Lesson();
             var payment = new Payment();
+            var invoiceWaiting = new InvoiceWaitingConfirm();
+            var invoice = new Invoice();            
 
             lesson.LearnerId = trialLessonViewModel.LearnerId;
             lesson.RoomId = trialLessonViewModel.RoomId;
@@ -57,6 +62,32 @@ namespace Pegasus_backend.Controllers
             payment.IsConfirmed = 0;
             payment.Comment = null;
 
+            invoiceWaiting.LessonFee =  trialLessonViewModel.Amount;
+            invoiceWaiting.LearnerId = trialLessonViewModel.LearnerId;
+            invoiceWaiting.LearnerName = await _ablemusicContext.Learner.
+                        Where(l => l.LearnerId == trialLessonViewModel.LearnerId  ).Select(l=> l.FirstName).FirstOrDefaultAsync();
+            invoiceWaiting.BeginDate = trialLessonViewModel.BeginTime.Value.Date;
+            invoiceWaiting.EndDate = trialLessonViewModel.BeginTime.Value.Date;
+            invoiceWaiting.TotalFee = trialLessonViewModel.Amount;
+            invoiceWaiting.DueDate = trialLessonViewModel.BeginTime.Value.Date;           
+            invoiceWaiting.PaidFee = 0;            
+            invoiceWaiting.OwingFee =trialLessonViewModel.Amount;                       
+            invoiceWaiting.CreatedAt =toNZTimezone(DateTime.UtcNow);      
+            invoiceWaiting.IsPaid =0;  
+            invoiceWaiting.TermId =await _ablemusicContext.Term.
+                        Where(t => t.BeginDate <= trialLessonViewModel.BeginTime.Value &&
+                                t.EndDate >= trialLessonViewModel.BeginTime.Value 
+                         ).Select(l=> l.TermId).FirstOrDefaultAsync();
+            invoiceWaiting.LessonQuantity =1;
+            invoiceWaiting.CourseName ="Trial Lesson";
+            invoiceWaiting.IsConfirmed = 1;
+            invoiceWaiting.IsEmailSent = 0;
+            invoiceWaiting.IsActivate = 1;
+
+            List<Lesson> conflictRooms = new List<Lesson>();
+            List<Lesson> conflictTeacherLessons = new List<Lesson>();
+            DateTime beginTime = lesson.BeginTime.Value.AddMinutes(-60);
+            DateTime endTime = lesson.EndTime.Value.AddMinutes(60);
             var lessonConflictCheckerService = new LessonConflictCheckerService(lesson);
             Result<List<object>> lessonConflictCheckResult;
             try
@@ -77,7 +108,15 @@ namespace Pegasus_backend.Controllers
             try
             {
                 await _ablemusicContext.Lesson.AddAsync(lesson);
-                await _ablemusicContext.Payment.AddAsync(payment);
+                if (trialLessonViewModel.IsPayNow)
+                    await _ablemusicContext.Payment.AddAsync(payment);
+                else {
+                    await _ablemusicContext.InvoiceWaitingConfirm.AddAsync(invoiceWaiting);
+                    invoiceWaiting.InvoiceNum = invoiceWaiting.WaitingId.ToString();
+                    _mapper.Map(invoiceWaiting,invoice);
+                    invoice.IsActive = 1;
+                    await _ablemusicContext.Invoice.AddAsync(invoice);
+                }
                 await _ablemusicContext.SaveChangesAsync();
             }
             catch(Exception ex)

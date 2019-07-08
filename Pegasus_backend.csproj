@@ -6,6 +6,7 @@
 
     <ItemGroup>
         <Folder Include="wwwroot\" />
+        <Folder Include="wwwroot\images\invoice" />
         <Folder Include="wwwroot\images\learner\ABRSM_Grade5_Certificate" />
         <Folder Include="wwwroot\images\learner\Form" />
         <Folder Include="wwwroot\images\learner\Otherfile" />
@@ -22,6 +23,7 @@
     <ItemGroup>
         <PackageReference Include="AutoMapper" Version="8.0.0" />
         <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.0.0" />
+        <PackageReference Include="iTextSharp" Version="5.5.13.1" />
         <PackageReference Include="MailKit" Version="2.1.4" />
         <PackageReference Include="Microsoft.AspNetCore.App" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.Abstractions" Version="2.1.1" />
