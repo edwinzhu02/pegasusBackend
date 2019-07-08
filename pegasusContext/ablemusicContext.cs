@@ -19,6 +19,7 @@ namespace Pegasus_backend.pegasusContext
         public virtual DbSet<ApplicationDetails> ApplicationDetails { get; set; }
         public virtual DbSet<AskOff> AskOff { get; set; }
         public virtual DbSet<AvailableDays> AvailableDays { get; set; }
+        public virtual DbSet<AwaitMakeUpLesson> AwaitMakeUpLesson { get; set; }
         public virtual DbSet<ChatGroup> ChatGroup { get; set; }
         public virtual DbSet<ChatMessage> ChatMessage { get; set; }
         public virtual DbSet<Course> Course { get; set; }
@@ -39,6 +40,7 @@ namespace Pegasus_backend.pegasusContext
         public virtual DbSet<LessonRemain> LessonRemain { get; set; }
         public virtual DbSet<LoginLog> LoginLog { get; set; }
         public virtual DbSet<Lookup> Lookup { get; set; }
+        public virtual DbSet<Notices> Notices { get; set; }
         public virtual DbSet<One2oneCourseInstance> One2oneCourseInstance { get; set; }
         public virtual DbSet<OnlineUser> OnlineUser { get; set; }
         public virtual DbSet<Org> Org { get; set; }
@@ -77,7 +79,7 @@ namespace Pegasus_backend.pegasusContext
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseMySQL("server=www.gradspace.org;port=3306;user=dbuser;password=qwer1234;database=ablemusic");
+                optionsBuilder.UseMySQL("Server=45.76.123.59;User Id=dbuser;Password=qwer1234;Database=ablemusic");
             }
         }
 
@@ -335,6 +337,54 @@ namespace Pegasus_backend.pegasusContext
                     .WithMany(p => p.AvailableDays)
                     .HasForeignKey(d => d.TeacherId)
                     .HasConstraintName("R_9");
+            });
+
+            modelBuilder.Entity<AwaitMakeUpLesson>(entity =>
+            {
+                entity.HasKey(e => e.AwaitId);
+
+                entity.ToTable("await_make_up_lesson", "ablemusic");
+
+                entity.HasIndex(e => e.MissedLessonId)
+                    .HasName("R_135");
+
+                entity.HasIndex(e => e.NewLessonId)
+                    .HasName("R_136");
+
+                entity.Property(e => e.AwaitId)
+                    .HasColumnName("await_id")
+                    .HasColumnType("int(11)")
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.CreateAt).HasColumnName("create_at");
+
+                entity.Property(e => e.ExpiredDate)
+                    .HasColumnName("expired_date")
+                    .HasColumnType("date");
+
+                entity.Property(e => e.IsActive)
+                    .HasColumnName("is_active")
+                    .HasColumnType("bit(1)");
+
+                entity.Property(e => e.MissedLessonId)
+                    .HasColumnName("missed_lesson_id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.NewLessonId)
+                    .HasColumnName("new_lesson_id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.SchduledAt).HasColumnName("schduled_at");
+
+                entity.HasOne(d => d.MissedLesson)
+                    .WithMany(p => p.AwaitMakeUpLessonMissedLesson)
+                    .HasForeignKey(d => d.MissedLessonId)
+                    .HasConstraintName("R_135");
+
+                entity.HasOne(d => d.NewLesson)
+                    .WithMany(p => p.AwaitMakeUpLessonNewLesson)
+                    .HasForeignKey(d => d.NewLessonId)
+                    .HasConstraintName("R_136");
             });
 
             modelBuilder.Entity<ChatGroup>(entity =>
@@ -647,6 +697,9 @@ namespace Pegasus_backend.pegasusContext
                 entity.HasIndex(e => e.GroupCourseInstanceId)
                     .HasName("R_75");
 
+                entity.HasIndex(e => e.InvoiceNum)
+                    .HasName("idx_invoice_num_n");
+
                 entity.HasIndex(e => e.LearnerId)
                     .HasName("R_76");
 
@@ -660,6 +713,11 @@ namespace Pegasus_backend.pegasusContext
                 entity.Property(e => e.BeginDate)
                     .HasColumnName("begin_date")
                     .HasColumnType("date");
+
+                entity.Property(e => e.Comment)
+                    .HasColumnName("comment")
+                    .HasMaxLength(300)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.ConcertFee)
                     .HasColumnName("concert_fee")
@@ -808,6 +866,9 @@ namespace Pegasus_backend.pegasusContext
                 entity.HasIndex(e => e.GroupCourseInstanceId)
                     .HasName("R_103");
 
+                entity.HasIndex(e => e.InvoiceNum)
+                    .HasName("idx_invoice_num_w");
+
                 entity.HasIndex(e => e.LearnerId)
                     .HasName("R_101");
 
@@ -821,6 +882,11 @@ namespace Pegasus_backend.pegasusContext
                 entity.Property(e => e.BeginDate)
                     .HasColumnName("begin_date")
                     .HasColumnType("date");
+
+                entity.Property(e => e.Comment)
+                    .HasColumnName("comment")
+                    .HasMaxLength(300)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.ConcertFee)
                     .HasColumnName("concert_fee")
@@ -1605,6 +1671,55 @@ namespace Pegasus_backend.pegasusContext
                 entity.Property(e => e.PropValue)
                     .HasColumnName("prop_value")
                     .HasColumnType("int(11)");
+            });
+
+            modelBuilder.Entity<Notices>(entity =>
+            {
+                entity.HasKey(e => e.NoticeId);
+
+                entity.ToTable("notices", "ablemusic");
+
+                entity.HasIndex(e => e.FromStaffId)
+                    .HasName("R_137");
+
+                entity.HasIndex(e => e.ToStaffId)
+                    .HasName("R_138");
+
+                entity.Property(e => e.NoticeId)
+                    .HasColumnName("notice_id")
+                    .HasColumnType("int(11)")
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.CreatedAt)
+                    .HasColumnName("created_at")
+                    .HasColumnType("date");
+
+                entity.Property(e => e.FromStaffId)
+                    .HasColumnName("from_staff_id")
+                    .HasColumnType("smallint(6)");
+
+                entity.Property(e => e.IsCompleted)
+                    .HasColumnName("is_completed")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.Notice)
+                    .HasColumnName("notice")
+                    .HasMaxLength(1000)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ToStaffId)
+                    .HasColumnName("to_staff_id")
+                    .HasColumnType("smallint(6)");
+
+                entity.HasOne(d => d.FromStaff)
+                    .WithMany(p => p.NoticesFromStaff)
+                    .HasForeignKey(d => d.FromStaffId)
+                    .HasConstraintName("R_137");
+
+                entity.HasOne(d => d.ToStaff)
+                    .WithMany(p => p.NoticesToStaff)
+                    .HasForeignKey(d => d.ToStaffId)
+                    .HasConstraintName("R_138");
             });
 
             modelBuilder.Entity<One2oneCourseInstance>(entity =>
@@ -3035,7 +3150,7 @@ namespace Pegasus_backend.pegasusContext
                 entity.ToTable("teacher_wage_rates", "ablemusic");
 
                 entity.HasIndex(e => e.TeacherId)
-                    .HasName("R_126");
+                    .HasName("idx_wage_teacher");
 
                 entity.Property(e => e.RatesId)
                     .HasColumnName("rates_id")

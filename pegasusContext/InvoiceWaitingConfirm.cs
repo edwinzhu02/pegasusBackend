@@ -36,6 +36,7 @@ namespace Pegasus_backend.pegasusContext
         public short? IsActivate { get; set; }
         public short? IsEmailSent { get; set; }
         public short? IsConfirmed { get; set; }
+        public string Comment { get; set; }
 
         public One2oneCourseInstance CourseInstance { get; set; }
         public GroupCourseInstance GroupCourseInstance { get; set; }

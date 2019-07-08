@@ -497,6 +497,7 @@ namespace Pegasus_backend.Controllers
         public async Task<IActionResult> PutSesson(int sessionId, string reason, short userId)
         {
             var result = new Result<string>();
+            var awaitMakeUpLesson = new AwaitMakeUpLesson();
             Lesson lesson;
             try
             {
@@ -537,6 +538,13 @@ namespace Pegasus_backend.Controllers
 
             lesson.IsCanceled = 1;
             lesson.Reason = reason;
+            //save to making up lessones to save
+            awaitMakeUpLesson.MissedLessonId = lesson.LessonId;
+            awaitMakeUpLesson.CreateAt = toNZTimezone(DateTime.UtcNow);
+            awaitMakeUpLesson.IsActive = 1;
+            awaitMakeUpLesson.ExpiredDate = lesson.BeginTime.Value.Date.AddMonths(3);
+            await _ablemusicContext.AwaitMakeUpLesson.AddAsync(awaitMakeUpLesson);
+
 
             bool isGroupCourse = lesson.LearnerId == null;
             Teacher teacher;

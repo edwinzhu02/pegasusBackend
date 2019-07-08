@@ -40,6 +40,7 @@ namespace Pegasus_backend.pegasusContext
         public string Other2FeeName { get; set; }
         public string Other3FeeName { get; set; }
         public short? IsActive { get; set; }
+        public string Comment { get; set; }
 
         public One2oneCourseInstance CourseInstance { get; set; }
         public GroupCourseInstance GroupCourseInstance { get; set; }

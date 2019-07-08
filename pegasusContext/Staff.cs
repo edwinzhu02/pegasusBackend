@@ -7,6 +7,8 @@ namespace Pegasus_backend.pegasusContext
     {
         public Staff()
         {
+            NoticesFromStaff = new HashSet<Notices>();
+            NoticesToStaff = new HashSet<Notices>();
             Payment = new HashSet<Payment>();
             StaffOrg = new HashSet<StaffOrg>();
             StockApplication = new HashSet<StockApplication>();
@@ -32,6 +34,8 @@ namespace Pegasus_backend.pegasusContext
         public short StaffId { get; set; }
 
         public User User { get; set; }
+        public ICollection<Notices> NoticesFromStaff { get; set; }
+        public ICollection<Notices> NoticesToStaff { get; set; }
         public ICollection<Payment> Payment { get; set; }
         public ICollection<StaffOrg> StaffOrg { get; set; }
         public ICollection<StockApplication> StockApplication { get; set; }
