@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Pegasus_backend.ActionFilter;
@@ -11,6 +10,8 @@ using Pegasus_backend.pegasusContext;
 using Microsoft.EntityFrameworkCore;
 using Pegasus_backend.Services;
 using Microsoft.Extensions.Logging;
+using Pegasus_backend.Repositories;
+using Pegasus_backend.Utilities;
 
 namespace Pegasus_backend.Controllers
 {
@@ -30,7 +31,7 @@ namespace Pegasus_backend.Controllers
         [CheckModelFilter]
         public async Task<IActionResult> PostPeriodCourseChange([FromBody] PeriodCourseChangeViewModel inputObj)
         {
-            var result = new Result<List<Amendment>>();
+            var result = new Result<Amendment>();
             List<Lesson> exsitingLessons;
             Learner learner;
             List<Holiday> holidays;
@@ -38,6 +39,7 @@ namespace Pegasus_backend.Controllers
             Amendment amendment = new Amendment();
             DateTime? todoDateEnd = null;
             DateTime todoDateBegin = inputObj.BeginDate;
+            List<Term> terms;
             dynamic courseInfo;
             dynamic newCourseInfo;
 
@@ -53,7 +55,7 @@ namespace Pegasus_backend.Controllers
                     exsitingLessons = await _ablemusicContext.Lesson.Where(l => l.LearnerId == inputObj.LearnerId &&
                     l.BeginTime.Value.Date > inputObj.BeginDate.Date).ToListAsync();
                 }
-                
+                terms = await _ablemusicContext.Term.ToListAsync();
                 courseInfo = await (from i in _ablemusicContext.One2oneCourseInstance
                                     join cs in _ablemusicContext.CourseSchedule on i.CourseInstanceId equals cs.CourseInstanceId
                                     join l in _ablemusicContext.Learner on i.LearnerId equals l.LearnerId
@@ -159,6 +161,97 @@ namespace Pegasus_backend.Controllers
             amendment.TeacherId = inputObj.TeacherId;
             amendment.CourseScheduleId = inputObj.CourseScheduleId;
 
+            DateTime endDate;
+            
+            if(inputObj.IsTemporary == 1)
+            {
+                endDate = inputObj.EndDate.Value;
+            }
+            else
+            {
+                Term currentTerm = null;
+                Term nextTerm = null;
+                DateTime lastDateInAllTerms = inputObj.BeginDate;
+                foreach (var t in terms)
+                {
+                    lastDateInAllTerms = lastDateInAllTerms >= t.EndDate.Value ? lastDateInAllTerms : t.EndDate.Value;
+                    if(amendment.BeginDate.Value > t.BeginDate.Value && amendment.BeginDate.Value < t.EndDate.Value)
+                    {
+                        currentTerm = t;
+                    }
+                }
+                if (currentTerm == null)
+                {
+                    result.IsSuccess = false;
+                    result.ErrorMessage = "Term not found";
+                    return BadRequest(result);
+                }
+                DateTime currentDay = currentTerm.EndDate.Value.AddDays(1);
+                while (currentDay < lastDateInAllTerms)
+                {
+                    nextTerm = terms.Find(t => t.BeginDate.Value < currentDay && t.EndDate.Value > currentDay);
+                    if (nextTerm != null)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        currentDay = currentDay.AddDays(1);
+                    }
+                }
+                if(nextTerm == null)
+                {
+                    endDate = currentTerm.EndDate.Value;
+                }
+                else
+                {
+                    endDate = nextTerm.EndDate.Value;
+                }
+            }
+            
+            var visualLessonsForCheckingConflict = new List<Lesson>();
+
+            DateTime currentDate = amendment.BeginDate.Value;
+            int currentDayOfWeek = currentDate.DayOfWeek == 0 ? 7 : (int)currentDate.DayOfWeek;
+            while (currentDayOfWeek != amendment.DayOfWeek)
+            {
+                currentDate = currentDate.AddDays(1);
+                currentDayOfWeek = currentDate.DayOfWeek == 0 ? 7 : (int)currentDate.DayOfWeek;
+            }
+            while (currentDate <= endDate)
+            {
+                visualLessonsForCheckingConflict.Add(new Lesson
+                {
+                    RoomId = amendment.RoomId,
+                    TeacherId = amendment.TeacherId,
+                    OrgId = amendment.OrgId.Value,
+                    BeginTime = currentDate.Add(amendment.BeginTime.Value),
+                    EndTime = currentDate.Add(amendment.EndTime.Value),
+                });
+                currentDate = currentDate.AddDays(7);
+                currentDayOfWeek = currentDate.DayOfWeek == 0 ? 7 : (int)currentDate.DayOfWeek;
+            }
+
+            foreach (var lesson in visualLessonsForCheckingConflict)
+            {
+                var lessonConflictCheckerService = new LessonConflictCheckerService(lesson);
+                Result<List<object>> lessonConflictCheckResult;
+                try
+                {
+                    lessonConflictCheckResult = await lessonConflictCheckerService.CheckBothRoomAndTeacher();
+                }
+                catch (Exception ex)
+                {
+                    result.IsSuccess = false;
+                    result.ErrorMessage = ex.Message;
+                    return BadRequest(result);
+                }
+                if (!lessonConflictCheckResult.IsSuccess)
+                {
+                    return BadRequest(lessonConflictCheckResult);
+                }
+            }
+            
             foreach (var holiday in holidays)
             {
                 if (holiday.HolidayDate.Date == todoDateBegin.Date)
@@ -178,32 +271,39 @@ namespace Pegasus_backend.Controllers
                     }
                 }
             }
-            TodoList learnerTodoEndTime = new TodoList();
-            TodoList teacherTodoEndTime = new TodoList();
-            if (inputObj.EndDate.HasValue)
+
+            TodoRepository todoRepository = new TodoRepository();
+            todoRepository.AddSingleTodoList("Period Course Change Remind", TodoListContentGenerator.PeriodCourseChangeForLearner(courseInfo,
+                newCourseInfo, inputObj, todoDateBegin), inputObj.UserId, todoDateBegin, null, inputObj.LearnerId, null);
+            todoRepository.AddSingleTodoList("Period Course Change Remind", TodoListContentGenerator.PeriodCourseChangeForTeacher(courseInfo,
+                newCourseInfo, inputObj, todoDateBegin), inputObj.UserId, todoDateBegin, null, null, courseInfo.TeacherId);
+            if (inputObj.EndDate.HasValue && inputObj.IsTemporary == 1)
             {
-                learnerTodoEndTime = TodoListForLearnerCreater(courseInfo, newCourseInfo, inputObj, todoDateEnd.Value);
-                teacherTodoEndTime = TodoListForTeacherCreater(courseInfo, newCourseInfo, inputObj, todoDateEnd.Value);
+                todoRepository.AddSingleTodoList("Period Course Change Remind", TodoListContentGenerator.PeriodCourseChangeForLearner(courseInfo,
+                    newCourseInfo, inputObj, todoDateEnd.Value), inputObj.UserId, todoDateEnd.Value, null, inputObj.LearnerId, null);
+                todoRepository.AddSingleTodoList("Period Course Change Remind", TodoListContentGenerator.PeriodCourseChangeForTeacher(courseInfo,
+                    newCourseInfo, inputObj, todoDateEnd.Value), inputObj.UserId, todoDateEnd.Value, null, null, courseInfo.TeacherId);
             }
-            TodoList learnerTodoBeginTime = TodoListForLearnerCreater(courseInfo, newCourseInfo, inputObj, todoDateBegin);
-            TodoList teacherTodoBeginTime = TodoListForTeacherCreater(courseInfo, newCourseInfo, inputObj, todoDateBegin);
-            RemindLog learnerRemindLog = RemindLogForLearnerCreater(courseInfo, newCourseInfo, inputObj);
-            RemindLog teacherRemindLog = RemindLogForTeacherCreater(courseInfo, newCourseInfo, inputObj);
+            var saveTodoResult = await todoRepository.SaveTodoListsAsync();
+            if (!saveTodoResult.IsSuccess)
+            {
+                return BadRequest(saveTodoResult);
+            }
+
+            RemindLogRepository remindLogRepository = new RemindLogRepository();
+            remindLogRepository.AddSingleRemindLog(courseInfo.LearnerId, courseInfo.LearnerEmail, RemindLogContentGenerator.PeriodCourseChangeForLearner(
+                courseInfo, newCourseInfo, inputObj), null, "Period Course Change Remind", null);
+            remindLogRepository.AddSingleRemindLog(null, courseInfo.TeacherEmail, RemindLogContentGenerator.PeriodCourseChangeForTeacher(courseInfo,
+                newCourseInfo, inputObj), courseInfo.TeacherId, "Period Course Change Remind", null);
+            var saveRemindLogResult = await remindLogRepository.SaveRemindLogAsync();
+            if (!saveRemindLogResult.IsSuccess)
+            {
+                return BadRequest(saveRemindLogResult);
+            }
 
             try
             {
                 await _ablemusicContext.Amendment.AddAsync(amendment);
-                if (inputObj.IsTemporary == 1)
-                {
-                    await _ablemusicContext.TodoList.AddAsync(learnerTodoEndTime);
-                    await _ablemusicContext.TodoList.AddAsync(teacherTodoEndTime);
-                }
-                await _ablemusicContext.TodoList.AddAsync(learnerTodoBeginTime);
-                await _ablemusicContext.TodoList.AddAsync(teacherTodoBeginTime);
-
-                await _ablemusicContext.RemindLog.AddAsync(learnerRemindLog);
-                await _ablemusicContext.RemindLog.AddAsync(teacherRemindLog);
-
                 await _ablemusicContext.SaveChangesAsync();
             }
             catch (Exception ex)
@@ -214,135 +314,29 @@ namespace Pegasus_backend.Controllers
             }
 
             //sending Email
-            string mailTitle = "Period Course Change Remind";
-            string teacherName = courseInfo.TeacherFirstName + " " + courseInfo.TeacherLastName;
-            string contentForTeacher = MailContentGenerator(teacherName, courseInfo, newCourseInfo, inputObj);
-            Task teacherMailSenderTask = MailSenderService.SendMailAsync(courseInfo.TeacherEmail, mailTitle, contentForTeacher, teacherRemindLog.RemindId);
+            List<NotificationEventArgs> notifications = new List<NotificationEventArgs>();
+            foreach (var remind in saveRemindLogResult.Data)
+            {
+                string currentPersonName;
+                if (remind.TeacherId == null)
+                {
+                    currentPersonName = courseInfo.LearnerFirstName + " " + courseInfo.LearnerLastName;
+                }
+                else
+                {
+                    currentPersonName = courseInfo.TeacherFirstName + " " + courseInfo.TeacherLastName;
+                }
+                string mailContent = EmailContentGenerator.PeriodCourseChange(currentPersonName, courseInfo, newCourseInfo, inputObj);
+                notifications.Add(new NotificationEventArgs(remind.Email, "Period Course Change Remind", mailContent, remind.RemindId));
+            }
+            foreach (var mail in notifications)
+            {
+                _notificationObservable.send(mail);
+            }
 
-            string learnerName = courseInfo.LearnerFirstName + " " + courseInfo.LearnerLastName;
-            string mailContentForLearner = MailContentGenerator(learnerName, courseInfo, newCourseInfo, inputObj);
-            Task learnerMailSenderTask = MailSenderService.SendMailAsync(courseInfo.LearnerEmail, mailTitle, mailContentForLearner, learnerRemindLog.RemindId);
+            result.Data = amendment;
 
             return Ok(result);
-        }
-
-        private TodoList TodoListForLearnerCreater(dynamic courseInfo, dynamic newCourseInfo, PeriodCourseChangeViewModel inputObj, DateTime todoDate)
-        {
-            TodoList todolistForLearner = new TodoList();
-            todolistForLearner.ListName = "Period Course Change Remind";
-            todolistForLearner.ListContent = "Inform learner " + courseInfo.LearnerFirstName + " " + courseInfo.LearnerLastName +
-                " the course " + courseInfo.CourseName + " at " + courseInfo.OrgName + " " + courseInfo.RoomName + " from " + 
-                getDayOfWeek(courseInfo.DayOfWeek) + " " + courseInfo.BeginTime + " to " + courseInfo.EndTime + " has been changed to " +
-                newCourseInfo.newOrg.OrgName + " " + newCourseInfo.newRoom.RoomName + " from " + inputObj.BeginTime + " to " + inputObj.EndTime +
-                "on " + getDayOfWeek(inputObj.DayOfWeek) + " ";
-            todolistForLearner.ListContent += inputObj.IsTemporary == 1 ? "for the period between " + inputObj.BeginDate + " to " +
-                inputObj.EndDate + "Temporarily" : "from " + inputObj.BeginDate + "permanently";
-            todolistForLearner.CreatedAt = toNZTimezone(DateTime.UtcNow);
-            todolistForLearner.ProcessedAt = null;
-            todolistForLearner.ProcessFlag = 0;
-            todolistForLearner.UserId = inputObj.UserId;
-            todolistForLearner.TodoDate = todoDate;
-            todolistForLearner.LearnerId = inputObj.LearnerId;
-            todolistForLearner.LessonId = null;
-            todolistForLearner.TeacherId = null;
-            return todolistForLearner;
-        }
-
-        private TodoList TodoListForTeacherCreater(dynamic courseInfo, dynamic newCourseInfo, PeriodCourseChangeViewModel inputObj, DateTime todoDate)
-        {
-            TodoList todolistForTeacher = new TodoList();
-            todolistForTeacher.ListName = "Period Course Change Remind";
-            todolistForTeacher.ListContent = "Inform teacher " + courseInfo.TeacherFirstName + " " + courseInfo.TeacherLastName +
-                " the course " + courseInfo.CourseName + " at " + courseInfo.OrgName + " " + courseInfo.RoomName + " from " +
-                getDayOfWeek(courseInfo.DayOfWeek) + " " + courseInfo.BeginTime + " to " + courseInfo.EndTime + " has been changed to " +
-                newCourseInfo.newOrg.OrgName + " " + newCourseInfo.newRoom.RoomName + " from " + inputObj.BeginTime + " to " + inputObj.EndTime +
-                "on " + getDayOfWeek(inputObj.DayOfWeek) + " ";
-            todolistForTeacher.ListContent += inputObj.IsTemporary == 1 ? "for the period between " + inputObj.BeginDate + " to " +
-                inputObj.EndDate + "Temporarily" : "from " + inputObj.BeginDate + "permanently";
-            todolistForTeacher.CreatedAt = toNZTimezone(DateTime.UtcNow);
-            todolistForTeacher.ProcessedAt = null;
-            todolistForTeacher.ProcessFlag = 0;
-            todolistForTeacher.UserId = inputObj.UserId;
-            todolistForTeacher.TodoDate = todoDate;
-            todolistForTeacher.LearnerId = null;
-            todolistForTeacher.LessonId = null;
-            todolistForTeacher.TeacherId = courseInfo.TeacherId;
-            return todolistForTeacher;
-        }
-
-        private RemindLog RemindLogForLearnerCreater(dynamic courseInfo, dynamic newCourseInfo, PeriodCourseChangeViewModel inputObj)
-        {
-            RemindLog remindLogLearner = new RemindLog();
-            remindLogLearner.LearnerId = courseInfo.LearnerId;
-            remindLogLearner.Email = courseInfo.LearnerEmail;
-            remindLogLearner.RemindType = 1;
-            remindLogLearner.RemindContent = "Inform learner " + courseInfo.LearnerFirstName + " " + courseInfo.LearnerLastName +
-                " the course " + courseInfo.CourseName + " at " + courseInfo.OrgName + " " + courseInfo.RoomName + " from " +
-                getDayOfWeek(courseInfo.DayOfWeek) + " " + courseInfo.BeginTime + " to " + courseInfo.EndTime + " has been changed to " +
-                newCourseInfo.newOrg.OrgName + " " + newCourseInfo.newRoom.RoomName + " from " + inputObj.BeginTime + " to " + inputObj.EndTime +
-                "on " + getDayOfWeek(inputObj.DayOfWeek) + " ";
-            remindLogLearner.RemindContent += inputObj.IsTemporary == 1 ? "for the period between " + inputObj.BeginDate + " to " +
-                inputObj.EndDate + "Temporarily" : "from " + inputObj.BeginDate + "permanently";
-            remindLogLearner.CreatedAt = toNZTimezone(DateTime.UtcNow);
-            remindLogLearner.TeacherId = null;
-            remindLogLearner.IsLearner = 1;
-            remindLogLearner.ProcessFlag = 0;
-            remindLogLearner.EmailAt = null;
-            remindLogLearner.RemindTitle = "Period Course Change Remind";
-            remindLogLearner.ReceivedFlag = 0;
-            remindLogLearner.LessonId = null;
-            return remindLogLearner;
-        }
-
-        private RemindLog RemindLogForTeacherCreater(dynamic courseInfo, dynamic newCourseInfo, PeriodCourseChangeViewModel inputObj)
-        {
-            RemindLog remindLogForTeacher = new RemindLog();
-            remindLogForTeacher.LearnerId = null;
-            remindLogForTeacher.Email = courseInfo.TeacherEmail;
-            remindLogForTeacher.RemindType = 1;
-            remindLogForTeacher.RemindContent = "Inform teacher " + courseInfo.TeacherFirstName + " " + courseInfo.TeacherLastName +
-                " the course " + courseInfo.CourseName + " at " + courseInfo.OrgName + " " + courseInfo.RoomName + " from " +
-                getDayOfWeek(courseInfo.DayOfWeek) + " " + courseInfo.BeginTime + " to " + courseInfo.EndTime + " has been changed to " +
-                newCourseInfo.newOrg.OrgName + " " + newCourseInfo.newRoom.RoomName + " from " + inputObj.BeginTime + " to " + inputObj.EndTime +
-                "on " + getDayOfWeek(inputObj.DayOfWeek) + " ";
-            remindLogForTeacher.RemindContent += inputObj.IsTemporary == 1 ? "for the period between " + inputObj.BeginDate + " to " +
-                inputObj.EndDate + "Temporarily" : "from " + inputObj.BeginDate + "permanently";
-            remindLogForTeacher.CreatedAt = toNZTimezone(DateTime.UtcNow);
-            remindLogForTeacher.TeacherId = courseInfo.TeacherId;
-            remindLogForTeacher.IsLearner = 0;
-            remindLogForTeacher.ProcessFlag = 0;
-            remindLogForTeacher.EmailAt = null;
-            remindLogForTeacher.RemindTitle = "Period Course Change Remind";
-            remindLogForTeacher.ReceivedFlag = 0;
-            remindLogForTeacher.LessonId = null;
-            return remindLogForTeacher;
-        }
-
-        private string MailContentGenerator(string name, dynamic courseInfo, dynamic newCourseInfo, PeriodCourseChangeViewModel inputObj)
-        {
-            string mailContent = "<div><p>Dear " + name + "</p>" + "<p>This is to inform you that the course " + courseInfo.CourseName + " at " + courseInfo.OrgName + " " + courseInfo.RoomName + " from " +
-                getDayOfWeek(courseInfo.DayOfWeek) + " " + courseInfo.BeginTime + " to " + courseInfo.EndTime + " has been changed to " +
-                newCourseInfo.newOrg.OrgName + " " + newCourseInfo.newRoom.RoomName + " from " + inputObj.BeginTime + " to " + inputObj.EndTime +
-                "on " + getDayOfWeek(inputObj.DayOfWeek) + " ";
-            mailContent += inputObj.IsTemporary == 1 ? "for the period between " + inputObj.BeginDate + " to " +
-                inputObj.EndDate + "Temporarily" : "from " + inputObj.BeginDate + "permanently</p>";
-
-            return mailContent;
-        }
-
-        private string getDayOfWeek(int value)
-        {
-            switch (value)
-            {
-                case 1: return "Monday";
-                case 2: return "Tuesday";
-                case 3: return "Wednesday";
-                case 4: return "Thursday";
-                case 5: return "Friday";
-                case 6: return "Saturday";
-                case 7: return "Sunday";
-                default: return ("Day of week not found");
-            }
         }
     }
 }

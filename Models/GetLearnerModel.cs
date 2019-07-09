@@ -29,6 +29,7 @@ namespace Pegasus_backend.Models
         public byte? LearnerLevel { get; set; }
         public byte? PaymentPeriod { get; set; }
         public string Referrer { get; set; }
+        public string Comment { get; set; }
         public string FormUrl { get; set; }
         public string OtherfileUrl { get; set; }
         public List<GetLearnerParentModel> Parent { get; set; }

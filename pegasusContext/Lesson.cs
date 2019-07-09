@@ -7,6 +7,8 @@ namespace Pegasus_backend.pegasusContext
     {
         public Lesson()
         {
+            AwaitMakeUpLessonMissedLesson = new HashSet<AwaitMakeUpLesson>();
+            AwaitMakeUpLessonNewLesson = new HashSet<AwaitMakeUpLesson>();
             LearnerTransaction = new HashSet<LearnerTransaction>();
             RemindLog = new HashSet<RemindLog>();
             TeacherTransaction = new HashSet<TeacherTransaction>();
@@ -39,6 +41,8 @@ namespace Pegasus_backend.pegasusContext
         public Room Room { get; set; }
         public Teacher Teacher { get; set; }
         public Course TrialCourse { get; set; }
+        public ICollection<AwaitMakeUpLesson> AwaitMakeUpLessonMissedLesson { get; set; }
+        public ICollection<AwaitMakeUpLesson> AwaitMakeUpLessonNewLesson { get; set; }
         public ICollection<LearnerTransaction> LearnerTransaction { get; set; }
         public ICollection<RemindLog> RemindLog { get; set; }
         public ICollection<TeacherTransaction> TeacherTransaction { get; set; }

@@ -8,7 +8,7 @@ namespace Pegasus_backend.Models
         public string StudentLevel;
         public string TeacherLevel;
         public string TeacherName;
-        public Time CourseTime;
+        /*public Time CourseTime;*/
         public string Location;
     }
 }

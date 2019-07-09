@@ -1,0 +1,1347 @@
+2019-07-08 19:13:14.686 +12:00 [INF] User profile is available. Using 'C:\Users\Learnspace\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-07-08 19:13:15.756 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
+2019-07-08 19:13:15.815 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-07-08 19:13:16.150 +12:00 [INF] Request finished in 397.2172ms 404 
+2019-07-08 19:13:21.644 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/login  
+2019-07-08 19:13:21.646 +12:00 [INF] Policy execution successful.
+2019-07-08 19:13:21.648 +12:00 [INF] Request finished in 3.7683ms 204 
+2019-07-08 19:13:21.653 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/login application/json 41
+2019-07-08 19:13:21.653 +12:00 [INF] Policy execution successful.
+2019-07-08 19:13:21.691 +12:00 [INF] Route matched with {action = "Login", controller = "Login"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(Pegasus_backend.Models.UsrAndPass) on controller Pegasus_backend.Controllers.Authorization.LoginController (Pegasus_backend).
+2019-07-08 19:13:21.930 +12:00 [INF] Executing action method Pegasus_backend.Controllers.Authorization.LoginController.Login (Pegasus_backend) - Validation state: "Valid"
+2019-07-08 19:13:23.007 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-08 19:13:24.161 +12:00 [INF] Executed DbCommand (42ms) [Parameters=[@__model_UserName_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`user_id`, `s`.`created_at`, `s`.`is_activate`, `s`.`is_online`, `s`.`password`, `s`.`role_id`, `s`.`signature`, `s`.`unread_message_id`, `s`.`user_name`, `s.Role`.`role_id`, `s.Role`.`role_name`
+FROM `ablemusic`.`user` AS `s`
+LEFT JOIN `ablemusic`.`role` AS `s.Role` ON `s`.`role_id` = `s.Role`.`role_id`
+WHERE `s`.`user_name` = @__model_UserName_0
+ORDER BY `s`.`user_id`
+LIMIT 1
+2019-07-08 19:13:24.352 +12:00 [INF] Executed DbCommand (40ms) [Parameters=[@__model_UserName_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.Learner`.`learner_id`, `s.Learner`.`address`, `s.Learner`.`comment`, `s.Learner`.`contact_num`, `s.Learner`.`created_at`, `s.Learner`.`dob`, `s.Learner`.`email`, `s.Learner`.`enroll_date`, `s.Learner`.`first_name`, `s.Learner`.`form_url`, `s.Learner`.`g5_certification`, `s.Learner`.`gender`, `s.Learner`.`is_abrsm_g5`, `s.Learner`.`is_active`, `s.Learner`.`is_under_18`, `s.Learner`.`last_name`, `s.Learner`.`learner_level`, `s.Learner`.`level_type`, `s.Learner`.`middle_name`, `s.Learner`.`note`, `s.Learner`.`org_id`, `s.Learner`.`otherfile_url`, `s.Learner`.`payment_period`, `s.Learner`.`photo`, `s.Learner`.`referrer`, `s.Learner`.`referrer_learner_id`, `s.Learner`.`user_id`
+FROM `ablemusic`.`learner` AS `s.Learner`
+INNER JOIN (
+    SELECT DISTINCT `t`.*
+    FROM (
+        SELECT `s0`.`user_id`
+        FROM `ablemusic`.`user` AS `s0`
+        LEFT JOIN `ablemusic`.`role` AS `s.Role0` ON `s0`.`role_id` = `s.Role0`.`role_id`
+        WHERE `s0`.`user_name` = @__model_UserName_0
+        ORDER BY `s0`.`user_id`
+        LIMIT 1
+    ) AS `t`
+) AS `t0` ON `s.Learner`.`user_id` = `t0`.`user_id`
+ORDER BY `t0`.`user_id`
+2019-07-08 19:13:24.480 +12:00 [INF] Executed DbCommand (35ms) [Parameters=[@__model_UserName_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.Teacher`.`teacher_id`, `s.Teacher`.`ability`, `s.Teacher`.`comment`, `s.Teacher`.`cv_url`, `s.Teacher`.`dob`, `s.Teacher`.`email`, `s.Teacher`.`expiry_date`, `s.Teacher`.`first_name`, `s.Teacher`.`form_url`, `s.Teacher`.`gender`, `s.Teacher`.`home_phone`, `s.Teacher`.`id_number`, `s.Teacher`.`id_photo`, `s.Teacher`.`id_type`, `s.Teacher`.`invoice_template`, `s.Teacher`.`ird_number`, `s.Teacher`.`is_activate`, `s.Teacher`.`is_contract`, `s.Teacher`.`is_left`, `s.Teacher`.`last_name`, `s.Teacher`.`level`, `s.Teacher`.`minimum_hours`, `s.Teacher`.`mobile_phone`, `s.Teacher`.`otherfile_url`, `s.Teacher`.`photo`, `s.Teacher`.`user_id`, `s.Teacher`.`visa`
+FROM `ablemusic`.`teacher` AS `s.Teacher`
+INNER JOIN (
+    SELECT DISTINCT `t1`.*
+    FROM (
+        SELECT `s1`.`user_id`
+        FROM `ablemusic`.`user` AS `s1`
+        LEFT JOIN `ablemusic`.`role` AS `s.Role1` ON `s1`.`role_id` = `s.Role1`.`role_id`
+        WHERE `s1`.`user_name` = @__model_UserName_0
+        ORDER BY `s1`.`user_id`
+        LIMIT 1
+    ) AS `t1`
+) AS `t2` ON `s.Teacher`.`user_id` = `t2`.`user_id`
+ORDER BY `t2`.`user_id`
+2019-07-08 19:13:24.614 +12:00 [INF] Executed DbCommand (34ms) [Parameters=[@__model_UserName_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.Staff`.`staff_id`, `s.Staff`.`dob`, `s.Staff`.`email`, `s.Staff`.`expiry_date`, `s.Staff`.`first_name`, `s.Staff`.`gender`, `s.Staff`.`home_phone`, `s.Staff`.`id_number`, `s.Staff`.`id_photo`, `s.Staff`.`id_type`, `s.Staff`.`ird_number`, `s.Staff`.`is_activate`, `s.Staff`.`last_name`, `s.Staff`.`mobile_phone`, `s.Staff`.`photo`, `s.Staff`.`user_id`, `s.Staff`.`visa`
+FROM `ablemusic`.`staff` AS `s.Staff`
+INNER JOIN (
+    SELECT DISTINCT `t3`.*
+    FROM (
+        SELECT `s2`.`user_id`
+        FROM `ablemusic`.`user` AS `s2`
+        LEFT JOIN `ablemusic`.`role` AS `s.Role2` ON `s2`.`role_id` = `s.Role2`.`role_id`
+        WHERE `s2`.`user_name` = @__model_UserName_0
+        ORDER BY `s2`.`user_id`
+        LIMIT 1
+    ) AS `t3`
+) AS `t4` ON `s.Staff`.`user_id` = `t4`.`user_id`
+ORDER BY `t4`.`user_id`, `s.Staff`.`staff_id`
+2019-07-08 19:13:24.706 +12:00 [INF] Executed DbCommand (34ms) [Parameters=[@__model_UserName_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.Staff.StaffOrg`.`staff_org_id`, `s.Staff.StaffOrg`.`is_activate`, `s.Staff.StaffOrg`.`org_id`, `s.Staff.StaffOrg`.`staff_id`, `s.Org`.`org_id`, `s.Org`.`abbr`, `s.Org`.`address`, `s.Org`.`email`, `s.Org`.`is_activate`, `s.Org`.`is_headoffice`, `s.Org`.`localtion_x`, `s.Org`.`localtion_y`, `s.Org`.`org_name`, `s.Org`.`phone`
+FROM `ablemusic`.`staff_org` AS `s.Staff.StaffOrg`
+LEFT JOIN `ablemusic`.`org` AS `s.Org` ON `s.Staff.StaffOrg`.`org_id` = `s.Org`.`org_id`
+INNER JOIN (
+    SELECT DISTINCT `s.Staff0`.`staff_id`, `t6`.`user_id`
+    FROM `ablemusic`.`staff` AS `s.Staff0`
+    INNER JOIN (
+        SELECT DISTINCT `t5`.*
+        FROM (
+            SELECT `s3`.`user_id`
+            FROM `ablemusic`.`user` AS `s3`
+            LEFT JOIN `ablemusic`.`role` AS `s.Role3` ON `s3`.`role_id` = `s.Role3`.`role_id`
+            WHERE `s3`.`user_name` = @__model_UserName_0
+            ORDER BY `s3`.`user_id`
+            LIMIT 1
+        ) AS `t5`
+    ) AS `t6` ON `s.Staff0`.`user_id` = `t6`.`user_id`
+) AS `t7` ON `s.Staff.StaffOrg`.`staff_id` = `t7`.`staff_id`
+ORDER BY `t7`.`user_id`, `t7`.`staff_id`
+2019-07-08 19:13:24.792 +12:00 [INF] Executed action method Pegasus_backend.Controllers.Authorization.LoginController.Login (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 2853.4904ms.
+2019-07-08 19:13:24.802 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-07-08 19:13:24.837 +12:00 [INF] Executed action Pegasus_backend.Controllers.Authorization.LoginController.Login (Pegasus_backend) in 3143.3613ms
+2019-07-08 19:13:24.839 +12:00 [INF] Request finished in 3186.3775ms 200 application/json; charset=utf-8
+2019-07-08 19:13:24.912 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/page  
+2019-07-08 19:13:24.912 +12:00 [INF] Policy execution successful.
+2019-07-08 19:13:24.917 +12:00 [INF] Route matched with {action = "GetRolePage", controller = "Page"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetRolePage() on controller Pegasus_backend.Controllers.PageController (Pegasus_backend).
+2019-07-08 19:13:24.918 +12:00 [INF] Executing action method Pegasus_backend.Controllers.PageController.GetRolePage (Pegasus_backend) - Validation state: "Valid"
+2019-07-08 19:13:24.926 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-08 19:13:24.953 +12:00 [WRN] The Include operation for navigation '[s].Page' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-07-08 19:13:25.079 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`role_id` AS `RoleId`, `s.Page`.`url`
+FROM `ablemusic`.`role_access` AS `s`
+LEFT JOIN `ablemusic`.`page` AS `s.Page` ON `s`.`page_id` = `s.Page`.`page_id`
+2019-07-08 19:13:25.083 +12:00 [INF] Executed action method Pegasus_backend.Controllers.PageController.GetRolePage (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 164.8547ms.
+2019-07-08 19:13:25.083 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-07-08 19:13:25.086 +12:00 [INF] Executed action Pegasus_backend.Controllers.PageController.GetRolePage (Pegasus_backend) in 169.249ms
+2019-07-08 19:13:25.087 +12:00 [INF] Request finished in 174.8866ms 200 application/json; charset=utf-8
+2019-07-08 19:13:25.112 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Chat/GetStaffChattingList/1  
+2019-07-08 19:13:25.112 +12:00 [INF] Policy execution successful.
+2019-07-08 19:13:25.119 +12:00 [INF] Route matched with {action = "GetStaffChattingList", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetStaffChattingList(Int32) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-07-08 19:13:25.119 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/todolist/3  
+2019-07-08 19:13:25.120 +12:00 [INF] Policy execution successful.
+2019-07-08 19:13:25.121 +12:00 [INF] Request finished in 1.5022ms 204 
+2019-07-08 19:13:25.123 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/dashboard/1  
+2019-07-08 19:13:25.123 +12:00 [INF] Policy execution successful.
+2019-07-08 19:13:25.124 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.GetStaffChattingList (Pegasus_backend) - Validation state: "Valid"
+2019-07-08 19:13:25.127 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/dashboard/1  
+2019-07-08 19:13:25.128 +12:00 [INF] Policy execution successful.
+2019-07-08 19:13:25.130 +12:00 [INF] Route matched with {action = "Get", controller = "Dashboard"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Get(System.String) on controller Pegasus_backend.Controllers.DashboardController (Pegasus_backend).
+2019-07-08 19:13:25.131 +12:00 [INF] Executing action method Pegasus_backend.Controllers.DashboardController.Get (Pegasus_backend) - Validation state: "Valid"
+2019-07-08 19:13:25.138 +12:00 [INF] Route matched with {action = "Get", controller = "Dashboard"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Get(System.String) on controller Pegasus_backend.Controllers.DashboardController (Pegasus_backend).
+2019-07-08 19:13:25.140 +12:00 [INF] Executing action method Pegasus_backend.Controllers.DashboardController.Get (Pegasus_backend) - Validation state: "Valid"
+2019-07-08 19:13:25.140 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-08 19:13:25.148 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-08 19:13:25.148 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-08 19:13:25.165 +12:00 [WRN] The LINQ expression 'where ((([l].BeginTime != null) AndAlso (Convert([l].BeginTime, DateTime).Date == ___today_Date_0)) AndAlso {___orgIds_1 => Contains(Convert([l].OrgId, Int32))})' could not be translated and will be evaluated locally.
+2019-07-08 19:13:25.167 +12:00 [WRN] The LINQ expression 'Contains(Convert([l].OrgId, Int32))' could not be translated and will be evaluated locally.
+2019-07-08 19:13:25.256 +12:00 [INF] Executed DbCommand (31ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`staff_id`, `x`.`dob`, `x`.`email`, `x`.`expiry_date`, `x`.`first_name`, `x`.`gender`, `x`.`home_phone`, `x`.`id_number`, `x`.`id_photo`, `x`.`id_type`, `x`.`ird_number`, `x`.`is_activate`, `x`.`last_name`, `x`.`mobile_phone`, `x`.`photo`, `x`.`user_id`, `x`.`visa`
+FROM `ablemusic`.`staff` AS `x`
+WHERE `x`.`user_id` = @__id_0
+LIMIT 1
+2019-07-08 19:13:25.277 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/images/staff/Photos/2190613092457108.jpg  
+2019-07-08 19:13:25.280 +12:00 [INF] Request finished in 3.3723ms 404 
+2019-07-08 19:13:25.324 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/todolist/3  
+2019-07-08 19:13:25.324 +12:00 [INF] Policy execution successful.
+2019-07-08 19:13:25.333 +12:00 [INF] Successfully validated the token.
+2019-07-08 19:13:25.339 +12:00 [INF] Route matched with {action = "Get", controller = "TodoList"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Get(Int16) on controller Pegasus_backend.Controllers.TodoListController (Pegasus_backend).
+2019-07-08 19:13:25.340 +12:00 [INF] Executing action method Pegasus_backend.Controllers.TodoListController.Get (Pegasus_backend) - Validation state: "Valid"
+2019-07-08 19:13:25.344 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-08 19:13:25.354 +12:00 [WRN] The LINQ expression 'where ([t].TodoDate == Convert(value(Pegasus_backend.Controllers.TodoListController).toNZTimezone(DateTime.UtcNow).Date, Nullable`1))' could not be translated and will be evaluated locally.
+2019-07-08 19:13:25.415 +12:00 [INF] Executed DbCommand (44ms) [Parameters=[@__staffDetial_StaffId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`org_id`
+FROM `ablemusic`.`staff_org` AS `x`
+WHERE `x`.`staff_id` = @__staffDetial_StaffId_0
+LIMIT 1
+2019-07-08 19:13:25.428 +12:00 [WRN] Query: '(from Staff x in DbSet<Staff> where (Nullable<int>)[x].UserId != (Nullable<int>)__id_0 select [x]).T...' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
+2019-07-08 19:13:25.546 +12:00 [INF] Executed DbCommand (42ms) [Parameters=[@__id_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`staff_id`, `x`.`dob`, `x`.`email`, `x`.`expiry_date`, `x`.`first_name`, `x`.`gender`, `x`.`home_phone`, `x`.`id_number`, `x`.`id_photo`, `x`.`id_type`, `x`.`ird_number`, `x`.`is_activate`, `x`.`last_name`, `x`.`mobile_phone`, `x`.`photo`, `x`.`user_id`, `x`.`visa`
+FROM `ablemusic`.`staff` AS `x`
+WHERE (`x`.`user_id` <> @__id_0) OR `x`.`user_id` IS NULL
+LIMIT @__p_1
+2019-07-08 19:13:25.551 +12:00 [WRN] Query: '(from Teacher x in DbSet<Teacher> select new Teacher{ { 
+    TeacherId = [x].TeacherId, , 
+    Fir...' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
+2019-07-08 19:13:25.671 +12:00 [INF] Executed DbCommand (34ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`teacher_id` AS `TeacherId`, `x`.`first_name` AS `FirstName`, `x`.`last_name` AS `LastName`, `x`.`email`
+FROM `ablemusic`.`teacher` AS `x`
+LIMIT @__p_0
+2019-07-08 19:13:25.674 +12:00 [INF] Executed DbCommand (34ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `l`.`lesson_id`, `l`.`begin_time`, `l`.`course_instance_id`, `l`.`created_at`, `l`.`end_time`, `l`.`group_course_instance_id`, `l`.`invoice_id`, `l`.`is_canceled`, `l`.`is_changed`, `l`.`is_confirm`, `l`.`is_trial`, `l`.`learner_id`, `l`.`org_id`, `l`.`reason`, `l`.`room_id`, `l`.`teacher_id`, `l`.`trial_course_id`
+FROM `ablemusic`.`lesson` AS `l`
+WHERE (`l`.`is_canceled` <> 1) OR `l`.`is_canceled` IS NULL
+2019-07-08 19:13:25.693 +12:00 [WRN] Query: '(from Lesson x in DbSet<Lesson> where (Nullable<int>)(int)[x].OrgId == (Nullable<int>)__orgIdOfStaff...' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
+2019-07-08 19:13:25.695 +12:00 [WRN] The Include operation for navigation '[x].Learner' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-07-08 19:13:25.761 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `l`.`lesson_id`, `l`.`begin_time`, `l`.`course_instance_id`, `l`.`created_at`, `l`.`end_time`, `l`.`group_course_instance_id`, `l`.`invoice_id`, `l`.`is_canceled`, `l`.`is_changed`, `l`.`is_confirm`, `l`.`is_trial`, `l`.`learner_id`, `l`.`org_id`, `l`.`reason`, `l`.`room_id`, `l`.`teacher_id`, `l`.`trial_course_id`
+FROM `ablemusic`.`lesson` AS `l`
+WHERE (`l`.`is_canceled` <> 1) OR `l`.`is_canceled` IS NULL
+2019-07-08 19:13:25.856 +12:00 [INF] Executed DbCommand (44ms) [Parameters=[@__orgIdOfStaff_0='?' (DbType = Int16), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x.Learner`.`learner_id`, `x.Learner`.`address`, `x.Learner`.`comment`, `x.Learner`.`contact_num`, `x.Learner`.`created_at`, `x.Learner`.`dob`, `x.Learner`.`email`, `x.Learner`.`enroll_date`, `x.Learner`.`first_name`, `x.Learner`.`form_url`, `x.Learner`.`g5_certification`, `x.Learner`.`gender`, `x.Learner`.`is_abrsm_g5`, `x.Learner`.`is_active`, `x.Learner`.`is_under_18`, `x.Learner`.`last_name`, `x.Learner`.`learner_level`, `x.Learner`.`level_type`, `x.Learner`.`middle_name`, `x.Learner`.`note`, `x.Learner`.`org_id`, `x.Learner`.`otherfile_url`, `x.Learner`.`payment_period`, `x.Learner`.`photo`, `x.Learner`.`referrer`, `x.Learner`.`referrer_learner_id`, `x.Learner`.`user_id`, `x`.`lesson_id` AS `LessonId`, `x`.`learner_id` AS `LearnerId`
+FROM `ablemusic`.`lesson` AS `x`
+LEFT JOIN `ablemusic`.`learner` AS `x.Learner` ON `x`.`learner_id` = `x.Learner`.`learner_id`
+WHERE `x`.`org_id` = @__orgIdOfStaff_0
+LIMIT @__p_1
+2019-07-08 19:13:25.927 +12:00 [WRN] The LINQ expression 'where (((([l].BeginTime != null) AndAlso (Convert([l].BeginTime, DateTime).Date == ___today_Date_0)) AndAlso (Convert([l].IsTrial, Nullable`1) == 1)) AndAlso {___orgIds_1 => Contains(Convert([l].OrgId, Int32))})' could not be translated and will be evaluated locally.
+2019-07-08 19:13:25.927 +12:00 [WRN] The LINQ expression 'Contains(Convert([l].OrgId, Int32))' could not be translated and will be evaluated locally.
+2019-07-08 19:13:25.931 +12:00 [WRN] Query: '(from Learner x in DbSet<Learner> where (Nullable<int>)[x].OrgId == (Nullable<int>)__orgIdOfStaff_0 ...' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
+2019-07-08 19:13:25.941 +12:00 [INF] Executed DbCommand (34ms) [Parameters=[@__userId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `t`.`list_id`, `t`.`created_at`, `t`.`learner_id`, `t`.`lesson_id`, `t`.`list_content`, `t`.`list_name`, `t`.`process_flag`, `t`.`processed_at`, `t`.`teacher_id`, `t`.`todo_date`, `t`.`user_id`
+FROM `ablemusic`.`todo_list` AS `t`
+WHERE `t`.`user_id` = @__userId_0
+2019-07-08 19:13:26.041 +12:00 [INF] Executed DbCommand (34ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `l`.`lesson_id`, `l`.`begin_time`, `l`.`course_instance_id`, `l`.`created_at`, `l`.`end_time`, `l`.`group_course_instance_id`, `l`.`invoice_id`, `l`.`is_canceled`, `l`.`is_changed`, `l`.`is_confirm`, `l`.`is_trial`, `l`.`learner_id`, `l`.`org_id`, `l`.`reason`, `l`.`room_id`, `l`.`teacher_id`, `l`.`trial_course_id`
+FROM `ablemusic`.`lesson` AS `l`
+WHERE (`l`.`is_canceled` <> 1) OR `l`.`is_canceled` IS NULL
+2019-07-08 19:13:26.066 +12:00 [INF] Executed DbCommand (42ms) [Parameters=[@__orgIdOfStaff_0='?' (DbType = Int16), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`learner_id`, `x`.`address`, `x`.`comment`, `x`.`contact_num`, `x`.`created_at`, `x`.`dob`, `x`.`email`, `x`.`enroll_date`, `x`.`first_name`, `x`.`form_url`, `x`.`g5_certification`, `x`.`gender`, `x`.`is_abrsm_g5`, `x`.`is_active`, `x`.`is_under_18`, `x`.`last_name`, `x`.`learner_level`, `x`.`level_type`, `x`.`middle_name`, `x`.`note`, `x`.`org_id`, `x`.`otherfile_url`, `x`.`payment_period`, `x`.`photo`, `x`.`referrer`, `x`.`referrer_learner_id`, `x`.`user_id`
+FROM `ablemusic`.`learner` AS `x`
+WHERE `x`.`org_id` = @__orgIdOfStaff_0
+LIMIT @__p_1
+2019-07-08 19:13:26.068 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.GetStaffChattingList (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 943.452ms.
+2019-07-08 19:13:26.068 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Tuple`4[[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Staff, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Teacher, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Lesson, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Learner, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-07-08 19:13:26.196 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.GetStaffChattingList (Pegasus_backend) in 1076.8221ms
+2019-07-08 19:13:26.196 +12:00 [INF] Request finished in 1084.8997ms 200 application/json; charset=utf-8
+2019-07-08 19:13:26.259 +12:00 [WRN] The LINQ expression 'where (([l].EnrollDate != null) AndAlso (___today_Date_0 == Convert([l].EnrollDate, DateTime).Date))' could not be translated and will be evaluated locally.
+2019-07-08 19:13:26.371 +12:00 [INF] Executed DbCommand (35ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `l`.`learner_id`, `l`.`address`, `l`.`comment`, `l`.`contact_num`, `l`.`created_at`, `l`.`dob`, `l`.`email`, `l`.`enroll_date`, `l`.`first_name`, `l`.`form_url`, `l`.`g5_certification`, `l`.`gender`, `l`.`is_abrsm_g5`, `l`.`is_active`, `l`.`is_under_18`, `l`.`last_name`, `l`.`learner_level`, `l`.`level_type`, `l`.`middle_name`, `l`.`note`, `l`.`org_id`, `l`.`otherfile_url`, `l`.`payment_period`, `l`.`photo`, `l`.`referrer`, `l`.`referrer_learner_id`, `l`.`user_id`
+FROM `ablemusic`.`learner` AS `l`
+WHERE `l`.`org_id` IN (1)
+2019-07-08 19:13:26.469 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `l`.`lesson_id`, `l`.`begin_time`, `l`.`course_instance_id`, `l`.`created_at`, `l`.`end_time`, `l`.`group_course_instance_id`, `l`.`invoice_id`, `l`.`is_canceled`, `l`.`is_changed`, `l`.`is_confirm`, `l`.`is_trial`, `l`.`learner_id`, `l`.`org_id`, `l`.`reason`, `l`.`room_id`, `l`.`teacher_id`, `l`.`trial_course_id`
+FROM `ablemusic`.`lesson` AS `l`
+WHERE (`l`.`is_canceled` <> 1) OR `l`.`is_canceled` IS NULL
+2019-07-08 19:13:26.628 +12:00 [INF] Executed DbCommand (52ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `w`.`waiting_id`, `w`.`begin_date`, `w`.`concert_fee`, `w`.`concert_fee_name`, `w`.`course_instance_id`, `w`.`course_name`, `w`.`created_at`, `w`.`due_date`, `w`.`end_date`, `w`.`group_course_instance_id`, `w`.`invoice_num`, `w`.`is_activate`, `w`.`is_confirmed`, `w`.`is_email_sent`, `w`.`is_paid`, `w`.`learner_id`, `w`.`learner_name`, `w`.`lesson_fee`, `w`.`lesson_note_fee_name`, `w`.`lesson_quantity`, `w`.`note_fee`, `w`.`other1_fee`, `w`.`other1_fee_name`, `w`.`other2_fee`, `w`.`other2_fee_name`, `w`.`other3_fee`, `w`.`other3_fee_name`, `w`.`owing_fee`, `w`.`paid_fee`, `w`.`term_id`, `w`.`total_fee`
+FROM `ablemusic`.`invoice_waiting_confirm` AS `w`
+INNER JOIN `ablemusic`.`learner` AS `l` ON `w`.`learner_id` = `l`.`learner_id`
+WHERE `l`.`org_id` IN (1) AND (`w`.`is_confirmed` = 0)
+2019-07-08 19:13:26.987 +12:00 [WRN] The LINQ expression 'where (Convert([l].BeginTime, DateTime).Date == ___today_Date_1)' could not be translated and will be evaluated locally.
+2019-07-08 19:13:27.022 +12:00 [INF] Executed action method Pegasus_backend.Controllers.TodoListController.Get (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 1682.7228ms.
+2019-07-08 19:13:27.023 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.TodoList, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-07-08 19:13:27.030 +12:00 [INF] Executed action Pegasus_backend.Controllers.TodoListController.Get (Pegasus_backend) in 1691.1899ms
+2019-07-08 19:13:27.030 +12:00 [INF] Request finished in 1706.2093ms 200 application/json; charset=utf-8
+2019-07-08 19:13:27.052 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `l`.`learner_id`, `l`.`address`, `l`.`comment`, `l`.`contact_num`, `l`.`created_at`, `l`.`dob`, `l`.`email`, `l`.`enroll_date`, `l`.`first_name`, `l`.`form_url`, `l`.`g5_certification`, `l`.`gender`, `l`.`is_abrsm_g5`, `l`.`is_active`, `l`.`is_under_18`, `l`.`last_name`, `l`.`learner_level`, `l`.`level_type`, `l`.`middle_name`, `l`.`note`, `l`.`org_id`, `l`.`otherfile_url`, `l`.`payment_period`, `l`.`photo`, `l`.`referrer`, `l`.`referrer_learner_id`, `l`.`user_id`
+FROM `ablemusic`.`learner` AS `l`
+WHERE `l`.`org_id` IN (1)
+2019-07-08 19:13:27.094 +12:00 [INF] Executed DbCommand (37ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `l`.`lesson_id`, `l`.`begin_time`, `l`.`course_instance_id`, `l`.`created_at`, `l`.`end_time`, `l`.`group_course_instance_id`, `l`.`invoice_id`, `l`.`is_canceled`, `l`.`is_changed`, `l`.`is_confirm`, `l`.`is_trial`, `l`.`learner_id`, `l`.`org_id`, `l`.`reason`, `l`.`room_id`, `l`.`teacher_id`, `l`.`trial_course_id`
+FROM `ablemusic`.`lesson` AS `l`
+WHERE (`l`.`begin_time` IS NOT NULL AND (`l`.`is_canceled` = 1)) AND `l`.`org_id` IN (1)
+2019-07-08 19:13:27.175 +12:00 [WRN] The LINQ expression 'where (Convert([l].BeginTime, DateTime).Date == ___today_Date_1)' could not be translated and will be evaluated locally.
+2019-07-08 19:13:27.221 +12:00 [INF] Executed DbCommand (34ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `w`.`waiting_id`, `w`.`begin_date`, `w`.`concert_fee`, `w`.`concert_fee_name`, `w`.`course_instance_id`, `w`.`course_name`, `w`.`created_at`, `w`.`due_date`, `w`.`end_date`, `w`.`group_course_instance_id`, `w`.`invoice_num`, `w`.`is_activate`, `w`.`is_confirmed`, `w`.`is_email_sent`, `w`.`is_paid`, `w`.`learner_id`, `w`.`learner_name`, `w`.`lesson_fee`, `w`.`lesson_note_fee_name`, `w`.`lesson_quantity`, `w`.`note_fee`, `w`.`other1_fee`, `w`.`other1_fee_name`, `w`.`other2_fee`, `w`.`other2_fee_name`, `w`.`other3_fee`, `w`.`other3_fee_name`, `w`.`owing_fee`, `w`.`paid_fee`, `w`.`term_id`, `w`.`total_fee`
+FROM `ablemusic`.`invoice_waiting_confirm` AS `w`
+INNER JOIN `ablemusic`.`learner` AS `l` ON `w`.`learner_id` = `l`.`learner_id`
+WHERE `l`.`org_id` IN (1) AND (`w`.`is_confirmed` = 0)
+2019-07-08 19:13:27.283 +12:00 [INF] Executed DbCommand (38ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `l`.`lesson_id`, `l`.`begin_time`, `l`.`course_instance_id`, `l`.`created_at`, `l`.`end_time`, `l`.`group_course_instance_id`, `l`.`invoice_id`, `l`.`is_canceled`, `l`.`is_changed`, `l`.`is_confirm`, `l`.`is_trial`, `l`.`learner_id`, `l`.`org_id`, `l`.`reason`, `l`.`room_id`, `l`.`teacher_id`, `l`.`trial_course_id`
+FROM `ablemusic`.`lesson` AS `l`
+WHERE ((`l`.`begin_time` IS NOT NULL AND `l`.`org_id` IN (1)) AND ((`l`.`is_canceled` <> 1) OR `l`.`is_canceled` IS NULL)) AND (`l`.`is_changed` = 1)
+2019-07-08 19:13:27.309 +12:00 [WRN] The LINQ expression 'where ((([a].EndDate != null) AndAlso (Convert([a].AmendType, Nullable`1) == 1)) AndAlso (___today_Date_0 == Convert([a].EndDate, DateTime).Date))' could not be translated and will be evaluated locally.
+2019-07-08 19:13:27.414 +12:00 [INF] Executed DbCommand (34ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `a`.`amendment_id`, `a`.`amend_type`, `a`.`begin_date`, `a`.`begin_time`, `a`.`course_instance_id`, `a`.`course_schedule_id`, `a`.`created_at`, `a`.`day_of_week`, `a`.`end_date`, `a`.`end_time`, `a`.`is_temporary`, `a`.`learner_id`, `a`.`org_id`, `a`.`reason`, `a`.`room_id`, `a`.`teacher_id`
+FROM `ablemusic`.`amendment` AS `a`
+WHERE `a`.`org_id` IN (1)
+2019-07-08 19:13:27.459 +12:00 [WRN] The LINQ expression 'where ((([a].EndDate != null) AndAlso (Convert([a].AmendType, Nullable`1) == 2)) AndAlso (___today_Date_0 == Convert([a].EndDate, DateTime).Date))' could not be translated and will be evaluated locally.
+2019-07-08 19:13:27.568 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `a`.`amendment_id`, `a`.`amend_type`, `a`.`begin_date`, `a`.`begin_time`, `a`.`course_instance_id`, `a`.`course_schedule_id`, `a`.`created_at`, `a`.`day_of_week`, `a`.`end_date`, `a`.`end_time`, `a`.`is_temporary`, `a`.`learner_id`, `a`.`org_id`, `a`.`reason`, `a`.`room_id`, `a`.`teacher_id`
+FROM `ablemusic`.`amendment` AS `a`
+WHERE `a`.`org_id` IN (1)
+2019-07-08 19:13:27.652 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `l`.`lesson_id`, `l`.`begin_time`, `l`.`course_instance_id`, `l`.`created_at`, `l`.`end_time`, `l`.`group_course_instance_id`, `l`.`invoice_id`, `l`.`is_canceled`, `l`.`is_changed`, `l`.`is_confirm`, `l`.`is_trial`, `l`.`learner_id`, `l`.`org_id`, `l`.`reason`, `l`.`room_id`, `l`.`teacher_id`, `l`.`trial_course_id`
+FROM `ablemusic`.`lesson` AS `l`
+WHERE (`l`.`begin_time` IS NOT NULL AND (`l`.`is_canceled` = 1)) AND `l`.`org_id` IN (1)
+2019-07-08 19:13:27.676 +12:00 [INF] Executed DbCommand (36ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `l`.`lesson_id`, `l`.`begin_time`, `l`.`course_instance_id`, `l`.`created_at`, `l`.`end_time`, `l`.`group_course_instance_id`, `l`.`invoice_id`, `l`.`is_canceled`, `l`.`is_changed`, `l`.`is_confirm`, `l`.`is_trial`, `l`.`learner_id`, `l`.`org_id`, `l`.`reason`, `l`.`room_id`, `l`.`teacher_id`, `l`.`trial_course_id`
+FROM `ablemusic`.`lesson` AS `l`
+WHERE (`l`.`is_canceled` <> 1) OR `l`.`is_canceled` IS NULL
+2019-07-08 19:13:27.955 +12:00 [INF] Executed DbCommand (149ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `l`.`lesson_id`, `l`.`begin_time`, `l`.`course_instance_id`, `l`.`created_at`, `l`.`end_time`, `l`.`group_course_instance_id`, `l`.`invoice_id`, `l`.`is_canceled`, `l`.`is_changed`, `l`.`is_confirm`, `l`.`is_trial`, `l`.`learner_id`, `l`.`org_id`, `l`.`reason`, `l`.`room_id`, `l`.`teacher_id`, `l`.`trial_course_id`
+FROM `ablemusic`.`lesson` AS `l`
+WHERE ((`l`.`begin_time` IS NOT NULL AND `l`.`org_id` IN (1)) AND ((`l`.`is_canceled` <> 1) OR `l`.`is_canceled` IS NULL)) AND (`l`.`is_changed` = 1)
+2019-07-08 19:13:28.003 +12:00 [INF] Executed action Pegasus_backend.Controllers.DashboardController.Get (Pegasus_backend) in 2873.0692000000004ms
+2019-07-08 19:13:28.006 +12:00 [ERR] An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: Nullable object must have a value.
+   at System.Nullable`1.get_Value()
+   at Pegasus_backend.Services.DashboardService.getLearnerWithRemainLessonsForToday(Int32 numOfRemainLesson) in c:\Users\Learnspace\source\pegasusBackend\Services\DashboardService.cs:line 199
+   at Pegasus_backend.Controllers.DashboardController.Get(String orgIDsStr) in c:\Users\Learnspace\source\pegasusBackend\Controllers\DashboardController.cs:line 45
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at System.Threading.Tasks.ValueTask`1.get_Result()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Cors.Infrastructure.CorsMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2019-07-08 19:13:28.084 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `a`.`amendment_id`, `a`.`amend_type`, `a`.`begin_date`, `a`.`begin_time`, `a`.`course_instance_id`, `a`.`course_schedule_id`, `a`.`created_at`, `a`.`day_of_week`, `a`.`end_date`, `a`.`end_time`, `a`.`is_temporary`, `a`.`learner_id`, `a`.`org_id`, `a`.`reason`, `a`.`room_id`, `a`.`teacher_id`
+FROM `ablemusic`.`amendment` AS `a`
+WHERE `a`.`org_id` IN (1)
+2019-07-08 19:13:28.093 +12:00 [INF] Request finished in 2970.3614ms 500 text/html; charset=utf-8
+2019-07-08 19:13:28.180 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `a`.`amendment_id`, `a`.`amend_type`, `a`.`begin_date`, `a`.`begin_time`, `a`.`course_instance_id`, `a`.`course_schedule_id`, `a`.`created_at`, `a`.`day_of_week`, `a`.`end_date`, `a`.`end_time`, `a`.`is_temporary`, `a`.`learner_id`, `a`.`org_id`, `a`.`reason`, `a`.`room_id`, `a`.`teacher_id`
+FROM `ablemusic`.`amendment` AS `a`
+WHERE `a`.`org_id` IN (1)
+2019-07-08 19:13:28.280 +12:00 [INF] Executed DbCommand (34ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `l`.`lesson_id`, `l`.`begin_time`, `l`.`course_instance_id`, `l`.`created_at`, `l`.`end_time`, `l`.`group_course_instance_id`, `l`.`invoice_id`, `l`.`is_canceled`, `l`.`is_changed`, `l`.`is_confirm`, `l`.`is_trial`, `l`.`learner_id`, `l`.`org_id`, `l`.`reason`, `l`.`room_id`, `l`.`teacher_id`, `l`.`trial_course_id`
+FROM `ablemusic`.`lesson` AS `l`
+WHERE (`l`.`is_canceled` <> 1) OR `l`.`is_canceled` IS NULL
+2019-07-08 19:13:28.488 +12:00 [INF] Executed action Pegasus_backend.Controllers.DashboardController.Get (Pegasus_backend) in 3350.1482ms
+2019-07-08 19:13:28.490 +12:00 [ERR] An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: Nullable object must have a value.
+   at System.Nullable`1.get_Value()
+   at Pegasus_backend.Services.DashboardService.getLearnerWithRemainLessonsForToday(Int32 numOfRemainLesson) in c:\Users\Learnspace\source\pegasusBackend\Services\DashboardService.cs:line 199
+   at Pegasus_backend.Controllers.DashboardController.Get(String orgIDsStr) in c:\Users\Learnspace\source\pegasusBackend\Controllers\DashboardController.cs:line 45
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at System.Threading.Tasks.ValueTask`1.get_Result()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Cors.Infrastructure.CorsMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2019-07-08 19:13:28.504 +12:00 [INF] Request finished in 3376.5444ms 500 text/html; charset=utf-8
+2019-07-08 19:15:48.956 +12:00 [INF] User profile is available. Using 'C:\Users\Learnspace\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-07-08 19:15:49.828 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
+2019-07-08 19:15:49.861 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-07-08 19:15:50.062 +12:00 [INF] Request finished in 235.1224ms 404 
+2019-07-08 19:15:59.568 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/login  
+2019-07-08 19:15:59.569 +12:00 [INF] Policy execution successful.
+2019-07-08 19:15:59.571 +12:00 [INF] Request finished in 3.4125ms 204 
+2019-07-08 19:15:59.577 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/login application/json 41
+2019-07-08 19:15:59.577 +12:00 [INF] Policy execution successful.
+2019-07-08 19:15:59.617 +12:00 [INF] Route matched with {action = "Login", controller = "Login"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(Pegasus_backend.Models.UsrAndPass) on controller Pegasus_backend.Controllers.Authorization.LoginController (Pegasus_backend).
+2019-07-08 19:15:59.857 +12:00 [INF] Executing action method Pegasus_backend.Controllers.Authorization.LoginController.Login (Pegasus_backend) - Validation state: "Valid"
+2019-07-08 19:16:00.925 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-08 19:16:01.972 +12:00 [INF] Executed DbCommand (37ms) [Parameters=[@__model_UserName_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`user_id`, `s`.`created_at`, `s`.`is_activate`, `s`.`is_online`, `s`.`password`, `s`.`role_id`, `s`.`signature`, `s`.`unread_message_id`, `s`.`user_name`, `s.Role`.`role_id`, `s.Role`.`role_name`
+FROM `ablemusic`.`user` AS `s`
+LEFT JOIN `ablemusic`.`role` AS `s.Role` ON `s`.`role_id` = `s.Role`.`role_id`
+WHERE `s`.`user_name` = @__model_UserName_0
+ORDER BY `s`.`user_id`
+LIMIT 1
+2019-07-08 19:16:02.123 +12:00 [INF] Executed DbCommand (30ms) [Parameters=[@__model_UserName_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.Learner`.`learner_id`, `s.Learner`.`address`, `s.Learner`.`comment`, `s.Learner`.`contact_num`, `s.Learner`.`created_at`, `s.Learner`.`dob`, `s.Learner`.`email`, `s.Learner`.`enroll_date`, `s.Learner`.`first_name`, `s.Learner`.`form_url`, `s.Learner`.`g5_certification`, `s.Learner`.`gender`, `s.Learner`.`is_abrsm_g5`, `s.Learner`.`is_active`, `s.Learner`.`is_under_18`, `s.Learner`.`last_name`, `s.Learner`.`learner_level`, `s.Learner`.`level_type`, `s.Learner`.`middle_name`, `s.Learner`.`note`, `s.Learner`.`org_id`, `s.Learner`.`otherfile_url`, `s.Learner`.`payment_period`, `s.Learner`.`photo`, `s.Learner`.`referrer`, `s.Learner`.`referrer_learner_id`, `s.Learner`.`user_id`
+FROM `ablemusic`.`learner` AS `s.Learner`
+INNER JOIN (
+    SELECT DISTINCT `t`.*
+    FROM (
+        SELECT `s0`.`user_id`
+        FROM `ablemusic`.`user` AS `s0`
+        LEFT JOIN `ablemusic`.`role` AS `s.Role0` ON `s0`.`role_id` = `s.Role0`.`role_id`
+        WHERE `s0`.`user_name` = @__model_UserName_0
+        ORDER BY `s0`.`user_id`
+        LIMIT 1
+    ) AS `t`
+) AS `t0` ON `s.Learner`.`user_id` = `t0`.`user_id`
+ORDER BY `t0`.`user_id`
+2019-07-08 19:16:02.243 +12:00 [INF] Executed DbCommand (36ms) [Parameters=[@__model_UserName_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.Teacher`.`teacher_id`, `s.Teacher`.`ability`, `s.Teacher`.`comment`, `s.Teacher`.`cv_url`, `s.Teacher`.`dob`, `s.Teacher`.`email`, `s.Teacher`.`expiry_date`, `s.Teacher`.`first_name`, `s.Teacher`.`form_url`, `s.Teacher`.`gender`, `s.Teacher`.`home_phone`, `s.Teacher`.`id_number`, `s.Teacher`.`id_photo`, `s.Teacher`.`id_type`, `s.Teacher`.`invoice_template`, `s.Teacher`.`ird_number`, `s.Teacher`.`is_activate`, `s.Teacher`.`is_contract`, `s.Teacher`.`is_left`, `s.Teacher`.`last_name`, `s.Teacher`.`level`, `s.Teacher`.`minimum_hours`, `s.Teacher`.`mobile_phone`, `s.Teacher`.`otherfile_url`, `s.Teacher`.`photo`, `s.Teacher`.`user_id`, `s.Teacher`.`visa`
+FROM `ablemusic`.`teacher` AS `s.Teacher`
+INNER JOIN (
+    SELECT DISTINCT `t1`.*
+    FROM (
+        SELECT `s1`.`user_id`
+        FROM `ablemusic`.`user` AS `s1`
+        LEFT JOIN `ablemusic`.`role` AS `s.Role1` ON `s1`.`role_id` = `s.Role1`.`role_id`
+        WHERE `s1`.`user_name` = @__model_UserName_0
+        ORDER BY `s1`.`user_id`
+        LIMIT 1
+    ) AS `t1`
+) AS `t2` ON `s.Teacher`.`user_id` = `t2`.`user_id`
+ORDER BY `t2`.`user_id`
+2019-07-08 19:16:02.364 +12:00 [INF] Executed DbCommand (34ms) [Parameters=[@__model_UserName_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.Staff`.`staff_id`, `s.Staff`.`dob`, `s.Staff`.`email`, `s.Staff`.`expiry_date`, `s.Staff`.`first_name`, `s.Staff`.`gender`, `s.Staff`.`home_phone`, `s.Staff`.`id_number`, `s.Staff`.`id_photo`, `s.Staff`.`id_type`, `s.Staff`.`ird_number`, `s.Staff`.`is_activate`, `s.Staff`.`last_name`, `s.Staff`.`mobile_phone`, `s.Staff`.`photo`, `s.Staff`.`user_id`, `s.Staff`.`visa`
+FROM `ablemusic`.`staff` AS `s.Staff`
+INNER JOIN (
+    SELECT DISTINCT `t3`.*
+    FROM (
+        SELECT `s2`.`user_id`
+        FROM `ablemusic`.`user` AS `s2`
+        LEFT JOIN `ablemusic`.`role` AS `s.Role2` ON `s2`.`role_id` = `s.Role2`.`role_id`
+        WHERE `s2`.`user_name` = @__model_UserName_0
+        ORDER BY `s2`.`user_id`
+        LIMIT 1
+    ) AS `t3`
+) AS `t4` ON `s.Staff`.`user_id` = `t4`.`user_id`
+ORDER BY `t4`.`user_id`, `s.Staff`.`staff_id`
+2019-07-08 19:16:02.446 +12:00 [INF] Executed DbCommand (30ms) [Parameters=[@__model_UserName_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.Staff.StaffOrg`.`staff_org_id`, `s.Staff.StaffOrg`.`is_activate`, `s.Staff.StaffOrg`.`org_id`, `s.Staff.StaffOrg`.`staff_id`, `s.Org`.`org_id`, `s.Org`.`abbr`, `s.Org`.`address`, `s.Org`.`email`, `s.Org`.`is_activate`, `s.Org`.`is_headoffice`, `s.Org`.`localtion_x`, `s.Org`.`localtion_y`, `s.Org`.`org_name`, `s.Org`.`phone`
+FROM `ablemusic`.`staff_org` AS `s.Staff.StaffOrg`
+LEFT JOIN `ablemusic`.`org` AS `s.Org` ON `s.Staff.StaffOrg`.`org_id` = `s.Org`.`org_id`
+INNER JOIN (
+    SELECT DISTINCT `s.Staff0`.`staff_id`, `t6`.`user_id`
+    FROM `ablemusic`.`staff` AS `s.Staff0`
+    INNER JOIN (
+        SELECT DISTINCT `t5`.*
+        FROM (
+            SELECT `s3`.`user_id`
+            FROM `ablemusic`.`user` AS `s3`
+            LEFT JOIN `ablemusic`.`role` AS `s.Role3` ON `s3`.`role_id` = `s.Role3`.`role_id`
+            WHERE `s3`.`user_name` = @__model_UserName_0
+            ORDER BY `s3`.`user_id`
+            LIMIT 1
+        ) AS `t5`
+    ) AS `t6` ON `s.Staff0`.`user_id` = `t6`.`user_id`
+) AS `t7` ON `s.Staff.StaffOrg`.`staff_id` = `t7`.`staff_id`
+ORDER BY `t7`.`user_id`, `t7`.`staff_id`
+2019-07-08 19:16:02.511 +12:00 [INF] Executed action method Pegasus_backend.Controllers.Authorization.LoginController.Login (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 2645.4385ms.
+2019-07-08 19:16:02.520 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-07-08 19:16:02.546 +12:00 [INF] Executed action Pegasus_backend.Controllers.Authorization.LoginController.Login (Pegasus_backend) in 2926.0413000000003ms
+2019-07-08 19:16:02.548 +12:00 [INF] Request finished in 2971.0041ms 200 application/json; charset=utf-8
+2019-07-08 19:16:02.551 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/page  
+2019-07-08 19:16:02.552 +12:00 [INF] Policy execution successful.
+2019-07-08 19:16:02.558 +12:00 [INF] Route matched with {action = "GetRolePage", controller = "Page"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetRolePage() on controller Pegasus_backend.Controllers.PageController (Pegasus_backend).
+2019-07-08 19:16:02.559 +12:00 [INF] Executing action method Pegasus_backend.Controllers.PageController.GetRolePage (Pegasus_backend) - Validation state: "Valid"
+2019-07-08 19:16:02.564 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-08 19:16:02.577 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/todolist/3  
+2019-07-08 19:16:02.578 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/dashboard/1  
+2019-07-08 19:16:02.579 +12:00 [INF] Policy execution successful.
+2019-07-08 19:16:02.579 +12:00 [INF] Policy execution successful.
+2019-07-08 19:16:02.579 +12:00 [INF] Request finished in 2.591ms 204 
+2019-07-08 19:16:02.580 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/dashboard/1  
+2019-07-08 19:16:02.580 +12:00 [INF] Policy execution successful.
+2019-07-08 19:16:02.583 +12:00 [WRN] The Include operation for navigation '[s].Page' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-07-08 19:16:02.586 +12:00 [INF] Route matched with {action = "Get", controller = "Dashboard"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Get(System.String) on controller Pegasus_backend.Controllers.DashboardController (Pegasus_backend).
+2019-07-08 19:16:02.587 +12:00 [INF] Route matched with {action = "Get", controller = "Dashboard"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Get(System.String) on controller Pegasus_backend.Controllers.DashboardController (Pegasus_backend).
+2019-07-08 19:16:02.595 +12:00 [INF] Executing action method Pegasus_backend.Controllers.DashboardController.Get (Pegasus_backend) - Validation state: "Valid"
+2019-07-08 19:16:02.599 +12:00 [INF] Executing action method Pegasus_backend.Controllers.DashboardController.Get (Pegasus_backend) - Validation state: "Valid"
+2019-07-08 19:16:02.614 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-08 19:16:02.614 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-08 19:16:02.632 +12:00 [WRN] The LINQ expression 'where ((([l].BeginTime != null) AndAlso (Convert([l].BeginTime, DateTime).Date == ___today_Date_0)) AndAlso {___orgIds_1 => Contains(Convert([l].OrgId, Int32))})' could not be translated and will be evaluated locally.
+2019-07-08 19:16:02.634 +12:00 [WRN] The LINQ expression 'Contains(Convert([l].OrgId, Int32))' could not be translated and will be evaluated locally.
+2019-07-08 19:16:02.652 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/images/staff/Photos/2190613092457108.jpg  
+2019-07-08 19:16:02.654 +12:00 [INF] Request finished in 2.1963ms 404 
+2019-07-08 19:16:02.682 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/todolist/3  
+2019-07-08 19:16:02.682 +12:00 [INF] Policy execution successful.
+2019-07-08 19:16:02.691 +12:00 [INF] Successfully validated the token.
+2019-07-08 19:16:02.696 +12:00 [INF] Route matched with {action = "Get", controller = "TodoList"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Get(Int16) on controller Pegasus_backend.Controllers.TodoListController (Pegasus_backend).
+2019-07-08 19:16:02.697 +12:00 [INF] Executing action method Pegasus_backend.Controllers.TodoListController.Get (Pegasus_backend) - Validation state: "Valid"
+2019-07-08 19:16:02.700 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-08 19:16:02.708 +12:00 [WRN] The LINQ expression 'where ([t].TodoDate == Convert(value(Pegasus_backend.Controllers.TodoListController).toNZTimezone(DateTime.UtcNow).Date, Nullable`1))' could not be translated and will be evaluated locally.
+2019-07-08 19:16:02.718 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`role_id` AS `RoleId`, `s.Page`.`url`
+FROM `ablemusic`.`role_access` AS `s`
+LEFT JOIN `ablemusic`.`page` AS `s.Page` ON `s`.`page_id` = `s.Page`.`page_id`
+2019-07-08 19:16:02.721 +12:00 [INF] Executed action method Pegasus_backend.Controllers.PageController.GetRolePage (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 161.98350000000002ms.
+2019-07-08 19:16:02.722 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-07-08 19:16:02.726 +12:00 [INF] Executed action Pegasus_backend.Controllers.PageController.GetRolePage (Pegasus_backend) in 167.5937ms
+2019-07-08 19:16:02.726 +12:00 [INF] Request finished in 175.1406ms 200 application/json; charset=utf-8
+2019-07-08 19:16:03.184 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `l`.`lesson_id`, `l`.`begin_time`, `l`.`course_instance_id`, `l`.`created_at`, `l`.`end_time`, `l`.`group_course_instance_id`, `l`.`invoice_id`, `l`.`is_canceled`, `l`.`is_changed`, `l`.`is_confirm`, `l`.`is_trial`, `l`.`learner_id`, `l`.`org_id`, `l`.`reason`, `l`.`room_id`, `l`.`teacher_id`, `l`.`trial_course_id`
+FROM `ablemusic`.`lesson` AS `l`
+WHERE (`l`.`is_canceled` <> 1) OR `l`.`is_canceled` IS NULL
+2019-07-08 19:16:03.212 +12:00 [INF] Executed DbCommand (42ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `l`.`lesson_id`, `l`.`begin_time`, `l`.`course_instance_id`, `l`.`created_at`, `l`.`end_time`, `l`.`group_course_instance_id`, `l`.`invoice_id`, `l`.`is_canceled`, `l`.`is_changed`, `l`.`is_confirm`, `l`.`is_trial`, `l`.`learner_id`, `l`.`org_id`, `l`.`reason`, `l`.`room_id`, `l`.`teacher_id`, `l`.`trial_course_id`
+FROM `ablemusic`.`lesson` AS `l`
+WHERE (`l`.`is_canceled` <> 1) OR `l`.`is_canceled` IS NULL
+2019-07-08 19:16:03.220 +12:00 [INF] Executed DbCommand (37ms) [Parameters=[@__userId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `t`.`list_id`, `t`.`created_at`, `t`.`learner_id`, `t`.`lesson_id`, `t`.`list_content`, `t`.`list_name`, `t`.`process_flag`, `t`.`processed_at`, `t`.`teacher_id`, `t`.`todo_date`, `t`.`user_id`
+FROM `ablemusic`.`todo_list` AS `t`
+WHERE `t`.`user_id` = @__userId_0
+2019-07-08 19:16:03.397 +12:00 [WRN] The LINQ expression 'where (((([l].BeginTime != null) AndAlso (Convert([l].BeginTime, DateTime).Date == ___today_Date_0)) AndAlso (Convert([l].IsTrial, Nullable`1) == 1)) AndAlso {___orgIds_1 => Contains(Convert([l].OrgId, Int32))})' could not be translated and will be evaluated locally.
+2019-07-08 19:16:03.398 +12:00 [WRN] The LINQ expression 'Contains(Convert([l].OrgId, Int32))' could not be translated and will be evaluated locally.
+2019-07-08 19:16:03.510 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `l`.`lesson_id`, `l`.`begin_time`, `l`.`course_instance_id`, `l`.`created_at`, `l`.`end_time`, `l`.`group_course_instance_id`, `l`.`invoice_id`, `l`.`is_canceled`, `l`.`is_changed`, `l`.`is_confirm`, `l`.`is_trial`, `l`.`learner_id`, `l`.`org_id`, `l`.`reason`, `l`.`room_id`, `l`.`teacher_id`, `l`.`trial_course_id`
+FROM `ablemusic`.`lesson` AS `l`
+WHERE (`l`.`is_canceled` <> 1) OR `l`.`is_canceled` IS NULL
+2019-07-08 19:16:03.570 +12:00 [INF] Executed DbCommand (36ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `l`.`lesson_id`, `l`.`begin_time`, `l`.`course_instance_id`, `l`.`created_at`, `l`.`end_time`, `l`.`group_course_instance_id`, `l`.`invoice_id`, `l`.`is_canceled`, `l`.`is_changed`, `l`.`is_confirm`, `l`.`is_trial`, `l`.`learner_id`, `l`.`org_id`, `l`.`reason`, `l`.`room_id`, `l`.`teacher_id`, `l`.`trial_course_id`
+FROM `ablemusic`.`lesson` AS `l`
+WHERE (`l`.`is_canceled` <> 1) OR `l`.`is_canceled` IS NULL
+2019-07-08 19:16:03.785 +12:00 [WRN] The LINQ expression 'where (([l].EnrollDate != null) AndAlso (___today_Date_0 == Convert([l].EnrollDate, DateTime).Date))' could not be translated and will be evaluated locally.
+2019-07-08 19:16:03.899 +12:00 [INF] Executed DbCommand (40ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `l`.`learner_id`, `l`.`address`, `l`.`comment`, `l`.`contact_num`, `l`.`created_at`, `l`.`dob`, `l`.`email`, `l`.`enroll_date`, `l`.`first_name`, `l`.`form_url`, `l`.`g5_certification`, `l`.`gender`, `l`.`is_abrsm_g5`, `l`.`is_active`, `l`.`is_under_18`, `l`.`last_name`, `l`.`learner_level`, `l`.`level_type`, `l`.`middle_name`, `l`.`note`, `l`.`org_id`, `l`.`otherfile_url`, `l`.`payment_period`, `l`.`photo`, `l`.`referrer`, `l`.`referrer_learner_id`, `l`.`user_id`
+FROM `ablemusic`.`learner` AS `l`
+WHERE `l`.`org_id` IN (1)
+2019-07-08 19:16:03.937 +12:00 [INF] Executed DbCommand (38ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `l`.`learner_id`, `l`.`address`, `l`.`comment`, `l`.`contact_num`, `l`.`created_at`, `l`.`dob`, `l`.`email`, `l`.`enroll_date`, `l`.`first_name`, `l`.`form_url`, `l`.`g5_certification`, `l`.`gender`, `l`.`is_abrsm_g5`, `l`.`is_active`, `l`.`is_under_18`, `l`.`last_name`, `l`.`learner_level`, `l`.`level_type`, `l`.`middle_name`, `l`.`note`, `l`.`org_id`, `l`.`otherfile_url`, `l`.`payment_period`, `l`.`photo`, `l`.`referrer`, `l`.`referrer_learner_id`, `l`.`user_id`
+FROM `ablemusic`.`learner` AS `l`
+WHERE `l`.`org_id` IN (1)
+2019-07-08 19:16:04.109 +12:00 [INF] Executed action method Pegasus_backend.Controllers.TodoListController.Get (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 1412.5949ms.
+2019-07-08 19:16:04.110 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.TodoList, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-07-08 19:16:04.114 +12:00 [INF] Executed action Pegasus_backend.Controllers.TodoListController.Get (Pegasus_backend) in 1418.3676ms
+2019-07-08 19:16:04.114 +12:00 [INF] Request finished in 1432.6326ms 200 application/json; charset=utf-8
+2019-07-08 19:16:04.216 +12:00 [INF] Executed DbCommand (38ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `w`.`waiting_id`, `w`.`begin_date`, `w`.`comment`, `w`.`concert_fee`, `w`.`concert_fee_name`, `w`.`course_instance_id`, `w`.`course_name`, `w`.`created_at`, `w`.`due_date`, `w`.`end_date`, `w`.`group_course_instance_id`, `w`.`invoice_num`, `w`.`is_activate`, `w`.`is_confirmed`, `w`.`is_email_sent`, `w`.`is_paid`, `w`.`learner_id`, `w`.`learner_name`, `w`.`lesson_fee`, `w`.`lesson_note_fee_name`, `w`.`lesson_quantity`, `w`.`note_fee`, `w`.`other1_fee`, `w`.`other1_fee_name`, `w`.`other2_fee`, `w`.`other2_fee_name`, `w`.`other3_fee`, `w`.`other3_fee_name`, `w`.`owing_fee`, `w`.`paid_fee`, `w`.`term_id`, `w`.`total_fee`
+FROM `ablemusic`.`invoice_waiting_confirm` AS `w`
+INNER JOIN `ablemusic`.`learner` AS `l` ON `w`.`learner_id` = `l`.`learner_id`
+WHERE `l`.`org_id` IN (1) AND (`w`.`is_confirmed` = 0)
+2019-07-08 19:16:04.225 +12:00 [INF] Executed DbCommand (47ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `w`.`waiting_id`, `w`.`begin_date`, `w`.`comment`, `w`.`concert_fee`, `w`.`concert_fee_name`, `w`.`course_instance_id`, `w`.`course_name`, `w`.`created_at`, `w`.`due_date`, `w`.`end_date`, `w`.`group_course_instance_id`, `w`.`invoice_num`, `w`.`is_activate`, `w`.`is_confirmed`, `w`.`is_email_sent`, `w`.`is_paid`, `w`.`learner_id`, `w`.`learner_name`, `w`.`lesson_fee`, `w`.`lesson_note_fee_name`, `w`.`lesson_quantity`, `w`.`note_fee`, `w`.`other1_fee`, `w`.`other1_fee_name`, `w`.`other2_fee`, `w`.`other2_fee_name`, `w`.`other3_fee`, `w`.`other3_fee_name`, `w`.`owing_fee`, `w`.`paid_fee`, `w`.`term_id`, `w`.`total_fee`
+FROM `ablemusic`.`invoice_waiting_confirm` AS `w`
+INNER JOIN `ablemusic`.`learner` AS `l` ON `w`.`learner_id` = `l`.`learner_id`
+WHERE `l`.`org_id` IN (1) AND (`w`.`is_confirmed` = 0)
+2019-07-08 19:16:04.832 +12:00 [WRN] The LINQ expression 'where (Convert([l].BeginTime, DateTime).Date == ___today_Date_1)' could not be translated and will be evaluated locally.
+2019-07-08 19:16:04.935 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `l`.`lesson_id`, `l`.`begin_time`, `l`.`course_instance_id`, `l`.`created_at`, `l`.`end_time`, `l`.`group_course_instance_id`, `l`.`invoice_id`, `l`.`is_canceled`, `l`.`is_changed`, `l`.`is_confirm`, `l`.`is_trial`, `l`.`learner_id`, `l`.`org_id`, `l`.`reason`, `l`.`room_id`, `l`.`teacher_id`, `l`.`trial_course_id`
+FROM `ablemusic`.`lesson` AS `l`
+WHERE (`l`.`begin_time` IS NOT NULL AND (`l`.`is_canceled` = 1)) AND `l`.`org_id` IN (1)
+2019-07-08 19:16:04.935 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `l`.`lesson_id`, `l`.`begin_time`, `l`.`course_instance_id`, `l`.`created_at`, `l`.`end_time`, `l`.`group_course_instance_id`, `l`.`invoice_id`, `l`.`is_canceled`, `l`.`is_changed`, `l`.`is_confirm`, `l`.`is_trial`, `l`.`learner_id`, `l`.`org_id`, `l`.`reason`, `l`.`room_id`, `l`.`teacher_id`, `l`.`trial_course_id`
+FROM `ablemusic`.`lesson` AS `l`
+WHERE (`l`.`begin_time` IS NOT NULL AND (`l`.`is_canceled` = 1)) AND `l`.`org_id` IN (1)
+2019-07-08 19:16:05.059 +12:00 [WRN] The LINQ expression 'where (Convert([l].BeginTime, DateTime).Date == ___today_Date_1)' could not be translated and will be evaluated locally.
+2019-07-08 19:16:05.165 +12:00 [INF] Executed DbCommand (35ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `l`.`lesson_id`, `l`.`begin_time`, `l`.`course_instance_id`, `l`.`created_at`, `l`.`end_time`, `l`.`group_course_instance_id`, `l`.`invoice_id`, `l`.`is_canceled`, `l`.`is_changed`, `l`.`is_confirm`, `l`.`is_trial`, `l`.`learner_id`, `l`.`org_id`, `l`.`reason`, `l`.`room_id`, `l`.`teacher_id`, `l`.`trial_course_id`
+FROM `ablemusic`.`lesson` AS `l`
+WHERE ((`l`.`begin_time` IS NOT NULL AND `l`.`org_id` IN (1)) AND ((`l`.`is_canceled` <> 1) OR `l`.`is_canceled` IS NULL)) AND (`l`.`is_changed` = 1)
+2019-07-08 19:16:05.165 +12:00 [INF] Executed DbCommand (35ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `l`.`lesson_id`, `l`.`begin_time`, `l`.`course_instance_id`, `l`.`created_at`, `l`.`end_time`, `l`.`group_course_instance_id`, `l`.`invoice_id`, `l`.`is_canceled`, `l`.`is_changed`, `l`.`is_confirm`, `l`.`is_trial`, `l`.`learner_id`, `l`.`org_id`, `l`.`reason`, `l`.`room_id`, `l`.`teacher_id`, `l`.`trial_course_id`
+FROM `ablemusic`.`lesson` AS `l`
+WHERE ((`l`.`begin_time` IS NOT NULL AND `l`.`org_id` IN (1)) AND ((`l`.`is_canceled` <> 1) OR `l`.`is_canceled` IS NULL)) AND (`l`.`is_changed` = 1)
+2019-07-08 19:16:05.186 +12:00 [WRN] The LINQ expression 'where ((([a].EndDate != null) AndAlso (Convert([a].AmendType, Nullable`1) == 1)) AndAlso (___today_Date_0 == Convert([a].EndDate, DateTime).Date))' could not be translated and will be evaluated locally.
+2019-07-08 19:16:05.295 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `a`.`amendment_id`, `a`.`amend_type`, `a`.`begin_date`, `a`.`begin_time`, `a`.`course_instance_id`, `a`.`course_schedule_id`, `a`.`created_at`, `a`.`day_of_week`, `a`.`end_date`, `a`.`end_time`, `a`.`is_temporary`, `a`.`learner_id`, `a`.`org_id`, `a`.`reason`, `a`.`room_id`, `a`.`teacher_id`
+FROM `ablemusic`.`amendment` AS `a`
+WHERE `a`.`org_id` IN (1)
+2019-07-08 19:16:05.295 +12:00 [INF] Executed DbCommand (34ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `a`.`amendment_id`, `a`.`amend_type`, `a`.`begin_date`, `a`.`begin_time`, `a`.`course_instance_id`, `a`.`course_schedule_id`, `a`.`created_at`, `a`.`day_of_week`, `a`.`end_date`, `a`.`end_time`, `a`.`is_temporary`, `a`.`learner_id`, `a`.`org_id`, `a`.`reason`, `a`.`room_id`, `a`.`teacher_id`
+FROM `ablemusic`.`amendment` AS `a`
+WHERE `a`.`org_id` IN (1)
+2019-07-08 19:16:05.330 +12:00 [WRN] The LINQ expression 'where ((([a].EndDate != null) AndAlso (Convert([a].AmendType, Nullable`1) == 2)) AndAlso (___today_Date_0 == Convert([a].EndDate, DateTime).Date))' could not be translated and will be evaluated locally.
+2019-07-08 19:16:05.458 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `a`.`amendment_id`, `a`.`amend_type`, `a`.`begin_date`, `a`.`begin_time`, `a`.`course_instance_id`, `a`.`course_schedule_id`, `a`.`created_at`, `a`.`day_of_week`, `a`.`end_date`, `a`.`end_time`, `a`.`is_temporary`, `a`.`learner_id`, `a`.`org_id`, `a`.`reason`, `a`.`room_id`, `a`.`teacher_id`
+FROM `ablemusic`.`amendment` AS `a`
+WHERE `a`.`org_id` IN (1)
+2019-07-08 19:16:05.459 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `a`.`amendment_id`, `a`.`amend_type`, `a`.`begin_date`, `a`.`begin_time`, `a`.`course_instance_id`, `a`.`course_schedule_id`, `a`.`created_at`, `a`.`day_of_week`, `a`.`end_date`, `a`.`end_time`, `a`.`is_temporary`, `a`.`learner_id`, `a`.`org_id`, `a`.`reason`, `a`.`room_id`, `a`.`teacher_id`
+FROM `ablemusic`.`amendment` AS `a`
+WHERE `a`.`org_id` IN (1)
+2019-07-08 19:16:05.576 +12:00 [INF] Executed DbCommand (50ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `l`.`lesson_id`, `l`.`begin_time`, `l`.`course_instance_id`, `l`.`created_at`, `l`.`end_time`, `l`.`group_course_instance_id`, `l`.`invoice_id`, `l`.`is_canceled`, `l`.`is_changed`, `l`.`is_confirm`, `l`.`is_trial`, `l`.`learner_id`, `l`.`org_id`, `l`.`reason`, `l`.`room_id`, `l`.`teacher_id`, `l`.`trial_course_id`
+FROM `ablemusic`.`lesson` AS `l`
+WHERE (`l`.`is_canceled` <> 1) OR `l`.`is_canceled` IS NULL
+2019-07-08 19:16:05.583 +12:00 [INF] Executed DbCommand (58ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `l`.`lesson_id`, `l`.`begin_time`, `l`.`course_instance_id`, `l`.`created_at`, `l`.`end_time`, `l`.`group_course_instance_id`, `l`.`invoice_id`, `l`.`is_canceled`, `l`.`is_changed`, `l`.`is_confirm`, `l`.`is_trial`, `l`.`learner_id`, `l`.`org_id`, `l`.`reason`, `l`.`room_id`, `l`.`teacher_id`, `l`.`trial_course_id`
+FROM `ablemusic`.`lesson` AS `l`
+WHERE (`l`.`is_canceled` <> 1) OR `l`.`is_canceled` IS NULL
+2019-07-08 19:16:06.003 +12:00 [INF] Executed action Pegasus_backend.Controllers.DashboardController.Get (Pegasus_backend) in 3416.5809000000004ms
+2019-07-08 19:16:06.110 +12:00 [ERR] An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: Nullable object must have a value.
+   at System.Nullable`1.get_Value()
+   at Pegasus_backend.Services.DashboardService.getLearnerWithRemainLessonsForToday(Int32 numOfRemainLesson) in c:\Users\Learnspace\source\pegasusBackend\Services\DashboardService.cs:line 199
+   at Pegasus_backend.Controllers.DashboardController.Get(String orgIDsStr) in c:\Users\Learnspace\source\pegasusBackend\Controllers\DashboardController.cs:line 45
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at System.Threading.Tasks.ValueTask`1.get_Result()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Cors.Infrastructure.CorsMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2019-07-08 19:16:06.110 +12:00 [INF] Executed action Pegasus_backend.Controllers.DashboardController.Get (Pegasus_backend) in 3523.4076ms
+2019-07-08 19:16:06.169 +12:00 [ERR] An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: Nullable object must have a value.
+   at System.Nullable`1.get_Value()
+   at Pegasus_backend.Services.DashboardService.getLearnerWithRemainLessonsForToday(Int32 numOfRemainLesson) in c:\Users\Learnspace\source\pegasusBackend\Services\DashboardService.cs:line 199
+   at Pegasus_backend.Controllers.DashboardController.Get(String orgIDsStr) in c:\Users\Learnspace\source\pegasusBackend\Controllers\DashboardController.cs:line 45
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at System.Threading.Tasks.ValueTask`1.get_Result()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Cors.Infrastructure.CorsMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2019-07-08 19:16:06.205 +12:00 [INF] Request finished in 3625.6052ms 500 text/html; charset=utf-8
+2019-07-08 19:16:06.205 +12:00 [INF] Request finished in 3626.992ms 500 text/html; charset=utf-8
+2019-07-08 19:16:14.354 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/lookups  
+2019-07-08 19:16:14.354 +12:00 [INF] Policy execution successful.
+2019-07-08 19:16:14.354 +12:00 [INF] Request finished in 0.4143ms 204 
+2019-07-08 19:16:14.356 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/navitems  
+2019-07-08 19:16:14.356 +12:00 [INF] Policy execution successful.
+2019-07-08 19:16:14.356 +12:00 [INF] Request finished in 0.3852ms 204 
+2019-07-08 19:16:14.393 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/todolist/3  
+2019-07-08 19:16:14.394 +12:00 [INF] Policy execution successful.
+2019-07-08 19:16:14.394 +12:00 [INF] Request finished in 0.4678ms 204 
+2019-07-08 19:16:14.395 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/dashboard/1  
+2019-07-08 19:16:14.396 +12:00 [INF] Policy execution successful.
+2019-07-08 19:16:14.396 +12:00 [INF] Route matched with {action = "Get", controller = "Dashboard"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Get(System.String) on controller Pegasus_backend.Controllers.DashboardController (Pegasus_backend).
+2019-07-08 19:16:14.397 +12:00 [INF] Executing action method Pegasus_backend.Controllers.DashboardController.Get (Pegasus_backend) - Validation state: "Valid"
+2019-07-08 19:16:14.397 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/dashboard/1  
+2019-07-08 19:16:14.397 +12:00 [INF] Policy execution successful.
+2019-07-08 19:16:14.397 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-08 19:16:14.397 +12:00 [INF] Route matched with {action = "Get", controller = "Dashboard"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Get(System.String) on controller Pegasus_backend.Controllers.DashboardController (Pegasus_backend).
+2019-07-08 19:16:14.398 +12:00 [INF] Executing action method Pegasus_backend.Controllers.DashboardController.Get (Pegasus_backend) - Validation state: "Valid"
+2019-07-08 19:16:14.399 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-08 19:16:14.488 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/images/staff/Photos/2190613092457108.jpg  
+2019-07-08 19:16:14.489 +12:00 [INF] Request finished in 0.7026ms 404 
+2019-07-08 19:16:14.494 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `l`.`lesson_id`, `l`.`begin_time`, `l`.`course_instance_id`, `l`.`created_at`, `l`.`end_time`, `l`.`group_course_instance_id`, `l`.`invoice_id`, `l`.`is_canceled`, `l`.`is_changed`, `l`.`is_confirm`, `l`.`is_trial`, `l`.`learner_id`, `l`.`org_id`, `l`.`reason`, `l`.`room_id`, `l`.`teacher_id`, `l`.`trial_course_id`
+FROM `ablemusic`.`lesson` AS `l`
+WHERE (`l`.`is_canceled` <> 1) OR `l`.`is_canceled` IS NULL
+2019-07-08 19:16:14.506 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `l`.`lesson_id`, `l`.`begin_time`, `l`.`course_instance_id`, `l`.`created_at`, `l`.`end_time`, `l`.`group_course_instance_id`, `l`.`invoice_id`, `l`.`is_canceled`, `l`.`is_changed`, `l`.`is_confirm`, `l`.`is_trial`, `l`.`learner_id`, `l`.`org_id`, `l`.`reason`, `l`.`room_id`, `l`.`teacher_id`, `l`.`trial_course_id`
+FROM `ablemusic`.`lesson` AS `l`
+WHERE (`l`.`is_canceled` <> 1) OR `l`.`is_canceled` IS NULL
+2019-07-08 19:16:14.766 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `l`.`lesson_id`, `l`.`begin_time`, `l`.`course_instance_id`, `l`.`created_at`, `l`.`end_time`, `l`.`group_course_instance_id`, `l`.`invoice_id`, `l`.`is_canceled`, `l`.`is_changed`, `l`.`is_confirm`, `l`.`is_trial`, `l`.`learner_id`, `l`.`org_id`, `l`.`reason`, `l`.`room_id`, `l`.`teacher_id`, `l`.`trial_course_id`
+FROM `ablemusic`.`lesson` AS `l`
+WHERE (`l`.`is_canceled` <> 1) OR `l`.`is_canceled` IS NULL
+2019-07-08 19:16:14.803 +12:00 [INF] Executed DbCommand (34ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `l`.`lesson_id`, `l`.`begin_time`, `l`.`course_instance_id`, `l`.`created_at`, `l`.`end_time`, `l`.`group_course_instance_id`, `l`.`invoice_id`, `l`.`is_canceled`, `l`.`is_changed`, `l`.`is_confirm`, `l`.`is_trial`, `l`.`learner_id`, `l`.`org_id`, `l`.`reason`, `l`.`room_id`, `l`.`teacher_id`, `l`.`trial_course_id`
+FROM `ablemusic`.`lesson` AS `l`
+WHERE (`l`.`is_canceled` <> 1) OR `l`.`is_canceled` IS NULL
+2019-07-08 19:16:15.058 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `l`.`learner_id`, `l`.`address`, `l`.`comment`, `l`.`contact_num`, `l`.`created_at`, `l`.`dob`, `l`.`email`, `l`.`enroll_date`, `l`.`first_name`, `l`.`form_url`, `l`.`g5_certification`, `l`.`gender`, `l`.`is_abrsm_g5`, `l`.`is_active`, `l`.`is_under_18`, `l`.`last_name`, `l`.`learner_level`, `l`.`level_type`, `l`.`middle_name`, `l`.`note`, `l`.`org_id`, `l`.`otherfile_url`, `l`.`payment_period`, `l`.`photo`, `l`.`referrer`, `l`.`referrer_learner_id`, `l`.`user_id`
+FROM `ablemusic`.`learner` AS `l`
+WHERE `l`.`org_id` IN (1)
+2019-07-08 19:16:15.080 +12:00 [INF] Executed DbCommand (42ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `l`.`learner_id`, `l`.`address`, `l`.`comment`, `l`.`contact_num`, `l`.`created_at`, `l`.`dob`, `l`.`email`, `l`.`enroll_date`, `l`.`first_name`, `l`.`form_url`, `l`.`g5_certification`, `l`.`gender`, `l`.`is_abrsm_g5`, `l`.`is_active`, `l`.`is_under_18`, `l`.`last_name`, `l`.`learner_level`, `l`.`level_type`, `l`.`middle_name`, `l`.`note`, `l`.`org_id`, `l`.`otherfile_url`, `l`.`payment_period`, `l`.`photo`, `l`.`referrer`, `l`.`referrer_learner_id`, `l`.`user_id`
+FROM `ablemusic`.`learner` AS `l`
+WHERE `l`.`org_id` IN (1)
+2019-07-08 19:16:15.087 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/lookups  
+2019-07-08 19:16:15.088 +12:00 [INF] Policy execution successful.
+2019-07-08 19:16:15.089 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/navitems  
+2019-07-08 19:16:15.089 +12:00 [INF] Successfully validated the token.
+2019-07-08 19:16:15.089 +12:00 [INF] Policy execution successful.
+2019-07-08 19:16:15.090 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/todolist/3  
+2019-07-08 19:16:15.090 +12:00 [INF] Policy execution successful.
+2019-07-08 19:16:15.090 +12:00 [INF] Successfully validated the token.
+2019-07-08 19:16:15.090 +12:00 [INF] Successfully validated the token.
+2019-07-08 19:16:15.090 +12:00 [INF] Route matched with {action = "Get", controller = "TodoList"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Get(Int16) on controller Pegasus_backend.Controllers.TodoListController (Pegasus_backend).
+2019-07-08 19:16:15.091 +12:00 [INF] Executing action method Pegasus_backend.Controllers.TodoListController.Get (Pegasus_backend) - Validation state: "Valid"
+2019-07-08 19:16:15.092 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-08 19:16:15.096 +12:00 [INF] Route matched with {action = "GetNavItems", controller = "NavItems"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetNavItems() on controller Pegasus_backend.Controllers.NavItemsController (Pegasus_backend).
+2019-07-08 19:16:15.097 +12:00 [INF] Route matched with {action = "GetLookups", controller = "Lookups"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetLookups() on controller Pegasus_backend.Controllers.LookupsController (Pegasus_backend).
+2019-07-08 19:16:15.097 +12:00 [WRN] The LINQ expression 'where ([t].TodoDate == Convert(value(Pegasus_backend.Controllers.TodoListController).toNZTimezone(DateTime.UtcNow).Date, Nullable`1))' could not be translated and will be evaluated locally.
+2019-07-08 19:16:15.098 +12:00 [INF] Executing action method Pegasus_backend.Controllers.LookupsController.GetLookups (Pegasus_backend) - Validation state: "Valid"
+2019-07-08 19:16:15.101 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-08 19:16:15.115 +12:00 [INF] Authorization was successful.
+2019-07-08 19:16:15.116 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NavItemsController.GetNavItems (Pegasus_backend) - Validation state: "Valid"
+2019-07-08 19:16:15.121 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-08 19:16:15.218 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `l`.`lookup_id`, `l`.`description`, `l`.`lookup_type`, `l`.`prop_name`, `l`.`prop_value`
+FROM `ablemusic`.`lookup` AS `l`
+2019-07-08 19:16:15.218 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[@__userId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `t`.`list_id`, `t`.`created_at`, `t`.`learner_id`, `t`.`lesson_id`, `t`.`list_content`, `t`.`list_name`, `t`.`process_flag`, `t`.`processed_at`, `t`.`teacher_id`, `t`.`todo_date`, `t`.`user_id`
+FROM `ablemusic`.`todo_list` AS `t`
+WHERE `t`.`user_id` = @__userId_0
+2019-07-08 19:16:15.230 +12:00 [INF] Executed action method Pegasus_backend.Controllers.LookupsController.GetLookups (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 132.3321ms.
+2019-07-08 19:16:15.230 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Lookup, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-07-08 19:16:15.240 +12:00 [INF] Executed action Pegasus_backend.Controllers.LookupsController.GetLookups (Pegasus_backend) in 142.9435ms
+2019-07-08 19:16:15.240 +12:00 [INF] Request finished in 152.7094ms 200 application/json; charset=utf-8
+2019-07-08 19:16:15.255 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `w`.`waiting_id`, `w`.`begin_date`, `w`.`comment`, `w`.`concert_fee`, `w`.`concert_fee_name`, `w`.`course_instance_id`, `w`.`course_name`, `w`.`created_at`, `w`.`due_date`, `w`.`end_date`, `w`.`group_course_instance_id`, `w`.`invoice_num`, `w`.`is_activate`, `w`.`is_confirmed`, `w`.`is_email_sent`, `w`.`is_paid`, `w`.`learner_id`, `w`.`learner_name`, `w`.`lesson_fee`, `w`.`lesson_note_fee_name`, `w`.`lesson_quantity`, `w`.`note_fee`, `w`.`other1_fee`, `w`.`other1_fee_name`, `w`.`other2_fee`, `w`.`other2_fee_name`, `w`.`other3_fee`, `w`.`other3_fee_name`, `w`.`owing_fee`, `w`.`paid_fee`, `w`.`term_id`, `w`.`total_fee`
+FROM `ablemusic`.`invoice_waiting_confirm` AS `w`
+INNER JOIN `ablemusic`.`learner` AS `l` ON `w`.`learner_id` = `l`.`learner_id`
+WHERE `l`.`org_id` IN (1) AND (`w`.`is_confirmed` = 0)
+2019-07-08 19:16:15.263 +12:00 [INF] Executed DbCommand (36ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `w`.`waiting_id`, `w`.`begin_date`, `w`.`comment`, `w`.`concert_fee`, `w`.`concert_fee_name`, `w`.`course_instance_id`, `w`.`course_name`, `w`.`created_at`, `w`.`due_date`, `w`.`end_date`, `w`.`group_course_instance_id`, `w`.`invoice_num`, `w`.`is_activate`, `w`.`is_confirmed`, `w`.`is_email_sent`, `w`.`is_paid`, `w`.`learner_id`, `w`.`learner_name`, `w`.`lesson_fee`, `w`.`lesson_note_fee_name`, `w`.`lesson_quantity`, `w`.`note_fee`, `w`.`other1_fee`, `w`.`other1_fee_name`, `w`.`other2_fee`, `w`.`other2_fee_name`, `w`.`other3_fee`, `w`.`other3_fee_name`, `w`.`owing_fee`, `w`.`paid_fee`, `w`.`term_id`, `w`.`total_fee`
+FROM `ablemusic`.`invoice_waiting_confirm` AS `w`
+INNER JOIN `ablemusic`.`learner` AS `l` ON `w`.`learner_id` = `l`.`learner_id`
+WHERE `l`.`org_id` IN (1) AND (`w`.`is_confirmed` = 0)
+2019-07-08 19:16:16.347 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `l`.`lesson_id`, `l`.`begin_time`, `l`.`course_instance_id`, `l`.`created_at`, `l`.`end_time`, `l`.`group_course_instance_id`, `l`.`invoice_id`, `l`.`is_canceled`, `l`.`is_changed`, `l`.`is_confirm`, `l`.`is_trial`, `l`.`learner_id`, `l`.`org_id`, `l`.`reason`, `l`.`room_id`, `l`.`teacher_id`, `l`.`trial_course_id`
+FROM `ablemusic`.`lesson` AS `l`
+WHERE (`l`.`begin_time` IS NOT NULL AND (`l`.`is_canceled` = 1)) AND `l`.`org_id` IN (1)
+2019-07-08 19:16:16.347 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `l`.`lesson_id`, `l`.`begin_time`, `l`.`course_instance_id`, `l`.`created_at`, `l`.`end_time`, `l`.`group_course_instance_id`, `l`.`invoice_id`, `l`.`is_canceled`, `l`.`is_changed`, `l`.`is_confirm`, `l`.`is_trial`, `l`.`learner_id`, `l`.`org_id`, `l`.`reason`, `l`.`room_id`, `l`.`teacher_id`, `l`.`trial_course_id`
+FROM `ablemusic`.`lesson` AS `l`
+WHERE (`l`.`begin_time` IS NOT NULL AND (`l`.`is_canceled` = 1)) AND `l`.`org_id` IN (1)
+2019-07-08 19:16:16.350 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[@__userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`user_id`, `s`.`created_at`, `s`.`is_activate`, `s`.`is_online`, `s`.`password`, `s`.`role_id`, `s`.`signature`, `s`.`unread_message_id`, `s`.`user_name`
+FROM `ablemusic`.`user` AS `s`
+WHERE `s`.`user_id` = @__userId_0
+LIMIT 1
+2019-07-08 19:16:16.494 +12:00 [INF] Executed DbCommand (40ms) [Parameters=[@__roleId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`page_id`
+FROM `ablemusic`.`role_access` AS `s`
+WHERE `s`.`role_id` = @__roleId_0
+2019-07-08 19:16:16.595 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `l`.`lesson_id`, `l`.`begin_time`, `l`.`course_instance_id`, `l`.`created_at`, `l`.`end_time`, `l`.`group_course_instance_id`, `l`.`invoice_id`, `l`.`is_canceled`, `l`.`is_changed`, `l`.`is_confirm`, `l`.`is_trial`, `l`.`learner_id`, `l`.`org_id`, `l`.`reason`, `l`.`room_id`, `l`.`teacher_id`, `l`.`trial_course_id`
+FROM `ablemusic`.`lesson` AS `l`
+WHERE ((`l`.`begin_time` IS NOT NULL AND `l`.`org_id` IN (1)) AND ((`l`.`is_canceled` <> 1) OR `l`.`is_canceled` IS NULL)) AND (`l`.`is_changed` = 1)
+2019-07-08 19:16:16.611 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `l`.`lesson_id`, `l`.`begin_time`, `l`.`course_instance_id`, `l`.`created_at`, `l`.`end_time`, `l`.`group_course_instance_id`, `l`.`invoice_id`, `l`.`is_canceled`, `l`.`is_changed`, `l`.`is_confirm`, `l`.`is_trial`, `l`.`learner_id`, `l`.`org_id`, `l`.`reason`, `l`.`room_id`, `l`.`teacher_id`, `l`.`trial_course_id`
+FROM `ablemusic`.`lesson` AS `l`
+WHERE ((`l`.`begin_time` IS NOT NULL AND `l`.`org_id` IN (1)) AND ((`l`.`is_canceled` <> 1) OR `l`.`is_canceled` IS NULL)) AND (`l`.`is_changed` = 1)
+2019-07-08 19:16:16.614 +12:00 [INF] Executed DbCommand (30ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`page_group_id`, `s`.`display_order`, `s`.`icon`, `s`.`page_group_name`
+FROM `ablemusic`.`page_group` AS `s`
+ORDER BY `s`.`page_group_id`
+2019-07-08 19:16:16.662 +12:00 [INF] Executed DbCommand (31ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.Page`.`page_id`, `s.Page`.`display_order`, `s.Page`.`icon`, `s.Page`.`is_activate`, `s.Page`.`page_group_id`, `s.Page`.`page_name`, `s.Page`.`para`, `s.Page`.`para_flag`, `s.Page`.`url`
+FROM `ablemusic`.`page` AS `s.Page`
+INNER JOIN (
+    SELECT `s0`.`page_group_id`
+    FROM `ablemusic`.`page_group` AS `s0`
+) AS `t` ON `s.Page`.`page_group_id` = `t`.`page_group_id`
+ORDER BY `t`.`page_group_id`
+2019-07-08 19:16:16.687 +12:00 [INF] Executed action method Pegasus_backend.Controllers.NavItemsController.GetNavItems (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 1570.8700000000001ms.
+2019-07-08 19:16:16.687 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-07-08 19:16:16.690 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `a`.`amendment_id`, `a`.`amend_type`, `a`.`begin_date`, `a`.`begin_time`, `a`.`course_instance_id`, `a`.`course_schedule_id`, `a`.`created_at`, `a`.`day_of_week`, `a`.`end_date`, `a`.`end_time`, `a`.`is_temporary`, `a`.`learner_id`, `a`.`org_id`, `a`.`reason`, `a`.`room_id`, `a`.`teacher_id`
+FROM `ablemusic`.`amendment` AS `a`
+WHERE `a`.`org_id` IN (1)
+2019-07-08 19:16:16.697 +12:00 [INF] Executed action Pegasus_backend.Controllers.NavItemsController.GetNavItems (Pegasus_backend) in 1600.722ms
+2019-07-08 19:16:16.697 +12:00 [INF] Request finished in 1608.2744ms 200 application/json; charset=utf-8
+2019-07-08 19:16:16.715 +12:00 [INF] Executed DbCommand (41ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `a`.`amendment_id`, `a`.`amend_type`, `a`.`begin_date`, `a`.`begin_time`, `a`.`course_instance_id`, `a`.`course_schedule_id`, `a`.`created_at`, `a`.`day_of_week`, `a`.`end_date`, `a`.`end_time`, `a`.`is_temporary`, `a`.`learner_id`, `a`.`org_id`, `a`.`reason`, `a`.`room_id`, `a`.`teacher_id`
+FROM `ablemusic`.`amendment` AS `a`
+WHERE `a`.`org_id` IN (1)
+2019-07-08 19:16:16.786 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `a`.`amendment_id`, `a`.`amend_type`, `a`.`begin_date`, `a`.`begin_time`, `a`.`course_instance_id`, `a`.`course_schedule_id`, `a`.`created_at`, `a`.`day_of_week`, `a`.`end_date`, `a`.`end_time`, `a`.`is_temporary`, `a`.`learner_id`, `a`.`org_id`, `a`.`reason`, `a`.`room_id`, `a`.`teacher_id`
+FROM `ablemusic`.`amendment` AS `a`
+WHERE `a`.`org_id` IN (1)
+2019-07-08 19:16:16.811 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `a`.`amendment_id`, `a`.`amend_type`, `a`.`begin_date`, `a`.`begin_time`, `a`.`course_instance_id`, `a`.`course_schedule_id`, `a`.`created_at`, `a`.`day_of_week`, `a`.`end_date`, `a`.`end_time`, `a`.`is_temporary`, `a`.`learner_id`, `a`.`org_id`, `a`.`reason`, `a`.`room_id`, `a`.`teacher_id`
+FROM `ablemusic`.`amendment` AS `a`
+WHERE `a`.`org_id` IN (1)
+2019-07-08 19:16:16.811 +12:00 [INF] Executed action method Pegasus_backend.Controllers.TodoListController.Get (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 1720.2738000000002ms.
+2019-07-08 19:16:16.812 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.TodoList, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-07-08 19:16:16.812 +12:00 [INF] Executed action Pegasus_backend.Controllers.TodoListController.Get (Pegasus_backend) in 1721.3955ms
+2019-07-08 19:16:16.812 +12:00 [INF] Request finished in 1722.4445ms 200 application/json; charset=utf-8
+2019-07-08 19:16:16.882 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `l`.`lesson_id`, `l`.`begin_time`, `l`.`course_instance_id`, `l`.`created_at`, `l`.`end_time`, `l`.`group_course_instance_id`, `l`.`invoice_id`, `l`.`is_canceled`, `l`.`is_changed`, `l`.`is_confirm`, `l`.`is_trial`, `l`.`learner_id`, `l`.`org_id`, `l`.`reason`, `l`.`room_id`, `l`.`teacher_id`, `l`.`trial_course_id`
+FROM `ablemusic`.`lesson` AS `l`
+WHERE (`l`.`is_canceled` <> 1) OR `l`.`is_canceled` IS NULL
+2019-07-08 19:16:16.906 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `l`.`lesson_id`, `l`.`begin_time`, `l`.`course_instance_id`, `l`.`created_at`, `l`.`end_time`, `l`.`group_course_instance_id`, `l`.`invoice_id`, `l`.`is_canceled`, `l`.`is_changed`, `l`.`is_confirm`, `l`.`is_trial`, `l`.`learner_id`, `l`.`org_id`, `l`.`reason`, `l`.`room_id`, `l`.`teacher_id`, `l`.`trial_course_id`
+FROM `ablemusic`.`lesson` AS `l`
+WHERE (`l`.`is_canceled` <> 1) OR `l`.`is_canceled` IS NULL
+2019-07-08 19:16:17.300 +12:00 [INF] Executed action Pegasus_backend.Controllers.DashboardController.Get (Pegasus_backend) in 2904.1763ms
+2019-07-08 19:16:17.302 +12:00 [INF] Executed action Pegasus_backend.Controllers.DashboardController.Get (Pegasus_backend) in 2904.5513ms
+2019-07-08 19:16:17.303 +12:00 [ERR] An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: Nullable object must have a value.
+   at System.Nullable`1.get_Value()
+   at Pegasus_backend.Services.DashboardService.getLearnerWithRemainLessonsForToday(Int32 numOfRemainLesson) in c:\Users\Learnspace\source\pegasusBackend\Services\DashboardService.cs:line 199
+   at Pegasus_backend.Controllers.DashboardController.Get(String orgIDsStr) in c:\Users\Learnspace\source\pegasusBackend\Controllers\DashboardController.cs:line 45
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at System.Threading.Tasks.ValueTask`1.get_Result()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Cors.Infrastructure.CorsMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2019-07-08 19:16:17.304 +12:00 [ERR] An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: Nullable object must have a value.
+   at System.Nullable`1.get_Value()
+   at Pegasus_backend.Services.DashboardService.getLearnerWithRemainLessonsForToday(Int32 numOfRemainLesson) in c:\Users\Learnspace\source\pegasusBackend\Services\DashboardService.cs:line 199
+   at Pegasus_backend.Controllers.DashboardController.Get(String orgIDsStr) in c:\Users\Learnspace\source\pegasusBackend\Controllers\DashboardController.cs:line 45
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at System.Threading.Tasks.ValueTask`1.get_Result()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Cors.Infrastructure.CorsMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2019-07-08 19:16:17.318 +12:00 [INF] Request finished in 2922.8627ms 500 text/html; charset=utf-8
+2019-07-08 19:16:17.323 +12:00 [INF] Request finished in 2926.0751ms 500 text/html; charset=utf-8
+2019-07-08 19:20:52.572 +12:00 [INF] User profile is available. Using 'C:\Users\Learnspace\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-07-08 19:20:53.502 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
+2019-07-08 19:20:53.537 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-07-08 19:20:53.740 +12:00 [INF] Request finished in 239.3064ms 404 
+2019-07-08 19:20:57.564 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/InvoiceWaitingConfirms/3  
+2019-07-08 19:20:57.565 +12:00 [INF] Policy execution successful.
+2019-07-08 19:20:57.567 +12:00 [INF] Request finished in 2.4323ms 404 
+2019-07-08 19:21:08.865 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/lookups/14  
+2019-07-08 19:21:08.866 +12:00 [INF] Policy execution successful.
+2019-07-08 19:21:08.867 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Payment/PaymentByDate/2/2019-7-1/2019-7-8  
+2019-07-08 19:21:08.867 +12:00 [INF] Policy execution successful.
+2019-07-08 19:21:08.868 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/lookups/7  
+2019-07-08 19:21:08.868 +12:00 [INF] Policy execution successful.
+2019-07-08 19:21:08.910 +12:00 [INF] Route matched with {action = "PaymentByDate", controller = "Payment"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] PaymentByDate(Int16, System.DateTime, System.DateTime) on controller Pegasus_backend.Controllers.PaymentController (Pegasus_backend).
+2019-07-08 19:21:08.910 +12:00 [INF] Route matched with {action = "GetLookup", controller = "Lookups"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetLookup(Int32) on controller Pegasus_backend.Controllers.LookupsController (Pegasus_backend).
+2019-07-08 19:21:08.910 +12:00 [INF] Route matched with {action = "GetLookup", controller = "Lookups"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetLookup(Int32) on controller Pegasus_backend.Controllers.LookupsController (Pegasus_backend).
+2019-07-08 19:21:09.158 +12:00 [INF] Executing action method Pegasus_backend.Controllers.LookupsController.GetLookup (Pegasus_backend) - Validation state: "Valid"
+2019-07-08 19:21:09.158 +12:00 [INF] Executing action method Pegasus_backend.Controllers.LookupsController.GetLookup (Pegasus_backend) - Validation state: "Valid"
+2019-07-08 19:21:09.645 +12:00 [INF] Executing action method Pegasus_backend.Controllers.PaymentController.PaymentByDate (Pegasus_backend) - Validation state: "Valid"
+2019-07-08 19:21:10.347 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-08 19:21:10.347 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-08 19:21:10.347 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-08 19:21:11.546 +12:00 [INF] Executed DbCommand (41ms) [Parameters=[@__type_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `l`.`lookup_id`, `l`.`description`, `l`.`lookup_type`, `l`.`prop_name`, `l`.`prop_value`
+FROM `ablemusic`.`lookup` AS `l`
+WHERE `l`.`lookup_type` = @__type_0
+2019-07-08 19:21:11.546 +12:00 [INF] Executed DbCommand (37ms) [Parameters=[@__type_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `l`.`lookup_id`, `l`.`description`, `l`.`lookup_type`, `l`.`prop_name`, `l`.`prop_value`
+FROM `ablemusic`.`lookup` AS `l`
+WHERE `l`.`lookup_type` = @__type_0
+2019-07-08 19:21:11.546 +12:00 [INF] Executed DbCommand (41ms) [Parameters=[@__8__locals1_staffId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `o`.`org_id`
+FROM `ablemusic`.`staff_org` AS `o`
+WHERE `o`.`staff_id` = @__8__locals1_staffId_0
+2019-07-08 19:21:11.591 +12:00 [WRN] Query: '(from StaffOrg <generated>_1 in [d].Staff.StaffOrg select [<generated>_1].OrgId).FirstOrDefault()' uses First/FirstOrDefault/Last/LastOrDefault operation without OrderBy and filter which may lead to unpredictable results.
+2019-07-08 19:21:11.592 +12:00 [WRN] Query: '(from StaffOrg <generated>_1 in [d].Staff.StaffOrg select [<generated>_1].OrgId).FirstOrDefault()' uses First/FirstOrDefault/Last/LastOrDefault operation without OrderBy and filter which may lead to unpredictable results.
+2019-07-08 19:21:11.606 +12:00 [INF] Executed action method Pegasus_backend.Controllers.LookupsController.GetLookup (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 2438.3899ms.
+2019-07-08 19:21:11.606 +12:00 [INF] Executed action method Pegasus_backend.Controllers.LookupsController.GetLookup (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 2438.3758000000003ms.
+2019-07-08 19:21:11.615 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Lookup, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-07-08 19:21:11.615 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Lookup, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-07-08 19:21:11.695 +12:00 [INF] Executed action Pegasus_backend.Controllers.LookupsController.GetLookup (Pegasus_backend) in 2780.6906000000004ms
+2019-07-08 19:21:11.695 +12:00 [INF] Executed action Pegasus_backend.Controllers.LookupsController.GetLookup (Pegasus_backend) in 2780.6538ms
+2019-07-08 19:21:11.697 +12:00 [INF] Request finished in 2831.5672ms 200 application/json; charset=utf-8
+2019-07-08 19:21:11.697 +12:00 [INF] Request finished in 2828.9663ms 200 application/json; charset=utf-8
+2019-07-08 19:21:11.916 +12:00 [INF] Executed DbCommand (63ms) [Parameters=[@__8__locals1_beginDate_0='?' (DbType = DateTime), @__8__locals1_endDate_1='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+SELECT `d`.`payment_id`, `d`.`after_balance`, `d`.`amount`, `d`.`before_balance`, `d`.`comment`, `d`.`created_at`, `d`.`invoice_id`, `d`.`is_confirmed`, `d`.`learner_id`, `d`.`payment_method`, `d`.`payment_type`, `d`.`staff_id`, `d.Learner`.`learner_id`, `d.Learner`.`address`, `d.Learner`.`comment`, `d.Learner`.`contact_num`, `d.Learner`.`created_at`, `d.Learner`.`dob`, `d.Learner`.`email`, `d.Learner`.`enroll_date`, `d.Learner`.`first_name`, `d.Learner`.`form_url`, `d.Learner`.`g5_certification`, `d.Learner`.`gender`, `d.Learner`.`is_abrsm_g5`, `d.Learner`.`is_active`, `d.Learner`.`is_under_18`, `d.Learner`.`last_name`, `d.Learner`.`learner_level`, `d.Learner`.`level_type`, `d.Learner`.`middle_name`, `d.Learner`.`note`, `d.Learner`.`org_id`, `d.Learner`.`otherfile_url`, `d.Learner`.`payment_period`, `d.Learner`.`photo`, `d.Learner`.`referrer`, `d.Learner`.`referrer_learner_id`, `d.Learner`.`user_id`, `d.Invoice`.`invoice_id`, `d.Invoice`.`begin_date`, `d.Invoice`.`comment`, `d.Invoice`.`concert_fee`, `d.Invoice`.`concert_fee_name`, `d.Invoice`.`course_instance_id`, `d.Invoice`.`course_name`, `d.Invoice`.`created_at`, `d.Invoice`.`due_date`, `d.Invoice`.`end_date`, `d.Invoice`.`group_course_instance_id`, `d.Invoice`.`invoice_num`, `d.Invoice`.`is_active`, `d.Invoice`.`is_paid`, `d.Invoice`.`learner_id`, `d.Invoice`.`learner_name`, `d.Invoice`.`lesson_fee`, `d.Invoice`.`lesson_note_fee_name`, `d.Invoice`.`lesson_quantity`, `d.Invoice`.`note_fee`, `d.Invoice`.`other1_fee`, `d.Invoice`.`other1_fee_name`, `d.Invoice`.`other2_fee`, `d.Invoice`.`other2_fee_name`, `d.Invoice`.`other3_fee`, `d.Invoice`.`other3_fee_name`, `d.Invoice`.`owing_fee`, `d.Invoice`.`paid_fee`, `d.Invoice`.`term_id`, `d.Invoice`.`total_fee`, `d.Staff`.`staff_id`, `d.Staff`.`dob`, `d.Staff`.`email`, `d.Staff`.`expiry_date`, `d.Staff`.`first_name`, `d.Staff`.`gender`, `d.Staff`.`home_phone`, `d.Staff`.`id_number`, `d.Staff`.`id_photo`, `d.Staff`.`id_type`, `d.Staff`.`ird_number`, `d.Staff`.`is_activate`, `d.Staff`.`last_name`, `d.Staff`.`mobile_phone`, `d.Staff`.`photo`, `d.Staff`.`user_id`, `d.Staff`.`visa`
+FROM `ablemusic`.`payment` AS `d`
+LEFT JOIN `ablemusic`.`learner` AS `d.Learner` ON `d`.`learner_id` = `d.Learner`.`learner_id`
+LEFT JOIN `ablemusic`.`invoice` AS `d.Invoice` ON `d`.`invoice_id` = `d.Invoice`.`invoice_id`
+LEFT JOIN `ablemusic`.`staff` AS `d.Staff` ON `d`.`staff_id` = `d.Staff`.`staff_id`
+WHERE ((`d`.`created_at` > @__8__locals1_beginDate_0) AND (`d`.`created_at` < @__8__locals1_endDate_1)) AND (
+    SELECT `s`.`org_id`
+    FROM `ablemusic`.`staff_org` AS `s`
+    WHERE `d.Staff`.`staff_id` = `s`.`staff_id`
+    LIMIT 1
+) IN (1)
+ORDER BY `d`.`payment_id`
+2019-07-08 19:21:12.200 +12:00 [INF] Executed DbCommand (36ms) [Parameters=[@__8__locals1_beginDate_0='?' (DbType = DateTime), @__8__locals1_endDate_1='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+SELECT `d.SoldTransaction`.`tran_id`, `d.SoldTransaction`.`aflter_quantity`, `d.SoldTransaction`.`amount`, `d.SoldTransaction`.`balance`, `d.SoldTransaction`.`before_quantity`, `d.SoldTransaction`.`created_at`, `d.SoldTransaction`.`discount_amount`, `d.SoldTransaction`.`discount_rate`, `d.SoldTransaction`.`discounted_amount`, `d.SoldTransaction`.`learner_id`, `d.SoldTransaction`.`note`, `d.SoldTransaction`.`payment_id`, `d.SoldTransaction`.`product_id`, `d.SoldTransaction`.`sold_quantity`, `d.SoldTransaction`.`stock_id`, `s.Product`.`product_id`, `s.Product`.`brand`, `s.Product`.`model`, `s.Product`.`prod_type_id`, `s.Product`.`product_name`, `s.Product`.`sell_price`, `s.Product`.`wholesale_price`
+FROM `ablemusic`.`sold_transaction` AS `d.SoldTransaction`
+LEFT JOIN `ablemusic`.`product` AS `s.Product` ON `d.SoldTransaction`.`product_id` = `s.Product`.`product_id`
+INNER JOIN (
+    SELECT DISTINCT `d0`.`payment_id`
+    FROM `ablemusic`.`payment` AS `d0`
+    LEFT JOIN `ablemusic`.`learner` AS `d.Learner0` ON `d0`.`learner_id` = `d.Learner0`.`learner_id`
+    LEFT JOIN `ablemusic`.`invoice` AS `d.Invoice0` ON `d0`.`invoice_id` = `d.Invoice0`.`invoice_id`
+    LEFT JOIN `ablemusic`.`staff` AS `d.Staff0` ON `d0`.`staff_id` = `d.Staff0`.`staff_id`
+    WHERE ((`d0`.`created_at` > @__8__locals1_beginDate_0) AND (`d0`.`created_at` < @__8__locals1_endDate_1)) AND (
+        SELECT `s0`.`org_id`
+        FROM `ablemusic`.`staff_org` AS `s0`
+        WHERE `d.Staff0`.`staff_id` = `s0`.`staff_id`
+        LIMIT 1
+    ) IN (1)
+) AS `t` ON `d.SoldTransaction`.`payment_id` = `t`.`payment_id`
+ORDER BY `t`.`payment_id`
+2019-07-08 19:21:12.305 +12:00 [INF] Executed action method Pegasus_backend.Controllers.PaymentController.PaymentByDate (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 2660.6486ms.
+2019-07-08 19:21:12.306 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-07-08 19:21:12.330 +12:00 [INF] Executed action Pegasus_backend.Controllers.PaymentController.PaymentByDate (Pegasus_backend) in 3418.5634ms
+2019-07-08 19:21:12.330 +12:00 [INF] Request finished in 3463.2804ms 200 application/json; charset=utf-8
+2019-07-08 19:22:52.984 +12:00 [INF] User profile is available. Using 'C:\Users\Learnspace\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-07-08 19:22:53.922 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
+2019-07-08 19:22:53.959 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-07-08 19:22:54.167 +12:00 [INF] Request finished in 246.6673ms 404 
+2019-07-08 19:23:01.670 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/courses  
+2019-07-08 19:23:01.677 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/teachercourse  
+2019-07-08 19:23:01.677 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/teacher  
+2019-07-08 19:23:01.677 +12:00 [INF] Policy execution successful.
+2019-07-08 19:23:01.677 +12:00 [INF] Policy execution successful.
+2019-07-08 19:23:01.677 +12:00 [INF] Policy execution successful.
+2019-07-08 19:23:01.725 +12:00 [INF] Route matched with {action = "GetTeacher", controller = "Teacher"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult] GetTeacher() on controller Pegasus_backend.Controllers.TeacherController (Pegasus_backend).
+2019-07-08 19:23:01.725 +12:00 [INF] Route matched with {action = "GetCourses", controller = "Courses"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Pegasus_backend.pegasusContext.Course]]] GetCourses() on controller Pegasus_backend.Controllers.CoursesController (Pegasus_backend).
+2019-07-08 19:23:01.725 +12:00 [INF] Route matched with {action = "GetTeacherCourse", controller = "TeacherCourse"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeacherCourse() on controller Pegasus_backend.Controllers.TeacherCourseController (Pegasus_backend).
+2019-07-08 19:23:02.373 +12:00 [INF] Executing action method Pegasus_backend.Controllers.TeacherController.GetTeacher (Pegasus_backend) - Validation state: "Valid"
+2019-07-08 19:23:02.373 +12:00 [INF] Executing action method Pegasus_backend.Controllers.TeacherCourseController.GetTeacherCourse (Pegasus_backend) - Validation state: "Valid"
+2019-07-08 19:23:02.373 +12:00 [INF] Executing action method Pegasus_backend.Controllers.CoursesController.GetCourses (Pegasus_backend) - Validation state: "Valid"
+2019-07-08 19:23:03.559 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-08 19:23:03.559 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-08 19:23:03.559 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-08 19:23:03.614 +12:00 [WRN] The Include operation for navigation '[s].Teacher' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-07-08 19:23:03.614 +12:00 [WRN] The Include operation for navigation '[s].Course.GroupCourseInstance' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-07-08 19:23:03.614 +12:00 [WRN] The Include operation for navigation '[s].Course.CourseCategory' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-07-08 19:23:03.622 +12:00 [WRN] The Include operation for navigation '[s].TeacherLanguage.Lang' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-07-08 19:23:03.622 +12:00 [WRN] The Include operation for navigation '[s].TeacherQualificatiion.Quali' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-07-08 19:23:03.622 +12:00 [WRN] The Include operation for navigation '[s].TeacherCourse.Course' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-07-08 19:23:03.623 +12:00 [WRN] The Include operation for navigation '[s].AvailableDays.Org' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-07-08 19:23:03.623 +12:00 [WRN] The Include operation for navigation '[s].TeacherCourse.Course' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-07-08 19:23:04.689 +12:00 [INF] Executed DbCommand (39ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `c`.`course_id` AS `CourseId`, `c`.`course_name` AS `CourseName`, `c`.`course_type` AS `CourseType`, `c`.`level`, `c`.`duration`, `c`.`price`, `c`.`course_category_id` AS `CourseCategoryId0`, `c`.`teacher_level` AS `TeacherLevel`, `cc`.`course_category_id` AS `CourseCategoryId`, `cc`.`course_category_name` AS `CourseCategoryName`
+FROM `ablemusic`.`course` AS `c`
+INNER JOIN `ablemusic`.`course_category` AS `cc` ON `c`.`course_category_id` = `cc`.`course_category_id`
+2019-07-08 19:23:04.689 +12:00 [INF] Executed DbCommand (43ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.Course.CourseCategory`.`course_category_id`, `s.Course.CourseCategory`.`course_category_name`, `s`.`teacher_course_id` AS `TeacherCourseId`, `s`.`course_id` AS `CourseId0`, `s`.`teacher_id` AS `TeacherId0`, `s`.`hourly_wage` AS `HourlyWage`, `s`.`course_id` AS `CourseId`, `s.Course`.`course_name` AS `CourseName`, `s.Course`.`level`, `s.Course`.`duration`, `s.Course`.`price`, `s.Course`.`course_type` AS `CourseType`, `s`.`teacher_id` AS `TeacherId`, `s.Teacher`.`first_name` AS `FirstName`, `s.Teacher`.`last_name` AS `LastName`, `s.Teacher`.`level` AS `Level0`
+FROM `ablemusic`.`teacher_course` AS `s`
+LEFT JOIN `ablemusic`.`teacher` AS `s.Teacher` ON `s`.`teacher_id` = `s.Teacher`.`teacher_id`
+LEFT JOIN `ablemusic`.`course` AS `s.Course` ON `s`.`course_id` = `s.Course`.`course_id`
+LEFT JOIN `ablemusic`.`course_category` AS `s.Course.CourseCategory` ON `s.Course`.`course_category_id` = `s.Course.CourseCategory`.`course_category_id`
+2019-07-08 19:23:04.692 +12:00 [INF] Executed DbCommand (48ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`teacher_id` AS `TeacherId`, `s`.`first_name` AS `FirstName`, `s`.`last_name` AS `LastName`, `s`.`dob`, `s`.`gender`, `s`.`ird_number` AS `IrdNumber`, `s`.`id_type` AS `IdType`, `s`.`id_photo`, `s`.`id_number` AS `IdNumber`, `s`.`home_phone` AS `HomePhone`, `s`.`mobile_phone` AS `MobilePhone`, `s`.`email`, `s`.`photo`, `s`.`expiry_date` AS `ExpiryDate`, `s`.`cv_url`, `s`.`otherfile_url`, `s`.`form_url`, `s`.`is_left` AS `IsLeft`, `s`.`is_contract` AS `IsContract`, `s`.`invoice_template` AS `InvoiceTemplate`, `s`.`ability`, `s`.`comment`, `s`.`level`
+FROM `ablemusic`.`teacher` AS `s`
+WHERE `s`.`is_activate` = 1
+ORDER BY `s`.`teacher_id`
+2019-07-08 19:23:04.890 +12:00 [INF] Executed action method Pegasus_backend.Controllers.TeacherCourseController.GetTeacherCourse (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 2507.2511ms.
+2019-07-08 19:23:04.903 +12:00 [INF] Executed DbCommand (29ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `l`.`prop_name` AS `PropName`, `l`.`prop_value` AS `PropValue`, `l`.`lookup_type` AS `LookupType`
+FROM `ablemusic`.`lookup` AS `l`
+WHERE (((`l`.`lookup_type` = 1) OR (`l`.`lookup_type` = 4)) OR (`l`.`lookup_type` = 6)) OR (`l`.`lookup_type` = 8)
+2019-07-08 19:23:04.911 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-07-08 19:23:04.912 +12:00 [INF] Executed action method Pegasus_backend.Controllers.CoursesController.GetCourses (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 2532.7074000000002ms.
+2019-07-08 19:23:04.912 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Collections.Generic.List`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-07-08 19:23:04.998 +12:00 [INF] Executed action Pegasus_backend.Controllers.CoursesController.GetCourses (Pegasus_backend) in 3269.4590000000003ms
+2019-07-08 19:23:05.001 +12:00 [INF] Request finished in 3331.2411ms 200 application/json; charset=utf-8
+2019-07-08 19:23:05.016 +12:00 [INF] Executed action Pegasus_backend.Controllers.TeacherCourseController.GetTeacherCourse (Pegasus_backend) in 3290.9703ms
+2019-07-08 19:23:05.017 +12:00 [INF] Request finished in 3340.0774ms 200 application/json; charset=utf-8
+2019-07-08 19:23:05.194 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.AvailableDays`.`available_days_id`, `s.AvailableDays`.`created_at`, `s.AvailableDays`.`day_of_week`, `s.AvailableDays`.`org_id`, `s.AvailableDays`.`teacher_id`, `t`.`teacher_id`
+FROM `ablemusic`.`available_days` AS `s.AvailableDays`
+INNER JOIN (
+    SELECT `s1`.`teacher_id`
+    FROM `ablemusic`.`teacher` AS `s1`
+    WHERE `s1`.`is_activate` = 1
+) AS `t` ON `s.AvailableDays`.`teacher_id` = `t`.`teacher_id`
+ORDER BY `t`.`teacher_id`
+2019-07-08 19:23:05.285 +12:00 [INF] Executed DbCommand (34ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.TeacherLanguage`.`teacher_lang_id`, `s.TeacherLanguage`.`lang_id`, `s.TeacherLanguage`.`teacher_id`, `t0`.`teacher_id`
+FROM `ablemusic`.`teacher_language` AS `s.TeacherLanguage`
+INNER JOIN (
+    SELECT `s2`.`teacher_id`
+    FROM `ablemusic`.`teacher` AS `s2`
+    WHERE `s2`.`is_activate` = 1
+) AS `t0` ON `s.TeacherLanguage`.`teacher_id` = `t0`.`teacher_id`
+ORDER BY `t0`.`teacher_id`
+2019-07-08 19:23:05.325 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.TeacherQualificatiion`.`teacher_quali_id`, `s.TeacherQualificatiion`.`description`, `s.TeacherQualificatiion`.`quali_id`, `s.TeacherQualificatiion`.`teacher_id`, `t1`.`teacher_id`
+FROM `ablemusic`.`teacher_qualificatiion` AS `s.TeacherQualificatiion`
+INNER JOIN (
+    SELECT `s3`.`teacher_id`
+    FROM `ablemusic`.`teacher` AS `s3`
+    WHERE `s3`.`is_activate` = 1
+) AS `t1` ON `s.TeacherQualificatiion`.`teacher_id` = `t1`.`teacher_id`
+ORDER BY `t1`.`teacher_id`
+2019-07-08 19:23:05.379 +12:00 [INF] Executed DbCommand (36ms) [Parameters=[@_outer_TeacherId='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s0`.`rates_id`, `s0`.`create_at`, `s0`.`group_rates`, `s0`.`is_activate`, `s0`.`others_rates`, `s0`.`piano_rates`, `s0`.`teacher_id`, `s0`.`theory_rates`
+FROM `ablemusic`.`teacher_wage_rates` AS `s0`
+WHERE (`s0`.`is_activate` = 1) AND (@_outer_TeacherId = `s0`.`teacher_id`)
+LIMIT 1
+2019-07-08 19:23:05.499 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[@_outer_TeacherId='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s0`.`rates_id`, `s0`.`create_at`, `s0`.`group_rates`, `s0`.`is_activate`, `s0`.`others_rates`, `s0`.`piano_rates`, `s0`.`teacher_id`, `s0`.`theory_rates`
+FROM `ablemusic`.`teacher_wage_rates` AS `s0`
+WHERE (`s0`.`is_activate` = 1) AND (@_outer_TeacherId = `s0`.`teacher_id`)
+LIMIT 1
+2019-07-08 19:23:05.595 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[@_outer_TeacherId='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s0`.`rates_id`, `s0`.`create_at`, `s0`.`group_rates`, `s0`.`is_activate`, `s0`.`others_rates`, `s0`.`piano_rates`, `s0`.`teacher_id`, `s0`.`theory_rates`
+FROM `ablemusic`.`teacher_wage_rates` AS `s0`
+WHERE (`s0`.`is_activate` = 1) AND (@_outer_TeacherId = `s0`.`teacher_id`)
+LIMIT 1
+2019-07-08 19:23:05.691 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[@_outer_TeacherId='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s0`.`rates_id`, `s0`.`create_at`, `s0`.`group_rates`, `s0`.`is_activate`, `s0`.`others_rates`, `s0`.`piano_rates`, `s0`.`teacher_id`, `s0`.`theory_rates`
+FROM `ablemusic`.`teacher_wage_rates` AS `s0`
+WHERE (`s0`.`is_activate` = 1) AND (@_outer_TeacherId = `s0`.`teacher_id`)
+LIMIT 1
+2019-07-08 19:23:05.796 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[@_outer_TeacherId='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s0`.`rates_id`, `s0`.`create_at`, `s0`.`group_rates`, `s0`.`is_activate`, `s0`.`others_rates`, `s0`.`piano_rates`, `s0`.`teacher_id`, `s0`.`theory_rates`
+FROM `ablemusic`.`teacher_wage_rates` AS `s0`
+WHERE (`s0`.`is_activate` = 1) AND (@_outer_TeacherId = `s0`.`teacher_id`)
+LIMIT 1
+2019-07-08 19:23:05.892 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[@_outer_TeacherId='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s0`.`rates_id`, `s0`.`create_at`, `s0`.`group_rates`, `s0`.`is_activate`, `s0`.`others_rates`, `s0`.`piano_rates`, `s0`.`teacher_id`, `s0`.`theory_rates`
+FROM `ablemusic`.`teacher_wage_rates` AS `s0`
+WHERE (`s0`.`is_activate` = 1) AND (@_outer_TeacherId = `s0`.`teacher_id`)
+LIMIT 1
+2019-07-08 19:23:05.988 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[@_outer_TeacherId='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s0`.`rates_id`, `s0`.`create_at`, `s0`.`group_rates`, `s0`.`is_activate`, `s0`.`others_rates`, `s0`.`piano_rates`, `s0`.`teacher_id`, `s0`.`theory_rates`
+FROM `ablemusic`.`teacher_wage_rates` AS `s0`
+WHERE (`s0`.`is_activate` = 1) AND (@_outer_TeacherId = `s0`.`teacher_id`)
+LIMIT 1
+2019-07-08 19:23:06.084 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[@_outer_TeacherId='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s0`.`rates_id`, `s0`.`create_at`, `s0`.`group_rates`, `s0`.`is_activate`, `s0`.`others_rates`, `s0`.`piano_rates`, `s0`.`teacher_id`, `s0`.`theory_rates`
+FROM `ablemusic`.`teacher_wage_rates` AS `s0`
+WHERE (`s0`.`is_activate` = 1) AND (@_outer_TeacherId = `s0`.`teacher_id`)
+LIMIT 1
+2019-07-08 19:23:06.179 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[@_outer_TeacherId='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s0`.`rates_id`, `s0`.`create_at`, `s0`.`group_rates`, `s0`.`is_activate`, `s0`.`others_rates`, `s0`.`piano_rates`, `s0`.`teacher_id`, `s0`.`theory_rates`
+FROM `ablemusic`.`teacher_wage_rates` AS `s0`
+WHERE (`s0`.`is_activate` = 1) AND (@_outer_TeacherId = `s0`.`teacher_id`)
+LIMIT 1
+2019-07-08 19:23:06.276 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[@_outer_TeacherId='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s0`.`rates_id`, `s0`.`create_at`, `s0`.`group_rates`, `s0`.`is_activate`, `s0`.`others_rates`, `s0`.`piano_rates`, `s0`.`teacher_id`, `s0`.`theory_rates`
+FROM `ablemusic`.`teacher_wage_rates` AS `s0`
+WHERE (`s0`.`is_activate` = 1) AND (@_outer_TeacherId = `s0`.`teacher_id`)
+LIMIT 1
+2019-07-08 19:23:06.372 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[@_outer_TeacherId='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s0`.`rates_id`, `s0`.`create_at`, `s0`.`group_rates`, `s0`.`is_activate`, `s0`.`others_rates`, `s0`.`piano_rates`, `s0`.`teacher_id`, `s0`.`theory_rates`
+FROM `ablemusic`.`teacher_wage_rates` AS `s0`
+WHERE (`s0`.`is_activate` = 1) AND (@_outer_TeacherId = `s0`.`teacher_id`)
+LIMIT 1
+2019-07-08 19:23:06.471 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[@_outer_TeacherId='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s0`.`rates_id`, `s0`.`create_at`, `s0`.`group_rates`, `s0`.`is_activate`, `s0`.`others_rates`, `s0`.`piano_rates`, `s0`.`teacher_id`, `s0`.`theory_rates`
+FROM `ablemusic`.`teacher_wage_rates` AS `s0`
+WHERE (`s0`.`is_activate` = 1) AND (@_outer_TeacherId = `s0`.`teacher_id`)
+LIMIT 1
+2019-07-08 19:23:06.567 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[@_outer_TeacherId='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s0`.`rates_id`, `s0`.`create_at`, `s0`.`group_rates`, `s0`.`is_activate`, `s0`.`others_rates`, `s0`.`piano_rates`, `s0`.`teacher_id`, `s0`.`theory_rates`
+FROM `ablemusic`.`teacher_wage_rates` AS `s0`
+WHERE (`s0`.`is_activate` = 1) AND (@_outer_TeacherId = `s0`.`teacher_id`)
+LIMIT 1
+2019-07-08 19:23:06.663 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[@_outer_TeacherId='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s0`.`rates_id`, `s0`.`create_at`, `s0`.`group_rates`, `s0`.`is_activate`, `s0`.`others_rates`, `s0`.`piano_rates`, `s0`.`teacher_id`, `s0`.`theory_rates`
+FROM `ablemusic`.`teacher_wage_rates` AS `s0`
+WHERE (`s0`.`is_activate` = 1) AND (@_outer_TeacherId = `s0`.`teacher_id`)
+LIMIT 1
+2019-07-08 19:23:06.760 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[@_outer_TeacherId='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s0`.`rates_id`, `s0`.`create_at`, `s0`.`group_rates`, `s0`.`is_activate`, `s0`.`others_rates`, `s0`.`piano_rates`, `s0`.`teacher_id`, `s0`.`theory_rates`
+FROM `ablemusic`.`teacher_wage_rates` AS `s0`
+WHERE (`s0`.`is_activate` = 1) AND (@_outer_TeacherId = `s0`.`teacher_id`)
+LIMIT 1
+2019-07-08 19:23:06.851 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[@_outer_TeacherId='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s0`.`rates_id`, `s0`.`create_at`, `s0`.`group_rates`, `s0`.`is_activate`, `s0`.`others_rates`, `s0`.`piano_rates`, `s0`.`teacher_id`, `s0`.`theory_rates`
+FROM `ablemusic`.`teacher_wage_rates` AS `s0`
+WHERE (`s0`.`is_activate` = 1) AND (@_outer_TeacherId = `s0`.`teacher_id`)
+LIMIT 1
+2019-07-08 19:23:06.950 +12:00 [INF] Executed DbCommand (35ms) [Parameters=[@_outer_TeacherId='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s0`.`rates_id`, `s0`.`create_at`, `s0`.`group_rates`, `s0`.`is_activate`, `s0`.`others_rates`, `s0`.`piano_rates`, `s0`.`teacher_id`, `s0`.`theory_rates`
+FROM `ablemusic`.`teacher_wage_rates` AS `s0`
+WHERE (`s0`.`is_activate` = 1) AND (@_outer_TeacherId = `s0`.`teacher_id`)
+LIMIT 1
+2019-07-08 19:23:07.049 +12:00 [INF] Executed DbCommand (34ms) [Parameters=[@_outer_TeacherId='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s0`.`rates_id`, `s0`.`create_at`, `s0`.`group_rates`, `s0`.`is_activate`, `s0`.`others_rates`, `s0`.`piano_rates`, `s0`.`teacher_id`, `s0`.`theory_rates`
+FROM `ablemusic`.`teacher_wage_rates` AS `s0`
+WHERE (`s0`.`is_activate` = 1) AND (@_outer_TeacherId = `s0`.`teacher_id`)
+LIMIT 1
+2019-07-08 19:23:07.148 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[@_outer_TeacherId='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s0`.`rates_id`, `s0`.`create_at`, `s0`.`group_rates`, `s0`.`is_activate`, `s0`.`others_rates`, `s0`.`piano_rates`, `s0`.`teacher_id`, `s0`.`theory_rates`
+FROM `ablemusic`.`teacher_wage_rates` AS `s0`
+WHERE (`s0`.`is_activate` = 1) AND (@_outer_TeacherId = `s0`.`teacher_id`)
+LIMIT 1
+2019-07-08 19:23:07.244 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[@_outer_TeacherId='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s0`.`rates_id`, `s0`.`create_at`, `s0`.`group_rates`, `s0`.`is_activate`, `s0`.`others_rates`, `s0`.`piano_rates`, `s0`.`teacher_id`, `s0`.`theory_rates`
+FROM `ablemusic`.`teacher_wage_rates` AS `s0`
+WHERE (`s0`.`is_activate` = 1) AND (@_outer_TeacherId = `s0`.`teacher_id`)
+LIMIT 1
+2019-07-08 19:23:07.345 +12:00 [INF] Executed DbCommand (38ms) [Parameters=[@_outer_TeacherId='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s0`.`rates_id`, `s0`.`create_at`, `s0`.`group_rates`, `s0`.`is_activate`, `s0`.`others_rates`, `s0`.`piano_rates`, `s0`.`teacher_id`, `s0`.`theory_rates`
+FROM `ablemusic`.`teacher_wage_rates` AS `s0`
+WHERE (`s0`.`is_activate` = 1) AND (@_outer_TeacherId = `s0`.`teacher_id`)
+LIMIT 1
+2019-07-08 19:23:07.439 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[@_outer_TeacherId='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s0`.`rates_id`, `s0`.`create_at`, `s0`.`group_rates`, `s0`.`is_activate`, `s0`.`others_rates`, `s0`.`piano_rates`, `s0`.`teacher_id`, `s0`.`theory_rates`
+FROM `ablemusic`.`teacher_wage_rates` AS `s0`
+WHERE (`s0`.`is_activate` = 1) AND (@_outer_TeacherId = `s0`.`teacher_id`)
+LIMIT 1
+2019-07-08 19:23:07.535 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[@_outer_TeacherId='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s0`.`rates_id`, `s0`.`create_at`, `s0`.`group_rates`, `s0`.`is_activate`, `s0`.`others_rates`, `s0`.`piano_rates`, `s0`.`teacher_id`, `s0`.`theory_rates`
+FROM `ablemusic`.`teacher_wage_rates` AS `s0`
+WHERE (`s0`.`is_activate` = 1) AND (@_outer_TeacherId = `s0`.`teacher_id`)
+LIMIT 1
+2019-07-08 19:23:07.632 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[@_outer_TeacherId='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s0`.`rates_id`, `s0`.`create_at`, `s0`.`group_rates`, `s0`.`is_activate`, `s0`.`others_rates`, `s0`.`piano_rates`, `s0`.`teacher_id`, `s0`.`theory_rates`
+FROM `ablemusic`.`teacher_wage_rates` AS `s0`
+WHERE (`s0`.`is_activate` = 1) AND (@_outer_TeacherId = `s0`.`teacher_id`)
+LIMIT 1
+2019-07-08 19:23:07.727 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[@_outer_TeacherId='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s0`.`rates_id`, `s0`.`create_at`, `s0`.`group_rates`, `s0`.`is_activate`, `s0`.`others_rates`, `s0`.`piano_rates`, `s0`.`teacher_id`, `s0`.`theory_rates`
+FROM `ablemusic`.`teacher_wage_rates` AS `s0`
+WHERE (`s0`.`is_activate` = 1) AND (@_outer_TeacherId = `s0`.`teacher_id`)
+LIMIT 1
+2019-07-08 19:23:07.824 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[@_outer_TeacherId='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s0`.`rates_id`, `s0`.`create_at`, `s0`.`group_rates`, `s0`.`is_activate`, `s0`.`others_rates`, `s0`.`piano_rates`, `s0`.`teacher_id`, `s0`.`theory_rates`
+FROM `ablemusic`.`teacher_wage_rates` AS `s0`
+WHERE (`s0`.`is_activate` = 1) AND (@_outer_TeacherId = `s0`.`teacher_id`)
+LIMIT 1
+2019-07-08 19:23:07.920 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[@_outer_TeacherId='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s0`.`rates_id`, `s0`.`create_at`, `s0`.`group_rates`, `s0`.`is_activate`, `s0`.`others_rates`, `s0`.`piano_rates`, `s0`.`teacher_id`, `s0`.`theory_rates`
+FROM `ablemusic`.`teacher_wage_rates` AS `s0`
+WHERE (`s0`.`is_activate` = 1) AND (@_outer_TeacherId = `s0`.`teacher_id`)
+LIMIT 1
+2019-07-08 19:23:08.015 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[@_outer_TeacherId='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s0`.`rates_id`, `s0`.`create_at`, `s0`.`group_rates`, `s0`.`is_activate`, `s0`.`others_rates`, `s0`.`piano_rates`, `s0`.`teacher_id`, `s0`.`theory_rates`
+FROM `ablemusic`.`teacher_wage_rates` AS `s0`
+WHERE (`s0`.`is_activate` = 1) AND (@_outer_TeacherId = `s0`.`teacher_id`)
+LIMIT 1
+2019-07-08 19:23:08.112 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[@_outer_TeacherId='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s0`.`rates_id`, `s0`.`create_at`, `s0`.`group_rates`, `s0`.`is_activate`, `s0`.`others_rates`, `s0`.`piano_rates`, `s0`.`teacher_id`, `s0`.`theory_rates`
+FROM `ablemusic`.`teacher_wage_rates` AS `s0`
+WHERE (`s0`.`is_activate` = 1) AND (@_outer_TeacherId = `s0`.`teacher_id`)
+LIMIT 1
+2019-07-08 19:23:08.212 +12:00 [INF] Executed DbCommand (34ms) [Parameters=[@_outer_TeacherId='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s0`.`rates_id`, `s0`.`create_at`, `s0`.`group_rates`, `s0`.`is_activate`, `s0`.`others_rates`, `s0`.`piano_rates`, `s0`.`teacher_id`, `s0`.`theory_rates`
+FROM `ablemusic`.`teacher_wage_rates` AS `s0`
+WHERE (`s0`.`is_activate` = 1) AND (@_outer_TeacherId = `s0`.`teacher_id`)
+LIMIT 1
+2019-07-08 19:23:08.307 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[@_outer_TeacherId='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s0`.`rates_id`, `s0`.`create_at`, `s0`.`group_rates`, `s0`.`is_activate`, `s0`.`others_rates`, `s0`.`piano_rates`, `s0`.`teacher_id`, `s0`.`theory_rates`
+FROM `ablemusic`.`teacher_wage_rates` AS `s0`
+WHERE (`s0`.`is_activate` = 1) AND (@_outer_TeacherId = `s0`.`teacher_id`)
+LIMIT 1
+2019-07-08 19:23:08.403 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[@_outer_TeacherId='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s0`.`rates_id`, `s0`.`create_at`, `s0`.`group_rates`, `s0`.`is_activate`, `s0`.`others_rates`, `s0`.`piano_rates`, `s0`.`teacher_id`, `s0`.`theory_rates`
+FROM `ablemusic`.`teacher_wage_rates` AS `s0`
+WHERE (`s0`.`is_activate` = 1) AND (@_outer_TeacherId = `s0`.`teacher_id`)
+LIMIT 1
+2019-07-08 19:23:08.499 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[@_outer_TeacherId='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s0`.`rates_id`, `s0`.`create_at`, `s0`.`group_rates`, `s0`.`is_activate`, `s0`.`others_rates`, `s0`.`piano_rates`, `s0`.`teacher_id`, `s0`.`theory_rates`
+FROM `ablemusic`.`teacher_wage_rates` AS `s0`
+WHERE (`s0`.`is_activate` = 1) AND (@_outer_TeacherId = `s0`.`teacher_id`)
+LIMIT 1
+2019-07-08 19:23:08.595 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[@_outer_TeacherId='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s0`.`rates_id`, `s0`.`create_at`, `s0`.`group_rates`, `s0`.`is_activate`, `s0`.`others_rates`, `s0`.`piano_rates`, `s0`.`teacher_id`, `s0`.`theory_rates`
+FROM `ablemusic`.`teacher_wage_rates` AS `s0`
+WHERE (`s0`.`is_activate` = 1) AND (@_outer_TeacherId = `s0`.`teacher_id`)
+LIMIT 1
+2019-07-08 19:23:08.692 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[@_outer_TeacherId='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s0`.`rates_id`, `s0`.`create_at`, `s0`.`group_rates`, `s0`.`is_activate`, `s0`.`others_rates`, `s0`.`piano_rates`, `s0`.`teacher_id`, `s0`.`theory_rates`
+FROM `ablemusic`.`teacher_wage_rates` AS `s0`
+WHERE (`s0`.`is_activate` = 1) AND (@_outer_TeacherId = `s0`.`teacher_id`)
+LIMIT 1
+2019-07-08 19:23:08.795 +12:00 [INF] Executed DbCommand (31ms) [Parameters=[@_outer_TeacherId='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s0`.`rates_id`, `s0`.`create_at`, `s0`.`group_rates`, `s0`.`is_activate`, `s0`.`others_rates`, `s0`.`piano_rates`, `s0`.`teacher_id`, `s0`.`theory_rates`
+FROM `ablemusic`.`teacher_wage_rates` AS `s0`
+WHERE (`s0`.`is_activate` = 1) AND (@_outer_TeacherId = `s0`.`teacher_id`)
+LIMIT 1
+2019-07-08 19:23:08.892 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[@_outer_TeacherId='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s0`.`rates_id`, `s0`.`create_at`, `s0`.`group_rates`, `s0`.`is_activate`, `s0`.`others_rates`, `s0`.`piano_rates`, `s0`.`teacher_id`, `s0`.`theory_rates`
+FROM `ablemusic`.`teacher_wage_rates` AS `s0`
+WHERE (`s0`.`is_activate` = 1) AND (@_outer_TeacherId = `s0`.`teacher_id`)
+LIMIT 1
+2019-07-08 19:23:08.988 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[@_outer_TeacherId='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s0`.`rates_id`, `s0`.`create_at`, `s0`.`group_rates`, `s0`.`is_activate`, `s0`.`others_rates`, `s0`.`piano_rates`, `s0`.`teacher_id`, `s0`.`theory_rates`
+FROM `ablemusic`.`teacher_wage_rates` AS `s0`
+WHERE (`s0`.`is_activate` = 1) AND (@_outer_TeacherId = `s0`.`teacher_id`)
+LIMIT 1
+2019-07-08 19:23:09.084 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[@_outer_TeacherId='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s0`.`rates_id`, `s0`.`create_at`, `s0`.`group_rates`, `s0`.`is_activate`, `s0`.`others_rates`, `s0`.`piano_rates`, `s0`.`teacher_id`, `s0`.`theory_rates`
+FROM `ablemusic`.`teacher_wage_rates` AS `s0`
+WHERE (`s0`.`is_activate` = 1) AND (@_outer_TeacherId = `s0`.`teacher_id`)
+LIMIT 1
+2019-07-08 19:23:09.180 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[@_outer_TeacherId='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s0`.`rates_id`, `s0`.`create_at`, `s0`.`group_rates`, `s0`.`is_activate`, `s0`.`others_rates`, `s0`.`piano_rates`, `s0`.`teacher_id`, `s0`.`theory_rates`
+FROM `ablemusic`.`teacher_wage_rates` AS `s0`
+WHERE (`s0`.`is_activate` = 1) AND (@_outer_TeacherId = `s0`.`teacher_id`)
+LIMIT 1
+2019-07-08 19:23:09.276 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[@_outer_TeacherId='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s0`.`rates_id`, `s0`.`create_at`, `s0`.`group_rates`, `s0`.`is_activate`, `s0`.`others_rates`, `s0`.`piano_rates`, `s0`.`teacher_id`, `s0`.`theory_rates`
+FROM `ablemusic`.`teacher_wage_rates` AS `s0`
+WHERE (`s0`.`is_activate` = 1) AND (@_outer_TeacherId = `s0`.`teacher_id`)
+LIMIT 1
+2019-07-08 19:23:09.372 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[@_outer_TeacherId='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s0`.`rates_id`, `s0`.`create_at`, `s0`.`group_rates`, `s0`.`is_activate`, `s0`.`others_rates`, `s0`.`piano_rates`, `s0`.`teacher_id`, `s0`.`theory_rates`
+FROM `ablemusic`.`teacher_wage_rates` AS `s0`
+WHERE (`s0`.`is_activate` = 1) AND (@_outer_TeacherId = `s0`.`teacher_id`)
+LIMIT 1
+2019-07-08 19:23:09.468 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[@_outer_TeacherId='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s0`.`rates_id`, `s0`.`create_at`, `s0`.`group_rates`, `s0`.`is_activate`, `s0`.`others_rates`, `s0`.`piano_rates`, `s0`.`teacher_id`, `s0`.`theory_rates`
+FROM `ablemusic`.`teacher_wage_rates` AS `s0`
+WHERE (`s0`.`is_activate` = 1) AND (@_outer_TeacherId = `s0`.`teacher_id`)
+LIMIT 1
+2019-07-08 19:23:09.469 +12:00 [INF] Executed action method Pegasus_backend.Controllers.TeacherController.GetTeacher (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 7089.8282ms.
+2019-07-08 19:23:09.469 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-07-08 19:23:09.517 +12:00 [INF] Executed action Pegasus_backend.Controllers.TeacherController.GetTeacher (Pegasus_backend) in 7791.6718ms
+2019-07-08 19:23:09.517 +12:00 [INF] Request finished in 7840.338ms 200 application/json; charset=utf-8
+2019-07-08 19:23:37.065 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/qualificationslanguagesorgs  
+2019-07-08 19:23:37.065 +12:00 [INF] Policy execution successful.
+2019-07-08 19:23:37.069 +12:00 [INF] Route matched with {action = "GetDetailsForTeacher", controller = "QualificationsLanguagesOrgs"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetDetailsForTeacher() on controller Pegasus_backend.Controllers.QualificationsLanguagesOrgsController (Pegasus_backend).
+2019-07-08 19:23:37.070 +12:00 [INF] Executing action method Pegasus_backend.Controllers.QualificationsLanguagesOrgsController.GetDetailsForTeacher (Pegasus_backend) - Validation state: "Valid"
+2019-07-08 19:23:37.073 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-08 19:23:37.088 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Lookups/1  
+2019-07-08 19:23:37.090 +12:00 [INF] Policy execution successful.
+2019-07-08 19:23:37.117 +12:00 [INF] Route matched with {action = "GetLookup", controller = "Lookups"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetLookup(Int32) on controller Pegasus_backend.Controllers.LookupsController (Pegasus_backend).
+2019-07-08 19:23:37.137 +12:00 [INF] Executing action method Pegasus_backend.Controllers.LookupsController.GetLookup (Pegasus_backend) - Validation state: "Valid"
+2019-07-08 19:23:37.139 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-08 19:23:37.200 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `q`.`quali_id`, `q`.`quali_name`
+FROM `ablemusic`.`qualification` AS `q`
+2019-07-08 19:23:37.243 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[@__type_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `l`.`lookup_id`, `l`.`description`, `l`.`lookup_type`, `l`.`prop_name`, `l`.`prop_value`
+FROM `ablemusic`.`lookup` AS `l`
+WHERE `l`.`lookup_type` = @__type_0
+2019-07-08 19:23:37.251 +12:00 [INF] Executed action method Pegasus_backend.Controllers.LookupsController.GetLookup (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 113.58500000000001ms.
+2019-07-08 19:23:37.251 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.Lookup, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-07-08 19:23:37.257 +12:00 [INF] Executed action Pegasus_backend.Controllers.LookupsController.GetLookup (Pegasus_backend) in 140.35840000000002ms
+2019-07-08 19:23:37.259 +12:00 [INF] Request finished in 169.3765ms 200 application/json; charset=utf-8
+2019-07-08 19:23:37.322 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/images/tutor/Photos/263190619120916553.png?60557473  
+2019-07-08 19:23:37.324 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/images/tutor/IdPhotos/263190619120916553.jpeg?1102954518  
+2019-07-08 19:23:37.360 +12:00 [INF] Sending file. Request path: '/images/tutor/IdPhotos/263190619120916553.jpeg'. Physical path: 'C:\Users\Learnspace\source\pegasusBackend\wwwroot\images\tutor\IdPhotos\263190619120916553.jpeg'
+2019-07-08 19:23:37.360 +12:00 [INF] Request finished in 36.6081ms 200 image/jpeg
+2019-07-08 19:23:37.367 +12:00 [INF] Sending file. Request path: '/images/tutor/Photos/263190619120916553.png'. Physical path: 'C:\Users\Learnspace\source\pegasusBackend\wwwroot\images\tutor\Photos\263190619120916553.png'
+2019-07-08 19:23:37.369 +12:00 [INF] Request finished in 46.9329ms 200 image/png
+2019-07-08 19:23:37.395 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `l`.`lang_id`, `l`.`lang_name`
+FROM `ablemusic`.`language` AS `l`
+2019-07-08 19:23:37.516 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `o`.`org_id`, `o`.`abbr`, `o`.`address`, `o`.`email`, `o`.`is_activate`, `o`.`is_headoffice`, `o`.`localtion_x`, `o`.`localtion_y`, `o`.`org_name`, `o`.`phone`
+FROM `ablemusic`.`org` AS `o`
+2019-07-08 19:23:37.552 +12:00 [INF] Executed action method Pegasus_backend.Controllers.QualificationsLanguagesOrgsController.GetDetailsForTeacher (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 481.2774ms.
+2019-07-08 19:23:37.552 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[Pegasus_backend.Models.DetailsForTeacherRegister, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2019-07-08 19:23:37.593 +12:00 [INF] Executed action Pegasus_backend.Controllers.QualificationsLanguagesOrgsController.GetDetailsForTeacher (Pegasus_backend) in 523.6082ms
+2019-07-08 19:23:37.593 +12:00 [INF] Request finished in 528.5842ms 200 application/json; charset=utf-8
+2019-07-08 19:24:02.763 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/lesson/GetLessonsBetweenDate/3/2019-07-02/2019-07-08  
+2019-07-08 19:24:02.763 +12:00 [INF] Policy execution successful.
+2019-07-08 19:24:02.768 +12:00 [INF] Route matched with {action = "GetLessonsBetweenDate", controller = "Lesson"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetLessonsBetweenDate(System.Nullable`1[System.DateTime], System.Nullable`1[System.DateTime], System.Nullable`1[System.Int32]) on controller Pegasus_backend.Controllers.LessonController (Pegasus_backend).
+2019-07-08 19:24:02.770 +12:00 [INF] Executing action method Pegasus_backend.Controllers.LessonController.GetLessonsBetweenDate (Pegasus_backend) - Validation state: "Valid"
+2019-07-08 19:24:02.786 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-08 19:24:02.905 +12:00 [INF] Executed DbCommand (34ms) [Parameters=[@__8__locals1_userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`staff_id`, `s`.`dob`, `s`.`email`, `s`.`expiry_date`, `s`.`first_name`, `s`.`gender`, `s`.`home_phone`, `s`.`id_number`, `s`.`id_photo`, `s`.`id_type`, `s`.`ird_number`, `s`.`is_activate`, `s`.`last_name`, `s`.`mobile_phone`, `s`.`photo`, `s`.`user_id`, `s`.`visa`
+FROM `ablemusic`.`staff` AS `s`
+WHERE `s`.`user_id` = @__8__locals1_userId_0
+LIMIT 1
+2019-07-08 19:24:03.039 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[@__staff_StaffId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`staff_org_id`, `s`.`is_activate`, `s`.`org_id`, `s`.`staff_id`
+FROM `ablemusic`.`staff_org` AS `s`
+WHERE `s`.`staff_id` = @__staff_StaffId_0
+LIMIT 1
+2019-07-08 19:24:03.077 +12:00 [WRN] The Include operation for navigation '[s].Teacher' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-07-08 19:24:03.077 +12:00 [WRN] The Include operation for navigation '[s].Learner' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-07-08 19:24:03.077 +12:00 [WRN] The Include operation for navigation '[s].Room' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-07-08 19:24:03.077 +12:00 [WRN] The Include operation for navigation '[s].Org' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-07-08 19:24:03.077 +12:00 [WRN] The Include operation for navigation '[s].GroupCourseInstance.Course' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-07-08 19:24:03.077 +12:00 [WRN] The Include operation for navigation '[s].CourseInstance.Course' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-07-08 19:24:03.138 +12:00 [WRN] The LINQ expression 'where ((__8__locals1_beginDate_Value_Date_0 <= Convert([s].EndTime, DateTime).Date) AndAlso (Convert([s].EndTime, DateTime).Date <= __8__locals1_endDate_Value_Date_1))' could not be translated and will be evaluated locally.
+2019-07-08 19:24:03.276 +12:00 [INF] Executed DbCommand (35ms) [Parameters=[@__orgId_2='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.CourseInstance`.`course_instance_id`, `s.CourseInstance`.`begin_date`, `s.CourseInstance`.`course_id`, `s.CourseInstance`.`end_date`, `s.CourseInstance`.`invoice_date`, `s.CourseInstance`.`learner_id`, `s.CourseInstance`.`org_id`, `s.CourseInstance`.`room_id`, `s.CourseInstance`.`teacher_id`, `s.GroupCourseInstance`.`group_course_instance_id`, `s.GroupCourseInstance`.`begin_date`, `s.GroupCourseInstance`.`course_id`, `s.GroupCourseInstance`.`end_date`, `s.GroupCourseInstance`.`invoice_date`, `s.GroupCourseInstance`.`is_activate`, `s.GroupCourseInstance`.`is_started`, `s.GroupCourseInstance`.`org_id`, `s.GroupCourseInstance`.`room_id`, `s.GroupCourseInstance`.`teacher_id`, `s`.`end_time` AS `EndTime`, `s.GroupCourseInstance.Course`.`course_name`, `s.TrialCourse`.`course_name`, `s.CourseInstance.Course`.`course_name`, `s.Teacher`.`first_name` AS `TeacherFirstName`, `s`.`begin_time` AS `BeginTime`, `s`.`lesson_id` AS `LessonId`, `s.Room`.`room_name` AS `Room`, `s.Org`.`org_name` AS `Branch`, `s`.`is_canceled` AS `IsCanceled`, `s`.`reason` AS `CancelReson`, `s`.`is_confirm` AS `IsConfirm`, `s`.`is_trial` AS `IsTrial`, `s.Learner`.`first_name` AS `Learner`, `s`.`learner_id` AS `LearnerId`, `s`.`room_id` AS `RoomId`, `s`.`teacher_id` AS `TeacherId`, `s`.`org_id` AS `OrgId`, `s.GroupCourseInstance.Course`.`course_id`, `s`.`trial_course_id`, `s.CourseInstance.Course`.`course_id`
+FROM `ablemusic`.`lesson` AS `s`
+LEFT JOIN `ablemusic`.`learner` AS `s.Learner` ON `s`.`learner_id` = `s.Learner`.`learner_id`
+INNER JOIN `ablemusic`.`org` AS `s.Org` ON `s`.`org_id` = `s.Org`.`org_id`
+LEFT JOIN `ablemusic`.`room` AS `s.Room` ON `s`.`room_id` = `s.Room`.`room_id`
+LEFT JOIN `ablemusic`.`teacher` AS `s.Teacher` ON `s`.`teacher_id` = `s.Teacher`.`teacher_id`
+LEFT JOIN `ablemusic`.`course` AS `s.TrialCourse` ON `s`.`trial_course_id` = `s.TrialCourse`.`course_id`
+LEFT JOIN `ablemusic`.`one2one_course_instance` AS `s.CourseInstance` ON `s`.`course_instance_id` = `s.CourseInstance`.`course_instance_id`
+LEFT JOIN `ablemusic`.`course` AS `s.CourseInstance.Course` ON `s.CourseInstance`.`course_id` = `s.CourseInstance.Course`.`course_id`
+LEFT JOIN `ablemusic`.`group_course_instance` AS `s.GroupCourseInstance` ON `s`.`group_course_instance_id` = `s.GroupCourseInstance`.`group_course_instance_id`
+LEFT JOIN `ablemusic`.`course` AS `s.GroupCourseInstance.Course` ON `s.GroupCourseInstance`.`course_id` = `s.GroupCourseInstance.Course`.`course_id`
+WHERE `s`.`org_id` = @__orgId_2
+2019-07-08 19:24:03.602 +12:00 [INF] Executed action method Pegasus_backend.Controllers.LessonController.GetLessonsBetweenDate (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 831.7246ms.
+2019-07-08 19:24:03.602 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-07-08 19:24:03.620 +12:00 [INF] Executed action Pegasus_backend.Controllers.LessonController.GetLessonsBetweenDate (Pegasus_backend) in 851.6045ms
+2019-07-08 19:24:03.620 +12:00 [INF] Request finished in 857.0941ms 200 application/json; charset=utf-8
+2019-07-08 19:24:12.228 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/session/3170/ccc/3  
+2019-07-08 19:24:12.229 +12:00 [INF] Policy execution successful.
+2019-07-08 19:24:12.230 +12:00 [INF] Request finished in 1.8867ms 204 
+2019-07-08 19:24:12.238 +12:00 [INF] Request starting HTTP/1.1 PUT http://localhost:5000/api/session/3170/ccc/3  0
+2019-07-08 19:24:12.239 +12:00 [INF] Policy execution successful.
+2019-07-08 19:24:12.245 +12:00 [INF] Route matched with {action = "PutSesson", controller = "Session"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] PutSesson(Int32, System.String, Int16) on controller Pegasus_backend.Controllers.SessionController (Pegasus_backend).
+2019-07-08 19:24:12.249 +12:00 [INF] Executing action method Pegasus_backend.Controllers.SessionController.PutSesson (Pegasus_backend) - Validation state: "Valid"
+2019-07-08 19:24:12.271 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-08 19:24:12.394 +12:00 [INF] Executed DbCommand (43ms) [Parameters=[@__sessionId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`lesson_id`, `x`.`begin_time`, `x`.`course_instance_id`, `x`.`created_at`, `x`.`end_time`, `x`.`group_course_instance_id`, `x`.`invoice_id`, `x`.`is_canceled`, `x`.`is_changed`, `x`.`is_confirm`, `x`.`is_trial`, `x`.`learner_id`, `x`.`org_id`, `x`.`reason`, `x`.`room_id`, `x`.`teacher_id`, `x`.`trial_course_id`
+FROM `ablemusic`.`lesson` AS `x`
+WHERE `x`.`lesson_id` = @__sessionId_0
+LIMIT 1
+2019-07-08 19:24:12.535 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[@__userId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `u`.`user_id`, `u`.`created_at`, `u`.`is_activate`, `u`.`is_online`, `u`.`password`, `u`.`role_id`, `u`.`signature`, `u`.`unread_message_id`, `u`.`user_name`
+FROM `ablemusic`.`user` AS `u`
+WHERE `u`.`user_id` = @__userId_0
+LIMIT 1
+2019-07-08 19:24:12.709 +12:00 [INF] Executed DbCommand (34ms) [Parameters=[@__lesson_TeacherId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `t`.`teacher_id`, `t`.`ability`, `t`.`comment`, `t`.`cv_url`, `t`.`dob`, `t`.`email`, `t`.`expiry_date`, `t`.`first_name`, `t`.`form_url`, `t`.`gender`, `t`.`home_phone`, `t`.`id_number`, `t`.`id_photo`, `t`.`id_type`, `t`.`invoice_template`, `t`.`ird_number`, `t`.`is_activate`, `t`.`is_contract`, `t`.`is_left`, `t`.`last_name`, `t`.`level`, `t`.`minimum_hours`, `t`.`mobile_phone`, `t`.`otherfile_url`, `t`.`photo`, `t`.`user_id`, `t`.`visa`
+FROM `ablemusic`.`teacher` AS `t`
+WHERE `t`.`teacher_id` = @__lesson_TeacherId_0
+LIMIT 1
+2019-07-08 19:24:12.903 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[@__lesson_CourseInstanceId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `c`.`course_id` AS `CourseId`, `c`.`course_name` AS `CourseName`
+FROM `ablemusic`.`course` AS `c`
+INNER JOIN `ablemusic`.`one2one_course_instance` AS `oto` ON `c`.`course_id` = `oto`.`course_id`
+WHERE `oto`.`course_instance_id` = @__lesson_CourseInstanceId_0
+LIMIT 1
+2019-07-08 19:24:13.044 +12:00 [INF] Executed DbCommand (70ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `h`.`holiday_id`, `h`.`holiday_date`, `h`.`holiday_name`
+FROM `ablemusic`.`holiday` AS `h`
+2019-07-08 19:24:13.165 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[@__lesson_LearnerId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `l`.`learner_id`, `l`.`address`, `l`.`comment`, `l`.`contact_num`, `l`.`created_at`, `l`.`dob`, `l`.`email`, `l`.`enroll_date`, `l`.`first_name`, `l`.`form_url`, `l`.`g5_certification`, `l`.`gender`, `l`.`is_abrsm_g5`, `l`.`is_active`, `l`.`is_under_18`, `l`.`last_name`, `l`.`learner_level`, `l`.`level_type`, `l`.`middle_name`, `l`.`note`, `l`.`org_id`, `l`.`otherfile_url`, `l`.`payment_period`, `l`.`photo`, `l`.`referrer`, `l`.`referrer_learner_id`, `l`.`user_id`
+FROM `ablemusic`.`learner` AS `l`
+WHERE `l`.`learner_id` = @__lesson_LearnerId_0
+LIMIT 1
+2019-07-08 19:24:15.224 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = DateTime), @p2='?' (DbType = DateTime), @p3='?' (DbType = Int16), @p4='?' (DbType = Int32), @p5='?' (DbType = AnsiString), @p6='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `ablemusic`.`await_make_up_lesson` (`await_id`, `create_at`, `expired_date`, `is_active`, `missed_lesson_id`, `new_lesson_id`, `schduled_at`)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+2019-07-08 19:24:15.259 +12:00 [INF] Executed DbCommand (34ms) [Parameters=[@p9='?' (DbType = Int32), @p7='?' (DbType = Int16), @p8='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+UPDATE `ablemusic`.`lesson` SET `is_canceled` = @p7, `reason` = @p8
+WHERE `lesson_id` = @p9;
+SELECT ROW_COUNT();
+2019-07-08 19:24:15.296 +12:00 [INF] Executed action method Pegasus_backend.Controllers.SessionController.PutSesson (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 3047.2468000000003ms.
+2019-07-08 19:24:15.296 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-07-08 19:24:15.300 +12:00 [INF] Executed action Pegasus_backend.Controllers.SessionController.PutSesson (Pegasus_backend) in 3055.271ms
+2019-07-08 19:24:15.300 +12:00 [INF] Request finished in 3061.9652ms 200 application/json; charset=utf-8
+2019-07-08 19:24:16.945 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/lesson/GetLessonsBetweenDate/3/2019-07-02/2019-07-08  
+2019-07-08 19:24:16.945 +12:00 [INF] Policy execution successful.
+2019-07-08 19:24:16.946 +12:00 [INF] Route matched with {action = "GetLessonsBetweenDate", controller = "Lesson"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetLessonsBetweenDate(System.Nullable`1[System.DateTime], System.Nullable`1[System.DateTime], System.Nullable`1[System.Int32]) on controller Pegasus_backend.Controllers.LessonController (Pegasus_backend).
+2019-07-08 19:24:16.947 +12:00 [INF] Executing action method Pegasus_backend.Controllers.LessonController.GetLessonsBetweenDate (Pegasus_backend) - Validation state: "Valid"
+2019-07-08 19:24:16.948 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-08 19:24:17.043 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[@__8__locals1_userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`staff_id`, `s`.`dob`, `s`.`email`, `s`.`expiry_date`, `s`.`first_name`, `s`.`gender`, `s`.`home_phone`, `s`.`id_number`, `s`.`id_photo`, `s`.`id_type`, `s`.`ird_number`, `s`.`is_activate`, `s`.`last_name`, `s`.`mobile_phone`, `s`.`photo`, `s`.`user_id`, `s`.`visa`
+FROM `ablemusic`.`staff` AS `s`
+WHERE `s`.`user_id` = @__8__locals1_userId_0
+LIMIT 1
+2019-07-08 19:24:17.139 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[@__staff_StaffId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`staff_org_id`, `s`.`is_activate`, `s`.`org_id`, `s`.`staff_id`
+FROM `ablemusic`.`staff_org` AS `s`
+WHERE `s`.`staff_id` = @__staff_StaffId_0
+LIMIT 1
+2019-07-08 19:24:17.147 +12:00 [WRN] The Include operation for navigation '[s].Teacher' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-07-08 19:24:17.147 +12:00 [WRN] The Include operation for navigation '[s].Learner' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-07-08 19:24:17.147 +12:00 [WRN] The Include operation for navigation '[s].Room' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-07-08 19:24:17.147 +12:00 [WRN] The Include operation for navigation '[s].Org' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-07-08 19:24:17.147 +12:00 [WRN] The Include operation for navigation '[s].GroupCourseInstance.Course' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-07-08 19:24:17.147 +12:00 [WRN] The Include operation for navigation '[s].CourseInstance.Course' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-07-08 19:24:17.178 +12:00 [WRN] The LINQ expression 'where ((__8__locals1_beginDate_Value_Date_0 <= Convert([s].EndTime, DateTime).Date) AndAlso (Convert([s].EndTime, DateTime).Date <= __8__locals1_endDate_Value_Date_1))' could not be translated and will be evaluated locally.
+2019-07-08 19:24:17.335 +12:00 [INF] Executed DbCommand (36ms) [Parameters=[@__orgId_2='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.CourseInstance`.`course_instance_id`, `s.CourseInstance`.`begin_date`, `s.CourseInstance`.`course_id`, `s.CourseInstance`.`end_date`, `s.CourseInstance`.`invoice_date`, `s.CourseInstance`.`learner_id`, `s.CourseInstance`.`org_id`, `s.CourseInstance`.`room_id`, `s.CourseInstance`.`teacher_id`, `s.GroupCourseInstance`.`group_course_instance_id`, `s.GroupCourseInstance`.`begin_date`, `s.GroupCourseInstance`.`course_id`, `s.GroupCourseInstance`.`end_date`, `s.GroupCourseInstance`.`invoice_date`, `s.GroupCourseInstance`.`is_activate`, `s.GroupCourseInstance`.`is_started`, `s.GroupCourseInstance`.`org_id`, `s.GroupCourseInstance`.`room_id`, `s.GroupCourseInstance`.`teacher_id`, `s`.`end_time` AS `EndTime`, `s.GroupCourseInstance.Course`.`course_name`, `s.TrialCourse`.`course_name`, `s.CourseInstance.Course`.`course_name`, `s.Teacher`.`first_name` AS `TeacherFirstName`, `s`.`begin_time` AS `BeginTime`, `s`.`lesson_id` AS `LessonId`, `s.Room`.`room_name` AS `Room`, `s.Org`.`org_name` AS `Branch`, `s`.`is_canceled` AS `IsCanceled`, `s`.`reason` AS `CancelReson`, `s`.`is_confirm` AS `IsConfirm`, `s`.`is_trial` AS `IsTrial`, `s.Learner`.`first_name` AS `Learner`, `s`.`learner_id` AS `LearnerId`, `s`.`room_id` AS `RoomId`, `s`.`teacher_id` AS `TeacherId`, `s`.`org_id` AS `OrgId`, `s.GroupCourseInstance.Course`.`course_id`, `s`.`trial_course_id`, `s.CourseInstance.Course`.`course_id`
+FROM `ablemusic`.`lesson` AS `s`
+LEFT JOIN `ablemusic`.`learner` AS `s.Learner` ON `s`.`learner_id` = `s.Learner`.`learner_id`
+INNER JOIN `ablemusic`.`org` AS `s.Org` ON `s`.`org_id` = `s.Org`.`org_id`
+LEFT JOIN `ablemusic`.`room` AS `s.Room` ON `s`.`room_id` = `s.Room`.`room_id`
+LEFT JOIN `ablemusic`.`teacher` AS `s.Teacher` ON `s`.`teacher_id` = `s.Teacher`.`teacher_id`
+LEFT JOIN `ablemusic`.`course` AS `s.TrialCourse` ON `s`.`trial_course_id` = `s.TrialCourse`.`course_id`
+LEFT JOIN `ablemusic`.`one2one_course_instance` AS `s.CourseInstance` ON `s`.`course_instance_id` = `s.CourseInstance`.`course_instance_id`
+LEFT JOIN `ablemusic`.`course` AS `s.CourseInstance.Course` ON `s.CourseInstance`.`course_id` = `s.CourseInstance.Course`.`course_id`
+LEFT JOIN `ablemusic`.`group_course_instance` AS `s.GroupCourseInstance` ON `s`.`group_course_instance_id` = `s.GroupCourseInstance`.`group_course_instance_id`
+LEFT JOIN `ablemusic`.`course` AS `s.GroupCourseInstance.Course` ON `s.GroupCourseInstance`.`course_id` = `s.GroupCourseInstance.Course`.`course_id`
+WHERE `s`.`org_id` = @__orgId_2
+2019-07-08 19:24:17.653 +12:00 [INF] Executed action method Pegasus_backend.Controllers.LessonController.GetLessonsBetweenDate (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 705.8929ms.
+2019-07-08 19:24:17.653 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-07-08 19:24:17.655 +12:00 [INF] Executed action Pegasus_backend.Controllers.LessonController.GetLessonsBetweenDate (Pegasus_backend) in 708.89960000000008ms
+2019-07-08 19:24:17.655 +12:00 [INF] Request finished in 710.363ms 200 application/json; charset=utf-8
