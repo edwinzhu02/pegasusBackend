@@ -35,8 +35,10 @@ namespace Pegasus_backend.Controllers
             try
             {   
                 result.Data = await _ablemusicContext.StockApplication
-                .Where(s => s.ApplyAt >= beginDate && s.ApplyAt <= endDate)
+                .Where(s => s.ApplyAt >= beginDate && s.ApplyAt <= endDate).Include(s=>s.Org)
+                .Include(s=>s.ApplyStaff)
                 .Include(t => t.ApplicationDetails).ToListAsync();
+                return Ok(result);
             }
             catch (Exception ex)
             {
@@ -44,7 +46,7 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = ex.Message;
                 return BadRequest(result);
             }
-            return Ok(result);
+        
         }
         // DELETE: api/StockApplication/5
         [HttpDelete("{id}")]
@@ -80,10 +82,8 @@ namespace Pegasus_backend.Controllers
             var result = new Result<string>();
             try
             {   
+                stockapplication.ProcessStatus = 1;
                 _ablemusicContext.StockApplication.Add(stockapplication);
-                var pApplyStock = await _ablemusicContext.StockApplication
-                .Where(s => s.ApplicationId == stockapplication.ApplicationId).FirstOrDefaultAsync();
-                _ablemusicContext.Update(pApplyStock.ProcessStatus == 1);
                 await _ablemusicContext.SaveChangesAsync();
 
             }
