@@ -12,7 +12,13 @@ namespace Pegasus_backend.pegasusContext
         public int? MissedLessonId { get; set; }
         public int? NewLessonId { get; set; }
         public short? IsActive { get; set; }
+        public int? LearnerId { get; set; }
+        public int? CourseInstanceId { get; set; }
+        public int? GroupCourseInstanceId { get; set; }
 
+        public One2oneCourseInstance CourseInstance { get; set; }
+        public GroupCourseInstance GroupCourseInstance { get; set; }
+        public Learner Learner { get; set; }
         public Lesson MissedLesson { get; set; }
         public Lesson NewLesson { get; set; }
     }

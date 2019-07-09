@@ -41,7 +41,7 @@ namespace Pegasus_backend.Controllers
                 lesson = await _ablemusicContext.Lesson.Where(l => l.LessonId == lessonId).Include(l => l.Invoice).FirstOrDefaultAsync();
                 if(lesson.Invoice == null)
                 {
-                    throw new Exception("Invoice not found under the give lesson id");
+                    throw new Exception("This session may is a group session, Group session is not allowed to reschedule");
                 }
                 courses = await (from c in _ablemusicContext.Course
                                  join oto in _ablemusicContext.One2oneCourseInstance on c.CourseId equals oto.CourseId

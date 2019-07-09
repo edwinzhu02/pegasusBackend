@@ -8,6 +8,7 @@ namespace Pegasus_backend.pegasusContext
         public Learner()
         {
             Amendment = new HashSet<Amendment>();
+            AwaitMakeUpLesson = new HashSet<AwaitMakeUpLesson>();
             Invoice = new HashSet<Invoice>();
             InvoiceWaitingConfirm = new HashSet<InvoiceWaitingConfirm>();
             LearnerGroupCourse = new HashSet<LearnerGroupCourse>();
@@ -54,6 +55,7 @@ namespace Pegasus_backend.pegasusContext
         public Org Org { get; set; }
         public User User { get; set; }
         public ICollection<Amendment> Amendment { get; set; }
+        public ICollection<AwaitMakeUpLesson> AwaitMakeUpLesson { get; set; }
         public ICollection<Invoice> Invoice { get; set; }
         public ICollection<InvoiceWaitingConfirm> InvoiceWaitingConfirm { get; set; }
         public ICollection<LearnerGroupCourse> LearnerGroupCourse { get; set; }

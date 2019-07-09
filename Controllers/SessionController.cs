@@ -491,6 +491,28 @@ namespace Pegasus_backend.Controllers
 
             return Ok(result);  //Should redirect to a success page!
         }
+        [HttpGet("[action]/{learnerId}")]
+        //public async Task<IActionResult> GetLessonsBetweenDate(DateTime? beginDate, DateTime? endDate, int? userId)
+        public async Task<IActionResult>  GetMakeupSessions(int learnerId)
+        //public async Task<IActionResult> CancelConfirm2(int remindId)
+      
+        {
+            var result = new Result<IEnumerable<object>>();
+            try
+            {
+                result.Data =await _ablemusicContext.AwaitMakeUpLesson.
+                    Include(a => a.CourseInstance).ThenInclude(ci => ci.Course).
+                    Where(a => a.IsActive==1 && a.LearnerId ==learnerId)
+                .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.ToString();
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
 
         // PUT: api/Session/5
         [HttpPut("{sessionId}/{reason}/{userId}")]
@@ -540,6 +562,9 @@ namespace Pegasus_backend.Controllers
             lesson.Reason = reason;
             //save to making up lessones to save
             awaitMakeUpLesson.MissedLessonId = lesson.LessonId;
+            awaitMakeUpLesson.LearnerId = lesson.LearnerId;
+            awaitMakeUpLesson.CourseInstanceId = lesson.CourseInstanceId;
+            awaitMakeUpLesson.GroupCourseInstanceId = lesson.GroupCourseInstanceId;            
             awaitMakeUpLesson.CreateAt = toNZTimezone(DateTime.UtcNow);
             awaitMakeUpLesson.IsActive = 1;
             awaitMakeUpLesson.ExpiredDate = lesson.BeginTime.Value.Date.AddMonths(3);

@@ -345,6 +345,15 @@ namespace Pegasus_backend.pegasusContext
 
                 entity.ToTable("await_make_up_lesson", "ablemusic");
 
+                entity.HasIndex(e => e.CourseInstanceId)
+                    .HasName("R_142");
+
+                entity.HasIndex(e => e.GroupCourseInstanceId)
+                    .HasName("R_143");
+
+                entity.HasIndex(e => e.LearnerId)
+                    .HasName("R_141");
+
                 entity.HasIndex(e => e.MissedLessonId)
                     .HasName("R_135");
 
@@ -356,15 +365,27 @@ namespace Pegasus_backend.pegasusContext
                     .HasColumnType("int(11)")
                     .ValueGeneratedNever();
 
+                entity.Property(e => e.CourseInstanceId)
+                    .HasColumnName("course_instance_id")
+                    .HasColumnType("int(11)");
+
                 entity.Property(e => e.CreateAt).HasColumnName("create_at");
 
                 entity.Property(e => e.ExpiredDate)
                     .HasColumnName("expired_date")
                     .HasColumnType("date");
 
+                entity.Property(e => e.GroupCourseInstanceId)
+                    .HasColumnName("group_course_instance_id")
+                    .HasColumnType("int(11)");
+
                 entity.Property(e => e.IsActive)
                     .HasColumnName("is_active")
                     .HasColumnType("bit(1)");
+
+                entity.Property(e => e.LearnerId)
+                    .HasColumnName("learner_id")
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.MissedLessonId)
                     .HasColumnName("missed_lesson_id")
@@ -375,6 +396,21 @@ namespace Pegasus_backend.pegasusContext
                     .HasColumnType("int(11)");
 
                 entity.Property(e => e.SchduledAt).HasColumnName("schduled_at");
+
+                entity.HasOne(d => d.CourseInstance)
+                    .WithMany(p => p.AwaitMakeUpLesson)
+                    .HasForeignKey(d => d.CourseInstanceId)
+                    .HasConstraintName("R_142");
+
+                entity.HasOne(d => d.GroupCourseInstance)
+                    .WithMany(p => p.AwaitMakeUpLesson)
+                    .HasForeignKey(d => d.GroupCourseInstanceId)
+                    .HasConstraintName("R_143");
+
+                entity.HasOne(d => d.Learner)
+                    .WithMany(p => p.AwaitMakeUpLesson)
+                    .HasForeignKey(d => d.LearnerId)
+                    .HasConstraintName("R_141");
 
                 entity.HasOne(d => d.MissedLesson)
                     .WithMany(p => p.AwaitMakeUpLessonMissedLesson)
