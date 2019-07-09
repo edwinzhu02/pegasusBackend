@@ -41,7 +41,7 @@ namespace Pegasus_backend.Controllers
                                                 join t in _ablemusicContext.Term on iw.TermId equals t.TermId
                                                 join iv in _ablemusicContext.Invoice on iw.InvoiceNum equals iv.InvoiceNum into f
                                                 from i in f.DefaultIfEmpty()
-                                                where s.UserId == userId && t.TermId == termId && i.IsActive == 1
+                                                where s.UserId == userId && t.TermId == termId
                                                 select new
                                                 {
                                                     Learner = new
@@ -135,7 +135,7 @@ namespace Pegasus_backend.Controllers
                                                         IsActive = i == null ? 0 : i.IsActive,
                                                         Comment = i == null ? string.Empty : i.Comment
                                                     },
-                                                }).OrderBy(f => f.InvoiceWaitingConfirm.InvoiceNum).ToListAsync();
+                                                }).ToListAsync();
             }
             catch (Exception ex)
             {
@@ -144,13 +144,14 @@ namespace Pegasus_backend.Controllers
                 return BadRequest(result);
             }
 
-            string preInvoiceNum = "";
+            List<string> preInvoiceNum = new List<string>();
             foreach(var i in invoiceWaitingConfirms)
             {
                 string currentInvoiceNum = i.InvoiceWaitingConfirm.InvoiceNum;
-                if (preInvoiceNum != currentInvoiceNum) 
+                if (preInvoiceNum.IndexOf(currentInvoiceNum) == -1) 
                 {
                     dynamic currentInvoices = new List<object>();
+                    preInvoiceNum.Add(currentInvoiceNum);
                     foreach(var i2 in invoiceWaitingConfirms)
                     {
                         if(i2.InvoiceWaitingConfirm.InvoiceNum == currentInvoiceNum)
