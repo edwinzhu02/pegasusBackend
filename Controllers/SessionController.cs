@@ -37,6 +37,7 @@ namespace Pegasus_backend.Controllers
             var lesson = _mapper.Map(lessonViewModel, new Lesson());
             var lessonRemains = new List<LessonRemain>();
             var course = new Course();
+            var awaitMakeUpLessons = new List<AwaitMakeUpLesson>();
             string userConfirmUrlPrefix = _configuration.GetSection("UrlPrefix").Value;
             try
             {
@@ -51,6 +52,10 @@ namespace Pegasus_backend.Controllers
                                     CourseName = c.CourseName,
                                     Duration = c.Duration,
                                 }).FirstOrDefaultAsync();
+                awaitMakeUpLessons = await _ablemusicContext.AwaitMakeUpLesson.Where(a => a.IsActive == 1 && a.LearnerId == lesson.LearnerId &&
+                                          (a.CourseInstanceId.HasValue && lesson.CourseInstanceId == a.CourseInstanceId) || 
+                                          (a.GroupCourseInstanceId.HasValue && lesson.GroupCourseInstanceId == a.GroupCourseInstanceId))
+                                          .OrderBy(a => a.ExpiredDate).ToListAsync(); 
             }
             catch(Exception ex)
             {
@@ -69,6 +74,27 @@ namespace Pegasus_backend.Controllers
             {
                 result.IsSuccess = false;
                 result.ErrorMessage = "Course not found";
+                return BadRequest(result);
+            }
+            if(awaitMakeUpLessons.Count <= 0)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = "AwaitMakeUpLesson not found";
+                return BadRequest(result);
+            }
+            AwaitMakeUpLesson validMakeUpLesson = null;
+            foreach(var makeUpLesson in awaitMakeUpLessons)
+            {
+                if(makeUpLesson.ExpiredDate.Value.Date >= lesson.BeginTime.Value.Date)
+                {
+                    validMakeUpLesson = makeUpLesson;
+                    break;
+                }
+            }
+            if(validMakeUpLesson == null)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = "Your lesson all expired";
                 return BadRequest(result);
             }
 
@@ -190,6 +216,8 @@ namespace Pegasus_backend.Controllers
             lesson.IsConfirm = 0;
             lesson.TrialCourseId = null;
             lesson.IsChanged = 0;
+
+            validMakeUpLesson.IsActive = 0;
 
             try
             {
@@ -491,6 +519,28 @@ namespace Pegasus_backend.Controllers
 
             return Ok(result);  //Should redirect to a success page!
         }
+        [HttpGet("[action]/{learnerId}")]
+        //public async Task<IActionResult> GetLessonsBetweenDate(DateTime? beginDate, DateTime? endDate, int? userId)
+        public async Task<IActionResult>  GetMakeupSessions(int learnerId)
+        //public async Task<IActionResult> CancelConfirm2(int remindId)
+      
+        {
+            var result = new Result<IEnumerable<object>>();
+            try
+            {
+                result.Data =await _ablemusicContext.AwaitMakeUpLesson.
+                    Include(a => a.CourseInstance).ThenInclude(ci => ci.Course).
+                    Where(a => a.IsActive==1 && a.LearnerId ==learnerId)
+                .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.ToString();
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
 
         // PUT: api/Session/5
         [HttpPut("{sessionId}/{reason}/{userId}")]
@@ -540,6 +590,9 @@ namespace Pegasus_backend.Controllers
             lesson.Reason = reason;
             //save to making up lessones to save
             awaitMakeUpLesson.MissedLessonId = lesson.LessonId;
+            awaitMakeUpLesson.LearnerId = lesson.LearnerId;
+            awaitMakeUpLesson.CourseInstanceId = lesson.CourseInstanceId;
+            awaitMakeUpLesson.GroupCourseInstanceId = lesson.GroupCourseInstanceId;            
             awaitMakeUpLesson.CreateAt = toNZTimezone(DateTime.UtcNow);
             awaitMakeUpLesson.IsActive = 1;
             awaitMakeUpLesson.ExpiredDate = lesson.BeginTime.Value.Date.AddMonths(3);

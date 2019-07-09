@@ -7,6 +7,7 @@ namespace Pegasus_backend.pegasusContext
     {
         public GroupCourseInstance()
         {
+            AwaitMakeUpLesson = new HashSet<AwaitMakeUpLesson>();
             CourseSchedule = new HashSet<CourseSchedule>();
             Invoice = new HashSet<Invoice>();
             InvoiceWaitingConfirm = new HashSet<InvoiceWaitingConfirm>();
@@ -30,6 +31,7 @@ namespace Pegasus_backend.pegasusContext
         public Org Org { get; set; }
         public Room Room { get; set; }
         public Teacher Teacher { get; set; }
+        public ICollection<AwaitMakeUpLesson> AwaitMakeUpLesson { get; set; }
         public ICollection<CourseSchedule> CourseSchedule { get; set; }
         public ICollection<Invoice> Invoice { get; set; }
         public ICollection<InvoiceWaitingConfirm> InvoiceWaitingConfirm { get; set; }
