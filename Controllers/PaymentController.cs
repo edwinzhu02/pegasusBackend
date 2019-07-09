@@ -100,9 +100,20 @@ namespace Pegasus_backend.Controllers
 
                     var fundItem =
                         await _ablemusicContext.Fund.FirstOrDefaultAsync(s => s.LearnerId == details.LearnerId);
-                    fundItem.Balance = fundItem.Balance + details.Amount;
-                    fundItem.UpdatedAt = toNZTimezone(DateTime.UtcNow);
-                    _ablemusicContext.Update(fundItem);
+                    if (fundItem == null )
+                    {
+                        var fundNewItem =  new  Fund();
+                        fundNewItem.LearnerId = details.LearnerId;
+                        fundNewItem.Balance =details.Amount;
+                        fundNewItem.Balance =details.Amount;
+                        fundNewItem.UpdatedAt = toNZTimezone(DateTime.UtcNow);
+                        _ablemusicContext.Add(fundNewItem);
+                    }
+                    else{
+                        fundItem.Balance = fundItem.Balance + details.Amount;
+                        fundItem.UpdatedAt = toNZTimezone(DateTime.UtcNow);
+                        _ablemusicContext.Update(fundItem);
+                    }
                     await _ablemusicContext.SaveChangesAsync();
 
                     if (invoiceItem.IsPaid == 1)
