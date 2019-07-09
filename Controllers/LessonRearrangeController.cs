@@ -34,16 +34,15 @@ namespace Pegasus_backend.Controllers
         [CheckModelFilter]
         public async Task<IActionResult> PutLesson(short userId, [FromBody] LessonViewModel lessonViewmodel)
         {
-            var result = new Result<string>();
+            var result = new Result<Lesson>();
             string userConfirmUrlPrefix = _configuration.GetSection("UrlPrefix").Value;
             Lesson newLesson = new Lesson();
             Lesson oldLesson = new Lesson();
-            Learner learner = new Learner();
+            
             _mapper.Map(lessonViewmodel, newLesson);
             try
             {
                 oldLesson = await _ablemusicContext.Lesson.Where(l => l.LessonId == newLesson.LessonId).FirstOrDefaultAsync();
-                learner = await _ablemusicContext.Learner.FirstOrDefaultAsync(l => l.LearnerId == oldLesson.LearnerId);
             }
             catch(Exception ex)
             {
@@ -59,12 +58,7 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = "Lesson id not found";
                 return NotFound(result);
             }
-            if(oldLesson.GroupCourseInstanceId != null)
-            {
-                result.IsSuccess = false;
-                result.ErrorMessage = "Goupe course is not allow to rearrange";
-                return BadRequest(result);
-            }
+
             TimeSpan lessonDuration = oldLesson.EndTime.Value.Subtract(oldLesson.BeginTime.Value);
             newLesson.EndTime = newLesson.BeginTime.Value.Add(lessonDuration);
 
@@ -86,6 +80,8 @@ namespace Pegasus_backend.Controllers
                 return BadRequest(lessonConflictCheckResult);
             }
 
+            Learner learner = new Learner();
+            List<Learner> learners = new List<Learner>();
             Teacher newTeacher;
             Teacher oldTeacher;
             pegasusContext.Org oldOrg;
@@ -96,14 +92,9 @@ namespace Pegasus_backend.Controllers
             List<Holiday> holidays;
             try
             {
-                newTeacher = await _ablemusicContext.Teacher.FirstOrDefaultAsync(t => t.TeacherId == newLesson.TeacherId);
-                oldTeacher = newLesson.TeacherId == oldLesson.TeacherId ? newTeacher : 
-                    await _ablemusicContext.Teacher.FirstOrDefaultAsync(t => t.TeacherId == oldLesson.TeacherId);
-                if(oldLesson.IsTrial == 1)
+                if(oldLesson.CourseInstanceId != null)
                 {
-                    course = await _ablemusicContext.Course.Where(c => c.CourseId == oldLesson.TrialCourseId).FirstOrDefaultAsync();
-                } else
-                {
+                    learner = await _ablemusicContext.Learner.FirstOrDefaultAsync(l => l.LearnerId == oldLesson.LearnerId);
                     course = await (from c in _ablemusicContext.Course
                                     join oto in _ablemusicContext.One2oneCourseInstance on c.CourseId equals oto.CourseId
                                     join l in _ablemusicContext.Lesson on oto.CourseInstanceId equals l.CourseInstanceId
@@ -113,6 +104,31 @@ namespace Pegasus_backend.Controllers
                                         CourseId = c.CourseId,
                                         CourseName = c.CourseName
                                     }).FirstOrDefaultAsync();
+                }
+                else
+                {
+                    learners = await (from gc in _ablemusicContext.GroupCourseInstance
+                                      join lgc in _ablemusicContext.LearnerGroupCourse on gc.GroupCourseInstanceId equals lgc.GroupCourseInstanceId
+                                      join l in _ablemusicContext.Learner on lgc.LearnerId equals l.LearnerId
+                                      where gc.GroupCourseInstanceId == oldLesson.GroupCourseInstanceId
+                                      select l
+                                      ).ToListAsync();
+                    course = await (from c in _ablemusicContext.Course
+                                    join gc in _ablemusicContext.GroupCourseInstance on c.CourseId equals gc.CourseId
+                                    join l in _ablemusicContext.Lesson on gc.GroupCourseInstanceId equals l.GroupCourseInstanceId
+                                    where l.LessonId == newLesson.LessonId
+                                    select new Course
+                                    {
+                                        CourseId = c.CourseId,
+                                        CourseName = c.CourseName
+                                    }).FirstOrDefaultAsync();
+                }
+                newTeacher = await _ablemusicContext.Teacher.FirstOrDefaultAsync(t => t.TeacherId == newLesson.TeacherId);
+                oldTeacher = newLesson.TeacherId == oldLesson.TeacherId ? newTeacher : 
+                    await _ablemusicContext.Teacher.FirstOrDefaultAsync(t => t.TeacherId == oldLesson.TeacherId);
+                if(oldLesson.IsTrial == 1)
+                {
+                    course = await _ablemusicContext.Course.Where(c => c.CourseId == oldLesson.TrialCourseId).FirstOrDefaultAsync();
                 }
                 holidays = await _ablemusicContext.Holiday.ToListAsync();
                 oldOrg = await _ablemusicContext.Org.Where(o => o.OrgId == oldLesson.OrgId).FirstOrDefaultAsync();
@@ -179,14 +195,27 @@ namespace Pegasus_backend.Controllers
             }
 
             TodoRepository todoRepository = new TodoRepository();
-            todoRepository.AddSingleTodoList("Lesson Rearrangement to Remind", TodoListContentGenerator.RearrangedSingleLessonWithOldLessonForLearner(
+            if(oldLesson.CourseInstanceId != null)
+            {
+                todoRepository.AddSingleTodoList("Lesson Rearrangement to Remind", TodoListContentGenerator.RearrangedSingleLessonWithOldLessonForLearner(
                 oldLesson, newLesson, learner, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom), userId, newTodoDate, newLesson.LessonId, learner.LearnerId, null);
+                todoRepository.AddSingleTodoList("Lesson Rearrangement to Remind", TodoListContentGenerator.RearrangedSingleLessonWithOldLessonForLearner(
+                oldLesson, newLesson, learner, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom), userId, oldTodoDate, oldLesson.LessonId, learner.LearnerId, null);
+            } else
+            {
+                Dictionary<int, string> learnerIdMapContent = new Dictionary<int, string>();
+                foreach(var l in learners)
+                {
+                    learnerIdMapContent.Add(l.LearnerId, TodoListContentGenerator.RearrangedSingleLessonWithOldLessonForLearner(oldLesson, newLesson, l, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom));
+                }
+                todoRepository.AddMutipleTodoLists("Lesson Rearrangement to Remind", learnerIdMapContent, userId, newTodoDate, newLesson.LessonId, null);
+                todoRepository.AddMutipleTodoLists("Lesson Rearrangement to Remind", learnerIdMapContent, userId, oldTodoDate, newLesson.LessonId, null);
+            }
             todoRepository.AddSingleTodoList("Lesson Rearrangement to Remind", TodoListContentGenerator.RearrangedSingleLessonWithOldLessonForOldTeacher(
                 oldLesson, newLesson, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom), userId, newTodoDate, newLesson.LessonId, null, oldTeacher.TeacherId);
             todoRepository.AddSingleTodoList("Lesson Rearrangement to Remind", TodoListContentGenerator.RearrangedSingleLessonWithOldLessonForNewTeacher(
                 oldLesson, newLesson, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom), userId, newTodoDate, newLesson.LessonId, null, newTeacher.TeacherId);
-            todoRepository.AddSingleTodoList("Lesson Rearrangement to Remind", TodoListContentGenerator.RearrangedSingleLessonWithOldLessonForLearner(
-                oldLesson, newLesson, learner, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom), userId, oldTodoDate, oldLesson.LessonId, learner.LearnerId, null);
+            
             todoRepository.AddSingleTodoList("Lesson Rearrangement to Remind", TodoListContentGenerator.RearrangedSingleLessonWithOldLessonForOldTeacher(
                 oldLesson, newLesson, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom), userId, oldTodoDate, oldLesson.LessonId, null, oldTeacher.TeacherId);
             todoRepository.AddSingleTodoList("Lesson Rearrangement to Remind", TodoListContentGenerator.RearrangedSingleLessonWithOldLessonForNewTeacher(
@@ -211,8 +240,19 @@ namespace Pegasus_backend.Controllers
             }
 
             RemindLogRepository remindLogRepository = new RemindLogRepository();
-            remindLogRepository.AddSingleRemindLog(learner.LearnerId, learner.Email, RemindLogContentGenerator.RearrangedSingleLessonWithOldLessonForLearner(
+            if(oldLesson.CourseInstanceId != null)
+            {
+                remindLogRepository.AddSingleRemindLog(learner.LearnerId, learner.Email, RemindLogContentGenerator.RearrangedSingleLessonWithOldLessonForLearner(
                 oldLesson, newLesson, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom, courseName), null, "Lesson Rearrangement Remind", newLesson.LessonId);
+            } else
+            {
+                Dictionary<Learner, string> learnerMapContent = new Dictionary<Learner, string>();
+                foreach(var l in learners)
+                {
+                    learnerMapContent.Add(l, RemindLogContentGenerator.RearrangedSingleLessonWithOldLessonForLearner(oldLesson, newLesson, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom, courseName));
+                }
+                remindLogRepository.AddMultipleRemindLogs(learnerMapContent, null, "Lesson rearrangement Remind", newLesson.LessonId);
+            }
             remindLogRepository.AddSingleRemindLog(null, oldTeacher.Email, RemindLogContentGenerator.RearrangedSingleLessonWithOldLessonForOldTeacher(
                 oldLesson, newLesson, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom, courseName), oldTeacher.TeacherId, "Lesson Rearrangement Remind", oldLesson.LessonId);
             remindLogRepository.AddSingleRemindLog(null, newTeacher.Email, RemindLogContentGenerator.RearrangedSingleLessonWithOldLessonForNewTeacher(
@@ -261,6 +301,7 @@ namespace Pegasus_backend.Controllers
             }
 
             result.IsSuccess = true;
+            result.Data = newLesson;
             return Ok(result);
         }
 

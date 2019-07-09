@@ -7,7 +7,6 @@ using Microsoft.Extensions.Logging;
 using Pegasus_backend.Models;
 using Pegasus_backend.pegasusContext;
 using Pegasus_backend.Services;
-using Pegasus_backend.Models;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -23,7 +22,7 @@ namespace Pegasus_backend.Controllers
 
         // GET api/values
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public IActionResult Get()
         {
             Result<object> result = new Result<object>();
             var arg = new NotificationEventArgs("Jesse", "Say Hi", "Details", 1);
