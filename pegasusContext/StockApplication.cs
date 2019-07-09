@@ -20,7 +20,7 @@ namespace Pegasus_backend.pegasusContext
         public short? IsDisputed { get; set; }
         public DateTime? ReplyAt { get; set; }
         public DateTime? RecieveAt { get; set; }
-        public string DeliverAt { get; set; }
+        public DateTime? DeliverAt { get; set; }
 
         public Staff ApplyStaff { get; set; }
         public Org Org { get; set; }
