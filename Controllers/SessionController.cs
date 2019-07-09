@@ -85,7 +85,7 @@ namespace Pegasus_backend.Controllers
             AwaitMakeUpLesson validMakeUpLesson = null;
             foreach(var makeUpLesson in awaitMakeUpLessons)
             {
-                if(makeUpLesson.ExpiredDate >= lesson.BeginTime)
+                if(makeUpLesson.ExpiredDate.Value.Date >= lesson.BeginTime.Value.Date)
                 {
                     validMakeUpLesson = makeUpLesson;
                     break;
