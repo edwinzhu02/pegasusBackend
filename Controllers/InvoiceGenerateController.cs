@@ -22,7 +22,7 @@ namespace Pegasus_backend.Controllers
     {
         private readonly pegasusContext.ablemusicContext _context;
         private List<Learner> StudentInfo;
-        private decimal? price;
+        //private decimal? price;
         private IEnumerable<Holiday> holidays;
         
         public InvoiceGenerateController(pegasusContext.ablemusicContext context)

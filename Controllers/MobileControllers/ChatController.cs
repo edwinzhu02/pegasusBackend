@@ -23,14 +23,15 @@ namespace Pegasus_backend.Controllers.MobileControllers
         private readonly IMapper _mapper;
         private readonly IHubContext<Chatroom> _chatRoom;
 
-        public ChatController(ablemusicContext ablemusicContext, ILogger<NavItemsController> log, IHubContext<Chatroom> chatRoom) : base(ablemusicContext, log)
+        public ChatController(ablemusicContext ablemusicContext, ILogger<NavItemsController> log, IHubContext<Chatroom> chatRoom, IMapper mapper) : base(ablemusicContext, log)
         {
             _chatRoom = chatRoom;
+            _mapper = mapper;
         }
 
         [Route("[action]")]
         [HttpPost]
-        public async Task<IActionResult> TestMessage(ChatMessageModel chatMessageModel)
+        public IActionResult TestMessage(ChatMessageModel chatMessageModel)
         {
             return Ok(chatMessageModel);
         }

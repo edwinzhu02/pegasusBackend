@@ -20,7 +20,6 @@ namespace Pegasus_backend.Controllers
     public class CourseRemainingController: ControllerBase
     {
         private readonly DataService _dataService;
-        private readonly IMapper _mapper;
 
         public CourseRemainingController(ablemusicContext context, IMapper mapper)
         {
