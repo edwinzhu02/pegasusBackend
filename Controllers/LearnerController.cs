@@ -106,7 +106,59 @@ namespace Pegasus_backend.Controllers
                 return BadRequest(result);
             }
         }
-
+        
+        [HttpGet]
+        [Route("[action]/{learnerId}")]
+       public async Task<IActionResult> GetLearnerById(int learnerId)
+        {
+            var result = new Result<object>();
+            try
+            {
+                var learners = await _ablemusicContext.Learner
+                    .Include(w => w.Parent)
+                    .Include(w => w.LearnerOthers)
+                    .Include(w=>w.One2oneCourseInstance)
+                    .ThenInclude(w=>w.Amendment)
+                    .ThenInclude(w=>w.Room)
+                    .Include(w=>w.One2oneCourseInstance)
+                    .ThenInclude(w=>w.Amendment)
+                    .ThenInclude(w=>w.Teacher)
+                    .Include(w => w.One2oneCourseInstance)
+                    .ThenInclude(w => w.Org)
+                    .Include(w => w.One2oneCourseInstance)
+                    .ThenInclude(w => w.Course)
+                    .Include(w => w.One2oneCourseInstance)
+                    .ThenInclude(w => w.Room)
+                    .Include(w => w.One2oneCourseInstance)
+                    .ThenInclude(w => w.CourseSchedule)
+                    .Include(w => w.One2oneCourseInstance)
+                    .ThenInclude(w => w.Teacher)
+                    .Include(w => w.LearnerGroupCourse)
+                    .ThenInclude(w => w.GroupCourseInstance)
+                    .ThenInclude(s => s.Teacher)
+                    .Include(w => w.LearnerGroupCourse)
+                    .ThenInclude(s => s.GroupCourseInstance)
+                    .ThenInclude(s => s.CourseSchedule)
+                    .Include(w => w.LearnerGroupCourse)
+                    .ThenInclude(s => s.GroupCourseInstance)
+                    .ThenInclude(s => s.Course)
+                    .Include(s => s.LearnerGroupCourse)
+                    .ThenInclude(s => s.GroupCourseInstance)
+                    .ThenInclude(s => s.Room)//
+                    .Where(s => s.LearnerId == learnerId)
+                    .ToListAsync();
+                
+                var mapperItem = _mapper.Map<List<GetLearnerModel>>(learners);
+                result.Data = mapperItem;
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+        }
         
         
         //GET: http://localhost:5000/api/learner/:name
