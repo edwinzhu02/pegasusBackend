@@ -24,7 +24,7 @@ namespace Pegasus_backend.Controllers
     public class TeacherController : BasicController
     {
         private readonly IMapper _mapper;
-        private TeacherLanguage newTeacherLanguage;
+        //private TeacherLanguage newTeacherLanguage;
         private TeacherQualificatiion newTeacherQualification;
         private AvailableDays DayList;
 
@@ -37,7 +37,7 @@ namespace Pegasus_backend.Controllers
         //GET http://localhost:5000/api/teacher/:words
         [CheckModelFilter]
         [HttpGet("{words}")]
-        public async Task<IActionResult> SearchTeacher(string words, [FromBody] TeacherSearch searchFormat)
+        public IActionResult SearchTeacher(string words, [FromBody] TeacherSearch searchFormat)
         {
             Result<Object> result = new Result<Object>();
             try
