@@ -37,5 +37,6 @@ namespace Pegasus_backend.Models
         public short? IsActivate { get; set; }
         public short? IsEmailSent { get; set; }
         public short? IsConfirmed { get; set; }
+        public string Comment { get; set; }
     }
 }

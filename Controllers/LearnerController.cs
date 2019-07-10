@@ -146,9 +146,9 @@ namespace Pegasus_backend.Controllers
                     .ThenInclude(s => s.GroupCourseInstance)
                     .ThenInclude(s => s.Room)//
                     .Where(s => s.LearnerId == learnerId)
-                    .ToListAsync();
+                    .FirstOrDefaultAsync();
                 
-                var mapperItem = _mapper.Map<List<GetLearnerModel>>(learners);
+                var mapperItem = _mapper.Map<GetLearnerModel>(learners);
                 result.Data = mapperItem;
                 return Ok(result);
             }

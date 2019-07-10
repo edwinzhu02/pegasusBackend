@@ -206,7 +206,8 @@ namespace Pegasus_backend.Controllers
             _mapper.Map(invoiceWaitingConfirmViewModel, invoiceWaitingConfirm);
             try
             {
-                invoiceWaitingConfirmUpdate = await _ablemusicContext.InvoiceWaitingConfirm.Where(i => i.InvoiceNum == invoiceWaitingConfirm.InvoiceNum).FirstOrDefaultAsync();
+                invoiceWaitingConfirmUpdate = await _ablemusicContext.InvoiceWaitingConfirm.
+                Where(i => (i.InvoiceNum == invoiceWaitingConfirm.InvoiceNum && i.IsActivate ==1 )).FirstOrDefaultAsync();
                 activeInvoices = await _ablemusicContext.Invoice.Where(i => (i.IsActive == 1 || i.IsActive == null) && i.InvoiceNum == invoiceWaitingConfirm.InvoiceNum).ToListAsync();
             }
             catch(Exception ex)
@@ -276,6 +277,7 @@ namespace Pegasus_backend.Controllers
             invoice.Other1FeeName = invoiceWaitingConfirm.Other1FeeName;
             invoice.Other2FeeName = invoiceWaitingConfirm.Other2FeeName;
             invoice.Other3FeeName = invoiceWaitingConfirm.Other3FeeName;
+            invoice.Comment = invoiceWaitingConfirm.Comment;
             invoice.IsActive = 1;
 
             if (activeInvoices.Count > 0)
