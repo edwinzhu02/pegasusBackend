@@ -37,7 +37,9 @@ namespace Pegasus_backend.Controllers
                 result.Data = await _ablemusicContext.StockApplication
                 .Where(s => s.ApplyAt >= beginDate && s.ApplyAt <= endDate).Include(s=>s.Org)
                 .Include(s=>s.ApplyStaff)
-                .Include(t => t.ApplicationDetails).ToListAsync();
+                .Include(t => t.ApplicationDetails)
+                .ThenInclude(t => t.Product)
+                .ToListAsync();
                 return Ok(result);
             }
             catch (Exception ex)
