@@ -33,8 +33,11 @@ namespace Pegasus_backend.Controllers
             {
                 result.Data = await _ablemusicContext.StockApplication
                 .Include(s => s.ApplyStaff)
-                .Include(s => s.ApplicationDetails)
                 .Include(s => s.Org)
+                .Include(s => s.ApplicationDetails)
+                .ThenInclude(s => s.Product)
+                .ThenInclude(s => s.ProdType)
+                .ThenInclude(s => s.ProdCat)
                 .Where(s => s.ApplyAt >= beginDate && s.ApplyAt <= endDate)
                 .Select(s => new
                 {
@@ -51,9 +54,19 @@ namespace Pegasus_backend.Controllers
                     s.DeliverAt,
                     s.Org,
                     s.ApplyStaff,
-                    s.ApplicationDetails
-                })
-                .ToListAsync();
+                    ApplicationDetails = s.ApplicationDetails.Select(ad => new
+                    {
+                        ad.ApplicationId,
+                        ad.DetaillsId,
+                        ad.ProductId,
+                        ad.AppliedQty,
+                        ad.DeliveredQty,
+                        ad.ReceivedQty,
+                        ad.Product,
+                        ad.Product.ProdType,
+                        ad.Product.ProdType.ProdCat,
+                    })
+                }).ToListAsync();
             }
             catch (Exception ex)
             {
@@ -79,8 +92,11 @@ namespace Pegasus_backend.Controllers
             {
                 result.Data = await _ablemusicContext.StockApplication
                 .Include(s => s.ApplyStaff)
-                .Include(s => s.ApplicationDetails)
                 .Include(s => s.Org)
+                .Include(s => s.ApplicationDetails)
+                .ThenInclude(s => s.Product)
+                .ThenInclude(s => s.ProdType)
+                .ThenInclude(s => s.ProdCat)
                 .Where(s => s.ProcessStatus == processStatus)
                 .Select(s => new
                 {
@@ -97,9 +113,19 @@ namespace Pegasus_backend.Controllers
                     s.DeliverAt,
                     s.Org,
                     s.ApplyStaff,
-                    s.ApplicationDetails
-                })
-                .ToListAsync();
+                    ApplicationDetails = s.ApplicationDetails.Select(ad => new
+                    {
+                        ad.ApplicationId,
+                        ad.DetaillsId,
+                        ad.ProductId,
+                        ad.AppliedQty,
+                        ad.DeliveredQty,
+                        ad.ReceivedQty,
+                        ad.Product,
+                        ad.Product.ProdType,
+                        ad.Product.ProdType.ProdCat,
+                    })
+                }).ToListAsync();
             }
             catch (Exception ex)
             {
@@ -125,8 +151,11 @@ namespace Pegasus_backend.Controllers
             {
                 result.Data = await _ablemusicContext.StockApplication
                 .Include(s => s.ApplyStaff)
-                .Include(s => s.ApplicationDetails)
                 .Include(s => s.Org)
+                .Include(s => s.ApplicationDetails)
+                .ThenInclude(s => s.Product)
+                .ThenInclude(s => s.ProdType)
+                .ThenInclude(s => s.ProdCat)
                 .Where(s => s.IsDisputed == IsDisputed)
                 .Select(s => new
                 {
@@ -143,9 +172,19 @@ namespace Pegasus_backend.Controllers
                     s.DeliverAt,
                     s.Org,
                     s.ApplyStaff,
-                    s.ApplicationDetails
-                })
-                .ToListAsync();
+                    ApplicationDetails = s.ApplicationDetails.Select(ad => new
+                    {
+                        ad.ApplicationId,
+                        ad.DetaillsId,
+                        ad.ProductId,
+                        ad.AppliedQty,
+                        ad.DeliveredQty,
+                        ad.ReceivedQty,
+                        ad.Product,
+                        ad.Product.ProdType,
+                        ad.Product.ProdType.ProdCat,
+                    })
+                }).ToListAsync();
             }
             catch (Exception ex)
             {
