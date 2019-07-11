@@ -101,7 +101,7 @@ namespace Pegasus_backend.Controllers
         }
 
         
-        [HttpGet("[action]/{userId}/{beginDate}")]
+        [HttpGet("[action]/{teacherId}/{beginDate}")]
         public async Task<IActionResult> GetLessonsForTeacher(byte teacherId, DateTime beginDate)
         {
             Result<Object> result = new Result<object>();
