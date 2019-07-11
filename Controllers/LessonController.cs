@@ -102,18 +102,18 @@ namespace Pegasus_backend.Controllers
 
         
         [HttpGet("[action]/{userId}/{beginDate}")]
-        public async Task<IActionResult> GetLessonsForTeacher(byte userId, DateTime beginDate)
+        public async Task<IActionResult> GetLessonsForTeacher(byte teacherId, DateTime beginDate)
         {
             Result<Object> result = new Result<object>();
             try
             {
                 var endDate = beginDate.AddDays(6);
-                var teacher = _ablemusicContext.Teacher.FirstOrDefault(s => s.UserId == userId);
-                if (teacher == null)
-                {
-                    throw new Exception("Teacher does not exist.");
-                }
-                var teacherId = teacher.TeacherId;
+                // var teacher = _ablemusicContext.Teacher.FirstOrDefault(s => s.TeacherId == teacherId);
+                // if (teacher == null)
+                // {
+                //     throw new Exception("Teacher does not exist.");
+                // }
+                //var teacherId = teacher.TeacherId;
                 var details = _ablemusicContext.Lesson.Where(s => s.TeacherId == teacherId)
                     .Where(s=>s.IsCanceled != 1 && s.IsConfirm != 1)
                     .Where(s=>beginDate.Date <= s.EndTime.Value.Date && s.EndTime.Value.Date <= endDate.Date)
