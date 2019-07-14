@@ -19,30 +19,6 @@ namespace Pegasus_backend.Controllers
         public LessonController(ablemusicContext ablemusicContext, ILogger<LessonController> log) : base(ablemusicContext, log)
         {
         }
-
-        /*[HttpGet]
-        [Route("abc")]
-        public IActionResult a()
-        {
-            var item = _ablemusicContext.Lesson
-                .Include(s => s.CourseInstance)
-                .Include(s => s.Learner)
-                .Include(s => s.Teacher)
-                .Include(s => s.Room)
-                .Include(s => s.Org)
-                .Include(s => s.TrialCourse)
-                .Include(group => group.GroupCourseInstance)
-                .ThenInclude(learnerCourse => learnerCourse.LearnerGroupCourse)
-                .ThenInclude(learner => learner.Learner)
-                .FirstOrDefault(s => s.LessonId == 2);
-
-
-            var result = IsNull(item.CourseInstanceId)
-                ? false
-                : _ablemusicContext.Fund.FirstOrDefault(q => q.LearnerId == item.LearnerId).Balance
-                  - _ablemusicContext.Course.FirstOrDefault(q => q.CourseId == item.CourseInstance.CourseId).Price <= 0;
-            return Ok(result);
-        }*/
         
         //GET: http://localhost:5000/api/lesson/GetLessonsForReceptionist/:userId/:date
         [HttpGet("[action]/{userId}/{date}")]
@@ -57,7 +33,6 @@ namespace Pegasus_backend.Controllers
                 var staff = _ablemusicContext.Staff.FirstOrDefault(s => s.UserId == userId);
                 var orgId = _ablemusicContext.StaffOrg.FirstOrDefault(s => s.StaffId == staff.StaffId).OrgId;
                 var details = _ablemusicContext.Lesson
-                    .Where(s=>s.IsCanceled != 1 && s.IsConfirm != 1)
                     .Where(s=>s.OrgId==orgId&&s.BeginTime.Value.Year == date.Year && s.BeginTime.Value.Month == date.Month && s.BeginTime.Value.Day == date.Day)
                     .Include(s=>s.CourseInstance)
                     .Include(s=>s.Learner)
