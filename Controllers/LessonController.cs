@@ -46,6 +46,7 @@ namespace Pegasus_backend.Controllers
                     .Select(s =>new {id = s.LessonId, resourceId = s.RoomId, start = s.BeginTime,end=s.EndTime,
                         title=IsNull(s.GroupCourseInstance)?IsNull(s.CourseInstance)?"T":"1":"G",description="",
                         teacher=s.Teacher.FirstName.ToString(),
+                        s.IsCanceled,
                         isOwnAfterLesson=IsNull(s.CourseInstanceId)?
                             0
                             :
