@@ -47,6 +47,7 @@ namespace Pegasus_backend.Controllers
                         title=IsNull(s.GroupCourseInstance)?IsNull(s.CourseInstance)?"T":"1":"G",description="",
                         teacher=s.Teacher.FirstName.ToString(),
                         s.IsCanceled,
+                        s.IsConfirm,
                         isOwnAfterLesson=IsNull(s.CourseInstanceId)?
                             0
                             :
