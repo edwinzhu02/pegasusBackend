@@ -7,7 +7,7 @@ namespace Pegasus_backend.Models
 {
     public class ChatMessageModel
     {
-        public int ChatMessageId { get; set; }
+        public int? ChatMessageId { get; set; }
         public string ChatGroupId { get; set; }
         public string MessageBody { get; set; }
         public short? SenderUserId { get; set; }

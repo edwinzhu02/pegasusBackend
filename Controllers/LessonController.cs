@@ -28,8 +28,6 @@ namespace Pegasus_backend.Controllers
             Result<Object> result = new Result<Object>();
             try
             {
-    
-               
                 var staff = _ablemusicContext.Staff.FirstOrDefault(s => s.UserId == userId);
                 var orgId = _ablemusicContext.StaffOrg.FirstOrDefault(s => s.StaffId == staff.StaffId).OrgId;
                 var details = _ablemusicContext.Lesson
@@ -43,24 +41,47 @@ namespace Pegasus_backend.Controllers
                     .Include(group => group.GroupCourseInstance)
                     .ThenInclude(learnerCourse => learnerCourse.LearnerGroupCourse)
                     .ThenInclude(learner => learner.Learner)
+                    .Include(s=>s.AwaitMakeUpLessonNewLesson)
                     .Select(s =>new {id = s.LessonId, resourceId = s.RoomId, start = s.BeginTime,end=s.EndTime,
                         title=IsNull(s.GroupCourseInstance)?IsNull(s.CourseInstance)?"T":"1":"G",description="",
                         teacher=s.Teacher.FirstName.ToString(),
                         s.IsCanceled,
                         s.IsConfirm,
+                        s.IsChanged,
+                        s.OrgId,
+                        newLesson= new
+                        {
+                            TeacherFirstName = _ablemusicContext.Teacher.FirstOrDefault(z=>z.TeacherId==_ablemusicContext.Lesson
+                                                                                                  .FirstOrDefault(r=>r.LessonId==s.NewLessonId).TeacherId).FirstName,
+                            TeacherLastName = _ablemusicContext.Teacher.FirstOrDefault(z=>z.TeacherId==_ablemusicContext.Lesson
+                                                                                                  .FirstOrDefault(r=>r.LessonId==s.NewLessonId).TeacherId).LastName,
+                            RoomName = _ablemusicContext.Room.FirstOrDefault(z=>z.RoomId==_ablemusicContext.Lesson
+                                                                                   .FirstOrDefault(r=>r.LessonId==s.NewLessonId).RoomId).RoomName,
+                            
+                            OrgName = _ablemusicContext.Org.FirstOrDefault(z=>z.OrgId==_ablemusicContext.Lesson
+                                                                                  .FirstOrDefault(r=>r.LessonId==s.NewLessonId).OrgId).OrgName,
+                            BeginTime =_ablemusicContext.Lesson
+                                .FirstOrDefault(r=>r.LessonId==s.NewLessonId).BeginTime,
+                            _ablemusicContext.Lesson
+                                .FirstOrDefault(r=>r.LessonId==s.NewLessonId).TeacherId,
+                            _ablemusicContext.Lesson
+                                .FirstOrDefault(r=>r.LessonId==s.NewLessonId).RoomId,
+                            _ablemusicContext.Lesson
+                                .FirstOrDefault(r=>r.LessonId==s.NewLessonId).OrgId
+                            
+                        },
                         s.Reason,
-                        isOwnAfterLesson=IsNull(s.CourseInstanceId)?
-                            0
-                            :
-                            (_ablemusicContext.Fund.FirstOrDefault(q=>q.LearnerId==s.LearnerId).Balance 
-                            - _ablemusicContext.Course.FirstOrDefault(q=>q.CourseId==s.CourseInstance.CourseId).Price <= 0)?1:0
-                       ,
-                       learner = IsNull(s.GroupCourseInstance)?new List<Object>(){new {s.Learner.FirstName,s.Learner.LearnerId}}:null,
-                       learners = IsNull(s.GroupCourseInstance)?null:s.GroupCourseInstance.LearnerGroupCourse.Select(w=>new{w.Learner.FirstName,w.Learner.LearnerId}),
+                        isReadyToOwn=IsNull(s.GroupCourseInstance)?IsNull(s.CourseInstance)?s.IsPaid==1?0:1:
+                            _ablemusicContext.LessonRemain.FirstOrDefault(q=>q.LearnerId==s.LearnerId && q.CourseInstanceId==s.CourseInstanceId).Quantity<=3?
+                            1:0
+                            :0,
+                        
+                        learner = IsNull(s.GroupCourseInstance)?new List<Object>(){new {s.Learner.FirstName,s.Learner.LearnerId}}:null,
+                        learners = IsNull(s.GroupCourseInstance)?null:s.GroupCourseInstance.LearnerGroupCourse.Select(w=>new{w.Learner.FirstName,w.Learner.LearnerId}),
                         IsGroup=!IsNull(s.GroupCourseInstance),
                         info = new
                         {
-                            s.Room.RoomName,s.RoomId,s.Org.OrgName,s.OrgId,s.TeacherId,TeacherName=s.Teacher.FirstName,s.BeginTime,s.EndTime,
+                            s.Room.RoomName,s.RoomId,s.Org.OrgName,s.OrgId,s.TeacherId,TeacherLastName=s.Teacher.FirstName,TeacherFirstName=s.Teacher.FirstName,s.BeginTime,s.EndTime,
                             CourseName=!IsNull(s.GroupCourseInstance)?s.GroupCourseInstance.Course.CourseName:IsNull(s.CourseInstance)?s.TrialCourse.CourseName:s.CourseInstance.Course.CourseName,
                             s.LessonId,courseId=!IsNull(s.GroupCourseInstance)?s.GroupCourseInstance.Course.CourseId:IsNull(s.CourseInstance)?s.TrialCourseId:s.CourseInstance.Course.CourseId,s.LearnerId
                         }
