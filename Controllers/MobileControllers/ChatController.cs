@@ -42,7 +42,6 @@ namespace Pegasus_backend.Controllers.MobileControllers
         public async Task<IActionResult> Post(ChatMessageModel chatMessageModel)
         {
             Result<ChatMessageModel> result = new Result<ChatMessageModel>();
-            chatMessageModel.CreateAt = DateTime.Now;
             ChatMessage chatMessage = new ChatMessage();
             try
             {
