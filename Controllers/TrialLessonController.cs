@@ -74,7 +74,7 @@ namespace Pegasus_backend.Controllers
             invoiceWaiting.PaidFee = 0;            
             invoiceWaiting.OwingFee =trialLessonViewModel.Amount;                       
             invoiceWaiting.CreatedAt =toNZTimezone(DateTime.UtcNow);      
-            invoiceWaiting.IsPaid =0;  
+            invoiceWaiting.IsPaid = 0;  
             invoiceWaiting.TermId =await _ablemusicContext.Term.
                         Where(t => t.BeginDate <= trialLessonViewModel.BeginTime.Value &&
                                 t.EndDate >= trialLessonViewModel.BeginTime.Value 

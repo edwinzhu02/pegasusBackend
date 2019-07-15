@@ -55,7 +55,8 @@ namespace Pegasus_backend.Controllers
                             (_ablemusicContext.Fund.FirstOrDefault(q=>q.LearnerId==s.LearnerId).Balance 
                             - _ablemusicContext.Course.FirstOrDefault(q=>q.CourseId==s.CourseInstance.CourseId).Price <= 0)?1:0
                        ,
-                        student=IsNull(s.GroupCourseInstance)?IsNull(s.CourseInstance)?new List<string>{s.Learner.FirstName}:new List<string>{s.Learner.FirstName}:s.GroupCourseInstance.LearnerGroupCourse.Select(w=>w.Learner.FirstName),
+                       learner = IsNull(s.GroupCourseInstance)?new List<Object>(){new {s.Learner.FirstName,s.Learner.LearnerId}}:null,
+                       learners = IsNull(s.GroupCourseInstance)?null:s.GroupCourseInstance.LearnerGroupCourse.Select(w=>new{w.Learner.FirstName,w.Learner.LearnerId}),
                         IsGroup=!IsNull(s.GroupCourseInstance),
                         info = new
                         {
