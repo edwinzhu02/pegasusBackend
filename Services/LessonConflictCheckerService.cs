@@ -373,7 +373,7 @@ namespace Pegasus_backend.Services
                 }
             }
 
-            if(conflictTeachers != null)
+            if(conflictTeachers.Count > 0)
             {
                 result.IsSuccess = false;
                 result.ErrorMessage = "Teacher is not available by checking unscheduled lessons! ";
