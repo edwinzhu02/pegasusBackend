@@ -60,7 +60,13 @@ namespace Pegasus_backend.Controllers
                             OrgName = _ablemusicContext.Org.FirstOrDefault(z=>z.OrgId==_ablemusicContext.Lesson
                                                                                   .FirstOrDefault(r=>r.LessonId==s.NewLessonId).OrgId).OrgName,
                             BeginTime =_ablemusicContext.Lesson
-                                .FirstOrDefault(r=>r.LessonId==s.NewLessonId).BeginTime
+                                .FirstOrDefault(r=>r.LessonId==s.NewLessonId).BeginTime,
+                            _ablemusicContext.Lesson
+                                .FirstOrDefault(r=>r.LessonId==s.NewLessonId).TeacherId,
+                            _ablemusicContext.Lesson
+                                .FirstOrDefault(r=>r.LessonId==s.NewLessonId).RoomId,
+                            _ablemusicContext.Lesson
+                                .FirstOrDefault(r=>r.LessonId==s.NewLessonId).OrgId
                             
                         },
                         s.Reason,
