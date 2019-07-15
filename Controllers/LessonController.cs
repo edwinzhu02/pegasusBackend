@@ -28,8 +28,6 @@ namespace Pegasus_backend.Controllers
             Result<Object> result = new Result<Object>();
             try
             {
-    
-               
                 var staff = _ablemusicContext.Staff.FirstOrDefault(s => s.UserId == userId);
                 var orgId = _ablemusicContext.StaffOrg.FirstOrDefault(s => s.StaffId == staff.StaffId).OrgId;
                 var details = _ablemusicContext.Lesson
@@ -43,11 +41,18 @@ namespace Pegasus_backend.Controllers
                     .Include(group => group.GroupCourseInstance)
                     .ThenInclude(learnerCourse => learnerCourse.LearnerGroupCourse)
                     .ThenInclude(learner => learner.Learner)
+                    .Include(s=>s.AwaitMakeUpLessonNewLesson)
                     .Select(s =>new {id = s.LessonId, resourceId = s.RoomId, start = s.BeginTime,end=s.EndTime,
                         title=IsNull(s.GroupCourseInstance)?IsNull(s.CourseInstance)?"T":"1":"G",description="",
                         teacher=s.Teacher.FirstName.ToString(),
                         s.IsCanceled,
                         s.IsConfirm,
+                        s.IsChanged,
+                        newLesson=_ablemusicContext.Lesson
+                            .Include(r=>r.Teacher)
+                            .Include(r=>r.Room)
+                            .Include(r=>r.Org)
+                            .FirstOrDefault(r=>r.LessonId==s.NewLessonId),
                         s.Reason,
                         isReadyToOwn=IsNull(s.GroupCourseInstance)?IsNull(s.CourseInstance)?s.IsPaid==1?0:1:
                             _ablemusicContext.LessonRemain.FirstOrDefault(q=>q.LearnerId==s.LearnerId && q.CourseInstanceId==s.CourseInstanceId).Quantity<=3?

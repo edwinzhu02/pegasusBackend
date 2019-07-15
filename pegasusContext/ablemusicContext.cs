@@ -78,8 +78,8 @@ namespace Pegasus_backend.pegasusContext
         {
             if (!optionsBuilder.IsConfigured)
             {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseMySQL("Server=45.76.123.59;User Id=dbuser;Password=qwer1234;Database=ablemusic");
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseMySQL("server=gradspace.org;User Id=dbuser;Password=qwer1234;Database=ablemusic");
             }
         }
 
@@ -466,8 +466,7 @@ namespace Pegasus_backend.pegasusContext
 
                 entity.Property(e => e.ChatMessageId)
                     .HasColumnName("chat_message_id")
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedNever();
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.ChatGroupId)
                     .HasColumnName("chat_group_id")
@@ -1516,6 +1515,10 @@ namespace Pegasus_backend.pegasusContext
 
                 entity.Property(e => e.LearnerId)
                     .HasColumnName("learner_id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.NewLessonId)
+                    .HasColumnName("new_lesson_id")
                     .HasColumnType("int(11)");
 
                 entity.Property(e => e.OrgId)
