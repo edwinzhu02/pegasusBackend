@@ -48,6 +48,7 @@ namespace Pegasus_backend.Controllers
                         teacher=s.Teacher.FirstName.ToString(),
                         s.IsCanceled,
                         s.IsConfirm,
+                        s.Reason,
                         isOwnAfterLesson=IsNull(s.CourseInstanceId)?
                             0
                             :
