@@ -102,7 +102,7 @@ namespace Pegasus_backend.Controllers
 
         
         [HttpGet("[action]/{teacherId}/{beginDate}")]
-        public async Task<IActionResult> GetLessonsForTeacher(byte teacherId, DateTime beginDate)
+        public async Task<IActionResult> GetLessonsForTeacher(short teacherId, DateTime beginDate)
         {
             Result<Object> result = new Result<object>();
             try
@@ -115,7 +115,7 @@ namespace Pegasus_backend.Controllers
                 // }
                 //var teacherId = teacher.TeacherId;
                 var details = _ablemusicContext.Lesson.Where(s => s.TeacherId == teacherId)
-                    .Where(s=>s.IsCanceled != 1 && s.IsConfirm != 1)
+                    //.Where(s=>s.IsCanceled != 1 && s.IsConfirm != 1)
                     .Where(s=>beginDate.Date <= s.EndTime.Value.Date && s.EndTime.Value.Date <= endDate.Date)
                     .Include(s=>s.Room)
                     .Include(s=>s.Learner)
@@ -128,7 +128,7 @@ namespace Pegasus_backend.Controllers
                     {
                         title=IsNull(q.GroupCourseInstance)?IsNull(q.CourseInstance)?"T":"1":"G",start=q.BeginTime,end=q.EndTime,
                         student=IsNull(q.GroupCourseInstance)?IsNull(q.CourseInstance)?new List<string>{q.Learner.FirstName}:new List<string>{q.Learner.FirstName}:q.GroupCourseInstance.LearnerGroupCourse.Select(w=>w.Learner.FirstName),
-                        description="", CourseName=!IsNull(q.GroupCourseInstance)?q.GroupCourseInstance.Course.CourseName:IsNull(q.CourseInstance)?q.TrialCourse.CourseName:q.CourseInstance.Course.CourseName,
+                        description="", courseName=!IsNull(q.GroupCourseInstance)?q.GroupCourseInstance.Course.CourseName:IsNull(q.CourseInstance)?q.TrialCourse.CourseName:q.CourseInstance.Course.CourseName,
                         orgName= q.Org.OrgName, roomName=q.Room.RoomName
                     });
                 result.Data = await details.ToListAsync();

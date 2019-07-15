@@ -57,7 +57,7 @@ namespace Pegasus_backend.Services
             if (conflictRooms.Count > 0)
             {
                 result.IsSuccess = false;
-                result.ErrorMessage = "Room is not available by checking current scheduled lessons";
+                result.ErrorMessage = "Room is not available by checking current scheduled lessons! ";
                 result.Data = conflictRooms;
                 return result;
             }
@@ -92,11 +92,11 @@ namespace Pegasus_backend.Services
                     }
                 }
                 result.IsSuccess = false;
-                result.ErrorMessage = "Teacher is not available by checking current scheduled lessons";
+                result.ErrorMessage = "Teacher is not available by checking current scheduled lessons! ";
                 result.Data = conflictTeachers;
                 return result;
             }
-            result.Note = "No conflict teacher was found based on current scheduled lessons";
+            result.Note = "No conflict teacher was found based on current scheduled lessons! ";
             return result;
         }
 
@@ -108,7 +108,7 @@ namespace Pegasus_backend.Services
             TimeSpan endTime = _endTime.TimeOfDay;
             if(_beginTime.Date != _endTime.Date)
             {
-                throw new Exception("The lesson begin time and end time are not at same date");
+                throw new Exception("The lesson begin time and end time are not at same date! ");
             }
             dynamic conflictRoomForOto = await (from cs in _ablemusicContext.CourseSchedule
                                                 join oto in _ablemusicContext.One2oneCourseInstance on cs.CourseInstanceId equals oto.CourseInstanceId
@@ -183,7 +183,7 @@ namespace Pegasus_backend.Services
             if(result.Data.Count > 0)
             {
                 result.IsSuccess = false;
-                result.ErrorMessage = "Room is not available by checking unscheduled lessons";
+                result.ErrorMessage = "Room is not available by checking unscheduled lessons! ";
                 return result;
             }
 
@@ -201,7 +201,7 @@ namespace Pegasus_backend.Services
             TimeSpan endTime = _endTime.AddMinutes(60).TimeOfDay;
             if (_beginTime.Date != _endTime.Date)
             {
-                throw new Exception("The lesson begin time and end time are not at same date");
+                throw new Exception("The lesson begin time and end time are not at same date! ");
             }
             dynamic conflictTeacherWithOutRelacationForOto = await (from cs in _ablemusicContext.CourseSchedule
                                                                     join oto in _ablemusicContext.One2oneCourseInstance on cs.CourseInstanceId equals oto.CourseInstanceId
@@ -286,7 +286,7 @@ namespace Pegasus_backend.Services
             if(conflictTeachers != null)
             {
                 result.IsSuccess = false;
-                result.ErrorMessage = "Teacher is not available by checking unscheduled lessons";
+                result.ErrorMessage = "Teacher is not available by checking unscheduled lessons! ";
                 result.Data = conflictTeachers;
                 return result;
             }
@@ -303,10 +303,15 @@ namespace Pegasus_backend.Services
             var checkRoomInUnscheduledLessonsResult = await CheckRoomConflictInUnscheduledLessons();
             var checkTeacherInUnscheduledLessonsResult = await CheckTeacherConflictInUnscheduledLessons();
 
-            if(!checkRoomInScheduledLessonsResult.IsSuccess || !checkTeacherInScheduledLessonsResult.IsSuccess || !checkRoomInUnscheduledLessonsResult.IsSuccess)
+            if(!checkRoomInScheduledLessonsResult.IsSuccess || !checkTeacherInScheduledLessonsResult.IsSuccess 
+                || !checkRoomInUnscheduledLessonsResult.IsSuccess ||!checkTeacherInUnscheduledLessonsResult.IsSuccess)
             {
                 result.IsSuccess = false;
-                result.ErrorMessage = "Details are in inner result";
+                //result.ErrorMessage = "Details are in inner result";
+                result.ErrorMessage = ((checkRoomInScheduledLessonsResult.IsSuccess)? "":checkRoomInScheduledLessonsResult.ErrorMessage)
+                                    +((checkTeacherInScheduledLessonsResult.IsSuccess)? "":checkTeacherInScheduledLessonsResult.ErrorMessage)
+                                    +((checkRoomInUnscheduledLessonsResult.IsSuccess)? "":checkRoomInUnscheduledLessonsResult.ErrorMessage)
+                                    +((checkTeacherInUnscheduledLessonsResult.IsSuccess)? "":checkTeacherInUnscheduledLessonsResult.ErrorMessage);                                    
                 result.Data = new List<object>
                 {
                     checkRoomInScheduledLessonsResult,
