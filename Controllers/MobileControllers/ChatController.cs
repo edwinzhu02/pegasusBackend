@@ -293,7 +293,7 @@ namespace Pegasus_backend.Controllers.MobileControllers
                     x.Learner.LastName,
                     x.Learner.UserId,
                     x.Learner.Photo
-                }).Distinct().ToListAsync();
+                }).Where(x=>x.UserId !=null).Distinct().ToListAsync();
 
             // students registered in his org
             var studentsRegisteredIn = await _ablemusicContext.Learner.Where(x=>x.OrgId == orgIdOfStaff).Select(x => new
@@ -303,7 +303,7 @@ namespace Pegasus_backend.Controllers.MobileControllers
                 x.LastName,
                 x.UserId,
                 x.Photo
-            }).Distinct().ToListAsync();
+            }).Where(x=>x.UserId !=null).Distinct().ToListAsync();
 
             // combine data
             ChatListModel chatListModel = new ChatListModel
