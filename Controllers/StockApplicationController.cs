@@ -97,7 +97,7 @@ namespace Pegasus_backend.Controllers
             return Ok(result);
 
         }
-/* 
+ 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateProcess2(short id,[FromBody] StockApplication stockapplication)
         {
@@ -192,6 +192,6 @@ namespace Pegasus_backend.Controllers
                 return BadRequest(result);
             }
             return Ok(result);
-        } */
+        } 
     }
 }
