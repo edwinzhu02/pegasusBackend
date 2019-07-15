@@ -32,6 +32,8 @@ namespace Pegasus_backend.pegasusContext
         public byte? IsConfirm { get; set; }
         public int? TrialCourseId { get; set; }
         public short? IsChanged { get; set; }
+        public short? IsPaid { get; set; }
+        public int? NewLessonId { get; set; }
 
         public One2oneCourseInstance CourseInstance { get; set; }
         public GroupCourseInstance GroupCourseInstance { get; set; }

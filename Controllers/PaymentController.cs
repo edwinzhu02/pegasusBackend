@@ -25,7 +25,30 @@ namespace Pegasus_backend.Controllers
             _mapper = mapper;
         }
 
+      [HttpGet("[action]/{learnerId}")]
+        public async Task<IActionResult> PaymentByLearner(int learnerId)
+        {
+            Result<Object> result = new Result<object>();
+            try
+             {
+                                var payments = await _ablemusicContext.Payment
+                    .Where(d => d.LearnerId == learnerId )
+                     .Include(p => p.Invoice)
+                     .Include(p => p.Learner)                     
+                     .Include(p => p.SoldTransaction ).ThenInclude(p => p.Product)
+                     .Include(t => t.Staff ).ToListAsync();
+ //&& orgs.Contains(d.Staff.StaffOrg.FirstOrDefault().OrgId)
+                result.Data = _mapper.Map<List<GetPaymentModel>>(payments);
 
+              }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorCode = ex.Message;
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
         [HttpGet("[action]/{staffId}/{beginDate}/{endDate}")]
         public async Task<IActionResult> PaymentByDate(short staffId,DateTime beginDate, DateTime endDate)
         {
@@ -100,9 +123,20 @@ namespace Pegasus_backend.Controllers
 
                     var fundItem =
                         await _ablemusicContext.Fund.FirstOrDefaultAsync(s => s.LearnerId == details.LearnerId);
-                    fundItem.Balance = fundItem.Balance + details.Amount;
-                    fundItem.UpdatedAt = toNZTimezone(DateTime.UtcNow);
-                    _ablemusicContext.Update(fundItem);
+                    if (fundItem == null )
+                    {
+                        var fundNewItem =  new  Fund();
+                        fundNewItem.LearnerId = details.LearnerId;
+                        fundNewItem.Balance =details.Amount;
+                        fundNewItem.Balance =details.Amount;
+                        fundNewItem.UpdatedAt = toNZTimezone(DateTime.UtcNow);
+                        _ablemusicContext.Add(fundNewItem);
+                    }
+                    else{
+                        fundItem.Balance = fundItem.Balance + details.Amount;
+                        fundItem.UpdatedAt = toNZTimezone(DateTime.UtcNow);
+                        _ablemusicContext.Update(fundItem);
+                    }
                     await _ablemusicContext.SaveChangesAsync();
 
                     if (invoiceItem.IsPaid == 1)
@@ -303,6 +337,7 @@ namespace Pegasus_backend.Controllers
                         lesson.IsConfirm = 0;
                         lesson.IsCanceled = 0; 
                         lesson.IsTrial = 0;                                                                       
+                        lesson.IsPaid  = 1;
 
                         string begintime = "";
                         string endtime = "";

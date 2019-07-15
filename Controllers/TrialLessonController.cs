@@ -49,6 +49,7 @@ namespace Pegasus_backend.Controllers
             lesson.InvoiceId = null;
             lesson.IsConfirm = 0;
             lesson.TrialCourseId = trialLessonViewModel.TrialCourseId;
+            lesson.IsPaid = trialLessonViewModel.IsPayNow?(short) 1: (short) 0;
 
             payment.PaymentMethod = trialLessonViewModel.PaymentMethod;
             payment.LearnerId = trialLessonViewModel.LearnerId;
@@ -73,7 +74,7 @@ namespace Pegasus_backend.Controllers
             invoiceWaiting.PaidFee = 0;            
             invoiceWaiting.OwingFee =trialLessonViewModel.Amount;                       
             invoiceWaiting.CreatedAt =toNZTimezone(DateTime.UtcNow);      
-            invoiceWaiting.IsPaid =0;  
+            invoiceWaiting.IsPaid = 0;  
             invoiceWaiting.TermId =await _ablemusicContext.Term.
                         Where(t => t.BeginDate <= trialLessonViewModel.BeginTime.Value &&
                                 t.EndDate >= trialLessonViewModel.BeginTime.Value 

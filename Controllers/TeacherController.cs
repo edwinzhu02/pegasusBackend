@@ -24,7 +24,7 @@ namespace Pegasus_backend.Controllers
     public class TeacherController : BasicController
     {
         private readonly IMapper _mapper;
-        private TeacherLanguage newTeacherLanguage;
+        //private TeacherLanguage newTeacherLanguage;
         private TeacherQualificatiion newTeacherQualification;
         private AvailableDays DayList;
 
@@ -37,7 +37,7 @@ namespace Pegasus_backend.Controllers
         //GET http://localhost:5000/api/teacher/:words
         [CheckModelFilter]
         [HttpGet("{words}")]
-        public async Task<IActionResult> SearchTeacher(string words, [FromBody] TeacherSearch searchFormat)
+        public IActionResult SearchTeacher(string words, [FromBody] TeacherSearch searchFormat)
         {
             Result<Object> result = new Result<Object>();
             try
@@ -108,23 +108,49 @@ namespace Pegasus_backend.Controllers
                     .ThenInclude(s=>s.Org)
                     .Include(s=>s.TeacherCourse)
                     .ThenInclude(s=>s.Course)
+                    .Include(t => t.TeacherWageRates)
                     .Where(s => s.IsActivate == 1)
-                    .Select(q => new
+                    .Select(q => new 
                     {
-                        q.TeacherId,q.FirstName,q.LastName,q.Dob,Gender=Convert.ToBoolean(q.Gender)?"Male":"Female",
-                        q.IrdNumber,q.IdType,IdPhoto=IsNull(q.IdPhoto)?null:String.Format("{0}?{1}",q.IdPhoto,r.Next()),q.IdNumber,q.HomePhone,q.MobilePhone,q.Email,
-                        Photo=IsNull(q.Photo)?null:String.Format("{0}?{1}",q.Photo,r.Next()),q.ExpiryDate,
-                        CV=IsNull(q.CvUrl)?null:String.Format("{0}?{1}",q.CvUrl,r.Next()),
-                        OtherFile=IsNull(q.OtherfileUrl)?null:String.Format("{0}?{1}",q.OtherfileUrl,r.Next()),
-                        Form=IsNull(q.FormUrl)?null:String.Format("{0}?{1}",q.FormUrl,r.Next()),
-                        q.IsLeft,q.IsContract,q.InvoiceTemplate,q.Ability,q.Comment,q.Level,
-                        q.AvailableDays,q.TeacherLanguage,q.TeacherQualificatiion,TeacherWageRate =q.TeacherWageRates.FirstOrDefault(s=>s.IsActivate==1)
-                        
+                        q.TeacherId,
+                        q.FirstName,
+                        q.LastName,
+                        q.Dob,
+                        Gender = Convert.ToBoolean(q.Gender) ? "Male" : "Female",
+                        q.IrdNumber,
+                        q.IdType,
+                        IdPhoto = IsNull(q.IdPhoto) ? null : String.Format("{0}?{1}", q.IdPhoto, r.Next()),
+                        q.IdNumber,
+                        q.HomePhone,
+                        q.MobilePhone,
+                        q.Email,
+                        Photo = IsNull(q.Photo) ? null : String.Format("{0}?{1}", q.Photo, r.Next()),
+                        q.ExpiryDate,
+                        CV = IsNull(q.CvUrl) ? null : String.Format("{0}?{1}", q.CvUrl, r.Next()),
+                        OtherFile = IsNull(q.OtherfileUrl) ? null : String.Format("{0}?{1}", q.OtherfileUrl, r.Next()),
+                        Form = IsNull(q.FormUrl) ? null : String.Format("{0}?{1}", q.FormUrl, r.Next()),
+                        q.IsLeft,
+                        q.IsContract,
+                        q.InvoiceTemplate,
+                        q.Ability,
+                        q.Comment,
+                        q.Level,
+                        q.AvailableDays,
+                        q.TeacherLanguage,
+                        q.TeacherQualificatiion,
+                        q.TeacherWageRates
+                        //TeacherWageRate = q.TeacherWageRates.FirstOrDefault(s => s.IsActivate == 1)
                     })
                     .ToListAsync();
-                    
+                foreach(var t in teachers)
+                {
+                    foreach(var twr in t.TeacherWageRates.Reverse())
+                    {
+                        if (twr.IsActivate != 1) t.TeacherWageRates.Remove(twr);
+                    }
+                }
+                
                 result.Data = teachers;
-
             }
             catch (Exception ex)
             {

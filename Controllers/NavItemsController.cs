@@ -25,7 +25,7 @@ namespace Pegasus_backend.Controllers
         //GET: http://localhost:5000/api/navitems
         [Authorize]
         [HttpGet]
-        public async Task<IActionResult> GetNavItems()
+        public IActionResult GetNavItems()
         {
             Result<Object> result = new Result<Object>();
             List<PageGroup> details = new List<PageGroup>();

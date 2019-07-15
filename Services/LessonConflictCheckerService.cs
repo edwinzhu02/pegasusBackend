@@ -13,13 +13,21 @@ namespace Pegasus_backend.Services
     public class LessonConflictCheckerService
     {
         private readonly ablemusicContext _ablemusicContext;
-        private readonly int _roomId;
-        private readonly int _orgId;
-        private readonly int _lessonId;
-        private readonly DateTime _beginTime;
-        private readonly DateTime _endTime;
-        private readonly int _teacherId;
-        
+        private int _roomId;
+        private int _orgId;
+        private int _lessonId;
+        private DateTime _beginTime;
+        private DateTime _endTime;
+        private DateTime _protentialBeginTime;
+        private int _teacherId;
+        private List<Lesson> _totalProtentialConflictLessons;
+
+        public LessonConflictCheckerService(DateTime protentialBeginTime)
+        {
+            _protentialBeginTime = protentialBeginTime;
+            _ablemusicContext = new ablemusicContext();
+        }
+
         public LessonConflictCheckerService(DateTime beginTime, DateTime endTime, int roomId = 0, int orgId = 0, int teacherId = 0, int lessonId = 0)
         {
             _ablemusicContext = new ablemusicContext();
@@ -42,6 +50,88 @@ namespace Pegasus_backend.Services
             _teacherId = lesson.TeacherId ?? 0;
         }
 
+        public void ConfigureLessonToCheck(Lesson lesson)
+        {
+            _roomId = lesson.RoomId ?? 0;
+            _orgId = lesson.OrgId;
+            _lessonId = lesson.LessonId;
+            _beginTime = lesson.BeginTime ?? throw new ArgumentNullException(nameof(_beginTime));
+            _endTime = lesson.EndTime ?? throw new ArgumentNullException(nameof(_endTime));
+            _teacherId = lesson.TeacherId ?? 0;
+        }
+
+        public async Task LoadAllProtentialConflictLessonsToMemoryAsync()
+        {
+            DateTime beginTime = _protentialBeginTime.AddDays(-1);
+            _totalProtentialConflictLessons = await _ablemusicContext.Lesson.Where(l => l.BeginTime >= beginTime && l.IsCanceled != 1).OrderBy(l => l.BeginTime).ToListAsync();
+        }
+
+        public Result<List<Lesson>> CheckRoomConflictInScheduledLessonsInMemory()
+        {
+            var result = new Result<List<Lesson>>();
+            var conflictRooms = new List<Lesson>();
+            foreach(var p in _totalProtentialConflictLessons)
+            {
+                if(p.RoomId == _roomId && p.OrgId == _orgId && p.LessonId != _lessonId && ((p.BeginTime > _beginTime && p.BeginTime < _endTime) ||
+                    (p.EndTime > _beginTime && p.EndTime < _endTime) ||
+                    (p.BeginTime <= _beginTime && p.EndTime >= _endTime) ||
+                    (p.BeginTime > _beginTime && p.EndTime < _endTime)))
+                {
+                    conflictRooms.Add(p);
+                }
+            }
+            if(conflictRooms.Count > 0)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = "Room is not available by checking current scheduled lessons";
+                result.Data = conflictRooms;
+                return result;
+            }
+            result.Note = "No conflict room was found based on current scheduled lessons";
+            return result;
+        }
+
+        public Result<List<Lesson>> CheckTeacherConflictInScheduledLessonsInMemory()
+        {
+            var result = new Result<List<Lesson>>();
+            var conflictTeachersWithoutRelocation = new List<Lesson>();
+            DateTime beginTime = _beginTime.AddMinutes(-60);
+            DateTime endTime = _endTime.AddMinutes(60);
+            foreach(var p in _totalProtentialConflictLessons)
+            {
+                if (p.TeacherId == _teacherId &&
+                    p.IsCanceled != 1 && p.LessonId != _lessonId &&
+                    ((p.BeginTime > beginTime && p.BeginTime < endTime) ||
+                    (p.EndTime > beginTime && p.EndTime < endTime) ||
+                    (p.BeginTime <= beginTime && p.EndTime >= endTime)))
+                {
+                    conflictTeachersWithoutRelocation.Add(p);
+                }
+            }
+
+            if (conflictTeachersWithoutRelocation.Count > 0)
+            {
+                var conflictTeachers = new List<Lesson>();
+                foreach (var c in conflictTeachersWithoutRelocation)
+                {
+                    if (c.OrgId != _orgId ||
+                        (c.BeginTime > _beginTime && c.BeginTime < _endTime) ||
+                        (c.EndTime > _beginTime && c.EndTime < _endTime) ||
+                        (c.BeginTime <= _beginTime && c.EndTime >= _endTime))
+                    {
+                        conflictTeachers.Add(c);
+                    }
+                }
+                result.IsSuccess = false;
+                result.ErrorMessage = "Teacher is not available by checking current scheduled lessons";
+                result.Data = conflictTeachers;
+                return result;
+            }
+            result.Note = "No conflict teacher was found based on current scheduled lessons";
+            return result;
+        }
+
+
         public async Task<Result<List<Lesson>>> CheckRoomConflictInScheduledLessons()
         {
             var result = new Result<List<Lesson>>();
@@ -57,7 +147,7 @@ namespace Pegasus_backend.Services
             if (conflictRooms.Count > 0)
             {
                 result.IsSuccess = false;
-                result.ErrorMessage = "Room is not available by checking current scheduled lessons";
+                result.ErrorMessage = "Room is not available by checking current scheduled lessons! ";
                 result.Data = conflictRooms;
                 return result;
             }
@@ -92,11 +182,11 @@ namespace Pegasus_backend.Services
                     }
                 }
                 result.IsSuccess = false;
-                result.ErrorMessage = "Teacher is not available by checking current scheduled lessons";
+                result.ErrorMessage = "Teacher is not available by checking current scheduled lessons! ";
                 result.Data = conflictTeachers;
                 return result;
             }
-            result.Note = "No conflict teacher was found based on current scheduled lessons";
+            result.Note = "No conflict teacher was found based on current scheduled lessons! ";
             return result;
         }
 
@@ -108,7 +198,7 @@ namespace Pegasus_backend.Services
             TimeSpan endTime = _endTime.TimeOfDay;
             if(_beginTime.Date != _endTime.Date)
             {
-                throw new Exception("The lesson begin time and end time are not at same date");
+                throw new Exception("The lesson begin time and end time are not at same date! ");
             }
             dynamic conflictRoomForOto = await (from cs in _ablemusicContext.CourseSchedule
                                                 join oto in _ablemusicContext.One2oneCourseInstance on cs.CourseInstanceId equals oto.CourseInstanceId
@@ -183,7 +273,7 @@ namespace Pegasus_backend.Services
             if(result.Data.Count > 0)
             {
                 result.IsSuccess = false;
-                result.ErrorMessage = "Room is not available by checking unscheduled lessons";
+                result.ErrorMessage = "Room is not available by checking unscheduled lessons! ";
                 return result;
             }
 
@@ -201,7 +291,7 @@ namespace Pegasus_backend.Services
             TimeSpan endTime = _endTime.AddMinutes(60).TimeOfDay;
             if (_beginTime.Date != _endTime.Date)
             {
-                throw new Exception("The lesson begin time and end time are not at same date");
+                throw new Exception("The lesson begin time and end time are not at same date! ");
             }
             dynamic conflictTeacherWithOutRelacationForOto = await (from cs in _ablemusicContext.CourseSchedule
                                                                     join oto in _ablemusicContext.One2oneCourseInstance on cs.CourseInstanceId equals oto.CourseInstanceId
@@ -283,10 +373,10 @@ namespace Pegasus_backend.Services
                 }
             }
 
-            if(conflictTeachers != null)
+            if(conflictTeachers.Count > 0)
             {
                 result.IsSuccess = false;
-                result.ErrorMessage = "Teacher is not available by checking unscheduled lessons";
+                result.ErrorMessage = "Teacher is not available by checking unscheduled lessons! ";
                 result.Data = conflictTeachers;
                 return result;
             }
@@ -303,7 +393,36 @@ namespace Pegasus_backend.Services
             var checkRoomInUnscheduledLessonsResult = await CheckRoomConflictInUnscheduledLessons();
             var checkTeacherInUnscheduledLessonsResult = await CheckTeacherConflictInUnscheduledLessons();
 
-            if(!checkRoomInScheduledLessonsResult.IsSuccess || !checkTeacherInScheduledLessonsResult.IsSuccess || !checkRoomInUnscheduledLessonsResult.IsSuccess)
+            if(!checkRoomInScheduledLessonsResult.IsSuccess || !checkTeacherInScheduledLessonsResult.IsSuccess || !checkRoomInUnscheduledLessonsResult.IsSuccess || !checkTeacherInUnscheduledLessonsResult.IsSuccess)
+            {
+                result.IsSuccess = false;
+                //result.ErrorMessage = "Details are in inner result";
+                result.ErrorMessage = ((checkRoomInScheduledLessonsResult.IsSuccess)? "":checkRoomInScheduledLessonsResult.ErrorMessage)
+                                    +((checkTeacherInScheduledLessonsResult.IsSuccess)? "":checkTeacherInScheduledLessonsResult.ErrorMessage)
+                                    +((checkRoomInUnscheduledLessonsResult.IsSuccess)? "":checkRoomInUnscheduledLessonsResult.ErrorMessage)
+                                    +((checkTeacherInUnscheduledLessonsResult.IsSuccess)? "":checkTeacherInUnscheduledLessonsResult.ErrorMessage);                                    
+                result.Data = new List<object>
+                {
+                    checkRoomInScheduledLessonsResult,
+                    checkTeacherInScheduledLessonsResult,
+                    checkRoomInUnscheduledLessonsResult,
+                    checkTeacherInUnscheduledLessonsResult
+                };
+                return result;
+            }
+            result.Note = "There is no any conflict";
+            return result;
+        }
+
+        public Result<List<object>> CheckBothRoomAndTeacherInMemory()
+        {
+            var result = new Result<List<object>>();
+            var checkRoomInScheduledLessonsResult = CheckRoomConflictInScheduledLessonsInMemory();
+            var checkTeacherInScheduledLessonsResult = CheckTeacherConflictInScheduledLessonsInMemory();
+            //var checkRoomInUnscheduledLessonsResult = await CheckRoomConflictInUnscheduledLessons();
+            //var checkTeacherInUnscheduledLessonsResult = await CheckTeacherConflictInUnscheduledLessons();
+
+            if (!checkRoomInScheduledLessonsResult.IsSuccess || !checkTeacherInScheduledLessonsResult.IsSuccess)
             {
                 result.IsSuccess = false;
                 result.ErrorMessage = "Details are in inner result";
@@ -311,8 +430,6 @@ namespace Pegasus_backend.Services
                 {
                     checkRoomInScheduledLessonsResult,
                     checkTeacherInScheduledLessonsResult,
-                    checkRoomInUnscheduledLessonsResult,
-                    checkTeacherInUnscheduledLessonsResult
                 };
                 return result;
             }
