@@ -348,6 +348,7 @@ namespace Pegasus_backend.Controllers
                         var TrailCourse = lesson.TrialCourse;
                         var fund1 = _ablemusicContext.Fund.FirstOrDefault(s => s.LearnerId == lesson.LearnerId);
                         fund1.Balance -= TrailCourse.Price;
+                        fund1.UpdatedAt = DateTime.Now;
                         _ablemusicContext.Update(fund1);
                         await _ablemusicContext.SaveChangesAsync();
                         
@@ -365,7 +366,7 @@ namespace Pegasus_backend.Controllers
                             _ablemusicContext.TeacherWageRates.FirstOrDefault(s =>
                                 s.TeacherId == lesson.TeacherId && s.IsActivate == 1);
                     
-                        var courseCatogoryId1 = lesson.CourseInstance.Course.CourseCategoryId;
+                        var courseCatogoryId1 = TrailCourse.CourseCategoryId;
                         if (courseCatogoryId1 == 1)
                         {
                             houlyWage = teacherWageRate1.PianoRates;
