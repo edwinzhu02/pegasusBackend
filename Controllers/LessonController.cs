@@ -48,6 +48,7 @@ namespace Pegasus_backend.Controllers
                         s.IsCanceled,
                         s.IsConfirm,
                         s.IsChanged,
+                        s.OrgId,
                         newLesson= new
                         {
                             TeacherFirstName = _ablemusicContext.Teacher.FirstOrDefault(z=>z.TeacherId==_ablemusicContext.Lesson
