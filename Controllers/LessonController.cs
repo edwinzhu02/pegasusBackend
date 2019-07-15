@@ -240,5 +240,46 @@ namespace Pegasus_backend.Controllers
             
             return Ok(result);
         }
+        [HttpGet("[action]/{learnerId}")]
+
+        public async Task<IActionResult> GetLessonsForLearner(int? learnerId)
+        {
+            Result<Object> result = new Result<Object>();
+            try
+            {
+               
+               
+                var items = _ablemusicContext.Lesson
+                    .Include(s => s.Teacher)
+                    .Include(s => s.Learner)
+                    .Include(s => s.Room)
+                    .Include(s => s.Org)
+                    .Include(s => s.GroupCourseInstance)
+                    .ThenInclude(w => w.Course)
+                    .Include(s => s.CourseInstance)
+                    .ThenInclude(w => w.Course)
+                    .Where(s => s.LearnerId ==learnerId )
+                    .Select(s => new
+                    {
+                        CourseName=!IsNull(s.GroupCourseInstance)?s.GroupCourseInstance.Course.CourseName:IsNull(s.CourseInstance)?s.TrialCourse.CourseName:s.CourseInstance.Course.CourseName,
+                        TeacherFirstName = s.Teacher.FirstName, s.BeginTime, s.EndTime, s.LessonId,
+                        Room = s.Room.RoomName, Branch = s.Org.OrgName, s.IsCanceled, CancelReson = s.Reason,
+                        s.IsConfirm,
+                        s.IsTrial, Learner = s.Learner.FirstName, Learners = "", s.LearnerId, s.RoomId, s.TeacherId,
+                        s.OrgId,
+                        courseId=!IsNull(s.GroupCourseInstance)?s.GroupCourseInstance.Course.CourseId:IsNull(s.CourseInstance)?s.TrialCourseId:s.CourseInstance.Course.CourseId
+                    });
+                
+                result.Data = await items.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.ToString();
+                return BadRequest(result);
+            }
+            
+            return Ok(result);
+        }        
     }
 }
