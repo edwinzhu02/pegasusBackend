@@ -78,7 +78,8 @@ namespace Pegasus_backend.pegasusContext
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseMySQL("Server=gradspace.org;UserId=dbuser;Password=qwer1234;Database=ablemusic");
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseMySQL("Server=45.76.123.59;User Id=dbuser;Password=qwer1234;Database=ablemusic");
             }
         }
 
@@ -1504,6 +1505,10 @@ namespace Pegasus_backend.pegasusContext
                 entity.Property(e => e.IsConfirm)
                     .HasColumnName("is_confirm")
                     .HasColumnType("tinyint(4)");
+
+                entity.Property(e => e.IsPaid)
+                    .HasColumnName("is_paid")
+                    .HasColumnType("bit(1)");
 
                 entity.Property(e => e.IsTrial)
                     .HasColumnName("is_trial")
