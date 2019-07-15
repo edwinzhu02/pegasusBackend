@@ -514,7 +514,7 @@ namespace Pegasus_backend.Controllers
                     x.InvoiceDate,
                     Course = new
                     {
-                        x.Course.CourseName,SaveLesson
+                        x.Course.CourseName,
                         x.Course.Price
                     },
                     Learner = new
