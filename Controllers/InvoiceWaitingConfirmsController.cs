@@ -190,7 +190,171 @@ namespace Pegasus_backend.Controllers
             }
             return Ok(result);
         }
+        [HttpGet("{learnerId}")]
+        public async Task<IActionResult> GetInvoiceByLearner(int learnerId)
+        {
+            Result<List<object>> result = new Result<List<object>>();
+            result.Data = new List<object>();
+            dynamic invoiceWaitingConfirms;
+            List<Invoice> invoices = new List<Invoice>();
+            try
+            {
+                invoiceWaitingConfirms = await (from s in _ablemusicContext.Staff
+                                                join so in _ablemusicContext.StaffOrg on s.StaffId equals so.StaffId
+                                                join l in _ablemusicContext.Learner on so.OrgId equals l.OrgId
+                                                join iw in _ablemusicContext.InvoiceWaitingConfirm on l.LearnerId equals iw.LearnerId
+                                                join t in _ablemusicContext.Term on iw.TermId equals t.TermId
+                                                join iv in _ablemusicContext.Invoice on iw.InvoiceNum equals iv.InvoiceNum into f
+                                                from i in f.DefaultIfEmpty()
+                                                where l.LearnerId==learnerId
+                                                select new
+                                                {
+                                                    InvoiceNum = iw.InvoiceNum,
+                                                    Learner = new
+                                                    {
+                                                        Email = iw.Learner.Email,
+                                                        FirstName = iw.Learner.FirstName,
+                                                        MiddleName = iw.Learner.MiddleName,
+                                                        LastName = iw.Learner.LastName,
+                                                        EnrollDate = iw.Learner.EnrollDate,
+                                                        ContactNum = iw.Learner.ContactNum,
+                                                        Address = iw.Learner.Address,
+                                                        IsUnder18 = iw.Learner.IsUnder18,
+                                                        Dob = iw.Learner.Dob,
+                                                        Gender = iw.Learner.Gender,
+                                                        IsAbrsmG5 = iw.Learner.IsAbrsmG5,
+                                                        G5Certification = iw.Learner.G5Certification,
+                                                        CreatedAt = iw.Learner.CreatedAt,
+                                                        ReferrerLearnerId = iw.Learner.ReferrerLearnerId,
+                                                        Photo = iw.Learner.Photo,
+                                                        Note = iw.Learner.Note,
+                                                        LevelType = iw.Learner.LevelType,
+                                                        UserId = iw.Learner.UserId,
+                                                        OrgId = iw.Learner.OrgId,
+                                                        Parent = iw.Learner.Parent
+                                                    },
+                                                    InvoiceWaitingConfirm = new
+                                                    {
+                                                        WaitingId = iw.WaitingId,
+                                                        InvoiceNum = iw.InvoiceNum,
+                                                        LessonFee = iw.LessonFee,
+                                                        ConcertFee = iw.ConcertFee,
+                                                        NoteFee = iw.NoteFee,
+                                                        Other1Fee = iw.Other1Fee,
+                                                        Other2Fee = iw.Other2Fee,
+                                                        Other3Fee = iw.Other3Fee,
+                                                        LearnerId = iw.LearnerId,
+                                                        LearnerName = iw.LearnerName,
+                                                        BeginDate = iw.BeginDate,
+                                                        EndDate = iw.EndDate,
+                                                        TotalFee = iw.TotalFee,
+                                                        DueDate = iw.DueDate,
+                                                        PaidFee = iw.PaidFee,
+                                                        OwingFee = iw.OwingFee,
+                                                        CreatedAt = iw.CreatedAt,
+                                                        IsPaid = iw.IsPaid,
+                                                        TermId = iw.TermId,
+                                                        CourseInstanceId = iw.CourseInstanceId,
+                                                        GroupCourseInstanceId = iw.GroupCourseInstanceId,
+                                                        LessonQuantity = iw.LessonQuantity,
+                                                        CourseName = iw.CourseName,
+                                                        ConcertFeeName = iw.ConcertFeeName,
+                                                        LessonNoteFeeName = iw.LessonNoteFeeName,
+                                                        Other1FeeName = iw.Other1FeeName,
+                                                        Other2FeeName = iw.Other2FeeName,
+                                                        Other3FeeName = iw.Other3FeeName,
+                                                        IsActivate = iw.IsActivate,
+                                                        IsEmailSent = iw.IsEmailSent,
+                                                        IsConfirmed = iw.IsConfirmed,
+                                                        Comment = iw.Comment
+                                                    },
+                                                    Invoice = new 
+                                                    {
+                                                        InvoiceId = i == null ? 0 : i.InvoiceId,
+                                                        InvoiceNum = i == null ? string.Empty : i.InvoiceNum,
+                                                        LessonFee = i == null ? 0 : i.LessonFee,
+                                                        ConcertFee = i == null ? 0 : i.ConcertFee,
+                                                        NoteFee = i == null ? 0 : i.NoteFee,
+                                                        Other1Fee = i == null ? 0 : i.Other1Fee,
+                                                        Other2Fee = i == null ? 0 : i.Other2Fee,
+                                                        Other3Fee = i == null ? 0 : i.Other3Fee,
+                                                        LearnerId = i == null ? 0 : i.LearnerId,
+                                                        LearnerName = i == null ? string.Empty : i.LearnerName,
+                                                        BeginDate = i == null ? null : i.BeginDate,
+                                                        EndDate = i == null ? null : i.EndDate,
+                                                        TotalFee = i == null ? 0 : i.TotalFee,
+                                                        DueDate = i == null ? null : i.DueDate,
+                                                        PaidFee = i == null ? 0 : i.PaidFee,
+                                                        OwingFee = i == null ? 0 : i.OwingFee,
+                                                        CreatedAt = i == null ? null : i.CreatedAt,
+                                                        IsPaid = i == null ? 0 : i.IsPaid,
+                                                        TermId = i == null ? 0 : i.TermId,
+                                                        CourseInstanceId = i == null ? 0 : i.CourseInstanceId,
+                                                        GroupCourseInstanceId = i == null ? 0 : i.GroupCourseInstanceId,
+                                                        LessonQuantity = i == null ? 0 : i.LessonQuantity,
+                                                        CourseName = i == null ? string.Empty : i.CourseName,
+                                                        ConcertFeeName = i == null ? string.Empty : i.ConcertFeeName,
+                                                        LessonNoteFeeName = i == null ? string.Empty : i.LessonNoteFeeName,
+                                                        Other1FeeName = i == null ? string.Empty : i.Other1FeeName,
+                                                        Other2FeeName = i == null ? string.Empty : i.Other2FeeName,
+                                                        Other3FeeName = i == null ? string.Empty : i.Other3FeeName,
+                                                        IsActive = i == null ? 0 : i.IsActive,
+                                                        Comment = i == null ? string.Empty : i.Comment
+                                                    },
+                                                }).OrderBy(re => re.InvoiceNum).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.ToString();
+                return BadRequest(result);
+            }
 
+            string preInvoiceNum = "";
+            foreach(var i in invoiceWaitingConfirms)
+            {
+                string currentInvoiceNum = i.InvoiceWaitingConfirm.InvoiceNum;
+                if (preInvoiceNum != currentInvoiceNum) 
+                {
+                    dynamic currentInvoices = new List<object>();
+                    preInvoiceNum = currentInvoiceNum;
+                    foreach(var i2 in invoiceWaitingConfirms)
+                    {
+                        if(i2.InvoiceWaitingConfirm.InvoiceNum == currentInvoiceNum)
+                        {
+                            currentInvoices.Add(i2);
+                        }
+                    }
+                    if(currentInvoices.Count == 1)
+                    {
+                        result.Data.Add(currentInvoices[0]);
+                    } else
+                    {
+                        int initialInvoiceWaitingId = int.MaxValue;
+                        int latestInvoiceId = 0;
+                        foreach (var ci in currentInvoices)
+                        {
+                            int currentWaitingId = ci.InvoiceWaitingConfirm.WaitingId;
+                            int currentInvoiceId = ci.Invoice.InvoiceId;
+                            initialInvoiceWaitingId = initialInvoiceWaitingId > currentWaitingId ? currentWaitingId : initialInvoiceWaitingId;
+                            latestInvoiceId = latestInvoiceId < currentInvoiceId ? currentInvoiceId : latestInvoiceId;
+                        }
+                        foreach (var ci in currentInvoices)
+                        {
+                            int currentWaitingId = ci.InvoiceWaitingConfirm.WaitingId;
+                            int currentInvoiceId = ci.Invoice.InvoiceId;
+
+                            if (currentWaitingId == initialInvoiceWaitingId && latestInvoiceId == currentInvoiceId)
+                            {
+                                result.Data.Add(ci);
+                            }
+                        }
+                    }
+                    
+                }
+            }
+            return Ok(result);
+        }
         // PUT: api/InvoiceWaitingConfirms/5
         [HttpPut]
         [CheckModelFilter]

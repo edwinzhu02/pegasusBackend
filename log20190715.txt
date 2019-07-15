@@ -5873,3 +5873,7 @@ FROM `ablemusic`.`course_category` AS `c`
 2019-07-15 12:39:53.420 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
 2019-07-15 12:39:53.454 +12:00 [WRN] Failed to determine the https port for redirect.
 2019-07-15 12:39:53.659 +12:00 [INF] Request finished in 240.6455ms 404 
+2019-07-15 13:41:17.032 +12:00 [INF] User profile is available. Using 'C:\Users\Learnspace\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-07-15 13:41:18.376 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
+2019-07-15 13:41:18.410 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-07-15 13:41:18.615 +12:00 [INF] Request finished in 239.8338ms 404 
