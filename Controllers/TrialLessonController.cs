@@ -49,6 +49,7 @@ namespace Pegasus_backend.Controllers
             lesson.InvoiceId = null;
             lesson.IsConfirm = 0;
             lesson.TrialCourseId = trialLessonViewModel.TrialCourseId;
+            lesson.IsPaid = trialLessonViewModel.IsPayNow?(short) 1: (short) 0;
 
             payment.PaymentMethod = trialLessonViewModel.PaymentMethod;
             payment.LearnerId = trialLessonViewModel.LearnerId;
