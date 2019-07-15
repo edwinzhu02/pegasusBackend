@@ -69,6 +69,7 @@ namespace Pegasus_backend.Controllers
                             _ablemusicContext.Lesson
                                 .FirstOrDefault(r=>r.LessonId==s.NewLessonId).OrgId
                             
+                            
                         },
                         s.Reason,
                         isReadyToOwn=IsNull(s.GroupCourseInstance)?IsNull(s.CourseInstance)?s.IsPaid==1?0:1:
