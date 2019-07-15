@@ -314,7 +314,8 @@ namespace Pegasus_backend.Controllers
                         lesson.IsConfirm = 0;
                         lesson.IsCanceled = 0; 
                         lesson.IsTrial = 0;                                                                       
-
+                        lesson.IsPaid  = 1;
+                        
                         string begintime = "";
                         string endtime = "";
 
