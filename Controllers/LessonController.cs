@@ -294,7 +294,7 @@ namespace Pegasus_backend.Controllers
                         s.IsTrial, Learner = s.Learner.FirstName, Learners = "", s.LearnerId, s.RoomId, s.TeacherId,
                         s.OrgId,
                         courseId=!IsNull(s.GroupCourseInstance)?s.GroupCourseInstance.Course.CourseId:IsNull(s.CourseInstance)?s.TrialCourseId:s.CourseInstance.Course.CourseId,
-                        isCancelled = s.IsCanceled
+                        IsChanged = s.IsChanged
                         ,newLessons =new {
                             TeacherFirstName = s.NewLesson.Teacher.FirstName,
                             BranchAbbr = s.NewLesson.Org.Abbr,
