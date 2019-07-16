@@ -48,11 +48,23 @@ namespace Pegasus_backend.Controllers
                         s.IsCanceled,
                         s.IsConfirm,
                         s.IsChanged,
-                        newLesson=_ablemusicContext.Lesson
-                            .Include(r=>r.Teacher)
-                            .Include(r=>r.Room)
-                            .Include(r=>r.Org)
-                            .FirstOrDefault(r=>r.LessonId==s.NewLessonId),
+                        s.OrgId,
+                        newLesson= new
+                        {
+                            TeacherFirstName = _ablemusicContext.Teacher.FirstOrDefault(z=>z.TeacherId==_ablemusicContext.Lesson
+                                                                                                  .FirstOrDefault(r=>r.LessonId==s.NewLessonId).TeacherId).FirstName,
+                            TeacherLastName = _ablemusicContext.Teacher.FirstOrDefault(z=>z.TeacherId==_ablemusicContext.Lesson
+                                                                                                  .FirstOrDefault(r=>r.LessonId==s.NewLessonId).TeacherId).LastName,
+                            RoomName = _ablemusicContext.Room.FirstOrDefault(z=>z.RoomId==_ablemusicContext.Lesson
+                                                                                   .FirstOrDefault(r=>r.LessonId==s.NewLessonId).RoomId).RoomName,
+                            
+                            OrgName = _ablemusicContext.Org.FirstOrDefault(z=>z.OrgId==_ablemusicContext.Lesson
+                                                                                  .FirstOrDefault(r=>r.LessonId==s.NewLessonId).OrgId).OrgName,
+                            BeginTime =_ablemusicContext.Lesson
+                                .FirstOrDefault(r=>r.LessonId==s.NewLessonId).BeginTime,
+                            
+                            
+                        },
                         s.Reason,
                         isReadyToOwn=IsNull(s.GroupCourseInstance)?IsNull(s.CourseInstance)?s.IsPaid==1?0:1:
                             _ablemusicContext.LessonRemain.FirstOrDefault(q=>q.LearnerId==s.LearnerId && q.CourseInstanceId==s.CourseInstanceId).Quantity<=3?
@@ -64,7 +76,7 @@ namespace Pegasus_backend.Controllers
                         IsGroup=!IsNull(s.GroupCourseInstance),
                         info = new
                         {
-                            s.Room.RoomName,s.RoomId,s.Org.OrgName,s.OrgId,s.TeacherId,TeacherName=s.Teacher.FirstName,s.BeginTime,s.EndTime,
+                            s.Room.RoomName,s.RoomId,s.Org.OrgName,s.OrgId,s.TeacherId,TeacherLastName=s.Teacher.FirstName,TeacherFirstName=s.Teacher.FirstName,s.BeginTime,s.EndTime,
                             CourseName=!IsNull(s.GroupCourseInstance)?s.GroupCourseInstance.Course.CourseName:IsNull(s.CourseInstance)?s.TrialCourse.CourseName:s.CourseInstance.Course.CourseName,
                             s.LessonId,courseId=!IsNull(s.GroupCourseInstance)?s.GroupCourseInstance.Course.CourseId:IsNull(s.CourseInstance)?s.TrialCourseId:s.CourseInstance.Course.CourseId,s.LearnerId
                         }
@@ -91,14 +103,7 @@ namespace Pegasus_backend.Controllers
             try
             {
                 var endDate = beginDate.AddDays(6);
-                // var teacher = _ablemusicContext.Teacher.FirstOrDefault(s => s.TeacherId == teacherId);
-                // if (teacher == null)
-                // {
-                //     throw new Exception("Teacher does not exist.");
-                // }
-                //var teacherId = teacher.TeacherId;
                 var details = _ablemusicContext.Lesson.Where(s => s.TeacherId == teacherId)
-                    //.Where(s=>s.IsCanceled != 1 && s.IsConfirm != 1)
                     .Where(s=>beginDate.Date <= s.EndTime.Value.Date && s.EndTime.Value.Date <= endDate.Date)
                     .Include(s=>s.Room)
                     .Include(s=>s.Learner)
@@ -112,7 +117,20 @@ namespace Pegasus_backend.Controllers
                         title=IsNull(q.GroupCourseInstance)?IsNull(q.CourseInstance)?"T":"1":"G",start=q.BeginTime,end=q.EndTime,
                         student=IsNull(q.GroupCourseInstance)?IsNull(q.CourseInstance)?new List<string>{q.Learner.FirstName}:new List<string>{q.Learner.FirstName}:q.GroupCourseInstance.LearnerGroupCourse.Select(w=>w.Learner.FirstName),
                         description="", courseName=!IsNull(q.GroupCourseInstance)?q.GroupCourseInstance.Course.CourseName:IsNull(q.CourseInstance)?q.TrialCourse.CourseName:q.CourseInstance.Course.CourseName,
-                        orgName= q.Org.OrgName, roomName=q.Room.RoomName
+                        orgName= q.Org.OrgName, roomName=q.Room.RoomName, orgAbbr = q.Org.Abbr,
+                        q.IsConfirm,q.IsChanged,q.IsCanceled,q.Reason,q.BeginTime,
+                        newLesson= new
+                        {
+                            RoomName = _ablemusicContext.Room.FirstOrDefault(z=>z.RoomId==_ablemusicContext.Lesson
+                                                                                    .FirstOrDefault(r=>r.LessonId==q.NewLessonId).RoomId).RoomName,
+                            
+                            OrgName = _ablemusicContext.Org.FirstOrDefault(z=>z.OrgId==_ablemusicContext.Lesson
+                                                                                  .FirstOrDefault(r=>r.LessonId==q.NewLessonId).OrgId).OrgName,
+                            BeginTime =_ablemusicContext.Lesson
+                                .FirstOrDefault(r=>r.LessonId==q.NewLessonId).BeginTime,
+                            
+                        },
+                        
                     });
                 result.Data = await details.ToListAsync();
 
@@ -251,8 +269,6 @@ namespace Pegasus_backend.Controllers
             Result<Object> result = new Result<Object>();
             try
             {
-               
-               
                 var items = _ablemusicContext.Lesson
                     .Include(s => s.Teacher)
                     .Include(s => s.Learner)
@@ -267,11 +283,12 @@ namespace Pegasus_backend.Controllers
                     {
                         CourseName=!IsNull(s.GroupCourseInstance)?s.GroupCourseInstance.Course.CourseName:IsNull(s.CourseInstance)?s.TrialCourse.CourseName:s.CourseInstance.Course.CourseName,
                         TeacherFirstName = s.Teacher.FirstName, s.BeginTime, s.EndTime, s.LessonId,
-                        Room = s.Room.RoomName, Branch = s.Org.OrgName, s.IsCanceled, CancelReson = s.Reason,
+                        Room = s.Room.RoomName, Branch = s.Org.OrgName,BranchAbbr = s.Org.Abbr, s.IsCanceled, CancelReson = s.Reason,
                         s.IsConfirm,
                         s.IsTrial, Learner = s.Learner.FirstName, Learners = "", s.LearnerId, s.RoomId, s.TeacherId,
                         s.OrgId,
-                        courseId=!IsNull(s.GroupCourseInstance)?s.GroupCourseInstance.Course.CourseId:IsNull(s.CourseInstance)?s.TrialCourseId:s.CourseInstance.Course.CourseId
+                        courseId=!IsNull(s.GroupCourseInstance)?s.GroupCourseInstance.Course.CourseId:IsNull(s.CourseInstance)?s.TrialCourseId:s.CourseInstance.Course.CourseId,
+                        isCancelled = s.IsCanceled
                     });
                 
                 result.Data = await items.ToListAsync();
