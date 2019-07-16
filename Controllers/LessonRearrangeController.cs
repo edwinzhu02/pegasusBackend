@@ -180,6 +180,8 @@ namespace Pegasus_backend.Controllers
             newLesson.IsTrial = oldLesson.IsTrial;
             newLesson.TrialCourseId = oldLesson.TrialCourseId;
             newLesson.InvoiceId = oldLesson.InvoiceId;
+            newLesson.IsPaid = oldLesson.IsPaid;
+            newLesson.NewLessonId = oldLesson.NewLessonId;            
             newLesson.IsChanged = 1;
 
             try
