@@ -26,6 +26,7 @@ namespace Pegasus_backend.Controllers
         }
 
         // PUT: api/LessonReschedule/5
+        //splite a lesson 
         [HttpPut("{lessonId}/{userId}/{reason}")]
         public async Task<IActionResult> Put(int lessonId, short userId, string reason)
         {
@@ -230,6 +231,9 @@ namespace Pegasus_backend.Controllers
                     CourseInstanceId = lessonAppend.CourseInstanceId,
                     GroupCourseInstanceId = lessonAppend.GroupCourseInstanceId,
                     IsTrial = lessonAppend.IsTrial,
+                    IsPaid = lessonAppend.IsPaid,
+                    IsChanged = lessonAppend.IsChanged,
+                    IsConfirm = lessonAppend.IsConfirm,                                    
                     BeginTime = lessonAppend.BeginTime,
                     EndTime = lessonAppend.EndTime,
                     InvoiceId = lessonAppend.InvoiceId,

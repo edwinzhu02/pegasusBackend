@@ -336,6 +336,7 @@ namespace Pegasus_backend.Controllers
                         lesson.InvoiceId = invoice.InvoiceId;
                         lesson.IsConfirm = 0;
                         lesson.IsCanceled = 0; 
+                        lesson.IsChanged = 0; 
                         lesson.IsTrial = 0;                                                                       
                         lesson.IsPaid  = 1;
 
