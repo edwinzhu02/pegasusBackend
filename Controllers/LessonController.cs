@@ -103,14 +103,7 @@ namespace Pegasus_backend.Controllers
             try
             {
                 var endDate = beginDate.AddDays(6);
-                // var teacher = _ablemusicContext.Teacher.FirstOrDefault(s => s.TeacherId == teacherId);
-                // if (teacher == null)
-                // {
-                //     throw new Exception("Teacher does not exist.");
-                // }
-                //var teacherId = teacher.TeacherId;
                 var details = _ablemusicContext.Lesson.Where(s => s.TeacherId == teacherId)
-                    //.Where(s=>s.IsCanceled != 1 && s.IsConfirm != 1)
                     .Where(s=>beginDate.Date <= s.EndTime.Value.Date && s.EndTime.Value.Date <= endDate.Date)
                     .Include(s=>s.Room)
                     .Include(s=>s.Learner)
@@ -124,7 +117,9 @@ namespace Pegasus_backend.Controllers
                         title=IsNull(q.GroupCourseInstance)?IsNull(q.CourseInstance)?"T":"1":"G",start=q.BeginTime,end=q.EndTime,
                         student=IsNull(q.GroupCourseInstance)?IsNull(q.CourseInstance)?new List<string>{q.Learner.FirstName}:new List<string>{q.Learner.FirstName}:q.GroupCourseInstance.LearnerGroupCourse.Select(w=>w.Learner.FirstName),
                         description="", courseName=!IsNull(q.GroupCourseInstance)?q.GroupCourseInstance.Course.CourseName:IsNull(q.CourseInstance)?q.TrialCourse.CourseName:q.CourseInstance.Course.CourseName,
-                        orgName= q.Org.OrgName, roomName=q.Room.RoomName
+                        orgName= q.Org.OrgName, roomName=q.Room.RoomName,
+                        q.IsConfirm,q.IsChanged,q.IsCanceled
+                        
                     });
                 result.Data = await details.ToListAsync();
 
