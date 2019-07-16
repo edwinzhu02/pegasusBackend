@@ -118,7 +118,18 @@ namespace Pegasus_backend.Controllers
                         student=IsNull(q.GroupCourseInstance)?IsNull(q.CourseInstance)?new List<string>{q.Learner.FirstName}:new List<string>{q.Learner.FirstName}:q.GroupCourseInstance.LearnerGroupCourse.Select(w=>w.Learner.FirstName),
                         description="", courseName=!IsNull(q.GroupCourseInstance)?q.GroupCourseInstance.Course.CourseName:IsNull(q.CourseInstance)?q.TrialCourse.CourseName:q.CourseInstance.Course.CourseName,
                         orgName= q.Org.OrgName, roomName=q.Room.RoomName,
-                        q.IsConfirm,q.IsChanged,q.IsCanceled,q.Reason,q.BeginTime
+                        q.IsConfirm,q.IsChanged,q.IsCanceled,q.Reason,q.BeginTime,
+                        newLesson= new
+                        {
+                            RoomName = _ablemusicContext.Room.FirstOrDefault(z=>z.RoomId==_ablemusicContext.Lesson
+                                                                                    .FirstOrDefault(r=>r.LessonId==q.NewLessonId).RoomId).RoomName,
+                            
+                            OrgName = _ablemusicContext.Org.FirstOrDefault(z=>z.OrgId==_ablemusicContext.Lesson
+                                                                                  .FirstOrDefault(r=>r.LessonId==q.NewLessonId).OrgId).OrgName,
+                            BeginTime =_ablemusicContext.Lesson
+                                .FirstOrDefault(r=>r.LessonId==q.NewLessonId).BeginTime,
+                            
+                        },
                         
                     });
                 result.Data = await details.ToListAsync();
