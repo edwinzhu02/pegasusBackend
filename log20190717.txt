@@ -1,0 +1,4 @@
+2019-07-17 10:39:01.290 +12:00 [INF] User profile is available. Using 'C:\Users\Learnspace\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-07-17 10:39:03.201 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
+2019-07-17 10:39:03.241 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-07-17 10:39:03.509 +12:00 [INF] Request finished in 310.9643ms 404 

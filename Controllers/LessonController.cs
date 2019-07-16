@@ -249,7 +249,7 @@ namespace Pegasus_backend.Controllers
                         s.IsTrial, Learner = s.Learner.FirstName, Learners = "", s.LearnerId, s.RoomId, s.TeacherId,
                         s.OrgId,
                         courseId=!IsNull(s.GroupCourseInstance)?s.GroupCourseInstance.Course.CourseId:IsNull(s.CourseInstance)?s.TrialCourseId:s.CourseInstance.Course.CourseId
-                    });
+                    }).OrderByDescending(s=>s.BeginTime);
                 
                 result.Data = await items.ToListAsync();
             }
@@ -278,6 +278,12 @@ namespace Pegasus_backend.Controllers
                     .ThenInclude(w => w.Course)
                     .Include(s => s.CourseInstance)
                     .ThenInclude(w => w.Course)
+                    .Include(s => s.NewLesson)
+                    .ThenInclude(s => s.Teacher)                    
+                    .Include(s => s.NewLesson)
+                    .ThenInclude(s => s.Org)                    
+                    .Include(s => s.NewLesson)
+                    .ThenInclude(s => s.Room)                    
                     .Where(s => s.LearnerId ==learnerId )
                     .Select(s => new
                     {
@@ -289,6 +295,13 @@ namespace Pegasus_backend.Controllers
                         s.OrgId,
                         courseId=!IsNull(s.GroupCourseInstance)?s.GroupCourseInstance.Course.CourseId:IsNull(s.CourseInstance)?s.TrialCourseId:s.CourseInstance.Course.CourseId,
                         isCancelled = s.IsCanceled
+                        ,newLessons =new {
+                            TeacherFirstName = s.NewLesson.Teacher.FirstName,
+                            BranchAbbr = s.NewLesson.Org.Abbr,
+                            Room = s.NewLesson.Room.RoomName,
+                            BeginTime = s.NewLesson.BeginTime,
+                            EndTime = s.NewLesson.EndTime
+                        }
                     });
                 
                 result.Data = await items.ToListAsync();
