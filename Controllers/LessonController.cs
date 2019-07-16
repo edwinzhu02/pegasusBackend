@@ -263,8 +263,6 @@ namespace Pegasus_backend.Controllers
             Result<Object> result = new Result<Object>();
             try
             {
-               
-               
                 var items = _ablemusicContext.Lesson
                     .Include(s => s.Teacher)
                     .Include(s => s.Learner)
@@ -279,11 +277,12 @@ namespace Pegasus_backend.Controllers
                     {
                         CourseName=!IsNull(s.GroupCourseInstance)?s.GroupCourseInstance.Course.CourseName:IsNull(s.CourseInstance)?s.TrialCourse.CourseName:s.CourseInstance.Course.CourseName,
                         TeacherFirstName = s.Teacher.FirstName, s.BeginTime, s.EndTime, s.LessonId,
-                        Room = s.Room.RoomName, Branch = s.Org.OrgName, s.IsCanceled, CancelReson = s.Reason,
+                        Room = s.Room.RoomName, Branch = s.Org.OrgName,BranchAbbr = s.Org.Abbr, s.IsCanceled, CancelReson = s.Reason,
                         s.IsConfirm,
                         s.IsTrial, Learner = s.Learner.FirstName, Learners = "", s.LearnerId, s.RoomId, s.TeacherId,
                         s.OrgId,
-                        courseId=!IsNull(s.GroupCourseInstance)?s.GroupCourseInstance.Course.CourseId:IsNull(s.CourseInstance)?s.TrialCourseId:s.CourseInstance.Course.CourseId
+                        courseId=!IsNull(s.GroupCourseInstance)?s.GroupCourseInstance.Course.CourseId:IsNull(s.CourseInstance)?s.TrialCourseId:s.CourseInstance.Course.CourseId,
+                        isCancelled = s.IsCanceled
                     });
                 
                 result.Data = await items.ToListAsync();
