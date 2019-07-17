@@ -205,8 +205,10 @@ namespace Pegasus_backend.Controllers
                         throw new Exception(name.ProductName + " has not enough stock, only " + stock.Quantity + " left");
                     }
                     detail.StockId = stock.StockId;
+                    
                     detail.CreatedAt = toNZTimezone(DateTime.UtcNow);
-                    detail.DiscountedAmount = name.SellPrice * detail.SoldQuantity;
+                    detail.Amount = name.SellPrice * detail.SoldQuantity;
+                    //detail.DiscountedAmount = name.SellPrice * detail.SoldQuantity;
                     if (detail.DiscountAmount != 0)
                     {
                         detail.DiscountedAmount -= detail.DiscountAmount;
