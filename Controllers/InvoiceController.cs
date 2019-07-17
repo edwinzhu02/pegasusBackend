@@ -38,6 +38,7 @@ namespace Pegasus_backend.Controllers
                     .ToList();
                 if (res.Count ==0){
                     result.IsSuccess = false;
+                    result.ErrorCode = "10000";                    
                     result.ErrorMessage ="Sorry, No invoice !";
                     return BadRequest(result);                    
                 }
