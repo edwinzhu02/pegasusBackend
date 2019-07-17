@@ -214,6 +214,7 @@ namespace Pegasus_backend.Controllers
             lesson.IsTrial = 0;
             lesson.InvoiceId = invoice.InvoiceId;
             lesson.IsConfirm = 0;
+            lesson.IsPaid = 1;
             lesson.TrialCourseId = null;
             lesson.IsChanged = 0;
 
@@ -320,6 +321,7 @@ namespace Pegasus_backend.Controllers
                         .ThenInclude(s=>s.Course)
                         .Include(s=>s.GroupCourseInstance)
                         .ThenInclude(s=>s.Course)
+                        .Include(s=>s.TrialCourse)
                         .FirstOrDefault(s => s.LessonId == lessonId);
                     if (lesson == null)
                     {
@@ -334,6 +336,64 @@ namespace Pegasus_backend.Controllers
                     if (lesson.IsConfirm == 1)
                     {
                         throw new Exception("This lesson has already confirm.");
+                    }
+
+                    if (!IsNull(lesson.TrialCourse))
+                    {
+                        lesson.IsConfirm = 1;
+                        lesson.Reason = reason;
+                        _ablemusicContext.Update(lesson);
+                        await _ablemusicContext.SaveChangesAsync();
+                        
+                        //fund
+                        var TrailCourse = lesson.TrialCourse;
+                        var fund1 = _ablemusicContext.Fund.FirstOrDefault(s => s.LearnerId == lesson.LearnerId);
+                        fund1.Balance -= TrailCourse.Price;
+                        fund1.UpdatedAt = DateTime.Now;
+                        _ablemusicContext.Update(fund1);
+                        await _ablemusicContext.SaveChangesAsync();
+                        
+                        //learner transaction
+                        var learnerTransaction1 = new LearnerTransaction
+                        {
+                            LessonId = lesson.LessonId,CreatedAt = toNZTimezone(DateTime.UtcNow).ToShortDateString(),
+                            Amount = TrailCourse.Price.ToString(),LearnerId = lesson.LearnerId
+                        };
+                        _ablemusicContext.Add(learnerTransaction1);
+                        await _ablemusicContext.SaveChangesAsync();
+                        
+                        //teacher transaction
+                        var teacherWageRate1 =
+                            _ablemusicContext.TeacherWageRates.FirstOrDefault(s =>
+                                s.TeacherId == lesson.TeacherId && s.IsActivate == 1);
+                    
+                        var courseCatogoryId1 = TrailCourse.CourseCategoryId;
+                        if (courseCatogoryId1 == 1)
+                        {
+                            houlyWage = teacherWageRate1.PianoRates;
+                        }
+
+                        else if (courseCatogoryId1 == 7)
+                        {
+                            houlyWage = teacherWageRate1.TheoryRates;
+                        }
+                        else
+                        {
+                            houlyWage = teacherWageRate1.OthersRates;
+                        }
+                        var wageAmout1 = (double) houlyWage*(lesson.EndTime.Value.Subtract(lesson.BeginTime.Value).TotalMinutes/60);
+                        var teacherTransaction1 = new TeacherTransaction
+                        {
+                            LessonId = lesson.LessonId,CreatedAt = toNZTimezone(DateTime.UtcNow),
+                            WageAmount = (decimal) wageAmout1,
+                            TeacherId = lesson.TeacherId
+                        };
+                        _ablemusicContext.Add(teacherTransaction1);
+                        await _ablemusicContext.SaveChangesAsync();
+                        dbContextTransaction.Commit();
+                        result.Data = "success";
+                        return Ok(result);
+                        
                     }
                     
                     if (!IsNull(lesson.GroupCourseInstanceId))
@@ -530,6 +590,7 @@ namespace Pegasus_backend.Controllers
             {
                 result.Data =await _ablemusicContext.AwaitMakeUpLesson.
                     Include(a => a.CourseInstance).ThenInclude(ci => ci.Course).
+                    Include(a => a.MissedLesson).
                     Where(a => a.IsActive==1 && a.LearnerId ==learnerId)
                 .ToListAsync();
             }

@@ -47,6 +47,7 @@ namespace Pegasus_backend.Controllers
             lesson.BeginTime = trialLessonViewModel.BeginTime;
             lesson.EndTime = trialLessonViewModel.EndTime;
             lesson.InvoiceId = null;
+            lesson.IsChanged = 0;
             lesson.IsConfirm = 0;
             lesson.TrialCourseId = trialLessonViewModel.TrialCourseId;
             lesson.IsPaid = trialLessonViewModel.IsPayNow?(short) 1: (short) 0;

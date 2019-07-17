@@ -37,10 +37,11 @@ namespace Pegasus_backend.Controllers.MobileControllers
         }
 
         // name of receiver
-        public async Task SendMessageOneToOne(string name, string message)
+        public async Task SendMessageOneToOne(ChatMessageModel chatMessageModel)
         {
             //var connectionId = Context.ConnectionId;
-            await Clients.User(name).SendAsync("SendMessageOneToOne", message);
+            await Clients.User(chatMessageModel.ReceiverUserId.ToString())
+                .SendAsync("SendMessageOneToOne",chatMessageModel.SenderUserId ,chatMessageModel.MessageBody, chatMessageModel.CreateAt);
             //await Clients.User(connectionId).SendAsync("SendMessageOneToOne", message);
         }
     }
