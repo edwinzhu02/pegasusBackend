@@ -18,15 +18,17 @@ namespace Pegasus_backend.Services
         private int _lessonId;
         private DateTime _beginTime;
         private DateTime _endTime;
-        private DateTime _protentialBeginTime;
+        private DateTime _protentialMinTime;
+        private DateTime _protentialMaxTime;
         private int _teacherId;
         private List<Lesson> _totalProtentialConflictLessons;
         private List<ConflictInfo> _totalProtentialConflictRoomForOTO;
         private List<ConflictInfo> _totalProtentialConflictRoomForGC;
 
-        public LessonConflictCheckerService(DateTime protentialBeginTime)
+        public LessonConflictCheckerService(DateTime min, DateTime max)
         {
-            _protentialBeginTime = protentialBeginTime;
+            _protentialMinTime = min;
+            _protentialMaxTime = max;
             _ablemusicContext = new ablemusicContext();
         }
 
@@ -64,15 +66,14 @@ namespace Pegasus_backend.Services
 
         public async Task LoadAllProtentialConflictLessonsToMemoryAsync()
         {
-            DateTime beginTime = _protentialBeginTime.AddDays(-1);
-            _totalProtentialConflictLessons = await _ablemusicContext.Lesson.Where(l => l.BeginTime >= beginTime && l.IsCanceled != 1).OrderBy(l => l.BeginTime).ToListAsync();
+            _totalProtentialConflictLessons = await _ablemusicContext.Lesson.Where(l => l.BeginTime >= _protentialMinTime && l.BeginTime <= _protentialMaxTime && l.IsCanceled != 1).ToListAsync();
             _totalProtentialConflictRoomForOTO = await (from cs in _ablemusicContext.CourseSchedule
                                                         join oto in _ablemusicContext.One2oneCourseInstance on cs.CourseInstanceId equals oto.CourseInstanceId
                                                         join c in _ablemusicContext.Course on oto.CourseId equals c.CourseId
                                                         join o in _ablemusicContext.Org on oto.OrgId equals o.OrgId
                                                         join r in _ablemusicContext.Room on oto.RoomId equals r.RoomId
                                                         join t in _ablemusicContext.Teacher on oto.TeacherId equals t.TeacherId
-                                                        where beginTime.Date >= oto.BeginDate.Value.Date
+                                                        where _protentialMinTime.Date >= oto.BeginDate.Value.Date
                                                         select new ConflictInfo
                                                         {
                                                             CourseScheduleId = cs.CourseScheduleId,
@@ -96,7 +97,7 @@ namespace Pegasus_backend.Services
                                                        join o in _ablemusicContext.Org on gc.OrgId equals o.OrgId
                                                        join r in _ablemusicContext.Room on gc.RoomId equals r.RoomId
                                                        join t in _ablemusicContext.Teacher on gc.TeacherId equals t.TeacherId
-                                                       where beginTime.Date >= gc.BeginDate.Value.Date
+                                                       where _protentialMinTime.Date >= gc.BeginDate.Value.Date
                                                        select new ConflictInfo
                                                        {
                                                            CourseScheduleId = cs.CourseScheduleId,

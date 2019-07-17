@@ -144,9 +144,16 @@ namespace Pegasus_backend.Controllers
             string courseName = courses[0].CourseName;
             DateTime conflictCheckingStart = DateTime.Now;
 
+            DateTime min = remainLessons[0].BeginTime.Value;
+            DateTime max = remainLessons[0].BeginTime.Value;
+            foreach (var remainLesson in remainLessons)
+            {
+                min = remainLesson.BeginTime.Value > min ? min : remainLesson.BeginTime.Value;
+                max = remainLesson.BeginTime.Value > max ? remainLesson.BeginTime.Value : max;
+            }
             List<Lesson> lessonsToBeAppend = new List<Lesson>();
             int i = numOfSchedulesToBeAdd;
-            var lessonConflictCheckerService = new LessonConflictCheckerService(lesson.BeginTime.Value);
+            var lessonConflictCheckerService = new LessonConflictCheckerService(min, max);
             try
             {
                 await lessonConflictCheckerService.LoadAllProtentialConflictLessonsToMemoryAsync();
@@ -158,7 +165,7 @@ namespace Pegasus_backend.Controllers
                 return BadRequest(result);
             }
 
-            Dictionary<Lesson, object> lessonMapConflictCheckResult = new Dictionary<Lesson, object>();
+            Dictionary<int, object> lessonIdMapConflictCheckResult = new Dictionary<int, object>();
             foreach (var remainLesson in remainLessons)
             {
                 if (i <= 0) break;
@@ -184,7 +191,7 @@ namespace Pegasus_backend.Controllers
                     else
                     {
                         remainLesson.BeginTime = remainLesson.BeginTime.Value.AddMinutes(15);
-                        lessonMapConflictCheckResult.Add(remainLesson, new
+                        lessonIdMapConflictCheckResult.Add(remainLesson.LessonId, new
                         {
                             TimeBeforeConflict = lessonConflictRecheckResult,
                             TimeAfterConflict = lessonConflictCheckResult
@@ -209,15 +216,15 @@ namespace Pegasus_backend.Controllers
                 {
                     result.Data.Add(new {ValidLesson = l});
                 }
-                foreach(var map in lessonMapConflictCheckResult)
+                foreach(var map in lessonIdMapConflictCheckResult)
                 {
                     result.Data.Add(new
                     {
-                        RemainLessonWithConflict = map.Key,
+                        RemainLessonIdWithConflict = map.Key,
                         ConflictDetail = map.Value
                     });
                 }
-                result.Note = "Conflic Chenking Time Consumed: " + conflictCheckingTime.ToString();
+                result.Note = "Conflict Chenking Time Consumed: " + conflictCheckingTime.ToString();
                 return BadRequest(result);
             }
 
@@ -332,7 +339,7 @@ namespace Pegasus_backend.Controllers
             {
                 _notificationObservable.send(mail);
             }
-            result.Note = "Conflic Chenking Time Consumed: " + conflictCheckingTime.ToString();
+            result.Note = "Conflict Chenking Time Consumed: " + conflictCheckingTime.ToString();
             return Ok(result);
         }
     }
