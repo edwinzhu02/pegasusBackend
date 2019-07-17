@@ -37,10 +37,10 @@ namespace Pegasus_backend.Controllers
                     .Where(s=>s.IsPaid == 0)
                     .ToList();
                 if (res.Count ==0){
-                    result.IsSuccess = false;
-                    result.ErrorCode = "10000";                    
+                    result.IsSuccess = true;
+                    result.IsFound = false;                    
                     result.ErrorMessage ="Sorry, No invoice !";
-                    return BadRequest(result);                    
+                    return Ok(result);                     
                 }
                 result.Data = res;
                 result.IsSuccess = true;
