@@ -29,6 +29,7 @@ using Pegasus_backend.Services;
 using Serilog;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
+using Pegasus_backend.MiddleWare;
 
 namespace Pegasus_backend
 {
@@ -162,6 +163,7 @@ namespace Pegasus_backend
             app.UseSignalR(routes => { routes.MapHub<Chatroom>("/chat"); });
             app.UseHttpsRedirection();
             app.UseAuthentication();
+            app.UseMiddleware<SerilogRequestLogger>();
             app.UseMvc();
             
         }

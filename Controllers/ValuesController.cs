@@ -29,7 +29,7 @@ namespace Pegasus_backend.Controllers
             var arg = new NotificationEventArgs("Jesse", "Say Hi", "Details", 1);
             _notificationObservable.send(arg);
             LogInfoToFile("hello");
-            throw new Exception("test exception");
+            //throw new Exception("test exception");
             return Ok(toNZTimezone(DateTime.UtcNow));
         }
 
