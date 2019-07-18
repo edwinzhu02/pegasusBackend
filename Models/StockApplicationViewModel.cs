@@ -12,6 +12,14 @@ namespace Pegasus_backend.Models
         [Required(ErrorMessage = "ApplyReason is required")]
         public string ApplyReason { get; set; }
         [Required(ErrorMessage = "ProductIdMapQty is required")]
-        public Dictionary<int, int> ProductIdMapQty { get; set; }
+        public List<StockApplicationDetailsViewModel> ProductIdQty { get; set; }
     }
+    public class StockApplicationDetailsViewModel
+    {
+       [Required(ErrorMessage = "ProductId is required")]
+        public int ProductId { get; set; }
+        [Required(ErrorMessage = "AppliedQty is required")]
+        public int? AppliedQty { get; set; }
+    }
+
 }

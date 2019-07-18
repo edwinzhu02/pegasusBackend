@@ -26,10 +26,11 @@ namespace Pegasus_backend.Controllers
         }
 
         // PUT: api/LessonReschedule/5
+        //splite a lesson 
         [HttpPut("{lessonId}/{userId}/{reason}")]
         public async Task<IActionResult> Put(int lessonId, short userId, string reason)
         {
-            var result = new Result<List<Lesson>>();
+            var result = new Result<List<object>>();
             Lesson lesson;
             Learner learner;
             List<Course> courses;
@@ -83,7 +84,6 @@ namespace Pegasus_backend.Controllers
                                                GroupCourseInstance = null,
                                                Lesson = null,
                                                One2oneCourseInstance = null,
-
                                            },
                                            CourseInstance = null,
                                            GroupCourseInstance = null,
@@ -132,38 +132,99 @@ namespace Pegasus_backend.Controllers
             if (remainLessons.Count < numOfSchedulesToBeAdd)
             {
                 result.IsSuccess = false;
-                result.ErrorMessage = "Not enough remain lessons to do reschedule";
+                result.ErrorMessage = "Not enough remain lessons to do reschedule\n" + "Remain lessons found:" + 
+                    remainLessons.Count + "\nRemain lessons need:" + numOfSchedulesToBeAdd;
+                result.Data = new List<object>();
+                foreach(var rl in remainLessons)
+                {
+                    result.Data.Add(new { RemainLesson = rl });
+                }
                 return BadRequest(result);
             }
             string courseName = courses[0].CourseName;
+            DateTime conflictCheckingStart = DateTime.Now;
+
+            DateTime min = remainLessons[0].BeginTime.Value;
+            DateTime max = remainLessons[0].BeginTime.Value;
+            foreach (var remainLesson in remainLessons)
+            {
+                min = remainLesson.BeginTime.Value > min ? min : remainLesson.BeginTime.Value;
+                max = remainLesson.BeginTime.Value > max ? remainLesson.BeginTime.Value : max;
+            }
             List<Lesson> lessonsToBeAppend = new List<Lesson>();
             int i = numOfSchedulesToBeAdd;
+            var lessonConflictCheckerService = new LessonConflictCheckerService(min, max);
+            try
+            {
+                await lessonConflictCheckerService.LoadAllProtentialConflictLessonsToMemoryAsync();
+            }
+            catch(Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+
+            Dictionary<int, object> lessonIdMapConflictCheckResult = new Dictionary<int, object>();
             foreach (var remainLesson in remainLessons)
             {
                 if (i <= 0) break;
-                var lessonConflictCheckerService = new LessonConflictCheckerService(remainLesson);
-                Result<List<object>> lessonConflictCheckResult;
-                try
-                {
-                    lessonConflictCheckResult = await lessonConflictCheckerService.CheckBothRoomAndTeacher();
-                }
-                catch (Exception ex)
-                {
-                    result.IsSuccess = false;
-                    result.ErrorMessage = ex.Message;
-                    return BadRequest(result);
-                }
+                remainLesson.EndTime = remainLesson.EndTime.Value.AddMinutes(15);
+                lessonConflictCheckerService.ConfigureLessonToCheck(remainLesson);
+                Result<List<object>> lessonConflictCheckResult = lessonConflictCheckerService.CheckBothRoomAndTeacherInMemory();
+                Result<List<object>> lessonConflictRecheckResult = new Result<List<object>>();
                 if (lessonConflictCheckResult.IsSuccess)
                 {
                     lessonsToBeAppend.Add(remainLesson);
                     i--;
+                } else
+                {
+                    remainLesson.EndTime = remainLesson.EndTime.Value.AddMinutes(-15);
+                    remainLesson.BeginTime = remainLesson.BeginTime.Value.AddMinutes(-15);
+                    lessonConflictCheckerService.ConfigureLessonToCheck(remainLesson);
+                    lessonConflictRecheckResult = lessonConflictCheckerService.CheckBothRoomAndTeacherInMemory();
+                    if (lessonConflictRecheckResult.IsSuccess)
+                    {
+                        lessonsToBeAppend.Add(remainLesson);
+                        i--;
+                    }
+                    else
+                    {
+                        remainLesson.BeginTime = remainLesson.BeginTime.Value.AddMinutes(15);
+                        lessonIdMapConflictCheckResult.Add(remainLesson.LessonId, new
+                        {
+                            TimeBeforeConflict = lessonConflictRecheckResult,
+                            TimeAfterConflict = lessonConflictCheckResult
+                        });
+                    }
                 }
             }
+
+            DateTime conflictCheckingEnd = DateTime.Now;
+            TimeSpan conflictCheckingTime = conflictCheckingEnd.Subtract(conflictCheckingStart);
 
             if (lessonsToBeAppend.Count < numOfSchedulesToBeAdd)
             {
                 result.IsSuccess = false;
-                result.ErrorMessage = "Not enough valid remain lessons to do reschedule";
+                result.ErrorMessage = "Not enough valid remain lessons to do reschedule.\n" + 
+                    "Valid lessons found: " + lessonsToBeAppend.Count +
+                    "\nRemain Lessons Found:" + remainLessons.Count + 
+                    "\nRemain Lessons with Conflict:" + (remainLessons.Count - lessonsToBeAppend.Count) +
+                    "\n Number of valid lessons need: " + numOfSchedulesToBeAdd;
+                result.Data = new List<object>();
+                foreach(var l in lessonsToBeAppend)
+                {
+                    result.Data.Add(new {ValidLesson = l});
+                }
+                foreach(var map in lessonIdMapConflictCheckResult)
+                {
+                    result.Data.Add(new
+                    {
+                        RemainLessonIdWithConflict = map.Key,
+                        ConflictDetail = map.Value
+                    });
+                }
+                result.Note = "Conflict Chenking Time Consumed: " + conflictCheckingTime.ToString();
                 return BadRequest(result);
             }
 
@@ -213,10 +274,9 @@ namespace Pegasus_backend.Controllers
                 return BadRequest(saveRemindLogResult);
             }
 
-            result.Data = new List<Lesson>();
+            result.Data = new List<object>();
             foreach (var lessonAppend in lessonsToBeAppend)
             {
-                lessonAppend.EndTime = lessonAppend.EndTime.Value.AddMinutes(15);
                 result.Data.Add(new Lesson
                 {
                     LessonId = lessonAppend.LessonId,
@@ -230,6 +290,9 @@ namespace Pegasus_backend.Controllers
                     CourseInstanceId = lessonAppend.CourseInstanceId,
                     GroupCourseInstanceId = lessonAppend.GroupCourseInstanceId,
                     IsTrial = lessonAppend.IsTrial,
+                    IsPaid = lessonAppend.IsPaid,
+                    IsChanged = lessonAppend.IsChanged,
+                    IsConfirm = lessonAppend.IsConfirm,                                    
                     BeginTime = lessonAppend.BeginTime,
                     EndTime = lessonAppend.EndTime,
                     InvoiceId = lessonAppend.InvoiceId,
@@ -276,7 +339,7 @@ namespace Pegasus_backend.Controllers
             {
                 _notificationObservable.send(mail);
             }
-
+            result.Note = "Conflict Chenking Time Consumed: " + conflictCheckingTime.ToString();
             return Ok(result);
         }
     }

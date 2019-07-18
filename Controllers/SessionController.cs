@@ -214,6 +214,7 @@ namespace Pegasus_backend.Controllers
             lesson.IsTrial = 0;
             lesson.InvoiceId = invoice.InvoiceId;
             lesson.IsConfirm = 0;
+            lesson.IsPaid = 1;
             lesson.TrialCourseId = null;
             lesson.IsChanged = 0;
 
@@ -589,6 +590,7 @@ namespace Pegasus_backend.Controllers
             {
                 result.Data =await _ablemusicContext.AwaitMakeUpLesson.
                     Include(a => a.CourseInstance).ThenInclude(ci => ci.Course).
+                    Include(a => a.MissedLesson).
                     Where(a => a.IsActive==1 && a.LearnerId ==learnerId)
                 .ToListAsync();
             }
