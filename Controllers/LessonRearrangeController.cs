@@ -168,6 +168,8 @@ namespace Pegasus_backend.Controllers
             }
 
             oldLesson.IsCanceled = 1;
+            oldLesson.IsChanged = 1;
+            oldLesson.NewLessonId = 1;            
             oldLesson.Reason = newLesson.Reason;
 
             newLesson.LessonId = 0;
@@ -181,8 +183,8 @@ namespace Pegasus_backend.Controllers
             newLesson.TrialCourseId = oldLesson.TrialCourseId;
             newLesson.InvoiceId = oldLesson.InvoiceId;
             newLesson.IsPaid = oldLesson.IsPaid;
-            newLesson.NewLessonId = oldLesson.NewLessonId;            
-            newLesson.IsChanged = 1;
+            //newLesson.NewLessonId = oldLesson.NewLessonId;            
+            newLesson.IsChanged = 0;
 
             try
             {

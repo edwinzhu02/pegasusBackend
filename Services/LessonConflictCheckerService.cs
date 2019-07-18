@@ -18,13 +18,17 @@ namespace Pegasus_backend.Services
         private int _lessonId;
         private DateTime _beginTime;
         private DateTime _endTime;
-        private DateTime _protentialBeginTime;
+        private DateTime _protentialMinTime;
+        private DateTime _protentialMaxTime;
         private int _teacherId;
         private List<Lesson> _totalProtentialConflictLessons;
+        private List<ConflictInfo> _totalProtentialConflictRoomForOTO;
+        private List<ConflictInfo> _totalProtentialConflictRoomForGC;
 
-        public LessonConflictCheckerService(DateTime protentialBeginTime)
+        public LessonConflictCheckerService(DateTime min, DateTime max)
         {
-            _protentialBeginTime = protentialBeginTime;
+            _protentialMinTime = min;
+            _protentialMaxTime = max;
             _ablemusicContext = new ablemusicContext();
         }
 
@@ -62,14 +66,68 @@ namespace Pegasus_backend.Services
 
         public async Task LoadAllProtentialConflictLessonsToMemoryAsync()
         {
-            DateTime beginTime = _protentialBeginTime.AddDays(-1);
-            _totalProtentialConflictLessons = await _ablemusicContext.Lesson.Where(l => l.BeginTime >= beginTime && l.IsCanceled != 1).OrderBy(l => l.BeginTime).ToListAsync();
+            _totalProtentialConflictLessons = await _ablemusicContext.Lesson.Where(l => l.BeginTime >= _protentialMinTime && l.BeginTime <= _protentialMaxTime && l.IsCanceled != 1).ToListAsync();
+            _totalProtentialConflictRoomForOTO = await (from cs in _ablemusicContext.CourseSchedule
+                                                        join oto in _ablemusicContext.One2oneCourseInstance on cs.CourseInstanceId equals oto.CourseInstanceId
+                                                        join c in _ablemusicContext.Course on oto.CourseId equals c.CourseId
+                                                        join o in _ablemusicContext.Org on oto.OrgId equals o.OrgId
+                                                        join r in _ablemusicContext.Room on oto.RoomId equals r.RoomId
+                                                        join t in _ablemusicContext.Teacher on oto.TeacherId equals t.TeacherId
+                                                        where _protentialMinTime.Date >= oto.BeginDate.Value.Date
+                                                        select new ConflictInfo
+                                                        {
+                                                            CourseScheduleId = cs.CourseScheduleId,
+                                                            CourseInstanceId = cs.CourseInstanceId,
+                                                            DayOfWeek = cs.DayOfWeek,
+                                                            BeginTime = cs.BeginTime,
+                                                            EndTime = cs.EndTime,
+                                                            CourseId = oto.CourseId,
+                                                            TeacherId = oto.TeacherId,
+                                                            OrgId = oto.OrgId,
+                                                            RoomId = oto.RoomId,
+                                                            CourseName = c.CourseName,
+                                                            OrgName = o.OrgName,
+                                                            RoomName = r.RoomName,
+                                                            TeacherFirstName = t.FirstName,
+                                                            TeacherLastName = t.LastName
+                                                        }).ToListAsync();
+            _totalProtentialConflictRoomForGC = await (from cs in _ablemusicContext.CourseSchedule
+                                                       join gc in _ablemusicContext.GroupCourseInstance on cs.GroupCourseInstanceId equals gc.GroupCourseInstanceId
+                                                       join c in _ablemusicContext.Course on gc.CourseId equals c.CourseId
+                                                       join o in _ablemusicContext.Org on gc.OrgId equals o.OrgId
+                                                       join r in _ablemusicContext.Room on gc.RoomId equals r.RoomId
+                                                       join t in _ablemusicContext.Teacher on gc.TeacherId equals t.TeacherId
+                                                       where _protentialMinTime.Date >= gc.BeginDate.Value.Date
+                                                       select new ConflictInfo
+                                                       {
+                                                           CourseScheduleId = cs.CourseScheduleId,
+                                                           GroupCourseInstanceId = cs.GroupCourseInstanceId,
+                                                           DayOfWeek = cs.DayOfWeek,
+                                                           BeginTime = cs.BeginTime,
+                                                           EndTime = cs.EndTime,
+                                                           CourseId = gc.CourseId,
+                                                           TeacherId = gc.TeacherId,
+                                                           OrgId = gc.OrgId,
+                                                           RoomId = gc.RoomId,
+                                                           CourseName = c.CourseName,
+                                                           OrgName = o.OrgName,
+                                                           RoomName = r.RoomName,
+                                                           TeacherFirstName = t.FirstName,
+                                                           TeacherLastName = t.LastName
+                                                       }).ToListAsync();
+
         }
 
         public Result<List<Lesson>> CheckRoomConflictInScheduledLessonsInMemory()
         {
             var result = new Result<List<Lesson>>();
             var conflictRooms = new List<Lesson>();
+            if(_totalProtentialConflictLessons.Count <= 0)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = "You have to call LoadAllProtentialConflictLessonsToMemoryAsync() before perform CheckRoomConflictInScheduledLessonsInMemory()";
+                return result;
+            }
             foreach(var p in _totalProtentialConflictLessons)
             {
                 if(p.RoomId == _roomId && p.OrgId == _orgId && p.LessonId != _lessonId && ((p.BeginTime > _beginTime && p.BeginTime < _endTime) ||
@@ -95,6 +153,12 @@ namespace Pegasus_backend.Services
         {
             var result = new Result<List<Lesson>>();
             var conflictTeachersWithoutRelocation = new List<Lesson>();
+            if (_totalProtentialConflictLessons.Count <= 0)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = "You have to call LoadAllProtentialConflictLessonsToMemoryAsync() before perform CheckTeacherConflictInScheduledLessonsInMemory()";
+                return result;
+            }
             DateTime beginTime = _beginTime.AddMinutes(-60);
             DateTime endTime = _endTime.AddMinutes(60);
             foreach(var p in _totalProtentialConflictLessons)
@@ -131,6 +195,107 @@ namespace Pegasus_backend.Services
             return result;
         }
 
+        public Result<List<ConflictInfo>> CheckRoomConflictInUnscheduledLessonsInMemory()
+        {
+            var result = new Result<List<ConflictInfo>>
+            {
+                Data = new List<ConflictInfo>()
+            };
+            TimeSpan beginTime = _beginTime.TimeOfDay;
+            TimeSpan endTime = _endTime.TimeOfDay;
+            if (_beginTime.Date != _endTime.Date)
+            {
+                throw new Exception("The lesson begin time and end time are not at same date! ");
+            }
+
+            foreach (var oto in _totalProtentialConflictRoomForOTO)
+            {
+                if(oto.OrgId == _orgId && oto.RoomId == _roomId && _beginTime.ToDayOfWeek() == oto.DayOfWeek &&
+                    ((oto.BeginTime > beginTime && oto.BeginTime < endTime) || (oto.EndTime > beginTime && oto.EndTime < endTime) ||
+                    (oto.BeginTime <= beginTime && oto.EndTime >= endTime) || (oto.BeginTime > beginTime && oto.EndTime < endTime)))
+                {
+                    result.Data.Add(oto);
+                }
+            }
+
+            foreach(var gc in _totalProtentialConflictRoomForGC)
+            {
+                if(gc.OrgId == _orgId && gc.RoomId == _roomId && _beginTime.ToDayOfWeek() == gc.DayOfWeek &&
+                    ((gc.BeginTime > beginTime && gc.BeginTime < endTime) || (gc.EndTime > beginTime && gc.EndTime < endTime) ||
+                    (gc.BeginTime <= beginTime && gc.EndTime >= endTime) || (gc.BeginTime > beginTime && gc.EndTime < endTime)))
+                {
+                    result.Data.Add(gc);
+                }
+            }
+
+            if (result.Data.Count > 0)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = "Room is not available by checking unscheduled lessons! ";
+                return result;
+            }
+
+            result.Note = "No conflict room was found based on unscheduled lessons";
+            return result;
+        }
+
+        public Result<List<ConflictInfo>> CheckTeacherConflictInUnscheduledLessonsInMemory()
+        {
+            var result = new Result<List<ConflictInfo>>
+            {
+                Data = new List<ConflictInfo>()
+            };
+            TimeSpan beginTime = _beginTime.AddMinutes(-60).TimeOfDay;
+            TimeSpan endTime = _endTime.AddMinutes(60).TimeOfDay;
+            if (_beginTime.Date != _endTime.Date)
+            {
+                throw new Exception("The lesson begin time and end time are not at same date! ");
+            }
+            var protentialConflictTeachers = new List<ConflictInfo>();
+            foreach(var oto in _totalProtentialConflictRoomForOTO)
+            {
+                if(oto.TeacherId == _teacherId && _beginTime.ToDayOfWeek() == oto.DayOfWeek &&
+                    ((oto.BeginTime > beginTime && oto.BeginTime < endTime) || 
+                    (oto.EndTime > beginTime && oto.EndTime < endTime) ||
+                    (oto.BeginTime <= beginTime && oto.EndTime >= endTime)))
+                {
+                    protentialConflictTeachers.Add(oto);
+                }
+            }
+            foreach(var gc in _totalProtentialConflictRoomForGC)
+            {
+                if (gc.TeacherId == _teacherId && _beginTime.ToDayOfWeek() == gc.DayOfWeek &&
+                    ((gc.BeginTime > beginTime && gc.BeginTime < endTime) ||
+                    (gc.EndTime > beginTime && gc.EndTime < endTime) ||
+                    (gc.BeginTime <= beginTime && gc.EndTime >= endTime)))
+                {
+                    protentialConflictTeachers.Add(gc);
+                }
+            }
+            
+            var exactConlictTeachers = new List<ConflictInfo>();
+            foreach (var pct in protentialConflictTeachers)
+            {
+                if (pct.OrgId != _orgId ||
+                    (pct.BeginTime > _beginTime.TimeOfDay && pct.BeginTime < _endTime.TimeOfDay) ||
+                    (pct.EndTime > _beginTime.TimeOfDay && pct.EndTime < _endTime.TimeOfDay) ||
+                    (pct.BeginTime <= _beginTime.TimeOfDay && pct.EndTime >= _endTime.TimeOfDay))
+                {
+                    exactConlictTeachers.Add(pct);
+                }
+            }
+
+            if (exactConlictTeachers.Count > 0)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = "Teacher is not available by checking unscheduled lessons! ";
+                result.Data = exactConlictTeachers;
+                return result;
+            }
+
+            result.Note = "No conflict teacher was found based on unscheduled lessons";
+            return result;
+        }
 
         public async Task<Result<List<Lesson>>> CheckRoomConflictInScheduledLessons()
         {
@@ -190,30 +355,30 @@ namespace Pegasus_backend.Services
             return result;
         }
 
-        public async Task<Result<List<object>>> CheckRoomConflictInUnscheduledLessons()
+        public async Task<Result<List<ConflictInfo>>> CheckRoomConflictInUnscheduledLessons()
         {
-            var result = new Result<List<object>>();
-            result.Data = new List<object>();
+            var result = new Result<List<ConflictInfo>>();
+            result.Data = new List<ConflictInfo>();
             TimeSpan beginTime = _beginTime.TimeOfDay;
             TimeSpan endTime = _endTime.TimeOfDay;
             if(_beginTime.Date != _endTime.Date)
             {
                 throw new Exception("The lesson begin time and end time are not at same date! ");
             }
-            dynamic conflictRoomForOto = await (from cs in _ablemusicContext.CourseSchedule
-                                                join oto in _ablemusicContext.One2oneCourseInstance on cs.CourseInstanceId equals oto.CourseInstanceId
-                                                join c in _ablemusicContext.Course on oto.CourseId equals c.CourseId
-                                                join o in _ablemusicContext.Org on oto.OrgId equals o.OrgId
-                                                join r in _ablemusicContext.Room on oto.RoomId equals r.RoomId
-                                                join t in _ablemusicContext.Teacher on oto.TeacherId equals t.TeacherId
-                                                where oto.RoomId == _roomId && oto.OrgId == _orgId && _beginTime.Date >= oto.BeginDate.Value.Date &&
-                                                (oto.EndDate.Value == null || (oto.EndDate.HasValue && _endTime.Date <= oto.EndDate.Value.Date)) && 
-                                                _beginTime.ToDayOfWeek() == cs.DayOfWeek && 
-                                                ((cs.BeginTime > beginTime && cs.BeginTime < endTime) ||
-                                                (cs.EndTime > beginTime && cs.EndTime < endTime) ||
-                                                (cs.BeginTime <= beginTime && cs.EndTime >= endTime) ||
-                                                (cs.BeginTime > beginTime && cs.EndTime < endTime))
-                                            select new
+            var conflictRoomForOto = await (from cs in _ablemusicContext.CourseSchedule
+                                            join oto in _ablemusicContext.One2oneCourseInstance on cs.CourseInstanceId equals oto.CourseInstanceId
+                                            join c in _ablemusicContext.Course on oto.CourseId equals c.CourseId
+                                            join o in _ablemusicContext.Org on oto.OrgId equals o.OrgId
+                                            join r in _ablemusicContext.Room on oto.RoomId equals r.RoomId
+                                            join t in _ablemusicContext.Teacher on oto.TeacherId equals t.TeacherId
+                                            where oto.RoomId == _roomId && oto.OrgId == _orgId && _beginTime.Date >= oto.BeginDate.Value.Date &&
+                                            (oto.EndDate.Value == null || (oto.EndDate.HasValue && _endTime.Date <= oto.EndDate.Value.Date)) &&
+                                            _beginTime.ToDayOfWeek() == cs.DayOfWeek &&
+                                            ((cs.BeginTime > beginTime && cs.BeginTime < endTime) ||
+                                            (cs.EndTime > beginTime && cs.EndTime < endTime) ||
+                                            (cs.BeginTime <= beginTime && cs.EndTime >= endTime) ||
+                                            (cs.BeginTime > beginTime && cs.EndTime < endTime))
+                                            select new ConflictInfo
                                             {
                                                 CourseScheduleId = cs.CourseScheduleId,
                                                 CourseInstanceId = cs.CourseInstanceId,
@@ -231,36 +396,36 @@ namespace Pegasus_backend.Services
                                                 TeacherLastName = t.LastName
                                             }).ToListAsync();
 
-            dynamic conflictRoomForGroupCourse = await (from cs in _ablemusicContext.CourseSchedule
-                                                        join gc in _ablemusicContext.GroupCourseInstance on cs.GroupCourseInstanceId equals gc.GroupCourseInstanceId
-                                                        join c in _ablemusicContext.Course on gc.CourseId equals c.CourseId
-                                                        join o in _ablemusicContext.Org on gc.OrgId equals o.OrgId
-                                                        join r in _ablemusicContext.Room on gc.RoomId equals r.RoomId
-                                                        join t in _ablemusicContext.Teacher on gc.TeacherId equals t.TeacherId
-                                                        where gc.RoomId == _roomId && gc.OrgId == _orgId && _beginTime.Date >= gc.BeginDate.Value.Date &&
-                                                        (gc.EndDate.Value == null || (gc.EndDate.HasValue && _endTime.Date <= gc.EndDate.Value.Date)) &&
-                                                        _beginTime.ToDayOfWeek() == cs.DayOfWeek &&
-                                                        ((cs.BeginTime > beginTime && cs.BeginTime < endTime) ||
-                                                        (cs.EndTime > beginTime && cs.EndTime < endTime) ||
-                                                        (cs.BeginTime <= beginTime && cs.EndTime >= endTime) ||
-                                                        (cs.BeginTime > beginTime && cs.EndTime < endTime))
-                                                        select new
-                                                        {
-                                                            CourseScheduleId = cs.CourseScheduleId,
-                                                            CourseInstanceId = cs.CourseInstanceId,
-                                                            DayOfWeek = cs.DayOfWeek,
-                                                            BeginTime = cs.BeginTime,
-                                                            EndTime = cs.EndTime,
-                                                            CourseId = gc.CourseId,
-                                                            TeacherId = gc.TeacherId,
-                                                            OrgId = gc.OrgId,
-                                                            RoomId = gc.RoomId,
-                                                            CourseName = c.CourseName,
-                                                            OrgName = o.OrgName,
-                                                            RoomName = r.RoomName,
-                                                            TeacherFirstName = t.FirstName,
-                                                            TeacherLastName = t.LastName
-                                                        }).ToListAsync();
+            var conflictRoomForGroupCourse = await (from cs in _ablemusicContext.CourseSchedule
+                                                    join gc in _ablemusicContext.GroupCourseInstance on cs.GroupCourseInstanceId equals gc.GroupCourseInstanceId
+                                                    join c in _ablemusicContext.Course on gc.CourseId equals c.CourseId
+                                                    join o in _ablemusicContext.Org on gc.OrgId equals o.OrgId
+                                                    join r in _ablemusicContext.Room on gc.RoomId equals r.RoomId
+                                                    join t in _ablemusicContext.Teacher on gc.TeacherId equals t.TeacherId
+                                                    where gc.RoomId == _roomId && gc.OrgId == _orgId && _beginTime.Date >= gc.BeginDate.Value.Date &&
+                                                    (gc.EndDate.Value == null || (gc.EndDate.HasValue && _endTime.Date <= gc.EndDate.Value.Date)) &&
+                                                    _beginTime.ToDayOfWeek() == cs.DayOfWeek &&
+                                                    ((cs.BeginTime > beginTime && cs.BeginTime < endTime) ||
+                                                    (cs.EndTime > beginTime && cs.EndTime < endTime) ||
+                                                    (cs.BeginTime <= beginTime && cs.EndTime >= endTime) ||
+                                                    (cs.BeginTime > beginTime && cs.EndTime < endTime))
+                                                    select new ConflictInfo
+                                                    {
+                                                        CourseScheduleId = cs.CourseScheduleId,
+                                                        GroupCourseInstanceId = cs.GroupCourseInstanceId,
+                                                        DayOfWeek = cs.DayOfWeek,
+                                                        BeginTime = cs.BeginTime,
+                                                        EndTime = cs.EndTime,
+                                                        CourseId = gc.CourseId,
+                                                        TeacherId = gc.TeacherId,
+                                                        OrgId = gc.OrgId,
+                                                        RoomId = gc.RoomId,
+                                                        CourseName = c.CourseName,
+                                                        OrgName = o.OrgName,
+                                                        RoomName = r.RoomName,
+                                                        TeacherFirstName = t.FirstName,
+                                                        TeacherLastName = t.LastName
+                                                    }).ToListAsync();
 
             foreach (var conflictRoomOTO in conflictRoomForOto)
             {
@@ -281,11 +446,11 @@ namespace Pegasus_backend.Services
             return result;
         }
 
-        public async Task<Result<List<object>>> CheckTeacherConflictInUnscheduledLessons()
+        public async Task<Result<List<ConflictInfo>>> CheckTeacherConflictInUnscheduledLessons()
         {
-            var result = new Result<List<object>>
+            var result = new Result<List<ConflictInfo>>
             {
-                Data = new List<object>()
+                Data = new List<ConflictInfo>()
             };
             TimeSpan beginTime = _beginTime.AddMinutes(-60).TimeOfDay;
             TimeSpan endTime = _endTime.AddMinutes(60).TimeOfDay;
@@ -293,65 +458,65 @@ namespace Pegasus_backend.Services
             {
                 throw new Exception("The lesson begin time and end time are not at same date! ");
             }
-            dynamic conflictTeacherWithOutRelacationForOto = await (from cs in _ablemusicContext.CourseSchedule
-                                                                    join oto in _ablemusicContext.One2oneCourseInstance on cs.CourseInstanceId equals oto.CourseInstanceId
-                                                                    join c in _ablemusicContext.Course on oto.CourseId equals c.CourseId
-                                                                    join o in _ablemusicContext.Org on oto.OrgId equals o.OrgId
-                                                                    join r in _ablemusicContext.Room on oto.RoomId equals r.RoomId
-                                                                    join t in _ablemusicContext.Teacher on oto.TeacherId equals t.TeacherId
-                                                                    where oto.TeacherId == _teacherId && _beginTime.Date >= oto.BeginDate.Value.Date &&
-                                                                    (oto.EndDate.Value == null || (oto.EndDate.HasValue && _endTime.Date <= oto.EndDate.Value.Date)) &&
-                                                                    _beginTime.ToDayOfWeek() == cs.DayOfWeek &&
-                                                                    ((cs.BeginTime > beginTime && cs.BeginTime < endTime) ||
-                                                                    (cs.EndTime > beginTime && cs.EndTime < endTime) ||
-                                                                    (cs.BeginTime <= beginTime && cs.EndTime >= endTime))
-                                                                    select new
-                                                                    {
-                                                                        CourseScheduleId = cs.CourseScheduleId,
-                                                                        CourseInstanceId = cs.CourseInstanceId,
-                                                                        DayOfWeek = cs.DayOfWeek,
-                                                                        BeginTime = cs.BeginTime,
-                                                                        EndTime = cs.EndTime,
-                                                                        CourseId = oto.CourseId,
-                                                                        TeacherId = oto.TeacherId,
-                                                                        OrgId = oto.OrgId,
-                                                                        RoomId = oto.RoomId,
-                                                                        CourseName = c.CourseName,
-                                                                        OrgName = o.OrgName,
-                                                                        RoomName = r.RoomName,
-                                                                        TeacherFirstName = t.FirstName,
-                                                                        TeacherLastName = t.LastName
-                                                                    }).ToListAsync();
-            dynamic conflictTeacherWithOutRelacationForGroupCourse = await (from cs in _ablemusicContext.CourseSchedule
-                                                                            join gc in _ablemusicContext.GroupCourseInstance on cs.GroupCourseInstanceId equals gc.GroupCourseInstanceId
-                                                                            join c in _ablemusicContext.Course on gc.CourseId equals c.CourseId
-                                                                            join o in _ablemusicContext.Org on gc.OrgId equals o.OrgId
-                                                                            join r in _ablemusicContext.Room on gc.RoomId equals r.RoomId
-                                                                            join t in _ablemusicContext.Teacher on gc.TeacherId equals t.TeacherId
-                                                                            where gc.TeacherId == _teacherId && _beginTime.Date >= gc.BeginDate.Value.Date &&
-                                                                            (gc.EndDate.Value == null || (gc.EndDate.HasValue && _endTime.Date <= gc.EndDate.Value.Date)) &&
-                                                                            _beginTime.ToDayOfWeek() == cs.DayOfWeek &&
-                                                                            ((cs.BeginTime > beginTime && cs.BeginTime < endTime) ||
-                                                                            (cs.EndTime > beginTime && cs.EndTime < endTime) ||
-                                                                            (cs.BeginTime <= beginTime && cs.EndTime >= endTime))
-                                                                            select new
-                                                                            {
-                                                                                CourseScheduleId = cs.CourseScheduleId,
-                                                                                CourseInstanceId = cs.CourseInstanceId,
-                                                                                DayOfWeek = cs.DayOfWeek,
-                                                                                BeginTime = cs.BeginTime,
-                                                                                EndTime = cs.EndTime,
-                                                                                CourseId = gc.CourseId,
-                                                                                TeacherId = gc.TeacherId,
-                                                                                OrgId = gc.OrgId,
-                                                                                RoomId = gc.RoomId,
-                                                                                CourseName = c.CourseName,
-                                                                                OrgName = o.OrgName,
-                                                                                RoomName = r.RoomName,
-                                                                                TeacherFirstName = t.FirstName,
-                                                                                TeacherLastName = t.LastName
-                                                                            }).ToListAsync();
-            var conflictTeachers = new List<object>();
+            var conflictTeacherWithOutRelacationForOto = await (from cs in _ablemusicContext.CourseSchedule
+                                                                join oto in _ablemusicContext.One2oneCourseInstance on cs.CourseInstanceId equals oto.CourseInstanceId
+                                                                join c in _ablemusicContext.Course on oto.CourseId equals c.CourseId
+                                                                join o in _ablemusicContext.Org on oto.OrgId equals o.OrgId
+                                                                join r in _ablemusicContext.Room on oto.RoomId equals r.RoomId
+                                                                join t in _ablemusicContext.Teacher on oto.TeacherId equals t.TeacherId
+                                                                where oto.TeacherId == _teacherId && _beginTime.Date >= oto.BeginDate.Value.Date &&
+                                                                (oto.EndDate.Value == null || (oto.EndDate.HasValue && _endTime.Date <= oto.EndDate.Value.Date)) &&
+                                                                _beginTime.ToDayOfWeek() == cs.DayOfWeek &&
+                                                                ((cs.BeginTime > beginTime && cs.BeginTime < endTime) ||
+                                                                (cs.EndTime > beginTime && cs.EndTime < endTime) ||
+                                                                (cs.BeginTime <= beginTime && cs.EndTime >= endTime))
+                                                                select new ConflictInfo
+                                                                {
+                                                                    CourseScheduleId = cs.CourseScheduleId,
+                                                                    CourseInstanceId = cs.CourseInstanceId,
+                                                                    DayOfWeek = cs.DayOfWeek,
+                                                                    BeginTime = cs.BeginTime,
+                                                                    EndTime = cs.EndTime,
+                                                                    CourseId = oto.CourseId,
+                                                                    TeacherId = oto.TeacherId,
+                                                                    OrgId = oto.OrgId,
+                                                                    RoomId = oto.RoomId,
+                                                                    CourseName = c.CourseName,
+                                                                    OrgName = o.OrgName,
+                                                                    RoomName = r.RoomName,
+                                                                    TeacherFirstName = t.FirstName,
+                                                                    TeacherLastName = t.LastName
+                                                                }).ToListAsync();
+            var conflictTeacherWithOutRelacationForGroupCourse = await (from cs in _ablemusicContext.CourseSchedule
+                                                                        join gc in _ablemusicContext.GroupCourseInstance on cs.GroupCourseInstanceId equals gc.GroupCourseInstanceId
+                                                                        join c in _ablemusicContext.Course on gc.CourseId equals c.CourseId
+                                                                        join o in _ablemusicContext.Org on gc.OrgId equals o.OrgId
+                                                                        join r in _ablemusicContext.Room on gc.RoomId equals r.RoomId
+                                                                        join t in _ablemusicContext.Teacher on gc.TeacherId equals t.TeacherId
+                                                                        where gc.TeacherId == _teacherId && _beginTime.Date >= gc.BeginDate.Value.Date &&
+                                                                        (gc.EndDate.Value == null || (gc.EndDate.HasValue && _endTime.Date <= gc.EndDate.Value.Date)) &&
+                                                                        _beginTime.ToDayOfWeek() == cs.DayOfWeek &&
+                                                                        ((cs.BeginTime > beginTime && cs.BeginTime < endTime) ||
+                                                                        (cs.EndTime > beginTime && cs.EndTime < endTime) ||
+                                                                        (cs.BeginTime <= beginTime && cs.EndTime >= endTime))
+                                                                        select new ConflictInfo
+                                                                        {
+                                                                            CourseScheduleId = cs.CourseScheduleId,
+                                                                            GroupCourseInstanceId = cs.GroupCourseInstanceId,
+                                                                            DayOfWeek = cs.DayOfWeek,
+                                                                            BeginTime = cs.BeginTime,
+                                                                            EndTime = cs.EndTime,
+                                                                            CourseId = gc.CourseId,
+                                                                            TeacherId = gc.TeacherId,
+                                                                            OrgId = gc.OrgId,
+                                                                            RoomId = gc.RoomId,
+                                                                            CourseName = c.CourseName,
+                                                                            OrgName = o.OrgName,
+                                                                            RoomName = r.RoomName,
+                                                                            TeacherFirstName = t.FirstName,
+                                                                            TeacherLastName = t.LastName
+                                                                        }).ToListAsync();
+            var conflictTeachers = new List<ConflictInfo>();
             foreach(var conflictOTO in conflictTeacherWithOutRelacationForOto)
             {
                 if(conflictOTO.OrgId != _orgId || 
@@ -393,10 +558,10 @@ namespace Pegasus_backend.Services
             var checkRoomInUnscheduledLessonsResult = await CheckRoomConflictInUnscheduledLessons();
             var checkTeacherInUnscheduledLessonsResult = await CheckTeacherConflictInUnscheduledLessons();
 
-            if(!checkRoomInScheduledLessonsResult.IsSuccess || !checkTeacherInScheduledLessonsResult.IsSuccess || !checkRoomInUnscheduledLessonsResult.IsSuccess || !checkTeacherInUnscheduledLessonsResult.IsSuccess)
+            if(!checkRoomInScheduledLessonsResult.IsSuccess || !checkTeacherInScheduledLessonsResult.IsSuccess || 
+                !checkRoomInUnscheduledLessonsResult.IsSuccess || !checkTeacherInUnscheduledLessonsResult.IsSuccess)
             {
                 result.IsSuccess = false;
-                //result.ErrorMessage = "Details are in inner result";
                 result.ErrorMessage = ((checkRoomInScheduledLessonsResult.IsSuccess)? "":checkRoomInScheduledLessonsResult.ErrorMessage)
                                     +((checkTeacherInScheduledLessonsResult.IsSuccess)? "":checkTeacherInScheduledLessonsResult.ErrorMessage)
                                     +((checkRoomInUnscheduledLessonsResult.IsSuccess)? "":checkRoomInUnscheduledLessonsResult.ErrorMessage)
@@ -419,17 +584,23 @@ namespace Pegasus_backend.Services
             var result = new Result<List<object>>();
             var checkRoomInScheduledLessonsResult = CheckRoomConflictInScheduledLessonsInMemory();
             var checkTeacherInScheduledLessonsResult = CheckTeacherConflictInScheduledLessonsInMemory();
-            //var checkRoomInUnscheduledLessonsResult = await CheckRoomConflictInUnscheduledLessons();
-            //var checkTeacherInUnscheduledLessonsResult = await CheckTeacherConflictInUnscheduledLessons();
+            var checkRoomInUnscheduledLessonsResult = CheckRoomConflictInUnscheduledLessonsInMemory();
+            var checkTeacherInUnscheduledLessonsResult = CheckTeacherConflictInUnscheduledLessonsInMemory();
 
-            if (!checkRoomInScheduledLessonsResult.IsSuccess || !checkTeacherInScheduledLessonsResult.IsSuccess)
+            if (!checkRoomInScheduledLessonsResult.IsSuccess || !checkTeacherInScheduledLessonsResult.IsSuccess || 
+                !checkRoomInUnscheduledLessonsResult.IsSuccess || !checkTeacherInUnscheduledLessonsResult.IsSuccess)
             {
                 result.IsSuccess = false;
-                result.ErrorMessage = "Details are in inner result";
+                result.ErrorMessage = ((checkRoomInScheduledLessonsResult.IsSuccess) ? "" : checkRoomInScheduledLessonsResult.ErrorMessage)
+                                    + ((checkTeacherInScheduledLessonsResult.IsSuccess) ? "" : checkTeacherInScheduledLessonsResult.ErrorMessage)
+                                    + ((checkRoomInUnscheduledLessonsResult.IsSuccess) ? "" : checkRoomInUnscheduledLessonsResult.ErrorMessage)
+                                    + ((checkTeacherInUnscheduledLessonsResult.IsSuccess) ? "" : checkTeacherInUnscheduledLessonsResult.ErrorMessage);
                 result.Data = new List<object>
                 {
                     checkRoomInScheduledLessonsResult,
                     checkTeacherInScheduledLessonsResult,
+                    checkRoomInUnscheduledLessonsResult,
+                    checkTeacherInUnscheduledLessonsResult
                 };
                 return result;
             }

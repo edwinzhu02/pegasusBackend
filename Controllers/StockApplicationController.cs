@@ -222,12 +222,12 @@ namespace Pegasus_backend.Controllers
                 ApplicationDetails = new List<ApplicationDetails>()
             };
 
-            foreach (var pmq in stockApplicationViewModel.ProductIdMapQty)
+            foreach (var pmq in stockApplicationViewModel.ProductIdQty)
             {
                 var applicationDetails = new ApplicationDetails
                 {
-                    ProductId = pmq.Key,
-                    AppliedQty = pmq.Value,
+                    ProductId = pmq.ProductId,
+                    AppliedQty = pmq.AppliedQty,
                     DeliveredQty = null,
                     ReceivedQty = null
                 };

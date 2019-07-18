@@ -12,59 +12,40 @@ namespace Pegasus_backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PageController : BasicController
+    public class RoleAccessController : BasicController
     {
-        public PageController(ablemusicContext ablemusicContext, ILogger<PageController> log) : base(ablemusicContext, log)
+        public RoleAccessController(ablemusicContext ablemusicContext, ILogger<PageController> log) : base(ablemusicContext, log)
         {
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetRolePage()
+        public async Task<IActionResult> GetRoleAccess()
         {
             var result = new Result<Object>();
             try
             {
-
-                var item = await _ablemusicContext.Page.ToListAsync();
-                result.Data = item;
-                result.IsSuccess = true;
+                var getRole = await _ablemusicContext.RoleAccess.ToListAsync();
+                result.Data = getRole;
                 return Ok(result);
             }
-            catch (Exception ex)
+             catch (Exception ex)
             {
                 result.IsSuccess = false;
                 result.ErrorMessage = ex.Message;
                 return BadRequest(result);
             }
         }
+
         [HttpPost]
-        public async Task<IActionResult> PostRolePage(Page page)
+        public async Task<IActionResult> PostRoleAccess(RoleAccess roleaccess)
         {
             var result = new Result<Object>();
-            Page pageExists = new Page();
-            try
-            {
-                pageExists = await _ablemusicContext.Page.Where(s => s.PageName == page.PageName)
-                .FirstOrDefaultAsync();
-            }
+            RoleAccess ra = new RoleAccess();
 
-            catch (Exception ex)
-            {
-                result.IsSuccess = false;
-                result.ErrorMessage = ex.Message;
-                return BadRequest(result);
-            }
-            if (pageExists != null)
-            {
-                result.ErrorMessage = "The pagename is already exists";
-                result.IsSuccess = false;
-                result.IsFound = false;
-                return BadRequest(result);
-            }
 
             try
             {
-                await _ablemusicContext.Page.AddAsync(page);
+                await _ablemusicContext.RoleAccess.AddAsync(roleaccess);
                 await _ablemusicContext.SaveChangesAsync();
             }
 
@@ -80,14 +61,14 @@ namespace Pegasus_backend.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteRolePage(int id)
+public async Task<IActionResult> DeleteRoleAccess(int id)
         {
             var result = new Result<Object>();
-            Page pageExists = new Page();
+            RoleAccess ra = new RoleAccess();
             try
             {
-                pageExists = await _ablemusicContext.Page
-                .Where(s => s.PageId == id).FirstOrDefaultAsync();
+                ra = await _ablemusicContext.RoleAccess
+                .Where(s => s.RoleAccessId == id).FirstOrDefaultAsync();
             }
             catch (Exception e)
             {
@@ -97,9 +78,9 @@ namespace Pegasus_backend.Controllers
                 return BadRequest(result);
             }
 
-            if (pageExists == null)
+            if (ra == null)
             {
-                result.ErrorMessage = "The page id is not exists";
+                result.ErrorMessage = "The id is not exists";
                 result.IsSuccess = false;
                 result.IsFound = false;
                 return BadRequest(result);
@@ -107,7 +88,7 @@ namespace Pegasus_backend.Controllers
 
             try
             {
-                _ablemusicContext.Page.Remove(pageExists);
+                _ablemusicContext.RoleAccess.Remove(ra);
                 await _ablemusicContext.SaveChangesAsync();
             }
             catch (Exception e)
@@ -123,24 +104,21 @@ namespace Pegasus_backend.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> PutRolePage([FromBody] Page page)
+        public async Task<IActionResult> PutRolePage([FromBody] RoleAccess roleaccess)
         {
             var result = new Result<string>();
-            Page pageExists = new Page();
+            RoleAccess ra = new RoleAccess();
             try
             {
-                pageExists = await _ablemusicContext.Page
-                .Where(s => s.PageId == page.PageId
+                ra = await _ablemusicContext.RoleAccess
+                .Where(s => s.RoleAccessId == roleaccess.RoleAccessId
                 ).FirstOrDefaultAsync();
-                if (pageExists != null)
+                if (ra != null)
                 {   
-                    pageExists.Icon = page.Icon;
-                    pageExists.IsActivate = page.IsActivate;
-                    pageExists.PageName = page.PageName;
-                    pageExists.Para = page.Para;
-                    pageExists.ParaFlag =page.ParaFlag;
-                    pageExists.Url =page.Url;
-                    pageExists.DisplayOrder = page.DisplayOrder;
+                    ra.IsMobile = roleaccess.IsMobile;
+                    ra.PageId =roleaccess.PageId;
+                    ra.RoleAccessId =roleaccess.RoleAccessId;
+                    ra.RoleId = roleaccess.RoleId;
                     await _ablemusicContext.SaveChangesAsync();
                 }
             }
@@ -153,8 +131,6 @@ namespace Pegasus_backend.Controllers
             return Ok(result);
         }
 
+
     }
-
-
 }
-
