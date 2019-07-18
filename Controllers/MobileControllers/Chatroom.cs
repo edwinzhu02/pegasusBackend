@@ -39,9 +39,12 @@ namespace Pegasus_backend.Controllers.MobileControllers
         // name of receiver
         public async Task SendMessageOneToOne(ChatMessageModel chatMessageModel)
         {
+            TimeZoneInfo timeInfo = TimeZoneInfo.FindSystemTimeZoneById("New Zealand Standard Time");
+            var returnedMessageTime = TimeZoneInfo.ConvertTimeFromUtc(chatMessageModel.CreateAt ?? DateTime.Now, timeInfo);
+
             //var connectionId = Context.ConnectionId;
             await Clients.User(chatMessageModel.ReceiverUserId.ToString())
-                .SendAsync("SendMessageOneToOne",chatMessageModel.SenderUserId ,chatMessageModel.MessageBody, chatMessageModel.CreateAt);
+                .SendAsync("SendMessageOneToOne",chatMessageModel.SenderUserId ,chatMessageModel.MessageBody, returnedMessageTime);
             //await Clients.User(connectionId).SendAsync("SendMessageOneToOne", message);
         }
     }
