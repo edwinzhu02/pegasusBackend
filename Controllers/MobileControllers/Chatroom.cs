@@ -44,7 +44,8 @@ namespace Pegasus_backend.Controllers.MobileControllers
 
             //var connectionId = Context.ConnectionId;
             await Clients.User(chatMessageModel.ReceiverUserId.ToString())
-                .SendAsync("SendMessageOneToOne",chatMessageModel.SenderUserId ,chatMessageModel.MessageBody, returnedMessageTime);
+                .SendAsync("SendMessageOneToOne",chatMessageModel.SenderUserId ,chatMessageModel.MessageBody, 
+                    returnedMessageTime.ToString("G"));
             //await Clients.User(connectionId).SendAsync("SendMessageOneToOne", message);
         }
     }
