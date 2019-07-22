@@ -45,4 +45,10 @@ namespace Pegasus_backend.Models
         [JsonProperty(Required = Required.Always)]
         public List<List<byte>> DayOfWeek { get; set; } 
     }
+
+    /*public class DayOfWeekModal
+    {
+        public short OrgId { get; set; }
+        public short RoomId { get; set; }
+    }*/
 }
