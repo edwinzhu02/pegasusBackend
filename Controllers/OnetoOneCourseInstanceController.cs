@@ -66,12 +66,22 @@ namespace Pegasus_backend.Controllers
                 {
                     model.OnetoOneCourses.ForEach(s =>
                     {
+                        var room = _ablemusicContext.AvailableDays.FirstOrDefault(
+                            q => q.TeacherId == s.TeacherId && q.OrgId == s.OrgId &&
+                                 q.DayOfWeek == s.Schedule.DayOfWeek);
+                            
+
+                        if (room == null)
+                        {
+                            throw new Exception("Room does not found");
+                        }
+                        
                         var durationType = _ablemusicContext.Course.FirstOrDefault(w => w.CourseId == s.CourseId).Duration;
                         _ablemusicContext.Add(new One2oneCourseInstance
                         {
                             CourseId = s.CourseId,TeacherId = s.TeacherId, OrgId = s.OrgId,
                             BeginDate = s.BeginDate, EndDate = s.EndDate, LearnerId = s.LearnerId,
-                            RoomId = _ablemusicContext.AvailableDays.FirstOrDefault(q=>q.TeacherId==s.TeacherId).RoomId,
+                            RoomId = room.RoomId,
                             CourseSchedule = new List<CourseSchedule>()
                             {
                                 new CourseSchedule
@@ -98,7 +108,7 @@ namespace Pegasus_backend.Controllers
             catch (Exception ex)
             {
                 result.IsSuccess = false;
-                result.ErrorMessage = ex.Message;
+                result.ErrorMessage = ex.ToString();
                 return BadRequest(result);
             }
         }
