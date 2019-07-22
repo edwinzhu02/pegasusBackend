@@ -28,8 +28,6 @@ namespace Pegasus_backend.Models
         [Required(ErrorMessage = "BeginTime is required")]
         public TimeSpan BeginTime { get; set; }
         public TimeSpan EndTime { get; set; }
-        [Required(ErrorMessage = "RoomId is required")]
-        public short RoomId { get; set; }
         [Required(ErrorMessage = "IsTemporary is required")]
         public short IsTemporary { get; set; }
         public int? CourseScheduleId { get; set; }

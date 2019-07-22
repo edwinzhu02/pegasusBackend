@@ -8,6 +8,7 @@ namespace Pegasus_backend.pegasusContext
         public Room()
         {
             Amendment = new HashSet<Amendment>();
+            AvailableDays = new HashSet<AvailableDays>();
             GroupCourseInstance = new HashSet<GroupCourseInstance>();
             Lesson = new HashSet<Lesson>();
             One2oneCourseInstance = new HashSet<One2oneCourseInstance>();
@@ -21,6 +22,7 @@ namespace Pegasus_backend.pegasusContext
 
         public Org Org { get; set; }
         public ICollection<Amendment> Amendment { get; set; }
+        public ICollection<AvailableDays> AvailableDays { get; set; }
         public ICollection<GroupCourseInstance> GroupCourseInstance { get; set; }
         public ICollection<Lesson> Lesson { get; set; }
         public ICollection<One2oneCourseInstance> One2oneCourseInstance { get; set; }
