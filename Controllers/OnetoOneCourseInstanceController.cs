@@ -64,29 +64,28 @@ namespace Pegasus_backend.Controllers
             {
                 using (var dbtransaction =await _ablemusicContext.Database.BeginTransactionAsync())
                 {
-                    model.OnetoOneCourses.ForEach(q =>
+                    model.OnetoOneCourses.ForEach(s =>
                     {
-                        var courseInstance = new One2oneCourseInstance();
-                        _mapper.Map(q, courseInstance);
-                        if (_ablemusicContext.Course.FirstOrDefault(s => courseInstance.CourseId == s.CourseId).CourseType != 1)
+                        var durationType = _ablemusicContext.Course.FirstOrDefault(w => w.CourseId == s.CourseId).Duration;
+                        _ablemusicContext.Add(new One2oneCourseInstance
                         {
-                            throw new Exception("This course is not one to one course");
-                        }
-
-                        var durationType = _ablemusicContext.Course.FirstOrDefault(s => s.CourseId == courseInstance.CourseId)
-                            .Duration;
-                        _ablemusicContext.Add(courseInstance);
-                        _ablemusicContext.SaveChanges();
-
-                        var schedule = new CourseSchedule
-                        {
-                            DayOfWeek = q.Schedule.DayOfWeek, CourseInstanceId = courseInstance.CourseInstanceId,
-                            BeginTime = q.Schedule.BeginTime,
-                            EndTime = GetEndTimeForOnetoOneCourseSchedule(q.Schedule.BeginTime,durationType)
-                        };
-                        _ablemusicContext.Add(schedule);
-                        _ablemusicContext.SaveChanges();
+                            CourseId = s.CourseId,TeacherId = s.TeacherId, OrgId = s.OrgId,
+                            BeginDate = s.BeginDate, EndDate = s.EndDate, LearnerId = s.LearnerId,
+                            RoomId = _ablemusicContext.AvailableDays.FirstOrDefault(q=>q.TeacherId==s.TeacherId).RoomId,
+                            CourseSchedule = new List<CourseSchedule>()
+                            {
+                                new CourseSchedule
+                                {
+                                    DayOfWeek = s.Schedule.DayOfWeek,
+                                    BeginTime = s.Schedule.BeginTime, 
+                                    EndTime = GetEndTimeForOnetoOneCourseSchedule(s.Schedule.BeginTime,durationType)
+                                }
+                            }
+                        });
                     });
+                    await _ablemusicContext.SaveChangesAsync();
+                        
+                
                     
                     dbtransaction.Commit();
                 }
