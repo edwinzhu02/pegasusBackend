@@ -58,10 +58,10 @@ namespace Pegasus_backend.Controllers.MobileControllers
             return "Message send";
         }
 
-        public override async Task OnDisconnectedAsync(Exception exception)
-        {
-            await Groups.RemoveFromGroupAsync(Context.ConnectionId, "SignalR Users");
-            await base.OnDisconnectedAsync(exception);
-        }
+//        public override async Task OnDisconnectedAsync(Exception exception)
+//        {
+//            await Groups.RemoveFromGroupAsync(Context.ConnectionId, "SignalR Users");
+//            await base.OnDisconnectedAsync(exception);
+//        }
     }
 }
