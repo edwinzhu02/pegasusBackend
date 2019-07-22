@@ -221,7 +221,11 @@ namespace Pegasus_backend.Controllers
                         {
                             s.ForEach(w =>
                             {
-                                _ablemusicContext.Add(new AvailableDays{TeacherId = teacher.TeacherId, DayOfWeek = i, CreatedAt = toNZTimezone(DateTime.UtcNow),OrgId = w});
+                                _ablemusicContext.Add(new AvailableDays{
+                                    TeacherId = teacher.TeacherId,
+                                    DayOfWeek = i, CreatedAt = toNZTimezone(DateTime.UtcNow),OrgId = w.OrgId,
+                                    RoomId = w.RoomId
+                                });
                             });
                         }
                         i++;
@@ -376,7 +380,7 @@ namespace Pegasus_backend.Controllers
                                     DayList = new AvailableDays
                                     {
                                         TeacherId = newTeacher.TeacherId, DayOfWeek = i, CreatedAt = toNZTimezone(DateTime.UtcNow),
-                                        OrgId = w
+                                        OrgId = w.OrgId, RoomId = w.RoomId
                                     };
                                     _ablemusicContext.Add(DayList);
                                 });

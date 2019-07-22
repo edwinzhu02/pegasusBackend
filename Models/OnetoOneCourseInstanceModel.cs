@@ -14,7 +14,7 @@ namespace Pegasus_backend.Models
         public DateTime? BeginDate { get; set; }
         public DateTime? EndDate { get; set; }
         public int? LearnerId { get; set; }
-        public short? RoomId { get; set; }
+        //public short? RoomId { get; set; }  废除RoomId
         public CourseScheduleModel Schedule { get; set; }
     }
 
