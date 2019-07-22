@@ -168,7 +168,7 @@ namespace Pegasus_backend.Controllers
                 }
             }
 
-            var newLessons = new List<Lesson>();
+            var newLessonsMapOldLesson = new Dictionary<Lesson,Lesson>();
 
             foreach (var lesson in exsitingLessons)
             {
@@ -181,7 +181,7 @@ namespace Pegasus_backend.Controllers
                 }
                 beginTime = beginTime.Date + inputObj.BeginTime;
                 endTime = endTime.Date + inputObj.EndTime;
-                newLessons.Add(new Lesson
+                newLessonsMapOldLesson.Add(new Lesson
                 {
                     LearnerId = lesson.LearnerId,
                     RoomId = availableDay.RoomId,
@@ -201,7 +201,7 @@ namespace Pegasus_backend.Controllers
                     IsChanged = lesson.IsChanged,
                     IsPaid = lesson.IsPaid,
                     NewLessonId = lesson.NewLessonId,
-                });
+                }, lesson);
                 lesson.IsCanceled = 1;
             }
 
@@ -363,7 +363,22 @@ namespace Pegasus_backend.Controllers
 
             try
             {
+                foreach(var lesson in newLessonsMapOldLesson)
+                {
+                    await _ablemusicContext.Lesson.AddAsync(lesson.Key);
+                }
                 await _ablemusicContext.Amendment.AddAsync(amendment);
+                await _ablemusicContext.SaveChangesAsync();
+                foreach(var lesson in exsitingLessons)
+                {
+                    foreach(var m in newLessonsMapOldLesson)
+                    {
+                        if(m.Value.LessonId == lesson.LessonId)
+                        {
+                            lesson.NewLessonId = m.Key.LessonId;
+                        }
+                    }
+                }
                 await _ablemusicContext.SaveChangesAsync();
             }
             catch (Exception ex)
