@@ -78,7 +78,8 @@ namespace Pegasus_backend.pegasusContext
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseMySQL("server=gradspace.org;User Id=dbuser;Password=qwer1234;Database=ablemusic");
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseMySQL("server=gradspace.org;UserId=dbuser;Password=qwer1234;Database=ablemusic");
             }
         }
 
@@ -306,6 +307,9 @@ namespace Pegasus_backend.pegasusContext
                 entity.HasIndex(e => e.OrgId)
                     .HasName("R_81");
 
+                entity.HasIndex(e => e.RoomId)
+                    .HasName("R_146");
+
                 entity.HasIndex(e => e.TeacherId)
                     .HasName("R_9");
 
@@ -323,6 +327,10 @@ namespace Pegasus_backend.pegasusContext
                     .HasColumnName("org_id")
                     .HasColumnType("smallint(6)");
 
+                entity.Property(e => e.RoomId)
+                    .HasColumnName("room_id")
+                    .HasColumnType("smallint(6)");
+
                 entity.Property(e => e.TeacherId)
                     .HasColumnName("teacher_id")
                     .HasColumnType("smallint(6)");
@@ -331,6 +339,11 @@ namespace Pegasus_backend.pegasusContext
                     .WithMany(p => p.AvailableDays)
                     .HasForeignKey(d => d.OrgId)
                     .HasConstraintName("R_81");
+
+                entity.HasOne(d => d.Room)
+                    .WithMany(p => p.AvailableDays)
+                    .HasForeignKey(d => d.RoomId)
+                    .HasConstraintName("R_146");
 
                 entity.HasOne(d => d.Teacher)
                     .WithMany(p => p.AvailableDays)
@@ -472,9 +485,7 @@ namespace Pegasus_backend.pegasusContext
                     .HasMaxLength(60)
                     .IsUnicode(false);
 
-                entity.Property(e => e.CreateAt)
-                    .HasColumnName("create_at")
-                    .HasColumnType("date");
+                entity.Property(e => e.CreateAt).HasColumnName("create_at");
 
                 entity.Property(e => e.MessageBody)
                     .HasColumnName("message_body")
@@ -1458,6 +1469,9 @@ namespace Pegasus_backend.pegasusContext
                 entity.HasIndex(e => e.LearnerId)
                     .HasName("R_31");
 
+                entity.HasIndex(e => e.NewLessonId)
+                    .HasName("new_lesson_id");
+
                 entity.HasIndex(e => e.OrgId)
                     .HasName("R_34");
 
@@ -1560,6 +1574,11 @@ namespace Pegasus_backend.pegasusContext
                     .WithMany(p => p.Lesson)
                     .HasForeignKey(d => d.LearnerId)
                     .HasConstraintName("R_31");
+
+                entity.HasOne(d => d.NewLesson)
+                    .WithMany(p => p.InverseNewLesson)
+                    .HasForeignKey(d => d.NewLessonId)
+                    .HasConstraintName("lesson_ibfk_1");
 
                 entity.HasOne(d => d.Org)
                     .WithMany(p => p.Lesson)
