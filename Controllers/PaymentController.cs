@@ -504,85 +504,83 @@ namespace Pegasus_backend.Controllers
         public async Task<IActionResult> Generateone2oneInvoice(int term_id, int instance_id=0)
         {
             var result = new Result<object>();
-            var course_instances = await _ablemusicContext.One2oneCourseInstance
-                .Include(x => x.Course)
-                .Include(x => x.Learner).Where(x => x.Learner.IsActive == 1)
-                .Select(x => new
+            try {
+                //get concert fee configuraton
+                var concertFeeName =  _ablemusicContext.Lookup.
+                    Where(x => x.LookupType == 15 && x.PropValue==1).Select(x=>x.PropName).FirstOrDefault();;
+
+                string concertFeeStr =  _ablemusicContext.Lookup.
+                        Where(x => x.LookupType == 15 && x.PropValue==2).Select(x=>x.PropName).FirstOrDefault();                    
+                int  concertFee = Int32.Parse(concertFeeStr);
+                //get note fee configuraton
+                string noteFeeName =  _ablemusicContext.Lookup.
+                        Where(x => x.LookupType == 16 && x.PropValue==1).Select(x=>x.PropName).FirstOrDefault();
+                string noteFeeStr =  _ablemusicContext.Lookup.
+                        Where(x => x.LookupType == 16 && x.PropValue==2).Select(x=>x.PropName).FirstOrDefault();                    
+                int  noteFee = Int32.Parse(noteFeeStr);                        
+                //get extra fee configuraton
+                string extraFeeStr =  _ablemusicContext.Lookup.
+                        Where(x => x.LookupType == 17 && x.PropValue==1).Select(x=>x.PropName).FirstOrDefault();                    
+                int extraFee = Int32.Parse(extraFeeStr); 
+
+                var course_instances = await _ablemusicContext.One2oneCourseInstance
+                    .Include(x => x.Course)
+                    .Include(x => x.Learner).Where(x => x.Learner.IsActive == 1)
+                    .Select(x => new
+                    {
+                        x.LearnerId,
+                        x.CourseId,
+                        x.CourseInstanceId,
+                        x.BeginDate,
+                        x.EndDate,
+                        x.InvoiceDate,
+                        Course = new
+                        {
+                            x.Course.CourseName,
+                            x.Course.Price
+                        },
+                        Learner = new
+                        {
+                            x.Learner.FirstName,
+                            x.Learner.PaymentPeriod
+                        }
+
+                    })
+                    .ToListAsync();
+                if (instance_id != 0)
                 {
-                    x.LearnerId,
-                    x.CourseId,
-                    x.CourseInstanceId,
-                    x.BeginDate,
-                    x.EndDate,
-                    x.InvoiceDate,
-                    Course = new
-                    {
-                        x.Course.CourseName,
-                        x.Course.Price
-                    },
-                    Learner = new
-                    {
-                        x.Learner.FirstName,
-                        x.Learner.PaymentPeriod
-                    }
-
-                })
-                .ToListAsync();
-            if (instance_id != 0)
-            {
-                course_instances = course_instances.Where(x => x.CourseInstanceId == instance_id).ToList();
-            }
-
-            var term = await _ablemusicContext.Term.FirstOrDefaultAsync(x => x.TermId == term_id);
-
-            var all_terms = await _ablemusicContext.Term.Select(x => new { x.TermId, x.BeginDate, x.EndDate }).ToListAsync();
-            int i = 0;
-            foreach (var course_instance in course_instances)
-            {
-                if (course_instance.InvoiceDate >= Convert.ToDateTime(term.EndDate)) continue;
-                InvoiceWaitingConfirm invoice = new InvoiceWaitingConfirm();
-
-                invoice.LearnerId = course_instance.LearnerId;
-                invoice.LearnerName = course_instance.Learner.FirstName;
-                invoice.CourseInstanceId = course_instance.CourseInstanceId;
-                invoice.CourseName = course_instance.Course.CourseName;
-                invoice.TermId = (short)term_id;
-                invoice.IsPaid = 0;
-                invoice.PaidFee = 0;
-                invoice.CreatedAt = toNZTimezone(DateTime.UtcNow);
-                invoice.IsConfirmed = 0;
-                invoice.IsActivate = 1;
-                invoice.IsEmailSent = 0;
-
-                var courseIns = await _ablemusicContext.One2oneCourseInstance.FirstOrDefaultAsync(x => x.CourseInstanceId == invoice.CourseInstanceId);
-                int lesson_quantity = 0;
-
-                if (course_instance.Learner.PaymentPeriod == 1 && (course_instance.InvoiceDate == null || course_instance.InvoiceDate < term.EndDate))
-                {
-                    if (course_instance.BeginDate >= term.BeginDate)
-                    {
-                        invoice.BeginDate = course_instance.BeginDate;
-                    }
-                    else
-                    {
-                        invoice.BeginDate = term.BeginDate;
-                    }
-
-                    invoice.EndDate = term.EndDate;
-
-                    await _ablemusicContext.InvoiceWaitingConfirm.AddAsync(invoice);
-                    await _ablemusicContext.SaveChangesAsync();
-                    using (var dbContextTransaction = _ablemusicContext.Database.BeginTransaction())
-                    {
-                        lesson_quantity = await SaveLesson(invoice.WaitingId, 1, 1);
-                        dbContextTransaction.Rollback();
-
-                    }
-                    courseIns.InvoiceDate = invoice.EndDate;
+                    course_instances = course_instances.Where(x => x.CourseInstanceId == instance_id).ToList();
                 }
-                else if (course_instance.Learner.PaymentPeriod == 2)
+
+                var term = await _ablemusicContext.Term.FirstOrDefaultAsync(x => x.TermId == term_id);
+
+                var all_terms = await _ablemusicContext.Term.Select(x => new { x.TermId, x.BeginDate, x.EndDate }).ToListAsync();
+                int i = 0;
+                foreach (var course_instance in course_instances)
                 {
-                    if (course_instance.InvoiceDate == null)
+                    if (course_instance.InvoiceDate >= Convert.ToDateTime(term.EndDate)) continue;
+                    InvoiceWaitingConfirm invoice = new InvoiceWaitingConfirm();
+
+                    invoice.LearnerId = course_instance.LearnerId;
+                    invoice.LearnerName = course_instance.Learner.FirstName;
+                    invoice.CourseInstanceId = course_instance.CourseInstanceId;
+                    invoice.CourseName = course_instance.Course.CourseName;
+                    invoice.ConcertFeeName = concertFeeName;
+                    invoice.ConcertFee = concertFee;        
+                    invoice.LessonNoteFeeName = noteFeeName;
+                    invoice.NoteFee = noteFee;                                        
+                    invoice.TermId = (short)term_id;
+                    invoice.IsPaid = 0;
+                    invoice.PaidFee = 0;
+                    invoice.CreatedAt = toNZTimezone(DateTime.UtcNow);
+                    invoice.IsConfirmed = 0;
+                    invoice.IsActivate = 1;
+                    invoice.IsEmailSent = 0;
+
+                    var courseIns = await _ablemusicContext.One2oneCourseInstance.FirstOrDefaultAsync(x => x.CourseInstanceId == invoice.CourseInstanceId);
+                    int lesson_quantity = 0;
+
+                    if (course_instance.Learner.PaymentPeriod == 1 && (course_instance.InvoiceDate == null || course_instance.InvoiceDate < term.EndDate))
                     {
                         if (course_instance.BeginDate >= term.BeginDate)
                         {
@@ -592,53 +590,87 @@ namespace Pegasus_backend.Controllers
                         {
                             invoice.BeginDate = term.BeginDate;
                         }
-                        int DOW = day_trans(Convert.ToDateTime(invoice.BeginDate).DayOfWeek.ToString());
 
-                        invoice.BeginDate = Convert.ToDateTime(invoice.BeginDate).AddDays(8 - DOW);
-                        invoice.EndDate = Convert.ToDateTime(invoice.BeginDate).AddDays(6);
+                        invoice.EndDate = term.EndDate;
 
-                        courseIns.InvoiceDate = invoice.EndDate;
+                        await _ablemusicContext.InvoiceWaitingConfirm.AddAsync(invoice);
+                        await _ablemusicContext.SaveChangesAsync();
+                        using (var dbContextTransaction = _ablemusicContext.Database.BeginTransaction())
+                        {
+                            lesson_quantity = await SaveLesson(invoice.WaitingId, 1, 1);
+                            dbContextTransaction.Rollback();
 
-                    }
-                    else if (course_instance.EndDate == null || (course_instance.EndDate != null && course_instance.EndDate > course_instance.InvoiceDate))
-                    {
-
-                        invoice.BeginDate = Convert.ToDateTime(courseIns.InvoiceDate).AddDays(1);
-                        invoice.EndDate = Convert.ToDateTime(invoice.BeginDate).AddDays(6);
+                        }
                         courseIns.InvoiceDate = invoice.EndDate;
                     }
-                    else continue;
-                    foreach (var all_term in all_terms)
+                    else if (course_instance.Learner.PaymentPeriod == 2)
                     {
-                        if (invoice.EndDate >= all_term.BeginDate && invoice.EndDate <= all_term.EndDate) invoice.TermId = all_term.TermId;
+                        if (course_instance.InvoiceDate == null)
+                        {
+                            if (course_instance.BeginDate >= term.BeginDate)
+                            {
+                                invoice.BeginDate = course_instance.BeginDate;
+                            }
+                            else
+                            {
+                                invoice.BeginDate = term.BeginDate;
+                            }
+                            int DOW = day_trans(Convert.ToDateTime(invoice.BeginDate).DayOfWeek.ToString());
+
+                            invoice.BeginDate = Convert.ToDateTime(invoice.BeginDate).AddDays(8 - DOW);
+                            invoice.EndDate = Convert.ToDateTime(invoice.BeginDate).AddDays(6);
+
+                            courseIns.InvoiceDate = invoice.EndDate;
+
+                        }
+                        else if (course_instance.EndDate == null || (course_instance.EndDate != null && course_instance.EndDate > course_instance.InvoiceDate))
+                        {
+
+                            invoice.BeginDate = Convert.ToDateTime(courseIns.InvoiceDate).AddDays(1);
+                            invoice.EndDate = Convert.ToDateTime(invoice.BeginDate).AddDays(6);
+                            courseIns.InvoiceDate = invoice.EndDate;
+                        }
+                        else continue;
+                        foreach (var all_term in all_terms)
+                        {
+                            if (invoice.EndDate >= all_term.BeginDate && invoice.EndDate <= all_term.EndDate) invoice.TermId = all_term.TermId;
+                        }
+                        await _ablemusicContext.InvoiceWaitingConfirm.AddAsync(invoice);
+                        await _ablemusicContext.SaveChangesAsync();
+                        using (var dbContextTransaction = _ablemusicContext.Database.BeginTransaction())
+                        {
+                            lesson_quantity = await SaveLesson(invoice.WaitingId, 1, 1);
+                            dbContextTransaction.Rollback();
+
+                        }
                     }
-                    await _ablemusicContext.InvoiceWaitingConfirm.AddAsync(invoice);
+                    if (invoice.BeginDate != null) invoice.DueDate = Convert.ToDateTime(invoice.BeginDate).AddDays(-1);
+                    invoice.LessonFee = course_instance.Course.Price * lesson_quantity;
+                    if (course_instance.Learner.PaymentPeriod == 2)
+                        invoice.LessonFee = invoice.LessonFee + extraFee;
+                    invoice.LessonFee = course_instance.Course.Price * lesson_quantity;
+                    invoice.OwingFee = invoice.LessonFee;
+                    invoice.TotalFee = invoice.LessonFee;
+                    invoice.LessonQuantity = lesson_quantity;
+                    if (invoice.LessonFee <= 0) continue;
+                    _ablemusicContext.InvoiceWaitingConfirm.Update(invoice);
+                    invoice.InvoiceNum = invoice.WaitingId.ToString();
+                    _ablemusicContext.Update(courseIns);
+
                     await _ablemusicContext.SaveChangesAsync();
-                    using (var dbContextTransaction = _ablemusicContext.Database.BeginTransaction())
-                    {
-                        lesson_quantity = await SaveLesson(invoice.WaitingId, 1, 1);
-                        dbContextTransaction.Rollback();
 
-                    }
+                    i++;
+                    //if (i == 4) break;
+
                 }
-                if (invoice.BeginDate != null) invoice.DueDate = Convert.ToDateTime(invoice.BeginDate).AddDays(-1);
-                invoice.LessonFee = course_instance.Course.Price * lesson_quantity;
-                invoice.LessonFee = course_instance.Course.Price * lesson_quantity;
-                invoice.OwingFee = invoice.LessonFee;
-                invoice.TotalFee = invoice.LessonFee;
-                invoice.LessonQuantity = lesson_quantity;
-                if (invoice.LessonFee <= 0) continue;
-                _ablemusicContext.InvoiceWaitingConfirm.Update(invoice);
-                invoice.InvoiceNum = invoice.WaitingId.ToString();
-                _ablemusicContext.Update(courseIns);
-
-                await _ablemusicContext.SaveChangesAsync();
-
-                i++;
-                //if (i == 4) break;
-
+                result.Data = i;
             }
-            result.Data = i;
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.ToString();
+                return BadRequest(result);
+            }
             return Ok(result);
         }
 
