@@ -62,6 +62,8 @@ namespace Pegasus_backend.Controllers
                                                                                   .FirstOrDefault(r=>r.LessonId==s.NewLessonId).OrgId).OrgName,
                             BeginTime =_ablemusicContext.Lesson
                                 .FirstOrDefault(r=>r.LessonId==s.NewLessonId).BeginTime,
+                            EndTime = _ablemusicContext.Lesson
+                                .FirstOrDefault(r=>r.LessonId==s.NewLessonId).EndTime,
                             
                             
                         },
