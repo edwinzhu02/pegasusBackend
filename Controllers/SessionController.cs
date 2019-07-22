@@ -224,6 +224,8 @@ namespace Pegasus_backend.Controllers
             {
                 await _ablemusicContext.Lesson.AddAsync(lesson);
                 await _ablemusicContext.SaveChangesAsync();
+                validMakeUpLesson.NewLessonId = lesson.LessonId;
+                await _ablemusicContext.SaveChangesAsync();
             }
             catch(Exception ex)
             {
