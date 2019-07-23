@@ -472,3 +472,35 @@ WHERE ((`s`.`teacher_id` = @__8__locals1_TeacherId_0) AND (`s`.`org_id` = @__8__
 2019-07-23 14:48:00.753 +12:00 [INF] Executed action Pegasus_backend.Controllers.RoomController.getRoomsbyTeacherId (Pegasus_backend) in 73460.1674ms
 2019-07-23 14:48:00.761 +12:00 [INF] Response {"IsSuccess":false,"ErrorCode":null,"IsFound":true,"ErrorMessage":"Object reference not set to an instance of an object.","Note":null,"Data":null}
 2019-07-23 14:48:00.774 +12:00 [INF] Request finished in 73779.1349ms 400 application/json; charset=utf-8
+2019-07-23 14:59:03.742 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-07-23 14:59:05.890 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Room/266/1/2019-07-21T11:15:00  
+2019-07-23 14:59:05.923 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-07-23 14:59:05.958 +12:00 [INF] 
+2019-07-23 14:59:06.107 +12:00 [INF] Route matched with {action = "getRoomsbyTeacherId", controller = "Room"}. Executing action Pegasus_backend.Controllers.RoomController.getRoomsbyTeacherId (Pegasus_backend)
+2019-07-23 14:59:06.237 +12:00 [INF] Executing action method Pegasus_backend.Controllers.RoomController.getRoomsbyTeacherId (Pegasus_backend) with arguments (["266","1","07/21/2019 11:15:00"]) - Validation state: "Valid"
+2019-07-23 14:59:07.081 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-23 14:59:08.545 +12:00 [INF] Executed DbCommand (68ms) [Parameters=[@__8__locals1_TeacherId_0='?' (DbType = Int32), @__8__locals1_OrgId_1='?' (DbType = Int16), @__day_2='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`available_days_id`, `s`.`created_at`, `s`.`day_of_week`, `s`.`org_id`, `s`.`room_id`, `s`.`teacher_id`, `s.Room`.`room_id`, `s.Room`.`created_at`, `s.Room`.`is_activate`, `s.Room`.`org_id`, `s.Room`.`room_name`
+FROM `ablemusic`.`available_days` AS `s`
+LEFT JOIN `ablemusic`.`room` AS `s.Room` ON `s`.`room_id` = `s.Room`.`room_id`
+WHERE ((`s`.`teacher_id` = @__8__locals1_TeacherId_0) AND (`s`.`org_id` = @__8__locals1_OrgId_1)) AND (`s`.`day_of_week` = @__day_2)
+2019-07-23 14:59:08.634 +12:00 [INF] Executed action method Pegasus_backend.Controllers.RoomController.getRoomsbyTeacherId (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 2386.1556ms.
+2019-07-23 14:59:08.639 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-07-23 14:59:08.673 +12:00 [INF] Executed action Pegasus_backend.Controllers.RoomController.getRoomsbyTeacherId (Pegasus_backend) in 2563.5958ms
+2019-07-23 14:59:08.675 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":[]}
+2019-07-23 14:59:08.680 +12:00 [INF] Request finished in 2790.8078ms 200 application/json; charset=utf-8
+2019-07-23 14:59:14.739 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/room/268/1/2019-07-22  
+2019-07-23 14:59:14.740 +12:00 [INF] 
+2019-07-23 14:59:14.740 +12:00 [INF] Route matched with {action = "getRoomsbyTeacherId", controller = "Room"}. Executing action Pegasus_backend.Controllers.RoomController.getRoomsbyTeacherId (Pegasus_backend)
+2019-07-23 14:59:14.741 +12:00 [INF] Executing action method Pegasus_backend.Controllers.RoomController.getRoomsbyTeacherId (Pegasus_backend) with arguments (["268","1","07/22/2019 00:00:00"]) - Validation state: "Valid"
+2019-07-23 14:59:14.742 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-23 14:59:15.225 +12:00 [INF] Executed DbCommand (55ms) [Parameters=[@__8__locals1_TeacherId_0='?' (DbType = Int32), @__8__locals1_OrgId_1='?' (DbType = Int16), @__day_2='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`available_days_id`, `s`.`created_at`, `s`.`day_of_week`, `s`.`org_id`, `s`.`room_id`, `s`.`teacher_id`, `s.Room`.`room_id`, `s.Room`.`created_at`, `s.Room`.`is_activate`, `s.Room`.`org_id`, `s.Room`.`room_name`
+FROM `ablemusic`.`available_days` AS `s`
+LEFT JOIN `ablemusic`.`room` AS `s.Room` ON `s`.`room_id` = `s.Room`.`room_id`
+WHERE ((`s`.`teacher_id` = @__8__locals1_TeacherId_0) AND (`s`.`org_id` = @__8__locals1_OrgId_1)) AND (`s`.`day_of_week` = @__day_2)
+2019-07-23 14:59:15.254 +12:00 [INF] Executed action method Pegasus_backend.Controllers.RoomController.getRoomsbyTeacherId (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 512.308ms.
+2019-07-23 14:59:15.254 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-07-23 14:59:15.259 +12:00 [INF] Executed action Pegasus_backend.Controllers.RoomController.getRoomsbyTeacherId (Pegasus_backend) in 518.7109ms
+2019-07-23 14:59:15.259 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":[{"RoomId":1,"RoomName":"Room 1"}]}
+2019-07-23 14:59:15.260 +12:00 [INF] Request finished in 521.0007ms 200 application/json; charset=utf-8

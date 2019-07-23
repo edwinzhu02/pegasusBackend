@@ -32,20 +32,20 @@ namespace Pegasus_backend.Controllers
                     .ToList();
                 if (availabledays.Count == 0)
                 {
-                    result.Data = null;
+                    result.Data = new List<object>();
                     return Ok(result);
                 }
 
                 if (availabledays.First().Room == null)
                 {
-                    result.Data = null;
+                    result.Data = new List<object>();
                     return Ok(result);
                 }
 
-                var room = availabledays.Select(s=> new
+                var room = availabledays.Select(s => new
                 {
                     s.Room.RoomId, s.Room.RoomName
-                }).First();
+                });
                 result.Data = room;
                 return Ok(result);
             }
