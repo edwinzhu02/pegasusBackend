@@ -31,7 +31,7 @@ namespace Pegasus_backend.Controllers
         [CheckModelFilter]
         public async Task<IActionResult> PostPeriodCourseChange([FromBody] PeriodCourseChangeViewModel inputObj)
         {
-            var result = new Result<Amendment>();
+            var result = new Result<List<object>>();
             List<Lesson> exsitingLessons;
             Learner learner;
             List<Holiday> holidays;
@@ -44,6 +44,7 @@ namespace Pegasus_backend.Controllers
             dynamic newCourseInfo;
             AvailableDays availableDay;
 
+            var tt1 = DateTime.Now;
             try
             {
                 if (inputObj.EndDate.HasValue)
@@ -100,7 +101,7 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = "Course schedule or course instance not found";
                 return BadRequest(result);
             }
-            if(availableDay == null)
+            if(availableDay == null || availableDay.RoomId == null)
             {
                 result.IsSuccess = false;
                 result.ErrorMessage = "Room Id not found";
@@ -146,6 +147,8 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = "EndDate is required when type is temporary";
                 return BadRequest(result);
             }
+            var tt2 = DateTime.Now;
+            var tt3 = tt2.Subtract(tt1);
 
             switch ((short)courseInfo.Duration)
             {
@@ -292,26 +295,54 @@ namespace Pegasus_backend.Controllers
                 currentDayOfWeek = currentDate.DayOfWeek == 0 ? 7 : (int)currentDate.DayOfWeek;
             }
 
+            var t1 = DateTime.Now;
+
+            var lessonConflictCheckerService = new LessonConflictCheckerService(inputObj.BeginDate, endDate);
+            try
+            {
+                await lessonConflictCheckerService.LoadAllProtentialConflictLessonsToMemoryAsync();
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+
+            Dictionary<Lesson, object> lessonIdMapConflictCheckResult = new Dictionary<Lesson, object>();
             foreach (var lesson in visualLessonsForCheckingConflict)
             {
-                var lessonConflictCheckerService = new LessonConflictCheckerService(lesson);
-                Result<List<object>> lessonConflictCheckResult;
-                try
-                {
-                    lessonConflictCheckResult = await lessonConflictCheckerService.CheckBothRoomAndTeacher();
-                }
-                catch (Exception ex)
-                {
-                    result.IsSuccess = false;
-                    result.ErrorMessage = ex.Message;
-                    return BadRequest(result);
-                }
+                lessonConflictCheckerService.ConfigureLessonToCheck(lesson);
+                Result<List<object>> lessonConflictCheckResult = lessonConflictCheckerService.CheckBothRoomAndTeacherInMemory();
                 if (!lessonConflictCheckResult.IsSuccess)
                 {
-                    return BadRequest(lessonConflictCheckResult);
+                    lessonIdMapConflictCheckResult.Add(lesson, lessonConflictCheckResult);
                 }
             }
-            
+
+            var t2 = DateTime.Now;
+            var t3 = t2.Subtract(t1);
+            if(lessonIdMapConflictCheckResult.Count > 0)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = "Conflict Found";
+                result.Data = new List<object>
+                {
+                    new { ArrangedLessonFound = exsitingLessons.Count },
+                    new { ConflictCheckingTime = t3 },
+                    new { LoadingDataTime = tt3 }
+                };
+                foreach(var conflictResult in lessonIdMapConflictCheckResult)
+                {
+                    result.Data.Add(new
+                    {
+                        LessonWithConflict = conflictResult.Key,
+                        ConflictDetail = conflictResult.Value
+                    });
+                }
+                return BadRequest(result);
+            }
+
             foreach (var holiday in holidays)
             {
                 if (holiday.HolidayDate.Date == todoDateBegin.Date)
@@ -409,7 +440,11 @@ namespace Pegasus_backend.Controllers
                 _notificationObservable.send(mail);
             }
 
-            result.Data = amendment;
+            result.Data = new List<object>
+            {
+                new { ArrangedLessonFound = exsitingLessons.Count },
+                new { ArrangedLessonChanged = newLessonsMapOldLesson.Count }
+            };
 
             return Ok(result);
         }
