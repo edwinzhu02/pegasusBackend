@@ -593,7 +593,14 @@ namespace Pegasus_backend.Controllers
                 result.Data =await _ablemusicContext.AwaitMakeUpLesson.
                     Include(a => a.CourseInstance).ThenInclude(ci => ci.Course).
                     Include(a => a.MissedLesson).
-                    Where(a => a.IsActive==1 && a.LearnerId ==learnerId)
+                    Include(a => a.NewLesson).                    
+                    Where(a => a.LearnerId ==learnerId).Select(a => new {
+                        awaitId = a.AwaitId , CreateAt = a.CreateAt , SchduledAt = a.SchduledAt ,ExpiredDate = a.ExpiredDate,
+                        MissedLessonId = a.MissedLessonId ,NewLessonId = a.NewLessonId ,IsActive =a.IsActive, CourseInstanceId = a.CourseInstanceId,
+                        CourseInstance = new { CourseId = a.CourseInstance.CourseId ,CourseName = a.CourseInstance.Course.CourseName },
+                        MissedLesson = new { Org = a.MissedLesson.Org.Abbr ,Teacher= a.MissedLesson.Teacher.FirstName,  beginDate = a.MissedLesson.BeginTime },
+                        NewLesson = new { Org = a.NewLesson.Org.Abbr ,Teacher= a.NewLesson.Teacher.FirstName,  beginDate = a.NewLesson.BeginTime }
+                    })
                 .ToListAsync();
             }
             catch (Exception ex)
