@@ -36,6 +36,12 @@ namespace Pegasus_backend.Controllers
                     return Ok(result);
                 }
 
+                if (availabledays.First().Room == null)
+                {
+                    result.Data = null;
+                    return Ok(result);
+                }
+
                 var room = availabledays.Select(s=> new
                 {
                     s.Room.RoomId, s.Room.RoomName
