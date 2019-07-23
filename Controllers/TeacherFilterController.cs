@@ -154,7 +154,7 @@ namespace Pegasus_backend.Controllers
                 teachers = await (from t in _ablemusicContext.Teacher
                                   join ta in _ablemusicContext.AvailableDays on t.TeacherId equals ta.TeacherId
                                   join tc in _ablemusicContext.TeacherCourse on t.TeacherId equals tc.TeacherId
-                                  where tc.CourseId == courseId
+                                  where tc.CourseId == courseId && t.IsActivate==1
                                   select new
                                   {
                                       TeacherId = t.TeacherId,
