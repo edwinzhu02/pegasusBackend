@@ -202,7 +202,7 @@ namespace Pegasus_backend.Controllers
         }
 
         // GET: api/StockApplication
-        [HttpGet("{applicationId}")]
+        [HttpGet("getById/{applicationId}")]
         public async Task<IActionResult> GetStockAppById(int applicationId)
         {
             var result = new Result<object>();
