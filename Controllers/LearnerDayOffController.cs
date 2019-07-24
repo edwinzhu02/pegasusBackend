@@ -40,7 +40,7 @@ namespace Pegasus_backend.Controllers
             List<Holiday> holidays;
             try
             {
-                lessons = await _ablemusicContext.Lesson.Where(l => l.LearnerId == inputObj.LearnerId && 
+                lessons = await _ablemusicContext.Lesson.Where(l => l.LearnerId == inputObj.LearnerId && l.IsCanceled != 1 && inputObj.InstanceIds.Contains(l.CourseInstanceId.Value) &&
                 l.BeginTime.Value.Date > inputObj.BeginDate.Date && l.BeginTime.Value.Date < inputObj.EndDate.Date).ToListAsync();
                 courseSchedules = await (from i in _ablemusicContext.One2oneCourseInstance
                                          join cs in _ablemusicContext.CourseSchedule on i.CourseInstanceId equals cs.CourseInstanceId
@@ -156,81 +156,93 @@ namespace Pegasus_backend.Controllers
                 }, RemindLogContentGenerator.DayOffForTeacher(cs, inputObj.EndDate.ToString()));
             }
 
-            TodoRepository todoRepository = new TodoRepository();
-            todoRepository.AddSingleTodoList("Period Dayoff Remind", TodoListContentGenerator.DayOffForLearner(courseSchedules[0],
-                inputObj.EndDate.ToString()), inputObj.UserId, todoDate, null, courseSchedules[0].LearnerId, null);
-            todoRepository.AddMutipleTodoLists("Period Dayoff Remind", teacherIdMapTodoContent, inputObj.UserId, todoDate, null, null);
-            var saveTodoResult = await todoRepository.SaveTodoListsAsync();
-            if (!saveTodoResult.IsSuccess)
+            using (var dbContextTransaction = _ablemusicContext.Database.BeginTransaction())
             {
-                return BadRequest(saveTodoResult);
-            }
-
-            RemindLogRepository remindLogRepository = new RemindLogRepository();
-            remindLogRepository.AddSingleRemindLog(courseSchedules[0].LearnerId, courseSchedules[0].LearnerEmail,
-                RemindLogContentGenerator.DayOffForLearner(courseSchedules[0], inputObj.EndDate.ToString()), null, "Period Dayoff Remind", null);
-            remindLogRepository.AddMultipleRemindLogs(teacherMapRemindLogContent, null, "Period Dayoff Remind", null);
-            var saveRemindLogResult = await remindLogRepository.SaveRemindLogAsync();
-            if (!saveRemindLogResult.IsSuccess)
-            {
-                return BadRequest(saveRemindLogResult);
-            }
-
-            try
-            {
-                foreach (var amendment in amendments)
+                TodoRepository todoRepository = new TodoRepository(_ablemusicContext);
+                todoRepository.AddSingleTodoList("Period Dayoff Remind", TodoListContentGenerator.DayOffForLearner(courseSchedules[0],
+                    inputObj.EndDate.ToString()), inputObj.UserId, todoDate, null, courseSchedules[0].LearnerId, null);
+                todoRepository.AddMutipleTodoLists("Period Dayoff Remind", teacherIdMapTodoContent, inputObj.UserId, todoDate, null, null);
+                var saveTodoResult = await todoRepository.SaveTodoListsAsync();
+                if (!saveTodoResult.IsSuccess)
                 {
-                    await _ablemusicContext.Amendment.AddAsync(amendment);
+                    return BadRequest(saveTodoResult);
                 }
-                await _ablemusicContext.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                result.IsSuccess = false;
-                result.ErrorMessage = ex.ToString();
-                return BadRequest(result);
-            }
 
-            string userConfirmUrlPrefix = _configuration.GetSection("UrlPrefix").Value;
-            //sending Email
-            List<NotificationEventArgs> notifications = new List<NotificationEventArgs>();
-            foreach (var todo in saveTodoResult.Data)
-            {
-                var remind = saveRemindLogResult.Data.Find(r => r.LearnerId == todo.LearnerId && r.TeacherId == todo.TeacherId);
-                string currentPersonName = "";
-                dynamic currentCourseSchedule = null;
-                if (todo.TeacherId == null)
+                RemindLogRepository remindLogRepository = new RemindLogRepository(_ablemusicContext);
+                remindLogRepository.AddSingleRemindLog(courseSchedules[0].LearnerId, courseSchedules[0].LearnerEmail,
+                    RemindLogContentGenerator.DayOffForLearner(courseSchedules[0], inputObj.EndDate.ToString()), null, "Period Dayoff Remind", null);
+                remindLogRepository.AddMultipleRemindLogs(teacherMapRemindLogContent, null, "Period Dayoff Remind", null);
+                var saveRemindLogResult = await remindLogRepository.SaveRemindLogAsync();
+                if (!saveRemindLogResult.IsSuccess)
                 {
-                    foreach(var cs in courseSchedules)
+                    return BadRequest(saveRemindLogResult);
+                }
+
+                try
+                {
+                    foreach (var amendment in amendments)
                     {
-                        if (todo.LearnerId == cs.LearnerId)
+                        await _ablemusicContext.Amendment.AddAsync(amendment);
+                    }
+                    await _ablemusicContext.SaveChangesAsync();
+                }
+                catch (Exception ex)
+                {
+                    result.IsSuccess = false;
+                    result.ErrorMessage = ex.ToString();
+                    return BadRequest(result);
+                }
+
+                string userConfirmUrlPrefix = _configuration.GetSection("UrlPrefix").Value;
+                //sending Email
+                //List<NotificationEventArgs> notifications = new List<NotificationEventArgs>();
+                foreach (var todo in saveTodoResult.Data)
+                {
+                    var remind = saveRemindLogResult.Data.Find(r => r.LearnerId == todo.LearnerId && r.TeacherId == todo.TeacherId);
+                    string currentPersonName = "";
+                    dynamic currentCourseSchedule = null;
+                    if (todo.TeacherId == null)
+                    {
+                        foreach (var cs in courseSchedules)
                         {
-                            currentPersonName = cs.LearnerFirstName + " " + cs.LearnerLastName;
-                            currentCourseSchedule = cs;
+                            if (todo.LearnerId == cs.LearnerId)
+                            {
+                                currentPersonName = cs.LearnerFirstName + " " + cs.LearnerLastName;
+                                currentCourseSchedule = cs;
+                            }
                         }
                     }
-                }
-                else
-                {
-                    foreach(var cs in courseSchedules)
+                    else
                     {
-                        if (todo.TeacherId == cs.TeacherId)
+                        foreach (var cs in courseSchedules)
                         {
-                            currentPersonName = cs.TeacherFirstName + " " + cs.TeacherLastName;
-                            currentCourseSchedule = cs;
+                            if (todo.TeacherId == cs.TeacherId)
+                            {
+                                currentPersonName = cs.TeacherFirstName + " " + cs.TeacherLastName;
+                                currentCourseSchedule = cs;
+                            }
                         }
                     }
+                    string confirmURL = userConfirmUrlPrefix + todo.ListId + "/" + remind.RemindId;
+                    string mailContent = EmailContentGenerator.Dayoff(currentPersonName, currentCourseSchedule, inputObj, confirmURL);
+                    remindLogRepository.UpdateContent(remind.RemindId, mailContent);
+                    //notifications.Add(new NotificationEventArgs(remind.Email, "Dayoff is expired", mailContent, remind.RemindId));
                 }
-                string confirmURL = userConfirmUrlPrefix + todo.ListId + "/" + remind.RemindId;
-                string mailContent = EmailContentGenerator.Dayoff(currentPersonName, currentCourseSchedule, inputObj, confirmURL);
-                notifications.Add(new NotificationEventArgs(remind.Email, "Dayoff is expired", mailContent, remind.RemindId));
-            }
-            foreach (var mail in notifications)
-            {
-                _notificationObservable.send(mail);
+                var remindLogUpdateContentResult = await remindLogRepository.SaveUpdatedContentAsync();
+                if (!remindLogUpdateContentResult.IsSuccess)
+                {
+                    result.IsSuccess = false;
+                    result.ErrorMessage = remindLogUpdateContentResult.ErrorMessage;
+                    return BadRequest(result);
+                }
+                //foreach (var mail in notifications)
+                //{
+                //    _notificationObservable.send(mail);
+                //}
+                dbContextTransaction.Commit();
             }
 
-            foreach(var amendment in amendments)
+            foreach (var amendment in amendments)
             {
                 amendment.Learner = null;
             }
