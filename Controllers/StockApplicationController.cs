@@ -201,6 +201,65 @@ namespace Pegasus_backend.Controllers
             return Ok(result);
         }
 
+        // GET: api/StockApplication
+        [HttpGet("{applicationId}")]
+        public async Task<IActionResult> GetStockAppById(int applicationId)
+        {
+            var result = new Result<object>();
+            try
+            {
+                result.Data = await _ablemusicContext.StockApplication
+                .Include(s => s.ApplyStaff)
+                .Include(s => s.Org)
+                .Include(s => s.ApplicationDetails)
+                .ThenInclude(s => s.Product)
+                .ThenInclude(s => s.ProdType)
+                .ThenInclude(s => s.ProdCat)
+                .Where(s => s.ApplicationId == applicationId)
+                .Select(s => new
+                {
+                    s.OrgId,
+                    s.ApplyStaffId,
+                    s.ApplyAt,
+                    s.ApplicationId,
+                    s.ProcessStatus,
+                    s.ApplyReason,
+                    s.ReplyContent,
+                    s.IsDisputed,
+                    s.ReplyAt,
+                    s.RecieveAt,
+                    s.DeliverAt,
+                    s.Org,
+                    s.ApplyStaff,
+                    ApplicationDetails = s.ApplicationDetails.Select(ad => new
+                    {
+                        ad.ApplicationId,
+                        ad.DetaillsId,
+                        ad.ProductId,
+                        ad.AppliedQty,
+                        ad.DeliveredQty,
+                        ad.ReceivedQty,
+                        ad.Product,
+                        ad.Product.ProdType,
+                        ad.Product.ProdType.ProdCat,
+                    })
+                }).FirstOrDefaultAsync();
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+            if (result.Data == null)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = "Stock Application not found";
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+
         // POST: api/StockApplication
         [CheckModelFilter]
         [HttpPost]
