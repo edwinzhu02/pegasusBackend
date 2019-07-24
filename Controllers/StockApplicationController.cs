@@ -507,5 +507,49 @@ namespace Pegasus_backend.Controllers
             result.Data = stockApplication;
             return Ok(result);
         }
+
+        // POST: api/StockApplication
+        [HttpDelete("{stockApplicationId}")]
+        public async Task<IActionResult> DeleteStockApp(int stockApplicationId)
+        {
+            var result = new Result<StockApplication>();
+            StockApplication stockApplication;
+            List<ApplicationDetails> applicationDetails;
+            try
+            {
+                stockApplication = await _ablemusicContext.StockApplication.Where(sa => sa.ApplicationId == stockApplicationId)
+                    .Include(sa => sa.ApplicationDetails)
+                    .FirstOrDefaultAsync();
+                applicationDetails = await _ablemusicContext.ApplicationDetails.Where(ad => ad.ApplicationId == stockApplicationId).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+            if(stockApplication == null)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = "Stock Application not found";
+                return BadRequest(result);
+            }
+            foreach(var applicationDetail in applicationDetails)
+            {
+                stockApplication.ApplicationDetails.Remove(applicationDetail);
+            }
+            try
+            {
+                _ablemusicContext.Remove(stockApplication);
+                await _ablemusicContext.SaveChangesAsync();
+            }
+            catch(Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
     }
 }
