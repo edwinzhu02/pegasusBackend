@@ -2401,6 +2401,10 @@ namespace Pegasus_backend.pegasusContext
                     .HasColumnName("remind_type")
                     .HasColumnType("bit(1)");
 
+                entity.Property(e => e.ScheduledDate)
+                    .HasColumnName("scheduled_date")
+                    .HasColumnType("date");
+
                 entity.Property(e => e.TeacherId)
                     .HasColumnName("teacher_id")
                     .HasColumnType("smallint(6)");
