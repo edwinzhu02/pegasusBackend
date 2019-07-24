@@ -44,7 +44,6 @@ namespace Pegasus_backend.Controllers
             dynamic newCourseInfo;
             AvailableDays availableDay;
 
-            var tt1 = DateTime.Now;
             try
             {
                 if (inputObj.EndDate.HasValue)
@@ -147,8 +146,6 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = "EndDate is required when type is temporary";
                 return BadRequest(result);
             }
-            var tt2 = DateTime.Now;
-            var tt3 = tt2.Subtract(tt1);
 
             switch ((short)courseInfo.Duration)
             {
@@ -295,8 +292,6 @@ namespace Pegasus_backend.Controllers
                 currentDayOfWeek = currentDate.DayOfWeek == 0 ? 7 : (int)currentDate.DayOfWeek;
             }
 
-            var t1 = DateTime.Now;
-
             var lessonConflictCheckerService = new LessonConflictCheckerService(inputObj.BeginDate, endDate);
             try
             {
@@ -320,17 +315,13 @@ namespace Pegasus_backend.Controllers
                 }
             }
 
-            var t2 = DateTime.Now;
-            var t3 = t2.Subtract(t1);
             if(lessonIdMapConflictCheckResult.Count > 0)
             {
                 result.IsSuccess = false;
                 result.ErrorMessage = "Conflict Found";
                 result.Data = new List<object>
                 {
-                    new { ArrangedLessonFound = exsitingLessons.Count },
-                    new { ConflictCheckingTime = t3 },
-                    new { LoadingDataTime = tt3 }
+                    new { ArrangedLessonFound = exsitingLessons.Count }
                 };
                 foreach(var conflictResult in lessonIdMapConflictCheckResult)
                 {
@@ -363,81 +354,93 @@ namespace Pegasus_backend.Controllers
                 }
             }
 
-            TodoRepository todoRepository = new TodoRepository();
-            todoRepository.AddSingleTodoList("Period Course Change Remind", TodoListContentGenerator.PeriodCourseChangeForLearner(courseInfo,
-                newCourseInfo, inputObj, todoDateBegin), inputObj.UserId, todoDateBegin, null, inputObj.LearnerId, null);
-            todoRepository.AddSingleTodoList("Period Course Change Remind", TodoListContentGenerator.PeriodCourseChangeForTeacher(courseInfo,
-                newCourseInfo, inputObj, todoDateBegin), inputObj.UserId, todoDateBegin, null, null, courseInfo.TeacherId);
-            if (inputObj.EndDate.HasValue && inputObj.IsTemporary == 1)
+            using (var dbContextTransaction = _ablemusicContext.Database.BeginTransaction())
             {
+                TodoRepository todoRepository = new TodoRepository(_ablemusicContext);
                 todoRepository.AddSingleTodoList("Period Course Change Remind", TodoListContentGenerator.PeriodCourseChangeForLearner(courseInfo,
-                    newCourseInfo, inputObj, todoDateEnd.Value), inputObj.UserId, todoDateEnd.Value, null, inputObj.LearnerId, null);
+                    newCourseInfo, inputObj, todoDateBegin), inputObj.UserId, todoDateBegin, null, inputObj.LearnerId, null);
                 todoRepository.AddSingleTodoList("Period Course Change Remind", TodoListContentGenerator.PeriodCourseChangeForTeacher(courseInfo,
-                    newCourseInfo, inputObj, todoDateEnd.Value), inputObj.UserId, todoDateEnd.Value, null, null, courseInfo.TeacherId);
-            }
-            var saveTodoResult = await todoRepository.SaveTodoListsAsync();
-            if (!saveTodoResult.IsSuccess)
-            {
-                return BadRequest(saveTodoResult);
-            }
-
-            RemindLogRepository remindLogRepository = new RemindLogRepository();
-            remindLogRepository.AddSingleRemindLog(courseInfo.LearnerId, courseInfo.LearnerEmail, RemindLogContentGenerator.PeriodCourseChangeForLearner(
-                courseInfo, newCourseInfo, inputObj), null, "Period Course Change Remind", null);
-            remindLogRepository.AddSingleRemindLog(null, courseInfo.TeacherEmail, RemindLogContentGenerator.PeriodCourseChangeForTeacher(courseInfo,
-                newCourseInfo, inputObj), courseInfo.TeacherId, "Period Course Change Remind", null);
-            var saveRemindLogResult = await remindLogRepository.SaveRemindLogAsync();
-            if (!saveRemindLogResult.IsSuccess)
-            {
-                return BadRequest(saveRemindLogResult);
-            }
-
-            try
-            {
-                foreach(var lesson in newLessonsMapOldLesson)
+                    newCourseInfo, inputObj, todoDateBegin), inputObj.UserId, todoDateBegin, null, null, courseInfo.TeacherId);
+                if (inputObj.EndDate.HasValue && inputObj.IsTemporary == 1)
                 {
-                    await _ablemusicContext.Lesson.AddAsync(lesson.Key);
+                    todoRepository.AddSingleTodoList("Period Course Change Remind", TodoListContentGenerator.PeriodCourseChangeForLearner(courseInfo,
+                        newCourseInfo, inputObj, todoDateEnd.Value), inputObj.UserId, todoDateEnd.Value, null, inputObj.LearnerId, null);
+                    todoRepository.AddSingleTodoList("Period Course Change Remind", TodoListContentGenerator.PeriodCourseChangeForTeacher(courseInfo,
+                        newCourseInfo, inputObj, todoDateEnd.Value), inputObj.UserId, todoDateEnd.Value, null, null, courseInfo.TeacherId);
                 }
-                await _ablemusicContext.Amendment.AddAsync(amendment);
-                await _ablemusicContext.SaveChangesAsync();
-                foreach(var lesson in exsitingLessons)
+                var saveTodoResult = await todoRepository.SaveTodoListsAsync();
+                if (!saveTodoResult.IsSuccess)
                 {
-                    foreach(var m in newLessonsMapOldLesson)
+                    return BadRequest(saveTodoResult);
+                }
+
+                RemindLogRepository remindLogRepository = new RemindLogRepository(_ablemusicContext);
+                remindLogRepository.AddSingleRemindLog(courseInfo.LearnerId, courseInfo.LearnerEmail, RemindLogContentGenerator.PeriodCourseChangeForLearner(
+                    courseInfo, newCourseInfo, inputObj), null, "Period Course Change Remind", null);
+                remindLogRepository.AddSingleRemindLog(null, courseInfo.TeacherEmail, RemindLogContentGenerator.PeriodCourseChangeForTeacher(courseInfo,
+                    newCourseInfo, inputObj), courseInfo.TeacherId, "Period Course Change Remind", null);
+                var saveRemindLogResult = await remindLogRepository.SaveRemindLogAsync();
+                if (!saveRemindLogResult.IsSuccess)
+                {
+                    return BadRequest(saveRemindLogResult);
+                }
+
+                try
+                {
+                    foreach (var lesson in newLessonsMapOldLesson)
                     {
-                        if(m.Value.LessonId == lesson.LessonId)
+                        await _ablemusicContext.Lesson.AddAsync(lesson.Key);
+                    }
+                    await _ablemusicContext.Amendment.AddAsync(amendment);
+                    await _ablemusicContext.SaveChangesAsync();
+                    foreach (var lesson in exsitingLessons)
+                    {
+                        foreach (var m in newLessonsMapOldLesson)
                         {
-                            lesson.NewLessonId = m.Key.LessonId;
+                            if (m.Value.LessonId == lesson.LessonId)
+                            {
+                                lesson.NewLessonId = m.Key.LessonId;
+                            }
                         }
                     }
+                    await _ablemusicContext.SaveChangesAsync();
                 }
-                await _ablemusicContext.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                result.IsSuccess = false;
-                result.ErrorMessage = ex.Message;
-                return BadRequest(result);
-            }
+                catch (Exception ex)
+                {
+                    result.IsSuccess = false;
+                    result.ErrorMessage = ex.Message;
+                    return BadRequest(result);
+                }
 
-            //sending Email
-            List<NotificationEventArgs> notifications = new List<NotificationEventArgs>();
-            foreach (var remind in saveRemindLogResult.Data)
-            {
-                string currentPersonName;
-                if (remind.TeacherId == null)
+                //sending Email
+                //List<NotificationEventArgs> notifications = new List<NotificationEventArgs>();
+                foreach (var remind in saveRemindLogResult.Data)
                 {
-                    currentPersonName = courseInfo.LearnerFirstName + " " + courseInfo.LearnerLastName;
+                    string currentPersonName;
+                    if (remind.TeacherId == null)
+                    {
+                        currentPersonName = courseInfo.LearnerFirstName + " " + courseInfo.LearnerLastName;
+                    }
+                    else
+                    {
+                        currentPersonName = courseInfo.TeacherFirstName + " " + courseInfo.TeacherLastName;
+                    }
+                    string mailContent = EmailContentGenerator.PeriodCourseChange(currentPersonName, courseInfo, newCourseInfo, inputObj);
+                    remindLogRepository.UpdateContent(remind.RemindId, mailContent);
+                    //notifications.Add(new NotificationEventArgs(remind.Email, "Period Course Change Remind", mailContent, remind.RemindId));
                 }
-                else
+                var remindLogUpdateContentResult = await remindLogRepository.SaveUpdatedContentAsync();
+                if (!remindLogUpdateContentResult.IsSuccess)
                 {
-                    currentPersonName = courseInfo.TeacherFirstName + " " + courseInfo.TeacherLastName;
+                    result.IsSuccess = false;
+                    result.ErrorMessage = remindLogUpdateContentResult.ErrorMessage;
+                    return BadRequest(result);
                 }
-                string mailContent = EmailContentGenerator.PeriodCourseChange(currentPersonName, courseInfo, newCourseInfo, inputObj);
-                notifications.Add(new NotificationEventArgs(remind.Email, "Period Course Change Remind", mailContent, remind.RemindId));
-            }
-            foreach (var mail in notifications)
-            {
-                _notificationObservable.send(mail);
+                //foreach (var mail in notifications)
+                //{
+                //    _notificationObservable.send(mail);
+                //}
+                dbContextTransaction.Commit();
             }
 
             result.Data = new List<object>
