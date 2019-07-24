@@ -30,7 +30,7 @@ namespace Pegasus_backend.Controllers
         }
 
         [HttpPut("{instanceId}/{endDate}")]
-        public async Task<IActionResult> UpdateOnetoOneCourseInstance(int instanceId, DateTime? endDate)
+        public async Task<IActionResult> UpdateOnetoOneCourseInstance(int instanceId, DateTime endDate)
         {
             var result = new Result<string>();
             try

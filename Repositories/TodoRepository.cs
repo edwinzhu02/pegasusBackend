@@ -11,9 +11,9 @@ namespace Pegasus_backend.Repositories
     {
         private readonly ablemusicContext _ablemusicContext;
 
-        public TodoRepository()
+        public TodoRepository(ablemusicContext ablemusicContext)
         {
-            _ablemusicContext = new ablemusicContext();
+            _ablemusicContext = ablemusicContext;
             _todoLists = new List<TodoList>();
         }
 

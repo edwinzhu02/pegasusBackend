@@ -11,9 +11,9 @@ namespace Pegasus_backend.Repositories
     {
         private readonly ablemusicContext _ablemusicContext;
 
-        public RemindLogRepository()
+        public RemindLogRepository(ablemusicContext ablemusicContext)
         {
-            _ablemusicContext = new ablemusicContext();
+            _ablemusicContext = ablemusicContext;
             _remindLogs = new List<RemindLog>();
         }
 
@@ -63,6 +63,34 @@ namespace Pegasus_backend.Repositories
                 {
                     await _ablemusicContext.RemindLog.AddAsync(r);
                 }
+                await _ablemusicContext.SaveChangesAsync();
+            }
+            catch(Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return result;
+            }
+            result.Data = _remindLogs;
+            return result;
+        }
+
+        public void UpdateContent(int remindId, string content)
+        {
+            foreach(var remind in _remindLogs)
+            {
+                if(remind.RemindId == remindId)
+                {
+                    remind.RemindContent = content;
+                }
+            }
+        }
+
+        public async Task<Result<List<RemindLog>>> SaveUpdatedContentAsync()
+        {
+            var result = new Result<List<RemindLog>>();
+            try
+            {
                 await _ablemusicContext.SaveChangesAsync();
             }
             catch(Exception ex)

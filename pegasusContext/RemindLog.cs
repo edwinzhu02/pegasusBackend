@@ -18,6 +18,7 @@ namespace Pegasus_backend.pegasusContext
         public string RemindTitle { get; set; }
         public short? ReceivedFlag { get; set; }
         public int? LessonId { get; set; }
+        public DateTime? ScheduledDate { get; set; }
 
         public Learner Learner { get; set; }
         public Lesson Lesson { get; set; }

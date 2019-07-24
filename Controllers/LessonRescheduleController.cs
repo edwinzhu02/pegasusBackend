@@ -142,7 +142,6 @@ namespace Pegasus_backend.Controllers
                 return BadRequest(result);
             }
             string courseName = courses[0].CourseName;
-            DateTime conflictCheckingStart = DateTime.Now;
 
             DateTime min = remainLessons[0].BeginTime.Value;
             DateTime max = remainLessons[0].BeginTime.Value;
@@ -200,9 +199,6 @@ namespace Pegasus_backend.Controllers
                 }
             }
 
-            DateTime conflictCheckingEnd = DateTime.Now;
-            TimeSpan conflictCheckingTime = conflictCheckingEnd.Subtract(conflictCheckingStart);
-
             if (lessonsToBeAppend.Count < numOfSchedulesToBeAdd)
             {
                 result.IsSuccess = false;
@@ -224,7 +220,6 @@ namespace Pegasus_backend.Controllers
                         ConflictDetail = map.Value
                     });
                 }
-                result.Note = "Conflict Chenking Time Consumed: " + conflictCheckingTime.ToString();
                 return BadRequest(result);
             }
 
@@ -254,92 +249,103 @@ namespace Pegasus_backend.Controllers
                 teacherMapRemindLogContent.Add(teacher, RemindLogContentGenerator.LessonRescheduleForTeacher(lesson, lessonsToBeAppend, teacher, courseName));
             }
 
-            TodoRepository todoRepository = new TodoRepository();
-            todoRepository.AddSingleTodoList("Lesson Reschedule Remind", TodoListContentGenerator.LessonRescheduleForLearner(lesson, learner,
-                lessonsToBeAppend, courseName), userId, todoDate, lesson.LessonId, learner.LearnerId, null);
-            todoRepository.AddMutipleTodoLists("Lesson Reschedule Remind", teacherIdMapTodoContent, userId, todoDate, lesson.LessonId, null);
-            var saveTodoResult = await todoRepository.SaveTodoListsAsync();
-            if (!saveTodoResult.IsSuccess)
+            using (var dbContextTransaction = _ablemusicContext.Database.BeginTransaction())
             {
-                return BadRequest(saveTodoResult);
-            }
-
-            RemindLogRepository remindLogRepository = new RemindLogRepository();
-            remindLogRepository.AddSingleRemindLog(learner.LearnerId, learner.Email, RemindLogContentGenerator.LessonRescheduleForLearner(lesson, learner,
-                lessonsToBeAppend, courseName), null, "Lesson Reschedule Remind", lesson.LessonId);
-            remindLogRepository.AddMultipleRemindLogs(teacherMapRemindLogContent, null, "Lesson Reschedule Remind", lesson.LessonId);
-            var saveRemindLogResult = await remindLogRepository.SaveRemindLogAsync();
-            if (!saveRemindLogResult.IsSuccess)
-            {
-                return BadRequest(saveRemindLogResult);
-            }
-
-            result.Data = new List<object>();
-            foreach (var lessonAppend in lessonsToBeAppend)
-            {
-                result.Data.Add(new Lesson
+                TodoRepository todoRepository = new TodoRepository(_ablemusicContext);
+                todoRepository.AddSingleTodoList("Lesson Reschedule Remind", TodoListContentGenerator.LessonRescheduleForLearner(lesson, learner,
+                    lessonsToBeAppend, courseName), userId, todoDate, lesson.LessonId, learner.LearnerId, null);
+                todoRepository.AddMutipleTodoLists("Lesson Reschedule Remind", teacherIdMapTodoContent, userId, todoDate, lesson.LessonId, null);
+                var saveTodoResult = await todoRepository.SaveTodoListsAsync();
+                if (!saveTodoResult.IsSuccess)
                 {
-                    LessonId = lessonAppend.LessonId,
-                    LearnerId = lessonAppend.LearnerId,
-                    RoomId = lessonAppend.RoomId,
-                    TeacherId = lessonAppend.TeacherId,
-                    OrgId = lessonAppend.OrgId,
-                    IsCanceled = lessonAppend.IsCanceled,
-                    Reason = lessonAppend.Reason,
-                    CreatedAt = lessonAppend.CreatedAt,
-                    CourseInstanceId = lessonAppend.CourseInstanceId,
-                    GroupCourseInstanceId = lessonAppend.GroupCourseInstanceId,
-                    IsTrial = lessonAppend.IsTrial,
-                    IsPaid = lessonAppend.IsPaid,
-                    IsChanged = lessonAppend.IsChanged,
-                    IsConfirm = lessonAppend.IsConfirm,                                    
-                    BeginTime = lessonAppend.BeginTime,
-                    EndTime = lessonAppend.EndTime,
-                    InvoiceId = lessonAppend.InvoiceId,
-                });
-                _ablemusicContext.Update(lessonAppend);
-            }
-
-            lesson.IsCanceled = 1;
-            lesson.Reason = reason;
-            lessonRemain.Quantity -= 1;
-
-            try
-            {
-                await _ablemusicContext.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                result.IsSuccess = false;
-                result.ErrorMessage = ex.ToString();
-                return BadRequest(result);
-            }
-
-            string userConfirmUrlPrefix = _configuration.GetSection("UrlPrefix").Value;
-            //sending Email
-            List<NotificationEventArgs> notifications = new List<NotificationEventArgs>();
-            foreach (var todo in saveTodoResult.Data)
-            {
-                var remind = saveRemindLogResult.Data.Find(r => r.LearnerId == todo.LearnerId && r.TeacherId == todo.TeacherId);
-                string currentPersonName;
-                if (todo.TeacherId == null)
-                {
-                    currentPersonName = learner.FirstName + " " + learner.LastName;
+                    return BadRequest(saveTodoResult);
                 }
-                else
+
+                RemindLogRepository remindLogRepository = new RemindLogRepository(_ablemusicContext);
+                remindLogRepository.AddSingleRemindLog(learner.LearnerId, learner.Email, RemindLogContentGenerator.LessonRescheduleForLearner(lesson, learner,
+                    lessonsToBeAppend, courseName), null, "Lesson Reschedule Remind", lesson.LessonId);
+                remindLogRepository.AddMultipleRemindLogs(teacherMapRemindLogContent, null, "Lesson Reschedule Remind", lesson.LessonId);
+                var saveRemindLogResult = await remindLogRepository.SaveRemindLogAsync();
+                if (!saveRemindLogResult.IsSuccess)
                 {
-                    var currentTeacher = effectedTeachers.Find(t => t.TeacherId == todo.TeacherId);
-                    currentPersonName = currentTeacher.FirstName + " " + currentTeacher.LastName;
+                    return BadRequest(saveRemindLogResult);
                 }
-                string confirmURL = userConfirmUrlPrefix + todo.ListId + "/" + remind.RemindId;
-                string mailContent = EmailContentGenerator.LessonReschedule(currentPersonName, courseName, lesson, reason, confirmURL, lessonsToBeAppend);
-                notifications.Add(new NotificationEventArgs(remind.Email, "Lesson Reschedule Confirm", mailContent, remind.RemindId));
+
+                result.Data = new List<object>();
+                foreach (var lessonAppend in lessonsToBeAppend)
+                {
+                    result.Data.Add(new Lesson
+                    {
+                        LessonId = lessonAppend.LessonId,
+                        LearnerId = lessonAppend.LearnerId,
+                        RoomId = lessonAppend.RoomId,
+                        TeacherId = lessonAppend.TeacherId,
+                        OrgId = lessonAppend.OrgId,
+                        IsCanceled = lessonAppend.IsCanceled,
+                        Reason = lessonAppend.Reason,
+                        CreatedAt = lessonAppend.CreatedAt,
+                        CourseInstanceId = lessonAppend.CourseInstanceId,
+                        GroupCourseInstanceId = lessonAppend.GroupCourseInstanceId,
+                        IsTrial = lessonAppend.IsTrial,
+                        IsPaid = lessonAppend.IsPaid,
+                        IsChanged = lessonAppend.IsChanged,
+                        IsConfirm = lessonAppend.IsConfirm,
+                        BeginTime = lessonAppend.BeginTime,
+                        EndTime = lessonAppend.EndTime,
+                        InvoiceId = lessonAppend.InvoiceId,
+                    });
+                    _ablemusicContext.Update(lessonAppend);
+                }
+
+                lesson.IsCanceled = 1;
+                lesson.Reason = reason;
+                lessonRemain.Quantity -= 1;
+
+                try
+                {
+                    await _ablemusicContext.SaveChangesAsync();
+                }
+                catch (Exception ex)
+                {
+                    result.IsSuccess = false;
+                    result.ErrorMessage = ex.ToString();
+                    return BadRequest(result);
+                }
+
+                string userConfirmUrlPrefix = _configuration.GetSection("UrlPrefix").Value;
+                //sending Email
+                //List<NotificationEventArgs> notifications = new List<NotificationEventArgs>();
+                foreach (var todo in saveTodoResult.Data)
+                {
+                    var remind = saveRemindLogResult.Data.Find(r => r.LearnerId == todo.LearnerId && r.TeacherId == todo.TeacherId);
+                    string currentPersonName;
+                    if (todo.TeacherId == null)
+                    {
+                        currentPersonName = learner.FirstName + " " + learner.LastName;
+                    }
+                    else
+                    {
+                        var currentTeacher = effectedTeachers.Find(t => t.TeacherId == todo.TeacherId);
+                        currentPersonName = currentTeacher.FirstName + " " + currentTeacher.LastName;
+                    }
+                    string confirmURL = userConfirmUrlPrefix + todo.ListId + "/" + remind.RemindId;
+                    string mailContent = EmailContentGenerator.LessonReschedule(currentPersonName, courseName, lesson, reason, confirmURL, lessonsToBeAppend);
+                    remindLogRepository.UpdateContent(remind.RemindId, mailContent);
+                    //notifications.Add(new NotificationEventArgs(remind.Email, "Lesson Reschedule Confirm", mailContent, remind.RemindId));
+                }
+                //foreach (var mail in notifications)
+                //{
+                //    _notificationObservable.send(mail);
+                //}
+                var remindLogUpdateContentResult = await remindLogRepository.SaveUpdatedContentAsync();
+                if (!remindLogUpdateContentResult.IsSuccess)
+                {
+                    result.IsSuccess = false;
+                    result.ErrorMessage = remindLogUpdateContentResult.ErrorMessage;
+                    return BadRequest(result);
+                }
+                dbContextTransaction.Commit();
             }
-            foreach (var mail in notifications)
-            {
-                _notificationObservable.send(mail);
-            }
-            result.Note = "Conflict Chenking Time Consumed: " + conflictCheckingTime.ToString();
             return Ok(result);
         }
     }
