@@ -540,6 +540,7 @@ namespace Pegasus_backend.Controllers
             }
             try
             {
+                await _ablemusicContext.SaveChangesAsync();
                 _ablemusicContext.Remove(stockApplication);
                 await _ablemusicContext.SaveChangesAsync();
             }
