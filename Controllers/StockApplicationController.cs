@@ -518,7 +518,6 @@ namespace Pegasus_backend.Controllers
             try
             {
                 stockApplication = await _ablemusicContext.StockApplication.Where(sa => sa.ApplicationId == stockApplicationId)
-                    .Include(sa => sa.ApplicationDetails)
                     .FirstOrDefaultAsync();
                 applicationDetails = await _ablemusicContext.ApplicationDetails.Where(ad => ad.ApplicationId == stockApplicationId).ToListAsync();
             }
@@ -534,13 +533,12 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = "Stock Application not found";
                 return BadRequest(result);
             }
-            foreach(var applicationDetail in applicationDetails)
+            foreach(var applicationDetail in applicationDetails.Reverse<ApplicationDetails>())
             {
-                stockApplication.ApplicationDetails.Remove(applicationDetail);
+                applicationDetails.Remove(applicationDetail);
             }
             try
             {
-                await _ablemusicContext.SaveChangesAsync();
                 _ablemusicContext.Remove(stockApplication);
                 await _ablemusicContext.SaveChangesAsync();
             }
