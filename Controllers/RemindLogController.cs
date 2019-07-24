@@ -45,7 +45,9 @@ namespace Pegasus_backend.Controllers
                                     (s.Lesson.GroupCourseInstance.Course.CourseName),                        
                         Learner = IsNull(s.Learner)?
                             null:new {s.Learner.FirstName,s.Learner.LastName,s.LearnerId},
-                        Teacher= IsNull(s.Teacher)?null:new {s.Teacher.TeacherId,s.Teacher.FirstName,s.Teacher.LastName
+                        Teacher= IsNull(s.Teacher)?null:new {s.Teacher.TeacherId,s.Teacher.FirstName,s.Teacher.LastName,
+                        branch = s.Learner.OrgId,
+                        branchName = s.Learner.Org.Abbr
                         }
                     })
                     .ToListAsync();

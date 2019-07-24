@@ -49,6 +49,6 @@ namespace Pegasus_backend.Models
     public class DayOfWeekModal
     {
         public byte OrgId { get; set; }
-        public short RoomId { get; set; }
+        public short? RoomId { get; set; }
     }
 }
