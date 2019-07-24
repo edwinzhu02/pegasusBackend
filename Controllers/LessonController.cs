@@ -62,6 +62,8 @@ namespace Pegasus_backend.Controllers
                                                                                   .FirstOrDefault(r=>r.LessonId==s.NewLessonId).OrgId).OrgName,
                             BeginTime =_ablemusicContext.Lesson
                                 .FirstOrDefault(r=>r.LessonId==s.NewLessonId).BeginTime,
+                            EndTime = _ablemusicContext.Lesson
+                                .FirstOrDefault(r=>r.LessonId==s.NewLessonId).EndTime,
                             
                             
                         },
@@ -108,6 +110,7 @@ namespace Pegasus_backend.Controllers
                     .Include(s=>s.Room)
                     .Include(s=>s.Learner)
                     .Include(s=>s.Teacher)
+                    .ThenInclude(s=>s.AvailableDays)
                     .Include(s=>s.GroupCourseInstance)
                     .Include(s=>s.CourseInstance).ThenInclude(w=>w.Course)
                     .Include(s=>s.GroupCourseInstance).ThenInclude(w=>w.Course)
@@ -129,7 +132,7 @@ namespace Pegasus_backend.Controllers
                             BeginTime =_ablemusicContext.Lesson
                                 .FirstOrDefault(r=>r.LessonId==q.NewLessonId).BeginTime,
                             
-                        },
+                        }
                         
                     });
                 result.Data = await details.ToListAsync();

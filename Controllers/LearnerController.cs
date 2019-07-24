@@ -210,7 +210,7 @@ namespace Pegasus_backend.Controllers
                 }
                 using (var dbContextTransaction = _ablemusicContext.Database.BeginTransaction())
                 {
-                    var detailsJson = JsonConvert.DeserializeObject<StudentRegister>(details);
+                    var detailsJson = JsonConvert.DeserializeObject<StudentUpdate>(details);
                     var learner = _ablemusicContext.Learner.FirstOrDefault(s => s.LearnerId == id);
                     
                     //delete parents for this learner
@@ -329,26 +329,37 @@ namespace Pegasus_backend.Controllers
                     });
 
                     await _ablemusicContext.SaveChangesAsync();
+                    
+                    
+                    detailsJson.OneToOneCourseInstance.ForEach(s =>
+                    {
+                        var room = _ablemusicContext.AvailableDays.FirstOrDefault(
+                            q => q.TeacherId == s.TeacherId && q.OrgId == s.OrgId &&
+                                 q.DayOfWeek == s.Schedule.DayOfWeek);
 
-                    for (var i = 0; i < newLearner.One2oneCourseInstance.ToList().Count; i++)
-                    {
-                        detailsJson.One2oneCourseInstance[i].id =
-                            newLearner.One2oneCourseInstance.ToList()[i].CourseInstanceId;
-                    }
-                    detailsJson.One2oneCourseInstance.ForEach(s =>
-                    {
-                        if (_ablemusicContext.Course.FirstOrDefault(w => w.CourseId == s.CourseId).CourseType != 1)
+                        if (room == null)
                         {
-                            throw new Exception("This course is not one to one course");
+                            throw new Exception("Room does not found");
                         }
+                        
                         var durationType = _ablemusicContext.Course.FirstOrDefault(w => w.CourseId == s.CourseId).Duration;
-                        _ablemusicContext.Add(new CourseSchedule
+                        _ablemusicContext.Add(new One2oneCourseInstance
                         {
-                            DayOfWeek = s.Schedule.DayOfWeek,CourseInstanceId = s.id,
-                            BeginTime = s.Schedule.BeginTime, 
-                            EndTime = GetEndTimeForOnetoOneCourseSchedule(s.Schedule.BeginTime,durationType)
+                            CourseId = s.CourseId,TeacherId = s.TeacherId, OrgId = s.OrgId,
+                            BeginDate = s.BeginDate, EndDate = s.EndDate, LearnerId = newLearner.LearnerId,
+                            RoomId = room.RoomId,
+                            CourseSchedule = new List<CourseSchedule>()
+                            {
+                                new CourseSchedule
+                                {
+                                    DayOfWeek = s.Schedule.DayOfWeek,
+                                    BeginTime = s.Schedule.BeginTime, 
+                                    EndTime = GetEndTimeForOnetoOneCourseSchedule(s.Schedule.BeginTime,durationType)
+                                }
+                            }
                         });
                     });
+
                     await _ablemusicContext.SaveChangesAsync();
                     
                     //add new fund row for new student

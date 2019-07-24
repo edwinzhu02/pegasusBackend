@@ -31,7 +31,7 @@ namespace Pegasus_backend.Controllers
         [CheckModelFilter]
         public async Task<IActionResult> PostPeriodCourseChange([FromBody] PeriodCourseChangeViewModel inputObj)
         {
-            var result = new Result<Amendment>();
+            var result = new Result<List<object>>();
             List<Lesson> exsitingLessons;
             Learner learner;
             List<Holiday> holidays;
@@ -42,17 +42,18 @@ namespace Pegasus_backend.Controllers
             List<Term> terms;
             dynamic courseInfo;
             dynamic newCourseInfo;
+            AvailableDays availableDay;
 
             try
             {
                 if (inputObj.EndDate.HasValue)
                 {
-                    exsitingLessons = await _ablemusicContext.Lesson.Where(l => l.LearnerId == inputObj.LearnerId &&
+                    exsitingLessons = await _ablemusicContext.Lesson.Where(l => l.LearnerId == inputObj.LearnerId && l.IsCanceled != 1 &&
                     l.BeginTime.Value.Date < inputObj.EndDate.Value.Date && l.BeginTime.Value.Date > inputObj.BeginDate.Date&&
                     l.CourseInstanceId == inputObj.InstanceId).ToListAsync();
                 } else
                 {
-                    exsitingLessons = await _ablemusicContext.Lesson.Where(l => l.LearnerId == inputObj.LearnerId &&
+                    exsitingLessons = await _ablemusicContext.Lesson.Where(l => l.LearnerId == inputObj.LearnerId && l.IsCanceled != 1 &&
                     l.BeginTime.Value.Date > inputObj.BeginDate.Date).ToListAsync();
                 }
                 terms = await _ablemusicContext.Term.ToListAsync();
@@ -85,17 +86,7 @@ namespace Pegasus_backend.Controllers
                                         BeginTime = cs.BeginTime,
                                         EndTime = cs.EndTime,
                                     }).FirstOrDefaultAsync();
-                newCourseInfo = new
-                {
-                    newOrg = await _ablemusicContext.Org.Where(o => o.OrgId == inputObj.OrgId).FirstOrDefaultAsync(),
-                    newRoom = await _ablemusicContext.Room.Where(r => r.RoomId == inputObj.RoomId).FirstOrDefaultAsync(),
-                };
-                learner = await _ablemusicContext.Learner.Where(l => l.LearnerId == inputObj.LearnerId).FirstOrDefaultAsync();
-                holidays = await _ablemusicContext.Holiday.ToListAsync();
-                exsitingAmendments = await _ablemusicContext.Amendment.Where(a => a.LearnerId == inputObj.LearnerId && a.AmendType == 2 &&
-                a.BeginDate == inputObj.BeginDate && a.EndDate == inputObj.EndDate && inputObj.OrgId == a.OrgId && 
-                inputObj.BeginTime == a.BeginTime && inputObj.DayOfWeek == a.DayOfWeek && inputObj.InstanceId == a.CourseInstanceId && 
-                inputObj.RoomId == a.RoomId && inputObj.IsTemporary == a.IsTemporary).ToListAsync();
+                availableDay = await _ablemusicContext.AvailableDays.Where(ad => ad.TeacherId == inputObj.TeacherId && ad.DayOfWeek == inputObj.DayOfWeek && ad.OrgId == inputObj.OrgId).FirstOrDefaultAsync();
             }
             catch(Exception ex)
             {
@@ -103,22 +94,38 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = ex.Message;
                 return BadRequest(result);
             }
-            if(exsitingLessons.Count > 0)
-            {
-                result.IsSuccess = false;
-                result.ErrorMessage = "Existing lessons are not allowed to change";
-                return BadRequest(result);
-            }
-            if(exsitingAmendments.Count > 0)
-            {
-                result.IsSuccess = false;
-                result.ErrorMessage = "The same change has already being made";
-                return BadRequest(result);
-            }
             if(courseInfo == null)
             {
                 result.IsSuccess = false;
-                result.ErrorMessage = "Course instance id not found";
+                result.ErrorMessage = "Course schedule or course instance not found";
+                return BadRequest(result);
+            }
+            if(availableDay == null || availableDay.RoomId == null)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = "Room Id not found";
+                return BadRequest(result);
+            }
+            
+            try
+            {
+                newCourseInfo = new
+                {
+                    newOrg = await _ablemusicContext.Org.Where(o => o.OrgId == inputObj.OrgId).FirstOrDefaultAsync(),
+                    newRoom = await _ablemusicContext.Room.Where(r => r.RoomId == availableDay.RoomId).FirstOrDefaultAsync(),
+                };
+                learner = await _ablemusicContext.Learner.Where(l => l.LearnerId == inputObj.LearnerId).FirstOrDefaultAsync();
+                holidays = await _ablemusicContext.Holiday.ToListAsync();
+                exsitingAmendments = await _ablemusicContext.Amendment.Where(a => a.LearnerId == inputObj.LearnerId && a.AmendType == 2 &&
+                a.BeginDate == inputObj.BeginDate && a.EndDate == inputObj.EndDate && inputObj.OrgId == a.OrgId &&
+                inputObj.BeginTime == a.BeginTime && inputObj.DayOfWeek == a.DayOfWeek && inputObj.InstanceId == a.CourseInstanceId &&
+                availableDay.RoomId == a.RoomId && inputObj.IsTemporary == a.IsTemporary
+                ).ToListAsync();
+            }
+            catch(Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
                 return BadRequest(result);
             }
             if(newCourseInfo == null)
@@ -127,12 +134,19 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = "Org id or room id not found";
                 return BadRequest(result);
             }
-            if(!inputObj.EndDate.HasValue && inputObj.IsTemporary == 1)
+            if (exsitingAmendments.Count > 0)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = "The same change has already being made";
+                return BadRequest(result);
+            }
+            if (!inputObj.EndDate.HasValue && inputObj.IsTemporary == 1)
             {
                 result.IsSuccess = false;
                 result.ErrorMessage = "EndDate is required when type is temporary";
                 return BadRequest(result);
             }
+
             switch ((short)courseInfo.Duration)
             {
                 case 1: inputObj.EndTime = inputObj.BeginTime.Add(TimeSpan.FromMinutes(30));
@@ -145,13 +159,59 @@ namespace Pegasus_backend.Controllers
                     break;
             }
 
+            foreach (var lesson in exsitingLessons.Reverse<Lesson>())
+            {
+                if (courseInfo.DayOfWeek != lesson.BeginTime.Value.ToDayOfWeek() || lesson.IsChanged == 1 ||
+                    lesson.BeginTime.Value.TimeOfDay != courseInfo.BeginTime)
+                {
+                    exsitingLessons.Remove(lesson);
+                }
+            }
+
+            var newLessonsMapOldLesson = new Dictionary<Lesson,Lesson>();
+
+            foreach (var lesson in exsitingLessons)
+            {
+                DateTime beginTime = lesson.BeginTime.Value;
+                DateTime endTime = lesson.EndTime.Value;
+                if (inputObj.DayOfWeek != courseInfo.DayOfWeek)
+                {
+                    beginTime = beginTime.SetDateByDayOfWeekInWeek(inputObj.DayOfWeek);
+                    endTime = endTime.SetDateByDayOfWeekInWeek(inputObj.DayOfWeek);
+                }
+                beginTime = beginTime.Date + inputObj.BeginTime;
+                endTime = endTime.Date + inputObj.EndTime;
+                newLessonsMapOldLesson.Add(new Lesson
+                {
+                    LearnerId = lesson.LearnerId,
+                    RoomId = availableDay.RoomId,
+                    TeacherId = inputObj.TeacherId,
+                    OrgId = Convert.ToInt16(inputObj.OrgId),
+                    IsCanceled = 0,
+                    Reason = null,
+                    CreatedAt = DateTime.UtcNow.ToNZTimezone(),
+                    CourseInstanceId = lesson.CourseInstanceId,
+                    GroupCourseInstanceId = lesson.GroupCourseInstanceId,
+                    IsTrial = lesson.IsTrial,
+                    BeginTime = beginTime,
+                    EndTime = endTime,
+                    InvoiceId = lesson.InvoiceId,
+                    IsConfirm = lesson.IsConfirm,
+                    TrialCourseId = lesson.TrialCourseId,
+                    IsChanged = lesson.IsChanged,
+                    IsPaid = lesson.IsPaid,
+                    NewLessonId = lesson.NewLessonId,
+                }, lesson);
+                lesson.IsCanceled = 1;
+            }
+
             amendment.CourseInstanceId = inputObj.InstanceId;
             amendment.OrgId = Convert.ToInt16(inputObj.OrgId);
             amendment.DayOfWeek = inputObj.DayOfWeek;
             amendment.BeginTime = inputObj.BeginTime;
             amendment.EndTime = inputObj.EndTime;
             amendment.LearnerId = inputObj.LearnerId;
-            amendment.RoomId = inputObj.RoomId;
+            amendment.RoomId = availableDay.RoomId;
             amendment.BeginDate = inputObj.BeginDate;
             amendment.EndDate = inputObj.IsTemporary == 1 ? inputObj.EndDate : null;
             amendment.CreatedAt = toNZTimezone(DateTime.UtcNow);
@@ -232,26 +292,48 @@ namespace Pegasus_backend.Controllers
                 currentDayOfWeek = currentDate.DayOfWeek == 0 ? 7 : (int)currentDate.DayOfWeek;
             }
 
+            var lessonConflictCheckerService = new LessonConflictCheckerService(inputObj.BeginDate, endDate);
+            try
+            {
+                await lessonConflictCheckerService.LoadAllProtentialConflictLessonsToMemoryAsync();
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+
+            Dictionary<Lesson, object> lessonIdMapConflictCheckResult = new Dictionary<Lesson, object>();
             foreach (var lesson in visualLessonsForCheckingConflict)
             {
-                var lessonConflictCheckerService = new LessonConflictCheckerService(lesson);
-                Result<List<object>> lessonConflictCheckResult;
-                try
-                {
-                    lessonConflictCheckResult = await lessonConflictCheckerService.CheckBothRoomAndTeacher();
-                }
-                catch (Exception ex)
-                {
-                    result.IsSuccess = false;
-                    result.ErrorMessage = ex.Message;
-                    return BadRequest(result);
-                }
+                lessonConflictCheckerService.ConfigureLessonToCheck(lesson);
+                Result<List<object>> lessonConflictCheckResult = lessonConflictCheckerService.CheckBothRoomAndTeacherInMemory();
                 if (!lessonConflictCheckResult.IsSuccess)
                 {
-                    return BadRequest(lessonConflictCheckResult);
+                    lessonIdMapConflictCheckResult.Add(lesson, lessonConflictCheckResult);
                 }
             }
-            
+
+            if(lessonIdMapConflictCheckResult.Count > 0)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = "Conflict Found";
+                result.Data = new List<object>
+                {
+                    new { ArrangedLessonFound = exsitingLessons.Count }
+                };
+                foreach(var conflictResult in lessonIdMapConflictCheckResult)
+                {
+                    result.Data.Add(new
+                    {
+                        LessonWithConflict = conflictResult.Key,
+                        ConflictDetail = conflictResult.Value
+                    });
+                }
+                return BadRequest(result);
+            }
+
             foreach (var holiday in holidays)
             {
                 if (holiday.HolidayDate.Date == todoDateBegin.Date)
@@ -272,69 +354,100 @@ namespace Pegasus_backend.Controllers
                 }
             }
 
-            TodoRepository todoRepository = new TodoRepository();
-            todoRepository.AddSingleTodoList("Period Course Change Remind", TodoListContentGenerator.PeriodCourseChangeForLearner(courseInfo,
-                newCourseInfo, inputObj, todoDateBegin), inputObj.UserId, todoDateBegin, null, inputObj.LearnerId, null);
-            todoRepository.AddSingleTodoList("Period Course Change Remind", TodoListContentGenerator.PeriodCourseChangeForTeacher(courseInfo,
-                newCourseInfo, inputObj, todoDateBegin), inputObj.UserId, todoDateBegin, null, null, courseInfo.TeacherId);
-            if (inputObj.EndDate.HasValue && inputObj.IsTemporary == 1)
+            using (var dbContextTransaction = _ablemusicContext.Database.BeginTransaction())
             {
+                TodoRepository todoRepository = new TodoRepository(_ablemusicContext);
                 todoRepository.AddSingleTodoList("Period Course Change Remind", TodoListContentGenerator.PeriodCourseChangeForLearner(courseInfo,
-                    newCourseInfo, inputObj, todoDateEnd.Value), inputObj.UserId, todoDateEnd.Value, null, inputObj.LearnerId, null);
+                    newCourseInfo, inputObj, todoDateBegin), inputObj.UserId, todoDateBegin, null, inputObj.LearnerId, null);
                 todoRepository.AddSingleTodoList("Period Course Change Remind", TodoListContentGenerator.PeriodCourseChangeForTeacher(courseInfo,
-                    newCourseInfo, inputObj, todoDateEnd.Value), inputObj.UserId, todoDateEnd.Value, null, null, courseInfo.TeacherId);
-            }
-            var saveTodoResult = await todoRepository.SaveTodoListsAsync();
-            if (!saveTodoResult.IsSuccess)
-            {
-                return BadRequest(saveTodoResult);
-            }
-
-            RemindLogRepository remindLogRepository = new RemindLogRepository();
-            remindLogRepository.AddSingleRemindLog(courseInfo.LearnerId, courseInfo.LearnerEmail, RemindLogContentGenerator.PeriodCourseChangeForLearner(
-                courseInfo, newCourseInfo, inputObj), null, "Period Course Change Remind", null);
-            remindLogRepository.AddSingleRemindLog(null, courseInfo.TeacherEmail, RemindLogContentGenerator.PeriodCourseChangeForTeacher(courseInfo,
-                newCourseInfo, inputObj), courseInfo.TeacherId, "Period Course Change Remind", null);
-            var saveRemindLogResult = await remindLogRepository.SaveRemindLogAsync();
-            if (!saveRemindLogResult.IsSuccess)
-            {
-                return BadRequest(saveRemindLogResult);
-            }
-
-            try
-            {
-                await _ablemusicContext.Amendment.AddAsync(amendment);
-                await _ablemusicContext.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                result.IsSuccess = false;
-                result.ErrorMessage = ex.Message;
-                return BadRequest(result);
-            }
-
-            //sending Email
-            List<NotificationEventArgs> notifications = new List<NotificationEventArgs>();
-            foreach (var remind in saveRemindLogResult.Data)
-            {
-                string currentPersonName;
-                if (remind.TeacherId == null)
+                    newCourseInfo, inputObj, todoDateBegin), inputObj.UserId, todoDateBegin, null, null, courseInfo.TeacherId);
+                if (inputObj.EndDate.HasValue && inputObj.IsTemporary == 1)
                 {
-                    currentPersonName = courseInfo.LearnerFirstName + " " + courseInfo.LearnerLastName;
+                    todoRepository.AddSingleTodoList("Period Course Change Remind", TodoListContentGenerator.PeriodCourseChangeForLearner(courseInfo,
+                        newCourseInfo, inputObj, todoDateEnd.Value), inputObj.UserId, todoDateEnd.Value, null, inputObj.LearnerId, null);
+                    todoRepository.AddSingleTodoList("Period Course Change Remind", TodoListContentGenerator.PeriodCourseChangeForTeacher(courseInfo,
+                        newCourseInfo, inputObj, todoDateEnd.Value), inputObj.UserId, todoDateEnd.Value, null, null, courseInfo.TeacherId);
                 }
-                else
+                var saveTodoResult = await todoRepository.SaveTodoListsAsync();
+                if (!saveTodoResult.IsSuccess)
                 {
-                    currentPersonName = courseInfo.TeacherFirstName + " " + courseInfo.TeacherLastName;
+                    return BadRequest(saveTodoResult);
                 }
-                string mailContent = EmailContentGenerator.PeriodCourseChange(currentPersonName, courseInfo, newCourseInfo, inputObj);
-                notifications.Add(new NotificationEventArgs(remind.Email, "Period Course Change Remind", mailContent, remind.RemindId));
-            }
-            foreach (var mail in notifications)
-            {
-                _notificationObservable.send(mail);
+
+                RemindLogRepository remindLogRepository = new RemindLogRepository(_ablemusicContext);
+                remindLogRepository.AddSingleRemindLog(courseInfo.LearnerId, courseInfo.LearnerEmail, RemindLogContentGenerator.PeriodCourseChangeForLearner(
+                    courseInfo, newCourseInfo, inputObj), null, "Period Course Change Remind", null);
+                remindLogRepository.AddSingleRemindLog(null, courseInfo.TeacherEmail, RemindLogContentGenerator.PeriodCourseChangeForTeacher(courseInfo,
+                    newCourseInfo, inputObj), courseInfo.TeacherId, "Period Course Change Remind", null);
+                var saveRemindLogResult = await remindLogRepository.SaveRemindLogAsync();
+                if (!saveRemindLogResult.IsSuccess)
+                {
+                    return BadRequest(saveRemindLogResult);
+                }
+
+                try
+                {
+                    foreach (var lesson in newLessonsMapOldLesson)
+                    {
+                        await _ablemusicContext.Lesson.AddAsync(lesson.Key);
+                    }
+                    await _ablemusicContext.Amendment.AddAsync(amendment);
+                    await _ablemusicContext.SaveChangesAsync();
+                    foreach (var lesson in exsitingLessons)
+                    {
+                        foreach (var m in newLessonsMapOldLesson)
+                        {
+                            if (m.Value.LessonId == lesson.LessonId)
+                            {
+                                lesson.NewLessonId = m.Key.LessonId;
+                            }
+                        }
+                    }
+                    await _ablemusicContext.SaveChangesAsync();
+                }
+                catch (Exception ex)
+                {
+                    result.IsSuccess = false;
+                    result.ErrorMessage = ex.Message;
+                    return BadRequest(result);
+                }
+
+                //sending Email
+                //List<NotificationEventArgs> notifications = new List<NotificationEventArgs>();
+                foreach (var remind in saveRemindLogResult.Data)
+                {
+                    string currentPersonName;
+                    if (remind.TeacherId == null)
+                    {
+                        currentPersonName = courseInfo.LearnerFirstName + " " + courseInfo.LearnerLastName;
+                    }
+                    else
+                    {
+                        currentPersonName = courseInfo.TeacherFirstName + " " + courseInfo.TeacherLastName;
+                    }
+                    string mailContent = EmailContentGenerator.PeriodCourseChange(currentPersonName, courseInfo, newCourseInfo, inputObj);
+                    remindLogRepository.UpdateContent(remind.RemindId, mailContent);
+                    //notifications.Add(new NotificationEventArgs(remind.Email, "Period Course Change Remind", mailContent, remind.RemindId));
+                }
+                var remindLogUpdateContentResult = await remindLogRepository.SaveUpdatedContentAsync();
+                if (!remindLogUpdateContentResult.IsSuccess)
+                {
+                    result.IsSuccess = false;
+                    result.ErrorMessage = remindLogUpdateContentResult.ErrorMessage;
+                    return BadRequest(result);
+                }
+                //foreach (var mail in notifications)
+                //{
+                //    _notificationObservable.send(mail);
+                //}
+                dbContextTransaction.Commit();
             }
 
-            result.Data = amendment;
+            result.Data = new List<object>
+            {
+                new { ArrangedLessonFound = exsitingLessons.Count },
+                new { ArrangedLessonChanged = newLessonsMapOldLesson.Count }
+            };
 
             return Ok(result);
         }

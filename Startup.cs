@@ -27,6 +27,9 @@ using Pegasus_backend.Controllers.MobileControllers;
 using Swashbuckle.AspNetCore.Swagger;
 using Pegasus_backend.Services;
 using Serilog;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Http;
+using Pegasus_backend.MiddleWare;
 
 namespace Pegasus_backend
 {
@@ -73,7 +76,7 @@ namespace Pegasus_backend
                 options.UseMySQL(Configuration.GetConnectionString("AblemusicDatabase")));
             services.AddTransient<pegasusContext.ablemusicContext>();
             // services.AddCors();
-            // services.AddHostedService<TimedHostedService>();
+            services.AddHostedService<TimedHostedService>();
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
@@ -117,6 +120,7 @@ namespace Pegasus_backend
             {
                 app.UseHsts();
             }
+            
             app.UseStaticFiles(); // For the wwwroot folder
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
@@ -146,6 +150,21 @@ namespace Pegasus_backend
             app.UseSignalR(routes => { routes.MapHub<Chatroom>("/chat"); });
             app.UseHttpsRedirection();
             app.UseAuthentication();
+            app.UseMiddleware<SerilogRequestLogger>();
+
+            app.UseExceptionHandler(a => a.Run(async context =>
+            {
+                var feature = context.Features.Get<IExceptionHandlerPathFeature>();
+                var ex = feature.Error;
+                var result = new Result<string>
+                {
+                    IsSuccess = false,
+                    ErrorMessage = "Global Exception was Caught: " + ex.ToString()
+                };
+                context.Response.ContentType = "application/json";
+                context.Response.StatusCode = 500;
+                await context.Response.WriteAsync(JsonConvert.SerializeObject(result));
+            }));
             app.UseMvc();
         }
     }

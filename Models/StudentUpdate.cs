@@ -6,10 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Pegasus_backend.pegasusContext;
-
 namespace Pegasus_backend.Models
 {
-    public class StudentRegister
+    public class StudentUpdate
     {
         [JsonProperty(Required = Required.Always)]
         public string FirstName { get; set; }
@@ -41,8 +40,6 @@ namespace Pegasus_backend.Models
         public byte PaymentPeriod { get; set; }
         
         public List<Parent> Parent { get; set; }
-        public List<LearnerGroupCourse> LearnerGroupCourse { get; set; }
-        public List<OnetoOneCourseInstanceModel> OneToOneCourseInstance { get; set; }
         public List<LearnerOthers> LearnerOthers { get; set; }
         
     }

@@ -186,122 +186,135 @@ namespace Pegasus_backend.Controllers
             //newLesson.NewLessonId = oldLesson.NewLessonId;            
             newLesson.IsChanged = 0;
 
-            try
-            {
-                await _ablemusicContext.Lesson.AddAsync(newLesson);
-                await _ablemusicContext.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                result.IsSuccess = false;
-                result.ErrorMessage = ex.ToString();
-                return BadRequest(result);
-            }
-
-            TodoRepository todoRepository = new TodoRepository();
-            if(oldLesson.CourseInstanceId != null)
-            {
-                todoRepository.AddSingleTodoList("Lesson Rearrangement to Remind", TodoListContentGenerator.RearrangedSingleLessonWithOldLessonForLearner(
-                oldLesson, newLesson, learner, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom), userId, newTodoDate, newLesson.LessonId, learner.LearnerId, null);
-                todoRepository.AddSingleTodoList("Lesson Rearrangement to Remind", TodoListContentGenerator.RearrangedSingleLessonWithOldLessonForLearner(
-                oldLesson, newLesson, learner, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom), userId, oldTodoDate, oldLesson.LessonId, learner.LearnerId, null);
-            } else
-            {
-                Dictionary<int, string> learnerIdMapContent = new Dictionary<int, string>();
-                foreach(var l in learners)
-                {
-                    learnerIdMapContent.Add(l.LearnerId, TodoListContentGenerator.RearrangedSingleLessonWithOldLessonForLearner(oldLesson, newLesson, l, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom));
-                }
-                todoRepository.AddMutipleTodoLists("Lesson Rearrangement to Remind", learnerIdMapContent, userId, newTodoDate, newLesson.LessonId, null);
-                todoRepository.AddMutipleTodoLists("Lesson Rearrangement to Remind", learnerIdMapContent, userId, oldTodoDate, newLesson.LessonId, null);
-            }
-            todoRepository.AddSingleTodoList("Lesson Rearrangement to Remind", TodoListContentGenerator.RearrangedSingleLessonWithOldLessonForOldTeacher(
-                oldLesson, newLesson, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom), userId, newTodoDate, newLesson.LessonId, null, oldTeacher.TeacherId);
-            todoRepository.AddSingleTodoList("Lesson Rearrangement to Remind", TodoListContentGenerator.RearrangedSingleLessonWithOldLessonForNewTeacher(
-                oldLesson, newLesson, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom), userId, newTodoDate, newLesson.LessonId, null, newTeacher.TeacherId);
-            
-            todoRepository.AddSingleTodoList("Lesson Rearrangement to Remind", TodoListContentGenerator.RearrangedSingleLessonWithOldLessonForOldTeacher(
-                oldLesson, newLesson, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom), userId, oldTodoDate, oldLesson.LessonId, null, oldTeacher.TeacherId);
-            todoRepository.AddSingleTodoList("Lesson Rearrangement to Remind", TodoListContentGenerator.RearrangedSingleLessonWithOldLessonForNewTeacher(
-                oldLesson, newLesson, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom), userId, oldTodoDate, oldLesson.LessonId, null, newTeacher.TeacherId);
-            var saveTodoResult = await todoRepository.SaveTodoListsAsync();
-            if (!saveTodoResult.IsSuccess)
+            using (var dbContextTransaction = _ablemusicContext.Database.BeginTransaction())
             {
                 try
                 {
-                    oldLesson.IsCanceled = 0;
-                    oldLesson.Reason = "";
-                    _ablemusicContext.Lesson.Remove(newLesson);
-                    await _ablemusicContext.SaveChangesAsync();
-                }
-                catch(Exception ex)
-                {
-                    result.IsSuccess = false;
-                    result.ErrorMessage = ex.Message + "\n" + saveTodoResult.ErrorMessage;
-                    return BadRequest(result);
-                }
-                return BadRequest(saveTodoResult);
-            }
-
-            RemindLogRepository remindLogRepository = new RemindLogRepository();
-            if(oldLesson.CourseInstanceId != null)
-            {
-                remindLogRepository.AddSingleRemindLog(learner.LearnerId, learner.Email, RemindLogContentGenerator.RearrangedSingleLessonWithOldLessonForLearner(
-                oldLesson, newLesson, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom, courseName), null, "Lesson Rearrangement Remind", newLesson.LessonId);
-            } else
-            {
-                Dictionary<Learner, string> learnerMapContent = new Dictionary<Learner, string>();
-                foreach(var l in learners)
-                {
-                    learnerMapContent.Add(l, RemindLogContentGenerator.RearrangedSingleLessonWithOldLessonForLearner(oldLesson, newLesson, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom, courseName));
-                }
-                remindLogRepository.AddMultipleRemindLogs(learnerMapContent, null, "Lesson rearrangement Remind", newLesson.LessonId);
-            }
-            remindLogRepository.AddSingleRemindLog(null, oldTeacher.Email, RemindLogContentGenerator.RearrangedSingleLessonWithOldLessonForOldTeacher(
-                oldLesson, newLesson, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom, courseName), oldTeacher.TeacherId, "Lesson Rearrangement Remind", oldLesson.LessonId);
-            remindLogRepository.AddSingleRemindLog(null, newTeacher.Email, RemindLogContentGenerator.RearrangedSingleLessonWithOldLessonForNewTeacher(
-                oldLesson, newLesson, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom, courseName), newTeacher.TeacherId, "Lesson Rearrangement Remind", newLesson.LessonId);
-            var saveRemindLogResult = await remindLogRepository.SaveRemindLogAsync();
-            if (!saveRemindLogResult.IsSuccess)
-            {
-                try
-                {
-                    oldLesson.IsCanceled = 0;
-                    oldLesson.Reason = "";
-                    _ablemusicContext.Lesson.Remove(newLesson);
+                    await _ablemusicContext.Lesson.AddAsync(newLesson);
                     await _ablemusicContext.SaveChangesAsync();
                 }
                 catch (Exception ex)
                 {
                     result.IsSuccess = false;
-                    result.ErrorMessage = ex.Message + "\n" + saveTodoResult.ErrorMessage;
+                    result.ErrorMessage = ex.ToString();
                     return BadRequest(result);
                 }
-                return BadRequest(saveRemindLogResult);
-            }
 
-            //sending Email
-            List<NotificationEventArgs> notifications = new List<NotificationEventArgs>();
-            foreach (var remind in saveRemindLogResult.Data)
-            {
-                var todo = saveTodoResult.Data.Find(t => t.LearnerId == remind.LearnerId && t.TeacherId == remind.TeacherId && t.TodoDate == newTodoDate);
-                string currentPersonName;
-                if (remind.TeacherId == null)
+                TodoRepository todoRepository = new TodoRepository(_ablemusicContext);
+                if (oldLesson.CourseInstanceId != null)
                 {
-                    currentPersonName = learner.FirstName + " " + learner.LastName;
+                    todoRepository.AddSingleTodoList("Lesson Rearrangement to Remind", TodoListContentGenerator.RearrangedSingleLessonWithOldLessonForLearner(
+                    oldLesson, newLesson, learner, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom), userId, newTodoDate, newLesson.LessonId, learner.LearnerId, null);
+                    todoRepository.AddSingleTodoList("Lesson Rearrangement to Remind", TodoListContentGenerator.RearrangedSingleLessonWithOldLessonForLearner(
+                    oldLesson, newLesson, learner, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom), userId, oldTodoDate, oldLesson.LessonId, learner.LearnerId, null);
                 }
                 else
                 {
-                    currentPersonName = remind.TeacherId == newTeacher.TeacherId ? newTeacher.FirstName + " " + newTeacher.LastName : oldTeacher.FirstName + " " + oldTeacher.LastName;
+                    Dictionary<int, string> learnerIdMapContent = new Dictionary<int, string>();
+                    foreach (var l in learners)
+                    {
+                        learnerIdMapContent.Add(l.LearnerId, TodoListContentGenerator.RearrangedSingleLessonWithOldLessonForLearner(oldLesson, newLesson, l, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom));
+                    }
+                    todoRepository.AddMutipleTodoLists("Lesson Rearrangement to Remind", learnerIdMapContent, userId, newTodoDate, newLesson.LessonId, null);
+                    todoRepository.AddMutipleTodoLists("Lesson Rearrangement to Remind", learnerIdMapContent, userId, oldTodoDate, newLesson.LessonId, null);
                 }
-                string confirmURL = userConfirmUrlPrefix + todo.ListId + "/" + remind.RemindId;
-                string mailContent = EmailContentGenerator.RearrangeLessonWithOld(currentPersonName, courseName, confirmURL, oldLesson, oldTeacher,
-                    newTeacher, oldOrg, newOrg, oldRoom, newRoom);
-                notifications.Add(new NotificationEventArgs(remind.Email, "Lesson Rearrange Confirm", mailContent, remind.RemindId));
-            }
-            foreach (var mail in notifications)
-            {
-                _notificationObservable.send(mail);
+                todoRepository.AddSingleTodoList("Lesson Rearrangement to Remind", TodoListContentGenerator.RearrangedSingleLessonWithOldLessonForOldTeacher(
+                    oldLesson, newLesson, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom), userId, newTodoDate, newLesson.LessonId, null, oldTeacher.TeacherId);
+                todoRepository.AddSingleTodoList("Lesson Rearrangement to Remind", TodoListContentGenerator.RearrangedSingleLessonWithOldLessonForNewTeacher(
+                    oldLesson, newLesson, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom), userId, newTodoDate, newLesson.LessonId, null, newTeacher.TeacherId);
+
+                todoRepository.AddSingleTodoList("Lesson Rearrangement to Remind", TodoListContentGenerator.RearrangedSingleLessonWithOldLessonForOldTeacher(
+                    oldLesson, newLesson, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom), userId, oldTodoDate, oldLesson.LessonId, null, oldTeacher.TeacherId);
+                todoRepository.AddSingleTodoList("Lesson Rearrangement to Remind", TodoListContentGenerator.RearrangedSingleLessonWithOldLessonForNewTeacher(
+                    oldLesson, newLesson, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom), userId, oldTodoDate, oldLesson.LessonId, null, newTeacher.TeacherId);
+                var saveTodoResult = await todoRepository.SaveTodoListsAsync();
+                if (!saveTodoResult.IsSuccess)
+                {
+                    try
+                    {
+                        oldLesson.IsCanceled = 0;
+                        oldLesson.Reason = "";
+                        _ablemusicContext.Lesson.Remove(newLesson);
+                        await _ablemusicContext.SaveChangesAsync();
+                    }
+                    catch (Exception ex)
+                    {
+                        result.IsSuccess = false;
+                        result.ErrorMessage = ex.Message + "\n" + saveTodoResult.ErrorMessage;
+                        return BadRequest(result);
+                    }
+                    return BadRequest(saveTodoResult);
+                }
+
+                RemindLogRepository remindLogRepository = new RemindLogRepository(_ablemusicContext);
+                if (oldLesson.CourseInstanceId != null)
+                {
+                    remindLogRepository.AddSingleRemindLog(learner.LearnerId, learner.Email, RemindLogContentGenerator.RearrangedSingleLessonWithOldLessonForLearner(
+                    oldLesson, newLesson, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom, courseName), null, "Lesson Rearrangement Remind", newLesson.LessonId);
+                }
+                else
+                {
+                    Dictionary<Learner, string> learnerMapContent = new Dictionary<Learner, string>();
+                    foreach (var l in learners)
+                    {
+                        learnerMapContent.Add(l, RemindLogContentGenerator.RearrangedSingleLessonWithOldLessonForLearner(oldLesson, newLesson, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom, courseName));
+                    }
+                    remindLogRepository.AddMultipleRemindLogs(learnerMapContent, null, "Lesson rearrangement Remind", newLesson.LessonId);
+                }
+                remindLogRepository.AddSingleRemindLog(null, oldTeacher.Email, RemindLogContentGenerator.RearrangedSingleLessonWithOldLessonForOldTeacher(
+                    oldLesson, newLesson, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom, courseName), oldTeacher.TeacherId, "Lesson Rearrangement Remind", oldLesson.LessonId);
+                remindLogRepository.AddSingleRemindLog(null, newTeacher.Email, RemindLogContentGenerator.RearrangedSingleLessonWithOldLessonForNewTeacher(
+                    oldLesson, newLesson, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom, courseName), newTeacher.TeacherId, "Lesson Rearrangement Remind", newLesson.LessonId);
+                var saveRemindLogResult = await remindLogRepository.SaveRemindLogAsync();
+                if (!saveRemindLogResult.IsSuccess)
+                {
+                    try
+                    {
+                        oldLesson.IsCanceled = 0;
+                        oldLesson.Reason = "";
+                        _ablemusicContext.Lesson.Remove(newLesson);
+                        await _ablemusicContext.SaveChangesAsync();
+                    }
+                    catch (Exception ex)
+                    {
+                        result.IsSuccess = false;
+                        result.ErrorMessage = ex.Message + "\n" + saveTodoResult.ErrorMessage;
+                        return BadRequest(result);
+                    }
+                    return BadRequest(saveRemindLogResult);
+                }
+
+                //sending Email
+                //List<NotificationEventArgs> notifications = new List<NotificationEventArgs>();
+                foreach (var remind in saveRemindLogResult.Data)
+                {
+                    var todo = saveTodoResult.Data.Find(t => t.LearnerId == remind.LearnerId && t.TeacherId == remind.TeacherId && t.TodoDate == newTodoDate);
+                    string currentPersonName;
+                    if (remind.TeacherId == null)
+                    {
+                        currentPersonName = learner.FirstName + " " + learner.LastName;
+                    }
+                    else
+                    {
+                        currentPersonName = remind.TeacherId == newTeacher.TeacherId ? newTeacher.FirstName + " " + newTeacher.LastName : oldTeacher.FirstName + " " + oldTeacher.LastName;
+                    }
+                    string confirmURL = userConfirmUrlPrefix + todo.ListId + "/" + remind.RemindId;
+                    string mailContent = EmailContentGenerator.RearrangeLessonWithOld(currentPersonName, courseName, confirmURL, oldLesson, oldTeacher,
+                        newTeacher, oldOrg, newOrg, oldRoom, newRoom);
+                    remindLogRepository.UpdateContent(remind.RemindId, mailContent);
+                    //notifications.Add(new NotificationEventArgs(remind.Email, "Lesson Rearrange Confirm", mailContent, remind.RemindId));
+                }
+                var remindLogUpdateContentResult = await remindLogRepository.SaveUpdatedContentAsync();
+                if (!remindLogUpdateContentResult.IsSuccess)
+                {
+                    result.IsSuccess = false;
+                    result.ErrorMessage = remindLogUpdateContentResult.ErrorMessage;
+                    return BadRequest(result);
+                }
+                //foreach (var mail in notifications)
+                //{
+                //    _notificationObservable.send(mail);
+                //}
             }
 
             result.IsSuccess = true;

@@ -27,7 +27,7 @@ namespace Pegasus_backend.Mappings
             CreateMap<TeachersUpdate, Teacher>();
             CreateMap<InvoiceWaitingConfirmViewModel, InvoiceWaitingConfirm>();
             CreateMap<GroupCourseInstanceModel, GroupCourseInstance>();
-            CreateMap<OnetoOneCourseInstanceModel, One2oneCourseInstance>();
+            //CreateMap<OnetoOneCourseInstanceModel, One2oneCourseInstance>();
             CreateMap<LessonViewModel, Lesson>();
             CreateMap<LoginLogModel, LoginLog>();
             CreateMap<Invoice, WaitingOrInvoice>();
@@ -65,6 +65,8 @@ namespace Pegasus_backend.Mappings
             CreateMap<PaymentStaffModel, Staff>(); 
 
             CreateMap<ChatMessageModel, ChatMessage>();
+            //Student update
+            CreateMap<StudentUpdate, Learner>();
         }
     }
 }

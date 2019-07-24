@@ -43,7 +43,7 @@ namespace Pegasus_backend.Models
         [JsonProperty(Required = Required.Always)]
         public List<byte> Language { get; set; }
         [JsonProperty(Required = Required.Always)]
-        public List<List<byte>> DayOfWeek { get; set; } 
+        public List<List<DayOfWeekModal>> DayOfWeek { get; set; } 
         
     }
 }

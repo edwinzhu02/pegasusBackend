@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using Pegasus_backend.Models;
 using Pegasus_backend.pegasusContext;
 using Pegasus_backend.Services;
+using Pegasus_backend.Utilities;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -27,17 +28,8 @@ namespace Pegasus_backend.Controllers
             Result<object> result = new Result<object>();
             var arg = new NotificationEventArgs("Jesse", "Say Hi", "Details", 1);
             _notificationObservable.send(arg);
-
-            try
-            {
-                throw new Exception();
-            }
-            catch (Exception ex)
-            {
-                LogErrorToFile(ex.ToString());
-            }
-
             LogInfoToFile("hello");
+            //throw new Exception("test exception");
             return Ok(toNZTimezone(DateTime.UtcNow));
         }
 
@@ -64,6 +56,48 @@ namespace Pegasus_backend.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+        }
+
+        private Task AddLesson(ILogger log)
+        {
+            return Task.Factory.StartNew(() =>
+            {
+                var ablemusicContext = new ablemusicContext();
+                DateTime startTime = new DateTime(2019, 10, 01, 08, 0, 0);
+                for (int i = 0; i < 400; i++)
+                {
+                    startTime = startTime.AddDays(1);
+                    for(int j = 0; j < 20; j++)
+                    {
+                        Lesson lesson = new Lesson
+                        {
+                            LearnerId = 10080,
+                            RoomId = 37,
+                            TeacherId = 256,
+                            OrgId = 5,
+                            IsCanceled = 0,
+                            Reason = "8000 lessons for loading balance testing",
+                            CreatedAt = DateTime.UtcNow.ToNZTimezone(),
+                            CourseInstanceId = 10136,
+                            GroupCourseInstanceId = null,
+                            IsTrial = 0,
+                            BeginTime = startTime.AddMinutes(30 * j),
+                            EndTime = startTime.AddMinutes(30 * j + 30),
+                            InvoiceId = 551,
+                            IsConfirm = 0,
+                            TrialCourseId = null,
+                            IsChanged = 0,
+                            IsPaid = 1,
+                            NewLessonId = null,
+                        };
+                        ablemusicContext.Add(lesson);
+                        log.LogInformation(j + " lessons has been added");
+                    }
+                    ablemusicContext.SaveChanges();
+                    log.LogInformation(i + " 0 lessons has been saved to database");
+                }
+                log.LogInformation("completed");
+            });
         }
     }
 }

@@ -27,6 +27,26 @@ namespace Pegasus_backend.Utilities
             }
         }
 
+        public static DateTime SetDateByDayOfWeekInWeek(this DateTime input, int dayOfWeek)
+        {
+            DateTime currentDateTime = input;
+            int currentDayOfWeek = input.ToDayOfWeek();
+            while(currentDayOfWeek != dayOfWeek)
+            {
+                if(currentDayOfWeek > dayOfWeek)
+                {
+                    currentDateTime = currentDateTime.AddDays(-1);
+                    currentDayOfWeek = currentDateTime.ToDayOfWeek();
+                }
+                else
+                {
+                    currentDateTime = currentDateTime.AddDays(1);
+                    currentDayOfWeek = currentDateTime.ToDayOfWeek();
+                }
+            }
+            return currentDateTime;
+        }
+
         public static int ToDayOfWeek(this DateTime inputTime)
         {
             int dayOfWeek = inputTime.DayOfWeek == 0 ? 7 : (int)inputTime.DayOfWeek;

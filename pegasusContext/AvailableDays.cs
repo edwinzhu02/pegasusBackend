@@ -10,8 +10,10 @@ namespace Pegasus_backend.pegasusContext
         public byte? DayOfWeek { get; set; }
         public DateTime? CreatedAt { get; set; }
         public short? OrgId { get; set; }
+        public short? RoomId { get; set; }
 
         public Org Org { get; set; }
+        public Room Room { get; set; }
         public Teacher Teacher { get; set; }
     }
 }

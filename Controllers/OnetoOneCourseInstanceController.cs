@@ -30,7 +30,7 @@ namespace Pegasus_backend.Controllers
         }
 
         [HttpPut("{instanceId}/{endDate}")]
-        public async Task<IActionResult> UpdateOnetoOneCourseInstance(int instanceId, DateTime? endDate)
+        public async Task<IActionResult> UpdateOnetoOneCourseInstance(int instanceId, DateTime endDate)
         {
             var result = new Result<string>();
             try
@@ -64,29 +64,38 @@ namespace Pegasus_backend.Controllers
             {
                 using (var dbtransaction =await _ablemusicContext.Database.BeginTransactionAsync())
                 {
-                    model.OnetoOneCourses.ForEach(q =>
+                    model.OnetoOneCourses.ForEach(s =>
                     {
-                        var courseInstance = new One2oneCourseInstance();
-                        _mapper.Map(q, courseInstance);
-                        if (_ablemusicContext.Course.FirstOrDefault(s => courseInstance.CourseId == s.CourseId).CourseType != 1)
+                        var room = _ablemusicContext.AvailableDays.FirstOrDefault(
+                            q => q.TeacherId == s.TeacherId && q.OrgId == s.OrgId &&
+                                 q.DayOfWeek == s.Schedule.DayOfWeek);
+                            
+
+                        if (room == null)
                         {
-                            throw new Exception("This course is not one to one course");
+                            throw new Exception("Room does not found");
                         }
-
-                        var durationType = _ablemusicContext.Course.FirstOrDefault(s => s.CourseId == courseInstance.CourseId)
-                            .Duration;
-                        _ablemusicContext.Add(courseInstance);
-                        _ablemusicContext.SaveChanges();
-
-                        var schedule = new CourseSchedule
+                        
+                        var durationType = _ablemusicContext.Course.FirstOrDefault(w => w.CourseId == s.CourseId).Duration;
+                        _ablemusicContext.Add(new One2oneCourseInstance
                         {
-                            DayOfWeek = q.Schedule.DayOfWeek, CourseInstanceId = courseInstance.CourseInstanceId,
-                            BeginTime = q.Schedule.BeginTime,
-                            EndTime = GetEndTimeForOnetoOneCourseSchedule(q.Schedule.BeginTime,durationType)
-                        };
-                        _ablemusicContext.Add(schedule);
-                        _ablemusicContext.SaveChanges();
+                            CourseId = s.CourseId,TeacherId = s.TeacherId, OrgId = s.OrgId,
+                            BeginDate = s.BeginDate, EndDate = s.EndDate, LearnerId = s.LearnerId,
+                            RoomId = room.RoomId,
+                            CourseSchedule = new List<CourseSchedule>()
+                            {
+                                new CourseSchedule
+                                {
+                                    DayOfWeek = s.Schedule.DayOfWeek,
+                                    BeginTime = s.Schedule.BeginTime, 
+                                    EndTime = GetEndTimeForOnetoOneCourseSchedule(s.Schedule.BeginTime,durationType)
+                                }
+                            }
+                        });
                     });
+                    await _ablemusicContext.SaveChangesAsync();
+                        
+                
                     
                     dbtransaction.Commit();
                 }
@@ -99,7 +108,7 @@ namespace Pegasus_backend.Controllers
             catch (Exception ex)
             {
                 result.IsSuccess = false;
-                result.ErrorMessage = ex.Message;
+                result.ErrorMessage = ex.ToString();
                 return BadRequest(result);
             }
         }

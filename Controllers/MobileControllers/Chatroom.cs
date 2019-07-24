@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Security.Principal;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
@@ -37,12 +38,30 @@ namespace Pegasus_backend.Controllers.MobileControllers
         }
 
         // name of receiver
-        public async Task SendMessageOneToOne(ChatMessageModel chatMessageModel)
+        public async Task<string> SendMessageOneToOne(ChatMessageModel chatMessageModel)
         {
+//            TimeZoneInfo timeInfo = TimeZoneInfo.FindSystemTimeZoneById("New Zealand Standard Time");
+//            var returnedMessageTime = TimeZoneInfo.ConvertTimeFromUtc(chatMessageModel.CreateAt ?? DateTime.Now, timeInfo);
+
             //var connectionId = Context.ConnectionId;
-            await Clients.User(chatMessageModel.ReceiverUserId.ToString())
-                .SendAsync("SendMessageOneToOne",chatMessageModel.SenderUserId ,chatMessageModel.MessageBody, chatMessageModel.CreateAt);
-            //await Clients.User(connectionId).SendAsync("SendMessageOneToOne", message);
+            var returnedMessageTime = chatMessageModel.CreateAt ?? DateTime.Now;
+            try
+            {
+                await Clients.User(chatMessageModel.ReceiverUserId.ToString())
+                    .SendAsync("SendMessageOneToOne", chatMessageModel.SenderUserId, chatMessageModel.MessageBody,
+                        returnedMessageTime.ToString("G"));
+            }
+            catch (Exception e)
+            {
+                return e.Message;
+            }
+            return "Message send";
+        }
+
+        public override async Task OnDisconnectedAsync(Exception exception)
+        {
+            await Groups.RemoveFromGroupAsync(Context.ConnectionId, "SignalR Users");
+            await base.OnDisconnectedAsync(exception);
         }
     }
 }
