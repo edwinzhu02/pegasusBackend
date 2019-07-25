@@ -333,6 +333,7 @@ namespace Pegasus_backend.Controllers
                     });
 
                     await _ablemusicContext.SaveChangesAsync();
+                    //generate new waiting invoice and group lesson
                     newLearner.LearnerGroupCourse.ToList().ForEach(s =>
                     {
                          _lessonGenerateService.GetTerm((DateTime)s.BeginDate, s.LearnerGroupCourseId);
@@ -368,7 +369,8 @@ namespace Pegasus_backend.Controllers
                     });
 
                     await _ablemusicContext.SaveChangesAsync();
-                    //generate new waiting invoice and lesson
+
+                    //generate new waiting invoice and one2one lesson
                     newLearner.One2oneCourseInstance.ToList().ForEach(s =>
                     {
                         _lessonGenerateService.GetTerm((DateTime)s.BeginDate, s.CourseInstanceId);
