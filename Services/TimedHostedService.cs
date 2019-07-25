@@ -11,7 +11,7 @@ namespace Pegasus_backend.Services
     {
         private readonly ILogger _logger;
         private Timer _timer;
-        private readonly LessonGenerateService _lessonGenerateService;
+        //private readonly LessonGenerateService _lessonGenerateService;
 
         public TimedHostedService(ILogger<TimedHostedService> logger)
         {
@@ -31,7 +31,7 @@ namespace Pegasus_backend.Services
             Console.WriteLine("DoWork executed");
 
             //run auto-generate invoive and lesson
-            _lessonGenerateService.GetTerm(DateTime.UtcNow.ToNZTimezone());
+           // _lessonGenerateService.GetTerm(DateTime.UtcNow.ToNZTimezone());
 
         }
 
