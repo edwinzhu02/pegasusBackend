@@ -167,6 +167,9 @@ namespace Pegasus_backend.Controllers
                 }
             }
 
+            DateTime oldRemindScheduledDate = oldTodoDate;
+            DateTime newRemindScheduledDate = newTodoDate;
+
             oldLesson.IsCanceled = 1;
             oldLesson.IsChanged = 1;
             oldLesson.NewLessonId = 1;            
@@ -247,24 +250,57 @@ namespace Pegasus_backend.Controllers
                 }
 
                 RemindLogRepository remindLogRepository = new RemindLogRepository(_ablemusicContext);
-                if (oldLesson.CourseInstanceId != null)
+                DateTime earlyDate = newRemindScheduledDate >= oldRemindScheduledDate ? oldRemindScheduledDate : newRemindScheduledDate;
+                DateTime laterDate = newRemindScheduledDate >= oldRemindScheduledDate ? newRemindScheduledDate : oldRemindScheduledDate;
+                DateTime laterDateNoticeWeekBefore = laterDate.AddDays(-7);
+                int dateDifferentBetweenNowAndEarlyDate = (int)(earlyDate - DateTime.UtcNow.ToNZTimezone()).TotalDays;
+                int dateDifferentBetweenEarlyDateAndLaterDate = (int)(laterDate - earlyDate).TotalDays;
+                if(dateDifferentBetweenNowAndEarlyDate < 7 & dateDifferentBetweenNowAndEarlyDate > 1)
                 {
-                    remindLogRepository.AddSingleRemindLog(learner.LearnerId, learner.Email, RemindLogContentGenerator.RearrangedSingleLessonWithOldLessonForLearner(
-                    oldLesson, newLesson, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom, courseName), null, "Lesson Rearrangement Remind", newLesson.LessonId);
+                    earlyDate = DateTime.UtcNow.ToNZTimezone().AddDays(1);
                 }
-                else
+                List<DateTime> remindScheduledDates = new List<DateTime>
                 {
-                    Dictionary<Learner, string> learnerMapContent = new Dictionary<Learner, string>();
-                    foreach (var l in learners)
+                    earlyDate,
+                    laterDate
+                };
+                foreach(var remindScheduleDate in remindScheduledDates)
+                {
+                    if (oldLesson.CourseInstanceId != null)
                     {
-                        learnerMapContent.Add(l, RemindLogContentGenerator.RearrangedSingleLessonWithOldLessonForLearner(oldLesson, newLesson, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom, courseName));
+                        remindLogRepository.AddSingleRemindLog(learner.LearnerId, learner.Email, RemindLogContentGenerator.RearrangedSingleLessonWithOldLessonForLearner(
+                        oldLesson, newLesson, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom, courseName), null, "Lesson Rearrangement Remind", newLesson.LessonId, remindScheduleDate);
                     }
-                    remindLogRepository.AddMultipleRemindLogs(learnerMapContent, null, "Lesson rearrangement Remind", newLesson.LessonId);
+                    else
+                    {
+                        Dictionary<Learner, string> learnerMapContent = new Dictionary<Learner, string>();
+                        foreach (var l in learners)
+                        {
+                            learnerMapContent.Add(l, RemindLogContentGenerator.RearrangedSingleLessonWithOldLessonForLearner(oldLesson, newLesson, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom, courseName));
+                        }
+                        remindLogRepository.AddMultipleRemindLogs(learnerMapContent, null, "Lesson rearrangement Remind", newLesson.LessonId, remindScheduleDate);
+                    }
+                    remindLogRepository.AddSingleRemindLog(null, oldTeacher.Email, RemindLogContentGenerator.RearrangedSingleLessonWithOldLessonForOldTeacher(
+                        oldLesson, newLesson, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom, courseName), oldTeacher.TeacherId, "Lesson Rearrangement Remind", oldLesson.LessonId, remindScheduleDate);
+                    remindLogRepository.AddSingleRemindLog(null, newTeacher.Email, RemindLogContentGenerator.RearrangedSingleLessonWithOldLessonForNewTeacher(
+                        oldLesson, newLesson, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom, courseName), newTeacher.TeacherId, "Lesson Rearrangement Remind", newLesson.LessonId, remindScheduleDate);
                 }
-                remindLogRepository.AddSingleRemindLog(null, oldTeacher.Email, RemindLogContentGenerator.RearrangedSingleLessonWithOldLessonForOldTeacher(
-                    oldLesson, newLesson, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom, courseName), oldTeacher.TeacherId, "Lesson Rearrangement Remind", oldLesson.LessonId);
-                remindLogRepository.AddSingleRemindLog(null, newTeacher.Email, RemindLogContentGenerator.RearrangedSingleLessonWithOldLessonForNewTeacher(
-                    oldLesson, newLesson, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom, courseName), newTeacher.TeacherId, "Lesson Rearrangement Remind", newLesson.LessonId);
+
+                foreach(var remindlog in remindLogRepository._remindLogs.Reverse<RemindLog>())
+                {
+                    if (remindlog.ScheduledDate <= DateTime.UtcNow.ToNZTimezone())
+                    {
+                        remindLogRepository._remindLogs.Remove(remindlog);
+                    }
+                    if (dateDifferentBetweenEarlyDateAndLaterDate <= 7)
+                    {
+                        if (remindlog.ScheduledDate.Value.Date == laterDateNoticeWeekBefore.Date)
+                        {
+                            remindLogRepository._remindLogs.Remove(remindlog);
+                        }
+                    }
+                }
+
                 var saveRemindLogResult = await remindLogRepository.SaveRemindLogAsync();
                 if (!saveRemindLogResult.IsSuccess)
                 {
