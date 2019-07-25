@@ -24,11 +24,11 @@ namespace Pegasus_backend.Controllers
     {
 
         private readonly IMapper _mapper;
-        protected readonly LessonGenerateService _lessonGenerateService;
+        //protected readonly LessonGenerateService _lessonGenerateService;
         public LearnerController(ablemusicContext ablemusicContext, ILogger<LearnerController> log, IMapper mapper) : base(ablemusicContext, log)
         {
             _mapper = mapper;
-            _lessonGenerateService = new LessonGenerateService(ablemusicContext, mapper);
+           // _lessonGenerateService = new LessonGenerateService(ablemusicContext, mapper);
         }
         
         //Delete: api/learner/:id
@@ -334,10 +334,10 @@ namespace Pegasus_backend.Controllers
 
                     await _ablemusicContext.SaveChangesAsync();
                     //generate new waiting invoice and group lesson
-                    newLearner.LearnerGroupCourse.ToList().ForEach(s =>
-                    {
-                         _lessonGenerateService.GetTerm((DateTime)s.BeginDate, s.LearnerGroupCourseId);
-                    });
+                    //newLearner.LearnerGroupCourse.ToList().ForEach(s =>
+                   // {
+                    //     _lessonGenerateService.GetTerm((DateTime)s.BeginDate, s.LearnerGroupCourseId);
+                    //});
                     
                     detailsJson.OneToOneCourseInstance.ForEach(s =>
                     {
@@ -371,10 +371,10 @@ namespace Pegasus_backend.Controllers
                     await _ablemusicContext.SaveChangesAsync();
 
                     //generate new waiting invoice and one2one lesson
-                    newLearner.One2oneCourseInstance.ToList().ForEach(s =>
-                    {
-                        _lessonGenerateService.GetTerm((DateTime)s.BeginDate, s.CourseInstanceId);
-                    });
+                   // newLearner.One2oneCourseInstance.ToList().ForEach(s =>
+                    //{
+                  //      _lessonGenerateService.GetTerm((DateTime)s.BeginDate, s.CourseInstanceId);
+                   // });
 
                     //add new fund row for new student
                     var fundItem = new Fund{Balance = 0,LearnerId = newLearner.LearnerId};
