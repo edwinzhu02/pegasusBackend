@@ -17,9 +17,9 @@ namespace Pegasus_backend.Repositories
             _remindLogs = new List<RemindLog>();
         }
 
-        public List<RemindLog> _remindLogs { get; }
+        public List<RemindLog> _remindLogs { get; set; }
 
-        public void AddSingleRemindLog(int? learnerId, string email, string remindContent, short? teacherId, string remindTitle, int? lessonId)
+        public void AddSingleRemindLog(int? learnerId, string email, string remindContent, short? teacherId, string remindTitle, int? lessonId, DateTime scheduledDate)
         {
             _remindLogs.Add(new RemindLog
             {
@@ -34,23 +34,40 @@ namespace Pegasus_backend.Repositories
                 EmailAt = null,
                 RemindTitle = remindTitle,
                 ReceivedFlag = 0,
-                LessonId = lessonId
+                LessonId = lessonId,
+                ScheduledDate = scheduledDate
+            });
+            _remindLogs.Add(new RemindLog
+            {
+                LearnerId = learnerId,
+                Email = email,
+                RemindType = 1,
+                RemindContent = remindContent,
+                CreatedAt = DateTime.UtcNow.ToNZTimezone(),
+                TeacherId = teacherId,
+                IsLearner = learnerId == null ? (short)0 : (short)1,
+                ProcessFlag = 0,
+                EmailAt = null,
+                RemindTitle = remindTitle,
+                ReceivedFlag = 0,
+                LessonId = lessonId,
+                ScheduledDate = scheduledDate.AddDays(-7)
             });
         }
 
-        public void AddMultipleRemindLogs(Dictionary<Learner, string> learnerMapContent, short? teacherId, string remindTitle, int? lessonId)
+        public void AddMultipleRemindLogs(Dictionary<Learner, string> learnerMapContent, short? teacherId, string remindTitle, int? lessonId, DateTime scheduledDate)
         {
             foreach (KeyValuePair<Learner, string> lc in learnerMapContent)
             {
-                AddSingleRemindLog(lc.Key.LearnerId, lc.Key.Email, lc.Value, teacherId, remindTitle, lessonId);
+                AddSingleRemindLog(lc.Key.LearnerId, lc.Key.Email, lc.Value, teacherId, remindTitle, lessonId, scheduledDate);
             }
         }
 
-        public void AddMultipleRemindLogs(Dictionary<Teacher, string> teacherMapContent, short? learnerId, string remindTitle, int? lessonId)
+        public void AddMultipleRemindLogs(Dictionary<Teacher, string> teacherMapContent, short? learnerId, string remindTitle, int? lessonId, DateTime scheduledDate)
         {
             foreach (KeyValuePair<Teacher, string> tc in teacherMapContent)
             {
-                AddSingleRemindLog(learnerId, tc.Key.Email, tc.Value, tc.Key.TeacherId, remindTitle, lessonId);
+                AddSingleRemindLog(learnerId, tc.Key.Email, tc.Value, tc.Key.TeacherId, remindTitle, lessonId, scheduledDate);
             }
         }
 

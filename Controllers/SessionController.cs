@@ -205,6 +205,7 @@ namespace Pegasus_backend.Controllers
                     todoDate = todoDate.AddDays(-1);
                 }
             }
+            DateTime remindScheduleDate = todoDate;
 
             lesson.LessonId = 0;
             lesson.IsCanceled = 0;
@@ -259,9 +260,10 @@ namespace Pegasus_backend.Controllers
 
                 RemindLogRepository remindLogRepository = new RemindLogRepository(_ablemusicContext);
                 remindLogRepository.AddSingleRemindLog(learner.LearnerId, learner.Email, RemindLogContentGenerator.RearrangedSingleLessonWithoutOldLessonForLearner(
-                    learner, lesson, org, room, teacher), null, "Lesson Rearranged", lesson.LessonId);
+                    learner, lesson, org, room, teacher), null, "Lesson Rearranged", lesson.LessonId, remindScheduleDate);
                 remindLogRepository.AddSingleRemindLog(null, teacher.Email, RemindLogContentGenerator.RearrangedSingleLessonWithoutOldLessonForTeacher(
-                    learner, lesson, org, room, teacher), teacher.TeacherId, "Lesson Rearranged", lesson.LessonId);
+                    learner, lesson, org, room, teacher), teacher.TeacherId, "Lesson Rearranged", lesson.LessonId, remindScheduleDate);
+
                 var saveRemindResult = await remindLogRepository.SaveRemindLogAsync();
                 if (!saveRemindResult.IsSuccess)
                 {
@@ -736,6 +738,8 @@ namespace Pegasus_backend.Controllers
                 }                
             }
 
+            DateTime remindScheduleDate = todoDate;
+
             //string userConfirmUrlPrefix = "https://localhost:44304/api/session/sessioncancelconfirm/"; 
             string userConfirmUrlPrefix = _configuration.GetSection("UrlPrefix").Value;
 
@@ -766,9 +770,9 @@ namespace Pegasus_backend.Controllers
 
                     RemindLogRepository remindLogRepository = new RemindLogRepository(_ablemusicContext);
                     remindLogRepository.AddSingleRemindLog(null, teacher.Email, RemindLogContentGenerator.CancelSingleLessonForTeacher(courseName,
-                        lesson, reason), teacher.TeacherId, "Lesson Cancellation Remind", lesson.LessonId);
+                        lesson, reason), teacher.TeacherId, "Lesson Cancellation Remind", lesson.LessonId, remindScheduleDate);
                     remindLogRepository.AddSingleRemindLog(learner.LearnerId, learner.Email, RemindLogContentGenerator.CancelSingleLessonForLearner(courseName,
-                        lesson, reason), null, "Lesson Cancellation Remind", lesson.LessonId);
+                        lesson, reason), null, "Lesson Cancellation Remind", lesson.LessonId, remindScheduleDate);
                     var saveRemindLogResult = await remindLogRepository.SaveRemindLogAsync();
                     if (!saveRemindLogResult.IsSuccess) return BadRequest(saveRemindLogResult);
 
@@ -855,8 +859,8 @@ namespace Pegasus_backend.Controllers
 
                     RemindLogRepository remindLogRepository = new RemindLogRepository(_ablemusicContext);
                     remindLogRepository.AddSingleRemindLog(null, teacher.Email, RemindLogContentGenerator.CancelSingleLessonForTeacher(courseName,
-                        lesson, reason), teacher.TeacherId, "Lesson Cancellation Remind", lesson.LessonId);
-                    remindLogRepository.AddMultipleRemindLogs(remindLogForLearnersMapContent, null, "Lesson Cancellation Remind", lesson.LessonId);
+                        lesson, reason), teacher.TeacherId, "Lesson Cancellation Remind", lesson.LessonId, remindScheduleDate);
+                    remindLogRepository.AddMultipleRemindLogs(remindLogForLearnersMapContent, null, "Lesson Cancellation Remind", lesson.LessonId, remindScheduleDate);
                     var saveRemindLogResult = await remindLogRepository.SaveRemindLogAsync();
                     if (!saveRemindLogResult.IsSuccess) return BadRequest(saveRemindLogResult);
 

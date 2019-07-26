@@ -143,6 +143,8 @@ namespace Pegasus_backend.Controllers
                 }
             }
 
+            DateTime remindScheduledDate = todoDate;
+
             var teacherIdMapTodoContent = new Dictionary<short, string>();
             var teacherMapRemindLogContent = new Dictionary<Teacher, string>();
 
@@ -170,8 +172,8 @@ namespace Pegasus_backend.Controllers
 
                 RemindLogRepository remindLogRepository = new RemindLogRepository(_ablemusicContext);
                 remindLogRepository.AddSingleRemindLog(courseSchedules[0].LearnerId, courseSchedules[0].LearnerEmail,
-                    RemindLogContentGenerator.DayOffForLearner(courseSchedules[0], inputObj.EndDate.ToString()), null, "Period Dayoff Remind", null);
-                remindLogRepository.AddMultipleRemindLogs(teacherMapRemindLogContent, null, "Period Dayoff Remind", null);
+                    RemindLogContentGenerator.DayOffForLearner(courseSchedules[0], inputObj.EndDate.ToString()), null, "Period Dayoff Remind", null, remindScheduledDate);
+                remindLogRepository.AddMultipleRemindLogs(teacherMapRemindLogContent, null, "Period Dayoff Remind", null, remindScheduledDate);
                 var saveRemindLogResult = await remindLogRepository.SaveRemindLogAsync();
                 if (!saveRemindLogResult.IsSuccess)
                 {
