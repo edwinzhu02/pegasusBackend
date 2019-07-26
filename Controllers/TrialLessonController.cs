@@ -92,20 +92,20 @@ namespace Pegasus_backend.Controllers
             DateTime endTime = lesson.EndTime.Value.AddMinutes(60);
             var lessonConflictCheckerService = new LessonConflictCheckerService(lesson);
             Result<List<object>> lessonConflictCheckResult;
-            try
-            {
-                lessonConflictCheckResult = await lessonConflictCheckerService.CheckBothRoomAndTeacher();
-            }
-            catch(Exception ex)
-            {
-                result.IsSuccess = false;
-                result.ErrorMessage = ex.Message;
-                return BadRequest(result);
-            }
-            if (!lessonConflictCheckResult.IsSuccess)
-            {
-                return BadRequest(lessonConflictCheckResult);
-            }
+            // try
+            // {
+            //     lessonConflictCheckResult = await lessonConflictCheckerService.CheckBothRoomAndTeacher();
+            // }
+            // catch(Exception ex)
+            // {
+            //     result.IsSuccess = false;
+            //     result.ErrorMessage = ex.Message;
+            //     return BadRequest(result);
+            // }
+            // if (!lessonConflictCheckResult.IsSuccess)
+            // {
+            //     return BadRequest(lessonConflictCheckResult);
+            // }
 
             try
             {
