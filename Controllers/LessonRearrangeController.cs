@@ -233,19 +233,6 @@ namespace Pegasus_backend.Controllers
                 var saveTodoResult = await todoRepository.SaveTodoListsAsync();
                 if (!saveTodoResult.IsSuccess)
                 {
-                    try
-                    {
-                        oldLesson.IsCanceled = 0;
-                        oldLesson.Reason = "";
-                        _ablemusicContext.Lesson.Remove(newLesson);
-                        await _ablemusicContext.SaveChangesAsync();
-                    }
-                    catch (Exception ex)
-                    {
-                        result.IsSuccess = false;
-                        result.ErrorMessage = ex.Message + "\n" + saveTodoResult.ErrorMessage;
-                        return BadRequest(result);
-                    }
                     return BadRequest(saveTodoResult);
                 }
 
@@ -351,10 +338,11 @@ namespace Pegasus_backend.Controllers
                 //{
                 //    _notificationObservable.send(mail);
                 //}
+                dbContextTransaction.Commit();
             }
 
             result.IsSuccess = true;
-            result.Data = newLesson;
+            //result.Data = newLesson;
             return Ok(result);
         }
 
