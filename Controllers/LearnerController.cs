@@ -349,9 +349,12 @@ namespace Pegasus_backend.Controllers
 
                         if (room == null)
                         {
-                            throw new Exception("Room does not found");
+                            throw new Exception("Available Days of this teacher does not found");
                         }
-                        
+                        if (room.RoomId == null)
+                        {
+                            throw new Exception("Teacher does not have a room in this branch");
+                        }                        
                         var durationType = _ablemusicContext.Course.FirstOrDefault(w => w.CourseId == s.CourseId).Duration;
                         _ablemusicContext.Add(new One2oneCourseInstance
                         {
