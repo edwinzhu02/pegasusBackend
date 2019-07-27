@@ -346,9 +346,11 @@ namespace Pegasus_backend.Services
                         conflictTeachers.Add(c);
                     }
                 }
-                result.IsSuccess = false;
-                result.ErrorMessage = "Teacher is not available by checking current scheduled lessons! ";
-                result.Data = conflictTeachers;
+                if (conflictTeachers.Count() >0 ){
+                    result.IsSuccess = false;
+                    result.ErrorMessage = "Teacher is not available by checking current scheduled lessons! ";
+                    result.Data = conflictTeachers;
+                }
                 return result;
             }
             result.Note = "No conflict teacher was found based on current scheduled lessons! ";
