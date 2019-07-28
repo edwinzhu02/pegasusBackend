@@ -1,0 +1,754 @@
+2019-07-28 12:37:53.754 +12:00 [INF] User profile is available. Using 'C:\Users\lgx95\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-07-28 12:37:55.602 +12:00 [INF] Request starting HTTP/1.1 DEBUG http://localhost:5000/  0
+2019-07-28 12:37:55.602 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/values  
+2019-07-28 12:37:55.602 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/chat/negotiate?userId=Emily  
+2019-07-28 12:37:55.634 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/Chat  
+2019-07-28 12:37:55.653 +12:00 [INF] Request finished in 51.9585ms 200 
+2019-07-28 12:37:55.711 +12:00 [INF] Policy execution successful.
+2019-07-28 12:37:55.714 +12:00 [INF] Policy execution successful.
+2019-07-28 12:37:55.718 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-07-28 12:37:55.721 +12:00 [INF] Request finished in 124.4688ms 204 
+2019-07-28 12:37:55.721 +12:00 [INF] Request finished in 87.299ms 204 
+2019-07-28 12:37:55.791 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/Chat application/json 118
+2019-07-28 12:37:55.791 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/chat/negotiate?userId=Emily text/plain;charset=UTF-8 0
+2019-07-28 12:37:55.792 +12:00 [INF] Policy execution successful.
+2019-07-28 12:37:55.792 +12:00 [INF] Policy execution successful.
+2019-07-28 12:37:55.943 +12:00 [INF] Request finished in 151.4964ms 200 application/json
+2019-07-28 12:37:55.962 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/chat?userId=Emily&id=3iiJKbp8JFKAjJetbdG4HQ  
+2019-07-28 12:37:55.963 +12:00 [INF] Policy execution successful.
+2019-07-28 12:37:56.077 +12:00 [INF] 
+2019-07-28 12:37:56.077 +12:00 [INF] {"ChatGroupId":null,"MessageBody":"123","SenderUserId":null,"ReceiverUserId":null,"CreateAt":"7/28/2019, 12:37:55 PM"}
+2019-07-28 12:37:56.154 +12:00 [INF] Completed connection handshake. Using HubProtocol 'json'.
+2019-07-28 12:37:56.507 +12:00 [INF] Route matched with {action = "Get", controller = "Values"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Get() on controller Pegasus_backend.Controllers.ValuesController (Pegasus_backend).
+2019-07-28 12:37:56.520 +12:00 [INF] Route matched with {action = "Post", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Post(Pegasus_backend.Models.ChatMessageModel) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-07-28 12:37:56.623 +12:00 [INF] Executing action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) - Validation state: "Valid"
+2019-07-28 12:37:56.641 +12:00 [INF] ValuesController LogInfoToFile: hello
+2019-07-28 12:37:56.646 +12:00 [INF] Executed action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 9.7265ms.
+2019-07-28 12:37:57.163 +12:00 [INF] Executing ObjectResult, writing value of type 'System.DateTime'.
+2019-07-28 12:37:57.191 +12:00 [INF] Executed action Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) in 677.6579ms
+2019-07-28 12:37:57.196 +12:00 [INF] Response "2019-07-28T12:37:56.6415763"
+2019-07-28 12:37:57.201 +12:00 [INF] Request finished in 1604.8897ms 200 application/json; charset=utf-8
+2019-07-28 12:37:57.212 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.Post (Pegasus_backend) - Validation state: "Valid"
+2019-07-28 12:37:58.228 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/favicon.ico  
+2019-07-28 12:37:58.234 +12:00 [INF] 
+2019-07-28 12:37:58.234 +12:00 [INF] Response 
+2019-07-28 12:37:58.235 +12:00 [INF] Request finished in 6.1939ms 404 
+2019-07-28 12:37:59.431 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-28 12:38:00.516 +12:00 [INF] Request finished in 4553.8219ms 101 
+2019-07-28 12:38:01.294 +12:00 [INF] Executed DbCommand (58ms) [Parameters=[@p0='?' (Size = -1), @p1='?' (DbType = DateTime), @p2='?' (Size = -1), @p3='?' (DbType = AnsiString), @p4='?' (DbType = AnsiString)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `ablemusic`.`chat_message` (`chat_group_id`, `create_at`, `message_body`, `receiver_user_id`, `sender_user_id`)
+VALUES (@p0, @p1, @p2, @p3, @p4);
+SELECT `chat_message_id`
+FROM `ablemusic`.`chat_message`
+WHERE ROW_COUNT() = 1
+ AND `chat_message_id`=LAST_INSERT_ID();
+2019-07-28 12:38:01.384 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.Post (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 4171.211ms.
+2019-07-28 12:38:01.384 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[Pegasus_backend.Models.ChatMessageModel, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2019-07-28 12:38:01.396 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.Post (Pegasus_backend) in 4875.264ms
+2019-07-28 12:38:01.396 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":{"ChatMessageId":null,"ChatGroupId":null,"MessageBody":"123","SenderUserId":null,"CreateAt":"2019-07-28T12:37:55","ReceiverUserId":null}}
+2019-07-28 12:38:01.397 +12:00 [INF] Request finished in 5606.2916ms 200 application/json; charset=utf-8
+2019-07-28 12:38:05.986 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/chat/negotiate?userId=Emily  
+2019-07-28 12:38:05.987 +12:00 [INF] Policy execution successful.
+2019-07-28 12:38:05.989 +12:00 [INF] Request finished in 2.6549ms 204 
+2019-07-28 12:38:06.290 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/chat/negotiate?userId=Emily text/plain;charset=UTF-8 0
+2019-07-28 12:38:06.291 +12:00 [INF] Policy execution successful.
+2019-07-28 12:38:06.292 +12:00 [INF] Request finished in 2.2901ms 200 application/json
+2019-07-28 12:38:06.368 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/chat?userId=Emily&id=qCHNAPfu3BeV6aFhRPHROg  
+2019-07-28 12:38:06.369 +12:00 [INF] Policy execution successful.
+2019-07-28 12:38:07.048 +12:00 [INF] Completed connection handshake. Using HubProtocol 'json'.
+2019-07-28 12:38:08.981 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/Chat  
+2019-07-28 12:38:08.981 +12:00 [INF] Policy execution successful.
+2019-07-28 12:38:08.981 +12:00 [INF] Request finished in 0.7272ms 204 
+2019-07-28 12:38:08.993 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/Chat application/json 118
+2019-07-28 12:38:08.993 +12:00 [INF] Policy execution successful.
+2019-07-28 12:38:08.994 +12:00 [INF] {"ChatGroupId":null,"MessageBody":"123","SenderUserId":null,"ReceiverUserId":null,"CreateAt":"7/28/2019, 12:38:08 PM"}
+2019-07-28 12:38:09.006 +12:00 [INF] Route matched with {action = "Post", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Post(Pegasus_backend.Models.ChatMessageModel) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-07-28 12:38:09.008 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.Post (Pegasus_backend) - Validation state: "Valid"
+2019-07-28 12:38:09.014 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-28 12:38:55.933 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-28 12:38:56.206 +12:00 [ERR] Failed to invoke hub method 'SendMessageOneToOne'.
+System.InvalidOperationException: The provider for the source IQueryable doesn't implement IDbAsyncQueryProvider. Only providers that implement IDbAsyncQueryProvider can be used for Entity Framework asynchronous operations. For more details see http://go.microsoft.com/fwlink/?LinkId=287068.
+   at System.Data.Entity.QueryableExtensions.FirstOrDefaultAsync[TSource](IQueryable`1 source, CancellationToken cancellationToken)
+   at System.Data.Entity.QueryableExtensions.FirstOrDefaultAsync[TSource](IQueryable`1 source)
+   at Pegasus_backend.Controllers.MobileControllers.Chatroom.SendMessageOneToOne(ChatMessageModel chatMessageModel) in C:\angular\pegasusBackend\Controllers\MobileControllers\Chatroom.cs:line 55
+   at lambda_method(Closure , Object )
+   at Microsoft.Extensions.Internal.ObjectMethodExecutorAwaitable.Awaiter.GetResult()
+   at Microsoft.AspNetCore.SignalR.Internal.DefaultHubDispatcher`1.ExecuteHubMethod(ObjectMethodExecutor methodExecutor, THub hub, Object[] arguments)
+   at Microsoft.AspNetCore.SignalR.Internal.DefaultHubDispatcher`1.Invoke(HubMethodDescriptor descriptor, HubConnectionContext connection, HubMethodInvocationMessage hubMethodInvocationMessage, Boolean isStreamedInvocation)
+2019-07-28 12:38:56.370 +12:00 [INF] Request finished in 50002.2594ms 101 
+2019-07-28 12:39:01.496 +12:00 [ERR] Failed executing DbCommand (52,340ms) [Parameters=[@p0='?' (Size = -1), @p1='?' (DbType = DateTime), @p2='?' (Size = -1), @p3='?' (DbType = AnsiString), @p4='?' (DbType = AnsiString)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `ablemusic`.`chat_message` (`chat_group_id`, `create_at`, `message_body`, `receiver_user_id`, `sender_user_id`)
+VALUES (@p0, @p1, @p2, @p3, @p4);
+SELECT `chat_message_id`
+FROM `ablemusic`.`chat_message`
+WHERE ROW_COUNT() = 1
+ AND `chat_message_id`=LAST_INSERT_ID();
+MySql.Data.MySqlClient.MySqlException (0x80004005): Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding. ---> System.TimeoutException: Timeout in IO operation
+   at MySql.Data.MySqlClient.TimedStream.StopTimer()
+   at MySql.Data.MySqlClient.TimedStream.Read(Byte[] buffer, Int32 offset, Int32 count)
+   at MySql.Data.MySqlClient.MySqlStream.ReadFully(Stream stream, Byte[] buffer, Int32 offset, Int32 count)
+   at MySql.Data.MySqlClient.MySqlStream.LoadPacket()
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at MySql.Data.MySqlClient.Interceptors.ExceptionInterceptor.Throw(Exception exception)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+2019-07-28 12:39:01.519 +12:00 [ERR] An exception occurred in the database while saving changes for context type 'Pegasus_backend.pegasusContext.ablemusicContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> MySql.Data.MySqlClient.MySqlException: Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding. ---> System.TimeoutException: Timeout in IO operation
+   at MySql.Data.MySqlClient.TimedStream.StopTimer()
+   at MySql.Data.MySqlClient.TimedStream.Read(Byte[] buffer, Int32 offset, Int32 count)
+   at MySql.Data.MySqlClient.MySqlStream.ReadFully(Stream stream, Byte[] buffer, Int32 offset, Int32 count)
+   at MySql.Data.MySqlClient.MySqlStream.LoadPacket()
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   --- End of inner exception stack trace ---
+   at MySql.Data.MySqlClient.Interceptors.ExceptionInterceptor.Throw(Exception exception)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(DbContext _, ValueTuple`2 parameters, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IReadOnlyList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> MySql.Data.MySqlClient.MySqlException: Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding. ---> System.TimeoutException: Timeout in IO operation
+   at MySql.Data.MySqlClient.TimedStream.StopTimer()
+   at MySql.Data.MySqlClient.TimedStream.Read(Byte[] buffer, Int32 offset, Int32 count)
+   at MySql.Data.MySqlClient.MySqlStream.ReadFully(Stream stream, Byte[] buffer, Int32 offset, Int32 count)
+   at MySql.Data.MySqlClient.MySqlStream.LoadPacket()
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   --- End of inner exception stack trace ---
+   at MySql.Data.MySqlClient.Interceptors.ExceptionInterceptor.Throw(Exception exception)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(DbContext _, ValueTuple`2 parameters, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IReadOnlyList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2019-07-28 12:39:01.608 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.Post (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.BadRequestObjectResult in 52598.4044ms.
+2019-07-28 12:39:01.608 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[Pegasus_backend.Models.ChatMessageModel, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2019-07-28 12:39:01.609 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.Post (Pegasus_backend) in 52602.4135ms
+2019-07-28 12:39:01.609 +12:00 [INF] Response {"IsSuccess":false,"ErrorCode":null,"IsFound":true,"ErrorMessage":"An error occurred while updating the entries. See the inner exception for details.","Note":null,"Data":null}
+2019-07-28 12:39:01.609 +12:00 [INF] Request finished in 52616.6801ms 400 application/json; charset=utf-8
+2019-07-28 12:40:34.465 +12:00 [INF] User profile is available. Using 'C:\Users\lgx95\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-07-28 12:40:35.598 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/values  
+2019-07-28 12:40:35.598 +12:00 [INF] Request starting HTTP/1.1 DEBUG http://localhost:5000/  0
+2019-07-28 12:40:35.635 +12:00 [INF] Request finished in 36.0621ms 200 
+2019-07-28 12:40:35.716 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-07-28 12:40:35.871 +12:00 [INF] 
+2019-07-28 12:40:36.235 +12:00 [INF] Route matched with {action = "Get", controller = "Values"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Get() on controller Pegasus_backend.Controllers.ValuesController (Pegasus_backend).
+2019-07-28 12:40:36.493 +12:00 [INF] Executing action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) - Validation state: "Valid"
+2019-07-28 12:40:36.509 +12:00 [INF] ValuesController LogInfoToFile: hello
+2019-07-28 12:40:36.516 +12:00 [INF] Executed action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 6.9623ms.
+2019-07-28 12:40:36.535 +12:00 [INF] Executing ObjectResult, writing value of type 'System.DateTime'.
+2019-07-28 12:40:36.632 +12:00 [INF] Executed action Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) in 391.10240000000005ms
+2019-07-28 12:40:36.636 +12:00 [INF] Response "2019-07-28T12:40:36.509497"
+2019-07-28 12:40:36.647 +12:00 [INF] Request finished in 1052.9572ms 200 application/json; charset=utf-8
+2019-07-28 12:41:12.001 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/chat/negotiate?userId=Emily  
+2019-07-28 12:41:12.012 +12:00 [INF] Policy execution successful.
+2019-07-28 12:41:12.026 +12:00 [INF] Request finished in 25.3132ms 204 
+2019-07-28 12:41:12.400 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/chat/negotiate?userId=Emily text/plain;charset=UTF-8 0
+2019-07-28 12:41:12.401 +12:00 [INF] Policy execution successful.
+2019-07-28 12:41:12.441 +12:00 [INF] Request finished in 41.4765ms 200 application/json
+2019-07-28 12:41:12.604 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/chat?userId=Emily&id=kVrEePswpX_MokFO_WRQbA  
+2019-07-28 12:41:12.604 +12:00 [INF] Policy execution successful.
+2019-07-28 12:41:13.138 +12:00 [INF] Completed connection handshake. Using HubProtocol 'json'.
+2019-07-28 12:44:00.952 +12:00 [INF] Request finished in 168347.9139ms 101 
+2019-07-28 12:44:54.836 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/chat/negotiate?userId=1  
+2019-07-28 12:44:54.847 +12:00 [INF] Policy execution successful.
+2019-07-28 12:44:54.847 +12:00 [INF] Request finished in 10.6551ms 204 
+2019-07-28 12:44:55.264 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/chat/negotiate?userId=1 text/plain;charset=UTF-8 0
+2019-07-28 12:44:55.264 +12:00 [INF] Policy execution successful.
+2019-07-28 12:44:55.265 +12:00 [INF] Request finished in 1.5946ms 200 application/json
+2019-07-28 12:44:55.342 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/chat?userId=1&id=eHR37hgVVjsAu2dsvADvsw  
+2019-07-28 12:44:55.343 +12:00 [INF] Policy execution successful.
+2019-07-28 12:44:55.416 +12:00 [INF] Completed connection handshake. Using HubProtocol 'json'.
+2019-07-28 12:44:59.224 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/Chat  
+2019-07-28 12:44:59.225 +12:00 [INF] Policy execution successful.
+2019-07-28 12:44:59.225 +12:00 [INF] Request finished in 0.5481ms 204 
+2019-07-28 12:44:59.245 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/Chat application/json 118
+2019-07-28 12:44:59.247 +12:00 [INF] Policy execution successful.
+2019-07-28 12:44:59.313 +12:00 [INF] {"ChatGroupId":null,"MessageBody":"123","SenderUserId":null,"ReceiverUserId":null,"CreateAt":"7/28/2019, 12:44:59 PM"}
+2019-07-28 12:44:59.348 +12:00 [INF] Route matched with {action = "Post", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Post(Pegasus_backend.Models.ChatMessageModel) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-07-28 12:45:00.456 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.Post (Pegasus_backend) - Validation state: "Valid"
+2019-07-28 12:45:01.596 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-28 12:45:01.596 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-28 12:45:03.083 +12:00 [INF] Executed DbCommand (49ms) [Parameters=[@p0='?' (Size = -1), @p1='?' (DbType = DateTime), @p2='?' (Size = -1), @p3='?' (DbType = AnsiString), @p4='?' (DbType = AnsiString)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `ablemusic`.`chat_message` (`chat_group_id`, `create_at`, `message_body`, `receiver_user_id`, `sender_user_id`)
+VALUES (@p0, @p1, @p2, @p3, @p4);
+SELECT `chat_message_id`
+FROM `ablemusic`.`chat_message`
+WHERE ROW_COUNT() = 1
+ AND `chat_message_id`=LAST_INSERT_ID();
+2019-07-28 12:45:03.161 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.Post (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 2705.0371ms.
+2019-07-28 12:45:03.162 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[Pegasus_backend.Models.ChatMessageModel, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2019-07-28 12:45:03.177 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.Post (Pegasus_backend) in 3828.8241000000003ms
+2019-07-28 12:45:03.178 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":{"ChatMessageId":null,"ChatGroupId":null,"MessageBody":"123","SenderUserId":null,"CreateAt":"2019-07-28T12:44:59","ReceiverUserId":null}}
+2019-07-28 12:45:03.182 +12:00 [INF] Request finished in 3936.7278ms 200 application/json; charset=utf-8
+2019-07-28 12:46:06.753 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/Chat  
+2019-07-28 12:46:06.753 +12:00 [INF] Policy execution successful.
+2019-07-28 12:46:06.754 +12:00 [INF] Request finished in 1.3299ms 204 
+2019-07-28 12:46:17.844 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/Chat application/json 118
+2019-07-28 12:46:17.858 +12:00 [INF] Policy execution successful.
+2019-07-28 12:46:17.860 +12:00 [INF] {"ChatGroupId":null,"MessageBody":"123","SenderUserId":null,"ReceiverUserId":null,"CreateAt":"7/28/2019, 12:46:06 PM"}
+2019-07-28 12:46:17.862 +12:00 [INF] Route matched with {action = "Post", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Post(Pegasus_backend.Models.ChatMessageModel) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-07-28 12:46:17.877 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.Post (Pegasus_backend) - Validation state: "Valid"
+2019-07-28 12:46:24.509 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-28 12:46:24.537 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-28 12:48:37.505 +12:00 [INF] User profile is available. Using 'C:\Users\lgx95\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-07-28 12:48:38.628 +12:00 [INF] Request starting HTTP/1.1 DEBUG http://localhost:5000/  0
+2019-07-28 12:48:38.628 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/values  
+2019-07-28 12:48:38.662 +12:00 [INF] Request finished in 34.2824ms 200 
+2019-07-28 12:48:38.719 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-07-28 12:48:38.840 +12:00 [INF] 
+2019-07-28 12:48:39.131 +12:00 [INF] Route matched with {action = "Get", controller = "Values"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Get() on controller Pegasus_backend.Controllers.ValuesController (Pegasus_backend).
+2019-07-28 12:48:39.449 +12:00 [INF] Executing action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) - Validation state: "Valid"
+2019-07-28 12:48:39.471 +12:00 [INF] ValuesController LogInfoToFile: hello
+2019-07-28 12:48:39.478 +12:00 [INF] Executed action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 6.7753000000000005ms.
+2019-07-28 12:48:39.495 +12:00 [INF] Executing ObjectResult, writing value of type 'System.DateTime'.
+2019-07-28 12:48:39.578 +12:00 [INF] Executed action Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) in 441.27500000000003ms
+2019-07-28 12:48:39.581 +12:00 [INF] Response "2019-07-28T12:48:39.4713987"
+2019-07-28 12:48:39.594 +12:00 [INF] Request finished in 970.5356ms 200 application/json; charset=utf-8
+2019-07-28 12:49:27.661 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/chat/negotiate?userId=1  
+2019-07-28 12:49:27.674 +12:00 [INF] Policy execution successful.
+2019-07-28 12:49:27.727 +12:00 [INF] Request finished in 65.5574ms 204 
+2019-07-28 12:49:28.218 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/chat/negotiate?userId=1 text/plain;charset=UTF-8 0
+2019-07-28 12:49:28.218 +12:00 [INF] Policy execution successful.
+2019-07-28 12:49:28.247 +12:00 [INF] Request finished in 29.1407ms 200 application/json
+2019-07-28 12:49:28.433 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/chat?userId=1&id=94PERpzgLHfSsWt_VN9jwg  
+2019-07-28 12:49:28.433 +12:00 [INF] Policy execution successful.
+2019-07-28 12:49:28.968 +12:00 [INF] Completed connection handshake. Using HubProtocol 'json'.
+2019-07-28 12:49:31.407 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/Chat  
+2019-07-28 12:49:31.407 +12:00 [INF] Policy execution successful.
+2019-07-28 12:49:31.407 +12:00 [INF] Request finished in 0.8928ms 204 
+2019-07-28 12:49:31.418 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/Chat application/json 120
+2019-07-28 12:49:31.418 +12:00 [INF] Policy execution successful.
+2019-07-28 12:49:31.421 +12:00 [INF] {"ChatGroupId":null,"MessageBody":"hello","SenderUserId":null,"ReceiverUserId":null,"CreateAt":"7/28/2019, 12:49:31 PM"}
+2019-07-28 12:49:31.463 +12:00 [INF] Route matched with {action = "Post", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Post(Pegasus_backend.Models.ChatMessageModel) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-07-28 12:50:36.092 +12:00 [INF] User profile is available. Using 'C:\Users\lgx95\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-07-28 12:50:36.890 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/chat/negotiate?userId=1  
+2019-07-28 12:50:36.956 +12:00 [INF] Policy execution successful.
+2019-07-28 12:50:36.966 +12:00 [INF] Request finished in 78.8307ms 204 
+2019-07-28 12:50:36.979 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/chat/negotiate?userId=1 text/plain;charset=UTF-8 0
+2019-07-28 12:50:36.979 +12:00 [INF] Policy execution successful.
+2019-07-28 12:50:37.031 +12:00 [INF] Request finished in 52.3214ms 200 application/json
+2019-07-28 12:50:37.045 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/chat?userId=1&id=WL1SwyA1Hhvfn-vaJViykA  
+2019-07-28 12:50:37.046 +12:00 [INF] Policy execution successful.
+2019-07-28 12:50:37.160 +12:00 [INF] Completed connection handshake. Using HubProtocol 'json'.
+2019-07-28 12:50:37.977 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/Chat  
+2019-07-28 12:50:37.978 +12:00 [INF] Policy execution successful.
+2019-07-28 12:50:37.979 +12:00 [INF] Request finished in 1.4098ms 204 
+2019-07-28 12:50:37.994 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/Chat application/json 117
+2019-07-28 12:50:37.994 +12:00 [INF] Policy execution successful.
+2019-07-28 12:50:37.997 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-07-28 12:50:38.074 +12:00 [INF] {"ChatGroupId":null,"MessageBody":"hello","SenderUserId":1,"ReceiverUserId":null,"CreateAt":"7/28/2019, 12:50:37 PM"}
+2019-07-28 12:50:38.367 +12:00 [INF] Route matched with {action = "Post", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Post(Pegasus_backend.Models.ChatMessageModel) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-07-28 12:50:39.223 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.Post (Pegasus_backend) - Validation state: "Valid"
+2019-07-28 12:50:40.026 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-28 12:50:40.026 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-28 12:50:40.098 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-28 12:50:40.100 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/Chat application/json 117
+2019-07-28 12:50:40.100 +12:00 [INF] Policy execution successful.
+2019-07-28 12:50:40.103 +12:00 [INF] {"ChatGroupId":null,"MessageBody":"hello","SenderUserId":1,"ReceiverUserId":null,"CreateAt":"7/28/2019, 12:50:40 PM"}
+2019-07-28 12:50:40.104 +12:00 [INF] Route matched with {action = "Post", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Post(Pegasus_backend.Models.ChatMessageModel) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-07-28 12:50:40.107 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.Post (Pegasus_backend) - Validation state: "Valid"
+2019-07-28 12:50:40.109 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-28 12:50:41.284 +12:00 [INF] Executed DbCommand (55ms) [Parameters=[@p0='?' (Size = -1), @p1='?' (DbType = DateTime), @p2='?' (Size = -1), @p3='?' (DbType = AnsiString), @p4='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `ablemusic`.`chat_message` (`chat_group_id`, `create_at`, `message_body`, `receiver_user_id`, `sender_user_id`)
+VALUES (@p0, @p1, @p2, @p3, @p4);
+SELECT `chat_message_id`
+FROM `ablemusic`.`chat_message`
+WHERE ROW_COUNT() = 1
+ AND `chat_message_id`=LAST_INSERT_ID();
+2019-07-28 12:50:41.284 +12:00 [INF] Executed DbCommand (52ms) [Parameters=[@p0='?' (Size = -1), @p1='?' (DbType = DateTime), @p2='?' (Size = -1), @p3='?' (DbType = AnsiString), @p4='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `ablemusic`.`chat_message` (`chat_group_id`, `create_at`, `message_body`, `receiver_user_id`, `sender_user_id`)
+VALUES (@p0, @p1, @p2, @p3, @p4);
+SELECT `chat_message_id`
+FROM `ablemusic`.`chat_message`
+WHERE ROW_COUNT() = 1
+ AND `chat_message_id`=LAST_INSERT_ID();
+2019-07-28 12:50:41.364 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.Post (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 2122.2072000000003ms.
+2019-07-28 12:50:41.364 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.Post (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 1251.9993ms.
+2019-07-28 12:50:41.377 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[Pegasus_backend.Models.ChatMessageModel, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2019-07-28 12:50:41.377 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[Pegasus_backend.Models.ChatMessageModel, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2019-07-28 12:50:41.399 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.Post (Pegasus_backend) in 1289.2474ms
+2019-07-28 12:50:41.399 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.Post (Pegasus_backend) in 3026.291ms
+2019-07-28 12:50:41.403 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":{"ChatMessageId":null,"ChatGroupId":null,"MessageBody":"hello","SenderUserId":1,"CreateAt":"2019-07-28T12:50:40","ReceiverUserId":null}}
+2019-07-28 12:50:41.403 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":{"ChatMessageId":null,"ChatGroupId":null,"MessageBody":"hello","SenderUserId":1,"CreateAt":"2019-07-28T12:50:37","ReceiverUserId":null}}
+2019-07-28 12:50:41.409 +12:00 [INF] Request finished in 3415.3592ms 200 application/json; charset=utf-8
+2019-07-28 12:50:41.409 +12:00 [INF] Request finished in 1309.1305ms 200 application/json; charset=utf-8
+2019-07-28 12:50:52.746 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/values  
+2019-07-28 12:50:52.755 +12:00 [INF] 
+2019-07-28 12:50:52.761 +12:00 [INF] Route matched with {action = "Get", controller = "Values"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Get() on controller Pegasus_backend.Controllers.ValuesController (Pegasus_backend).
+2019-07-28 12:50:52.762 +12:00 [INF] Executing action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) - Validation state: "Valid"
+2019-07-28 12:50:52.770 +12:00 [INF] ValuesController LogInfoToFile: hello
+2019-07-28 12:50:52.770 +12:00 [INF] Executed action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 7.8790000000000004ms.
+2019-07-28 12:50:52.771 +12:00 [INF] Executing ObjectResult, writing value of type 'System.DateTime'.
+2019-07-28 12:50:52.772 +12:00 [INF] Executed action Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) in 11.0304ms
+2019-07-28 12:50:52.772 +12:00 [INF] Response "2019-07-28T12:50:52.7703053"
+2019-07-28 12:50:52.773 +12:00 [INF] Request finished in 26.5334ms 200 application/json; charset=utf-8
+2019-07-28 12:52:55.965 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/Chat  
+2019-07-28 12:52:55.965 +12:00 [INF] Policy execution successful.
+2019-07-28 12:52:55.966 +12:00 [INF] Request finished in 1.7717ms 204 
+2019-07-28 12:52:55.990 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/Chat application/json 117
+2019-07-28 12:52:55.991 +12:00 [INF] Policy execution successful.
+2019-07-28 12:52:55.992 +12:00 [INF] {"ChatGroupId":null,"MessageBody":"hello","SenderUserId":1,"ReceiverUserId":null,"CreateAt":"7/28/2019, 12:52:46 PM"}
+2019-07-28 12:52:55.993 +12:00 [INF] Route matched with {action = "Post", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Post(Pegasus_backend.Models.ChatMessageModel) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-07-28 12:52:55.994 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.Post (Pegasus_backend) - Validation state: "Valid"
+2019-07-28 12:52:55.996 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-28 12:53:03.457 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-28 12:55:22.342 +12:00 [INF] User profile is available. Using 'C:\Users\lgx95\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-07-28 12:55:23.386 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/values  
+2019-07-28 12:55:23.386 +12:00 [INF] Request starting HTTP/1.1 DEBUG http://localhost:5000/  0
+2019-07-28 12:55:23.427 +12:00 [INF] Request finished in 41.0214ms 200 
+2019-07-28 12:55:23.494 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-07-28 12:55:23.625 +12:00 [INF] 
+2019-07-28 12:55:23.981 +12:00 [INF] Route matched with {action = "Get", controller = "Values"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Get() on controller Pegasus_backend.Controllers.ValuesController (Pegasus_backend).
+2019-07-28 12:55:24.266 +12:00 [INF] Executing action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) - Validation state: "Valid"
+2019-07-28 12:55:24.287 +12:00 [INF] ValuesController LogInfoToFile: hello
+2019-07-28 12:55:24.297 +12:00 [INF] Executed action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 7.0287000000000006ms.
+2019-07-28 12:55:24.317 +12:00 [INF] Executing ObjectResult, writing value of type 'System.DateTime'.
+2019-07-28 12:55:24.417 +12:00 [INF] Executed action Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) in 428.9368ms
+2019-07-28 12:55:24.422 +12:00 [INF] Response "2019-07-28T12:55:24.2878968"
+2019-07-28 12:55:24.435 +12:00 [INF] Request finished in 1053.7738ms 200 application/json; charset=utf-8
+2019-07-28 12:55:33.040 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/chat/negotiate?userId=1  
+2019-07-28 12:55:33.043 +12:00 [INF] Policy execution successful.
+2019-07-28 12:55:33.045 +12:00 [INF] Request finished in 5.006ms 204 
+2019-07-28 12:55:33.327 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/chat/negotiate?userId=1 text/plain;charset=UTF-8 0
+2019-07-28 12:55:33.328 +12:00 [INF] Policy execution successful.
+2019-07-28 12:55:33.363 +12:00 [INF] Request finished in 36.2952ms 200 application/json
+2019-07-28 12:55:33.491 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/chat?userId=1&id=HLs1td6E7Ln9eJfOImTVkQ  
+2019-07-28 12:55:33.492 +12:00 [INF] Policy execution successful.
+2019-07-28 12:55:34.012 +12:00 [INF] Completed connection handshake. Using HubProtocol 'json'.
+2019-07-28 12:55:37.580 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/Chat  
+2019-07-28 12:55:37.581 +12:00 [INF] Policy execution successful.
+2019-07-28 12:55:37.582 +12:00 [INF] Request finished in 2.2144ms 204 
+2019-07-28 12:55:37.600 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/Chat application/json 117
+2019-07-28 12:55:37.600 +12:00 [INF] Policy execution successful.
+2019-07-28 12:55:37.603 +12:00 [INF] {"ChatGroupId":null,"MessageBody":"hello","SenderUserId":1,"ReceiverUserId":null,"CreateAt":"7/28/2019, 12:55:37 PM"}
+2019-07-28 12:55:37.656 +12:00 [INF] Route matched with {action = "Post", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Post(Pegasus_backend.Models.ChatMessageModel) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-07-28 12:55:55.224 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.Post (Pegasus_backend) - Validation state: "Valid"
+2019-07-28 12:55:56.469 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-28 12:55:56.469 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-28 12:55:57.792 +12:00 [INF] Executed DbCommand (43ms) [Parameters=[@__chatMessageModel_SenderUserId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`user_id`, `x`.`created_at`, `x`.`is_activate`, `x`.`is_online`, `x`.`password`, `x`.`role_id`, `x`.`signature`, `x`.`unread_message_id`, `x`.`user_name`
+FROM `ablemusic`.`user` AS `x`
+WHERE `x`.`user_id` = @__chatMessageModel_SenderUserId_0
+LIMIT 1
+2019-07-28 12:56:07.750 +12:00 [INF] Executed DbCommand (9,842ms) [Parameters=[@p0='?' (Size = -1), @p1='?' (DbType = DateTime), @p2='?' (Size = -1), @p3='?' (DbType = AnsiString), @p4='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `ablemusic`.`chat_message` (`chat_group_id`, `create_at`, `message_body`, `receiver_user_id`, `sender_user_id`)
+VALUES (@p0, @p1, @p2, @p3, @p4);
+SELECT `chat_message_id`
+FROM `ablemusic`.`chat_message`
+WHERE ROW_COUNT() = 1
+ AND `chat_message_id`=LAST_INSERT_ID();
+2019-07-28 12:56:22.465 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.Post (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 27240.5944ms.
+2019-07-28 12:56:22.466 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[Pegasus_backend.Models.ChatMessageModel, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2019-07-28 12:56:22.486 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.Post (Pegasus_backend) in 44829.596900000004ms
+2019-07-28 12:56:22.486 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":{"ChatMessageId":null,"ChatGroupId":null,"MessageBody":"hello","SenderUserId":1,"CreateAt":"2019-07-28T12:55:37","ReceiverUserId":null}}
+2019-07-28 12:56:22.486 +12:00 [INF] Request finished in 44886.7541ms 200 application/json; charset=utf-8
+2019-07-28 12:56:29.913 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/Chat  
+2019-07-28 12:56:29.916 +12:00 [INF] Policy execution successful.
+2019-07-28 12:56:29.930 +12:00 [INF] Request finished in 17.1273ms 204 
+2019-07-28 12:56:29.955 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/Chat application/json 117
+2019-07-28 12:56:29.956 +12:00 [INF] Policy execution successful.
+2019-07-28 12:56:29.973 +12:00 [INF] {"ChatGroupId":null,"MessageBody":"hello","SenderUserId":1,"ReceiverUserId":null,"CreateAt":"7/28/2019, 12:56:26 PM"}
+2019-07-28 12:56:30.847 +12:00 [INF] Route matched with {action = "Post", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Post(Pegasus_backend.Models.ChatMessageModel) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-07-28 12:57:23.591 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-28 12:57:59.664 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.Post (Pegasus_backend) - Validation state: "Valid"
+2019-07-28 12:57:59.706 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-28 12:57:59.937 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[@p0='?' (Size = -1), @p1='?' (DbType = DateTime), @p2='?' (Size = -1), @p3='?' (DbType = AnsiString), @p4='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `ablemusic`.`chat_message` (`chat_group_id`, `create_at`, `message_body`, `receiver_user_id`, `sender_user_id`)
+VALUES (@p0, @p1, @p2, @p3, @p4);
+SELECT `chat_message_id`
+FROM `ablemusic`.`chat_message`
+WHERE ROW_COUNT() = 1
+ AND `chat_message_id`=LAST_INSERT_ID();
+2019-07-28 12:57:59.983 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.Post (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 319.2428ms.
+2019-07-28 12:57:59.984 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[Pegasus_backend.Models.ChatMessageModel, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2019-07-28 12:57:59.986 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.Post (Pegasus_backend) in 89136.7516ms
+2019-07-28 12:58:00.005 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":{"ChatMessageId":null,"ChatGroupId":null,"MessageBody":"hello","SenderUserId":1,"CreateAt":"2019-07-28T12:56:26","ReceiverUserId":null}}
+2019-07-28 12:58:00.020 +12:00 [INF] Request finished in 90050.7117ms 200 application/json; charset=utf-8
+2019-07-28 12:58:00.316 +12:00 [INF] Executed DbCommand (31ms) [Parameters=[@__chatMessageModel_SenderUserId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`user_id`, `x`.`created_at`, `x`.`is_activate`, `x`.`is_online`, `x`.`password`, `x`.`role_id`, `x`.`signature`, `x`.`unread_message_id`, `x`.`user_name`
+FROM `ablemusic`.`user` AS `x`
+WHERE `x`.`user_id` = @__chatMessageModel_SenderUserId_0
+LIMIT 1
+2019-07-28 13:04:51.760 +12:00 [INF] User profile is available. Using 'C:\Users\lgx95\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-07-28 13:04:52.518 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/chat/negotiate?userId=1  
+2019-07-28 13:04:52.584 +12:00 [INF] Policy execution successful.
+2019-07-28 13:04:52.595 +12:00 [INF] Request finished in 79.6237ms 204 
+2019-07-28 13:04:52.613 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/chat/negotiate?userId=1 text/plain;charset=UTF-8 0
+2019-07-28 13:04:52.615 +12:00 [INF] Policy execution successful.
+2019-07-28 13:04:52.700 +12:00 [INF] Request finished in 86.6581ms 200 application/json
+2019-07-28 13:04:52.720 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/chat?userId=1&id=tdBsRobX8wb0cvn1C5JdwQ  
+2019-07-28 13:04:52.725 +12:00 [INF] Policy execution successful.
+2019-07-28 13:04:52.866 +12:00 [INF] Completed connection handshake. Using HubProtocol 'json'.
+2019-07-28 13:05:13.733 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/Chat  
+2019-07-28 13:05:13.733 +12:00 [INF] Policy execution successful.
+2019-07-28 13:05:13.734 +12:00 [INF] Request finished in 1.7003ms 204 
+2019-07-28 13:05:13.744 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/Chat application/json 114
+2019-07-28 13:05:13.745 +12:00 [INF] Policy execution successful.
+2019-07-28 13:05:13.748 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-07-28 13:05:13.833 +12:00 [INF] {"ChatGroupId":null,"MessageBody":"121","SenderUserId":1,"ReceiverUserId":null,"CreateAt":"7/28/2019, 1:05:13 PM"}
+2019-07-28 13:05:14.206 +12:00 [INF] Route matched with {action = "Post", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Post(Pegasus_backend.Models.ChatMessageModel) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-07-28 13:05:15.197 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.Post (Pegasus_backend) - Validation state: "Valid"
+2019-07-28 13:05:16.052 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-28 13:05:16.052 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-28 13:05:17.095 +12:00 [INF] Executed DbCommand (38ms) [Parameters=[@__chatMessageModel_SenderUserId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`user_id`, `x`.`created_at`, `x`.`is_activate`, `x`.`is_online`, `x`.`password`, `x`.`role_id`, `x`.`signature`, `x`.`unread_message_id`, `x`.`user_name`
+FROM `ablemusic`.`user` AS `x`
+WHERE `x`.`user_id` = @__chatMessageModel_SenderUserId_0
+LIMIT 1
+2019-07-28 13:05:17.255 +12:00 [INF] Executed DbCommand (49ms) [Parameters=[@p0='?' (Size = -1), @p1='?' (DbType = DateTime), @p2='?' (Size = -1), @p3='?' (DbType = AnsiString), @p4='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `ablemusic`.`chat_message` (`chat_group_id`, `create_at`, `message_body`, `receiver_user_id`, `sender_user_id`)
+VALUES (@p0, @p1, @p2, @p3, @p4);
+SELECT `chat_message_id`
+FROM `ablemusic`.`chat_message`
+WHERE ROW_COUNT() = 1
+ AND `chat_message_id`=LAST_INSERT_ID();
+2019-07-28 13:05:17.313 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.Post (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 2093.7157ms.
+2019-07-28 13:05:17.326 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[Pegasus_backend.Models.ChatMessageModel, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2019-07-28 13:05:17.344 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.Post (Pegasus_backend) in 3133.5246ms
+2019-07-28 13:05:17.348 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":{"ChatMessageId":null,"ChatGroupId":null,"MessageBody":"121","SenderUserId":1,"CreateAt":"2019-07-28T13:05:13","ReceiverUserId":null}}
+2019-07-28 13:05:17.353 +12:00 [INF] Request finished in 3608.8581ms 200 application/json; charset=utf-8
+2019-07-28 13:05:27.593 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/values  
+2019-07-28 13:05:27.608 +12:00 [INF] 
+2019-07-28 13:05:27.615 +12:00 [INF] Route matched with {action = "Get", controller = "Values"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Get() on controller Pegasus_backend.Controllers.ValuesController (Pegasus_backend).
+2019-07-28 13:05:27.617 +12:00 [INF] Executing action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) - Validation state: "Valid"
+2019-07-28 13:05:27.623 +12:00 [INF] ValuesController LogInfoToFile: hello
+2019-07-28 13:05:27.624 +12:00 [INF] Executed action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 6.5701ms.
+2019-07-28 13:05:27.625 +12:00 [INF] Executing ObjectResult, writing value of type 'System.DateTime'.
+2019-07-28 13:05:27.627 +12:00 [INF] Executed action Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) in 11.1148ms
+2019-07-28 13:05:27.627 +12:00 [INF] Response "2019-07-28T13:05:27.6233475"
+2019-07-28 13:05:27.628 +12:00 [INF] Request finished in 34.6477ms 200 application/json; charset=utf-8
+2019-07-28 13:05:41.382 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/Chat  
+2019-07-28 13:05:41.390 +12:00 [INF] Policy execution successful.
+2019-07-28 13:05:41.405 +12:00 [INF] Request finished in 23.3905ms 204 
+2019-07-28 13:05:41.426 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/Chat application/json 114
+2019-07-28 13:05:41.429 +12:00 [INF] Policy execution successful.
+2019-07-28 13:05:41.443 +12:00 [INF] {"ChatGroupId":null,"MessageBody":"121","SenderUserId":1,"ReceiverUserId":null,"CreateAt":"7/28/2019, 1:05:37 PM"}
+2019-07-28 13:05:41.445 +12:00 [INF] Route matched with {action = "Post", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Post(Pegasus_backend.Models.ChatMessageModel) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-07-28 13:05:44.800 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.Post (Pegasus_backend) - Validation state: "Valid"
+2019-07-28 13:05:44.847 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-28 13:05:45.078 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[@p0='?' (Size = -1), @p1='?' (DbType = DateTime), @p2='?' (Size = -1), @p3='?' (DbType = AnsiString), @p4='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `ablemusic`.`chat_message` (`chat_group_id`, `create_at`, `message_body`, `receiver_user_id`, `sender_user_id`)
+VALUES (@p0, @p1, @p2, @p3, @p4);
+SELECT `chat_message_id`
+FROM `ablemusic`.`chat_message`
+WHERE ROW_COUNT() = 1
+ AND `chat_message_id`=LAST_INSERT_ID();
+2019-07-28 13:05:45.145 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.Post (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 344.23080000000004ms.
+2019-07-28 13:05:45.145 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[Pegasus_backend.Models.ChatMessageModel, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2019-07-28 13:05:45.145 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-28 13:05:45.146 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.Post (Pegasus_backend) in 3700.9548ms
+2019-07-28 13:05:45.147 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":{"ChatMessageId":null,"ChatGroupId":null,"MessageBody":"121","SenderUserId":1,"CreateAt":"2019-07-28T13:05:37","ReceiverUserId":null}}
+2019-07-28 13:05:45.147 +12:00 [INF] Request finished in 3720.7395ms 200 application/json; charset=utf-8
+2019-07-28 13:05:45.390 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[@__chatMessageModel_SenderUserId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`user_id`, `x`.`created_at`, `x`.`is_activate`, `x`.`is_online`, `x`.`password`, `x`.`role_id`, `x`.`signature`, `x`.`unread_message_id`, `x`.`user_name`
+FROM `ablemusic`.`user` AS `x`
+WHERE `x`.`user_id` = @__chatMessageModel_SenderUserId_0
+LIMIT 1
+2019-07-28 13:07:12.957 +12:00 [INF] User profile is available. Using 'C:\Users\lgx95\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-07-28 13:07:14.217 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/values  
+2019-07-28 13:07:14.217 +12:00 [INF] Request starting HTTP/1.1 DEBUG http://localhost:5000/  0
+2019-07-28 13:07:14.254 +12:00 [INF] Request finished in 41.0342ms 200 
+2019-07-28 13:07:14.311 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-07-28 13:07:14.447 +12:00 [INF] 
+2019-07-28 13:07:14.859 +12:00 [INF] Route matched with {action = "Get", controller = "Values"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Get() on controller Pegasus_backend.Controllers.ValuesController (Pegasus_backend).
+2019-07-28 13:07:15.157 +12:00 [INF] Executing action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) - Validation state: "Valid"
+2019-07-28 13:07:15.176 +12:00 [INF] ValuesController LogInfoToFile: hello
+2019-07-28 13:07:15.186 +12:00 [INF] Executed action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 5.6943ms.
+2019-07-28 13:07:15.203 +12:00 [INF] Executing ObjectResult, writing value of type 'System.DateTime'.
+2019-07-28 13:07:15.292 +12:00 [INF] Executed action Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) in 426.1234ms
+2019-07-28 13:07:15.301 +12:00 [INF] Response "2019-07-28T13:07:15.1766054"
+2019-07-28 13:07:15.317 +12:00 [INF] Request finished in 1107.2978ms 200 application/json; charset=utf-8
+2019-07-28 13:07:29.160 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/chat/negotiate?userId=1  
+2019-07-28 13:07:29.165 +12:00 [INF] Policy execution successful.
+2019-07-28 13:07:29.167 +12:00 [INF] Request finished in 7.7797ms 204 
+2019-07-28 13:07:29.460 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/chat/negotiate?userId=1 text/plain;charset=UTF-8 0
+2019-07-28 13:07:29.462 +12:00 [INF] Policy execution successful.
+2019-07-28 13:07:29.498 +12:00 [INF] Request finished in 38.5339ms 200 application/json
+2019-07-28 13:07:29.742 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/chat?userId=1&id=vEjX1YwO6GqZwoN57t9wNg  
+2019-07-28 13:07:29.743 +12:00 [INF] Policy execution successful.
+2019-07-28 13:07:30.249 +12:00 [INF] Completed connection handshake. Using HubProtocol 'json'.
+2019-07-28 13:07:32.606 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/Chat  
+2019-07-28 13:07:32.606 +12:00 [INF] Policy execution successful.
+2019-07-28 13:07:32.606 +12:00 [INF] Request finished in 0.9482ms 204 
+2019-07-28 13:07:32.617 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/Chat application/json 117
+2019-07-28 13:07:32.618 +12:00 [INF] Policy execution successful.
+2019-07-28 13:07:32.620 +12:00 [INF] {"ChatGroupId":null,"MessageBody":"234234","SenderUserId":1,"ReceiverUserId":null,"CreateAt":"7/28/2019, 1:07:32 PM"}
+2019-07-28 13:07:32.660 +12:00 [INF] Route matched with {action = "Post", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Post(Pegasus_backend.Models.ChatMessageModel) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-07-28 13:07:42.969 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.Post (Pegasus_backend) - Validation state: "Valid"
+2019-07-28 13:07:44.198 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-28 13:07:44.198 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-28 13:07:45.506 +12:00 [INF] Executed DbCommand (41ms) [Parameters=[@__chatMessageModel_SenderUserId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`user_id`, `x`.`created_at`, `x`.`is_activate`, `x`.`is_online`, `x`.`password`, `x`.`role_id`, `x`.`signature`, `x`.`unread_message_id`, `x`.`user_name`
+FROM `ablemusic`.`user` AS `x`
+WHERE `x`.`user_id` = @__chatMessageModel_SenderUserId_0
+LIMIT 1
+2019-07-28 13:12:08.144 +12:00 [INF] User profile is available. Using 'C:\Users\lgx95\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-07-28 13:12:09.268 +12:00 [INF] Request starting HTTP/1.1 DEBUG http://localhost:5000/  0
+2019-07-28 13:12:09.268 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/values  
+2019-07-28 13:12:09.300 +12:00 [INF] Request finished in 32.6538ms 200 
+2019-07-28 13:12:09.346 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-07-28 13:12:09.469 +12:00 [INF] 
+2019-07-28 13:12:09.771 +12:00 [INF] Route matched with {action = "Get", controller = "Values"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Get() on controller Pegasus_backend.Controllers.ValuesController (Pegasus_backend).
+2019-07-28 13:12:10.047 +12:00 [INF] Executing action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) - Validation state: "Valid"
+2019-07-28 13:12:10.063 +12:00 [INF] ValuesController LogInfoToFile: hello
+2019-07-28 13:12:10.070 +12:00 [INF] Executed action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 6.0840000000000005ms.
+2019-07-28 13:12:10.085 +12:00 [INF] Executing ObjectResult, writing value of type 'System.DateTime'.
+2019-07-28 13:12:10.179 +12:00 [INF] Executed action Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) in 399.1118ms
+2019-07-28 13:12:10.184 +12:00 [INF] Response "2019-07-28T13:12:10.0639287"
+2019-07-28 13:12:10.197 +12:00 [INF] Request finished in 933.8467ms 200 application/json; charset=utf-8
+2019-07-28 13:12:56.187 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/chat/negotiate?userId=1  
+2019-07-28 13:12:56.215 +12:00 [INF] Policy execution successful.
+2019-07-28 13:12:56.218 +12:00 [INF] Request finished in 30.7376ms 204 
+2019-07-28 13:12:56.610 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/chat/negotiate?userId=1 text/plain;charset=UTF-8 0
+2019-07-28 13:12:56.617 +12:00 [INF] Policy execution successful.
+2019-07-28 13:12:56.648 +12:00 [INF] Request finished in 43.1536ms 200 application/json
+2019-07-28 13:12:56.871 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/chat?userId=1&id=ReyXYTSl-tSEKtdT3_Ljwg  
+2019-07-28 13:12:56.871 +12:00 [INF] Policy execution successful.
+2019-07-28 13:12:57.394 +12:00 [INF] Completed connection handshake. Using HubProtocol 'json'.
+2019-07-28 13:13:00.112 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/Chat  
+2019-07-28 13:13:00.113 +12:00 [INF] Policy execution successful.
+2019-07-28 13:13:00.113 +12:00 [INF] Request finished in 1.1652ms 204 
+2019-07-28 13:13:00.132 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/Chat application/json 117
+2019-07-28 13:13:00.134 +12:00 [INF] Policy execution successful.
+2019-07-28 13:13:00.158 +12:00 [INF] {"ChatGroupId":null,"MessageBody":"werwer","SenderUserId":1,"ReceiverUserId":null,"CreateAt":"7/28/2019, 1:13:00 PM"}
+2019-07-28 13:13:00.200 +12:00 [INF] Route matched with {action = "Post", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Post(Pegasus_backend.Models.ChatMessageModel) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-07-28 13:13:07.940 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.Post (Pegasus_backend) - Validation state: "Valid"
+2019-07-28 13:13:09.079 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-28 13:13:09.079 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-28 13:13:10.421 +12:00 [INF] Executed DbCommand (42ms) [Parameters=[@__chatMessageModel_SenderUserId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`role_id`
+FROM `ablemusic`.`user` AS `x`
+WHERE `x`.`user_id` = @__chatMessageModel_SenderUserId_0
+LIMIT 1
+2019-07-28 13:14:00.188 +12:00 [INF] User profile is available. Using 'C:\Users\lgx95\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-07-28 13:14:01.125 +12:00 [INF] Request starting HTTP/1.1 DEBUG http://localhost:5000/  0
+2019-07-28 13:14:01.125 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/values  
+2019-07-28 13:14:01.169 +12:00 [INF] Request finished in 41.9586ms 200 
+2019-07-28 13:14:01.221 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-07-28 13:14:01.359 +12:00 [INF] 
+2019-07-28 13:14:01.703 +12:00 [INF] Route matched with {action = "Get", controller = "Values"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Get() on controller Pegasus_backend.Controllers.ValuesController (Pegasus_backend).
+2019-07-28 13:14:02.038 +12:00 [INF] Executing action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) - Validation state: "Valid"
+2019-07-28 13:14:02.061 +12:00 [INF] ValuesController LogInfoToFile: hello
+2019-07-28 13:14:02.071 +12:00 [INF] Executed action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 7.9132000000000007ms.
+2019-07-28 13:14:02.086 +12:00 [INF] Executing ObjectResult, writing value of type 'System.DateTime'.
+2019-07-28 13:14:02.181 +12:00 [INF] Executed action Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) in 469.7318ms
+2019-07-28 13:14:02.188 +12:00 [INF] Response "2019-07-28T13:14:02.0618185"
+2019-07-28 13:14:02.205 +12:00 [INF] Request finished in 1084.9516ms 200 application/json; charset=utf-8
+2019-07-28 13:14:21.685 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/chat/negotiate?userId=1  
+2019-07-28 13:14:21.689 +12:00 [INF] Policy execution successful.
+2019-07-28 13:14:21.693 +12:00 [INF] Request finished in 7.5861ms 204 
+2019-07-28 13:14:21.982 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/chat/negotiate?userId=1 text/plain;charset=UTF-8 0
+2019-07-28 13:14:21.984 +12:00 [INF] Policy execution successful.
+2019-07-28 13:14:22.028 +12:00 [INF] Request finished in 46.0501ms 200 application/json
+2019-07-28 13:14:22.196 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/chat?userId=1&id=Qtt0wRDB7lj4guWfuCKo3A  
+2019-07-28 13:14:22.197 +12:00 [INF] Policy execution successful.
+2019-07-28 13:14:22.685 +12:00 [INF] Completed connection handshake. Using HubProtocol 'json'.
+2019-07-28 13:14:24.097 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/Chat  
+2019-07-28 13:14:24.098 +12:00 [INF] Policy execution successful.
+2019-07-28 13:14:24.098 +12:00 [INF] Request finished in 1.1209ms 204 
+2019-07-28 13:14:24.108 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/Chat application/json 117
+2019-07-28 13:14:24.108 +12:00 [INF] Policy execution successful.
+2019-07-28 13:14:24.110 +12:00 [INF] {"ChatGroupId":null,"MessageBody":"asdsad","SenderUserId":1,"ReceiverUserId":null,"CreateAt":"7/28/2019, 1:14:24 PM"}
+2019-07-28 13:14:24.142 +12:00 [INF] Route matched with {action = "Post", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Post(Pegasus_backend.Models.ChatMessageModel) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-07-28 13:14:30.135 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.Post (Pegasus_backend) - Validation state: "Valid"
+2019-07-28 13:14:31.298 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-28 13:14:31.298 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-28 13:14:32.575 +12:00 [INF] Executed DbCommand (38ms) [Parameters=[@__chatMessageModel_SenderUserId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`role_id`
+FROM `ablemusic`.`user` AS `x`
+WHERE `x`.`user_id` = @__chatMessageModel_SenderUserId_0
+LIMIT 1
+2019-07-28 13:14:37.224 +12:00 [INF] Executed DbCommand (45ms) [Parameters=[@p0='?' (Size = -1), @p1='?' (DbType = DateTime), @p2='?' (Size = -1), @p3='?' (DbType = AnsiString), @p4='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `ablemusic`.`chat_message` (`chat_group_id`, `create_at`, `message_body`, `receiver_user_id`, `sender_user_id`)
+VALUES (@p0, @p1, @p2, @p3, @p4);
+SELECT `chat_message_id`
+FROM `ablemusic`.`chat_message`
+WHERE ROW_COUNT() = 1
+ AND `chat_message_id`=LAST_INSERT_ID();
+2019-07-28 13:14:37.233 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[@__senderRoleId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`role_name`
+FROM `ablemusic`.`role` AS `x`
+WHERE `x`.`role_id` = @__senderRoleId_0
+LIMIT 1
+2019-07-28 13:14:44.740 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.Post (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 14604.6118ms.
+2019-07-28 13:14:44.742 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[Pegasus_backend.Models.ChatMessageModel, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2019-07-28 13:14:44.761 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.Post (Pegasus_backend) in 20618.4664ms
+2019-07-28 13:14:44.761 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":{"ChatMessageId":null,"ChatGroupId":null,"MessageBody":"asdsad","SenderUserId":1,"CreateAt":"2019-07-28T13:14:24","ReceiverUserId":null}}
+2019-07-28 13:14:44.761 +12:00 [INF] Request finished in 20653.9156ms 200 application/json; charset=utf-8
+2019-07-28 13:15:51.042 +12:00 [INF] Request finished in 88845.55ms 101 
+2019-07-28 13:15:54.469 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/chat/negotiate?userId=1  
+2019-07-28 13:15:54.470 +12:00 [INF] Policy execution successful.
+2019-07-28 13:15:54.470 +12:00 [INF] Request finished in 1.266ms 204 
+2019-07-28 13:15:54.739 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/chat/negotiate?userId=1 text/plain;charset=UTF-8 0
+2019-07-28 13:15:54.740 +12:00 [INF] Policy execution successful.
+2019-07-28 13:15:54.741 +12:00 [INF] Request finished in 1.3503ms 200 application/json
+2019-07-28 13:15:54.818 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/chat?userId=1&id=oyAfrbTUAFfZp_g2UbW_IA  
+2019-07-28 13:15:54.818 +12:00 [INF] Policy execution successful.
+2019-07-28 13:15:55.405 +12:00 [INF] Completed connection handshake. Using HubProtocol 'json'.
+2019-07-28 13:16:01.366 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-28 13:16:01.377 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/Chat  
+2019-07-28 13:16:01.377 +12:00 [INF] Policy execution successful.
+2019-07-28 13:16:01.378 +12:00 [INF] Request finished in 0.7446ms 204 
+2019-07-28 13:16:01.387 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/Chat application/json 116
+2019-07-28 13:16:01.387 +12:00 [INF] Policy execution successful.
+2019-07-28 13:16:01.388 +12:00 [INF] {"ChatGroupId":null,"MessageBody":"emily","SenderUserId":1,"ReceiverUserId":null,"CreateAt":"7/28/2019, 1:16:01 PM"}
+2019-07-28 13:16:01.389 +12:00 [INF] Route matched with {action = "Post", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Post(Pegasus_backend.Models.ChatMessageModel) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-07-28 13:16:01.391 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.Post (Pegasus_backend) - Validation state: "Valid"
+2019-07-28 13:16:01.394 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-28 13:16:01.463 +12:00 [INF] Executed DbCommand (31ms) [Parameters=[@__chatMessageModel_SenderUserId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`role_id`
+FROM `ablemusic`.`user` AS `x`
+WHERE `x`.`user_id` = @__chatMessageModel_SenderUserId_0
+LIMIT 1
+2019-07-28 13:16:01.570 +12:00 [INF] Executed DbCommand (34ms) [Parameters=[@__senderRoleId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`role_name`
+FROM `ablemusic`.`role` AS `x`
+WHERE `x`.`role_id` = @__senderRoleId_0
+LIMIT 1
+2019-07-28 13:16:01.570 +12:00 [INF] Executed DbCommand (38ms) [Parameters=[@p0='?' (Size = -1), @p1='?' (DbType = DateTime), @p2='?' (Size = -1), @p3='?' (DbType = AnsiString), @p4='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `ablemusic`.`chat_message` (`chat_group_id`, `create_at`, `message_body`, `receiver_user_id`, `sender_user_id`)
+VALUES (@p0, @p1, @p2, @p3, @p4);
+SELECT `chat_message_id`
+FROM `ablemusic`.`chat_message`
+WHERE ROW_COUNT() = 1
+ AND `chat_message_id`=LAST_INSERT_ID();
+2019-07-28 13:16:01.606 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.Post (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 215.08ms.
+2019-07-28 13:16:01.607 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[Pegasus_backend.Models.ChatMessageModel, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2019-07-28 13:16:01.607 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.Post (Pegasus_backend) in 218.025ms
+2019-07-28 13:16:01.607 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":{"ChatMessageId":null,"ChatGroupId":null,"MessageBody":"emily","SenderUserId":1,"CreateAt":"2019-07-28T13:16:01","ReceiverUserId":null}}
+2019-07-28 13:16:01.607 +12:00 [INF] Request finished in 220.8989ms 200 application/json; charset=utf-8
+2019-07-28 13:17:33.172 +12:00 [INF] User profile is available. Using 'C:\Users\lgx95\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-07-28 13:17:34.203 +12:00 [INF] Request starting HTTP/1.1 DEBUG http://localhost:5000/  0
+2019-07-28 13:17:34.203 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/values  
+2019-07-28 13:17:34.238 +12:00 [INF] Request finished in 35.6972ms 200 
+2019-07-28 13:17:34.300 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-07-28 13:17:34.435 +12:00 [INF] 
+2019-07-28 13:17:34.815 +12:00 [INF] Route matched with {action = "Get", controller = "Values"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Get() on controller Pegasus_backend.Controllers.ValuesController (Pegasus_backend).
+2019-07-28 13:17:35.311 +12:00 [INF] Executing action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) - Validation state: "Valid"
+2019-07-28 13:17:35.337 +12:00 [INF] ValuesController LogInfoToFile: hello
+2019-07-28 13:17:35.346 +12:00 [INF] Executed action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 11.9654ms.
+2019-07-28 13:17:35.372 +12:00 [INF] Executing ObjectResult, writing value of type 'System.DateTime'.
+2019-07-28 13:17:35.488 +12:00 [INF] Executed action Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) in 662.6979ms
+2019-07-28 13:17:35.492 +12:00 [INF] Response "2019-07-28T13:17:35.337847"
+2019-07-28 13:17:35.510 +12:00 [INF] Request finished in 1311.2873ms 200 application/json; charset=utf-8
+2019-07-28 13:17:53.121 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/chat/negotiate?userId=1  
+2019-07-28 13:17:53.126 +12:00 [INF] Policy execution successful.
+2019-07-28 13:17:53.128 +12:00 [INF] Request finished in 7.598ms 204 
+2019-07-28 13:17:53.375 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/chat/negotiate?userId=1 text/plain;charset=UTF-8 0
+2019-07-28 13:17:53.375 +12:00 [INF] Policy execution successful.
+2019-07-28 13:17:53.405 +12:00 [INF] Request finished in 30.0764ms 200 application/json
+2019-07-28 13:17:53.611 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/chat?userId=1&id=E1bfNT4tGSCcObDKmTJwfQ  
+2019-07-28 13:17:53.612 +12:00 [INF] Policy execution successful.
+2019-07-28 13:17:54.074 +12:00 [INF] Completed connection handshake. Using HubProtocol 'json'.
+2019-07-28 13:17:57.307 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/Chat  
+2019-07-28 13:17:57.308 +12:00 [INF] Policy execution successful.
+2019-07-28 13:17:57.309 +12:00 [INF] Request finished in 1.7641ms 204 
+2019-07-28 13:17:57.319 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/Chat application/json 113
+2019-07-28 13:17:57.320 +12:00 [INF] Policy execution successful.
+2019-07-28 13:17:57.329 +12:00 [INF] {"ChatGroupId":null,"MessageBody":"emily","SenderUserId":1,"ReceiverUserId":1,"CreateAt":"7/28/2019, 1:17:57 PM"}
+2019-07-28 13:17:57.364 +12:00 [INF] Route matched with {action = "Post", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Post(Pegasus_backend.Models.ChatMessageModel) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-07-28 13:17:58.330 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.Post (Pegasus_backend) - Validation state: "Valid"
+2019-07-28 13:17:59.486 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-28 13:17:59.486 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-28 13:18:00.931 +12:00 [INF] Executed DbCommand (51ms) [Parameters=[@p0='?' (Size = -1), @p1='?' (DbType = DateTime), @p2='?' (Size = -1), @p3='?' (DbType = Int16), @p4='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `ablemusic`.`chat_message` (`chat_group_id`, `create_at`, `message_body`, `receiver_user_id`, `sender_user_id`)
+VALUES (@p0, @p1, @p2, @p3, @p4);
+SELECT `chat_message_id`
+FROM `ablemusic`.`chat_message`
+WHERE ROW_COUNT() = 1
+ AND `chat_message_id`=LAST_INSERT_ID();
+2019-07-28 13:18:01.011 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.Post (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 2681.0927ms.
+2019-07-28 13:18:01.012 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[Pegasus_backend.Models.ChatMessageModel, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2019-07-28 13:18:01.023 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.Post (Pegasus_backend) in 3659.2380000000003ms
+2019-07-28 13:18:01.023 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":{"ChatMessageId":null,"ChatGroupId":null,"MessageBody":"emily","SenderUserId":1,"CreateAt":"2019-07-28T13:17:57","ReceiverUserId":1}}
+2019-07-28 13:18:01.025 +12:00 [INF] Request finished in 3705.058ms 200 application/json; charset=utf-8
+2019-07-28 13:18:34.950 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/Chat  
+2019-07-28 13:18:34.954 +12:00 [INF] Policy execution successful.
+2019-07-28 13:18:34.972 +12:00 [INF] Request finished in 22.0541ms 204 
+2019-07-28 13:18:35.001 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/Chat application/json 113
+2019-07-28 13:18:35.044 +12:00 [INF] Policy execution successful.
+2019-07-28 13:18:35.046 +12:00 [INF] {"ChatGroupId":null,"MessageBody":"emily","SenderUserId":1,"ReceiverUserId":1,"CreateAt":"7/28/2019, 1:18:31 PM"}
+2019-07-28 13:18:35.048 +12:00 [INF] Route matched with {action = "Post", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Post(Pegasus_backend.Models.ChatMessageModel) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-07-28 13:18:42.777 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.Post (Pegasus_backend) - Validation state: "Valid"
+2019-07-28 13:18:42.788 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-28 13:18:42.813 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-28 13:19:29.185 +12:00 [INF] User profile is available. Using 'C:\Users\lgx95\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-07-28 13:19:30.338 +12:00 [INF] Request starting HTTP/1.1 DEBUG http://localhost:5000/  0
+2019-07-28 13:19:30.338 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/values  
+2019-07-28 13:19:30.374 +12:00 [INF] Request finished in 38.6037ms 200 
+2019-07-28 13:19:30.425 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-07-28 13:19:30.580 +12:00 [INF] 
+2019-07-28 13:19:30.966 +12:00 [INF] Route matched with {action = "Get", controller = "Values"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Get() on controller Pegasus_backend.Controllers.ValuesController (Pegasus_backend).
+2019-07-28 13:19:31.289 +12:00 [INF] Executing action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) - Validation state: "Valid"
+2019-07-28 13:19:31.305 +12:00 [INF] ValuesController LogInfoToFile: hello
+2019-07-28 13:19:31.314 +12:00 [INF] Executed action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 5.6976ms.
+2019-07-28 13:19:31.329 +12:00 [INF] Executing ObjectResult, writing value of type 'System.DateTime'.
+2019-07-28 13:19:31.416 +12:00 [INF] Executed action Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) in 444.4062ms
+2019-07-28 13:19:31.422 +12:00 [INF] Response "2019-07-28T13:19:31.3058042"
+2019-07-28 13:19:31.439 +12:00 [INF] Request finished in 1108.4569ms 200 application/json; charset=utf-8
+2019-07-28 13:19:39.433 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/chat/negotiate?userId=1  
+2019-07-28 13:19:39.436 +12:00 [INF] Policy execution successful.
+2019-07-28 13:19:39.438 +12:00 [INF] Request finished in 4.9625ms 204 
+2019-07-28 13:19:39.834 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/chat/negotiate?userId=1 text/plain;charset=UTF-8 0
+2019-07-28 13:19:39.835 +12:00 [INF] Policy execution successful.
+2019-07-28 13:19:39.879 +12:00 [INF] Request finished in 44.876ms 200 application/json
+2019-07-28 13:19:40.086 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/chat?userId=1&id=fW7RNef39fwWA2bHCNColQ  
+2019-07-28 13:19:40.087 +12:00 [INF] Policy execution successful.
+2019-07-28 13:19:40.592 +12:00 [INF] Completed connection handshake. Using HubProtocol 'json'.
+2019-07-28 13:19:43.795 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/Chat  
+2019-07-28 13:19:43.796 +12:00 [INF] Policy execution successful.
+2019-07-28 13:19:43.796 +12:00 [INF] Request finished in 1.4259ms 204 
+2019-07-28 13:19:43.810 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/Chat application/json 115
+2019-07-28 13:19:43.810 +12:00 [INF] Policy execution successful.
+2019-07-28 13:19:43.813 +12:00 [INF] {"ChatGroupId":null,"MessageBody":"jiojasd","SenderUserId":1,"ReceiverUserId":1,"CreateAt":"7/28/2019, 1:19:43 PM"}
+2019-07-28 13:19:43.851 +12:00 [INF] Route matched with {action = "Post", controller = "Chat"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Post(Pegasus_backend.Models.ChatMessageModel) on controller Pegasus_backend.Controllers.MobileControllers.ChatController (Pegasus_backend).
+2019-07-28 13:19:44.920 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.ChatController.Post (Pegasus_backend) - Validation state: "Valid"
+2019-07-28 13:19:46.154 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-28 13:19:46.154 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-28 13:19:47.413 +12:00 [INF] Executed DbCommand (38ms) [Parameters=[@__chatMessageModel_SenderUserId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`role_id`
+FROM `ablemusic`.`user` AS `x`
+WHERE `x`.`user_id` = @__chatMessageModel_SenderUserId_0
+LIMIT 1
+2019-07-28 13:19:47.580 +12:00 [INF] Executed DbCommand (37ms) [Parameters=[@__senderRoleId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`role_name`
+FROM `ablemusic`.`role` AS `x`
+WHERE `x`.`role_id` = @__senderRoleId_0
+LIMIT 1
+2019-07-28 13:19:47.582 +12:00 [INF] Executed DbCommand (52ms) [Parameters=[@p0='?' (Size = -1), @p1='?' (DbType = DateTime), @p2='?' (Size = -1), @p3='?' (DbType = Int16), @p4='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `ablemusic`.`chat_message` (`chat_group_id`, `create_at`, `message_body`, `receiver_user_id`, `sender_user_id`)
+VALUES (@p0, @p1, @p2, @p3, @p4);
+SELECT `chat_message_id`
+FROM `ablemusic`.`chat_message`
+WHERE ROW_COUNT() = 1
+ AND `chat_message_id`=LAST_INSERT_ID();
+2019-07-28 13:19:47.649 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.ChatController.Post (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 2728.6037ms.
+2019-07-28 13:19:47.650 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[Pegasus_backend.Models.ChatMessageModel, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2019-07-28 13:19:47.664 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.ChatController.Post (Pegasus_backend) in 3813.5179000000003ms
+2019-07-28 13:19:47.665 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":{"ChatMessageId":null,"ChatGroupId":null,"MessageBody":"jiojasd","SenderUserId":1,"CreateAt":"2019-07-28T13:19:43","ReceiverUserId":1}}
+2019-07-28 13:19:47.665 +12:00 [INF] Request finished in 3855.5861ms 200 application/json; charset=utf-8

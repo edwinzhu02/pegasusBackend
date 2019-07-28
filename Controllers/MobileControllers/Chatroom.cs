@@ -6,6 +6,7 @@ using System.Linq;
 using System.Security.Principal;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 using Org.BouncyCastle.Security;
 using Pegasus_backend.Models;
 using Pegasus_backend.pegasusContext;
@@ -52,15 +53,18 @@ namespace Pegasus_backend.Controllers.MobileControllers
 
             //var connectionId = Context.ConnectionId;
             var returnedMessageTime = chatMessageModel.CreateAt ?? DateTime.Now;
-            var senderRole = await _ablemusicContext.User.Where(x => x.UserId == chatMessageModel.SenderUserId)
-                .Include(x => x.Role).FirstOrDefaultAsync();
-            if (senderRole == null)
-            {
-                return "Cannot find userId of message sender";
-            }
-            var roleName = senderRole.Role.RoleName;
             try
             {
+                var senderRoleId = _ablemusicContext.User.Where(x => x.UserId == chatMessageModel.SenderUserId)
+                    .Select(x => x.RoleId).FirstOrDefault();
+                if (senderRoleId == null)
+                {
+                    return "Cannot find userId of message sender";
+                }
+
+                var roleName = _ablemusicContext.Role.Where(x => x.RoleId == senderRoleId).Select(x => x.RoleName)
+                    .First();
+
                 await Clients.User(chatMessageModel.ReceiverUserId.ToString())
                     .SendAsync("SendMessageOneToOne", chatMessageModel.SenderUserId, chatMessageModel.MessageBody,
                         returnedMessageTime.ToString("G"), roleName);
