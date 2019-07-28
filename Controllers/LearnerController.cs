@@ -336,9 +336,10 @@ namespace Pegasus_backend.Controllers
                     await _ablemusicContext.SaveChangesAsync();
 
                     //generate new waiting invoice and group lesson
+
                     newLearner.LearnerGroupCourse.ToList().ForEach(async s =>
                     {
-                         await _lessonGenerateService.GetTerm((DateTime)s.BeginDate, (int)s.GroupCourseInstanceId);
+                         await _lessonGenerateService.GetTerm((DateTime)s.BeginDate, (int)s.GroupCourseInstanceId,0);
                     });
 
                     detailsJson.OneToOneCourseInstance.ForEach(s =>
@@ -349,12 +350,9 @@ namespace Pegasus_backend.Controllers
 
                         if (room == null)
                         {
-                            throw new Exception("Available Days of this teacher does not found");
+                            throw new Exception("Room does not found");
                         }
-                        if (room.RoomId == null)
-                        {
-                            throw new Exception("Teacher does not have a room in this branch");
-                        }                        
+                        
                         var durationType = _ablemusicContext.Course.FirstOrDefault(w => w.CourseId == s.CourseId).Duration;
                         _ablemusicContext.Add(new One2oneCourseInstance
                         {
@@ -378,7 +376,7 @@ namespace Pegasus_backend.Controllers
                     //generate new waiting invoice and one2one lesson
                     newLearner.One2oneCourseInstance.ToList().ForEach(async s =>
                     {
-                        await _lessonGenerateService.GetTerm((DateTime)s.BeginDate, s.CourseInstanceId);
+                        await _lessonGenerateService.GetTerm((DateTime)s.BeginDate, s.CourseInstanceId,1);
                     });
 
                     //add new fund row for new student

@@ -560,7 +560,7 @@ namespace Pegasus_backend.Services
 
         }
 
-        public async Task GetTerm(DateTime date, int instance_id=0)
+        public async Task GetTerm(DateTime date, int instance_id=0,int isone2one=3)
         {
             //string time DateTime time
             var terms = _ablemusicContext.Term.OrderBy(x => x.BeginDate).ToArray();
@@ -577,22 +577,54 @@ namespace Pegasus_backend.Services
                 TimeSpan ts = BeginDate.Subtract(start_date);
 
                 int day = ts.Days;
-
-                if (day >= 0 && day <= 30)
+                if (isone2one == 3)
                 {
+                    if (day >= 0 && day <= 30)
+                    {
 
-                    int next_term = term.TermId;
-                    await Generateone2oneInvoice(next_term,instance_id);
-                    await GenerateGroupInvoice(next_term, instance_id);
+                        int next_term = term.TermId;
+                        await Generateone2oneInvoice(next_term, instance_id);
+                        await GenerateGroupInvoice(next_term, instance_id);
+                    }
+
+                    if (start_date >= term.BeginDate && start_date <= term.EndDate)
+                    {
+                        int this_term = term.TermId;
+                        await Generateone2oneInvoice(this_term, instance_id);
+                        await GenerateGroupInvoice(this_term, instance_id);
+                    }
+                }
+                if (isone2one == 0)
+                {
+                    if (day >= 0 && day <= 30)
+                    {
+
+                        int next_term = term.TermId;
+                        await GenerateGroupInvoice(next_term, instance_id);
+                    }
+
+                    if (start_date >= term.BeginDate && start_date <= term.EndDate)
+                    {
+                        int this_term = term.TermId;
+                        await GenerateGroupInvoice(this_term, instance_id);
+                    }
+                }
+                if (isone2one == 1)
+                {
+                    if (day >= 0 && day <= 30)
+                    {
+
+                        int next_term = term.TermId;
+                        await Generateone2oneInvoice(next_term, instance_id);
+                    }
+
+                    if (start_date >= term.BeginDate && start_date <= term.EndDate)
+                    {
+                        int this_term = term.TermId;
+                        await Generateone2oneInvoice(this_term, instance_id);
+                    }
                 }
 
-                if (start_date >= term.BeginDate && start_date <= term.EndDate)
-                {
-                    int this_term = term.TermId;
-                    await Generateone2oneInvoice(this_term, instance_id);
-                    await GenerateGroupInvoice(this_term, instance_id);
-
-                }
             }
         }
 
