@@ -64,7 +64,8 @@ namespace Pegasus_backend.Controllers
 
             try
             {
-                result.Data = await _ablemusicContext.Invoice.Include(x => x.Learner).Include(x => x.Term).Include(x => x.GroupCourseInstance).Include(x => x.CourseInstance).ToListAsync();
+                result.Data = await _ablemusicContext.Invoice.Where(i => i.IsActive==1)
+                .Include(x => x.Learner).Include(x => x.Term).Include(x => x.GroupCourseInstance).Include(x => x.CourseInstance).ToListAsync();
                 
             }
             catch (Exception ex)
