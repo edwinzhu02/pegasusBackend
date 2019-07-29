@@ -70,6 +70,9 @@ namespace Pegasus_backend.Controllers
                     .Include(w=>w.One2oneCourseInstance)
                     .ThenInclude(w=>w.Amendment)
                     .ThenInclude(w=>w.Teacher)
+                    .Include(w=>w.One2oneCourseInstance)
+                    .ThenInclude(w=>w.Amendment)
+                    .ThenInclude(w=>w.Org)
                     .Include(w => w.One2oneCourseInstance)
                     .ThenInclude(w => w.Org)
                     .Include(w => w.One2oneCourseInstance)
@@ -92,6 +95,7 @@ namespace Pegasus_backend.Controllers
                     .Include(s => s.LearnerGroupCourse)
                     .ThenInclude(s => s.GroupCourseInstance)
                     .ThenInclude(s => s.Room)//
+                    
                     .Where(s => s.IsActive == 1)
                     .ToListAsync();
                 
