@@ -121,7 +121,8 @@ namespace Pegasus_backend.Controllers
                         student=IsNull(q.GroupCourseInstance)?IsNull(q.CourseInstance)?new List<string>{q.Learner.FirstName}:new List<string>{q.Learner.FirstName}:q.GroupCourseInstance.LearnerGroupCourse.Select(w=>w.Learner.FirstName),
                         description="", courseName=!IsNull(q.GroupCourseInstance)?q.GroupCourseInstance.Course.CourseName:IsNull(q.CourseInstance)?q.TrialCourse.CourseName:q.CourseInstance.Course.CourseName,
                         orgName= q.Org.OrgName, roomName=q.Room.RoomName, orgAbbr = q.Org.Abbr,
-                        q.IsConfirm,q.IsChanged,q.IsCanceled,q.Reason,q.BeginTime,
+                        q.OrgId,q.RoomId,
+                        q.IsConfirm,q.IsChanged,q.IsCanceled,q.Reason,q.BeginTime, q.LessonId, q.LearnerId,
                         newLesson= new
                         {
                             RoomName = _ablemusicContext.Room.FirstOrDefault(z=>z.RoomId==_ablemusicContext.Lesson

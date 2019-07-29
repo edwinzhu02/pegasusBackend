@@ -33,6 +33,27 @@ namespace Pegasus_backend.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet("[action]/{orgId}/{dayofweek}")]
+        public async Task<IActionResult> GetTeacherRoomByOrgDayOfWeek(short orgId, short dayofweek)
+        {
+            var result = new Result<object>();
+            try
+            {
+                var availableDays = await _ablemusicContext.AvailableDays
+                    .Include(s=>s.Teacher)
+                    .Where(s => s.OrgId == orgId && s.RoomId != null && s.DayOfWeek == dayofweek)
+                    .ToListAsync();
+                result.Data = availableDays;
+                return Ok(availableDays);
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+        }
+
         
         //GET http://localhost:5000/api/teacher/:words
         [CheckModelFilter]
