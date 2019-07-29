@@ -73,7 +73,11 @@ namespace Pegasus_backend.Controllers
 
                         if (room == null)
                         {
-                            throw new Exception("Room does not found");
+                            throw new Exception("this teacher is not available");
+                        }
+                        if (room.RoomId == null)
+                        {
+                            throw new Exception("Room of this teacher in this branch does not found");
                         }
                         
                         var durationType = _ablemusicContext.Course.FirstOrDefault(w => w.CourseId == s.CourseId).Duration;
@@ -108,7 +112,7 @@ namespace Pegasus_backend.Controllers
             catch (Exception ex)
             {
                 result.IsSuccess = false;
-                result.ErrorMessage = ex.ToString();
+                result.ErrorMessage = ex.Message;
                 return BadRequest(result);
             }
         }

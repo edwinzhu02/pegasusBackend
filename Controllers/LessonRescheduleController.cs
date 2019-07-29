@@ -231,6 +231,7 @@ namespace Pegasus_backend.Controllers
                     todoDate = todoDate.AddDays(-1);
                 }
             }
+            DateTime remindScheduledDate = todoDate;
 
             List<Teacher> effectedTeachers = new List<Teacher>();
             foreach (var lessonAppend in lessonsToBeAppend)
@@ -263,8 +264,8 @@ namespace Pegasus_backend.Controllers
 
                 RemindLogRepository remindLogRepository = new RemindLogRepository(_ablemusicContext);
                 remindLogRepository.AddSingleRemindLog(learner.LearnerId, learner.Email, RemindLogContentGenerator.LessonRescheduleForLearner(lesson, learner,
-                    lessonsToBeAppend, courseName), null, "Lesson Reschedule Remind", lesson.LessonId);
-                remindLogRepository.AddMultipleRemindLogs(teacherMapRemindLogContent, null, "Lesson Reschedule Remind", lesson.LessonId);
+                    lessonsToBeAppend, courseName), null, "Lesson Reschedule Remind", lesson.LessonId, remindScheduledDate);
+                remindLogRepository.AddMultipleRemindLogs(teacherMapRemindLogContent, null, "Lesson Reschedule Remind", lesson.LessonId, remindScheduledDate);
                 var saveRemindLogResult = await remindLogRepository.SaveRemindLogAsync();
                 if (!saveRemindLogResult.IsSuccess)
                 {

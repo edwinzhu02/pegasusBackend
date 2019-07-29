@@ -53,7 +53,7 @@ namespace Pegasus_backend.Controllers
                     details.Add(pageGroup);
                     
                 });
-                var finaldata = details.Where(s => s.Page.Count != 0).ToList();
+                var finaldata = details.Where(s => s.Page.Count != 0).OrderBy(s => s.DisplayOrder).ToList();
                 result.Data = finaldata;
 
             }

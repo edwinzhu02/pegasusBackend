@@ -354,6 +354,8 @@ namespace Pegasus_backend.Controllers
                 }
             }
 
+            DateTime remindScheduleDateBegin = todoDateBegin;
+
             using (var dbContextTransaction = _ablemusicContext.Database.BeginTransaction())
             {
                 TodoRepository todoRepository = new TodoRepository(_ablemusicContext);
@@ -376,9 +378,10 @@ namespace Pegasus_backend.Controllers
 
                 RemindLogRepository remindLogRepository = new RemindLogRepository(_ablemusicContext);
                 remindLogRepository.AddSingleRemindLog(courseInfo.LearnerId, courseInfo.LearnerEmail, RemindLogContentGenerator.PeriodCourseChangeForLearner(
-                    courseInfo, newCourseInfo, inputObj), null, "Period Course Change Remind", null);
+                    courseInfo, newCourseInfo, inputObj), null, "Period Course Change Remind", null, remindScheduleDateBegin);
                 remindLogRepository.AddSingleRemindLog(null, courseInfo.TeacherEmail, RemindLogContentGenerator.PeriodCourseChangeForTeacher(courseInfo,
-                    newCourseInfo, inputObj), courseInfo.TeacherId, "Period Course Change Remind", null);
+                    newCourseInfo, inputObj), courseInfo.TeacherId, "Period Course Change Remind", null, remindScheduleDateBegin);
+
                 var saveRemindLogResult = await remindLogRepository.SaveRemindLogAsync();
                 if (!saveRemindLogResult.IsSuccess)
                 {

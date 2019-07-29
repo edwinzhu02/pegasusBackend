@@ -1,9 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Diagnostics;
+using System.Linq;
 using System.Security.Principal;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 using Org.BouncyCastle.Security;
 using Pegasus_backend.Models;
 using Pegasus_backend.pegasusContext;
@@ -12,6 +15,11 @@ namespace Pegasus_backend.Controllers.MobileControllers
 {
     public class Chatroom : Hub
     {
+        private readonly ablemusicContext _ablemusicContext;
+        public Chatroom (ablemusicContext ablemusicContext)
+        {
+            _ablemusicContext = ablemusicContext;
+        }
 //        public override Task OnConnectedAsync()
 //        {
 //            var username = Context.UserIdentifier.
@@ -47,9 +55,19 @@ namespace Pegasus_backend.Controllers.MobileControllers
             var returnedMessageTime = chatMessageModel.CreateAt ?? DateTime.Now;
             try
             {
+                var senderRoleId = _ablemusicContext.User.Where(x => x.UserId == chatMessageModel.SenderUserId)
+                    .Select(x => x.RoleId).FirstOrDefault();
+                if (senderRoleId == null)
+                {
+                    return "Cannot find userId of message sender";
+                }
+
+                var roleName = _ablemusicContext.Role.Where(x => x.RoleId == senderRoleId).Select(x => x.RoleName)
+                    .First();
+
                 await Clients.User(chatMessageModel.ReceiverUserId.ToString())
                     .SendAsync("SendMessageOneToOne", chatMessageModel.SenderUserId, chatMessageModel.MessageBody,
-                        returnedMessageTime.ToString("G"));
+                        returnedMessageTime.ToString("G"), roleName);
             }
             catch (Exception e)
             {
