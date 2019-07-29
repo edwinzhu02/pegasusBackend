@@ -172,6 +172,21 @@ namespace Pegasus_backend.Models
         public short? TeacherId { get; set; }
         public GetLearnerOnetoOneCourseInstanceCourseAmendmentTeacher Teacher { get; set; }
         public GetLearnerOnetoOneCourseInstanceCourseAmendmentRoom Room { get; set; }
+        public GetLearnerOnetoOneCourseInstanceCourseAmendmentOrg Org { get; set; }
+    }
+
+    public class GetLearnerOnetoOneCourseInstanceCourseAmendmentOrg
+    {
+        public short OrgId { get; set; }
+        public string OrgName { get; set; }
+        public short? IsHeadoffice { get; set; }
+        public short? IsActivate { get; set; }
+        public string Address { get; set; }
+        public string Email { get; set; }
+        public string Phone { get; set; }
+        public decimal? LocaltionX { get; set; }
+        public decimal? LocaltionY { get; set; }
+        public string Abbr { get; set; }
     }
 
     public class GetLearnerOnetoOneCourseInstanceCourseAmendmentRoom
