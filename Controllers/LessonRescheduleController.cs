@@ -42,7 +42,7 @@ namespace Pegasus_backend.Controllers
                 lesson = await _ablemusicContext.Lesson.Where(l => l.LessonId == lessonId).Include(l => l.Invoice).FirstOrDefaultAsync();
                 if(lesson.Invoice == null)
                 {
-                    throw new Exception("This session may is a group session, Group session is not allowed to reschedule");
+                    throw new Exception("This session may is a group session or Trial session, this session is not allowed to reschedule");
                 }
                 courses = await (from c in _ablemusicContext.Course
                                  join oto in _ablemusicContext.One2oneCourseInstance on c.CourseId equals oto.CourseId
@@ -100,7 +100,7 @@ namespace Pegasus_backend.Controllers
             {
                 result.IsSuccess = false;
                 result.IsFound = false;
-                result.ErrorMessage = ex.ToString();
+                result.ErrorMessage = ex.Message;
                 return NotFound(result);
             }
             if (lesson == null)
@@ -309,7 +309,7 @@ namespace Pegasus_backend.Controllers
                 catch (Exception ex)
                 {
                     result.IsSuccess = false;
-                    result.ErrorMessage = ex.ToString();
+                    result.ErrorMessage = ex.Message;
                     return BadRequest(result);
                 }
 
