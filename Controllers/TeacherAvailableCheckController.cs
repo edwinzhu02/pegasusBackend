@@ -57,7 +57,7 @@ namespace Pegasus_backend.Controllers
                                              join oto in _ablemusicContext.One2oneCourseInstance on l.LearnerId equals oto.LearnerId
                                              join cs in _ablemusicContext.CourseSchedule on oto.CourseInstanceId equals cs.CourseInstanceId
                                              join o in _ablemusicContext.Org on oto.OrgId equals o.OrgId
-                                             where oto.TeacherId == teacherId && beginDate < oto.EndDate 
+                                             where oto.TeacherId == teacherId && (beginDate < oto.EndDate || oto.EndDate == null)
                                              select new 
                                              {
                                                  CourseScheduleId = cs.CourseScheduleId,
@@ -75,7 +75,7 @@ namespace Pegasus_backend.Controllers
                 arrangedGroupSchedule = await (from g in _ablemusicContext.GroupCourseInstance
                                              join cs in _ablemusicContext.CourseSchedule on g.GroupCourseInstanceId equals cs.GroupCourseInstanceId
                                              join o in _ablemusicContext.Org on g.OrgId equals o.OrgId
-                                             where g.TeacherId == teacherId && beginDate < g.EndDate
+                                             where g.TeacherId == teacherId && (beginDate < g.EndDate || g.EndDate == null)
                                              select new 
                                              {
                                                  CourseScheduleId = cs.CourseScheduleId,

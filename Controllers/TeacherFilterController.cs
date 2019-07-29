@@ -53,7 +53,7 @@ namespace Pegasus_backend.Controllers
                 teachers = await (from t in _ablemusicContext.Teacher
                                   join ta in _ablemusicContext.AvailableDays on t.TeacherId equals ta.TeacherId
                                   join tc in _ablemusicContext.TeacherCourse on t.TeacherId equals tc.TeacherId
-                                  where tc.CourseId == courseId && t.IsActivate == 1
+                                  where tc.CourseId == courseId && t.IsActivate == 1 && ta.RoomId != null
                                   select new
                                   {
                                       TeacherId = t.TeacherId,
@@ -136,8 +136,10 @@ namespace Pegasus_backend.Controllers
             dynamic orgs;
             dynamic rooms;
             dynamic teachers;
+            //var  courseCat;
             try
             {
+                var courseCat = _ablemusicContext.Course.Where(c => c.CourseId == courseId).Select(c => c.CourseCategoryId).FirstOrDefault();
                 orgs = await (from o in _ablemusicContext.Org
                               select new
                               {
@@ -154,7 +156,8 @@ namespace Pegasus_backend.Controllers
                 teachers = await (from t in _ablemusicContext.Teacher
                                   join ta in _ablemusicContext.AvailableDays on t.TeacherId equals ta.TeacherId
                                   join tc in _ablemusicContext.TeacherCourse on t.TeacherId equals tc.TeacherId
-                                  where tc.CourseId == courseId && t.IsActivate==1
+                                  join cc in _ablemusicContext.Course on tc.CourseId  equals cc.CourseId
+                                  where cc.CourseCategoryId == courseCat && t.IsActivate==1
                                   select new
                                   {
                                       TeacherId = t.TeacherId,
