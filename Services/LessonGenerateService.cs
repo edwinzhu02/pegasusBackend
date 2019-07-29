@@ -694,7 +694,7 @@ namespace Pegasus_backend.Services
                 }
 
             }
-            UpdateWaitingInvoicetoActive();
+            //UpdateWaitingInvoicetoActive();
         }
 
 
