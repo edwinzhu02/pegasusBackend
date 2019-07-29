@@ -33,6 +33,12 @@ namespace Pegasus_backend.Controllers
             _mapper = mapper;
         }
 
+        /*[HttpGet("[action]/{orgId}")]
+        public async Task<IActionResult> GetTeacherByOrgRoom()
+        {
+            
+        }*/
+
         
         //GET http://localhost:5000/api/teacher/:words
         [CheckModelFilter]
