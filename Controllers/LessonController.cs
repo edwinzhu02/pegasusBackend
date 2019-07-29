@@ -122,7 +122,7 @@ namespace Pegasus_backend.Controllers
                         description="", courseName=!IsNull(q.GroupCourseInstance)?q.GroupCourseInstance.Course.CourseName:IsNull(q.CourseInstance)?q.TrialCourse.CourseName:q.CourseInstance.Course.CourseName,
                         orgName= q.Org.OrgName, roomName=q.Room.RoomName, orgAbbr = q.Org.Abbr,
                         q.OrgId,q.RoomId,
-                        q.IsConfirm,q.IsChanged,q.IsCanceled,q.Reason,q.BeginTime, q.LessonId,
+                        q.IsConfirm,q.IsChanged,q.IsCanceled,q.Reason,q.BeginTime, q.LessonId, q.LearnerId,
                         newLesson= new
                         {
                             RoomName = _ablemusicContext.Room.FirstOrDefault(z=>z.RoomId==_ablemusicContext.Lesson
