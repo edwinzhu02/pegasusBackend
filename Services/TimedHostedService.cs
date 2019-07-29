@@ -27,7 +27,7 @@ namespace Pegasus_backend.Services
             return Task.CompletedTask;
         }
 
-        private void DoWork(object state)
+        private async void DoWork(object state)
         {
             Console.WriteLine("DoWork executed");
 
