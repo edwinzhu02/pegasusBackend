@@ -44,7 +44,7 @@ namespace Pegasus_backend.Controllers
                     .Where(s => s.OrgId == orgId && s.RoomId != null && s.DayOfWeek == dayofweek)
                     .ToListAsync();
                 result.Data = availableDays;
-                return Ok(availableDays);
+                return Ok(result);
             }
             catch (Exception ex)
             {
