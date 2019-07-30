@@ -44,7 +44,7 @@ namespace Pegasus_backend.Controllers
                     .Where(s => s.OrgId == orgId && s.RoomId != null && s.DayOfWeek == dayofweek)
                     .ToListAsync();
                 result.Data = availableDays;
-                return Ok(availableDays);
+                return Ok(result);
             }
             catch (Exception ex)
             {
@@ -54,32 +54,32 @@ namespace Pegasus_backend.Controllers
             }
         }
 
-        
-        //GET http://localhost:5000/api/teacher/:words
-        [CheckModelFilter]
-        [HttpGet("{words}")]
-        public IActionResult SearchTeacher(string words, [FromBody] TeacherSearch searchFormat)
+
+
+        [HttpGet("[action]/{teacherId}")]
+        public async Task<IActionResult> GetTeacherAvailableDaysDayById(int teacherId)
         {
-            Result<Object> result = new Result<Object>();
+            var result = new Result<object>();
             try
             {
-                
-                var firstNameList = searchFormat.FirstName?_ablemusicContext.Teacher.Where(s => s.FirstName.Contains(words)).ToList():new List<Teacher>();
-                var lastNameList = searchFormat.LastName?_ablemusicContext.Teacher.Where(s => s.LastName.Contains(words)).ToList():new List<Teacher>();
-                var genderList = searchFormat.Gender?_ablemusicContext.Teacher.Where(s => s.Gender.ToString().Contains(words)).ToList():new List<Teacher>();
-                var mobilePhoneList = searchFormat.MobilePhone?_ablemusicContext.Teacher.Where(s => s.MobilePhone.Contains(words)).ToList():new List<Teacher>();
-                var emailList = searchFormat.Email?_ablemusicContext.Teacher.Where(s => s.Email.Contains(words)).ToList():new List<Teacher>();
-                result.Data = firstNameList.Union(lastNameList).Union(genderList).Union(mobilePhoneList)
-                    .Union(emailList);
+                result.Data = await _ablemusicContext.AvailableDays
+                    .Include(s=>s.Org)
+                    .Where(s => s.TeacherId == teacherId)
+                    .Select(s=> new
+                    {
+                        s.TeacherId, s.AvailableDaysId,s.DayOfWeek,s.OrgId,s.Org.Abbr,
+                    })
+                    .ToListAsync();
+                return Ok(result);
             }
             catch (Exception ex)
             {
                 result.IsSuccess = false;
-                result.ErrorMessage = ex.ToString();
+                result.ErrorMessage = ex.Message;
                 return BadRequest(result);
             }
-            return Ok(result);
         }
+        
         
         //DELETE http://localhost:5000/api/teacher/:id
         [HttpDelete("{id}")]
@@ -125,8 +125,8 @@ namespace Pegasus_backend.Controllers
                     .ThenInclude(s => s.Quali)
                     .Include(s => s.TeacherCourse)
                     .ThenInclude(s => s.Course)
-                    .Include(s => s.AvailableDays)
-                    .ThenInclude(s=>s.Org)
+                    .Include(q=>q.AvailableDays)
+                    .ThenInclude(q=>q.Org)
                     .Include(s=>s.TeacherCourse)
                     .ThenInclude(s=>s.Course)
                     .Include(t => t.TeacherWageRates)

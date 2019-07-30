@@ -12,14 +12,14 @@ namespace Pegasus_backend.Services
 {
     public class DashboardService
     {
-        private readonly ablemusicContext _ablemusciContext;
+        private readonly ablemusicContext _ablemusicContext;
         private readonly ILogger _log;
         private readonly List<int> _orgIds;
         private readonly DateTime _today;
 
         public DashboardService(ablemusicContext ablemusicContext, ILogger<Object> log, List<int> orgIds)
         {
-            _ablemusciContext = ablemusicContext;
+            _ablemusicContext = ablemusicContext;
             _log = log;
             _orgIds = orgIds;
             _today = DateTime.UtcNow.ToNZTimezone();
@@ -31,7 +31,7 @@ namespace Pegasus_backend.Services
             result.Data = new List<Lesson>();
             try
             {
-                result.Data = await _ablemusciContext.Lesson.Where(l => l.BeginTime.HasValue && l.BeginTime.Value.Date == _today.Date && 
+                result.Data = await _ablemusicContext.Lesson.Where(l => l.BeginTime.HasValue && l.BeginTime.Value.Date == _today.Date && 
                 _orgIds.Contains(l.OrgId) && l.IsCanceled != 1).ToListAsync();
             }
             catch(Exception ex)
@@ -50,7 +50,7 @@ namespace Pegasus_backend.Services
             result.Data = new List<Lesson>();
             try
             {
-                result.Data = await _ablemusciContext.Lesson.Where(l => l.BeginTime.HasValue && l.BeginTime.Value.Date == _today.Date && 
+                result.Data = await _ablemusicContext.Lesson.Where(l => l.BeginTime.HasValue && l.BeginTime.Value.Date == _today.Date && 
                 l.IsTrial == 1 && _orgIds.Contains(l.OrgId) && l.IsCanceled != 1).ToListAsync();
             }
             catch(Exception ex)
@@ -69,7 +69,7 @@ namespace Pegasus_backend.Services
             result.Data = new List<Learner>();
             try
             {
-                result.Data = await _ablemusciContext.Learner.Where(l => l.EnrollDate.HasValue && _today.Date == l.EnrollDate.Value.Date && 
+                result.Data = await _ablemusicContext.Learner.Where(l => l.EnrollDate.HasValue && _today.Date == l.EnrollDate.Value.Date && 
                 _orgIds.Contains((int)l.OrgId)).ToListAsync();
                 Console.WriteLine(_today.Date);
             }
@@ -89,8 +89,8 @@ namespace Pegasus_backend.Services
             result.Data = new List<InvoiceWaitingConfirm>();
             try
             {
-                result.Data = await (from w in _ablemusciContext.InvoiceWaitingConfirm
-                                join l in _ablemusciContext.Learner on w.LearnerId equals l.LearnerId
+                result.Data = await (from w in _ablemusicContext.InvoiceWaitingConfirm
+                                join l in _ablemusicContext.Learner on w.LearnerId equals l.LearnerId
                                 where _orgIds.Contains((int)l.OrgId) && w.IsConfirmed == 0
                                 select w
                                 ).ToListAsync();
@@ -111,7 +111,7 @@ namespace Pegasus_backend.Services
             result.Data = new List<Lesson>();
             try
             {
-                result.Data = await _ablemusciContext.Lesson.Where(l => l.BeginTime.HasValue && l.IsCanceled == 1 && _orgIds.Contains(l.OrgId) && 
+                result.Data = await _ablemusicContext.Lesson.Where(l => l.BeginTime.HasValue && l.IsCanceled == 1 && _orgIds.Contains(l.OrgId) && 
                 l.BeginTime.Value.Date == _today.Date).ToListAsync();
             }
             catch(Exception ex)
@@ -130,7 +130,7 @@ namespace Pegasus_backend.Services
             result.Data = new List<Lesson>();
             try
             {
-                result.Data = await _ablemusciContext.Lesson.Where(l => l.BeginTime.HasValue && _orgIds.Contains(l.OrgId) && l.IsCanceled != 1 && 
+                result.Data = await _ablemusicContext.Lesson.Where(l => l.BeginTime.HasValue && _orgIds.Contains(l.OrgId) && l.IsCanceled != 1 && 
                 l.IsChanged == 1 && l.BeginTime.Value.Date == _today.Date).ToListAsync();
             }
             catch(Exception ex)
@@ -149,7 +149,7 @@ namespace Pegasus_backend.Services
             result.Data = new List<Amendment>();
             try
             {
-                result.Data = await _ablemusciContext.Amendment.Where(a => a.EndDate.HasValue && a.AmendType == 1 && 
+                result.Data = await _ablemusicContext.Amendment.Where(a => a.EndDate.HasValue && a.AmendType == 1 && 
                 _today.Date == a.EndDate.Value.Date && _orgIds.Contains((int)a.OrgId)).ToListAsync();
             }
             catch(Exception ex)
@@ -168,7 +168,7 @@ namespace Pegasus_backend.Services
             result.Data = new List<Amendment>();
             try
             {
-                result.Data = await _ablemusciContext.Amendment.Where(a => a.EndDate.HasValue && a.AmendType == 2 && 
+                result.Data = await _ablemusicContext.Amendment.Where(a => a.EndDate.HasValue && a.AmendType == 2 && 
                 _today.Date == a.EndDate.Value.Date && _orgIds.Contains((int)a.OrgId)).ToListAsync();
             }
             catch(Exception ex)
@@ -202,8 +202,8 @@ namespace Pegasus_backend.Services
             var repeatedLearners = new List<Learner>();
             try
             {
-                repeatedLearners = await (from l in _ablemusciContext.Lesson
-                                join lr in _ablemusciContext.Learner on l.LearnerId equals lr.LearnerId
+                repeatedLearners = await (from l in _ablemusicContext.Lesson
+                                join lr in _ablemusicContext.Learner on l.LearnerId equals lr.LearnerId
                                 where learnerIdForToday.Contains(l.LearnerId.Value) && l.BeginTime.Value.Date >= _today.Date
                                 select lr
                                 ).ToListAsync();
@@ -249,7 +249,7 @@ namespace Pegasus_backend.Services
             var totalLessons = new List<Lesson>();
             try
             {
-                totalLessons = await _ablemusciContext.Lesson.Where(l => l.BeginTime.HasValue && l.IsCanceled != 1 && _orgIds.Contains(l.OrgId) &&
+                totalLessons = await _ablemusicContext.Lesson.Where(l => l.BeginTime.HasValue && l.IsCanceled != 1 && _orgIds.Contains(l.OrgId) &&
                 l.BeginTime.Value.Date >= beginDate.Date && l.BeginTime.Value.Date <= endDate.Date).ToListAsync();
             }
             catch (Exception ex)
@@ -287,7 +287,7 @@ namespace Pegasus_backend.Services
             var totalLearners = new List<Learner>();
             try
             {
-                totalLearners = await _ablemusciContext.Learner.Where(l => l.EnrollDate.HasValue && l.EnrollDate.Value.Date >= beginTime.Date && 
+                totalLearners = await _ablemusicContext.Learner.Where(l => l.EnrollDate.HasValue && l.EnrollDate.Value.Date >= beginTime.Date && 
                 l.EnrollDate.Value.Date <= _today.Date && _orgIds.Contains(l.OrgId.Value)).ToListAsync();
             }
             catch(Exception ex)
