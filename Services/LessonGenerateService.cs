@@ -475,7 +475,7 @@ namespace Pegasus_backend.Services
         public int IsLearnerHasPayExtreFee(int term_id, int learner_id)
         {
             var term = _ablemusicContext.Term.Where(x => x.TermId == term_id).FirstOrDefault();
-            var learnerWaitingInvoice = _ablemusicContext.InvoiceWaitingConfirm.Where(x => x.BeginDate >= term.BeginDate && x.EndDate <= term.EndDate).ToList();
+            var learnerWaitingInvoice = _ablemusicContext.InvoiceWaitingConfirm.Where(x => x.BeginDate >= term.BeginDate && x.EndDate <= term.EndDate && x.LearnerId==learner_id).ToList();
             if (learnerWaitingInvoice.Count ==0)
             {
                 return 0;
