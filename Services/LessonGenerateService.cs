@@ -423,14 +423,14 @@ namespace Pegasus_backend.Services
                         }
 
                         //check if the learner has pay the concertfee and notefee this term
-//                         int isExist = IsLearnerHasPayExtreFee((int)invoice.TermId, (int)invoice.LearnerId);
-//                         if(isExist == 1)
-//                         {
-//                             //invoice.ConcertFeeName = concertFeeName;
-//                             invoice.ConcertFee = 0;
-//                             //invoice.LessonNoteFeeName = noteFeeName;
-//                             invoice.NoteFee = 0;
-//                         }
+                        int isExist = IsLearnerHasPayExtreFee((int)invoice.TermId, (int)invoice.LearnerId);
+                        if(isExist == 1)
+                        {
+                            //invoice.ConcertFeeName = concertFeeName;
+                            invoice.ConcertFee = 0;
+                            //invoice.LessonNoteFeeName = noteFeeName;
+                            invoice.NoteFee = 0;
+                        }
                         //var isexistInvoice=await _ablemusicContext.InvoiceWaitingConfirm.Where(x=>x.LearnerId==course_instance.CourseId && (x.BeginDate>= ))
                         await _ablemusicContext.InvoiceWaitingConfirm.AddAsync(invoice);
                         await _ablemusicContext.SaveChangesAsync();
@@ -694,7 +694,7 @@ namespace Pegasus_backend.Services
                 }
 
             }
-            //UpdateWaitingInvoicetoActive();
+            UpdateWaitingInvoicetoActive();
         }
 
 
