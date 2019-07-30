@@ -420,14 +420,14 @@ namespace Pegasus_backend.Services
                             if (invoice.EndDate >= all_term.BeginDate && invoice.EndDate <= all_term.EndDate) invoice.TermId = all_term.TermId;
                         }
 
-                        int isExist = IsLearnerHasPayExtreFee((int)invoice.TermId, (int)invoice.LearnerId);
-                        if (isExist == 1)
-                        {
-                            //invoice.ConcertFeeName = concertFeeName;
-                            invoice.ConcertFee = 0;
-                            //invoice.LessonNoteFeeName = noteFeeName;
-                            invoice.NoteFee = 0;
-                        }
+//                         int isExist = IsLearnerHasPayExtreFee((int)invoice.TermId, (int)invoice.LearnerId);
+//                         if (isExist == 1)
+//                         {
+//                             //invoice.ConcertFeeName = concertFeeName;
+//                             invoice.ConcertFee = 0;
+//                             //invoice.LessonNoteFeeName = noteFeeName;
+//                             invoice.NoteFee = 0;
+//                         }
                         await _ablemusicContext.InvoiceWaitingConfirm.AddAsync(invoice);
                         await _ablemusicContext.SaveChangesAsync();
                         //using (var dbContextTransaction = _ablemusicContext.Database.BeginTransaction())
@@ -589,16 +589,16 @@ namespace Pegasus_backend.Services
 
         //}
 
-        public int IsLearnerHasPayExtreFee(int term_id, int learner_id)
-        {
-            var term = _ablemusicContext.Term.Where(x => x.TermId == term_id).FirstOrDefault();
-            var learnerWaitingInvoice = _ablemusicContext.InvoiceWaitingConfirm.Where(x => x.BeginDate >= term.BeginDate && x.EndDate <= term.EndDate && x.LearnerId == learner_id).ToList();
-            if (learnerWaitingInvoice.Count == 0)
-            {
-                return 0;
-            }
-            return 1;
-        }
+//         public int IsLearnerHasPayExtreFee(int term_id, int learner_id)
+//         {
+//             var term = _ablemusicContext.Term.Where(x => x.TermId == term_id).FirstOrDefault();
+//             var learnerWaitingInvoice = _ablemusicContext.InvoiceWaitingConfirm.Where(x => x.BeginDate >= term.BeginDate && x.EndDate <= term.EndDate && x.LearnerId == learner_id).ToList();
+//             if (learnerWaitingInvoice.Count == 0)
+//             {
+//                 return 0;
+//             }
+//             return 1;
+//         }
 
 
         public async Task GetTerm(DateTime date, int instance_id=0,int isone2one=3)
