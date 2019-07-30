@@ -247,3 +247,214 @@ WHERE `s`.`teacher_id` = @__teacherId_0
 2019-07-30 13:56:27.803 +12:00 [INF] Executed action Pegasus_backend.Controllers.TeacherController.GetTeacherAvailableDaysDayById (Pegasus_backend) in 4879.4090000000006ms
 2019-07-30 13:56:27.804 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":[{"TeacherId":1,"AvailableDaysId":1,"DayOfWeek":3,"CreatedAt":null,"OrgId":1,"RoomId":1,"Org":{"OrgId":1,"OrgName":"CENTRAL AUCKLAND BRANCH","IsHeadoffice":0,"IsActivate":1,"Address":null,"Email":null,"Phone":null,"LocaltionX":-36.8871300,"LocaltionY":174.7119770,"Abbr":"CENTRAL","Amendment":[],"AvailableDays":[{"TeacherId":1,"AvailableDaysId":3,"DayOfWeek":3,"CreatedAt":"2019-10-20T00:00:00","OrgId":1,"RoomId":null,"Room":null,"Teacher":null},{"TeacherId":1,"AvailableDaysId":4,"DayOfWeek":3,"CreatedAt":null,"OrgId":1,"RoomId":null,"Room":null,"Teacher":null}],"GroupCourseInstance":[],"Learner":[],"Lesson":[],"LoginLog":[],"One2oneCourseInstance":[],"Room":[],"StaffOrg":[],"Stock":[],"StockApplication":[],"StockOrder":[]},"Room":null,"Teacher":null},{"TeacherId":1,"AvailableDaysId":2,"DayOfWeek":7,"CreatedAt":null,"OrgId":2,"RoomId":null,"Org":{"OrgId":2,"OrgName":"EPSOM BRANCH","IsHeadoffice":0,"IsActivate":1,"Address":null,"Email":null,"Phone":null,"LocaltionX":-36.8791400,"LocaltionY":174.7760660,"Abbr":"EPSOM","Amendment":[],"AvailableDays":[],"GroupCourseInstance":[],"Learner":[],"Lesson":[],"LoginLog":[],"One2oneCourseInstance":[],"Room":[],"StaffOrg":[],"Stock":[],"StockApplication":[],"StockOrder":[]},"Room":null,"Teacher":null},{"TeacherId":1,"AvailableDaysId":3,"DayOfWeek":3,"CreatedAt":"2019-10-20T00:00:00","OrgId":1,"RoomId":null,"Org":{"OrgId":1,"OrgName":"CENTRAL AUCKLAND BRANCH","IsHeadoffice":0,"IsActivate":1,"Address":null,"Email":null,"Phone":null,"LocaltionX":-36.8871300,"LocaltionY":174.7119770,"Abbr":"CENTRAL","Amendment":[],"AvailableDays":[{"TeacherId":1,"AvailableDaysId":1,"DayOfWeek":3,"CreatedAt":null,"OrgId":1,"RoomId":1,"Room":null,"Teacher":null},{"TeacherId":1,"AvailableDaysId":4,"DayOfWeek":3,"CreatedAt":null,"OrgId":1,"RoomId":null,"Room":null,"Teacher":null}],"GroupCourseInstance":[],"Learner":[],"Lesson":[],"LoginLog":[],"One2oneCourseInstance":[],"Room":[],"StaffOrg":[],"Stock":[],"StockApplication":[],"StockOrder":[]},"Room":null,"Teacher":null},{"TeacherId":1,"AvailableDaysId":4,"DayOfWeek":3,"CreatedAt":null,"OrgId":1,"RoomId":null,"Org":{"OrgId":1,"OrgName":"CENTRAL AUCKLAND BRANCH","IsHeadoffice":0,"IsActivate":1,"Address":null,"Email":null,"Phone":null,"LocaltionX":-36.8871300,"LocaltionY":174.7119770,"Abbr":"CENTRAL","Amendment":[],"AvailableDays":[{"TeacherId":1,"AvailableDaysId":1,"DayOfWeek":3,"CreatedAt":null,"OrgId":1,"RoomId":1,"Room":null,"Teacher":null},{"TeacherId":1,"AvailableDaysId":3,"DayOfWeek":3,"CreatedAt":"2019-10-20T00:00:00","OrgId":1,"RoomId":null,"Room":null,"Teacher":null}],"GroupCourseInstance":[],"Learner":[],"Lesson":[],"LoginLog":[],"One2oneCourseInstance":[],"Room":[],"StaffOrg":[],"Stock":[],"StockApplication":[],"StockOrder":[]},"Room":null,"Teacher":null}]}
 2019-07-30 13:56:27.810 +12:00 [INF] Request finished in 5092.9494ms 200 application/json; charset=utf-8
+2019-07-30 15:40:28.397 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-07-30 15:40:28.769 +12:00 [INF] Daily Execution Start at 07/30/2019 15:40:28
+2019-07-30 15:40:28.773 +12:00 [INF] Checking if today is the end of any term...
+2019-07-30 15:40:31.490 +12:00 [INF] Current Term is 2019 Term 3. It is not the end of the term. No lesson to arrange for today.
+2019-07-30 15:40:44.973 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/learner multipart/form-data; boundary=--------------------------157667088748677912795314 868
+2019-07-30 15:40:45.003 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-07-30 15:40:45.042 +12:00 [INF] ----------------------------157667088748677912795314
+Content-Disposition: form-data; name="details"
+
+{
+	"FirstName":"Daddy",
+	"LastName": "Key",
+	"Gender": 1,
+	"dob": null,
+	"ContactNum": "0210989",
+	"Email": "123@qq.com",
+        "LevelType": 1,
+        "LearnerLevel": 2,
+        "OrgId": 1,
+        "IsUnder18": 1,
+        "referrer": "qweqw",
+        "PaymentPeriod": 1,
+        "MiddleName": "asdas",
+	"Address": "71 ash st",
+	"Parent": [{
+		"FirstName": "H1",
+		"LastName": "Key",
+		"Relationship": 1,
+		"ContactNum": "02108736339",
+		"Email": "123@gamil.com"
+	}],
+	"LearnerGroupCourse":[{
+		"GroupCourseInstanceId": 1,
+		"Comment": "hello1"
+	},
+	{
+		"GroupCourseInstanceId": 2,
+		"Comment": "hello2"
+	}],
+	"OneToOneCourseInstance": [],
+	"LearnerOthers":[{
+		"OthersType": "1",
+		"OthersValue":1
+	}]
+}
+----------------------------157667088748677912795314--
+
+2019-07-30 15:40:45.173 +12:00 [INF] Route matched with {action = "StudentRegister", controller = "Learner"}. Executing action Pegasus_backend.Controllers.LearnerController.StudentRegister (Pegasus_backend)
+2019-07-30 15:40:45.562 +12:00 [INF] Executing action method Pegasus_backend.Controllers.LearnerController.StudentRegister (Pegasus_backend) with arguments (["","","","","{\n\t\"FirstName\":\"Daddy\",\n\t\"LastName\": \"Key\",\n\t\"Gender\": 1,\n\t\"dob\": null,\n\t\"ContactNum\": \"0210989\",\n\t\"Email\": \"123@qq.com\",\n        \"LevelType\": 1,\n        \"LearnerLevel\": 2,\n        \"OrgId\": 1,\n        \"IsUnder18\": 1,\n        \"referrer\": \"qweqw\",\n        \"PaymentPeriod\": 1,\n        \"MiddleName\": \"asdas\",\n\t\"Address\": \"71 ash st\",\n\t\"Parent\": [{\n\t\t\"FirstName\": \"H1\",\n\t\t\"LastName\": \"Key\",\n\t\t\"Relationship\": 1,\n\t\t\"ContactNum\": \"02108736339\",\n\t\t\"Email\": \"123@gamil.com\"\n\t}],\n\t\"LearnerGroupCourse\":[{\n\t\t\"GroupCourseInstanceId\": 1,\n\t\t\"Comment\": \"hello1\"\n\t},\n\t{\n\t\t\"GroupCourseInstanceId\": 2,\n\t\t\"Comment\": \"hello2\"\n\t}],\n\t\"OneToOneCourseInstance\": [],\n\t\"LearnerOthers\":[{\n\t\t\"OthersType\": \"1\",\n\t\t\"OthersValue\":1\n\t}]\n}"]) - Validation state: "Valid"
+2019-07-30 15:40:45.943 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-30 15:40:46.285 +12:00 [INF] Executed DbCommand (67ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`term_id` AS `TermId`, `x`.`begin_date` AS `BeginDate`, `x`.`end_date` AS `EndDate`
+FROM `ablemusic`.`term` AS `x`
+2019-07-30 15:40:46.647 +12:00 [INF] Executed DbCommand (74ms) [Parameters=[@p0='?' (Size = -1), @p1='?' (Size = -1), @p2='?' (Size = -1), @p3='?' (DbType = DateTime), @p4='?' (DbType = DateTime), @p5='?' (Size = -1), @p6='?' (DbType = DateTime), @p7='?' (Size = -1), @p8='?' (Size = -1), @p9='?' (Size = -1), @p10='?' (DbType = Int16), @p11='?' (DbType = AnsiString), @p12='?' (DbType = Int16), @p13='?' (DbType = Int16), @p14='?' (Size = -1), @p15='?' (DbType = Byte), @p16='?' (DbType = Byte), @p17='?' (Size = -1), @p18='?' (Size = -1), @p19='?' (DbType = Int16), @p20='?' (Size = -1), @p21='?' (DbType = Byte), @p22='?' (Size = -1), @p23='?' (Size = -1), @p24='?' (DbType = AnsiString), @p25='?' (DbType = AnsiString)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `ablemusic`.`learner` (`address`, `comment`, `contact_num`, `created_at`, `dob`, `email`, `enroll_date`, `first_name`, `form_url`, `g5_certification`, `gender`, `is_abrsm_g5`, `is_active`, `is_under_18`, `last_name`, `learner_level`, `level_type`, `middle_name`, `note`, `org_id`, `otherfile_url`, `payment_period`, `photo`, `referrer`, `referrer_learner_id`, `user_id`)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19, @p20, @p21, @p22, @p23, @p24, @p25);
+SELECT `learner_id`
+FROM `ablemusic`.`learner`
+WHERE ROW_COUNT() = 1
+ AND `learner_id`=LAST_INSERT_ID();
+2019-07-30 15:40:46.738 +12:00 [INF] Executed DbCommand (63ms) [Parameters=[@p26='?' (DbType = DateTime), @p27='?' (Size = -1), @p28='?' (DbType = DateTime), @p29='?' (DbType = DateTime), @p30='?' (DbType = Int32), @p31='?' (DbType = DateTime), @p32='?' (DbType = AnsiString), @p33='?' (DbType = Int32), @p34='?' (DbType = DateTime), @p35='?' (Size = -1), @p36='?' (DbType = DateTime), @p37='?' (DbType = DateTime), @p38='?' (DbType = Int32), @p39='?' (DbType = DateTime), @p40='?' (DbType = AnsiString), @p41='?' (DbType = Int32), @p42='?' (DbType = Int32), @p43='?' (DbType = AnsiString), @p44='?' (Size = -1), @p45='?' (DbType = Int16), @p46='?' (Size = -1), @p47='?' (DbType = DateTime), @p48='?' (Size = -1), @p49='?' (Size = -1), @p50='?' (Size = -1), @p51='?' (DbType = Int32), @p52='?' (DbType = Byte)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `ablemusic`.`learner_group_course` (`begin_date`, `comment`, `created_at`, `end_date`, `group_course_instance_id`, `invoice_date`, `is_activate`, `learner_id`)
+VALUES (@p26, @p27, @p28, @p29, @p30, @p31, @p32, @p33);
+SELECT `learner_group_course_id`
+FROM `ablemusic`.`learner_group_course`
+WHERE ROW_COUNT() = 1
+ AND `learner_group_course_id`=LAST_INSERT_ID();
+
+INSERT INTO `ablemusic`.`learner_group_course` (`begin_date`, `comment`, `created_at`, `end_date`, `group_course_instance_id`, `invoice_date`, `is_activate`, `learner_id`)
+VALUES (@p34, @p35, @p36, @p37, @p38, @p39, @p40, @p41);
+SELECT `learner_group_course_id`
+FROM `ablemusic`.`learner_group_course`
+WHERE ROW_COUNT() = 1
+ AND `learner_group_course_id`=LAST_INSERT_ID();
+
+INSERT INTO `ablemusic`.`learner_others` (`learner_id`, `learner_level`, `others_type`, `others_value`)
+VALUES (@p42, @p43, @p44, @p45);
+SELECT `learner_others_id`
+FROM `ablemusic`.`learner_others`
+WHERE ROW_COUNT() = 1
+ AND `learner_others_id`=LAST_INSERT_ID();
+
+INSERT INTO `ablemusic`.`parent` (`contact_num`, `created_at`, `email`, `first_name`, `last_name`, `learner_id`, `relationship`)
+VALUES (@p46, @p47, @p48, @p49, @p50, @p51, @p52);
+SELECT `parent_id`
+FROM `ablemusic`.`parent`
+WHERE ROW_COUNT() = 1
+ AND `parent_id`=LAST_INSERT_ID();
+2019-07-30 15:40:46.811 +12:00 [INF] Executed DbCommand (52ms) [Parameters=[@p8='?' (DbType = Int32), @p0='?' (DbType = DateTime), @p1='?' (Size = -1), @p2='?' (DbType = DateTime), @p3='?' (DbType = DateTime), @p4='?' (DbType = Int32), @p5='?' (DbType = DateTime), @p6='?' (DbType = Int16), @p7='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+UPDATE `ablemusic`.`learner_group_course` SET `begin_date` = @p0, `comment` = @p1, `created_at` = @p2, `end_date` = @p3, `group_course_instance_id` = @p4, `invoice_date` = @p5, `is_activate` = @p6, `learner_id` = @p7
+WHERE `learner_group_course_id` = @p8;
+SELECT ROW_COUNT();
+2019-07-30 15:40:46.867 +12:00 [INF] Executed DbCommand (53ms) [Parameters=[@p17='?' (DbType = Int32), @p9='?' (DbType = DateTime), @p10='?' (Size = -1), @p11='?' (DbType = DateTime), @p12='?' (DbType = DateTime), @p13='?' (DbType = Int32), @p14='?' (DbType = DateTime), @p15='?' (DbType = Int16), @p16='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+UPDATE `ablemusic`.`learner_group_course` SET `begin_date` = @p9, `comment` = @p10, `created_at` = @p11, `end_date` = @p12, `group_course_instance_id` = @p13, `invoice_date` = @p14, `is_activate` = @p15, `learner_id` = @p16
+WHERE `learner_group_course_id` = @p17;
+SELECT ROW_COUNT();
+2019-07-30 15:42:44.079 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-07-30 15:42:44.566 +12:00 [INF] Daily Execution Start at 07/30/2019 15:42:44
+2019-07-30 15:42:44.569 +12:00 [INF] Checking if today is the end of any term...
+2019-07-30 15:42:46.451 +12:00 [INF] Current Term is 2019 Term 3. It is not the end of the term. No lesson to arrange for today.
+2019-07-30 15:42:46.776 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/learner multipart/form-data; boundary=--------------------------469620503083571225878779 868
+2019-07-30 15:42:46.804 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-07-30 15:42:46.842 +12:00 [INF] ----------------------------469620503083571225878779
+Content-Disposition: form-data; name="details"
+
+{
+	"FirstName":"Daddy",
+	"LastName": "Key",
+	"Gender": 1,
+	"dob": null,
+	"ContactNum": "0210989",
+	"Email": "123@qq.com",
+        "LevelType": 1,
+        "LearnerLevel": 2,
+        "OrgId": 1,
+        "IsUnder18": 1,
+        "referrer": "qweqw",
+        "PaymentPeriod": 1,
+        "MiddleName": "asdas",
+	"Address": "71 ash st",
+	"Parent": [{
+		"FirstName": "H1",
+		"LastName": "Key",
+		"Relationship": 1,
+		"ContactNum": "02108736339",
+		"Email": "123@gamil.com"
+	}],
+	"LearnerGroupCourse":[{
+		"GroupCourseInstanceId": 1,
+		"Comment": "hello1"
+	},
+	{
+		"GroupCourseInstanceId": 2,
+		"Comment": "hello2"
+	}],
+	"OneToOneCourseInstance": [],
+	"LearnerOthers":[{
+		"OthersType": "1",
+		"OthersValue":1
+	}]
+}
+----------------------------469620503083571225878779--
+
+2019-07-30 15:42:46.965 +12:00 [INF] Route matched with {action = "StudentRegister", controller = "Learner"}. Executing action Pegasus_backend.Controllers.LearnerController.StudentRegister (Pegasus_backend)
+2019-07-30 15:42:47.338 +12:00 [INF] Executing action method Pegasus_backend.Controllers.LearnerController.StudentRegister (Pegasus_backend) with arguments (["","","","","{\n\t\"FirstName\":\"Daddy\",\n\t\"LastName\": \"Key\",\n\t\"Gender\": 1,\n\t\"dob\": null,\n\t\"ContactNum\": \"0210989\",\n\t\"Email\": \"123@qq.com\",\n        \"LevelType\": 1,\n        \"LearnerLevel\": 2,\n        \"OrgId\": 1,\n        \"IsUnder18\": 1,\n        \"referrer\": \"qweqw\",\n        \"PaymentPeriod\": 1,\n        \"MiddleName\": \"asdas\",\n\t\"Address\": \"71 ash st\",\n\t\"Parent\": [{\n\t\t\"FirstName\": \"H1\",\n\t\t\"LastName\": \"Key\",\n\t\t\"Relationship\": 1,\n\t\t\"ContactNum\": \"02108736339\",\n\t\t\"Email\": \"123@gamil.com\"\n\t}],\n\t\"LearnerGroupCourse\":[{\n\t\t\"GroupCourseInstanceId\": 1,\n\t\t\"Comment\": \"hello1\"\n\t},\n\t{\n\t\t\"GroupCourseInstanceId\": 2,\n\t\t\"Comment\": \"hello2\"\n\t}],\n\t\"OneToOneCourseInstance\": [],\n\t\"LearnerOthers\":[{\n\t\t\"OthersType\": \"1\",\n\t\t\"OthersValue\":1\n\t}]\n}"]) - Validation state: "Valid"
+2019-07-30 15:42:47.712 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-07-30 15:42:48.073 +12:00 [INF] Executed DbCommand (65ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`term_id` AS `TermId`, `x`.`begin_date` AS `BeginDate`, `x`.`end_date` AS `EndDate`
+FROM `ablemusic`.`term` AS `x`
+2019-07-30 15:42:48.423 +12:00 [INF] Executed DbCommand (72ms) [Parameters=[@p0='?' (Size = -1), @p1='?' (Size = -1), @p2='?' (Size = -1), @p3='?' (DbType = DateTime), @p4='?' (DbType = DateTime), @p5='?' (Size = -1), @p6='?' (DbType = DateTime), @p7='?' (Size = -1), @p8='?' (Size = -1), @p9='?' (Size = -1), @p10='?' (DbType = Int16), @p11='?' (DbType = AnsiString), @p12='?' (DbType = Int16), @p13='?' (DbType = Int16), @p14='?' (Size = -1), @p15='?' (DbType = Byte), @p16='?' (DbType = Byte), @p17='?' (Size = -1), @p18='?' (Size = -1), @p19='?' (DbType = Int16), @p20='?' (Size = -1), @p21='?' (DbType = Byte), @p22='?' (Size = -1), @p23='?' (Size = -1), @p24='?' (DbType = AnsiString), @p25='?' (DbType = AnsiString)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `ablemusic`.`learner` (`address`, `comment`, `contact_num`, `created_at`, `dob`, `email`, `enroll_date`, `first_name`, `form_url`, `g5_certification`, `gender`, `is_abrsm_g5`, `is_active`, `is_under_18`, `last_name`, `learner_level`, `level_type`, `middle_name`, `note`, `org_id`, `otherfile_url`, `payment_period`, `photo`, `referrer`, `referrer_learner_id`, `user_id`)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19, @p20, @p21, @p22, @p23, @p24, @p25);
+SELECT `learner_id`
+FROM `ablemusic`.`learner`
+WHERE ROW_COUNT() = 1
+ AND `learner_id`=LAST_INSERT_ID();
+2019-07-30 15:42:48.513 +12:00 [INF] Executed DbCommand (65ms) [Parameters=[@p26='?' (DbType = DateTime), @p27='?' (Size = -1), @p28='?' (DbType = DateTime), @p29='?' (DbType = DateTime), @p30='?' (DbType = Int32), @p31='?' (DbType = DateTime), @p32='?' (DbType = AnsiString), @p33='?' (DbType = Int32), @p34='?' (DbType = DateTime), @p35='?' (Size = -1), @p36='?' (DbType = DateTime), @p37='?' (DbType = DateTime), @p38='?' (DbType = Int32), @p39='?' (DbType = DateTime), @p40='?' (DbType = AnsiString), @p41='?' (DbType = Int32), @p42='?' (DbType = Int32), @p43='?' (DbType = AnsiString), @p44='?' (Size = -1), @p45='?' (DbType = Int16), @p46='?' (Size = -1), @p47='?' (DbType = DateTime), @p48='?' (Size = -1), @p49='?' (Size = -1), @p50='?' (Size = -1), @p51='?' (DbType = Int32), @p52='?' (DbType = Byte)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `ablemusic`.`learner_group_course` (`begin_date`, `comment`, `created_at`, `end_date`, `group_course_instance_id`, `invoice_date`, `is_activate`, `learner_id`)
+VALUES (@p26, @p27, @p28, @p29, @p30, @p31, @p32, @p33);
+SELECT `learner_group_course_id`
+FROM `ablemusic`.`learner_group_course`
+WHERE ROW_COUNT() = 1
+ AND `learner_group_course_id`=LAST_INSERT_ID();
+
+INSERT INTO `ablemusic`.`learner_group_course` (`begin_date`, `comment`, `created_at`, `end_date`, `group_course_instance_id`, `invoice_date`, `is_activate`, `learner_id`)
+VALUES (@p34, @p35, @p36, @p37, @p38, @p39, @p40, @p41);
+SELECT `learner_group_course_id`
+FROM `ablemusic`.`learner_group_course`
+WHERE ROW_COUNT() = 1
+ AND `learner_group_course_id`=LAST_INSERT_ID();
+
+INSERT INTO `ablemusic`.`learner_others` (`learner_id`, `learner_level`, `others_type`, `others_value`)
+VALUES (@p42, @p43, @p44, @p45);
+SELECT `learner_others_id`
+FROM `ablemusic`.`learner_others`
+WHERE ROW_COUNT() = 1
+ AND `learner_others_id`=LAST_INSERT_ID();
+
+INSERT INTO `ablemusic`.`parent` (`contact_num`, `created_at`, `email`, `first_name`, `last_name`, `learner_id`, `relationship`)
+VALUES (@p46, @p47, @p48, @p49, @p50, @p51, @p52);
+SELECT `parent_id`
+FROM `ablemusic`.`parent`
+WHERE ROW_COUNT() = 1
+ AND `parent_id`=LAST_INSERT_ID();
+2019-07-30 15:42:48.586 +12:00 [INF] Executed DbCommand (54ms) [Parameters=[@p8='?' (DbType = Int32), @p0='?' (DbType = DateTime), @p1='?' (Size = -1), @p2='?' (DbType = DateTime), @p3='?' (DbType = DateTime), @p4='?' (DbType = Int32), @p5='?' (DbType = DateTime), @p6='?' (DbType = Int16), @p7='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+UPDATE `ablemusic`.`learner_group_course` SET `begin_date` = @p0, `comment` = @p1, `created_at` = @p2, `end_date` = @p3, `group_course_instance_id` = @p4, `invoice_date` = @p5, `is_activate` = @p6, `learner_id` = @p7
+WHERE `learner_group_course_id` = @p8;
+SELECT ROW_COUNT();
+2019-07-30 15:42:48.640 +12:00 [INF] Executed DbCommand (52ms) [Parameters=[@p17='?' (DbType = Int32), @p9='?' (DbType = DateTime), @p10='?' (Size = -1), @p11='?' (DbType = DateTime), @p12='?' (DbType = DateTime), @p13='?' (DbType = Int32), @p14='?' (DbType = DateTime), @p15='?' (DbType = Int16), @p16='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+UPDATE `ablemusic`.`learner_group_course` SET `begin_date` = @p9, `comment` = @p10, `created_at` = @p11, `end_date` = @p12, `group_course_instance_id` = @p13, `invoice_date` = @p14, `is_activate` = @p15, `learner_id` = @p16
+WHERE `learner_group_course_id` = @p17;
+SELECT ROW_COUNT();
+2019-07-30 15:42:48.724 +12:00 [INF] Executed DbCommand (63ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = Decimal), @p2='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `ablemusic`.`fund` (`learner_id`, `balance`, `updated_at`)
+VALUES (@p0, @p1, @p2);
+2019-07-30 15:42:48.815 +12:00 [INF] Executed DbCommand (57ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?' (DbType = Int16), @p2='?' (DbType = AnsiString), @p3='?' (Size = -1), @p4='?' (DbType = Int16), @p5='?' (Size = -1), @p6='?' (DbType = AnsiString), @p7='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `ablemusic`.`user` (`created_at`, `is_activate`, `is_online`, `password`, `role_id`, `signature`, `unread_message_id`, `user_name`)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7);
+SELECT `user_id`
+FROM `ablemusic`.`user`
+WHERE ROW_COUNT() = 1
+ AND `user_id`=LAST_INSERT_ID();
+2019-07-30 15:42:48.898 +12:00 [INF] Executed DbCommand (57ms) [Parameters=[@p26='?' (DbType = Int32), @p0='?' (Size = -1), @p1='?' (Size = -1), @p2='?' (Size = -1), @p3='?' (DbType = DateTime), @p4='?' (DbType = DateTime), @p5='?' (Size = -1), @p6='?' (DbType = DateTime), @p7='?' (Size = -1), @p8='?' (Size = -1), @p9='?' (Size = -1), @p10='?' (DbType = Int16), @p11='?' (DbType = AnsiString), @p12='?' (DbType = Int16), @p13='?' (DbType = Int16), @p14='?' (Size = -1), @p15='?' (DbType = Byte), @p16='?' (DbType = Byte), @p17='?' (Size = -1), @p18='?' (Size = -1), @p19='?' (DbType = Int16), @p20='?' (Size = -1), @p21='?' (DbType = Byte), @p22='?' (Size = -1), @p23='?' (Size = -1), @p24='?' (DbType = AnsiString), @p25='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+UPDATE `ablemusic`.`learner` SET `address` = @p0, `comment` = @p1, `contact_num` = @p2, `created_at` = @p3, `dob` = @p4, `email` = @p5, `enroll_date` = @p6, `first_name` = @p7, `form_url` = @p8, `g5_certification` = @p9, `gender` = @p10, `is_abrsm_g5` = @p11, `is_active` = @p12, `is_under_18` = @p13, `last_name` = @p14, `learner_level` = @p15, `level_type` = @p16, `middle_name` = @p17, `note` = @p18, `org_id` = @p19, `otherfile_url` = @p20, `payment_period` = @p21, `photo` = @p22, `referrer` = @p23, `referrer_learner_id` = @p24, `user_id` = @p25
+WHERE `learner_id` = @p26;
+SELECT ROW_COUNT();
+2019-07-30 15:42:48.986 +12:00 [INF] Executed action method Pegasus_backend.Controllers.LearnerController.StudentRegister (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 1635.4619ms.
+2019-07-30 15:42:48.996 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-07-30 15:42:49.006 +12:00 [INF] Executed action Pegasus_backend.Controllers.LearnerController.StudentRegister (Pegasus_backend) in 2038.2008ms
+2019-07-30 15:42:49.008 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":"success!"}
+2019-07-30 15:42:49.013 +12:00 [INF] Request finished in 2239.0071ms 200 application/json; charset=utf-8
