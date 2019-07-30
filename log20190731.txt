@@ -1,0 +1,1 @@
+2019-07-31 11:21:31.496 +12:00 [INF] User profile is available. Using '/Users/lyric/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.

@@ -14,6 +14,7 @@ using Pegasus_backend.ActionFilter;
 using Pegasus_backend.pegasusContext;
 using Pegasus_backend.Models;
 using Microsoft.Extensions.Logging;
+using Pegasus_backend.Services;
 
 namespace Pegasus_backend.Controllers
 {
@@ -23,10 +24,12 @@ namespace Pegasus_backend.Controllers
 
     {
         private readonly IMapper _mapper;
+        private readonly LessonGenerateService _lessonGenerateService;
 
         public OnetoOneCourseInstanceController(ablemusicContext ablemusicContext, ILogger<OnetoOneCourseInstanceController> log, IMapper mapper) : base(ablemusicContext, log)
         {
             _mapper = mapper;
+            _lessonGenerateService = new LessonGenerateService(_ablemusicContext, _mapper);
         }
 
         [HttpPut("{instanceId}/{endDate}")]
@@ -96,11 +99,17 @@ namespace Pegasus_backend.Controllers
                                 }
                             }
                         });
+
                     });
                     await _ablemusicContext.SaveChangesAsync();
-                        
-                
-                    
+                    model.OnetoOneCourses.ForEach(async s =>
+                    {
+                        await _lessonGenerateService.GetTerm((DateTime)s.BeginDate, s.id, 1);
+                    });
+
+
+
+
                     dbtransaction.Commit();
                 }
 

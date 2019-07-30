@@ -14,6 +14,8 @@ using Pegasus_backend.Controllers;
 using Pegasus_backend.pegasusContext;
 using Pegasus_backend.Models;
 using Microsoft.Extensions.Logging;
+using Pegasus_backend.Services;
+using AutoMapper;
 
 namespace Pegasus_backend.Controllers
 {
@@ -21,9 +23,12 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class LearnerGroupCourseController: BasicController
     {
+        private readonly IMapper _mapper;
+        private readonly LessonGenerateService _lessonGenerateService;
 
         public LearnerGroupCourseController(ablemusicContext ablemusicContext, ILogger<LearnerGroupCourseController> log) : base(ablemusicContext, log)
         {
+            _lessonGenerateService = new LessonGenerateService(_ablemusicContext, _mapper);
         }
 
         [HttpPost]
@@ -47,6 +52,10 @@ namespace Pegasus_backend.Controllers
                 });
                 await _ablemusicContext.SaveChangesAsync();
 
+                model.LearnerGroupCourses.ForEach(async s =>
+                {
+                    await _lessonGenerateService.GetTerm((DateTime)s.BeginDate, (int)s.GroupCourseInstanceId, 0);
+                });
                 result.Data = "success";
                 return Ok(result);
             }
