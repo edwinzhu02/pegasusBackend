@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Pegasus_backend.Models;
 using Pegasus_backend.pegasusContext;
 using Microsoft.Extensions.Logging;
+using Pegasus_backend.Utilities;
 
 namespace Pegasus_backend.Controllers
 {
@@ -33,6 +34,7 @@ namespace Pegasus_backend.Controllers
             List<dynamic> customisedArranged;
             List<dynamic> customisedDayoff = new List<dynamic>();
             List<dynamic> customisedTempChange = new List<dynamic>();
+            List<Lesson> arrangedLessons = new List<Lesson>();
             try
             {
                 beginDate = DateTime.Parse(StartDate);
@@ -111,6 +113,8 @@ namespace Pegasus_backend.Controllers
                                         CourseScheduleId = a.CourseScheduleId,
                                         Learner = a.Learner,
                                     }).ToListAsync();
+                arrangedLessons = await _ablemusicContext.Lesson.Where(l => l.TeacherId == teacherId && l.BeginTime.HasValue &&
+                l.BeginTime.Value.Date >= beginDate.Date && l.IsCanceled != 1).Include(l => l.Learner).Include(l => l.Org).ToListAsync();
             }
             catch(Exception ex)
             {
@@ -187,8 +191,21 @@ namespace Pegasus_backend.Controllers
                     OrgName = g.OrgName,
                 });
             }
+            foreach(var lesson in arrangedLessons)
+            {
+                customisedArranged.Add(new
+                {
+                    DayOfWeek = lesson.BeginTime.Value.ToDayOfWeek(),
+                    TimeBegin = lesson.BeginTime.Value,
+                    TimeEnd = lesson.EndTime.Value,
+                    LearnerName = lesson.Learner == null ? null : lesson.Learner.FirstName + " " + lesson.Learner.LastName,
+                    CourseScheduleId = -1,
+                    OrgId = lesson.OrgId,
+                    OrgName = lesson.Org?.OrgName
+                });
+            }
 
-            var dayoffsOverThreeMonth = amendments.Where(a => a.AmendType == 1 && beginDate > a.BeginDate && beginDate < a.EndDate &&
+            var dayoffsOverThreeMonth = amendments.Where(a => a.AmendType == 1 && beginDate.Date >= a.BeginDate.Value.Date && beginDate.Date <= a.EndDate.Value.Date &&
             a.EndDate.Value.Month - a.BeginDate.Value.Month >= 3).ToList();
             var changeTemporarily = amendments.Where(a => a.AmendType == 2 && a.IsTemporary == 1 && beginDate < a.EndDate).ToList();
             var changePermanentlyExpired = amendments.Where(a => a.AmendType == 2 && a.IsTemporary == 0 && beginDate > a.BeginDate).ToList();
