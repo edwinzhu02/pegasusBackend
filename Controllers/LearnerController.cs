@@ -341,10 +341,10 @@ namespace Pegasus_backend.Controllers
 
                     //generate new waiting invoice and group lesson
 
-                    newLearner.LearnerGroupCourse.ToList().ForEach(async s =>
-                    {
-                         await _lessonGenerateService.GetTerm((DateTime)s.BeginDate, (int)s.GroupCourseInstanceId,0);
-                    });
+//                     newLearner.LearnerGroupCourse.ToList().ForEach(async s =>
+//                     {
+//                          await _lessonGenerateService.GetTerm((DateTime)s.BeginDate, (int)s.GroupCourseInstanceId,0);
+//                     });
 
                     detailsJson.OneToOneCourseInstance.ForEach(s =>
                     {
