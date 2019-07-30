@@ -423,14 +423,14 @@ namespace Pegasus_backend.Services
                         }
 
                         //check if the learner has pay the concertfee and notefee this term
-                        int isExist = IsLearnerHasPayExtreFee((int)invoice.TermId, (int)invoice.LearnerId);
-                        if(isExist == 1)
-                        {
-                            //invoice.ConcertFeeName = concertFeeName;
-                            invoice.ConcertFee = 0;
-                            //invoice.LessonNoteFeeName = noteFeeName;
-                            invoice.NoteFee = 0;
-                        }
+//                         int isExist = IsLearnerHasPayExtreFee((int)invoice.TermId, (int)invoice.LearnerId);
+//                         if(isExist == 1)
+//                         {
+//                             //invoice.ConcertFeeName = concertFeeName;
+//                             invoice.ConcertFee = 0;
+//                             //invoice.LessonNoteFeeName = noteFeeName;
+//                             invoice.NoteFee = 0;
+//                         }
                         //var isexistInvoice=await _ablemusicContext.InvoiceWaitingConfirm.Where(x=>x.LearnerId==course_instance.CourseId && (x.BeginDate>= ))
                         await _ablemusicContext.InvoiceWaitingConfirm.AddAsync(invoice);
                         await _ablemusicContext.SaveChangesAsync();
@@ -472,16 +472,16 @@ namespace Pegasus_backend.Services
             return result;
         }
 
-        public int IsLearnerHasPayExtreFee(int term_id, int learner_id)
-        {
-            var term = _ablemusicContext.Term.Where(x => x.TermId == term_id).FirstOrDefault();
-            var learnerWaitingInvoice = _ablemusicContext.InvoiceWaitingConfirm.Where(x => x.BeginDate >= term.BeginDate && x.EndDate <= term.EndDate && x.LearnerId==learner_id).ToList();
-            if (learnerWaitingInvoice.Count ==0)
-            {
-                return 0;
-            }
-            return 1;
-        }
+//         public int IsLearnerHasPayExtreFee(int term_id, int learner_id)
+//         {
+//             var term = _ablemusicContext.Term.Where(x => x.TermId == term_id).FirstOrDefault();
+//             var learnerWaitingInvoice = _ablemusicContext.InvoiceWaitingConfirm.Where(x => x.BeginDate >= term.BeginDate && x.EndDate <= term.EndDate && x.LearnerId==learner_id).ToList();
+//             if (learnerWaitingInvoice.Count ==0)
+//             {
+//                 return 0;
+//             }
+//             return 1;
+//         }
 
         public async Task<Result<IActionResult>> GenerateGroupInvoice(int term_id, int instance_id = 0)
         {
@@ -608,25 +608,25 @@ namespace Pegasus_backend.Services
 
         }
 
-        public void UpdateWaitingInvoicetoActive()
-        {
-            //InvoiceWaitingConfirm invoiceWaitingConfirm = new InvoiceWaitingConfirm();
-            List<InvoiceWaitingConfirm> InvoiceWaitingConfirms = new List<InvoiceWaitingConfirm>();
-            InvoiceWaitingConfirms =  _ablemusicContext.InvoiceWaitingConfirm.Where(i => i.IsActivate==3).ToList();
-            foreach(var InvoiceWaitingConfirm in InvoiceWaitingConfirms)
-            {
-                TimeSpan ts = (DateTime)InvoiceWaitingConfirm.BeginDate - _today;
-                int days = ts.Days;
+//         public void UpdateWaitingInvoicetoActive()
+//         {
+//             //InvoiceWaitingConfirm invoiceWaitingConfirm = new InvoiceWaitingConfirm();
+//             List<InvoiceWaitingConfirm> InvoiceWaitingConfirms = new List<InvoiceWaitingConfirm>();
+//             InvoiceWaitingConfirms =  _ablemusicContext.InvoiceWaitingConfirm.Where(i => i.IsActivate==3).ToList();
+//             foreach(var InvoiceWaitingConfirm in InvoiceWaitingConfirms)
+//             {
+//                 TimeSpan ts = (DateTime)InvoiceWaitingConfirm.BeginDate - _today;
+//                 int days = ts.Days;
 
-                if ((InvoiceWaitingConfirm.CourseInstanceId!= null && days<=30) || (InvoiceWaitingConfirm.GroupCourseInstanceId != null && days <= 14))
-                {
-                    InvoiceWaitingConfirm.IsActivate = 1;
-                    _ablemusicContext.Update(InvoiceWaitingConfirm);
-                    _ablemusicContext.SaveChanges();
-                }
-            }
+//                 if ((InvoiceWaitingConfirm.CourseInstanceId!= null && days<=30) || (InvoiceWaitingConfirm.GroupCourseInstanceId != null && days <= 14))
+//                 {
+//                     InvoiceWaitingConfirm.IsActivate = 1;
+//                     _ablemusicContext.Update(InvoiceWaitingConfirm);
+//                     _ablemusicContext.SaveChanges();
+//                 }
+//             }
 
-        }
+//         }
 
         public async Task GetTerm(DateTime date, int instance_id=0,int isone2one=3)
         {
