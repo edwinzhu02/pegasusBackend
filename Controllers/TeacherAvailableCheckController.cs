@@ -188,7 +188,7 @@ namespace Pegasus_backend.Controllers
                 });
             }
 
-            var dayoffsOverThreeMonth = amendments.Where(a => a.AmendType == 1 && beginDate > a.BeginDate && beginDate < a.EndDate &&
+            var dayoffsOverThreeMonth = amendments.Where(a => a.AmendType == 1 && beginDate.Date >= a.BeginDate.Value.Date && beginDate.Date <= a.EndDate.Value.Date &&
             a.EndDate.Value.Month - a.BeginDate.Value.Month >= 3).ToList();
             var changeTemporarily = amendments.Where(a => a.AmendType == 2 && a.IsTemporary == 1 && beginDate < a.EndDate).ToList();
             var changePermanentlyExpired = amendments.Where(a => a.AmendType == 2 && a.IsTemporary == 0 && beginDate > a.BeginDate).ToList();
