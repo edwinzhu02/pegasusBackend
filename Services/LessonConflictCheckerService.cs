@@ -557,23 +557,24 @@ namespace Pegasus_backend.Services
             var result = new Result<List<object>>();
             var checkRoomInScheduledLessonsResult = await CheckRoomConflictInScheduledLessons();
             var checkTeacherInScheduledLessonsResult = await CheckTeacherConflictInScheduledLessons();
-            var checkRoomInUnscheduledLessonsResult = await CheckRoomConflictInUnscheduledLessons();
-            var checkTeacherInUnscheduledLessonsResult = await CheckTeacherConflictInUnscheduledLessons();
+            //var checkRoomInUnscheduledLessonsResult = await CheckRoomConflictInUnscheduledLessons();
+            //var checkTeacherInUnscheduledLessonsResult = await CheckTeacherConflictInUnscheduledLessons();
 
-            if(!checkRoomInScheduledLessonsResult.IsSuccess || !checkTeacherInScheduledLessonsResult.IsSuccess || 
-                !checkRoomInUnscheduledLessonsResult.IsSuccess || !checkTeacherInUnscheduledLessonsResult.IsSuccess)
+            if(!checkRoomInScheduledLessonsResult.IsSuccess || !checkTeacherInScheduledLessonsResult.IsSuccess 
+                //|| !checkRoomInUnscheduledLessonsResult.IsSuccess || !checkTeacherInUnscheduledLessonsResult.IsSuccess
+                )
             {
                 result.IsSuccess = false;
-                result.ErrorMessage = ((checkRoomInScheduledLessonsResult.IsSuccess)? "":checkRoomInScheduledLessonsResult.ErrorMessage)
-                                    +((checkTeacherInScheduledLessonsResult.IsSuccess)? "":checkTeacherInScheduledLessonsResult.ErrorMessage)
-                                    +((checkRoomInUnscheduledLessonsResult.IsSuccess)? "":checkRoomInUnscheduledLessonsResult.ErrorMessage)
-                                    +((checkTeacherInUnscheduledLessonsResult.IsSuccess)? "":checkTeacherInUnscheduledLessonsResult.ErrorMessage);                                    
+                result.ErrorMessage = ((checkRoomInScheduledLessonsResult.IsSuccess) ? "" : checkRoomInScheduledLessonsResult.ErrorMessage)
+                                    + ((checkTeacherInScheduledLessonsResult.IsSuccess) ? "" : checkTeacherInScheduledLessonsResult.ErrorMessage);
+                                    //+((checkRoomInUnscheduledLessonsResult.IsSuccess)? "":checkRoomInUnscheduledLessonsResult.ErrorMessage)
+                                    //+((checkTeacherInUnscheduledLessonsResult.IsSuccess)? "":checkTeacherInUnscheduledLessonsResult.ErrorMessage);                                    
                 result.Data = new List<object>
                 {
                     checkRoomInScheduledLessonsResult,
                     checkTeacherInScheduledLessonsResult,
-                    checkRoomInUnscheduledLessonsResult,
-                    checkTeacherInUnscheduledLessonsResult
+                    //checkRoomInUnscheduledLessonsResult,
+                    //checkTeacherInUnscheduledLessonsResult
                 };
                 return result;
             }
@@ -586,23 +587,24 @@ namespace Pegasus_backend.Services
             var result = new Result<List<object>>();
             var checkRoomInScheduledLessonsResult = CheckRoomConflictInScheduledLessonsInMemory();
             var checkTeacherInScheduledLessonsResult = CheckTeacherConflictInScheduledLessonsInMemory();
-            var checkRoomInUnscheduledLessonsResult = CheckRoomConflictInUnscheduledLessonsInMemory();
-            var checkTeacherInUnscheduledLessonsResult = CheckTeacherConflictInUnscheduledLessonsInMemory();
+            //var checkRoomInUnscheduledLessonsResult = CheckRoomConflictInUnscheduledLessonsInMemory();
+            //var checkTeacherInUnscheduledLessonsResult = CheckTeacherConflictInUnscheduledLessonsInMemory();
 
-            if (!checkRoomInScheduledLessonsResult.IsSuccess || !checkTeacherInScheduledLessonsResult.IsSuccess || 
-                !checkRoomInUnscheduledLessonsResult.IsSuccess || !checkTeacherInUnscheduledLessonsResult.IsSuccess)
+            if (!checkRoomInScheduledLessonsResult.IsSuccess || !checkTeacherInScheduledLessonsResult.IsSuccess 
+               // || !checkRoomInUnscheduledLessonsResult.IsSuccess || !checkTeacherInUnscheduledLessonsResult.IsSuccess
+                )
             {
                 result.IsSuccess = false;
                 result.ErrorMessage = ((checkRoomInScheduledLessonsResult.IsSuccess) ? "" : checkRoomInScheduledLessonsResult.ErrorMessage)
-                                    + ((checkTeacherInScheduledLessonsResult.IsSuccess) ? "" : checkTeacherInScheduledLessonsResult.ErrorMessage)
-                                    + ((checkRoomInUnscheduledLessonsResult.IsSuccess) ? "" : checkRoomInUnscheduledLessonsResult.ErrorMessage)
-                                    + ((checkTeacherInUnscheduledLessonsResult.IsSuccess) ? "" : checkTeacherInUnscheduledLessonsResult.ErrorMessage);
+                                    + ((checkTeacherInScheduledLessonsResult.IsSuccess) ? "" : checkTeacherInScheduledLessonsResult.ErrorMessage);
+                                    //+ ((checkRoomInUnscheduledLessonsResult.IsSuccess) ? "" : checkRoomInUnscheduledLessonsResult.ErrorMessage)
+                                    //+ ((checkTeacherInUnscheduledLessonsResult.IsSuccess) ? "" : checkTeacherInUnscheduledLessonsResult.ErrorMessage);
                 result.Data = new List<object>
                 {
                     checkRoomInScheduledLessonsResult,
                     checkTeacherInScheduledLessonsResult,
-                    checkRoomInUnscheduledLessonsResult,
-                    checkTeacherInUnscheduledLessonsResult
+                    //checkRoomInUnscheduledLessonsResult,
+                    //checkTeacherInUnscheduledLessonsResult
                 };
                 return result;
             }
