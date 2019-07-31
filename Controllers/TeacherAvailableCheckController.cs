@@ -279,7 +279,7 @@ namespace Pegasus_backend.Controllers
             {
                 AvailableDay = customisedAvailableDays,
                 Arranged = customisedArranged,
-                Dayoff = customisedDayoff,
+                Dayoff = customisedDayoff.Where(d => d.TimeBegin !=null),
                 TempChange = customisedTempChange,
             };
 
