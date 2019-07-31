@@ -632,14 +632,13 @@ namespace Pegasus_backend.Services
 
         public int IsLearnerHasPayExtreFee(int term_id, int learner_id)
         {
-            int result=0;
             //var term = _ablemusicContext.Term.Where(x => x.TermId == term_id).FirstOrDefault();
             var learnerWaitingInvoice = _ablemusicContext.InvoiceWaitingConfirm.Where(x => x.TermId==term_id && x.LearnerId == learner_id).ToList();
-            if (learnerWaitingInvoice.count != 0)
+            if (learnerWaitingInvoice.count == 0)
             {
-                result=1;
+                return 0;
             }
-            return result;
+            return 1;
         }
 
 
