@@ -388,6 +388,14 @@ namespace Pegasus_backend.Services
                         //    dbContextTransaction.Rollback();
 
                         //}
+                        int isExist = IsLearnerHasPayExtreFee((int)invoice.TermId, (int)invoice.LearnerId);
+                        if (isExist == 1)
+                        {
+                            //invoice.ConcertFeeName = concertFeeName;
+                            invoice.ConcertFee = 0;
+                            //invoice.LessonNoteFeeName = noteFeeName;
+                            invoice.NoteFee = 0;
+                        }
                         lesson_quantity = await SaveLesson(invoice.WaitingId, 1, 1);
                         courseIns.InvoiceDate = invoice.EndDate;
                     }
