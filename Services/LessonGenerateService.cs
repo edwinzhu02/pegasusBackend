@@ -364,6 +364,15 @@ namespace Pegasus_backend.Services
                     invoice.IsActivate = 3;
                     invoice.IsEmailSent = 0;
 
+                    int isExist = IsLearnerHasPayExtreFee((int)invoice.TermId, (int)course_instance.LearnerId);
+                    if (isExist == 1)
+                    {
+                        //invoice.ConcertFeeName = concertFeeName;
+                        invoice.ConcertFee = 0;
+                        //invoice.LessonNoteFeeName = noteFeeName;
+                        invoice.NoteFee = 0;
+                    }
+
                     var courseIns = await _ablemusicContext.One2oneCourseInstance.FirstOrDefaultAsync(x => x.CourseInstanceId == invoice.CourseInstanceId);
                     int lesson_quantity = 0;
 
@@ -388,14 +397,6 @@ namespace Pegasus_backend.Services
                         //    dbContextTransaction.Rollback();
 
                         //}
-                        int isExist = IsLearnerHasPayExtreFee((int)invoice.TermId, (int)invoice.LearnerId);
-                        if (isExist == 1)
-                        {
-                            //invoice.ConcertFeeName = concertFeeName;
-                            invoice.ConcertFee = 0;
-                            //invoice.LessonNoteFeeName = noteFeeName;
-                            invoice.NoteFee = 0;
-                        }
                         lesson_quantity = await SaveLesson(invoice.WaitingId, 1, 1);
                         courseIns.InvoiceDate = invoice.EndDate;
                     }
@@ -432,14 +433,6 @@ namespace Pegasus_backend.Services
                             if (invoice.EndDate >= all_term.BeginDate && invoice.EndDate <= all_term.EndDate) invoice.TermId = all_term.TermId;
                         }
 
-                        int isExist = IsLearnerHasPayExtreFee((int)invoice.TermId, (int)invoice.LearnerId);
-                        if (isExist == 1)
-                        {
-                            //invoice.ConcertFeeName = concertFeeName;
-                            invoice.ConcertFee = 0;
-                            //invoice.LessonNoteFeeName = noteFeeName;
-                            invoice.NoteFee = 0;
-                        }
                         await _ablemusicContext.InvoiceWaitingConfirm.AddAsync(invoice);
                         await _ablemusicContext.SaveChangesAsync();
                         //using (var dbContextTransaction = _ablemusicContext.Database.BeginTransaction())
@@ -548,6 +541,15 @@ namespace Pegasus_backend.Services
                     invoice.LessonNoteFeeName = noteFeeName;
                     invoice.NoteFee = noteFee;
 
+                    int isExist = IsLearnerHasPayExtreFee((int)invoice.TermId, (int)learner.LearnerId);
+                    if (isExist == 1)
+                    {
+                        //invoice.ConcertFeeName = concertFeeName;
+                        invoice.ConcertFee = 0;
+                        //invoice.LessonNoteFeeName = noteFeeName;
+                        invoice.NoteFee = 0;
+                    }
+
                     var courseIns = await _ablemusicContext.LearnerGroupCourse.FirstOrDefaultAsync(x => x.LearnerGroupCourseId == learner.LearnerGroupCourseId);
                     int lesson_quantity = 0;
 
@@ -576,7 +578,6 @@ namespace Pegasus_backend.Services
                         courseIns.InvoiceDate = invoice.EndDate;
                     }
 
-
                     if (invoice.BeginDate != null) invoice.DueDate = Convert.ToDateTime(invoice.BeginDate).AddDays(-1);
                     invoice.LessonFee = group_course_instance.Price * lesson_quantity;
 
@@ -584,14 +585,7 @@ namespace Pegasus_backend.Services
                     invoice.TotalFee = invoice.LessonFee;
                     invoice.LessonQuantity = lesson_quantity;
                     if (invoice.LessonFee <= 0) continue;
-                    int isExist = IsLearnerHasPayExtreFee((int)invoice.TermId, (int)invoice.LearnerId);
-                    if (isExist == 1)
-                    {
-                        //invoice.ConcertFeeName = concertFeeName;
-                        invoice.ConcertFee = 0;
-                        //invoice.LessonNoteFeeName = noteFeeName;
-                        invoice.NoteFee = 0;
-                    }
+
                     invoice.InvoiceNum = invoice.WaitingId.ToString();
                     _ablemusicContext.InvoiceWaitingConfirm.Update(invoice);
                     _ablemusicContext.Update(courseIns);
