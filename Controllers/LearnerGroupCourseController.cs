@@ -26,8 +26,9 @@ namespace Pegasus_backend.Controllers
         private readonly IMapper _mapper;
         private readonly LessonGenerateService _lessonGenerateService;
 
-        public LearnerGroupCourseController(ablemusicContext ablemusicContext, ILogger<LearnerGroupCourseController> log) : base(ablemusicContext, log)
+        public LearnerGroupCourseController(ablemusicContext ablemusicContext, ILogger<LearnerGroupCourseController> log, IMapper mapper) : base(ablemusicContext, log)
         {
+            _mapper = mapper;
             _lessonGenerateService = new LessonGenerateService(_ablemusicContext, _mapper);
         }
 
@@ -51,7 +52,6 @@ namespace Pegasus_backend.Controllers
                     _ablemusicContext.Add(item);
                 });
                 await _ablemusicContext.SaveChangesAsync();
-
                 model.LearnerGroupCourses.ForEach(async s =>
                 {
                     await _lessonGenerateService.GetTerm((DateTime)s.BeginDate, (int)s.GroupCourseInstanceId, 0);
