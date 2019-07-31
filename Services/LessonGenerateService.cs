@@ -634,7 +634,7 @@ namespace Pegasus_backend.Services
         {
             //var term = _ablemusicContext.Term.Where(x => x.TermId == term_id).FirstOrDefault();
             var learnerWaitingInvoice = _ablemusicContext.InvoiceWaitingConfirm.Where(x => x.TermId==term_id && x.LearnerId == learner_id).ToList();
-            if (learnerWaitingInvoice.count == 0)
+            if (learnerWaitingInvoice.Count == 0)
             {
                 return 0;
             }
