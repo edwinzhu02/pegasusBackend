@@ -199,14 +199,15 @@ namespace Pegasus_backend.Controllers
             List<Invoice> invoices = new List<Invoice>();
             try
             {
-                invoiceWaitingConfirms = await (from s in _ablemusicContext.Staff
-                                                join so in _ablemusicContext.StaffOrg on s.StaffId equals so.StaffId
-                                                join l in _ablemusicContext.Learner on so.OrgId equals l.OrgId
+                
+                invoiceWaitingConfirms = await (from //s in _ablemusicContext.Staff
+                                                //join so in _ablemusicContext.StaffOrg on s.StaffId equals so.StaffId
+                                                l in _ablemusicContext.Learner //on so.OrgId equals l.OrgId
                                                 join iw in _ablemusicContext.InvoiceWaitingConfirm on l.LearnerId equals iw.LearnerId
-                                                join t in _ablemusicContext.Term on iw.TermId equals t.TermId
+                                                //join t in _ablemusicContext.Term on iw.TermId equals t.TermId
                                                 join iv in _ablemusicContext.Invoice on iw.InvoiceNum equals iv.InvoiceNum into f
                                                 from i in f.DefaultIfEmpty()
-                                                where l.LearnerId==learnerId
+                                                where l.LearnerId==learnerId && iw.IsActivate ==1 
                                                 select new
                                                 {
                                                     InvoiceNum = iw.InvoiceNum,
