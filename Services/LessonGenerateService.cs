@@ -361,7 +361,7 @@ namespace Pegasus_backend.Services
                     invoice.PaidFee = 0;
                     invoice.CreatedAt = _today;
                     invoice.IsConfirmed = 0;
-                    invoice.IsActivate = 1;
+                    invoice.IsActivate = 3;
                     invoice.IsEmailSent = 0;
 
                     var courseIns = await _ablemusicContext.One2oneCourseInstance.FirstOrDefaultAsync(x => x.CourseInstanceId == invoice.CourseInstanceId);
@@ -541,7 +541,7 @@ namespace Pegasus_backend.Services
                     invoice.PaidFee = 0;
                     invoice.CreatedAt = _today;
                     invoice.IsConfirmed = 0;
-                    invoice.IsActivate = 1;
+                    invoice.IsActivate = 3;
                     invoice.IsEmailSent = 0;
                     invoice.ConcertFeeName = concertFeeName;
                     invoice.ConcertFee = concertFee;
