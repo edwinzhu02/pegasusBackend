@@ -229,8 +229,12 @@ namespace Pegasus_backend.Services
                         DateTime EndTime = Convert.ToDateTime(endDate);
                         lesson.BeginTime = BeginTime;
                         lesson.EndTime = EndTime;
-                        await _ablemusicContext.Lesson.AddAsync(lesson);
-                        await _ablemusicContext.SaveChangesAsync();
+                        if (isOne2one == 1)
+                        {
+                            await _ablemusicContext.Lesson.AddAsync(lesson);
+                            await _ablemusicContext.SaveChangesAsync();
+                        }
+
                         lesson_quantity++;
                     }
                     catch (Exception e)
@@ -357,7 +361,7 @@ namespace Pegasus_backend.Services
                     invoice.PaidFee = 0;
                     invoice.CreatedAt = _today;
                     invoice.IsConfirmed = 0;
-                    invoice.IsActivate = 3;
+                    invoice.IsActivate = 1;
                     invoice.IsEmailSent = 0;
 
                     var courseIns = await _ablemusicContext.One2oneCourseInstance.FirstOrDefaultAsync(x => x.CourseInstanceId == invoice.CourseInstanceId);
@@ -512,7 +516,7 @@ namespace Pegasus_backend.Services
                     invoice.PaidFee = 0;
                     invoice.CreatedAt = _today;
                     invoice.IsConfirmed = 0;
-                    invoice.IsActivate = 3;
+                    invoice.IsActivate = 1;
                     invoice.IsEmailSent = 0;
 
                     var courseIns = await _ablemusicContext.LearnerGroupCourse.FirstOrDefaultAsync(x => x.LearnerGroupCourseId == learner.LearnerGroupCourseId);
@@ -533,12 +537,11 @@ namespace Pegasus_backend.Services
 
                         await _ablemusicContext.InvoiceWaitingConfirm.AddAsync(invoice);
                         await _ablemusicContext.SaveChangesAsync();
-                        using (var dbContextTransaction = _ablemusicContext.Database.BeginTransaction())
-                        {
-                            lesson_quantity = await SaveLesson(invoice.WaitingId, 1, 0);
-                            dbContextTransaction.Rollback();
-
-                        }
+                        //using (var dbContextTransaction = _ablemusicContext.Database.BeginTransaction())
+                        //{
+                        //    lesson_quantity = await SaveLesson(invoice.WaitingId, 1, 0);
+                        //    dbContextTransaction.Rollback();
+                        //}
                         lesson_quantity = await SaveLesson(invoice.WaitingId, 1, 0);
                         courseIns.InvoiceDate = invoice.EndDate;
                     }
@@ -572,20 +575,20 @@ namespace Pegasus_backend.Services
 
         public void UpdateWaitingInvoicetoActive()
         {
-           List<InvoiceWaitingConfirm> InvoiceWaitingConfirms = new List<InvoiceWaitingConfirm>();
-           InvoiceWaitingConfirms = _ablemusicContext.InvoiceWaitingConfirm.Where(i => i.IsActivate == 3).ToList();
-           foreach (var InvoiceWaitingConfirm in InvoiceWaitingConfirms)
-           {
-               TimeSpan ts = (DateTime)InvoiceWaitingConfirm.BeginDate - _today;
-               int days = ts.Days;
+            List<InvoiceWaitingConfirm> InvoiceWaitingConfirms = new List<InvoiceWaitingConfirm>();
+            InvoiceWaitingConfirms = _ablemusicContext.InvoiceWaitingConfirm.Where(i => i.IsActivate == 3).ToList();
+            foreach (var InvoiceWaitingConfirm in InvoiceWaitingConfirms)
+            {
+                TimeSpan ts = (DateTime)InvoiceWaitingConfirm.BeginDate - _today;
+                int days = ts.Days;
 
-               if ((InvoiceWaitingConfirm.CourseInstanceId != null && days <= 30) || (InvoiceWaitingConfirm.GroupCourseInstanceId != null && days <= 14))
-               {
-                   InvoiceWaitingConfirm.IsActivate = 1;
-                   _ablemusicContext.Update(InvoiceWaitingConfirm);
-                   _ablemusicContext.SaveChanges();
-               }
-           }
+                if ((InvoiceWaitingConfirm.CourseInstanceId != null && days <= 30) || (InvoiceWaitingConfirm.GroupCourseInstanceId != null && days <= 14))
+                {
+                    InvoiceWaitingConfirm.IsActivate = 1;
+                    _ablemusicContext.Update(InvoiceWaitingConfirm);
+                    _ablemusicContext.SaveChanges();
+                }
+            }
 
         }
 
