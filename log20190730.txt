@@ -2932,4 +2932,18 @@ INNER JOIN `ablemusic`.`amendment` AS `a` ON `oto`.`course_instance_id` = `a`.`c
 LEFT JOIN `ablemusic`.`learner` AS `a.Learner` ON `a`.`learner_id` = `a.Learner`.`learner_id`
 INNER JOIN `ablemusic`.`learner` AS `l` ON `a`.`learner_id` = `l`.`learner_id`
 WHERE `oto`.`teacher_id` = @__teacherId_0
+<<<<<<< HEAD
 >>>>>>> 8546a5ec96299264fa8935b858e98fb20030ebad
+=======
+2019-07-30 23:01:08.610 +12:00 [INF] User profile is available. Using 'C:\Users\zhuyi\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-07-30 23:01:08.666 +12:00 [INF] Creating key "43d323ee-3fbb-429a-a021-e16f9ace835c" with creation date "2019-07-30T11:01:08.6632903+00:00", activation date "2019-07-30T11:01:08.6580617+00:00", and expiration date "2019-10-28T11:01:08.6580617+00:00".
+2019-07-30 23:01:08.706 +12:00 [INF] Writing data to file 'C:\Users\zhuyi\AppData\Local\ASP.NET\DataProtection-Keys\key-43d323ee-3fbb-429a-a021-e16f9ace835c.xml'.
+2019-07-30 23:01:09.053 +12:00 [INF] Daily Execution Start at 2019/7/30 23:01:09
+2019-07-30 23:01:09.067 +12:00 [INF] Checking if today is the end of any term...
+2019-07-30 23:01:11.356 +12:00 [INF] Current Term is 2019 Term 3. It is not the end of the term. No lesson to arrange for today.
+2019-07-30 23:01:11.678 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
+2019-07-30 23:01:11.711 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-07-30 23:01:11.775 +12:00 [INF] 
+2019-07-30 23:01:11.885 +12:00 [INF] Response 
+2019-07-30 23:01:11.891 +12:00 [INF] Request finished in 213.7252ms 404 
+>>>>>>> 4cd8ffefb03a6fd199736835049a95f6503213e6

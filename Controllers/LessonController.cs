@@ -79,7 +79,8 @@ namespace Pegasus_backend.Controllers
                             :0,
                         
                         learner = IsNull(s.GroupCourseInstance)?new List<Object>(){new {s.Learner.FirstName,s.Learner.LearnerId}}:null,
-                        learners = IsNull(s.GroupCourseInstance)?null:s.GroupCourseInstance.LearnerGroupCourse.Select(w=>new{w.Learner.FirstName,w.Learner.LearnerId}),
+                        learners = IsNull(s.GroupCourseInstance)?null:s.GroupCourseInstance.LearnerGroupCourse.
+                                Select(w=>new{w.Learner.FirstName,w.Learner.LearnerId}),
                         IsGroup=!IsNull(s.GroupCourseInstance),
                         info = new
                         {
