@@ -388,6 +388,14 @@ namespace Pegasus_backend.Services
                         //    dbContextTransaction.Rollback();
 
                         //}
+                        int isExist = IsLearnerHasPayExtreFee((int)invoice.TermId, (int)invoice.LearnerId);
+                        if (isExist == 1)
+                        {
+                            //invoice.ConcertFeeName = concertFeeName;
+                            invoice.ConcertFee = 0;
+                            //invoice.LessonNoteFeeName = noteFeeName;
+                            invoice.NoteFee = 0;
+                        }
                         lesson_quantity = await SaveLesson(invoice.WaitingId, 1, 1);
                         courseIns.InvoiceDate = invoice.EndDate;
                     }
@@ -554,8 +562,9 @@ namespace Pegasus_backend.Services
                     invoice.TotalFee = invoice.LessonFee;
                     invoice.LessonQuantity = lesson_quantity;
                     if (invoice.LessonFee <= 0) continue;
-                    _ablemusicContext.InvoiceWaitingConfirm.Update(invoice);
+
                     invoice.InvoiceNum = invoice.WaitingId.ToString();
+                    _ablemusicContext.InvoiceWaitingConfirm.Update(invoice);
                     _ablemusicContext.Update(courseIns);
 
                     await _ablemusicContext.SaveChangesAsync();
