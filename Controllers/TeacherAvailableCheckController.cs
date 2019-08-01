@@ -35,6 +35,7 @@ namespace Pegasus_backend.Controllers
             List<dynamic> customisedDayoff = new List<dynamic>();
             List<dynamic> customisedTempChange = new List<dynamic>();
             List<Lesson> arrangedLessons = new List<Lesson>();
+            
             try
             {
                 beginDate = DateTime.Parse(StartDate);
@@ -90,11 +91,11 @@ namespace Pegasus_backend.Controllers
                                                  OrgId = g.OrgId,
                                                  OrgName = o.OrgName,
                                              }).ToListAsync();
-                amendments = await (from oto in _ablemusicContext.One2oneCourseInstance
-                                    join a in _ablemusicContext.Amendment on oto.CourseInstanceId equals a.CourseInstanceId
+                amendments = await (from a in _ablemusicContext.Amendment
+                                    join oto in _ablemusicContext.One2oneCourseInstance on a.CourseInstanceId equals oto.CourseInstanceId
                                     join l in _ablemusicContext.Learner on a.LearnerId equals l.LearnerId
                                     join cs in _ablemusicContext.CourseSchedule on a.CourseScheduleId equals cs.CourseScheduleId
-                                    where oto.TeacherId == teacherId
+                                    //where oto.TeacherId == teacherId
                                     select new Amendment
                                     {
                                         CourseInstanceId = a.CourseInstanceId,
@@ -113,6 +114,7 @@ namespace Pegasus_backend.Controllers
                                         AmendType = a.AmendType,
                                         CourseScheduleId = a.CourseScheduleId,
                                         Learner = a.Learner,
+                                        TeacherId = oto.TeacherId,
                                     }).ToListAsync();
                 arrangedLessons = await _ablemusicContext.Lesson.Where(l => l.TeacherId == teacherId && l.BeginTime.HasValue &&
                 l.BeginTime.Value.Date >= beginDate.Date && l.IsCanceled != 1).Include(l => l.Learner).Include(l => l.Org).ToListAsync();
@@ -206,21 +208,30 @@ namespace Pegasus_backend.Controllers
                 });
             }
 
-            var dayoffsOverThreeMonth = amendments.Where(a => a.AmendType == 1 && beginDate.Date >= a.BeginDate.Value.Date && beginDate.Date <= a.EndDate.Value.Date &&
+            var dayoffsOverThreeMonth = amendments.Where(a => a.TeacherId == teacherId && a.AmendType == 1 && beginDate.Date >= a.BeginDate.Value.Date && beginDate.Date <= a.EndDate.Value.Date &&
             a.EndDate.Value.Month - a.BeginDate.Value.Month >= 3).ToList();
-            var changeTemporarily = amendments.Where(a => a.AmendType == 2 && a.IsTemporary == 1 && beginDate < a.EndDate).ToList();
-            var changePermanentlyExpired = amendments.Where(a => a.AmendType == 2 && a.IsTemporary == 0 && beginDate > a.BeginDate).ToList();
-            var changePermanentlyNotExpired = amendments.Where(a => a.AmendType == 2 && a.IsTemporary == 0 && beginDate <= a.BeginDate).ToList();
+            var changeTemporarily = amendments.Where(a => a.TeacherId == teacherId && a.AmendType == 2 && a.IsTemporary == 1 && beginDate < a.EndDate).ToList();
+            var changePermanentlyExpired = amendments.Where(a => a.TeacherId == teacherId && a.AmendType == 2 && a.IsTemporary == 0 && beginDate > a.BeginDate).ToList();
+            var changePermanentlyNotExpired = amendments.Where(a => a.TeacherId == teacherId && a.AmendType == 2 && a.IsTemporary == 0 && beginDate <= a.BeginDate).ToList();
 
             if(dayoffsOverThreeMonth != null)
             {
                 foreach(var d in dayoffsOverThreeMonth)
                 {
+                    List<Amendment> checkLearnerMadeChangeBeforeDayOff = amendments.Where(a => a.LearnerId == d.LearnerId && a.AmendType == 2 && a.IsTemporary == 0 && a.CreatedAt < d.CreatedAt).OrderBy(a => a.CreatedAt).ToList();
+                    TimeSpan beginTime = d.BeginTime.Value;
+                    TimeSpan endTime = d.EndTime.Value;
+                    foreach(var changedBeforeDayOff in checkLearnerMadeChangeBeforeDayOff)
+                    {
+                        beginTime = changedBeforeDayOff.BeginTime.Value;
+                        endTime = changedBeforeDayOff.EndTime.Value;
+                    }
+
                     customisedDayoff.Add(new
                     {
                         DayOfWeek = d.DayOfWeek,
-                        TimeBegin = d.BeginTime,
-                        TimeEnd = d.EndTime,
+                        TimeBegin = beginTime,
+                        TimeEnd = endTime,
                         LearnerName = d.Learner.FirstName + " " + d.Learner.LastName,
                         CourseScheduleId = d.CourseScheduleId,
                     });
