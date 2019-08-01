@@ -40,7 +40,7 @@ namespace Pegasus_backend.Controllers
             List<Holiday> holidays;
             try
             {
-                lessons = await _ablemusicContext.Lesson.Where(l => l.LearnerId == inputObj.LearnerId && l.IsCanceled != 1 && inputObj.InstanceIds.Contains(l.CourseInstanceId.Value) &&
+                lessons = await _ablemusicContext.Lesson.Where(l => l.LearnerId == inputObj.LearnerId && l.IsCanceled != 1 && l.CourseInstanceId.HasValue && inputObj.InstanceIds.Contains(l.CourseInstanceId.Value) &&
                 l.BeginTime.Value.Date > inputObj.BeginDate.Date && l.BeginTime.Value.Date < inputObj.EndDate.Date).ToListAsync();
                 courseSchedules = await (from i in _ablemusicContext.One2oneCourseInstance
                                          join cs in _ablemusicContext.CourseSchedule on i.CourseInstanceId equals cs.CourseInstanceId
@@ -73,6 +73,7 @@ namespace Pegasus_backend.Controllers
                 learner = await _ablemusicContext.Learner.Where(l => l.LearnerId == inputObj.LearnerId).FirstOrDefaultAsync();
                 holidays = await _ablemusicContext.Holiday.ToListAsync();
                 exsitsAmendment = await _ablemusicContext.Amendment.Where(a => a.LearnerId == inputObj.LearnerId && a.AmendType == 1 &&
+                a.CourseInstanceId.HasValue && inputObj.InstanceIds.Contains(a.CourseInstanceId.Value) &&
                 ((inputObj.BeginDate >= a.BeginDate && inputObj.BeginDate <= a.EndDate) ||
                 (inputObj.EndDate >= a.BeginDate && inputObj.EndDate <= a.EndDate) ||
                 (inputObj.BeginDate <= a.BeginDate && inputObj.EndDate >= a.EndDate))).ToListAsync();

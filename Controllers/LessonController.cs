@@ -68,13 +68,19 @@ namespace Pegasus_backend.Controllers
                             
                         },
                         s.Reason,
-                        isReadyToOwn=IsNull(s.GroupCourseInstance)?IsNull(s.CourseInstance)?s.IsPaid==1?0:1:
+                        /*isReadyToOwn=IsNull(s.GroupCourseInstance)?IsNull(s.CourseInstance)?s.IsPaid==1?0:1:
                             _ablemusicContext.LessonRemain.FirstOrDefault(q=>q.LearnerId==s.LearnerId && q.CourseInstanceId==s.CourseInstanceId).Quantity<=3?
                             1:0
+                            :0,*/
+                        isReadyToOwn = IsNull(s.GroupCourseInstance)?IsNull(s.CourseInstance)?s.IsPaid==1?0:1:
+                                _ablemusicContext.LessonRemain.FirstOrDefault(q=>q.LearnerId==s.LearnerId && q.CourseInstanceId==s.CourseInstanceId)==null?
+                                1: _ablemusicContext.LessonRemain.FirstOrDefault(q=>q.LearnerId==s.LearnerId && q.CourseInstanceId==s.CourseInstanceId).Quantity<=3?
+                                    1:0
                             :0,
                         
                         learner = IsNull(s.GroupCourseInstance)?new List<Object>(){new {s.Learner.FirstName,s.Learner.LearnerId}}:null,
-                        learners = IsNull(s.GroupCourseInstance)?null:s.GroupCourseInstance.LearnerGroupCourse.Select(w=>new{w.Learner.FirstName,w.Learner.LearnerId}),
+                        learners = IsNull(s.GroupCourseInstance)?null:s.GroupCourseInstance.LearnerGroupCourse.
+                                Select(w=>new{w.Learner.FirstName,w.Learner.LearnerId}),
                         IsGroup=!IsNull(s.GroupCourseInstance),
                         info = new
                         {

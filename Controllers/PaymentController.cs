@@ -62,6 +62,7 @@ namespace Pegasus_backend.Controllers
                      .Include(p => p.Invoice)
                      .Include(p => p.Learner)                     
                      .Include(p => p.SoldTransaction ).ThenInclude(p => p.Product)
+                     .Include(p => p.Staff).ThenInclude(s => s.StaffOrg)
                      .Include(t => t.Staff ).OrderByDescending(p => p.CreatedAt).ToListAsync();
  //&& orgs.Contains(d.Staff.StaffOrg.FirstOrDefault().OrgId)
                 result.Data = _mapper.Map<List<GetPaymentModel>>(payments);

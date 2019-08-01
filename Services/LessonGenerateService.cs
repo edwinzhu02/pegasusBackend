@@ -229,8 +229,12 @@ namespace Pegasus_backend.Services
                         DateTime EndTime = Convert.ToDateTime(endDate);
                         lesson.BeginTime = BeginTime;
                         lesson.EndTime = EndTime;
-                        await _ablemusicContext.Lesson.AddAsync(lesson);
-                        await _ablemusicContext.SaveChangesAsync();
+                        if (isOne2one == 1)
+                        {
+                            await _ablemusicContext.Lesson.AddAsync(lesson);
+                            await _ablemusicContext.SaveChangesAsync();
+                        }
+
                         lesson_quantity++;
                     }
                     catch (Exception e)
@@ -360,6 +364,15 @@ namespace Pegasus_backend.Services
                     invoice.IsActivate = 3;
                     invoice.IsEmailSent = 0;
 
+                    int isExist = IsLearnerHasPayExtreFee((int)invoice.TermId, (int)course_instance.LearnerId);
+                    if (isExist == 1)
+                    {
+                        //invoice.ConcertFeeName = concertFeeName;
+                        invoice.ConcertFee = 0;
+                        //invoice.LessonNoteFeeName = noteFeeName;
+                        invoice.NoteFee = 0;
+                    }
+
                     var courseIns = await _ablemusicContext.One2oneCourseInstance.FirstOrDefaultAsync(x => x.CourseInstanceId == invoice.CourseInstanceId);
                     int lesson_quantity = 0;
 
@@ -420,14 +433,6 @@ namespace Pegasus_backend.Services
                             if (invoice.EndDate >= all_term.BeginDate && invoice.EndDate <= all_term.EndDate) invoice.TermId = all_term.TermId;
                         }
 
-                        int isExist = IsLearnerHasPayExtreFee((int)invoice.TermId, (int)invoice.LearnerId);
-                        if (isExist == 1)
-                        {
-                            //invoice.ConcertFeeName = concertFeeName;
-                            invoice.ConcertFee = 0;
-                            //invoice.LessonNoteFeeName = noteFeeName;
-                            invoice.NoteFee = 0;
-                        }
                         await _ablemusicContext.InvoiceWaitingConfirm.AddAsync(invoice);
                         await _ablemusicContext.SaveChangesAsync();
                         //using (var dbContextTransaction = _ablemusicContext.Database.BeginTransaction())
@@ -470,6 +475,23 @@ namespace Pegasus_backend.Services
 
         public async Task<Result<IActionResult>> GenerateGroupInvoice(int term_id, int instance_id = 0)
         {
+            var concertFeeName = _ablemusicContext.Lookup.
+                    Where(x => x.LookupType == 15 && x.PropValue == 1).Select(x => x.PropName).FirstOrDefault(); ;
+
+            string concertFeeStr = _ablemusicContext.Lookup.
+                    Where(x => x.LookupType == 15 && x.PropValue == 2).Select(x => x.PropName).FirstOrDefault();
+            int concertFee = Int32.Parse(concertFeeStr);
+            //get note fee configuraton
+            string noteFeeName = _ablemusicContext.Lookup.
+                    Where(x => x.LookupType == 16 && x.PropValue == 1).Select(x => x.PropName).FirstOrDefault();
+            string noteFeeStr = _ablemusicContext.Lookup.
+                    Where(x => x.LookupType == 16 && x.PropValue == 2).Select(x => x.PropName).FirstOrDefault();
+            int noteFee = Int32.Parse(noteFeeStr);
+            //get extra fee configuraton
+            string extraFeeStr = _ablemusicContext.Lookup.
+                    Where(x => x.LookupType == 17 && x.PropValue == 1).Select(x => x.PropName).FirstOrDefault();
+            int extraFee = Int32.Parse(extraFeeStr);
+
             var result = new Result<IActionResult>();
             var group_course_instances = await _ablemusicContext.GroupCourseInstance
                 .Include(x => x.Course)
@@ -514,6 +536,19 @@ namespace Pegasus_backend.Services
                     invoice.IsConfirmed = 0;
                     invoice.IsActivate = 3;
                     invoice.IsEmailSent = 0;
+                    invoice.ConcertFeeName = concertFeeName;
+                    invoice.ConcertFee = concertFee;
+                    invoice.LessonNoteFeeName = noteFeeName;
+                    invoice.NoteFee = noteFee;
+
+                    int isExist = IsLearnerHasPayExtreFee((int)invoice.TermId, (int)learner.LearnerId);
+                    if (isExist == 1)
+                    {
+                        //invoice.ConcertFeeName = concertFeeName;
+                        invoice.ConcertFee = 0;
+                        //invoice.LessonNoteFeeName = noteFeeName;
+                        invoice.NoteFee = 0;
+                    }
 
                     var courseIns = await _ablemusicContext.LearnerGroupCourse.FirstOrDefaultAsync(x => x.LearnerGroupCourseId == learner.LearnerGroupCourseId);
                     int lesson_quantity = 0;
@@ -533,16 +568,15 @@ namespace Pegasus_backend.Services
 
                         await _ablemusicContext.InvoiceWaitingConfirm.AddAsync(invoice);
                         await _ablemusicContext.SaveChangesAsync();
-                        using (var dbContextTransaction = _ablemusicContext.Database.BeginTransaction())
-                        {
-                            lesson_quantity = await SaveLesson(invoice.WaitingId, 1, 0);
-                            dbContextTransaction.Rollback();
+                        //using (var dbContextTransaction = _ablemusicContext.Database.BeginTransaction())
+                        //{
+                        //    lesson_quantity = await SaveLesson(invoice.WaitingId, 1, 0);
+                        //    dbContextTransaction.Rollback();
+                        //}
 
-                        }
                         lesson_quantity = await SaveLesson(invoice.WaitingId, 1, 0);
                         courseIns.InvoiceDate = invoice.EndDate;
                     }
-
 
                     if (invoice.BeginDate != null) invoice.DueDate = Convert.ToDateTime(invoice.BeginDate).AddDays(-1);
                     invoice.LessonFee = group_course_instance.Price * lesson_quantity;
@@ -551,8 +585,9 @@ namespace Pegasus_backend.Services
                     invoice.TotalFee = invoice.LessonFee;
                     invoice.LessonQuantity = lesson_quantity;
                     if (invoice.LessonFee <= 0) continue;
-                    _ablemusicContext.InvoiceWaitingConfirm.Update(invoice);
+
                     invoice.InvoiceNum = invoice.WaitingId.ToString();
+                    _ablemusicContext.InvoiceWaitingConfirm.Update(invoice);
                     _ablemusicContext.Update(courseIns);
 
                     await _ablemusicContext.SaveChangesAsync();
@@ -572,27 +607,27 @@ namespace Pegasus_backend.Services
 
         public void UpdateWaitingInvoicetoActive()
         {
-           List<InvoiceWaitingConfirm> InvoiceWaitingConfirms = new List<InvoiceWaitingConfirm>();
-           InvoiceWaitingConfirms = _ablemusicContext.InvoiceWaitingConfirm.Where(i => i.IsActivate == 3).ToList();
-           foreach (var InvoiceWaitingConfirm in InvoiceWaitingConfirms)
-           {
-               TimeSpan ts = (DateTime)InvoiceWaitingConfirm.BeginDate - _today;
-               int days = ts.Days;
+            List<InvoiceWaitingConfirm> InvoiceWaitingConfirms = new List<InvoiceWaitingConfirm>();
+            InvoiceWaitingConfirms = _ablemusicContext.InvoiceWaitingConfirm.Where(i => i.IsActivate == 3).ToList();
+            foreach (var InvoiceWaitingConfirm in InvoiceWaitingConfirms)
+            {
+                TimeSpan ts = (DateTime)InvoiceWaitingConfirm.BeginDate - _today;
+                int days = ts.Days;
 
-               if ((InvoiceWaitingConfirm.CourseInstanceId != null && days <= 30) || (InvoiceWaitingConfirm.GroupCourseInstanceId != null && days <= 14))
-               {
-                   InvoiceWaitingConfirm.IsActivate = 1;
-                   _ablemusicContext.Update(InvoiceWaitingConfirm);
-                   _ablemusicContext.SaveChanges();
-               }
-           }
+                if (InvoiceWaitingConfirm.CourseInstanceId != null && days <= 30)
+                {
+                    InvoiceWaitingConfirm.IsActivate = 1;
+                    _ablemusicContext.Update(InvoiceWaitingConfirm);
+                    _ablemusicContext.SaveChanges();
+                }
+            }
 
         }
 
         public int IsLearnerHasPayExtreFee(int term_id, int learner_id)
         {
-            var term = _ablemusicContext.Term.Where(x => x.TermId == term_id).FirstOrDefault();
-            var learnerWaitingInvoice = _ablemusicContext.InvoiceWaitingConfirm.Where(x => x.BeginDate >= term.BeginDate && x.EndDate <= term.EndDate && x.LearnerId == learner_id).ToList();
+            //var term = _ablemusicContext.Term.Where(x => x.TermId == term_id).FirstOrDefault();
+            var learnerWaitingInvoice = _ablemusicContext.InvoiceWaitingConfirm.Where(x => x.TermId==term_id && x.LearnerId == learner_id).ToList();
             if (learnerWaitingInvoice.Count == 0)
             {
                 return 0;
@@ -667,7 +702,7 @@ namespace Pegasus_backend.Services
                 }
 
             }
-            UpdateWaitingInvoicetoActive();
+            //UpdateWaitingInvoicetoActive();
         }
 
 
