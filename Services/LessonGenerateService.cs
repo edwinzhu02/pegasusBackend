@@ -614,7 +614,7 @@ namespace Pegasus_backend.Services
                 TimeSpan ts = (DateTime)InvoiceWaitingConfirm.BeginDate - _today;
                 int days = ts.Days;
 
-                if (InvoiceWaitingConfirm.CourseInstanceId != null && days <= 30)
+                if (days <= 30)
                 {
                     InvoiceWaitingConfirm.IsActivate = 1;
                     _ablemusicContext.Update(InvoiceWaitingConfirm);
@@ -702,7 +702,7 @@ namespace Pegasus_backend.Services
                 }
 
             }
-            //UpdateWaitingInvoicetoActive();
+            UpdateWaitingInvoicetoActive();
         }
 
 
