@@ -376,8 +376,8 @@ namespace Pegasus_backend.Controllers
         }
 
         // PUT: api/StockApplication/reply/1/request approved
-        [HttpPut("reply/{applicationId}/{replyContent}")]
-        public async Task<IActionResult> ReplyStock(int applicationId, string replyContent)
+        [HttpPut("reply/{applicationId}/{replyContent}/{applyAt}")]
+        public async Task<IActionResult> ReplyStock(int applicationId, string replyContent, DateTime applyAt)
         {
             var result = new Result<StockApplication>();
             var stockApplication = new StockApplication();
@@ -397,7 +397,12 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = "stockApplication not found";
                 return BadRequest(result);
             }
-
+            if(stockApplication.ApplyAt.Value != applyAt)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = "This application has been updtated by other client. Please refresh page first";
+                return BadRequest(result);
+            }
             stockApplication.ProcessStatus = 2;
             stockApplication.ReplyContent = replyContent;
             stockApplication.ReplyAt = DateTime.UtcNow.ToNZTimezone();
