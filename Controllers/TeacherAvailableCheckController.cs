@@ -93,6 +93,7 @@ namespace Pegasus_backend.Controllers
                 amendments = await (from oto in _ablemusicContext.One2oneCourseInstance
                                     join a in _ablemusicContext.Amendment on oto.CourseInstanceId equals a.CourseInstanceId
                                     join l in _ablemusicContext.Learner on a.LearnerId equals l.LearnerId
+                                    join cs in _ablemusicContext.CourseSchedule on a.CourseScheduleId equals cs.CourseScheduleId
                                     where oto.TeacherId == teacherId
                                     select new Amendment
                                     {
@@ -100,8 +101,8 @@ namespace Pegasus_backend.Controllers
                                         AmendmentId = a.AmendmentId,
                                         OrgId = a.OrgId,
                                         DayOfWeek = a.DayOfWeek,
-                                        BeginTime = a.BeginTime,
-                                        EndTime = a.EndTime,
+                                        BeginTime = cs.BeginTime,
+                                        EndTime = cs.EndTime,
                                         LearnerId = a.LearnerId,
                                         RoomId = a.RoomId,
                                         BeginDate = a.BeginDate,
