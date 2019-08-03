@@ -119,6 +119,7 @@ namespace Pegasus_backend.Controllers
                     _mapper.Map(details, paymentItem);
                     paymentItem.CreatedAt = toNZTimezone(DateTime.UtcNow);
                     paymentItem.PaymentType = 1;
+                    paymentItem.IsConfirmed = 0;
                     _ablemusicContext.Add(paymentItem);
                     await _ablemusicContext.SaveChangesAsync();
 
