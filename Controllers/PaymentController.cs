@@ -144,19 +144,35 @@ namespace Pegasus_backend.Controllers
                     if (invoiceItem.IsPaid == 1)
                     {
                         if (invoiceItem.CourseInstanceId!=null) { //if this is a one on one session 
-                            var lessonRemain = new LessonRemain
+                            //
+                            var invoiceLessonRemain =
+                                _ablemusicContext.LessonRemain.FirstOrDefault(s =>
+                                    s.CourseInstanceId == invoiceItem.CourseInstanceId);
+                            if (invoiceLessonRemain != null)
                             {
-                                Quantity = invoiceItem.LessonQuantity,
-                                TermId = invoiceItem.TermId,
-                                ExpiryDate = invoiceItem.EndDate.Value.AddMonths(3),
-                                CourseInstanceId = invoiceItem.CourseInstanceId,
-                                LearnerId = invoiceItem.LearnerId
-                            };
-                            _ablemusicContext.Add(lessonRemain);
+                                invoiceLessonRemain.Quantity =
+                                    invoiceLessonRemain.Quantity + invoiceItem.LessonQuantity;
+                                _ablemusicContext.Update(invoiceLessonRemain);
+                                await _ablemusicContext.SaveChangesAsync();
+                            }
+                            else
+                            {
+                                var lessonRemain = new LessonRemain
+                                {
+                                    Quantity = invoiceItem.LessonQuantity,
+                                    TermId = invoiceItem.TermId,
+                                    ExpiryDate = invoiceItem.EndDate.Value.AddMonths(3),
+                                    CourseInstanceId = invoiceItem.CourseInstanceId,
+                                    LearnerId = invoiceItem.LearnerId
+                                };
+                                _ablemusicContext.Add(lessonRemain);
+                                await _ablemusicContext.SaveChangesAsync();
+                            }
+                           
                         }
                         //if  (invoiceItem.CourseInstanceId != null)
                             //await SaveLesson(details.InvoiceId,0,1);
-                        await _ablemusicContext.SaveChangesAsync();
+                        
 
                     }
                     dbContextTransaction.Commit();
