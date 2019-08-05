@@ -308,9 +308,76 @@ namespace Pegasus_backend.Controllers
             return Ok(result);
         }
 
+        // PUT: api/StockApplication
+        [CheckModelFilter]
+        [HttpPut("{applicationId}")]
+        public async Task<IActionResult> UpdateStock(int applicationId, StockApplicationViewModel stockApplicationViewModel)
+        {
+            var result = new Result<StockApplication>();
+            StockApplication stockApplication;
+            try
+            {
+                stockApplication = await _ablemusicContext.StockApplication.Where(s => s.ApplicationId == applicationId)
+                    .Include(s => s.ApplicationDetails).FirstOrDefaultAsync();
+            }
+            catch(Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+            if(stockApplication == null)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = "Stock Application not found";
+                return BadRequest(result);
+            }
+            if(stockApplication.ProcessStatus != 1)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = "This Stock Application is not allowed to change";
+                return BadRequest(result);
+            }
+
+            foreach (var detail in stockApplication.ApplicationDetails)
+            {
+                _ablemusicContext.ApplicationDetails.Remove(detail);
+            }
+
+            stockApplication.ApplicationDetails = new List<ApplicationDetails>();
+            foreach (var pmq in stockApplicationViewModel.ProductIdQty)
+            {
+                var applicationDetails = new ApplicationDetails
+                {
+                    ApplicationId = applicationId,
+                    ProductId = pmq.ProductId,
+                    AppliedQty = pmq.AppliedQty,
+                    DeliveredQty = null,
+                    ReceivedQty = null
+                };
+                stockApplication.ApplicationDetails.Add(applicationDetails);
+            }
+            stockApplication.OrgId = stockApplicationViewModel.OrgId;
+            stockApplication.ApplyStaffId = stockApplicationViewModel.ApplyStaffId;
+            stockApplication.ApplyAt = DateTime.UtcNow.ToNZTimezone();
+            stockApplication.ApplyReason = stockApplicationViewModel.ApplyReason;
+            try
+            {
+                await _ablemusicContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+            result.Data = stockApplication;
+            return Ok(result);        
+        }
+
         // PUT: api/StockApplication/reply/1/request approved
-        [HttpPut("reply/{applicationId}/{replyContent}")]
-        public async Task<IActionResult> ReplyStock(int applicationId, string replyContent)
+        [HttpPut("reply/{applicationId}/{replyContent}/{applyAt}")]
+        public async Task<IActionResult> ReplyStock(int applicationId, string replyContent, DateTime applyAt)
         {
             var result = new Result<StockApplication>();
             var stockApplication = new StockApplication();
@@ -330,7 +397,12 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = "stockApplication not found";
                 return BadRequest(result);
             }
-
+            if(stockApplication.ApplyAt.Value != applyAt)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = "This application has been updtated by other client. Please refresh page first";
+                return BadRequest(result);
+            }
             stockApplication.ProcessStatus = 2;
             stockApplication.ReplyContent = replyContent;
             stockApplication.ReplyAt = DateTime.UtcNow.ToNZTimezone();

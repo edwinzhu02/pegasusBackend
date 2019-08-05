@@ -16,7 +16,7 @@ namespace Pegasus_backend.Models
     }
     public class StockApplicationDetailsViewModel
     {
-       [Required(ErrorMessage = "ProductId is required")]
+        [Required(ErrorMessage = "ProductId is required")]
         public int ProductId { get; set; }
         [Required(ErrorMessage = "AppliedQty is required")]
         public int? AppliedQty { get; set; }
