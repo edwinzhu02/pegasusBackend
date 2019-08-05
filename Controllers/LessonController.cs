@@ -296,7 +296,7 @@ namespace Pegasus_backend.Controllers
                     .ThenInclude(s => s.Org)                    
                     .Include(s => s.NewLesson)
                     .ThenInclude(s => s.Room)                    
-                    .Where(s => s.LearnerId ==learnerId || FindGroup(s,learnerId))
+                    .Where(s => s.LearnerId ==learnerId || s.GroupCourseInstance.LearnerGroupCourse.ToList().Exists(e=>e.LearnerId == learnerId) )
                     .Select(s => new
                     {
                         CourseName=!IsNull(s.GroupCourseInstance)?s.GroupCourseInstance.Course.CourseName:IsNull(s.CourseInstance)?s.TrialCourse.CourseName:s.CourseInstance.Course.CourseName,
@@ -315,6 +315,7 @@ namespace Pegasus_backend.Controllers
                             EndTime = s.NewLesson.EndTime
                         }
                     }).ToListAsync();
+                
 
                 result.Data = items;
             }
