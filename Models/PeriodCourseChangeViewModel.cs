@@ -31,5 +31,7 @@ namespace Pegasus_backend.Models
         [Required(ErrorMessage = "IsTemporary is required")]
         public short IsTemporary { get; set; }
         public int? CourseScheduleId { get; set; }
+        
+        public short IsInvoiceChange { get; set; }
     }
 }
