@@ -279,13 +279,15 @@ namespace Pegasus_backend.Controllers
             Result<Object> result = new Result<Object>();
             try
             {
-                var items = _ablemusicContext.Lesson
+                var items = await _ablemusicContext.Lesson
                     .Include(s => s.Teacher)
                     .Include(s => s.Learner)
                     .Include(s => s.Room)
                     .Include(s => s.Org)
                     .Include(s => s.GroupCourseInstance)
                     .ThenInclude(w => w.Course)
+                    .Include(s=>s.GroupCourseInstance)
+                    .ThenInclude(s=>s.LearnerGroupCourse)
                     .Include(s => s.CourseInstance)
                     .ThenInclude(w => w.Course)
                     .Include(s => s.NewLesson)
@@ -294,7 +296,7 @@ namespace Pegasus_backend.Controllers
                     .ThenInclude(s => s.Org)                    
                     .Include(s => s.NewLesson)
                     .ThenInclude(s => s.Room)                    
-                    .Where(s => s.LearnerId ==learnerId )
+                    .Where(s => s.LearnerId ==learnerId || FindGroup(s,learnerId))
                     .Select(s => new
                     {
                         CourseName=!IsNull(s.GroupCourseInstance)?s.GroupCourseInstance.Course.CourseName:IsNull(s.CourseInstance)?s.TrialCourse.CourseName:s.CourseInstance.Course.CourseName,
@@ -312,9 +314,9 @@ namespace Pegasus_backend.Controllers
                             BeginTime = s.NewLesson.BeginTime,
                             EndTime = s.NewLesson.EndTime
                         }
-                    });
-                
-                result.Data = await items.ToListAsync();
+                    }).ToListAsync();
+
+                result.Data = items;
             }
             catch (Exception ex)
             {
@@ -324,6 +326,21 @@ namespace Pegasus_backend.Controllers
             }
             
             return Ok(result);
-        }        
+        }
+        private static bool FindGroup(Lesson s,int? learnerId){
+            if (s.GroupCourseInstance == null)
+            {
+                return false;
+            }
+            for (var i = 0; i < s.GroupCourseInstance.LearnerGroupCourse.Count; i++)
+            {
+                if (s.GroupCourseInstance.LearnerGroupCourse.ToList()[i].LearnerId == learnerId)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }
