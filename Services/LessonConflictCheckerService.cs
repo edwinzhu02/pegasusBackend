@@ -165,8 +165,8 @@ namespace Pegasus_backend.Services
             {
                 if (p.TeacherId == _teacherId &&
                     p.IsCanceled != 1 && p.LessonId != _lessonId &&
-                    ((p.BeginTime > beginTime && p.BeginTime < endTime) ||
-                    (p.EndTime > beginTime && p.EndTime < endTime) ||
+                    ((p.BeginTime >= beginTime && p.BeginTime < endTime) ||
+                    (p.EndTime > beginTime && p.EndTime <= endTime) ||
                     (p.BeginTime <= beginTime && p.EndTime >= endTime)))
                 {
                     conflictTeachersWithoutRelocation.Add(p);
@@ -179,17 +179,20 @@ namespace Pegasus_backend.Services
                 foreach (var c in conflictTeachersWithoutRelocation)
                 {
                     if (c.OrgId != _orgId ||
-                        (c.BeginTime > _beginTime && c.BeginTime < _endTime) ||
-                        (c.EndTime > _beginTime && c.EndTime < _endTime) ||
+                        (c.BeginTime >= _beginTime && c.BeginTime < _endTime) ||
+                        (c.EndTime > _beginTime && c.EndTime <= _endTime) ||
                         (c.BeginTime <= _beginTime && c.EndTime >= _endTime))
                     {
                         conflictTeachers.Add(c);
                     }
                 }
-                result.IsSuccess = false;
-                result.ErrorMessage = "Teacher is not available by checking current scheduled lessons";
-                result.Data = conflictTeachers;
-                return result;
+                if(conflictTeachers.Count > 0)
+                {
+                    result.IsSuccess = false;
+                    result.ErrorMessage = "Teacher is not available by checking current scheduled lessons";
+                    result.Data = conflictTeachers;
+                    return result;
+                }
             }
             result.Note = "No conflict teacher was found based on current scheduled lessons";
             return result;
@@ -328,8 +331,8 @@ namespace Pegasus_backend.Services
             DateTime endTime = _endTime.AddMinutes(60);
             conflictTeachersWithoutRelocation = await _ablemusicContext.Lesson.Where(l => l.TeacherId == _teacherId &&
                     l.IsCanceled != 1 && l.LessonId != _lessonId &&
-                    ((l.BeginTime > beginTime && l.BeginTime < endTime) ||
-                    (l.EndTime > beginTime && l.EndTime < endTime) ||
+                    ((l.BeginTime >= beginTime && l.BeginTime < endTime) ||
+                    (l.EndTime > beginTime && l.EndTime <= endTime) ||
                     (l.BeginTime <= beginTime && l.EndTime >= endTime)))
                     .ToListAsync();
 
@@ -339,14 +342,14 @@ namespace Pegasus_backend.Services
                 foreach (var c in conflictTeachersWithoutRelocation)
                 {
                     if (c.OrgId != _orgId ||
-                        (c.BeginTime > _beginTime && c.BeginTime < _endTime) ||
-                        (c.EndTime > _beginTime && c.EndTime < _endTime) ||
+                        (c.BeginTime >= _beginTime && c.BeginTime < _endTime) ||
+                        (c.EndTime > _beginTime && c.EndTime <= _endTime) ||
                         (c.BeginTime <= _beginTime && c.EndTime >= _endTime))
                     {
                         conflictTeachers.Add(c);
                     }
                 }
-                if (conflictTeachers.Count() >0 ){
+                if (conflictTeachers.Count() > 0){
                     result.IsSuccess = false;
                     result.ErrorMessage = "Teacher is not available by checking current scheduled lessons! ";
                     result.Data = conflictTeachers;
