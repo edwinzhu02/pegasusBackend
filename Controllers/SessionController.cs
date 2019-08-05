@@ -441,12 +441,26 @@ namespace Pegasus_backend.Controllers
                     await _ablemusicContext.SaveChangesAsync();
                     
                     //lessonRemain
-                    var lessonRemain = _ablemusicContext.LessonRemain.FirstOrDefault(s =>
+                    LessonRemain lessonRemain;
+                    lessonRemain = _ablemusicContext.LessonRemain.FirstOrDefault(s =>
                         s.LearnerId == lesson.LearnerId && s.CourseInstanceId == lesson.CourseInstanceId);
-                    if (lessonRemain.Quantity == 0)
+                    
+                    //
+                    if (lessonRemain == null)
                     {
-                        throw new Exception("the remain quantities of your lesson is 0");
+                        var invoice = _ablemusicContext.Invoice.FirstOrDefault(s => s.InvoiceId == lesson.InvoiceId);
+                        var newlessonRemain = new LessonRemain
+                        {
+                            Quantity = 0, TermId = invoice.TermId, ExpiryDate = invoice.EndDate.Value.AddMonths(3),
+                            CourseInstanceId = lesson.CourseInstanceId,LearnerId = lesson.LearnerId
+                        };
+                        _ablemusicContext.Add(newlessonRemain);
+                        await _ablemusicContext.SaveChangesAsync();
                     }
+                    
+                    lessonRemain = _ablemusicContext.LessonRemain.FirstOrDefault(s =>
+                        s.LearnerId == lesson.LearnerId && s.CourseInstanceId == lesson.CourseInstanceId);
+                    //
 
                     lessonRemain.Quantity -= 1;
                     _ablemusicContext.Update(lessonRemain);
