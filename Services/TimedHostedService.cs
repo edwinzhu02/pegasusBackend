@@ -18,7 +18,7 @@ namespace Pegasus_backend.Services
         private readonly ILogger<TimedHostedService> _logger;
         private Timer _timer;
         private readonly ablemusicContext _ablemusicContext;
-        private readonly LessonGenerateService _lessonGenerateService;
+        //private readonly LessonGenerateService _lessonGenerateService;
         private readonly GroupCourseGenerateService _groupCourseGenerateService;
 
         public TimedHostedService(ILogger<TimedHostedService> logger)
