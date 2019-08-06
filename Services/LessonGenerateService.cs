@@ -391,6 +391,8 @@ namespace Pegasus_backend.Services
 
                         await _ablemusicContext.InvoiceWaitingConfirm.AddAsync(invoice);
                         await _ablemusicContext.SaveChangesAsync();
+                        invoice.InvoiceNum = invoice.WaitingId.ToString();
+
                         //using (var dbContextTransaction = _ablemusicContext.Database.BeginTransaction())
                         //{
                         //    lesson_quantity = await SaveLesson(invoice.WaitingId, 1, 1);
@@ -453,7 +455,6 @@ namespace Pegasus_backend.Services
                     invoice.LessonQuantity = lesson_quantity;
                     if (invoice.LessonFee <= 0) continue;
                     _ablemusicContext.InvoiceWaitingConfirm.Update(invoice);
-                    invoice.InvoiceNum = invoice.WaitingId.ToString();
                     _ablemusicContext.Update(courseIns);
 
                     await _ablemusicContext.SaveChangesAsync();
