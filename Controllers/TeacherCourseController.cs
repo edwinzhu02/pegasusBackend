@@ -60,7 +60,42 @@ namespace Pegasus_backend.Controllers
             return Ok(result);
 
         }
-        
+      //GET api/teachercourse
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetTeacherCourseByID(int teacherId)
+        {
+            Result<Object> result = new Result<Object>();
+            try
+            {
+                result.Data = await _ablemusicContext.TeacherCourse
+                    .Include(s=>s.Teacher)
+                    .Include(s=>s.Course)
+                    .ThenInclude(s=>s.GroupCourseInstance)
+                    .Include(s=>s.Course)
+                    .ThenInclude(s=>s.CourseCategory)
+                    .Where(t => t.TeacherId ==teacherId)                    
+                    .Select(s=> new
+                    {
+                        s.TeacherCourseId,s.CourseId,s.TeacherId,s.HourlyWage,
+                        Course=new
+                        {
+                            s.Course.CourseId,s.Course.CourseName,s.Course.Level,s.Course.Duration,
+                            s.Course.Price, s.Course.CourseType,s.Course.CourseCategory
+                        },
+                        Teacher= new {s.Teacher.TeacherId,s.Teacher.FirstName,s.Teacher.LastName,s.Teacher.Level}
+                    })
+                    .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+
+            return Ok(result);
+
+        }        
         //PUT api/teachercourse
         [HttpPut]
         [CheckModelFilter]
