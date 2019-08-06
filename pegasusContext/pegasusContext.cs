@@ -1452,8 +1452,6 @@ namespace Pegasus_backend.pegasusContext
                 entity.HasIndex(e => e.GroupCourseInstanceId)
                     .HasName("R_67");
 
-                entity.HasIndex(e => e.InvoiceId)
-                    .HasName("R_112");
 
                 entity.HasIndex(e => e.LearnerId)
                     .HasName("R_31");
@@ -1491,9 +1489,6 @@ namespace Pegasus_backend.pegasusContext
                     .HasColumnName("group_course_instance_id")
                     .HasColumnType("int(11)");
 
-                entity.Property(e => e.InvoiceId)
-                    .HasColumnName("invoice_id")
-                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.IsCanceled)
                     .HasColumnName("is_canceled")
@@ -1554,10 +1549,6 @@ namespace Pegasus_backend.pegasusContext
                     .HasForeignKey(d => d.GroupCourseInstanceId)
                     .HasConstraintName("R_67");
 
-                entity.HasOne(d => d.Invoice)
-                    .WithMany(p => p.Lesson)
-                    .HasForeignKey(d => d.InvoiceId)
-                    .HasConstraintName("R_112");
 
                 entity.HasOne(d => d.Learner)
                     .WithMany(p => p.Lesson)

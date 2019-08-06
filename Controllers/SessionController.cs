@@ -448,7 +448,7 @@ namespace Pegasus_backend.Controllers
                     //
                     if (lessonRemain == null)
                     {
-                        var invoice = _ablemusicContext.Invoice.FirstOrDefault(s => s.InvoiceId == lesson.InvoiceId);
+                        var invoice = _ablemusicContext.Invoice.FirstOrDefault(s => s.InvoiceNum == lesson.InvoiceNum && s.IsActive==1);
                         var newlessonRemain = new LessonRemain
                         {
                             Quantity = 0, TermId = invoice.TermId, ExpiryDate = invoice.EndDate.Value.AddMonths(3),

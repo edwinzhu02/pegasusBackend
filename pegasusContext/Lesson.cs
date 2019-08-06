@@ -29,7 +29,7 @@ namespace Pegasus_backend.pegasusContext
         public byte? IsTrial { get; set; }
         public DateTime? BeginTime { get; set; }
         public DateTime? EndTime { get; set; }
-        public int? InvoiceId { get; set; }
+        public string InvoiceNum { get; set; }
         public byte? IsConfirm { get; set; }
         public int? TrialCourseId { get; set; }
         public short? IsChanged { get; set; }
@@ -38,7 +38,6 @@ namespace Pegasus_backend.pegasusContext
 
         public One2oneCourseInstance CourseInstance { get; set; }
         public GroupCourseInstance GroupCourseInstance { get; set; }
-        public Invoice Invoice { get; set; }
         public Learner Learner { get; set; }
         public Lesson NewLesson { get; set; }
         public Org Org { get; set; }

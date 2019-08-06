@@ -1,0 +1,1 @@
+2019-08-06 12:09:08.450 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.

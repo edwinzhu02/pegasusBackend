@@ -83,7 +83,7 @@ namespace Pegasus_backend.Controllers
                             IsTrial = 0,
                             BeginTime = startTime.AddMinutes(30 * j),
                             EndTime = startTime.AddMinutes(30 * j + 30),
-                            InvoiceId = 551,
+                            
                             IsConfirm = 0,
                             TrialCourseId = null,
                             IsChanged = 0,

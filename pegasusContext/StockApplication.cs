@@ -14,7 +14,7 @@ namespace Pegasus_backend.pegasusContext
         public short? ApplyStaffId { get; set; }
         public DateTime? ApplyAt { get; set; }
         public int ApplicationId { get; set; }
-        public short? ProcessStatus { get; set; }
+        public byte? ProcessStatus { get; set; }
         public string ApplyReason { get; set; }
         public string ReplyContent { get; set; }
         public short? IsDisputed { get; set; }
