@@ -20,16 +20,16 @@ namespace Pegasus_backend.Controllers
         }
 
         [HttpGet("{TeacherId}/{OrgId}/{beginTime}")]
-        public async Task<IActionResult> getRoomsbyTeacherId(int TeacherId,short OrgId,DateTime beginTime)
+        public async Task<IActionResult> GetRoomsbyTeacherId(int TeacherId,short OrgId,DateTime beginTime)
         {
             var result = new Result<object>();
             try
             {
                 var day = (int) beginTime.DayOfWeek==0?7:(int) beginTime.DayOfWeek;
-                var availabledays = _ablemusicContext.AvailableDays
+                var availabledays = await _ablemusicContext.AvailableDays
                     .Include(s => s.Room)
                     .Where(s => s.TeacherId == TeacherId && s.OrgId == OrgId && s.DayOfWeek == day && s.RoomId != null)
-                    .ToList();
+                    .ToListAsync();
                 if (availabledays.Count == 0)
                 {
                     result.Data = new List<object>();

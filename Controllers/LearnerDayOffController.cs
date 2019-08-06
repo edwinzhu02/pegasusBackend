@@ -31,7 +31,7 @@ namespace Pegasus_backend.Controllers
         [CheckModelFilter]
         public async Task<IActionResult> PostDayoff([FromBody] LearnerDayoffViewModel inputObj)
         {
-            var result = new Result<List<Amendment>>();
+            var result = new Result<object>();
             List<Lesson> lessons;
             List<Amendment> amendments = new List<Amendment>();
             List<Amendment> exsitsAmendment;
@@ -41,7 +41,7 @@ namespace Pegasus_backend.Controllers
             try
             {
                 lessons = await _ablemusicContext.Lesson.Where(l => l.LearnerId == inputObj.LearnerId && l.IsCanceled != 1 && l.CourseInstanceId.HasValue && inputObj.InstanceIds.Contains(l.CourseInstanceId.Value) &&
-                l.BeginTime.Value.Date > inputObj.BeginDate.Date && l.BeginTime.Value.Date < inputObj.EndDate.Date).ToListAsync();
+                l.BeginTime.Value.Date > inputObj.BeginDate.Date && l.BeginTime.Value.Date < inputObj.EndDate.Date).OrderBy(l => l.CourseInstanceId).ToListAsync();
                 courseSchedules = await (from i in _ablemusicContext.One2oneCourseInstance
                                          join cs in _ablemusicContext.CourseSchedule on i.CourseInstanceId equals cs.CourseInstanceId
                                          join l in _ablemusicContext.Learner on i.LearnerId equals l.LearnerId
@@ -102,11 +102,110 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = "There is a conflict of date on your previous dayoff";
                 return BadRequest(result);
             }
-
+            Dictionary<string, int> invoiceNumsMapLessonQuantity = new Dictionary<string, int>();
             foreach(var lesson in lessons)
             {
+                if (inputObj.ApplyToInvoice && lesson.InvoiceNum != null)
+                {
+                    if (!invoiceNumsMapLessonQuantity.ContainsKey(lesson.InvoiceNum))
+                    {
+                        invoiceNumsMapLessonQuantity.Add(lesson.InvoiceNum, 1);
+                    }
+                    else
+                    {
+                        invoiceNumsMapLessonQuantity[lesson.InvoiceNum]++;
+                    }
+                }
                 lesson.IsCanceled = 1;
                 lesson.Reason = inputObj.Reason;
+            }
+
+            var invoices = new List<Invoice>();
+            var invoiceWaitingConfirms = new List<InvoiceWaitingConfirm>();
+            var invoiceNumMapCoursePrice = new Dictionary<string, decimal>();
+            var awaitMakeUpLessons = new List<AwaitMakeUpLesson>();
+            if (inputObj.ApplyToInvoice)
+            {
+                try
+                {
+                    invoices = await _ablemusicContext.Invoice.Where(i => i.IsActive == 1 && invoiceNumsMapLessonQuantity.Keys.Contains(i.InvoiceNum)).ToListAsync();
+                    invoiceWaitingConfirms = await _ablemusicContext.InvoiceWaitingConfirm.Where(iw => iw.IsActivate == 1 && invoiceNumsMapLessonQuantity.Keys.Contains(iw.InvoiceNum)).ToListAsync();
+                    foreach(var i in invoices)
+                    {
+                        var coursePrice = (await _ablemusicContext.One2oneCourseInstance.Where(oto => oto.CourseInstanceId == i.CourseInstanceId).Include(oto => oto.Course).FirstOrDefaultAsync()).Course.Price;
+                        invoiceNumMapCoursePrice.Add(i.InvoiceNum, coursePrice.Value);
+                    }
+                }
+                catch(Exception ex)
+                {
+                    result.IsSuccess = false;
+                    result.ErrorMessage = ex.Message;
+                    return BadRequest(result);
+                }
+                if(invoices.Count <= 0 || invoices.Count < invoiceNumsMapLessonQuantity.Count || invoices.Count != invoiceWaitingConfirms.Count)
+                {
+                    result.IsSuccess = false;
+                    result.ErrorMessage = "Invoce not found, try to request without apply to invoce";
+                    return BadRequest(result);
+                }
+                foreach(var i in invoices)
+                {
+                    if(i.PaidFee > 0)
+                    {
+                        result.IsSuccess = false;
+                        result.ErrorMessage = "Paid invoce found, try to request without apply to invoce";
+                        result.Data = new List<object>
+                        {
+                            i
+                        };
+                        return BadRequest(result);
+                    } else
+                    {
+                        var fee = invoiceNumMapCoursePrice[i.InvoiceNum] * invoiceNumsMapLessonQuantity[i.InvoiceNum];
+                        i.LessonFee -= fee;
+                        i.TotalFee -= fee;
+                        i.OwingFee -= fee;
+                        i.LessonQuantity += invoiceNumsMapLessonQuantity[i.InvoiceNum];
+                    }
+                }
+                foreach (var iw in invoiceWaitingConfirms)
+                {
+                    if (iw.PaidFee > 0)
+                    {
+                        result.IsSuccess = false;
+                        result.ErrorMessage = "Paid invoce found, try to request without apply to invoce";
+                        result.Data = new List<object>
+                        {
+                            iw
+                        };
+                        return BadRequest(result);
+                    }
+                    else
+                    {
+                        var fee = invoiceNumMapCoursePrice[iw.InvoiceNum] * invoiceNumsMapLessonQuantity[iw.InvoiceNum];
+                        iw.LessonFee -= fee;
+                        iw.TotalFee -= fee;
+                        iw.OwingFee -= fee;
+                        iw.LessonQuantity += invoiceNumsMapLessonQuantity[iw.InvoiceNum];
+                    }
+                }
+            } else
+            {
+                foreach(var l in lessons)
+                {
+                    awaitMakeUpLessons.Add(new AwaitMakeUpLesson()
+                    {
+                        CreateAt = DateTime.UtcNow.ToNZTimezone(),
+                        SchduledAt = null,
+                        ExpiredDate = l.BeginTime.Value.AddMonths(3).Date,
+                        MissedLessonId = l.LessonId,
+                        NewLessonId = null,
+                        IsActive = 1,
+                        LearnerId = l.LearnerId,
+                        CourseInstanceId = l.CourseInstanceId,
+                        GroupCourseInstanceId = null,
+                    });
+                }
             }
 
             foreach(var cs in courseSchedules)
@@ -117,21 +216,23 @@ namespace Pegasus_backend.Controllers
                     result.ErrorMessage = "InstanceId not match learnerId";
                     return BadRequest(result);
                 }
-                Amendment amendment = new Amendment();
-                amendment.CourseInstanceId = cs.CourseInstanceId;
-                amendment.OrgId = cs.OrgId;
-                amendment.DayOfWeek = cs.DayOfWeek;
-                amendment.BeginTime = null;
-                amendment.EndTime = null;
-                amendment.LearnerId = cs.LearnerId;
-                amendment.RoomId = cs.RoomId;
-                amendment.BeginDate = inputObj.BeginDate;
-                amendment.EndDate = inputObj.EndDate;
-                amendment.CreatedAt = toNZTimezone(DateTime.UtcNow);
-                amendment.Reason = inputObj.Reason;
-                amendment.IsTemporary = null;
-                amendment.AmendType = 1;
-                amendment.CourseScheduleId = cs.CourseScheduleId;
+                Amendment amendment = new Amendment
+                {
+                    CourseInstanceId = cs.CourseInstanceId,
+                    OrgId = cs.OrgId,
+                    DayOfWeek = cs.DayOfWeek,
+                    BeginTime = null,
+                    EndTime = null,
+                    LearnerId = cs.LearnerId,
+                    RoomId = cs.RoomId,
+                    BeginDate = inputObj.BeginDate,
+                    EndDate = inputObj.EndDate,
+                    CreatedAt = toNZTimezone(DateTime.UtcNow),
+                    Reason = inputObj.Reason,
+                    IsTemporary = null,
+                    AmendType = 1,
+                    CourseScheduleId = cs.CourseScheduleId
+                };
                 amendments.Add(amendment);
             }
 
@@ -151,7 +252,11 @@ namespace Pegasus_backend.Controllers
 
             foreach (var cs in courseSchedules)
             {
-                teacherIdMapTodoContent.Add(cs.TeacherId, TodoListContentGenerator.DayOffForTeacher(cs, inputObj.EndDate.ToString()));
+                if (!teacherIdMapTodoContent.ContainsKey(cs.TeacherId))
+                {
+                    teacherIdMapTodoContent.Add(cs.TeacherId, TodoListContentGenerator.DayOffForTeacher(cs, inputObj.EndDate.ToString()));
+                }
+
                 teacherMapRemindLogContent.Add(new Teacher
                 {
                     TeacherId = cs.TeacherId,
@@ -186,6 +291,13 @@ namespace Pegasus_backend.Controllers
                     foreach (var amendment in amendments)
                     {
                         await _ablemusicContext.Amendment.AddAsync(amendment);
+                    }
+                    if (!inputObj.ApplyToInvoice)
+                    {
+                        foreach(var makeUpLesson in awaitMakeUpLessons)
+                        {
+                            await _ablemusicContext.AwaitMakeUpLesson.AddAsync(makeUpLesson);
+                        }
                     }
                     await _ablemusicContext.SaveChangesAsync();
                 }
@@ -249,7 +361,17 @@ namespace Pegasus_backend.Controllers
             {
                 amendment.Learner = null;
             }
-            result.Data = amendments;
+            result.Data = new 
+            {   
+                EffectedAmendmentCount = amendments.Count,
+                EffectedLessonsCount = lessons.Count,
+                EffectedAwaitMakeUpLessonCount = awaitMakeUpLessons.Count,
+                EffectedInvoiceCount = invoices.Count,
+                EffectedAmendments = amendments,
+                EffectedLessons = lessons,
+                EffectedAwaitMakeUpLessons = awaitMakeUpLessons,
+                EffectedInvoices = invoices,
+            };
             return Ok(result);
         }
     }
