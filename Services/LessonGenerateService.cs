@@ -117,7 +117,7 @@ namespace Pegasus_backend.Services
                         lesson.OrgId = (short)course.OrgId;
                         lesson.TeacherId = course.TeacherId;
                         lesson.LearnerId = (int)invoice.LearnerId;
-                        lesson.InvoiceId = invoice.InvoiceId;
+                        lesson.InvoiceNum = invoice.InvoiceNum;
                         lesson.IsConfirm = 0;
                         lesson.IsCanceled = 0;
                         lesson.IsChanged = 0;

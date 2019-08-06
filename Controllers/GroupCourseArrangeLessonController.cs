@@ -111,7 +111,7 @@ namespace Pegasus_backend.Controllers
                                         IsTrial = 0,
                                         BeginTime = currentDate.Add(schedule.BeginTime.Value),
                                         EndTime = currentDate.Add(schedule.EndTime.Value),
-                                        InvoiceId = null,
+                                        InvoiceNum = null,                          
                                         IsConfirm = 0,
                                         TrialCourseId = null,
                                         IsChanged = 0

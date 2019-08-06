@@ -213,7 +213,7 @@ namespace Pegasus_backend.Controllers
             lesson.CreatedAt = toNZTimezone(DateTime.UtcNow);
             lesson.GroupCourseInstanceId = null;
             lesson.IsTrial = 0;
-            lesson.InvoiceId = invoice.InvoiceId;
+            lesson.InvoiceNum = invoice.InvoiceNum;
             lesson.IsConfirm = 0;
             lesson.IsPaid = 1;
             lesson.TrialCourseId = null;
@@ -315,7 +315,6 @@ namespace Pegasus_backend.Controllers
                 //}
             }
             result.Data = lesson;
-            result.Data.Invoice = null;
             result.Data.Learner = null;
             result.Data.Org = null;
             result.Data.Room = null;

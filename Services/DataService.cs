@@ -88,8 +88,8 @@ namespace Pegasus_backend.Services
             IEnumerable<Lesson> lessons;
             try
             {
-                lessons = _context.Lesson.Where(i => i.LearnerId == studentId && i.IsConfirm!=1 && i.IsCanceled!=1 )
-                        .Include(c=>c.Invoice);
+                lessons = _context.Lesson.Where(i => i.LearnerId == studentId && i.IsConfirm != 1 && i.IsCanceled != 1);
+                        //.Include(c=>c.Invoice);
                 
             }
             catch (Exception ex)
@@ -114,7 +114,7 @@ namespace Pegasus_backend.Services
             {
                 lessonWithTerm = from l in lessons
                     join i in _context.Invoice.ToList()
-                        on l.InvoiceId equals i.InvoiceId
+                        on l.InvoiceNum equals i.InvoiceNum
                     select new LessonTerm()
                     {
                         LessonId = l.LessonId,
@@ -123,7 +123,7 @@ namespace Pegasus_backend.Services
                         Reason = l.Reason,
                         CourseInstanceId = l.CourseInstanceId,
                         GroupCourseInstanceId = l.GroupCourseInstanceId,
-                        InvoiceId = l.InvoiceId,
+                        InvoiceId = i.InvoiceId,
                         IsConfirm = l.IsConfirm,
                         TermId = i.TermId
                     };

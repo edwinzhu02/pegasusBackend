@@ -40,10 +40,11 @@ namespace Pegasus_backend.Controllers
             {
                 invoices = await (from i in _ablemusicContext.Invoice
                                   join l in _ablemusicContext.Learner on i.LearnerId equals l.LearnerId
-                                  where orgIDs.Contains((int)l.OrgId) && i.TermId == termId
+                                  where orgIDs.Contains((int)l.OrgId) && i.TermId == termId && i.IsActive == 1
                                   select new
                                   {
                                       LearnerId = l.LearnerId,
+                                      InvoiceNum = i.InvoiceNum,
                                       l.FirstName,
                                       l.LastName,
                                       InvoiceId = i.InvoiceId,
@@ -52,17 +53,17 @@ namespace Pegasus_backend.Controllers
                                       CourseInstanceId = i.CourseInstanceId,
                                       GroupCourseInstanceId = i.GroupCourseInstanceId,
                                   }).ToListAsync();
-                var invoiceNums = new List<int>();
+                var invoiceNums = new List<string>();
                 foreach(var invoice in invoices)
                 {
-                    invoiceNums.Add(invoice.InvoiceId);
+                    invoiceNums.Add(invoice.InvoiceNum);
                 }
                 lessonRemains = await _ablemusicContext.LessonRemain.Where(lr => lr.TermId == termId).ToListAsync();
                 learners = await _ablemusicContext.Learner.Where(l => orgIDs.Contains((int)l.OrgId)).ToListAsync();
                 otoLessons = await (from l in _ablemusicContext.Lesson
                                  join oto in _ablemusicContext.One2oneCourseInstance on l.CourseInstanceId equals oto.CourseInstanceId
                                  join c in _ablemusicContext.Course on oto.CourseId equals c.CourseId
-                                 where l.InvoiceId.HasValue && invoiceNums.Contains(l.InvoiceId.Value) && l.CourseInstanceId.HasValue
+                                 where invoiceNums.Contains(l.InvoiceNum) && l.CourseInstanceId.HasValue
                                  select new 
                                  {
                                      l.LearnerId,
@@ -70,12 +71,12 @@ namespace Pegasus_backend.Controllers
                                      c.CourseId,
                                      l.IsCanceled,
                                      l.IsConfirm,
-                                     l.InvoiceId
+                                     l.InvoiceNum
                                  }).ToListAsync();
                 gLessons = await (from l in _ablemusicContext.Lesson
                                   join gc in _ablemusicContext.GroupCourseInstance on l.GroupCourseInstanceId equals gc.GroupCourseInstanceId
                                   join c in _ablemusicContext.Course on gc.CourseId equals c.CourseId
-                                  where l.GroupCourseInstanceId.HasValue && invoiceNums.Contains(l.InvoiceId.Value) && l.InvoiceId.HasValue
+                                  where l.GroupCourseInstanceId.HasValue && invoiceNums.Contains(l.InvoiceNum)
                                   select new
                                   {
                                       l.LearnerId,
@@ -83,7 +84,7 @@ namespace Pegasus_backend.Controllers
                                       c.CourseId,
                                       l.IsCanceled,
                                       l.IsConfirm,
-                                      l.InvoiceId
+                                      l.InvoiceNum
                                   }).ToListAsync();
             }
             catch (Exception ex)

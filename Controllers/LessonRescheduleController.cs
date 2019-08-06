@@ -32,6 +32,7 @@ namespace Pegasus_backend.Controllers
         {
             var result = new Result<List<object>>();
             Lesson lesson;
+            Invoice invoice;
             Learner learner;
             List<Course> courses;
             List<Lesson> remainLessons;
@@ -39,8 +40,13 @@ namespace Pegasus_backend.Controllers
             LessonRemain lessonRemain;
             try
             {
-                lesson = await _ablemusicContext.Lesson.Where(l => l.LessonId == lessonId).Include(l => l.Invoice).FirstOrDefaultAsync();
-                if(lesson.Invoice == null)
+                lesson = await _ablemusicContext.Lesson.Where(l => l.LessonId == lessonId).FirstOrDefaultAsync();
+                if(lesson == null)
+                {
+                    throw new Exception("Lesson not found");
+                }
+                invoice = await _ablemusicContext.Invoice.Where(iv => iv.InvoiceNum == lesson.InvoiceNum && iv.IsActive == 1).FirstOrDefaultAsync();
+                if(invoice == null)
                 {
                     throw new Exception("This session may is a group session or Trial session, this session is not allowed to reschedule");
                 }
@@ -71,7 +77,7 @@ namespace Pegasus_backend.Controllers
                                            IsTrial = l.IsTrial,
                                            BeginTime = l.BeginTime,
                                            EndTime = l.EndTime,
-                                           InvoiceId = l.InvoiceId,
+                                           InvoiceNum = l.InvoiceNum,
                                            Learner = null,
                                            Teacher = new Teacher
                                            {
@@ -87,13 +93,12 @@ namespace Pegasus_backend.Controllers
                                            },
                                            CourseInstance = null,
                                            GroupCourseInstance = null,
-                                           Invoice = null,
                                            Org = null,
                                            Room = null,
                                        }).ToListAsync();
                 learner = await _ablemusicContext.Learner.Where(l => l.LearnerId == lesson.LearnerId).FirstOrDefaultAsync();
                 holidays = await _ablemusicContext.Holiday.ToListAsync();
-                lessonRemain = await _ablemusicContext.LessonRemain.Where(lr => lr.TermId == lesson.Invoice.TermId &&
+                lessonRemain = await _ablemusicContext.LessonRemain.Where(lr => lr.TermId == invoice.TermId &&
                 lr.CourseInstanceId == lesson.CourseInstanceId && lr.LearnerId == lesson.LearnerId).FirstOrDefaultAsync();
             }
             catch (Exception ex)
@@ -101,13 +106,6 @@ namespace Pegasus_backend.Controllers
                 result.IsSuccess = false;
                 result.IsFound = false;
                 result.ErrorMessage = ex.Message;
-                return NotFound(result);
-            }
-            if (lesson == null)
-            {
-                result.IsSuccess = false;
-                result.IsFound = false;
-                result.ErrorMessage = "lesson id not found";
                 return NotFound(result);
             }
             if (lesson.GroupCourseInstanceId != null)
@@ -293,7 +291,7 @@ namespace Pegasus_backend.Controllers
                         IsConfirm = lessonAppend.IsConfirm,
                         BeginTime = lessonAppend.BeginTime,
                         EndTime = lessonAppend.EndTime,
-                        InvoiceId = lessonAppend.InvoiceId,
+                        InvoiceNum = lessonAppend.InvoiceNum,
                     });
                     _ablemusicContext.Update(lessonAppend);
                 }

@@ -195,7 +195,7 @@ namespace Pegasus_backend.Controllers
                     IsTrial = lesson.IsTrial,
                     BeginTime = beginTime,
                     EndTime = endTime,
-                    InvoiceId = lesson.InvoiceId,
+                    InvoiceNum = lesson.InvoiceNum,
                     IsConfirm = lesson.IsConfirm,
                     TrialCourseId = lesson.TrialCourseId,
                     IsChanged = lesson.IsChanged,

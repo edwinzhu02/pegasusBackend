@@ -184,7 +184,7 @@ namespace Pegasus_backend.Controllers
             newLesson.GroupCourseInstanceId = oldLesson.GroupCourseInstanceId;
             newLesson.IsTrial = oldLesson.IsTrial;
             newLesson.TrialCourseId = oldLesson.TrialCourseId;
-            newLesson.InvoiceId = oldLesson.InvoiceId;
+            newLesson.InvoiceNum = oldLesson.InvoiceNum;
             newLesson.IsPaid = oldLesson.IsPaid;
             //newLesson.NewLessonId = oldLesson.NewLessonId;            
             newLesson.IsChanged = 0;
