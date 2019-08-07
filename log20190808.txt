@@ -177,3 +177,71 @@ SELECT `l`.`lesson_id`, `l`.`begin_time`, `l`.`course_instance_id`, `l`.`created
 FROM `ablemusic`.`lesson` AS `l`
 WHERE (`l`.`is_canceled` <> 1) OR `l`.`is_canceled` IS NULL
 >>>>>>> 3a463add4ffaf40fbb58ae3c0ee101107c503847
+2019-08-08 11:32:23.127 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-08-08 11:32:23.532 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-08-08 11:32:25.085 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/rating/TeacherGetRating/1 application/json 72
+2019-08-08 11:32:25.116 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-08-08 11:32:25.160 +12:00 [INF] {
+	"UserId": 3,
+	"LocaltionX": -36.9128580,
+	"LocaltionY": 174.8736460
+}
+2019-08-08 11:32:25.294 +12:00 [INF] Route matched with {action = "TeacherGetRating", controller = "Rating"}. Executing action Pegasus_backend.Controllers.RatingController.TeacherGetRating (Pegasus_backend)
+2019-08-08 11:32:25.345 +12:00 [INF] Executing action method Pegasus_backend.Controllers.RatingController.TeacherGetRating (Pegasus_backend) with arguments (["1"]) - Validation state: "Valid"
+2019-08-08 11:32:26.273 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-08-08 11:32:27.270 +12:00 [INF] Executed DbCommand (65ms) [Parameters=[@__userId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`teacher_id`, `s`.`ability`, `s`.`comment`, `s`.`cv_url`, `s`.`dob`, `s`.`email`, `s`.`expiry_date`, `s`.`first_name`, `s`.`form_url`, `s`.`gender`, `s`.`home_phone`, `s`.`id_number`, `s`.`id_photo`, `s`.`id_type`, `s`.`invoice_template`, `s`.`ird_number`, `s`.`is_activate`, `s`.`is_contract`, `s`.`is_left`, `s`.`last_name`, `s`.`level`, `s`.`minimum_hours`, `s`.`mobile_phone`, `s`.`otherfile_url`, `s`.`photo`, `s`.`user_id`, `s`.`visa`
+FROM `ablemusic`.`teacher` AS `s`
+WHERE `s`.`user_id` = @__userId_0
+LIMIT 1
+2019-08-08 11:32:27.295 +12:00 [INF] Executed action method Pegasus_backend.Controllers.RatingController.TeacherGetRating (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.BadRequestObjectResult in 1936.8596ms.
+2019-08-08 11:32:27.301 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-08-08 11:32:27.337 +12:00 [INF] Executed action Pegasus_backend.Controllers.RatingController.TeacherGetRating (Pegasus_backend) in 2040.0045ms
+2019-08-08 11:32:27.339 +12:00 [INF] Response {"IsSuccess":false,"ErrorCode":null,"IsFound":true,"ErrorMessage":"You are not teacher.","Note":null,"Data":null}
+2019-08-08 11:32:27.344 +12:00 [INF] Request finished in 2260.2282ms 400 application/json; charset=utf-8
+2019-08-08 11:32:31.677 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/rating/TeacherGetRating/272 application/json 72
+2019-08-08 11:32:31.678 +12:00 [INF] {
+	"UserId": 3,
+	"LocaltionX": -36.9128580,
+	"LocaltionY": 174.8736460
+}
+2019-08-08 11:32:31.679 +12:00 [INF] Route matched with {action = "TeacherGetRating", controller = "Rating"}. Executing action Pegasus_backend.Controllers.RatingController.TeacherGetRating (Pegasus_backend)
+2019-08-08 11:32:31.680 +12:00 [INF] Executing action method Pegasus_backend.Controllers.RatingController.TeacherGetRating (Pegasus_backend) with arguments (["272"]) - Validation state: "Valid"
+2019-08-08 11:32:31.681 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-08-08 11:32:31.893 +12:00 [INF] Executed DbCommand (85ms) [Parameters=[@__userId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`teacher_id`, `s`.`ability`, `s`.`comment`, `s`.`cv_url`, `s`.`dob`, `s`.`email`, `s`.`expiry_date`, `s`.`first_name`, `s`.`form_url`, `s`.`gender`, `s`.`home_phone`, `s`.`id_number`, `s`.`id_photo`, `s`.`id_type`, `s`.`invoice_template`, `s`.`ird_number`, `s`.`is_activate`, `s`.`is_contract`, `s`.`is_left`, `s`.`last_name`, `s`.`level`, `s`.`minimum_hours`, `s`.`mobile_phone`, `s`.`otherfile_url`, `s`.`photo`, `s`.`user_id`, `s`.`visa`
+FROM `ablemusic`.`teacher` AS `s`
+WHERE `s`.`user_id` = @__userId_0
+LIMIT 1
+2019-08-08 11:32:31.894 +12:00 [INF] Executed action method Pegasus_backend.Controllers.RatingController.TeacherGetRating (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.BadRequestObjectResult in 213.53900000000002ms.
+2019-08-08 11:32:31.894 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-08-08 11:32:31.894 +12:00 [INF] Executed action Pegasus_backend.Controllers.RatingController.TeacherGetRating (Pegasus_backend) in 215.6047ms
+2019-08-08 11:32:31.895 +12:00 [INF] Response {"IsSuccess":false,"ErrorCode":null,"IsFound":true,"ErrorMessage":"You are not teacher.","Note":null,"Data":null}
+2019-08-08 11:32:31.895 +12:00 [INF] Request finished in 218.1361ms 400 application/json; charset=utf-8
+2019-08-08 11:32:36.192 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/rating/TeacherGetRating/10115 application/json 72
+2019-08-08 11:32:36.192 +12:00 [INF] {
+	"UserId": 3,
+	"LocaltionX": -36.9128580,
+	"LocaltionY": 174.8736460
+}
+2019-08-08 11:32:36.193 +12:00 [INF] Route matched with {action = "TeacherGetRating", controller = "Rating"}. Executing action Pegasus_backend.Controllers.RatingController.TeacherGetRating (Pegasus_backend)
+2019-08-08 11:32:36.193 +12:00 [INF] Executing action method Pegasus_backend.Controllers.RatingController.TeacherGetRating (Pegasus_backend) with arguments (["10115"]) - Validation state: "Valid"
+2019-08-08 11:32:36.194 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-08-08 11:32:36.398 +12:00 [INF] Executed DbCommand (88ms) [Parameters=[@__userId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`teacher_id`, `s`.`ability`, `s`.`comment`, `s`.`cv_url`, `s`.`dob`, `s`.`email`, `s`.`expiry_date`, `s`.`first_name`, `s`.`form_url`, `s`.`gender`, `s`.`home_phone`, `s`.`id_number`, `s`.`id_photo`, `s`.`id_type`, `s`.`invoice_template`, `s`.`ird_number`, `s`.`is_activate`, `s`.`is_contract`, `s`.`is_left`, `s`.`last_name`, `s`.`level`, `s`.`minimum_hours`, `s`.`mobile_phone`, `s`.`otherfile_url`, `s`.`photo`, `s`.`user_id`, `s`.`visa`
+FROM `ablemusic`.`teacher` AS `s`
+WHERE `s`.`user_id` = @__userId_0
+LIMIT 1
+2019-08-08 11:32:36.484 +12:00 [WRN] The Include operation for navigation '[s].Learner' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-08-08 11:32:36.485 +12:00 [WRN] The Include operation for navigation '[s].Lesson' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-08-08 11:32:36.714 +12:00 [INF] Executed DbCommand (78ms) [Parameters=[@__teacherId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.Learner`.`first_name` AS `FirstName`, `s.Learner`.`last_name` AS `LastName`, `s.Lesson`.`begin_time` AS `BeginTime`, `s`.`comment`, `s`.`rate_star` AS `RateStar`
+FROM `ablemusic`.`rating` AS `s`
+LEFT JOIN `ablemusic`.`lesson` AS `s.Lesson` ON `s`.`lesson_id` = `s.Lesson`.`lesson_id`
+LEFT JOIN `ablemusic`.`learner` AS `s.Learner` ON `s`.`learner_id` = `s.Learner`.`learner_id`
+WHERE (`s`.`teacher_id` = @__teacherId_0) AND (`s`.`rate_type` = 0)
+2019-08-08 11:32:36.720 +12:00 [INF] Executed action method Pegasus_backend.Controllers.RatingController.TeacherGetRating (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 526.9292ms.
+2019-08-08 11:32:36.721 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-08-08 11:32:36.727 +12:00 [INF] Executed action Pegasus_backend.Controllers.RatingController.TeacherGetRating (Pegasus_backend) in 534.525ms
+2019-08-08 11:32:36.728 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":[{"FirstName":"Oliver","LastName":"Deng","BeginTime":"2019-05-02T13:00:00","Comment":"baba","RateStar":5},{"FirstName":"Oliver","LastName":"Deng","BeginTime":"2019-05-02T13:00:00","Comment":"haha","RateStar":3}]}
+2019-08-08 11:32:36.728 +12:00 [INF] Request finished in 535.8202ms 200 application/json; charset=utf-8

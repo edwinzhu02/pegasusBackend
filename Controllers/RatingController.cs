@@ -18,12 +18,19 @@ namespace Pegasus_backend.Controllers
     {
         public RatingController(ablemusicContext ablemusicContext, ILogger<LessonRescheduleController> log) : base(ablemusicContext, log){}
 
-        [HttpGet("[action]/{teacherId}")]
-        public async Task<IActionResult> TeacherGetRating(short teacherId)
+        [HttpGet("[action]/{userId}")]
+        public async Task<IActionResult> TeacherGetRating(short userId)
         {
             var result = new Result<object>();
             try
             {
+                var teacher = _ablemusicContext.Teacher.FirstOrDefault(s => s.UserId == userId);
+                if (teacher == null)
+                {
+                    throw new Exception("You are not teacher.");
+                }
+
+                var teacherId = teacher.TeacherId;
                 //0 is student to teacher 1 is teacher to student 2 is teacher to school
                 var ratingItem = await _ablemusicContext.Rating
                     .Include(s=>s.Learner)
