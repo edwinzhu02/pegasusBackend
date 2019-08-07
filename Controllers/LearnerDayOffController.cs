@@ -105,7 +105,7 @@ namespace Pegasus_backend.Controllers
             Dictionary<string, int> invoiceNumsMapLessonQuantity = new Dictionary<string, int>();
             foreach(var lesson in lessons)
             {
-                if (inputObj.ApplyToInvoice && lesson.InvoiceNum != null)
+                if (inputObj.IsInvoiceChange && lesson.InvoiceNum != null)
                 {
                     if (!invoiceNumsMapLessonQuantity.ContainsKey(lesson.InvoiceNum))
                     {
@@ -124,7 +124,7 @@ namespace Pegasus_backend.Controllers
             var invoiceWaitingConfirms = new List<InvoiceWaitingConfirm>();
             var invoiceNumMapCoursePrice = new Dictionary<string, decimal>();
             var awaitMakeUpLessons = new List<AwaitMakeUpLesson>();
-            if (inputObj.ApplyToInvoice)
+            if (inputObj.IsInvoiceChange)
             {
                 try
                 {
@@ -142,7 +142,7 @@ namespace Pegasus_backend.Controllers
                     result.ErrorMessage = ex.Message;
                     return BadRequest(result);
                 }
-                if(invoices.Count <= 0 || invoices.Count < invoiceNumsMapLessonQuantity.Count || invoices.Count != invoiceWaitingConfirms.Count)
+                if(invoiceWaitingConfirms.Count <= 0 || invoices.Count < invoiceNumsMapLessonQuantity.Count)
                 {
                     result.IsSuccess = false;
                     result.ErrorMessage = "Invoce not found, try to request without apply to invoce";
@@ -292,7 +292,7 @@ namespace Pegasus_backend.Controllers
                     {
                         await _ablemusicContext.Amendment.AddAsync(amendment);
                     }
-                    if (!inputObj.ApplyToInvoice)
+                    if (!inputObj.IsInvoiceChange)
                     {
                         foreach(var makeUpLesson in awaitMakeUpLessons)
                         {

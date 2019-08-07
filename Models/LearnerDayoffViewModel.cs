@@ -19,6 +19,6 @@ namespace Pegasus_backend.Models
         public string Reason { get; set; }
         [Required(ErrorMessage = "InstanceId is required")]
         public List<int> InstanceIds { get; set; }
-        public bool ApplyToInvoice { get; set; } = false;
+        public bool IsInvoiceChange { get; set; } = false;
     }
 }
