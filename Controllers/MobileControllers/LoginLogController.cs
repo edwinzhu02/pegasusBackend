@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Pegasus_backend.Models;
 using Pegasus_backend.pegasusContext;
 using Microsoft.Extensions.Logging;
+using Pegasus_backend.ActionFilter;
 using Pegasus_backend.Utilities;
 namespace Pegasus_backend.Controllers.MobileControllers
 {
@@ -16,7 +17,29 @@ namespace Pegasus_backend.Controllers.MobileControllers
     {
         public LoginLogController(ablemusicContext ablemusicContext, ILogger<LessonRescheduleController> log) : base(ablemusicContext, log){}
 
+        [HttpGet("{userId}")]
+        public async Task<IActionResult> LoginLog(short userId)
+        {
+            var result = new Result<object>();
+            try
+            {
+                result.Data = await _ablemusicContext.LoginLog
+                    .Include(s=>s.Org)
+                    .Where(s=>s.UserId == userId)
+                    .Select(s=>new{s.LogType,s.CreatedAt,s.Org.Abbr})
+                    .ToListAsync();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+        }
+        
         [HttpPost("[action]")]
+        [CheckModelFilter]
         public async Task<IActionResult> CheckIn([FromBody] CheckInOrOutModel model)
         {
             var result = new Result<string>();
@@ -31,18 +54,42 @@ namespace Pegasus_backend.Controllers.MobileControllers
                 {
                     throw new Exception("Check in failed. 你必须在校区列表里随便一个校区的300米内");
                 }
-                
                 var newLogLog = new LoginLog
                 {
                     UserId = model.UserId,
                     LogType = 1,
-                    CreatedAt = DateTime.Now,
+                    CreatedAt = DateTime.UtcNow.AddHours(12),
                     OrgId = Org.OrgId
                 };
                 _ablemusicContext.Add(newLogLog);
                 await _ablemusicContext.SaveChangesAsync();
                 result.Data = "Check in successfully.";
                 return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+        }
+
+        [HttpPost("[action]")]
+        [CheckModelFilter]
+        public async Task<IActionResult> CheckOut(CheckInOrOutModel model)
+        {
+            var result = new Result<string>();
+            try
+            {
+                var checkInDetail = _ablemusicContext.LoginLog.FirstOrDefault(s =>
+                    s.CreatedAt.Value.Day == DateTime.Now.Day &&
+                    s.CreatedAt.Value.Month == DateTime.Now.Month &&
+                    s.CreatedAt.Value.Year == DateTime.Now.Year && s.LogType == 1);
+                if (checkInDetail == null)
+                {
+                    
+                }
+                return Ok();
             }
             catch (Exception ex)
             {
