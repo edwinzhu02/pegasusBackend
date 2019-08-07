@@ -41,7 +41,7 @@ namespace Pegasus_backend.Controllers
             try
             {
                 lessons = await _ablemusicContext.Lesson.Where(l => l.LearnerId == inputObj.LearnerId && l.IsCanceled != 1 && l.CourseInstanceId.HasValue && inputObj.InstanceIds.Contains(l.CourseInstanceId.Value) &&
-                l.BeginTime.Value.Date > inputObj.BeginDate.Date && l.BeginTime.Value.Date < inputObj.EndDate.Date).OrderBy(l => l.CourseInstanceId).ToListAsync();
+                l.BeginTime.Value.Date >= inputObj.BeginDate.Date && l.BeginTime.Value.Date <= inputObj.EndDate.Date).OrderBy(l => l.CourseInstanceId).ToListAsync();
                 courseSchedules = await (from i in _ablemusicContext.One2oneCourseInstance
                                          join cs in _ablemusicContext.CourseSchedule on i.CourseInstanceId equals cs.CourseInstanceId
                                          join l in _ablemusicContext.Learner on i.LearnerId equals l.LearnerId
@@ -142,7 +142,7 @@ namespace Pegasus_backend.Controllers
                     result.ErrorMessage = ex.Message;
                     return BadRequest(result);
                 }
-                if(invoiceWaitingConfirms.Count <= 0 || invoices.Count < invoiceNumsMapLessonQuantity.Count)
+                if(invoiceWaitingConfirms.Count <= 0 || invoiceWaitingConfirms.Count < invoiceNumsMapLessonQuantity.Count)
                 {
                     result.IsSuccess = false;
                     result.ErrorMessage = "Invoce not found, try to request without apply to invoce";
