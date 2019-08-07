@@ -31,12 +31,11 @@ namespace Pegasus_backend.Controllers.MobileControllers
                 {
                     throw new Exception("Check in failed. 你必须在校区列表里随便一个校区的300米内");
                 }
-                
                 var newLogLog = new LoginLog
                 {
                     UserId = model.UserId,
                     LogType = 1,
-                    CreatedAt = DateTime.Now.ToLocalTime(),
+                    CreatedAt = DateTime.UtcNow.AddHours(12),
                     OrgId = Org.OrgId
                 };
                 _ablemusicContext.Add(newLogLog);
