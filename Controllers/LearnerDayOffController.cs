@@ -142,7 +142,7 @@ namespace Pegasus_backend.Controllers
                     result.ErrorMessage = ex.Message;
                     return BadRequest(result);
                 }
-                if(invoices.Count <= 0 || invoices.Count < invoiceNumsMapLessonQuantity.Count || invoices.Count != invoiceWaitingConfirms.Count)
+                if(invoiceWaitingConfirms.Count <= 0 || invoices.Count < invoiceNumsMapLessonQuantity.Count)
                 {
                     result.IsSuccess = false;
                     result.ErrorMessage = "Invoce not found, try to request without apply to invoce";
