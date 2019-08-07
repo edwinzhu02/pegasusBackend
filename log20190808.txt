@@ -1,0 +1,54 @@
+2019-08-08 11:11:53.590 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-08-08 11:11:54.085 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-08-08 11:12:31.567 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/TeacherGetRating/1 application/json 72
+2019-08-08 11:12:31.617 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-08-08 11:12:31.679 +12:00 [INF] {
+	"UserId": 3,
+	"LocaltionX": -36.9128580,
+	"LocaltionY": 174.8736460
+}
+2019-08-08 11:12:31.822 +12:00 [INF] Response 
+2019-08-08 11:12:31.827 +12:00 [INF] Request finished in 261.8763ms 404 
+2019-08-08 11:12:44.676 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/rating/TeacherGetRating/1 application/json 72
+2019-08-08 11:12:44.677 +12:00 [INF] {
+	"UserId": 3,
+	"LocaltionX": -36.9128580,
+	"LocaltionY": 174.8736460
+}
+2019-08-08 11:12:44.705 +12:00 [INF] Route matched with {action = "TeacherGetRating", controller = "Rating"}. Executing action Pegasus_backend.Controllers.RatingController.TeacherGetRating (Pegasus_backend)
+2019-08-08 11:12:44.755 +12:00 [INF] Executing action method Pegasus_backend.Controllers.RatingController.TeacherGetRating (Pegasus_backend) with arguments (["1"]) - Validation state: "Valid"
+2019-08-08 11:12:45.684 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-08-08 11:12:46.594 +12:00 [INF] Executed DbCommand (58ms) [Parameters=[@__teacherId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`rating_id`, `s`.`comment`, `s`.`create_at`, `s`.`learner_id`, `s`.`lesson_id`, `s`.`rate_star`, `s`.`rate_type`, `s`.`teacher_id`
+FROM `ablemusic`.`rating` AS `s`
+WHERE (`s`.`teacher_id` = @__teacherId_0) AND (`s`.`rate_type` = 0)
+2019-08-08 11:12:46.652 +12:00 [INF] Executed action method Pegasus_backend.Controllers.RatingController.TeacherGetRating (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 1885.2903000000001ms.
+2019-08-08 11:12:46.658 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-08-08 11:12:46.710 +12:00 [INF] Executed action Pegasus_backend.Controllers.RatingController.TeacherGetRating (Pegasus_backend) in 2002.6568000000002ms
+2019-08-08 11:12:46.710 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":[{"RatingId":1,"RateType":0,"Comment":"aaa","CreateAt":null,"LearnerId":1,"TeacherId":1,"LessonId":1,"RateStar":1,"Learner":null,"Lesson":null,"Teacher":null}]}
+2019-08-08 11:12:46.713 +12:00 [INF] Request finished in 2036.9071ms 200 application/json; charset=utf-8
+2019-08-08 11:14:55.938 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-08-08 11:14:56.311 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-08-08 11:14:59.888 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/rating/TeacherGetRating/1 application/json 72
+2019-08-08 11:14:59.920 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-08-08 11:14:59.964 +12:00 [INF] {
+	"UserId": 3,
+	"LocaltionX": -36.9128580,
+	"LocaltionY": 174.8736460
+}
+2019-08-08 11:15:00.112 +12:00 [INF] Route matched with {action = "TeacherGetRating", controller = "Rating"}. Executing action Pegasus_backend.Controllers.RatingController.TeacherGetRating (Pegasus_backend)
+2019-08-08 11:15:00.163 +12:00 [INF] Executing action method Pegasus_backend.Controllers.RatingController.TeacherGetRating (Pegasus_backend) with arguments (["1"]) - Validation state: "Valid"
+2019-08-08 11:15:01.071 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-08-08 11:15:01.110 +12:00 [WRN] The Include operation for navigation '[s].Learner' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-08-08 11:15:01.112 +12:00 [WRN] The Include operation for navigation '[s].Lesson' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-08-08 11:15:01.999 +12:00 [INF] Executed DbCommand (62ms) [Parameters=[@__teacherId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.Learner`.`first_name` AS `FirstName`, `s.Learner`.`last_name` AS `LastName`, `s.Lesson`.`begin_time` AS `BeginTime`, `s`.`comment`, `s`.`rate_star` AS `RateStar`
+FROM `ablemusic`.`rating` AS `s`
+LEFT JOIN `ablemusic`.`lesson` AS `s.Lesson` ON `s`.`lesson_id` = `s.Lesson`.`lesson_id`
+LEFT JOIN `ablemusic`.`learner` AS `s.Learner` ON `s`.`learner_id` = `s.Learner`.`learner_id`
+WHERE (`s`.`teacher_id` = @__teacherId_0) AND (`s`.`rate_type` = 0)
+2019-08-08 11:15:02.025 +12:00 [INF] Executed action method Pegasus_backend.Controllers.RatingController.TeacherGetRating (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 1849.6686000000002ms.
+2019-08-08 11:15:02.031 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-08-08 11:15:02.071 +12:00 [INF] Executed action Pegasus_backend.Controllers.RatingController.TeacherGetRating (Pegasus_backend) in 1956.7769ms
+2019-08-08 11:15:02.073 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":[{"FirstName":"Oliver","LastName":"Deng","BeginTime":"2019-05-02T13:00:00","Comment":"aaa","RateStar":1}]}
+2019-08-08 11:15:02.078 +12:00 [INF] Request finished in 2191.2889ms 200 application/json; charset=utf-8

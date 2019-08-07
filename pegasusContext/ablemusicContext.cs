@@ -78,6 +78,7 @@ namespace Pegasus_backend.pegasusContext
         {
             if (!optionsBuilder.IsConfigured)
             {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 optionsBuilder.UseMySQL("server=gradspace.org;UserId=dbuser;Password=qwer1234;Database=ablemusic");
             }
         }
@@ -2294,6 +2295,9 @@ namespace Pegasus_backend.pegasusContext
                 entity.HasIndex(e => e.LearnerId)
                     .HasName("R_124");
 
+                entity.HasIndex(e => e.LessonId)
+                    .HasName("lesson_id");
+
                 entity.HasIndex(e => e.TeacherId)
                     .HasName("R_1251");
 
@@ -2312,6 +2316,14 @@ namespace Pegasus_backend.pegasusContext
                     .HasColumnName("learner_id")
                     .HasColumnType("int(11)");
 
+                entity.Property(e => e.LessonId)
+                    .HasColumnName("lesson_id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.RateStar)
+                    .HasColumnName("rate_star")
+                    .HasColumnType("smallint(6)");
+
                 entity.Property(e => e.RateType)
                     .HasColumnName("rate_type")
                     .HasColumnType("bit(1)");
@@ -2324,6 +2336,11 @@ namespace Pegasus_backend.pegasusContext
                     .WithMany(p => p.Rating)
                     .HasForeignKey(d => d.LearnerId)
                     .HasConstraintName("R_124");
+
+                entity.HasOne(d => d.Lesson)
+                    .WithMany(p => p.Rating)
+                    .HasForeignKey(d => d.LessonId)
+                    .HasConstraintName("rating_ibfk_1");
 
                 entity.HasOne(d => d.Teacher)
                     .WithMany(p => p.Rating)
