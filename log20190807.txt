@@ -2291,3 +2291,129 @@ WHERE `s`.`teacher_id` = @__teacherId_0
 2019-08-07 11:15:17.458 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":[{"TeacherCourseId":1,"CourseId":1,"TeacherId":1,"HourlyWage":23.00,"Course":{"CourseId":1,"CourseName":"Piano-G3&Under-Internship-30 mins-OneOnOne","Level":0,"Duration":1,"Price":6.00,"CourseType":1,"CourseCategory":{"CourseCategoryId":1,"CourseCategoryName":"Piano","Course":[]}},"Teacher":{"TeacherId":1,"FirstName":"Edwin","LastName":"Zhu","Level":null}},{"TeacherCourseId":4,"CourseId":2,"TeacherId":1,"HourlyWage":21.00,"Course":{"CourseId":2,"CourseName":"Piano-G3&Under-Internship-45 mins-OneOnOne","Level":0,"Duration":2,"Price":60.00,"CourseType":1,"CourseCategory":{"CourseCategoryId":1,"CourseCategoryName":"Piano","Course":[]}},"Teacher":{"TeacherId":1,"FirstName":"Edwin","LastName":"Zhu","Level":null}},{"TeacherCourseId":13,"CourseId":1,"TeacherId":1,"HourlyWage":20.00,"Course":{"CourseId":1,"CourseName":"Piano-G3&Under-Internship-30 mins-OneOnOne","Level":0,"Duration":1,"Price":6.00,"CourseType":1,"CourseCategory":{"CourseCategoryId":1,"CourseCategoryName":"Piano","Course":[]}},"Teacher":{"TeacherId":1,"FirstName":"Edwin","LastName":"Zhu","Level":null}},{"TeacherCourseId":14,"CourseId":2,"TeacherId":1,"HourlyWage":21.00,"Course":{"CourseId":2,"CourseName":"Piano-G3&Under-Internship-45 mins-OneOnOne","Level":0,"Duration":2,"Price":60.00,"CourseType":1,"CourseCategory":{"CourseCategoryId":1,"CourseCategoryName":"Piano","Course":[]}},"Teacher":{"TeacherId":1,"FirstName":"Edwin","LastName":"Zhu","Level":null}}]}
 2019-08-07 11:15:17.458 +12:00 [INF] Request finished in 301.3016ms 200 application/json; charset=utf-8
 >>>>>>> 5ce9f73ccf31fa3ce6a8327362957234b8588d05
+2019-08-07 14:11:26.392 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-08-07 14:11:26.774 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-08-07 14:11:31.676 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/loginlog/CheckIn application/json 72
+2019-08-07 14:11:31.704 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-08-07 14:11:31.743 +12:00 [INF] {
+	"UserId": 1,
+	"LocaltionX": -36.8871300,
+	"LocaltionY": 174.7169770
+}
+2019-08-07 14:11:31.864 +12:00 [INF] Route matched with {action = "CheckIn", controller = "LoginLog"}. Executing action Pegasus_backend.Controllers.MobileControllers.LoginLogController.CheckIn (Pegasus_backend)
+2019-08-07 14:11:31.941 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.LoginLogController.CheckIn (Pegasus_backend) with arguments (["Pegasus_backend.Models.CheckInOrOutModel"]) - Validation state: "Valid"
+2019-08-07 14:11:32.808 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-08-07 14:11:32.869 +12:00 [WRN] The LINQ expression 'where (Sqrt(ToDouble(Convert(((([s].LocaltionX - __model_LocaltionX_0) * ([s].LocaltionX - __model_LocaltionX_1)) + (([s].LocaltionY - __model_LocaltionY_2) * ([s].LocaltionY - __model_LocaltionY_3))), Object))) <= 0.003)' could not be translated and will be evaluated locally.
+2019-08-07 14:11:32.874 +12:00 [WRN] The LINQ expression 'FirstOrDefault()' could not be translated and will be evaluated locally.
+2019-08-07 14:11:33.768 +12:00 [INF] Executed DbCommand (69ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`org_id`, `s`.`abbr`, `s`.`address`, `s`.`email`, `s`.`is_activate`, `s`.`is_headoffice`, `s`.`localtion_x`, `s`.`localtion_y`, `s`.`org_name`, `s`.`phone`
+FROM `ablemusic`.`org` AS `s`
+2019-08-07 14:11:33.832 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.LoginLogController.CheckIn (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.BadRequestObjectResult in 1880.7467000000001ms.
+2019-08-07 14:11:33.838 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-08-07 14:11:33.847 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.LoginLogController.CheckIn (Pegasus_backend) in 1980.0931ms
+2019-08-07 14:11:33.848 +12:00 [INF] Response {"IsSuccess":false,"ErrorCode":null,"IsFound":true,"ErrorMessage":"Check in failed. 你必须在校区列表里随便一个校区的300米内","Note":null,"Data":null}
+2019-08-07 14:11:33.853 +12:00 [INF] Request finished in 2178.0103ms 400 application/json; charset=utf-8
+2019-08-07 14:11:38.261 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/loginlog/CheckIn application/json 72
+2019-08-07 14:11:38.262 +12:00 [INF] {
+	"UserId": 1,
+	"LocaltionX": -36.8871300,
+	"LocaltionY": 174.7129770
+}
+2019-08-07 14:11:38.263 +12:00 [INF] Route matched with {action = "CheckIn", controller = "LoginLog"}. Executing action Pegasus_backend.Controllers.MobileControllers.LoginLogController.CheckIn (Pegasus_backend)
+2019-08-07 14:11:38.264 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.LoginLogController.CheckIn (Pegasus_backend) with arguments (["Pegasus_backend.Models.CheckInOrOutModel"]) - Validation state: "Valid"
+2019-08-07 14:11:38.264 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-08-07 14:11:38.448 +12:00 [INF] Executed DbCommand (57ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`org_id`, `s`.`abbr`, `s`.`address`, `s`.`email`, `s`.`is_activate`, `s`.`is_headoffice`, `s`.`localtion_x`, `s`.`localtion_y`, `s`.`org_name`, `s`.`phone`
+FROM `ablemusic`.`org` AS `s`
+2019-08-07 14:11:38.926 +12:00 [INF] Executed DbCommand (65ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?' (DbType = Int32), @p2='?' (DbType = Int16), @p3='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `ablemusic`.`login_log` (`created_at`, `log_type`, `org_id`, `user_id`)
+VALUES (@p0, @p1, @p2, @p3);
+SELECT `login_log_id`
+FROM `ablemusic`.`login_log`
+WHERE ROW_COUNT() = 1
+ AND `login_log_id`=LAST_INSERT_ID();
+2019-08-07 14:11:39.127 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.LoginLogController.CheckIn (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 863.11290000000008ms.
+2019-08-07 14:11:39.128 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-08-07 14:11:39.128 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.LoginLogController.CheckIn (Pegasus_backend) in 865.18220000000008ms
+2019-08-07 14:11:39.128 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":"Check in successfully."}
+2019-08-07 14:11:39.129 +12:00 [INF] Request finished in 867.4855ms 200 application/json; charset=utf-8
+2019-08-07 14:15:51.538 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-08-07 14:15:51.907 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-08-07 14:15:56.585 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/loginlog/CheckIn application/json 72
+2019-08-07 14:15:56.613 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-08-07 14:15:56.651 +12:00 [INF] {
+	"UserId": 1,
+	"LocaltionX": -36.8871300,
+	"LocaltionY": 174.7129770
+}
+2019-08-07 14:15:56.776 +12:00 [INF] Route matched with {action = "CheckIn", controller = "LoginLog"}. Executing action Pegasus_backend.Controllers.MobileControllers.LoginLogController.CheckIn (Pegasus_backend)
+2019-08-07 14:15:56.853 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.LoginLogController.CheckIn (Pegasus_backend) with arguments (["Pegasus_backend.Models.CheckInOrOutModel"]) - Validation state: "Valid"
+2019-08-07 14:15:57.733 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-08-07 14:15:57.790 +12:00 [WRN] The LINQ expression 'where (Sqrt(ToDouble(Convert(((([s].LocaltionX - __model_LocaltionX_0) * ([s].LocaltionX - __model_LocaltionX_1)) + (([s].LocaltionY - __model_LocaltionY_2) * ([s].LocaltionY - __model_LocaltionY_3))), Object))) <= 0.003)' could not be translated and will be evaluated locally.
+2019-08-07 14:15:57.796 +12:00 [WRN] The LINQ expression 'FirstOrDefault()' could not be translated and will be evaluated locally.
+2019-08-07 14:15:58.694 +12:00 [INF] Executed DbCommand (65ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`org_id`, `s`.`abbr`, `s`.`address`, `s`.`email`, `s`.`is_activate`, `s`.`is_headoffice`, `s`.`localtion_x`, `s`.`localtion_y`, `s`.`org_name`, `s`.`phone`
+FROM `ablemusic`.`org` AS `s`
+2019-08-07 14:15:59.226 +12:00 [INF] Executed DbCommand (69ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?' (DbType = Int32), @p2='?' (DbType = Int16), @p3='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `ablemusic`.`login_log` (`created_at`, `log_type`, `org_id`, `user_id`)
+VALUES (@p0, @p1, @p2, @p3);
+SELECT `login_log_id`
+FROM `ablemusic`.`login_log`
+WHERE ROW_COUNT() = 1
+ AND `login_log_id`=LAST_INSERT_ID();
+2019-08-07 14:15:59.300 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.LoginLogController.CheckIn (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 2434.9094ms.
+2019-08-07 14:15:59.309 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-08-07 14:15:59.320 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.LoginLogController.CheckIn (Pegasus_backend) in 2540.8796ms
+2019-08-07 14:15:59.322 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":"Check in successfully."}
+2019-08-07 14:15:59.328 +12:00 [INF] Request finished in 2743.4894ms 200 application/json; charset=utf-8
+2019-08-07 14:16:25.474 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-08-07 14:16:25.929 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-08-07 14:16:27.177 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/loginlog/CheckIn application/json 72
+2019-08-07 14:16:27.204 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-08-07 14:16:27.243 +12:00 [INF] {
+	"UserId": 1,
+	"LocaltionX": -36.8871300,
+	"LocaltionY": 174.7129770
+}
+2019-08-07 14:16:27.369 +12:00 [INF] Route matched with {action = "CheckIn", controller = "LoginLog"}. Executing action Pegasus_backend.Controllers.MobileControllers.LoginLogController.CheckIn (Pegasus_backend)
+2019-08-07 14:16:27.444 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.LoginLogController.CheckIn (Pegasus_backend) with arguments (["Pegasus_backend.Models.CheckInOrOutModel"]) - Validation state: "Valid"
+2019-08-07 14:16:28.323 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-08-07 14:16:28.385 +12:00 [WRN] The LINQ expression 'where (Sqrt(ToDouble(Convert(((([s].LocaltionX - __model_LocaltionX_0) * ([s].LocaltionX - __model_LocaltionX_1)) + (([s].LocaltionY - __model_LocaltionY_2) * ([s].LocaltionY - __model_LocaltionY_3))), Object))) <= 0.003)' could not be translated and will be evaluated locally.
+2019-08-07 14:16:28.390 +12:00 [WRN] The LINQ expression 'FirstOrDefault()' could not be translated and will be evaluated locally.
+2019-08-07 14:16:29.257 +12:00 [INF] Executed DbCommand (56ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`org_id`, `s`.`abbr`, `s`.`address`, `s`.`email`, `s`.`is_activate`, `s`.`is_headoffice`, `s`.`localtion_x`, `s`.`localtion_y`, `s`.`org_name`, `s`.`phone`
+FROM `ablemusic`.`org` AS `s`
+2019-08-07 14:16:29.334 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.LoginLogController.CheckIn (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.BadRequestObjectResult in 1879.4783ms.
+2019-08-07 14:16:29.339 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-08-07 14:16:29.348 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.LoginLogController.CheckIn (Pegasus_backend) in 1977.6128ms
+2019-08-07 14:16:29.350 +12:00 [INF] Response {"IsSuccess":false,"ErrorCode":null,"IsFound":true,"ErrorMessage":"The conversion could not be completed because the supplied DateTime did not have the Kind property set correctly.  For example, when the Kind property is DateTimeKind.Local, the source time zone must be TimeZoneInfo.Local.\nParameter name: sourceTimeZone","Note":null,"Data":null}
+2019-08-07 14:16:29.355 +12:00 [INF] Request finished in 2179.024ms 400 application/json; charset=utf-8
+2019-08-07 14:17:37.240 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-08-07 14:17:37.701 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-08-07 14:17:41.847 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/loginlog/CheckIn application/json 72
+2019-08-07 14:17:41.874 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-08-07 14:17:41.911 +12:00 [INF] {
+	"UserId": 1,
+	"LocaltionX": -36.8871300,
+	"LocaltionY": 174.7129770
+}
+2019-08-07 14:17:42.033 +12:00 [INF] Route matched with {action = "CheckIn", controller = "LoginLog"}. Executing action Pegasus_backend.Controllers.MobileControllers.LoginLogController.CheckIn (Pegasus_backend)
+2019-08-07 14:17:42.114 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.LoginLogController.CheckIn (Pegasus_backend) with arguments (["Pegasus_backend.Models.CheckInOrOutModel"]) - Validation state: "Valid"
+2019-08-07 14:17:42.998 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-08-07 14:17:43.059 +12:00 [WRN] The LINQ expression 'where (Sqrt(ToDouble(Convert(((([s].LocaltionX - __model_LocaltionX_0) * ([s].LocaltionX - __model_LocaltionX_1)) + (([s].LocaltionY - __model_LocaltionY_2) * ([s].LocaltionY - __model_LocaltionY_3))), Object))) <= 0.003)' could not be translated and will be evaluated locally.
+2019-08-07 14:17:43.064 +12:00 [WRN] The LINQ expression 'FirstOrDefault()' could not be translated and will be evaluated locally.
+2019-08-07 14:17:43.989 +12:00 [INF] Executed DbCommand (65ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`org_id`, `s`.`abbr`, `s`.`address`, `s`.`email`, `s`.`is_activate`, `s`.`is_headoffice`, `s`.`localtion_x`, `s`.`localtion_y`, `s`.`org_name`, `s`.`phone`
+FROM `ablemusic`.`org` AS `s`
+2019-08-07 14:17:44.557 +12:00 [INF] Executed DbCommand (130ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?' (DbType = Int32), @p2='?' (DbType = Int16), @p3='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `ablemusic`.`login_log` (`created_at`, `log_type`, `org_id`, `user_id`)
+VALUES (@p0, @p1, @p2, @p3);
+SELECT `login_log_id`
+FROM `ablemusic`.`login_log`
+WHERE ROW_COUNT() = 1
+ AND `login_log_id`=LAST_INSERT_ID();
+2019-08-07 14:17:44.702 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.LoginLogController.CheckIn (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 2575.4961000000003ms.
+2019-08-07 14:17:44.709 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-08-07 14:17:44.719 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.LoginLogController.CheckIn (Pegasus_backend) in 2683.4514ms
+2019-08-07 14:17:44.721 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":"Check in successfully."}
+2019-08-07 14:17:44.727 +12:00 [INF] Request finished in 2881.3148ms 200 application/json; charset=utf-8

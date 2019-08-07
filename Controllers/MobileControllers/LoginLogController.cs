@@ -36,13 +36,37 @@ namespace Pegasus_backend.Controllers.MobileControllers
                 {
                     UserId = model.UserId,
                     LogType = 1,
-                    CreatedAt = DateTime.Now,
+                    CreatedAt = DateTime.Now.ToLocalTime(),
                     OrgId = Org.OrgId
                 };
                 _ablemusicContext.Add(newLogLog);
                 await _ablemusicContext.SaveChangesAsync();
                 result.Data = "Check in successfully.";
                 return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+        }
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> CheckOut(CheckInOrOutModel model)
+        {
+            var result = new Result<string>();
+            try
+            {
+                /*var checkInDetail = _ablemusicContext.LoginLog.FirstOrDefault(s =>
+                    s.CreatedAt.Value.Day == DateTime.Now.Day &&
+                    s.CreatedAt.Value.Month == DateTime.Now.Month &&
+                    s.CreatedAt.Value.Year == DateTime.Now.Year && s.LogType == 1);
+                if (checkInDetail == null)
+                {
+                    
+                }*/
+                return Ok();
             }
             catch (Exception ex)
             {
