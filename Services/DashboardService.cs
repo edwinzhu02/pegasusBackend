@@ -196,6 +196,7 @@ namespace Pegasus_backend.Services
             var learnerIdForToday = new List<int>();
             foreach(var lft in lessonsForToday.Data)
             {
+                if (lft.LearnerId.HasValue)
                 learnerIdForToday.Add(lft.LearnerId.Value);
             }
 
