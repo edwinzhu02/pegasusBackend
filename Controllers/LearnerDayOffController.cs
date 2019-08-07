@@ -130,7 +130,7 @@ namespace Pegasus_backend.Controllers
                 {
                     invoices = await _ablemusicContext.Invoice.Where(i => i.IsActive == 1 && invoiceNumsMapLessonQuantity.Keys.Contains(i.InvoiceNum)).ToListAsync();
                     invoiceWaitingConfirms = await _ablemusicContext.InvoiceWaitingConfirm.Where(iw => iw.IsActivate == 1 && invoiceNumsMapLessonQuantity.Keys.Contains(iw.InvoiceNum)).ToListAsync();
-                    foreach(var i in invoices)
+                    foreach(var i in invoiceWaitingConfirms)
                     {
                         var coursePrice = (await _ablemusicContext.One2oneCourseInstance.Where(oto => oto.CourseInstanceId == i.CourseInstanceId).Include(oto => oto.Course).FirstOrDefaultAsync()).Course.Price;
                         invoiceNumMapCoursePrice.Add(i.InvoiceNum, coursePrice.Value);
@@ -366,10 +366,12 @@ namespace Pegasus_backend.Controllers
                 EffectedAmendmentCount = amendments.Count,
                 EffectedLessonsCount = lessons.Count,
                 EffectedAwaitMakeUpLessonCount = awaitMakeUpLessons.Count,
+                EffectedInvoiceWaitingConfirmCount = invoiceWaitingConfirms.Count,
                 EffectedInvoiceCount = invoices.Count,
                 EffectedAmendments = amendments,
                 EffectedLessons = lessons,
                 EffectedAwaitMakeUpLessons = awaitMakeUpLessons,
+                EffectedInvoiceWaitingConfirm = invoiceWaitingConfirms,
                 EffectedInvoices = invoices,
             };
             return Ok(result);
