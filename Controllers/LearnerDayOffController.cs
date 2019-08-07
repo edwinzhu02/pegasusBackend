@@ -186,7 +186,7 @@ namespace Pegasus_backend.Controllers
                         iw.LessonFee -= fee;
                         iw.TotalFee -= fee;
                         iw.OwingFee -= fee;
-                        iw.LessonQuantity += invoiceNumsMapLessonQuantity[iw.InvoiceNum];
+                        iw.LessonQuantity -= invoiceNumsMapLessonQuantity[iw.InvoiceNum];
                     }
                 }
             } else

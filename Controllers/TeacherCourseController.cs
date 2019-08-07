@@ -61,7 +61,7 @@ namespace Pegasus_backend.Controllers
 
         }
       //GET api/teachercourse
-        [HttpGet("{id}")]
+        [HttpGet("{teacherId}")]
         public async Task<IActionResult> GetTeacherCourseByID(int teacherId)
         {
             Result<Object> result = new Result<Object>();
