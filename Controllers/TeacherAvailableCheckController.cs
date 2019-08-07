@@ -63,17 +63,17 @@ namespace Pegasus_backend.Controllers
                                              where oto.TeacherId == teacherId && (beginDate < oto.EndDate || oto.EndDate == null)
                                              select new 
                                              {
-                                                 CourseScheduleId = cs.CourseScheduleId,
-                                                 DayOfWeek = cs.DayOfWeek,
-                                                 CourseInstanceId = cs.CourseInstanceId,
-                                                 GroupCourseInstanceId = cs.GroupCourseInstanceId,
-                                                 BeginTime = cs.BeginTime,
-                                                 EndTime = cs.EndTime,
-                                                 LearnerId = l.LearnerId,
+                                                 cs.CourseScheduleId,
+                                                 cs.DayOfWeek,
+                                                 cs.CourseInstanceId,
+                                                 cs.GroupCourseInstanceId,
+                                                 cs.BeginTime,
+                                                 cs.EndTime,
+                                                 l.LearnerId,
                                                  LearnerFirstName = l.FirstName,
                                                  LearnerLastName = l.LastName,
-                                                 OrgId = oto.OrgId,
-                                                 OrgName = o.OrgName,
+                                                 oto.OrgId,
+                                                 o.OrgName,
                                              }).ToListAsync();
                 arrangedGroupSchedule = await (from g in _ablemusicContext.GroupCourseInstance
                                              join cs in _ablemusicContext.CourseSchedule on g.GroupCourseInstanceId equals cs.GroupCourseInstanceId
@@ -81,15 +81,15 @@ namespace Pegasus_backend.Controllers
                                              where g.TeacherId == teacherId && (beginDate < g.EndDate || g.EndDate == null)
                                              select new 
                                              {
-                                                 CourseScheduleId = cs.CourseScheduleId,
-                                                 DayOfWeek = cs.DayOfWeek,
-                                                 CourseInstanceId = cs.CourseInstanceId,
-                                                 GroupCourseInstanceId = cs.GroupCourseInstanceId,
-                                                 BeginTime = cs.BeginTime,
-                                                 EndTime = cs.EndTime,
+                                                 cs.CourseScheduleId,
+                                                 cs.DayOfWeek,
+                                                 cs.CourseInstanceId,
+                                                 cs.GroupCourseInstanceId,
+                                                 cs.BeginTime,
+                                                 cs.EndTime,
                                                  LearnerName = "Group",
-                                                 OrgId = g.OrgId,
-                                                 OrgName = o.OrgName,
+                                                 g.OrgId,
+                                                 o.OrgName,
                                              }).ToListAsync();
                 amendments = await (from a in _ablemusicContext.Amendment
                                     join oto in _ablemusicContext.One2oneCourseInstance on a.CourseInstanceId equals oto.CourseInstanceId
@@ -144,8 +144,8 @@ namespace Pegasus_backend.Controllers
                     {
                         cad.Orgs.Add(new 
                         {
-                            OrgId = ad.Org.OrgId,
-                            OrgName = ad.Org.OrgName
+                            ad.Org.OrgId,
+                            ad.Org.OrgName
                         });
                         repeatDate = true;
                     }
@@ -154,13 +154,13 @@ namespace Pegasus_backend.Controllers
                 {
                     customisedAvailableDays.Add(new
                     {
-                        DayOfWeek = ad.DayOfWeek,
+                        ad.DayOfWeek,
                         Orgs = new List<Object>()
                         {
                             new 
                             {
-                                OrgId = ad.Org.OrgId,
-                                OrgName = ad.Org.OrgName,
+                                 ad.Org.OrgId,
+                                 ad.Org.OrgName,
                             }
                         },
                     });
@@ -172,26 +172,26 @@ namespace Pegasus_backend.Controllers
             {
                 customisedArranged.Add(new
                 {
-                    DayOfWeek = oto.DayOfWeek,
+                    oto.DayOfWeek,
                     TimeBegin = oto.BeginTime,
                     TimeEnd = oto.EndTime,
                     LearnerName = oto.LearnerFirstName + " " + oto.LearnerLastName,
-                    CourseScheduleId = oto.CourseScheduleId,
-                    OrgId = oto.OrgId,
-                    OrgName = oto.OrgName,
+                    oto.CourseScheduleId,
+                    oto.OrgId,
+                    oto.OrgName,
                 });
             }
             foreach(var g in arrangedGroupSchedule)
             {
                 customisedArranged.Add(new
                 {
-                    DayOfWeek = g.DayOfWeek,
+                    g.DayOfWeek,
                     TimeBegin = g.BeginTime,
                     TimeEnd = g.EndTime,
-                    LearnerName = g.LearnerName,
-                    CourseScheduleId = g.CourseScheduleId,
-                    OrgId = g.OrgId,
-                    OrgName = g.OrgName,
+                    g.LearnerName,
+                    g.CourseScheduleId,
+                    g.OrgId,
+                    g.OrgName,
                 });
             }
             foreach(var lesson in arrangedLessons)
@@ -203,8 +203,8 @@ namespace Pegasus_backend.Controllers
                     TimeEnd = lesson.EndTime.Value,
                     LearnerName = lesson.Learner == null ? null : lesson.Learner.FirstName + " " + lesson.Learner.LastName,
                     CourseScheduleId = -1,
-                    OrgId = lesson.OrgId,
-                    OrgName = lesson.Org?.OrgName
+                    lesson.OrgId,
+                    lesson.Org?.OrgName
                 });
             }
 
@@ -229,11 +229,11 @@ namespace Pegasus_backend.Controllers
 
                     customisedDayoff.Add(new
                     {
-                        DayOfWeek = d.DayOfWeek,
+                        d.DayOfWeek,
                         TimeBegin = beginTime,
                         TimeEnd = endTime,
                         LearnerName = d.Learner.FirstName + " " + d.Learner.LastName,
-                        CourseScheduleId = d.CourseScheduleId,
+                        d.CourseScheduleId,
                     });
                     customisedArranged.Remove(customisedArranged.Find(c => c.CourseScheduleId == d.CourseScheduleId));
                 }
@@ -245,11 +245,11 @@ namespace Pegasus_backend.Controllers
                 {
                     customisedTempChange.Add(new
                     {
-                        DayOfWeek = ct.DayOfWeek,
+                        ct.DayOfWeek,
                         TimeBegin = ct.BeginTime,
                         TimeEnd = ct.EndTime,
                         LearnerName = ct.Learner.FirstName + " " + ct.Learner.LastName,
-                        CourseScheduleId = ct.CourseScheduleId,
+                        ct.CourseScheduleId,
                     });
                 }
             }
@@ -261,11 +261,11 @@ namespace Pegasus_backend.Controllers
                     customisedArranged.Remove(customisedArranged.Find(c => c.CourseScheduleId == cpe.CourseScheduleId));
                     customisedArranged.Add(new
                     {
-                        DayOfWeek = cpe.DayOfWeek,
+                        cpe.DayOfWeek,
                         TimeBegin = cpe.BeginTime,
                         TimeEnd = cpe.EndTime,
                         LearnerName = cpe.Learner.FirstName + " " + cpe.Learner.LastName,
-                        CourseScheduleId = cpe.CourseScheduleId,
+                        cpe.CourseScheduleId,
                     });
                 }
             }
@@ -278,11 +278,11 @@ namespace Pegasus_backend.Controllers
                     customisedArranged.Remove(customisedArranged.Find(c => c.CourseScheduleId == cpne.CourseScheduleId));
                     customisedArranged.Add(new
                     {
-                        DayOfWeek = cpne.DayOfWeek,
+                        cpne.DayOfWeek,
                         TimeBegin = cpne.BeginTime,
                         TimeEnd = cpne.EndTime,
                         LearnerName = cpne.Learner.FirstName + " " + cpne.Learner.LastName,
-                        CourseScheduleId = cpne.CourseScheduleId,
+                        cpne.CourseScheduleId,
                     });
                 }
             }
