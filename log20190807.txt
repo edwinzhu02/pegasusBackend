@@ -2519,3 +2519,61 @@ WHERE ROW_COUNT() = 1
 2019-08-07 14:26:21.100 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.LoginLogController.CheckIn (Pegasus_backend) in 2570.8395ms
 2019-08-07 14:26:21.102 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":"Check in successfully."}
 2019-08-07 14:26:21.107 +12:00 [INF] Request finished in 2774.5464ms 200 application/json; charset=utf-8
+2019-08-07 14:31:22.773 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-08-07 14:31:23.144 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-08-07 14:31:25.972 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/loginlog application/json 72
+2019-08-07 14:31:26.002 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-08-07 14:31:26.043 +12:00 [INF] {
+	"UserId": 1,
+	"LocaltionX": -36.8871300,
+	"LocaltionY": 174.7129770
+}
+2019-08-07 14:31:26.155 +12:00 [INF] Response 
+2019-08-07 14:31:26.158 +12:00 [INF] Request finished in 188.5704ms 404 
+2019-08-07 14:31:29.108 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/loginlog application/json 72
+2019-08-07 14:31:29.109 +12:00 [INF] {
+	"UserId": 1,
+	"LocaltionX": -36.8871300,
+	"LocaltionY": 174.7129770
+}
+2019-08-07 14:31:29.110 +12:00 [INF] Response 
+2019-08-07 14:31:29.110 +12:00 [INF] Request finished in 1.4776ms 404 
+2019-08-07 14:31:55.025 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/loginlog application/json 72
+2019-08-07 14:31:55.026 +12:00 [INF] {
+	"UserId": 1,
+	"LocaltionX": -36.8871300,
+	"LocaltionY": 174.7129770
+}
+2019-08-07 14:31:55.036 +12:00 [INF] Route matched with {action = "LoginLog", controller = "LoginLog"}. Executing action Pegasus_backend.Controllers.MobileControllers.LoginLogController.LoginLog (Pegasus_backend)
+2019-08-07 14:31:55.075 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.LoginLogController.LoginLog (Pegasus_backend) - Validation state: "Valid"
+2019-08-07 14:31:55.961 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-08-07 14:31:56.903 +12:00 [INF] Executed DbCommand (75ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `l`.`login_log_id`, `l`.`created_at`, `l`.`log_type`, `l`.`org_id`, `l`.`user_id`
+FROM `ablemusic`.`login_log` AS `l`
+2019-08-07 14:31:56.961 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.LoginLogController.LoginLog (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 1878.4003ms.
+2019-08-07 14:31:56.967 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-08-07 14:31:57.008 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.LoginLogController.LoginLog (Pegasus_backend) in 1969.8541ms
+2019-08-07 14:31:57.008 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":[{"UserId":1,"LoginLogId":1,"LogType":null,"CreatedAt":"2019-04-10T00:00:00","OrgId":null,"Org":null,"User":null},{"UserId":2,"LoginLogId":2,"LogType":null,"CreatedAt":"2019-04-10T00:00:00","OrgId":null,"Org":null,"User":null},{"UserId":1,"LoginLogId":9,"LogType":1,"CreatedAt":"2019-01-01T00:00:00","OrgId":null,"Org":null,"User":null},{"UserId":3,"LoginLogId":14,"LogType":0,"CreatedAt":"2019-05-23T02:33:04","OrgId":null,"Org":null,"User":null},{"UserId":3,"LoginLogId":36,"LogType":0,"CreatedAt":"2019-05-29T02:33:00","OrgId":null,"Org":null,"User":null},{"UserId":3,"LoginLogId":40,"LogType":0,"CreatedAt":"2019-06-02T06:02:00","OrgId":6,"Org":null,"User":null},{"UserId":3,"LoginLogId":43,"LogType":0,"CreatedAt":"2019-06-03T22:36:25","OrgId":5,"Org":null,"User":null},{"UserId":3,"LoginLogId":44,"LogType":1,"CreatedAt":"2019-06-03T22:36:30","OrgId":5,"Org":null,"User":null},{"UserId":3,"LoginLogId":47,"LogType":0,"CreatedAt":"2019-06-04T14:40:30","OrgId":5,"Org":null,"User":null},{"UserId":3,"LoginLogId":48,"LogType":1,"CreatedAt":"2019-06-04T14:40:52","OrgId":5,"Org":null,"User":null},{"UserId":1,"LoginLogId":49,"LogType":1,"CreatedAt":"2019-08-07T12:59:26","OrgId":1,"Org":null,"User":null},{"UserId":1,"LoginLogId":50,"LogType":1,"CreatedAt":"2019-08-07T12:59:56","OrgId":1,"Org":null,"User":null},{"UserId":1,"LoginLogId":51,"LogType":1,"CreatedAt":"2019-08-07T13:00:00","OrgId":1,"Org":null,"User":null},{"UserId":1,"LoginLogId":52,"LogType":1,"CreatedAt":"2019-08-07T13:00:57","OrgId":1,"Org":null,"User":null},{"UserId":1,"LoginLogId":53,"LogType":1,"CreatedAt":"2019-08-07T13:10:40","OrgId":1,"Org":null,"User":null},{"UserId":3,"LoginLogId":54,"LogType":1,"CreatedAt":"2019-08-07T02:10:09","OrgId":7,"Org":null,"User":null},{"UserId":1,"LoginLogId":55,"LogType":1,"CreatedAt":"2019-08-07T14:11:38","OrgId":1,"Org":null,"User":null},{"UserId":3,"LoginLogId":56,"LogType":1,"CreatedAt":"2019-08-07T02:12:17","OrgId":7,"Org":null,"User":null},{"UserId":3,"LoginLogId":57,"LogType":1,"CreatedAt":"2019-08-07T02:15:14","OrgId":7,"Org":null,"User":null},{"UserId":1,"LoginLogId":58,"LogType":1,"CreatedAt":"0001-01-01T11:40:00","OrgId":1,"Org":null,"User":null},{"UserId":1,"LoginLogId":59,"LogType":1,"CreatedAt":"2019-08-07T14:17:44","OrgId":1,"Org":null,"User":null},{"UserId":3,"LoginLogId":60,"LogType":1,"CreatedAt":"2019-08-07T02:18:44","OrgId":7,"Org":null,"User":null},{"UserId":1,"LoginLogId":61,"LogType":1,"CreatedAt":"2019-08-07T02:19:19","OrgId":1,"Org":null,"User":null},{"UserId":3,"LoginLogId":62,"LogType":1,"CreatedAt":"2019-08-07T02:20:25","OrgId":7,"Org":null,"User":null},{"UserId":3,"LoginLogId":63,"LogType":1,"CreatedAt":"2019-08-07T02:21:36","OrgId":7,"Org":null,"User":null},{"UserId":1,"LoginLogId":64,"LogType":1,"CreatedAt":"2019-08-07T02:25:43","OrgId":1,"Org":null,"User":null},{"UserId":1,"LoginLogId":65,"LogType":1,"CreatedAt":"2019-08-07T14:26:20","OrgId":1,"Org":null,"User":null}]}
+2019-08-07 14:31:57.011 +12:00 [INF] Request finished in 1985.7378ms 200 application/json; charset=utf-8
+2019-08-07 14:33:09.099 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-08-07 14:33:09.470 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-08-07 14:33:10.904 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/loginlog application/json 72
+2019-08-07 14:33:10.934 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-08-07 14:33:10.979 +12:00 [INF] {
+	"UserId": 1,
+	"LocaltionX": -36.8871300,
+	"LocaltionY": 174.7129770
+}
+2019-08-07 14:33:11.100 +12:00 [INF] Route matched with {action = "LoginLog", controller = "LoginLog"}. Executing action Pegasus_backend.Controllers.MobileControllers.LoginLogController.LoginLog (Pegasus_backend)
+2019-08-07 14:33:11.136 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.LoginLogController.LoginLog (Pegasus_backend) - Validation state: "Valid"
+2019-08-07 14:33:12.071 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-08-07 14:33:12.101 +12:00 [WRN] The Include operation for navigation '[s].Org' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-08-07 14:33:13.092 +12:00 [INF] Executed DbCommand (63ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`log_type` AS `LogType`, `s`.`created_at` AS `CreatedAt`, `s.Org`.`org_name` AS `OrgName`
+FROM `ablemusic`.`login_log` AS `s`
+LEFT JOIN `ablemusic`.`org` AS `s.Org` ON `s`.`org_id` = `s.Org`.`org_id`
+2019-08-07 14:33:13.117 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.LoginLogController.LoginLog (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 1973.5616ms.
+2019-08-07 14:33:13.123 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-08-07 14:33:13.161 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.LoginLogController.LoginLog (Pegasus_backend) in 2059.4481ms
+2019-08-07 14:33:13.163 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":[{"LogType":null,"CreatedAt":"2019-04-10T00:00:00","OrgName":null},{"LogType":null,"CreatedAt":"2019-04-10T00:00:00","OrgName":null},{"LogType":1,"CreatedAt":"2019-01-01T00:00:00","OrgName":null},{"LogType":0,"CreatedAt":"2019-05-23T02:33:04","OrgName":null},{"LogType":0,"CreatedAt":"2019-05-29T02:33:00","OrgName":null},{"LogType":0,"CreatedAt":"2019-06-02T06:02:00","OrgName":"AUCKLAND CITY BRANCH"},{"LogType":0,"CreatedAt":"2019-06-03T22:36:25","OrgName":"AMA Pakuranga "},{"LogType":1,"CreatedAt":"2019-06-03T22:36:30","OrgName":"AMA Pakuranga "},{"LogType":0,"CreatedAt":"2019-06-04T14:40:30","OrgName":"AMA Pakuranga "},{"LogType":1,"CreatedAt":"2019-06-04T14:40:52","OrgName":"AMA Pakuranga "},{"LogType":1,"CreatedAt":"2019-08-07T12:59:26","OrgName":"CENTRAL AUCKLAND BRANCH"},{"LogType":1,"CreatedAt":"2019-08-07T12:59:56","OrgName":"CENTRAL AUCKLAND BRANCH"},{"LogType":1,"CreatedAt":"2019-08-07T13:00:00","OrgName":"CENTRAL AUCKLAND BRANCH"},{"LogType":1,"CreatedAt":"2019-08-07T13:00:57","OrgName":"CENTRAL AUCKLAND BRANCH"},{"LogType":1,"CreatedAt":"2019-08-07T13:10:40","OrgName":"CENTRAL AUCKLAND BRANCH"},{"LogType":1,"CreatedAt":"2019-08-07T02:10:09","OrgName":"EAST AUCKLAND BRANCH"},{"LogType":1,"CreatedAt":"2019-08-07T14:11:38","OrgName":"CENTRAL AUCKLAND BRANCH"},{"LogType":1,"CreatedAt":"2019-08-07T02:12:17","OrgName":"EAST AUCKLAND BRANCH"},{"LogType":1,"CreatedAt":"2019-08-07T02:15:14","OrgName":"EAST AUCKLAND BRANCH"},{"LogType":1,"CreatedAt":"0001-01-01T11:40:00","OrgName":"CENTRAL AUCKLAND BRANCH"},{"LogType":1,"CreatedAt":"2019-08-07T14:17:44","OrgName":"CENTRAL AUCKLAND BRANCH"},{"LogType":1,"CreatedAt":"2019-08-07T02:18:44","OrgName":"EAST AUCKLAND BRANCH"},{"LogType":1,"CreatedAt":"2019-08-07T02:19:19","OrgName":"CENTRAL AUCKLAND BRANCH"},{"LogType":1,"CreatedAt":"2019-08-07T02:20:25","OrgName":"EAST AUCKLAND BRANCH"},{"LogType":1,"CreatedAt":"2019-08-07T02:21:36","OrgName":"EAST AUCKLAND BRANCH"},{"LogType":1,"CreatedAt":"2019-08-07T02:25:43","OrgName":"CENTRAL AUCKLAND BRANCH"},{"LogType":1,"CreatedAt":"2019-08-07T14:26:20","OrgName":"CENTRAL AUCKLAND BRANCH"}]}
+2019-08-07 14:33:13.169 +12:00 [INF] Request finished in 2265.8085ms 200 application/json; charset=utf-8

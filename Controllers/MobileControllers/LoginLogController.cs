@@ -16,6 +16,26 @@ namespace Pegasus_backend.Controllers.MobileControllers
     {
         public LoginLogController(ablemusicContext ablemusicContext, ILogger<LessonRescheduleController> log) : base(ablemusicContext, log){}
 
+        [HttpGet]
+        public async Task<IActionResult> LoginLog()
+        {
+            var result = new Result<object>();
+            try
+            {
+                result.Data = await _ablemusicContext.LoginLog
+                    .Include(s=>s.Org)
+                    .Select(s=>new{s.LogType,s.CreatedAt,s.Org.Abbr})
+                    .ToListAsync();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+        }
+        
         [HttpPost("[action]")]
         public async Task<IActionResult> CheckIn([FromBody] CheckInOrOutModel model)
         {
@@ -57,14 +77,14 @@ namespace Pegasus_backend.Controllers.MobileControllers
             var result = new Result<string>();
             try
             {
-                /*var checkInDetail = _ablemusicContext.LoginLog.FirstOrDefault(s =>
+                var checkInDetail = _ablemusicContext.LoginLog.FirstOrDefault(s =>
                     s.CreatedAt.Value.Day == DateTime.Now.Day &&
                     s.CreatedAt.Value.Month == DateTime.Now.Month &&
                     s.CreatedAt.Value.Year == DateTime.Now.Year && s.LogType == 1);
                 if (checkInDetail == null)
                 {
                     
-                }*/
+                }
                 return Ok();
             }
             catch (Exception ex)
