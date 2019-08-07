@@ -41,7 +41,7 @@ namespace Pegasus_backend.Controllers
             try
             {
                 lessons = await _ablemusicContext.Lesson.Where(l => l.LearnerId == inputObj.LearnerId && l.IsCanceled != 1 && l.CourseInstanceId.HasValue && inputObj.InstanceIds.Contains(l.CourseInstanceId.Value) &&
-                l.BeginTime.Value.Date > inputObj.BeginDate.Date && l.BeginTime.Value.Date < inputObj.EndDate.Date).OrderBy(l => l.CourseInstanceId).ToListAsync();
+                l.BeginTime.Value.Date >= inputObj.BeginDate.Date && l.BeginTime.Value.Date <= inputObj.EndDate.Date).OrderBy(l => l.CourseInstanceId).ToListAsync();
                 courseSchedules = await (from i in _ablemusicContext.One2oneCourseInstance
                                          join cs in _ablemusicContext.CourseSchedule on i.CourseInstanceId equals cs.CourseInstanceId
                                          join l in _ablemusicContext.Learner on i.LearnerId equals l.LearnerId
@@ -52,20 +52,20 @@ namespace Pegasus_backend.Controllers
                                          where inputObj.InstanceIds.Contains(cs.CourseInstanceId.Value)
                                          select new
                                          {
-                                             CourseScheduleId = cs.CourseScheduleId,
-                                             CourseInstanceId = cs.CourseInstanceId,
-                                             OrgId = i.OrgId,
-                                             OrgName = o.OrgName,
-                                             RoomId = i.RoomId,
-                                             RoomName = r.RoomName,
-                                             CourseId = i.CourseId,
-                                             CourseName = c.CourseName,
-                                             TeacherId = i.TeacherId,
+                                             cs.CourseScheduleId,
+                                             cs.CourseInstanceId,
+                                             i.OrgId,
+                                             o.OrgName,
+                                             i.RoomId,
+                                             r.RoomName,
+                                             i.CourseId,
+                                             c.CourseName,
+                                             i.TeacherId,
                                              TeacherFirstName = t.FirstName,
                                              TeacherLastName = t.LastName,
                                              TeacherEmail = t.Email,
-                                             DayOfWeek = cs.DayOfWeek,
-                                             LearnerId = i.LearnerId,
+                                             cs.DayOfWeek,
+                                             i.LearnerId,
                                              LearnerFirstName = l.FirstName,
                                              LearnerLastName = l.LastName,
                                              LearnerEmail = l.Email,
@@ -130,7 +130,7 @@ namespace Pegasus_backend.Controllers
                 {
                     invoices = await _ablemusicContext.Invoice.Where(i => i.IsActive == 1 && invoiceNumsMapLessonQuantity.Keys.Contains(i.InvoiceNum)).ToListAsync();
                     invoiceWaitingConfirms = await _ablemusicContext.InvoiceWaitingConfirm.Where(iw => iw.IsActivate == 1 && invoiceNumsMapLessonQuantity.Keys.Contains(iw.InvoiceNum)).ToListAsync();
-                    foreach(var i in invoices)
+                    foreach(var i in invoiceWaitingConfirms)
                     {
                         var coursePrice = (await _ablemusicContext.One2oneCourseInstance.Where(oto => oto.CourseInstanceId == i.CourseInstanceId).Include(oto => oto.Course).FirstOrDefaultAsync()).Course.Price;
                         invoiceNumMapCoursePrice.Add(i.InvoiceNum, coursePrice.Value);
@@ -142,7 +142,7 @@ namespace Pegasus_backend.Controllers
                     result.ErrorMessage = ex.Message;
                     return BadRequest(result);
                 }
-                if(invoices.Count <= 0 || invoices.Count < invoiceNumsMapLessonQuantity.Count || invoices.Count != invoiceWaitingConfirms.Count)
+                if(invoiceWaitingConfirms.Count <= 0 || invoiceWaitingConfirms.Count < invoiceNumsMapLessonQuantity.Count)
                 {
                     result.IsSuccess = false;
                     result.ErrorMessage = "Invoce not found, try to request without apply to invoce";
@@ -186,7 +186,7 @@ namespace Pegasus_backend.Controllers
                         iw.LessonFee -= fee;
                         iw.TotalFee -= fee;
                         iw.OwingFee -= fee;
-                        iw.LessonQuantity += invoiceNumsMapLessonQuantity[iw.InvoiceNum];
+                        iw.LessonQuantity -= invoiceNumsMapLessonQuantity[iw.InvoiceNum];
                     }
                 }
             } else
@@ -366,10 +366,12 @@ namespace Pegasus_backend.Controllers
                 EffectedAmendmentCount = amendments.Count,
                 EffectedLessonsCount = lessons.Count,
                 EffectedAwaitMakeUpLessonCount = awaitMakeUpLessons.Count,
+                EffectedInvoiceWaitingConfirmCount = invoiceWaitingConfirms.Count,
                 EffectedInvoiceCount = invoices.Count,
                 EffectedAmendments = amendments,
                 EffectedLessons = lessons,
                 EffectedAwaitMakeUpLessons = awaitMakeUpLessons,
+                EffectedInvoiceWaitingConfirm = invoiceWaitingConfirms,
                 EffectedInvoices = invoices,
             };
             return Ok(result);
