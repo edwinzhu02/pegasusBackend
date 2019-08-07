@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Pegasus_backend.Models;
 using Pegasus_backend.pegasusContext;
 using Microsoft.Extensions.Logging;
+using Pegasus_backend.ActionFilter;
 using Pegasus_backend.Utilities;
 namespace Pegasus_backend.Controllers.MobileControllers
 {
@@ -37,6 +38,7 @@ namespace Pegasus_backend.Controllers.MobileControllers
         }
         
         [HttpPost("[action]")]
+        [CheckModelFilter]
         public async Task<IActionResult> CheckIn([FromBody] CheckInOrOutModel model)
         {
             var result = new Result<string>();
@@ -72,6 +74,7 @@ namespace Pegasus_backend.Controllers.MobileControllers
         }
 
         [HttpPost("[action]")]
+        [CheckModelFilter]
         public async Task<IActionResult> CheckOut(CheckInOrOutModel model)
         {
             var result = new Result<string>();
