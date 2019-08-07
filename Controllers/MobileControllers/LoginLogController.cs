@@ -17,14 +17,15 @@ namespace Pegasus_backend.Controllers.MobileControllers
     {
         public LoginLogController(ablemusicContext ablemusicContext, ILogger<LessonRescheduleController> log) : base(ablemusicContext, log){}
 
-        [HttpGet]
-        public async Task<IActionResult> LoginLog()
+        [HttpGet("{userId}")]
+        public async Task<IActionResult> LoginLog(short userId)
         {
             var result = new Result<object>();
             try
             {
                 result.Data = await _ablemusicContext.LoginLog
                     .Include(s=>s.Org)
+                    .Where(s=>s.UserId == userId)
                     .Select(s=>new{s.LogType,s.CreatedAt,s.Org.Abbr})
                     .ToListAsync();
                 return Ok(result);
