@@ -2577,3 +2577,96 @@ LEFT JOIN `ablemusic`.`org` AS `s.Org` ON `s`.`org_id` = `s.Org`.`org_id`
 2019-08-07 14:33:13.161 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.LoginLogController.LoginLog (Pegasus_backend) in 2059.4481ms
 2019-08-07 14:33:13.163 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":[{"LogType":null,"CreatedAt":"2019-04-10T00:00:00","OrgName":null},{"LogType":null,"CreatedAt":"2019-04-10T00:00:00","OrgName":null},{"LogType":1,"CreatedAt":"2019-01-01T00:00:00","OrgName":null},{"LogType":0,"CreatedAt":"2019-05-23T02:33:04","OrgName":null},{"LogType":0,"CreatedAt":"2019-05-29T02:33:00","OrgName":null},{"LogType":0,"CreatedAt":"2019-06-02T06:02:00","OrgName":"AUCKLAND CITY BRANCH"},{"LogType":0,"CreatedAt":"2019-06-03T22:36:25","OrgName":"AMA Pakuranga "},{"LogType":1,"CreatedAt":"2019-06-03T22:36:30","OrgName":"AMA Pakuranga "},{"LogType":0,"CreatedAt":"2019-06-04T14:40:30","OrgName":"AMA Pakuranga "},{"LogType":1,"CreatedAt":"2019-06-04T14:40:52","OrgName":"AMA Pakuranga "},{"LogType":1,"CreatedAt":"2019-08-07T12:59:26","OrgName":"CENTRAL AUCKLAND BRANCH"},{"LogType":1,"CreatedAt":"2019-08-07T12:59:56","OrgName":"CENTRAL AUCKLAND BRANCH"},{"LogType":1,"CreatedAt":"2019-08-07T13:00:00","OrgName":"CENTRAL AUCKLAND BRANCH"},{"LogType":1,"CreatedAt":"2019-08-07T13:00:57","OrgName":"CENTRAL AUCKLAND BRANCH"},{"LogType":1,"CreatedAt":"2019-08-07T13:10:40","OrgName":"CENTRAL AUCKLAND BRANCH"},{"LogType":1,"CreatedAt":"2019-08-07T02:10:09","OrgName":"EAST AUCKLAND BRANCH"},{"LogType":1,"CreatedAt":"2019-08-07T14:11:38","OrgName":"CENTRAL AUCKLAND BRANCH"},{"LogType":1,"CreatedAt":"2019-08-07T02:12:17","OrgName":"EAST AUCKLAND BRANCH"},{"LogType":1,"CreatedAt":"2019-08-07T02:15:14","OrgName":"EAST AUCKLAND BRANCH"},{"LogType":1,"CreatedAt":"0001-01-01T11:40:00","OrgName":"CENTRAL AUCKLAND BRANCH"},{"LogType":1,"CreatedAt":"2019-08-07T14:17:44","OrgName":"CENTRAL AUCKLAND BRANCH"},{"LogType":1,"CreatedAt":"2019-08-07T02:18:44","OrgName":"EAST AUCKLAND BRANCH"},{"LogType":1,"CreatedAt":"2019-08-07T02:19:19","OrgName":"CENTRAL AUCKLAND BRANCH"},{"LogType":1,"CreatedAt":"2019-08-07T02:20:25","OrgName":"EAST AUCKLAND BRANCH"},{"LogType":1,"CreatedAt":"2019-08-07T02:21:36","OrgName":"EAST AUCKLAND BRANCH"},{"LogType":1,"CreatedAt":"2019-08-07T02:25:43","OrgName":"CENTRAL AUCKLAND BRANCH"},{"LogType":1,"CreatedAt":"2019-08-07T14:26:20","OrgName":"CENTRAL AUCKLAND BRANCH"}]}
 2019-08-07 14:33:13.169 +12:00 [INF] Request finished in 2265.8085ms 200 application/json; charset=utf-8
+2019-08-07 15:16:47.338 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-08-07 15:16:47.729 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-08-07 15:17:20.607 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/loginlog/checkout application/json 72
+2019-08-07 15:17:20.636 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-08-07 15:17:20.677 +12:00 [INF] {
+	"UserId": 3,
+	"LocaltionX": -36.8871300,
+	"LocaltionY": 174.7129770
+}
+2019-08-07 15:17:20.811 +12:00 [INF] Route matched with {action = "CheckOut", controller = "LoginLog"}. Executing action Pegasus_backend.Controllers.MobileControllers.LoginLogController.CheckOut (Pegasus_backend)
+2019-08-07 15:17:20.900 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.LoginLogController.CheckOut (Pegasus_backend) with arguments (["Pegasus_backend.Models.CheckInOrOutModel"]) - Validation state: "Valid"
+2019-08-07 15:17:21.830 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-08-07 15:17:21.926 +12:00 [WRN] The LINQ expression 'where (((Convert([s].CreatedAt, DateTime).Day == DateTime.Now.Day) AndAlso (Convert([s].CreatedAt, DateTime).Month == DateTime.Now.Month)) AndAlso (Convert([s].CreatedAt, DateTime).Year == DateTime.Now.Year))' could not be translated and will be evaluated locally.
+2019-08-07 15:17:23.418 +12:00 [INF] Executed DbCommand (74ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`login_log_id`, `s`.`created_at`, `s`.`log_type`, `s`.`org_id`, `s`.`user_id`, `s.Org`.`org_id`, `s.Org`.`abbr`, `s.Org`.`address`, `s.Org`.`email`, `s.Org`.`is_activate`, `s.Org`.`is_headoffice`, `s.Org`.`localtion_x`, `s.Org`.`localtion_y`, `s.Org`.`org_name`, `s.Org`.`phone`
+FROM `ablemusic`.`login_log` AS `s`
+LEFT JOIN `ablemusic`.`org` AS `s.Org` ON `s`.`org_id` = `s.Org`.`org_id`
+WHERE `s`.`log_type` = 1
+2019-08-07 15:17:23.543 +12:00 [WRN] The LINQ expression 'where (((Convert([s].CreatedAt, DateTime).Day == DateTime.Now.Day) AndAlso (Convert([s].CreatedAt, DateTime).Month == DateTime.Now.Month)) AndAlso (Convert([s].CreatedAt, DateTime).Year == DateTime.Now.Year))' could not be translated and will be evaluated locally.
+2019-08-07 15:17:23.547 +12:00 [WRN] The LINQ expression 'where (Sqrt(ToDouble(Convert(((([s.Org]?.LocaltionX - __model_LocaltionX_0) * ([s.Org]?.LocaltionX - __model_LocaltionX_1)) + (([s.Org]?.LocaltionY - __model_LocaltionY_2) * ([s.Org]?.LocaltionY - __model_LocaltionY_3))), Object))) <= 0.003)' could not be translated and will be evaluated locally.
+2019-08-07 15:17:23.548 +12:00 [WRN] The LINQ expression 'FirstOrDefault()' could not be translated and will be evaluated locally.
+2019-08-07 15:17:23.612 +12:00 [INF] Executed DbCommand (53ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`login_log_id`, `s`.`created_at`, `s`.`log_type`, `s`.`org_id`, `s`.`user_id`, `s.Org`.`org_id`, `s.Org`.`abbr`, `s.Org`.`address`, `s.Org`.`email`, `s.Org`.`is_activate`, `s.Org`.`is_headoffice`, `s.Org`.`localtion_x`, `s.Org`.`localtion_y`, `s.Org`.`org_name`, `s.Org`.`phone`
+FROM `ablemusic`.`login_log` AS `s`
+LEFT JOIN `ablemusic`.`org` AS `s.Org` ON `s`.`org_id` = `s.Org`.`org_id`
+WHERE `s`.`log_type` = 1
+2019-08-07 15:17:24.021 +12:00 [INF] Executed DbCommand (63ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?' (DbType = Int32), @p2='?' (DbType = Int16), @p3='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `ablemusic`.`login_log` (`created_at`, `log_type`, `org_id`, `user_id`)
+VALUES (@p0, @p1, @p2, @p3);
+SELECT `login_log_id`
+FROM `ablemusic`.`login_log`
+WHERE ROW_COUNT() = 1
+ AND `login_log_id`=LAST_INSERT_ID();
+2019-08-07 15:17:24.111 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.LoginLogController.CheckOut (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 3198.5273ms.
+2019-08-07 15:17:24.121 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-08-07 15:17:24.132 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.LoginLogController.CheckOut (Pegasus_backend) in 3318.4943000000003ms
+2019-08-07 15:17:24.134 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":"Check out successfully."}
+2019-08-07 15:17:24.141 +12:00 [INF] Request finished in 3534.8455ms 200 application/json; charset=utf-8
+2019-08-07 15:18:08.362 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/loginlog/checkout application/json 72
+2019-08-07 15:18:08.363 +12:00 [INF] {
+	"UserId": 3,
+	"LocaltionX": -36.9382530,
+	"LocaltionY": 174.9136020
+}
+2019-08-07 15:18:08.364 +12:00 [INF] Route matched with {action = "CheckOut", controller = "LoginLog"}. Executing action Pegasus_backend.Controllers.MobileControllers.LoginLogController.CheckOut (Pegasus_backend)
+2019-08-07 15:18:08.365 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.LoginLogController.CheckOut (Pegasus_backend) with arguments (["Pegasus_backend.Models.CheckInOrOutModel"]) - Validation state: "Valid"
+2019-08-07 15:18:08.366 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-08-07 15:18:08.567 +12:00 [INF] Executed DbCommand (66ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`login_log_id`, `s`.`created_at`, `s`.`log_type`, `s`.`org_id`, `s`.`user_id`, `s.Org`.`org_id`, `s.Org`.`abbr`, `s.Org`.`address`, `s.Org`.`email`, `s.Org`.`is_activate`, `s.Org`.`is_headoffice`, `s.Org`.`localtion_x`, `s.Org`.`localtion_y`, `s.Org`.`org_name`, `s.Org`.`phone`
+FROM `ablemusic`.`login_log` AS `s`
+LEFT JOIN `ablemusic`.`org` AS `s.Org` ON `s`.`org_id` = `s.Org`.`org_id`
+WHERE `s`.`log_type` = 1
+2019-08-07 15:18:08.623 +12:00 [INF] Executed DbCommand (55ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`login_log_id`, `s`.`created_at`, `s`.`log_type`, `s`.`org_id`, `s`.`user_id`, `s.Org`.`org_id`, `s.Org`.`abbr`, `s.Org`.`address`, `s.Org`.`email`, `s.Org`.`is_activate`, `s.Org`.`is_headoffice`, `s.Org`.`localtion_x`, `s.Org`.`localtion_y`, `s.Org`.`org_name`, `s.Org`.`phone`
+FROM `ablemusic`.`login_log` AS `s`
+LEFT JOIN `ablemusic`.`org` AS `s.Org` ON `s`.`org_id` = `s.Org`.`org_id`
+WHERE `s`.`log_type` = 1
+2019-08-07 15:18:08.891 +12:00 [INF] Executed DbCommand (53ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?' (DbType = Int32), @p2='?' (DbType = Int16), @p3='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `ablemusic`.`login_log` (`created_at`, `log_type`, `org_id`, `user_id`)
+VALUES (@p0, @p1, @p2, @p3);
+SELECT `login_log_id`
+FROM `ablemusic`.`login_log`
+WHERE ROW_COUNT() = 1
+ AND `login_log_id`=LAST_INSERT_ID();
+2019-08-07 15:18:08.969 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.LoginLogController.CheckOut (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 603.48120000000006ms.
+2019-08-07 15:18:08.970 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-08-07 15:18:08.970 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.LoginLogController.CheckOut (Pegasus_backend) in 606.1724ms
+2019-08-07 15:18:08.970 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":"Check out successfully."}
+2019-08-07 15:18:08.974 +12:00 [INF] Request finished in 612.1262ms 200 application/json; charset=utf-8
+2019-08-07 15:18:43.699 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/loginlog/checkout application/json 72
+2019-08-07 15:18:43.700 +12:00 [INF] {
+	"UserId": 3,
+	"LocaltionX": -36.9128580,
+	"LocaltionY": 174.8736460
+}
+2019-08-07 15:18:43.700 +12:00 [INF] Route matched with {action = "CheckOut", controller = "LoginLog"}. Executing action Pegasus_backend.Controllers.MobileControllers.LoginLogController.CheckOut (Pegasus_backend)
+2019-08-07 15:18:43.700 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.LoginLogController.CheckOut (Pegasus_backend) with arguments (["Pegasus_backend.Models.CheckInOrOutModel"]) - Validation state: "Valid"
+2019-08-07 15:18:43.701 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-08-07 15:18:43.889 +12:00 [INF] Executed DbCommand (64ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`login_log_id`, `s`.`created_at`, `s`.`log_type`, `s`.`org_id`, `s`.`user_id`, `s.Org`.`org_id`, `s.Org`.`abbr`, `s.Org`.`address`, `s.Org`.`email`, `s.Org`.`is_activate`, `s.Org`.`is_headoffice`, `s.Org`.`localtion_x`, `s.Org`.`localtion_y`, `s.Org`.`org_name`, `s.Org`.`phone`
+FROM `ablemusic`.`login_log` AS `s`
+LEFT JOIN `ablemusic`.`org` AS `s.Org` ON `s`.`org_id` = `s.Org`.`org_id`
+WHERE `s`.`log_type` = 1
+2019-08-07 15:18:43.954 +12:00 [INF] Executed DbCommand (64ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`login_log_id`, `s`.`created_at`, `s`.`log_type`, `s`.`org_id`, `s`.`user_id`, `s.Org`.`org_id`, `s.Org`.`abbr`, `s.Org`.`address`, `s.Org`.`email`, `s.Org`.`is_activate`, `s.Org`.`is_headoffice`, `s.Org`.`localtion_x`, `s.Org`.`localtion_y`, `s.Org`.`org_name`, `s.Org`.`phone`
+FROM `ablemusic`.`login_log` AS `s`
+LEFT JOIN `ablemusic`.`org` AS `s.Org` ON `s`.`org_id` = `s.Org`.`org_id`
+WHERE `s`.`log_type` = 1
+2019-08-07 15:18:43.955 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.LoginLogController.CheckOut (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.BadRequestObjectResult in 254.4576ms.
+2019-08-07 15:18:43.955 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-08-07 15:18:43.956 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.LoginLogController.CheckOut (Pegasus_backend) in 255.5576ms
+2019-08-07 15:18:43.956 +12:00 [INF] Response {"IsSuccess":false,"ErrorCode":null,"IsFound":true,"ErrorMessage":"你不在今天打卡的地方里登出","Note":null,"Data":null}
+2019-08-07 15:18:43.956 +12:00 [INF] Request finished in 256.6835ms 400 application/json; charset=utf-8

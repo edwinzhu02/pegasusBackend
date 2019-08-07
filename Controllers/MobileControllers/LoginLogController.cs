@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Castle.Core.Internal;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Pegasus_backend.Models;
@@ -81,15 +82,36 @@ namespace Pegasus_backend.Controllers.MobileControllers
             var result = new Result<string>();
             try
             {
-                var checkInDetail = _ablemusicContext.LoginLog.FirstOrDefault(s =>
+                var checkInDetail = _ablemusicContext.LoginLog.Where(s =>
                     s.CreatedAt.Value.Day == DateTime.Now.Day &&
                     s.CreatedAt.Value.Month == DateTime.Now.Month &&
-                    s.CreatedAt.Value.Year == DateTime.Now.Year && s.LogType == 1);
-                if (checkInDetail == null)
+                    s.CreatedAt.Value.Year == DateTime.Now.Year && s.LogType == 1).Include(s=>s.Org);
+                if (checkInDetail.IsNullOrEmpty())
                 {
-                    
+                    throw new Exception("你今天没打卡 不存在登出");
                 }
-                return Ok();
+                
+                var Org = checkInDetail.FirstOrDefault(s =>
+                    Math.Sqrt(Convert.ToDouble((s.Org.LocaltionX - model.LocaltionX) * (s.Org.LocaltionX - model.LocaltionX) +
+                                               (s.Org.LocaltionY - model.LocaltionY) *
+                                               (s.Org.LocaltionY - model.LocaltionY))) <= 0.003
+                );
+                if (Org == null)
+                {
+                    throw new Exception("你不在今天打卡的地方里登出");
+                }
+                var newLogLog = new LoginLog
+                {
+                    UserId = model.UserId,
+                    LogType = 0,
+                    CreatedAt = DateTime.UtcNow.AddHours(12),
+                    OrgId = Org.OrgId
+                };
+                _ablemusicContext.Add(newLogLog);
+                await _ablemusicContext.SaveChangesAsync();
+                result.Data = "Check out successfully.";
+                
+                return Ok(result);
             }
             catch (Exception ex)
             {
