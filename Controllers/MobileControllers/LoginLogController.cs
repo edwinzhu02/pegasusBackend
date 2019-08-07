@@ -26,7 +26,7 @@ namespace Pegasus_backend.Controllers.MobileControllers
             {
                 result.Data = await _ablemusicContext.LoginLog
                     .Include(s=>s.Org)
-                    .Where(s=>s.UserId == userId)
+                    .Where(s=>s.UserId == userId && DateTime.Now.AddDays(-6) <= s.CreatedAt && s.CreatedAt <= DateTime.Now)
                     .Select(s=>new{s.LogType,s.CreatedAt,s.Org.Abbr})
                     .ToListAsync();
                 return Ok(result);
