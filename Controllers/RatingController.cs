@@ -65,7 +65,7 @@ namespace Pegasus_backend.Controllers
                 var ratingItem = await _ablemusicContext.Rating
                     .Include(s=>s.Teacher)
                     .Include(s=>s.Lesson)
-                    .Where(s => s.TeacherId == learnerId && s.RateType == 1)
+                    .Where(s => s.LearnerId == learnerId && s.RateType == 1)
                     .Select(s=>new {s.Teacher.FirstName,s.Teacher.LastName,s.Lesson.BeginTime,s.Comment,s.RateStar})
                     .ToListAsync();
                 result.Data = ratingItem;
