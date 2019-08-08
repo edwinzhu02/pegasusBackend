@@ -49,5 +49,35 @@ namespace Pegasus_backend.Controllers
             }
         }
 
+        [HttpGet("[action]/{userId}")]
+        public async Task<IActionResult> LearnerGetRating(short userId)
+        {
+            var result = new Result<object>();
+            try
+            {
+                var learner = _ablemusicContext.Learner.FirstOrDefault(s => s.UserId == userId);
+                if (learner == null)
+                {
+                    throw new Exception("You are not Learner");
+                }
+
+                var learnerId = learner.LearnerId;
+                var ratingItem = await _ablemusicContext.Rating
+                    .Include(s=>s.Teacher)
+                    .Include(s=>s.Lesson)
+                    .Where(s => s.TeacherId == learnerId && s.RateType == 1)
+                    .Select(s=>new {s.Teacher.FirstName,s.Teacher.LastName,s.Lesson.BeginTime,s.Comment,s.RateStar})
+                    .ToListAsync();
+                result.Data = ratingItem;
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+        }
+
     }
 }
