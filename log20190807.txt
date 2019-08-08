@@ -2719,3 +2719,26 @@ LEFT JOIN `ablemusic`.`org` AS `s.Org` ON `s`.`org_id` = `s.Org`.`org_id`
 2019-08-07 15:31:59.591 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.LoginLogController.LoginLog (Pegasus_backend) in 210.793ms
 2019-08-07 15:31:59.592 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":[{"LogType":1,"CreatedAt":"2019-08-07T12:59:26","Abbr":"CENTRAL"},{"LogType":1,"CreatedAt":"2019-08-07T12:59:56","Abbr":"CENTRAL"},{"LogType":1,"CreatedAt":"2019-08-07T13:00:00","Abbr":"CENTRAL"},{"LogType":1,"CreatedAt":"2019-08-07T13:00:57","Abbr":"CENTRAL"},{"LogType":1,"CreatedAt":"2019-08-07T13:10:40","Abbr":"CENTRAL"},{"LogType":1,"CreatedAt":"2019-08-07T14:11:38","Abbr":"CENTRAL"},{"LogType":1,"CreatedAt":"2019-08-07T14:17:44","Abbr":"CENTRAL"},{"LogType":1,"CreatedAt":"2019-08-07T02:19:19","Abbr":"CENTRAL"},{"LogType":1,"CreatedAt":"2019-08-07T02:25:43","Abbr":"CENTRAL"},{"LogType":1,"CreatedAt":"2019-08-07T14:26:20","Abbr":"CENTRAL"}]}
 2019-08-07 15:31:59.592 +12:00 [INF] Request finished in 212.5097ms 200 application/json; charset=utf-8
+2019-08-07 22:14:48.405 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-08-07 22:14:48.812 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-08-07 22:15:03.089 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/loginlog/3 application/json 72
+2019-08-07 22:15:03.121 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-08-07 22:15:03.169 +12:00 [INF] {
+	"UserId": 3,
+	"LocaltionX": -36.9128580,
+	"LocaltionY": 174.8736460
+}
+2019-08-07 22:15:03.308 +12:00 [INF] Route matched with {action = "LoginLog", controller = "LoginLog"}. Executing action Pegasus_backend.Controllers.MobileControllers.LoginLogController.LoginLog (Pegasus_backend)
+2019-08-07 22:15:03.369 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.LoginLogController.LoginLog (Pegasus_backend) with arguments (["3"]) - Validation state: "Valid"
+2019-08-07 22:15:04.263 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-08-07 22:15:04.303 +12:00 [WRN] The Include operation for navigation '[s].Org' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-08-07 22:15:04.344 +12:00 [WRN] The LINQ expression 'where (((Convert([s].UserId, Nullable`1) == Convert(Convert(__userId_0, Int32), Nullable`1)) AndAlso (Convert(DateTime.UtcNow.AddHours(12).AddDays(-6), Nullable`1) <= [s].CreatedAt)) AndAlso ([s].CreatedAt <= Convert(DateTime.UtcNow.AddHours(12), Nullable`1)))' could not be translated and will be evaluated locally.
+2019-08-07 22:15:05.341 +12:00 [INF] Executed DbCommand (67ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`user_id`, `s`.`created_at` AS `CreatedAt`, `s`.`log_type` AS `LogType`, `s.Org`.`abbr`
+FROM `ablemusic`.`login_log` AS `s`
+LEFT JOIN `ablemusic`.`org` AS `s.Org` ON `s`.`org_id` = `s.Org`.`org_id`
+2019-08-07 22:15:05.367 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.LoginLogController.LoginLog (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 1986.2949ms.
+2019-08-07 22:15:05.373 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-08-07 22:15:05.419 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.LoginLogController.LoginLog (Pegasus_backend) in 2108.8248000000003ms
+2019-08-07 22:15:05.421 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":[{"LogType":1,"CreatedAt":"2019-08-07T02:10:09","Abbr":"EAST"},{"LogType":1,"CreatedAt":"2019-08-07T02:12:17","Abbr":"EAST"},{"LogType":1,"CreatedAt":"2019-08-07T02:15:14","Abbr":"EAST"},{"LogType":1,"CreatedAt":"2019-08-07T02:18:44","Abbr":"EAST"},{"LogType":1,"CreatedAt":"2019-08-07T02:20:25","Abbr":"EAST"},{"LogType":1,"CreatedAt":"2019-08-07T02:21:36","Abbr":"EAST"},{"LogType":0,"CreatedAt":"2019-08-07T15:17:23","Abbr":"CENTRAL"},{"LogType":0,"CreatedAt":"2019-08-07T15:18:08","Abbr":"EAST"},{"LogType":0,"CreatedAt":"2019-08-07T15:36:25","Abbr":"EAST"},{"LogType":0,"CreatedAt":"2019-08-07T15:38:08","Abbr":"EAST"},{"LogType":1,"CreatedAt":"2019-08-07T15:38:47","Abbr":"EAST"},{"LogType":0,"CreatedAt":"2019-08-07T16:03:03","Abbr":"EAST"}]}
+2019-08-07 22:15:05.428 +12:00 [INF] Request finished in 2340.3197ms 200 application/json; charset=utf-8
