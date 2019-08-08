@@ -87,8 +87,14 @@ namespace Pegasus_backend.Controllers.Authorization
                 {
                     photo =  user.Staff.FirstOrDefault().Photo;
                 }
-                result.Data = new {token=tokenToClient,username=model.UserName,roleid = user.RoleId,userid=user.UserId,
-                            expires=date,userdetails= UserInfoFilter(user,position),photo=photo};
+
+                
+                result.Data = new {
+                    token=tokenToClient,username=model.UserName,roleid = user.RoleId,userid=user.UserId,
+                    expires=date,userdetails= UserInfoFilter(user,position),photo=photo,
+                    mobileComponents = ComponentsSelectors(user.RoleId)
+                            
+                };
                 result.IsSuccess = true;
                 return Ok(result);
             }
@@ -101,5 +107,40 @@ namespace Pegasus_backend.Controllers.Authorization
             
             
         }
+
+        private List<object> ComponentsSelectors(short? roleId)
+        {
+            switch (roleId)
+            {
+                case 1:
+                    return new List<object>
+                    {
+                        new { name= "Check In", code= "#1abc9c",component= "CheckIn" },
+                        new { name= "Check Out", code= "#2ecc71",component= "CheckOut" },
+                        new { name= "Schedule", code= "#3498db",component= "Schedule" },
+                        new { name= "Feedback", code= "#9b59b6",component= "Feedback" },
+                        new { name= "View Feedback", code= "#27ae60",component= "FeedbackView" },
+                    };
+                case 2:
+                    return new List<object>();
+                case 3:
+                    return new List<object>
+                    {
+                        new { name= "Check In", code= "#1abc9c",component= "CheckIn" },
+                        new { name= "Check Out", code= "#2ecc71",component= "CheckOut" },
+                    };
+                case 4:
+                    return new List<object>
+                    {
+                        new { name= "Feedback", code= "#9b59b6",component= "Feedback" },
+                        new { name= "View Feedback", code= "#27ae60",component= "FeedbackView" }
+                    };
+                case 5:
+                    return new List<object>();
+                default:
+                    return new List<object>();
+            }
+        }
+        
     }
 }

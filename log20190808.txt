@@ -245,3 +245,71 @@ WHERE (`s`.`teacher_id` = @__teacherId_0) AND (`s`.`rate_type` = 0)
 2019-08-08 11:32:36.727 +12:00 [INF] Executed action Pegasus_backend.Controllers.RatingController.TeacherGetRating (Pegasus_backend) in 534.525ms
 2019-08-08 11:32:36.728 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":[{"FirstName":"Oliver","LastName":"Deng","BeginTime":"2019-05-02T13:00:00","Comment":"baba","RateStar":5},{"FirstName":"Oliver","LastName":"Deng","BeginTime":"2019-05-02T13:00:00","Comment":"haha","RateStar":3}]}
 2019-08-08 11:32:36.728 +12:00 [INF] Request finished in 535.8202ms 200 application/json; charset=utf-8
+2019-08-08 14:53:13.067 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-08-08 14:53:13.457 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-08-08 14:53:19.727 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/login application/json 57
+2019-08-08 14:53:19.758 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-08-08 14:53:19.800 +12:00 [INF] {
+	"userName": "qwerqwer123",
+	"password": "helloworld"
+}
+2019-08-08 14:53:19.938 +12:00 [INF] Route matched with {action = "Login", controller = "Login"}. Executing action Pegasus_backend.Controllers.Authorization.LoginController.Login (Pegasus_backend)
+2019-08-08 14:53:20.047 +12:00 [INF] Executing action method Pegasus_backend.Controllers.Authorization.LoginController.Login (Pegasus_backend) with arguments (["Pegasus_backend.Models.UsrAndPass"]) - Validation state: "Valid"
+2019-08-08 14:53:20.973 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-08-08 14:53:22.005 +12:00 [INF] Executed DbCommand (61ms) [Parameters=[@__model_UserName_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`user_id`, `s`.`created_at`, `s`.`is_activate`, `s`.`is_online`, `s`.`password`, `s`.`role_id`, `s`.`signature`, `s`.`unread_message_id`, `s`.`user_name`, `s.Role`.`role_id`, `s.Role`.`role_name`
+FROM `ablemusic`.`user` AS `s`
+LEFT JOIN `ablemusic`.`role` AS `s.Role` ON `s`.`role_id` = `s.Role`.`role_id`
+WHERE `s`.`user_name` = @__model_UserName_0
+ORDER BY `s`.`user_id`
+LIMIT 1
+2019-08-08 14:53:22.175 +12:00 [INF] Executed DbCommand (61ms) [Parameters=[@__model_UserName_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.Learner`.`learner_id`, `s.Learner`.`address`, `s.Learner`.`comment`, `s.Learner`.`contact_num`, `s.Learner`.`created_at`, `s.Learner`.`dob`, `s.Learner`.`email`, `s.Learner`.`enroll_date`, `s.Learner`.`first_name`, `s.Learner`.`form_url`, `s.Learner`.`g5_certification`, `s.Learner`.`gender`, `s.Learner`.`is_abrsm_g5`, `s.Learner`.`is_active`, `s.Learner`.`is_under_18`, `s.Learner`.`last_name`, `s.Learner`.`learner_level`, `s.Learner`.`level_type`, `s.Learner`.`middle_name`, `s.Learner`.`note`, `s.Learner`.`org_id`, `s.Learner`.`otherfile_url`, `s.Learner`.`payment_period`, `s.Learner`.`photo`, `s.Learner`.`referrer`, `s.Learner`.`referrer_learner_id`, `s.Learner`.`user_id`
+FROM `ablemusic`.`learner` AS `s.Learner`
+INNER JOIN (
+    SELECT DISTINCT `t`.*
+    FROM (
+        SELECT `s0`.`user_id`
+        FROM `ablemusic`.`user` AS `s0`
+        LEFT JOIN `ablemusic`.`role` AS `s.Role0` ON `s0`.`role_id` = `s.Role0`.`role_id`
+        WHERE `s0`.`user_name` = @__model_UserName_0
+        ORDER BY `s0`.`user_id`
+        LIMIT 1
+    ) AS `t`
+) AS `t0` ON `s.Learner`.`user_id` = `t0`.`user_id`
+ORDER BY `t0`.`user_id`
+2019-08-08 14:53:22.349 +12:00 [INF] Executed DbCommand (61ms) [Parameters=[@__model_UserName_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.Teacher`.`teacher_id`, `s.Teacher`.`ability`, `s.Teacher`.`comment`, `s.Teacher`.`cv_url`, `s.Teacher`.`dob`, `s.Teacher`.`email`, `s.Teacher`.`expiry_date`, `s.Teacher`.`first_name`, `s.Teacher`.`form_url`, `s.Teacher`.`gender`, `s.Teacher`.`home_phone`, `s.Teacher`.`id_number`, `s.Teacher`.`id_photo`, `s.Teacher`.`id_type`, `s.Teacher`.`invoice_template`, `s.Teacher`.`ird_number`, `s.Teacher`.`is_activate`, `s.Teacher`.`is_contract`, `s.Teacher`.`is_left`, `s.Teacher`.`last_name`, `s.Teacher`.`level`, `s.Teacher`.`minimum_hours`, `s.Teacher`.`mobile_phone`, `s.Teacher`.`otherfile_url`, `s.Teacher`.`photo`, `s.Teacher`.`user_id`, `s.Teacher`.`visa`
+FROM `ablemusic`.`teacher` AS `s.Teacher`
+INNER JOIN (
+    SELECT DISTINCT `t1`.*
+    FROM (
+        SELECT `s1`.`user_id`
+        FROM `ablemusic`.`user` AS `s1`
+        LEFT JOIN `ablemusic`.`role` AS `s.Role1` ON `s1`.`role_id` = `s.Role1`.`role_id`
+        WHERE `s1`.`user_name` = @__model_UserName_0
+        ORDER BY `s1`.`user_id`
+        LIMIT 1
+    ) AS `t1`
+) AS `t2` ON `s.Teacher`.`user_id` = `t2`.`user_id`
+ORDER BY `t2`.`user_id`
+2019-08-08 14:53:22.553 +12:00 [INF] Executed DbCommand (59ms) [Parameters=[@__model_UserName_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.Staff`.`staff_id`, `s.Staff`.`dob`, `s.Staff`.`email`, `s.Staff`.`expiry_date`, `s.Staff`.`first_name`, `s.Staff`.`gender`, `s.Staff`.`home_phone`, `s.Staff`.`id_number`, `s.Staff`.`id_photo`, `s.Staff`.`id_type`, `s.Staff`.`ird_number`, `s.Staff`.`is_activate`, `s.Staff`.`last_name`, `s.Staff`.`mobile_phone`, `s.Staff`.`photo`, `s.Staff`.`user_id`, `s.Staff`.`visa`
+FROM `ablemusic`.`staff` AS `s.Staff`
+INNER JOIN (
+    SELECT DISTINCT `t3`.*
+    FROM (
+        SELECT `s2`.`user_id`
+        FROM `ablemusic`.`user` AS `s2`
+        LEFT JOIN `ablemusic`.`role` AS `s.Role2` ON `s2`.`role_id` = `s.Role2`.`role_id`
+        WHERE `s2`.`user_name` = @__model_UserName_0
+        ORDER BY `s2`.`user_id`
+        LIMIT 1
+    ) AS `t3`
+) AS `t4` ON `s.Staff`.`user_id` = `t4`.`user_id`
+ORDER BY `t4`.`user_id`, `s.Staff`.`staff_id`
+2019-08-08 14:53:22.575 +12:00 [INF] Executed action method Pegasus_backend.Controllers.Authorization.LoginController.Login (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 2513.2531ms.
+2019-08-08 14:53:22.584 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-08-08 14:53:22.603 +12:00 [INF] Executed action Pegasus_backend.Controllers.Authorization.LoginController.Login (Pegasus_backend) in 2662.1289ms
+2019-08-08 14:53:22.605 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOiIxMDExNSIsIm5iZiI6MTU2NTIzMjgwMiwiZXhwIjoxNTY2NDQyNDAyLCJpYXQiOjE1NjUyMzI4MDJ9.JMrBuUmFqqpFRinlNEWNig1sVpFfNpS6CuHszgtZ4dk","username":"qwerqwer123","roleid":1,"userid":10115,"expires":1566442402,"userdetails":{"firstname":"BABA123","lastname":"asd","position":"teacher"},"photo":null,"mobileComponents":[{"name":"Check In","code":"#1abc9c","component":"CheckIn"},{"name":"Check Out","code":"#2ecc71","component":"CheckOut"},{"name":"Schedule","code":"#3498db","component":"Schedule"},{"name":"Feedback","code":"#9b59b6","component":"Feedback"},{"name":"View Feedback","code":"#27ae60","component":"FeedbackView"}]}
+2019-08-08 14:53:22.611 +12:00 [INF] Request finished in 2885.6632ms 200 application/json; charset=utf-8
