@@ -1,0 +1,38 @@
+2019-08-12 11:20:55.379 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-08-12 11:20:55.805 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-08-12 11:21:55.754 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/loginlog/checkout application/json 76
+2019-08-12 11:21:55.782 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-08-12 11:21:55.829 +12:00 [INF] {
+	"UserId": 10115,
+	"LocaltionX": -36.9128580,
+	"LocaltionY": 174.8736460
+}
+2019-08-12 11:21:55.956 +12:00 [INF] Route matched with {action = "CheckOut", controller = "LoginLog"}. Executing action Pegasus_backend.Controllers.MobileControllers.LoginLogController.CheckOut (Pegasus_backend)
+2019-08-12 11:21:56.061 +12:00 [INF] Executing action method Pegasus_backend.Controllers.MobileControllers.LoginLogController.CheckOut (Pegasus_backend) with arguments (["Pegasus_backend.Models.CheckInOrOutModel"]) - Validation state: "Valid"
+2019-08-12 11:21:56.948 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-08-12 11:21:57.038 +12:00 [WRN] The LINQ expression 'where (((Convert([s].CreatedAt, DateTime).Day == DateTime.Now.Day) AndAlso (Convert([s].CreatedAt, DateTime).Month == DateTime.Now.Month)) AndAlso (Convert([s].CreatedAt, DateTime).Year == DateTime.Now.Year))' could not be translated and will be evaluated locally.
+2019-08-12 11:21:58.096 +12:00 [INF] Executed DbCommand (64ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`login_log_id`, `s`.`created_at`, `s`.`log_type`, `s`.`org_id`, `s`.`user_id`, `s.Org`.`org_id`, `s.Org`.`abbr`, `s.Org`.`address`, `s.Org`.`email`, `s.Org`.`is_activate`, `s.Org`.`is_headoffice`, `s.Org`.`localtion_x`, `s.Org`.`localtion_y`, `s.Org`.`org_name`, `s.Org`.`phone`
+FROM `ablemusic`.`login_log` AS `s`
+LEFT JOIN `ablemusic`.`org` AS `s.Org` ON `s`.`org_id` = `s.Org`.`org_id`
+WHERE `s`.`log_type` = 1
+2019-08-12 11:21:58.217 +12:00 [WRN] The LINQ expression 'where (((Convert([s].CreatedAt, DateTime).Day == DateTime.Now.Day) AndAlso (Convert([s].CreatedAt, DateTime).Month == DateTime.Now.Month)) AndAlso (Convert([s].CreatedAt, DateTime).Year == DateTime.Now.Year))' could not be translated and will be evaluated locally.
+2019-08-12 11:21:58.220 +12:00 [WRN] The LINQ expression 'where (Sqrt(ToDouble(Convert(((([s.Org]?.LocaltionX - __model_LocaltionX_0) * ([s.Org]?.LocaltionX - __model_LocaltionX_1)) + (([s.Org]?.LocaltionY - __model_LocaltionY_2) * ([s.Org]?.LocaltionY - __model_LocaltionY_3))), Object))) <= 0.003)' could not be translated and will be evaluated locally.
+2019-08-12 11:21:58.222 +12:00 [WRN] The LINQ expression 'FirstOrDefault()' could not be translated and will be evaluated locally.
+2019-08-12 11:21:58.289 +12:00 [INF] Executed DbCommand (56ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`login_log_id`, `s`.`created_at`, `s`.`log_type`, `s`.`org_id`, `s`.`user_id`, `s.Org`.`org_id`, `s.Org`.`abbr`, `s.Org`.`address`, `s.Org`.`email`, `s.Org`.`is_activate`, `s.Org`.`is_headoffice`, `s.Org`.`localtion_x`, `s.Org`.`localtion_y`, `s.Org`.`org_name`, `s.Org`.`phone`
+FROM `ablemusic`.`login_log` AS `s`
+LEFT JOIN `ablemusic`.`org` AS `s.Org` ON `s`.`org_id` = `s.Org`.`org_id`
+WHERE `s`.`log_type` = 1
+2019-08-12 11:21:58.989 +12:00 [INF] Executed DbCommand (59ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?' (DbType = Int32), @p2='?' (DbType = Int16), @p3='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `ablemusic`.`login_log` (`created_at`, `log_type`, `org_id`, `user_id`)
+VALUES (@p0, @p1, @p2, @p3);
+SELECT `login_log_id`
+FROM `ablemusic`.`login_log`
+WHERE ROW_COUNT() = 1
+ AND `login_log_id`=LAST_INSERT_ID();
+2019-08-12 11:21:59.065 +12:00 [INF] Executed action method Pegasus_backend.Controllers.MobileControllers.LoginLogController.CheckOut (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 2992.1239ms.
+2019-08-12 11:21:59.077 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-08-12 11:21:59.088 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.LoginLogController.CheckOut (Pegasus_backend) in 3129.5952ms
+2019-08-12 11:21:59.090 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":"Check out successfully."}
+2019-08-12 11:21:59.096 +12:00 [INF] Request finished in 3343.3559ms 200 application/json; charset=utf-8

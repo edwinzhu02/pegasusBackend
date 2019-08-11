@@ -79,5 +79,21 @@ namespace Pegasus_backend.Controllers
             }
         }
 
+        [HttpGet("[action]/{userId}")]
+        public async Task<IActionResult> TeacherFeedbackRatingList(short userId)
+        {
+            var result = new Result<object>();
+            try
+            {
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+        }
+
     }
 }
