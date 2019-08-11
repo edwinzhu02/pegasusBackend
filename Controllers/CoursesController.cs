@@ -90,6 +90,73 @@ namespace Pegasus_backend.Controllers
 
             return Ok(result);
         }
+        [HttpGet("Id")]
+        public async Task<ActionResult<IEnumerable<Course>>> GetCourses(int Id)
+        {
+            Result<List<Object>> result = new Result<List<Object>>();
+            result.Data = new List<Object>();
+            List<Course> courses = new List<Course>();
+            List<Lookup> lookups = new List<Lookup>();
+            try
+            {
+                courses = await (from c in _ablemusicContext.Course
+                                  join cc in _ablemusicContext.CourseCategory on c.CourseCategoryId equals cc.CourseCategoryId
+                                  where c.CourseId == Id
+                                  select new Course
+                                  {
+                                      CourseId = c.CourseId,
+                                      CourseName = c.CourseName,
+                                      CourseType = c.CourseType,
+                                      Level = c.Level,
+                                      Duration = c.Duration,
+                                      Price = c.Price,
+                                      CourseCategoryId = c.CourseCategoryId,
+                                      TeacherLevel = c.TeacherLevel,
+                                      CourseCategory = new CourseCategory
+                                      {
+                                          CourseCategoryId = cc.CourseCategoryId,
+                                          CourseCategoryName = cc.CourseCategoryName,
+                                          Course = null
+                                      }
+                                  }).ToListAsync();
+                lookups = await (from l in _ablemusicContext.Lookup
+                                where l.LookupType == 1 || l.LookupType == 4 || l.LookupType == 6 || l.LookupType == 8
+                                select new Lookup
+                                {
+                                    PropName = l.PropName,
+                                    PropValue = l.PropValue,
+                                    LookupType = l.LookupType
+                                }).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+
+            foreach (var course in courses)
+            {
+                result.Data.Add(new
+                {
+                    CourseId = course.CourseId,
+                    CourseName = course.CourseName,
+                    CourseType = course.CourseType,
+                    CourseTypeName = lookups.Where(l => l.PropValue == course.CourseType && l.LookupType == 6).FirstOrDefault().PropName,
+                    Level = course.Level,
+                    LevelName = lookups.Where(l => l.PropValue == course.Level && l.LookupType == 4).FirstOrDefault().PropName,
+                    Duration = course.Duration,
+                    DurationName = lookups.Where(l => l.PropValue == course.Duration && l.LookupType == 8).FirstOrDefault().PropName,
+                    Price = course.Price,
+                    CourseCategoryId = course.CourseCategoryId,
+                    TeacherLevel = course.TeacherLevel,
+                    TeacherLevelName = lookups.Where(l => l.PropValue == course.TeacherLevel && l.LookupType == 1).FirstOrDefault().PropName,
+                    CourseCategory = course.CourseCategory,
+                });
+            }
+
+            return Ok(result);
+        }
 
         [Route("[action]")]
         [HttpGet]

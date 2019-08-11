@@ -448,8 +448,8 @@ namespace Pegasus_backend.Services
                     if (course_instance.Learner.PaymentPeriod == 2)
                         invoice.LessonFee = invoice.LessonFee + extraFee;
                     invoice.LessonFee = course_instance.Course.Price * lesson_quantity;
-                    invoice.OwingFee = invoice.LessonFee;
-                    invoice.TotalFee = invoice.LessonFee;
+                    invoice.OwingFee = invoice.LessonFee+invoice.NoteFee+invoice.ConcertFee;
+                    invoice.TotalFee = invoice.OwingFee;
                     invoice.LessonQuantity = lesson_quantity;
                     if (invoice.LessonFee <= 0) continue;
                     _ablemusicContext.InvoiceWaitingConfirm.Update(invoice);
