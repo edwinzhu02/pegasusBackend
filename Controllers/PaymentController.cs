@@ -53,6 +53,7 @@ namespace Pegasus_backend.Controllers
         public async Task<IActionResult> PaymentByDate(short staffId,DateTime beginDate, DateTime endDate)
         {
             Result<Object> result = new Result<object>();
+            endDate = endDate.AddDays(1);
             try
              {
                 var orgs = await _ablemusicContext.StaffOrg.Where(o=>o.StaffId==staffId).Select(o=>o.OrgId).ToListAsync();
