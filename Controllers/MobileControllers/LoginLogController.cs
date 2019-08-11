@@ -83,9 +83,9 @@ namespace Pegasus_backend.Controllers.MobileControllers
             try
             {
                 var checkInDetail = _ablemusicContext.LoginLog.Where(s =>
-                    s.CreatedAt.Value.Day == DateTime.Now.Day &&
-                    s.CreatedAt.Value.Month == DateTime.Now.Month &&
-                    s.CreatedAt.Value.Year == DateTime.Now.Year && s.LogType == 1).Include(s=>s.Org);
+                    s.CreatedAt.Value.Day == DateTime.UtcNow.AddHours(12).Day &&
+                    s.CreatedAt.Value.Month == DateTime.UtcNow.AddHours(12).Month &&
+                    s.CreatedAt.Value.Year == DateTime.UtcNow.AddHours(12).Year && s.LogType == 1).Include(s=>s.Org);
                 if (checkInDetail.IsNullOrEmpty())
                 {
                     throw new Exception("你今天没打卡 不存在登出");

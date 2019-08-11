@@ -36,3 +36,5 @@ WHERE ROW_COUNT() = 1
 2019-08-12 11:21:59.088 +12:00 [INF] Executed action Pegasus_backend.Controllers.MobileControllers.LoginLogController.CheckOut (Pegasus_backend) in 3129.5952ms
 2019-08-12 11:21:59.090 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":"Check out successfully."}
 2019-08-12 11:21:59.096 +12:00 [INF] Request finished in 3343.3559ms 200 application/json; charset=utf-8
+2019-08-12 11:25:17.364 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-08-12 11:25:17.681 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
