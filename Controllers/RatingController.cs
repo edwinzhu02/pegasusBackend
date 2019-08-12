@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Castle.Core.Internal;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using Pegasus_backend.Models;
 using Pegasus_backend.pegasusContext;
@@ -85,7 +86,23 @@ namespace Pegasus_backend.Controllers
             var result = new Result<object>();
             try
             {
-                return Ok();
+                var teacher = _ablemusicContext.Teacher.FirstOrDefault(s => s.UserId == userId);
+                if (teacher == null)
+                {
+                    throw new Exception("You are not Teacher");
+                }
+
+                var teacherId = teacher.TeacherId;
+                var item = await _ablemusicContext.Lesson
+                    .Include(s=>s.Rating)
+                    .Where(s => s.IsConfirm == 1 && s.CreatedAt >= DateTime.UtcNow.AddHours(12).AddDays(-14) && s.TeacherId ==teacherId)
+                    .Select(s => new
+                    {
+                        s.LearnerId, isRate = s.Rating.ToList().Exists(q=>q.RateType == 1)?1:0, s.LessonId,s.BeginTime
+                    })
+                    .ToListAsync();
+                result.Data = item;
+                return Ok(result);
             }
             catch (Exception ex)
             {
