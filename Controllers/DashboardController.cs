@@ -34,19 +34,19 @@ namespace Pegasus_backend.Controllers
             List<int> orgIDs = orgIDsConvertResult.Data;
             var dashboardService = new DashboardService(_ablemusicContext, _log, orgIDs);
 
-            var lessonsForToday = await dashboardService.getLessonsForToday();
-            var trialLessonsForToday = await dashboardService.getTrialLessonsForToday();
-            var newStudentsForToday = await dashboardService.getNewStudentsForToday();
-            var waitingInvoices = await dashboardService.getUnConfirmedWaitingInvoice();
-            var canceledLessonsForToday = await dashboardService.getCanceledLessonsForToday();
-            var rearrangedLessonsForToday = await dashboardService.getRearrangedLessonsForToday();
-            var expiredDayOffForToday = await dashboardService.getExpiredDayOffForToday();
-            var expiredRearrangedLessonForToday = await dashboardService.getExpiredRearrangedLessonsForToday();
-            var studentWith0RemainLessonForToday = await dashboardService.getLearnerWithRemainLessonsForToday(0);
-            var studentWith1RemainLessonForToday = await dashboardService.getLearnerWithRemainLessonsForToday(1);
-            var studentWith2RemainLessonsForToday = await dashboardService.getLearnerWithRemainLessonsForToday(2);
-            var lessonsForRecent14Days = await dashboardService.getRecentLessons(14, toNZTimezone(DateTime.UtcNow));
-            var newEnrolledStudentsForRecent8Weeks = await dashboardService.getRecentNewRegisteredLearner(8);
+            var lessonsForToday = await dashboardService.GetLessonsForToday();
+            var trialLessonsForToday = await dashboardService.GetTrialLessonsForToday();
+            var newStudentsForToday = await dashboardService.GetNewStudentsForToday();
+            var waitingInvoices = await dashboardService.GetUnConfirmedWaitingInvoice();
+            var canceledLessonsForToday = await dashboardService.GetCanceledLessonsForToday();
+            var rearrangedLessonsForToday = await dashboardService.GetRearrangedLessonsForToday();
+            var expiredDayOffForToday = await dashboardService.GetExpiredDayOffForToday();
+            var expiredRearrangedLessonForToday = await dashboardService.GetExpiredRearrangedLessonsForToday();
+            var studentWith0RemainLessonForToday = await dashboardService.GetLearnerWithRemainLessonsForToday(0);
+            var studentWith1RemainLessonForToday = await dashboardService.GetLearnerWithRemainLessonsForToday(1);
+            var studentWith2RemainLessonsForToday = await dashboardService.GetLearnerWithRemainLessonsForToday(2);
+            var lessonsForRecent14Days = await dashboardService.GetRecentLessons(14, toNZTimezone(DateTime.UtcNow));
+            var newEnrolledStudentsForRecent8Weeks = await dashboardService.GetRecentNewRegisteredLearner(8);
 
             var lessonsForRecent14DaysCount = new Dictionary<string, int>();
             if (lessonsForRecent14Days.IsSuccess)

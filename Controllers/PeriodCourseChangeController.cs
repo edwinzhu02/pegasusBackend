@@ -49,12 +49,12 @@ namespace Pegasus_backend.Controllers
                 if (inputObj.EndDate.HasValue)
                 {
                     exsitingLessons = await _ablemusicContext.Lesson.Where(l => l.LearnerId == inputObj.LearnerId && l.IsCanceled != 1 &&
-                    l.BeginTime.Value.Date < inputObj.EndDate.Value.Date && l.BeginTime.Value.Date > inputObj.BeginDate.Date&&
+                    l.BeginTime.Value.Date <= inputObj.EndDate.Value.Date && l.BeginTime.Value.Date >= inputObj.BeginDate.Date&&
                     l.CourseInstanceId == inputObj.InstanceId).ToListAsync();
                 } else
                 {
                     exsitingLessons = await _ablemusicContext.Lesson.Where(l => l.LearnerId == inputObj.LearnerId && l.IsCanceled != 1 &&
-                    l.BeginTime.Value.Date > inputObj.BeginDate.Date).ToListAsync();
+                    l.BeginTime.Value.Date >= inputObj.BeginDate.Date).ToListAsync();
                 }
                 terms = await _ablemusicContext.Term.ToListAsync();
                 courseInfo = await (from i in _ablemusicContext.One2oneCourseInstance
@@ -292,7 +292,7 @@ namespace Pegasus_backend.Controllers
                 currentDayOfWeek = currentDate.DayOfWeek == 0 ? 7 : (int)currentDate.DayOfWeek;
             }
 
-            var lessonConflictCheckerService = new LessonConflictCheckerService(inputObj.BeginDate, endDate);
+            var lessonConflictCheckerService = new LessonConflictCheckerService(_ablemusicContext, inputObj.BeginDate, endDate);
             try
             {
                 await lessonConflictCheckerService.LoadAllProtentialConflictLessonsToMemoryAsync();

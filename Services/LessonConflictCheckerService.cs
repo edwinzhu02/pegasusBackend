@@ -25,16 +25,16 @@ namespace Pegasus_backend.Services
         private List<ConflictInfo> _totalProtentialConflictRoomForOTO;
         private List<ConflictInfo> _totalProtentialConflictRoomForGC;
 
-        public LessonConflictCheckerService(DateTime min, DateTime max)
+        public LessonConflictCheckerService(ablemusicContext ablemusicContext, DateTime min, DateTime max)
         {
             _protentialMinTime = min;
             _protentialMaxTime = max;
-            _ablemusicContext = new ablemusicContext();
+            _ablemusicContext = ablemusicContext;
         }
 
-        public LessonConflictCheckerService(DateTime beginTime, DateTime endTime, int roomId = 0, int orgId = 0, int teacherId = 0, int lessonId = 0)
+        public LessonConflictCheckerService(ablemusicContext ablemusicContext, DateTime beginTime, DateTime endTime, int roomId = 0, int orgId = 0, int teacherId = 0, int lessonId = 0)
         {
-            _ablemusicContext = new ablemusicContext();
+            _ablemusicContext = ablemusicContext;
             _roomId = roomId;
             _orgId = orgId;
             _lessonId = lessonId;
@@ -43,9 +43,9 @@ namespace Pegasus_backend.Services
             _teacherId = teacherId;
         }
 
-        public LessonConflictCheckerService(Lesson lesson)
+        public LessonConflictCheckerService(ablemusicContext ablemusicContext, Lesson lesson)
         {
-            _ablemusicContext = new ablemusicContext();
+            _ablemusicContext = ablemusicContext;
             _roomId = lesson.RoomId ?? 0;
             _orgId = lesson.OrgId ;
             _lessonId = lesson.LessonId;

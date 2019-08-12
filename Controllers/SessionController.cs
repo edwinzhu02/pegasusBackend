@@ -180,7 +180,7 @@ namespace Pegasus_backend.Controllers
                 return BadRequest(result);
             }
 
-            var lessonConflictCheckerService = new LessonConflictCheckerService(lesson);
+            var lessonConflictCheckerService = new LessonConflictCheckerService(_ablemusicContext, lesson);
             Result<List<object>> lessonConflictCheckResult;
             try
             {
