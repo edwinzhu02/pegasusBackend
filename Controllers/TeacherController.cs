@@ -42,6 +42,7 @@ namespace Pegasus_backend.Controllers
                 var availableDays = await _ablemusicContext.AvailableDays
                     .Include(s=>s.Teacher)
                     .Where(s => s.OrgId == orgId && s.RoomId != null && s.DayOfWeek == dayofweek)
+                    .OrderBy(s => s.Teacher.FirstName)
                     .ToListAsync();
                 result.Data = availableDays;
                 return Ok(result);
@@ -161,7 +162,7 @@ namespace Pegasus_backend.Controllers
                         q.TeacherQualificatiion,
                         q.TeacherWageRates
                         //TeacherWageRate = q.TeacherWageRates.FirstOrDefault(s => s.IsActivate == 1)
-                    })
+                    }).OrderBy(s => s.FirstName)
                     .ToListAsync();
                 foreach(var t in teachers)
                 {
