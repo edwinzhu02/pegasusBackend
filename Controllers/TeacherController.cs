@@ -111,6 +111,78 @@ namespace Pegasus_backend.Controllers
 
         //GET: http://localhost:5000/api/teacher
         //this controller is for prepare for register custom one to one course
+        [HttpGet("{id}")]
+        public async Task<ActionResult> GetTeacherByID(int id)
+        {
+            Result<Object> result = new Result<Object>();
+            try
+            {
+                Random r = new Random();
+                result.IsSuccess = true;
+                var teachers =  _ablemusicContext.Teacher
+                    .Include(s => s.TeacherLanguage)
+                    .ThenInclude(s => s.Lang)
+                    .Include(s => s.TeacherQualificatiion)
+                    .ThenInclude(s => s.Quali)
+                    .Include(s => s.TeacherCourse)
+                    .ThenInclude(s => s.Course)
+                    .Include(q=>q.AvailableDays)
+                    .ThenInclude(q=>q.Org)
+                    .Include(s=>s.TeacherCourse)
+                    .ThenInclude(s=>s.Course)
+                    .Include(t => t.TeacherWageRates)
+                    .Where(s =>  s.TeacherId == id)
+                    .Select(q => new 
+                    {
+                        q.TeacherId,
+                        q.FirstName,
+                        q.LastName,
+                        q.Dob,
+                        Gender = Convert.ToBoolean(q.Gender) ? "Male" : "Female",
+                        q.IrdNumber,
+                        q.IdType,
+                        IdPhoto = IsNull(q.IdPhoto) ? null : String.Format("{0}?{1}", q.IdPhoto, r.Next()),
+                        q.IdNumber,
+                        q.HomePhone,
+                        q.MobilePhone,
+                        q.Email,
+                        Photo = IsNull(q.Photo) ? null : String.Format("{0}?{1}", q.Photo, r.Next()),
+                        q.ExpiryDate,
+                        CV = IsNull(q.CvUrl) ? null : String.Format("{0}?{1}", q.CvUrl, r.Next()),
+                        OtherFile = IsNull(q.OtherfileUrl) ? null : String.Format("{0}?{1}", q.OtherfileUrl, r.Next()),
+                        Form = IsNull(q.FormUrl) ? null : String.Format("{0}?{1}", q.FormUrl, r.Next()),
+                        q.IsLeft,
+                        q.IsContract,
+                        q.InvoiceTemplate,
+                        q.Ability,
+                        q.Comment,
+                        q.Level,
+                        q.AvailableDays,
+                        q.TeacherLanguage,
+                        q.TeacherQualificatiion,
+                        q.TeacherWageRates
+                        //TeacherWageRate = q.TeacherWageRates.FirstOrDefault(s => s.IsActivate == 1)
+                    })
+                    .FirstOrDefault();
+                if (teachers == null )
+                    throw new Exception("Can not find this teacher!");
+                foreach(var twr in teachers.TeacherWageRates.Reverse())
+                {
+                    if (twr.IsActivate != 1) teachers.TeacherWageRates.Remove(twr);
+                }
+
+                
+                result.Data = teachers;
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+            
+            return Ok(result);
+        }
         [HttpGet]
         public async Task<ActionResult> GetTeacher()
         {
