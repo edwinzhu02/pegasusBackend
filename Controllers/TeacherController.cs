@@ -234,7 +234,7 @@ namespace Pegasus_backend.Controllers
                         q.TeacherQualificatiion,
                         q.TeacherWageRates
                         //TeacherWageRate = q.TeacherWageRates.FirstOrDefault(s => s.IsActivate == 1)
-                    }).OrderBy(s => s.FirstName)
+                    })
                     .ToListAsync();
                 foreach(var t in teachers)
                 {
