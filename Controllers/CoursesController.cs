@@ -90,7 +90,7 @@ namespace Pegasus_backend.Controllers
 
             return Ok(result);
         }
-        [HttpGet("Id")]
+        [HttpGet("{Id}")]
         public async Task<ActionResult<IEnumerable<Course>>> GetCourses(int Id)
         {
             Result<List<Object>> result = new Result<List<Object>>();
