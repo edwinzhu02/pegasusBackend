@@ -79,7 +79,7 @@ namespace Pegasus_backend.pegasusContext
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseMySQL("Server=gradspace.org;UserId=dbuser;Password=qwer1234;Database=ablemusic");
+                optionsBuilder.UseMySQL("server=gradspace.org;UserId=dbuser;Password=qwer1234;Database=ablemusic");
             }
         }
 
@@ -2336,7 +2336,7 @@ namespace Pegasus_backend.pegasusContext
 
                 entity.Property(e => e.RateType)
                     .HasColumnName("rate_type")
-                    .HasColumnType("bit(1)");
+                    .HasColumnType("bit(2)");
 
                 entity.Property(e => e.TeacherId)
                     .HasColumnName("teacher_id")

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Threading.Tasks;
 using Castle.Core.Internal;
@@ -103,6 +104,89 @@ namespace Pegasus_backend.Controllers
                     .ToListAsync();
                 result.Data = item;
                 return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+        }
+
+        [HttpPost("[action]")]
+
+        public async Task<IActionResult> TeacherFeedback([FromBody] TeacherFeedbackModel model)
+        {
+            var result = new Result<string>();
+            try
+            {
+                var teacher = _ablemusicContext.Teacher.FirstOrDefault(s => model.UserId == s.UserId);
+                if (teacher == null)
+                {
+                    throw new Exception("You are not the teacher");
+                }
+                var teacherId = teacher.TeacherId;
+                using (var dbTransaction = _ablemusicContext.Database.BeginTransaction())
+                {
+                    //save the teacher to school comment firstly
+                    var TeacherToSchoolRating = new Rating
+                    {
+                        RateType = 2,
+                        Comment = model.CommentToSchool,
+                        CreateAt = DateTime.UtcNow.AddHours(12),
+                        TeacherId = teacherId,
+                        LessonId = model.LessonId,
+                        RateStar = model.RateStar,
+                    };
+                    _ablemusicContext.Add(TeacherToSchoolRating);
+                    await _ablemusicContext.SaveChangesAsync();
+                    
+                    //then process the teacher to student comment
+                    var lesson = _ablemusicContext.Lesson
+                        .FirstOrDefault(s => s.LessonId == model.LessonId);
+                    
+                    var learnerId = lesson.LearnerId;
+                    if (learnerId != null)
+                    {
+                        var TeacherToLearner = new Rating
+                        {
+                            RateType = 1,
+                            Comment = model.CommentToLearner,
+                            CreateAt = DateTime.UtcNow.AddHours(12),
+                            LearnerId =  learnerId,
+                            TeacherId = teacherId,
+                            LessonId = model.LessonId,
+                            RateStar = model.RateStar
+                        };
+                        _ablemusicContext.Add(TeacherToLearner);
+                        await _ablemusicContext.SaveChangesAsync();
+                    }
+
+                    if (learnerId == null && lesson.GroupCourseInstanceId != null)
+                    {
+                        var learnerGroupCourse = _ablemusicContext.LearnerGroupCourse
+                            .Where(s => s.GroupCourseInstanceId == lesson.GroupCourseInstanceId).ToList();
+                        learnerGroupCourse.ForEach(s =>
+                        {
+                            var teacherTostudent = new Rating
+                            {
+                                RateType = 1,
+                                Comment = model.CommentToLearner,
+                                CreateAt = DateTime.UtcNow.AddHours(12),
+                                LearnerId = s.LearnerId,
+                                TeacherId = teacherId,
+                                LessonId = model.LessonId,
+                                RateStar = model.RateStar
+                            };
+                            _ablemusicContext.Add(teacherTostudent);
+                        });
+                        await _ablemusicContext.SaveChangesAsync();
+                    }
+                    
+                    dbTransaction.Commit();
+                    result.Data = "Comment successfully!";
+                    return Ok(result);
+                }
             }
             catch (Exception ex)
             {
