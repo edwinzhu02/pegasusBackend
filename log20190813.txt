@@ -1,0 +1,69 @@
+2019-08-13 13:50:03.868 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-08-13 13:50:04.382 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-08-13 13:51:36.658 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/rating/TeacherFeedback application/json 119
+2019-08-13 13:51:36.691 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-08-13 13:51:36.734 +12:00 [INF] {
+	"UserId": 10182,
+	"LessonId": 42607,
+	"RateStar": 4,
+	"CommentToLearner": "hahaha",
+	"CommentToSchool": "hahahaha"
+}
+2019-08-13 13:51:36.823 +12:00 [ERR] An unhandled exception has occurred while executing the request.
+Microsoft.AspNetCore.Routing.RouteCreationException: The following errors occurred with attribute routing information:
+
+For action: 'Pegasus_backend.Controllers.RatingController.TeacherFeedback (Pegasus_backend)'
+Error: There is an incomplete parameter in the route template. Check that each '{' character has a matching '}' character.
+Parameter name: routeTemplate
+   at Microsoft.AspNetCore.Mvc.Internal.AttributeRoute.GetRouteInfos(IReadOnlyList`1 actions)
+   at Microsoft.AspNetCore.Mvc.Internal.AttributeRoute.AddEntries(TreeRouteBuilder builder, ActionDescriptorCollection actions)
+   at Microsoft.AspNetCore.Mvc.Internal.AttributeRoute.GetTreeRouter()
+   at Microsoft.AspNetCore.Mvc.Internal.AttributeRoute.RouteAsync(RouteContext context)
+   at Microsoft.AspNetCore.Routing.RouteCollection.RouteAsync(RouteContext context)
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddleware.Invoke(HttpContext context)
+2019-08-13 13:51:36.902 +12:00 [INF] Response {"IsSuccess":false,"ErrorCode":null,"IsFound":true,"ErrorMessage":"Global Exception was Caught: Microsoft.AspNetCore.Routing.RouteCreationException: The following errors occurred with attribute routing information:\n\nFor action: 'Pegasus_backend.Controllers.RatingController.TeacherFeedback (Pegasus_backend)'\nError: There is an incomplete parameter in the route template. Check that each '{' character has a matching '}' character.\nParameter name: routeTemplate\n   at Microsoft.AspNetCore.Mvc.Internal.AttributeRoute.GetRouteInfos(IReadOnlyList`1 actions)\n   at Microsoft.AspNetCore.Mvc.Internal.AttributeRoute.AddEntries(TreeRouteBuilder builder, ActionDescriptorCollection actions)\n   at Microsoft.AspNetCore.Mvc.Internal.AttributeRoute.GetTreeRouter()\n   at Microsoft.AspNetCore.Mvc.Internal.AttributeRoute.RouteAsync(RouteContext context)\n   at Microsoft.AspNetCore.Routing.RouteCollection.RouteAsync(RouteContext context)\n   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)\n   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddleware.Invoke(HttpContext context)","Note":null,"Data":null}
+2019-08-13 13:51:36.908 +12:00 [INF] Request finished in 252.7476ms 500 application/json
+2019-08-13 13:52:12.521 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-08-13 13:52:12.883 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-08-13 13:52:15.223 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/rating/TeacherFeedback application/json 119
+2019-08-13 13:52:15.252 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-08-13 13:52:15.291 +12:00 [INF] {
+	"UserId": 10182,
+	"LessonId": 42607,
+	"RateStar": 4,
+	"CommentToLearner": "hahaha",
+	"CommentToSchool": "hahahaha"
+}
+2019-08-13 13:52:15.418 +12:00 [INF] Route matched with {action = "TeacherFeedback", controller = "Rating"}. Executing action Pegasus_backend.Controllers.RatingController.TeacherFeedback (Pegasus_backend)
+2019-08-13 13:52:15.514 +12:00 [INF] Executing action method Pegasus_backend.Controllers.RatingController.TeacherFeedback (Pegasus_backend) with arguments (["Pegasus_backend.Models.TeacherFeedbackModel"]) - Validation state: "Valid"
+2019-08-13 13:52:16.443 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-08-13 13:52:17.949 +12:00 [INF] Executed DbCommand (70ms) [Parameters=[@__8__locals1_model_UserId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`teacher_id`, `s`.`ability`, `s`.`comment`, `s`.`cv_url`, `s`.`dob`, `s`.`email`, `s`.`expiry_date`, `s`.`first_name`, `s`.`form_url`, `s`.`gender`, `s`.`home_phone`, `s`.`id_number`, `s`.`id_photo`, `s`.`id_type`, `s`.`invoice_template`, `s`.`ird_number`, `s`.`is_activate`, `s`.`is_contract`, `s`.`is_left`, `s`.`last_name`, `s`.`level`, `s`.`minimum_hours`, `s`.`mobile_phone`, `s`.`otherfile_url`, `s`.`photo`, `s`.`user_id`, `s`.`visa`
+FROM `ablemusic`.`teacher` AS `s`
+WHERE @__8__locals1_model_UserId_0 = `s`.`user_id`
+LIMIT 1
+2019-08-13 13:52:18.516 +12:00 [INF] Executed DbCommand (72ms) [Parameters=[@p0='?' (Size = -1), @p1='?' (DbType = DateTime), @p2='?' (DbType = AnsiString), @p3='?' (DbType = Int32), @p4='?' (DbType = Int16), @p5='?' (DbType = Int16), @p6='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `ablemusic`.`rating` (`comment`, `create_at`, `learner_id`, `lesson_id`, `rate_star`, `rate_type`, `teacher_id`)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+SELECT `rating_id`
+FROM `ablemusic`.`rating`
+WHERE ROW_COUNT() = 1
+ AND `rating_id`=LAST_INSERT_ID();
+2019-08-13 13:52:18.663 +12:00 [INF] Executed DbCommand (59ms) [Parameters=[@__8__locals1_model_LessonId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`lesson_id`, `s`.`begin_time`, `s`.`course_instance_id`, `s`.`created_at`, `s`.`end_time`, `s`.`group_course_instance_id`, `s`.`invoice_num`, `s`.`is_canceled`, `s`.`is_changed`, `s`.`is_confirm`, `s`.`is_paid`, `s`.`is_trial`, `s`.`learner_id`, `s`.`new_lesson_id`, `s`.`org_id`, `s`.`reason`, `s`.`room_id`, `s`.`teacher_id`, `s`.`trial_course_id`
+FROM `ablemusic`.`lesson` AS `s`
+WHERE `s`.`lesson_id` = @__8__locals1_model_LessonId_0
+LIMIT 1
+2019-08-13 13:52:18.780 +12:00 [INF] Executed DbCommand (66ms) [Parameters=[@p0='?' (Size = -1), @p1='?' (DbType = DateTime), @p2='?' (DbType = Int32), @p3='?' (DbType = Int32), @p4='?' (DbType = Int16), @p5='?' (DbType = Int16), @p6='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `ablemusic`.`rating` (`comment`, `create_at`, `learner_id`, `lesson_id`, `rate_star`, `rate_type`, `teacher_id`)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+SELECT `rating_id`
+FROM `ablemusic`.`rating`
+WHERE ROW_COUNT() = 1
+ AND `rating_id`=LAST_INSERT_ID();
+2019-08-13 13:52:18.854 +12:00 [INF] Executed action method Pegasus_backend.Controllers.RatingController.TeacherFeedback (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 3328.4736000000003ms.
+2019-08-13 13:52:18.862 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-08-13 13:52:18.873 +12:00 [INF] Executed action Pegasus_backend.Controllers.RatingController.TeacherFeedback (Pegasus_backend) in 3452.7693000000004ms
+2019-08-13 13:52:18.875 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":"Comment successfully!"}
+2019-08-13 13:52:18.881 +12:00 [INF] Request finished in 3658.5966ms 200 application/json; charset=utf-8
