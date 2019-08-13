@@ -33,7 +33,7 @@ namespace Pegasus_backend.pegasusContext
         public string Address { get; set; }
         public short? IsUnder18 { get; set; }
         public DateTime? Dob { get; set; }
-        public short? Gender { get; set; }
+        public byte? Gender { get; set; }
         public short? IsAbrsmG5 { get; set; }
         public string G5Certification { get; set; }
         public DateTime? CreatedAt { get; set; }

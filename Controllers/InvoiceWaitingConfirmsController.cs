@@ -356,7 +356,7 @@ namespace Pegasus_backend.Controllers
             }
             return Ok(result);
         }
-        // PUT: api/InvoiceWaitingConfirms/5
+        // PUT: api/InvoiceWaitingConfirms
         [HttpPut]
         [CheckModelFilter]
         public async Task<IActionResult> PutInvoiceWaitingConfirm([FromBody] InvoiceWaitingConfirmViewModel invoiceWaitingConfirmViewModel)
@@ -365,14 +365,13 @@ namespace Pegasus_backend.Controllers
             InvoiceWaitingConfirm invoiceWaitingConfirm = new InvoiceWaitingConfirm();
             InvoiceWaitingConfirm invoiceWaitingConfirmUpdate = new InvoiceWaitingConfirm();
             List<Invoice> activeInvoices = new List<Invoice>();
-            Invoice invoice = new Invoice();
             Invoice existInvoice = new Invoice();
             Learner learner = new Learner();
             _mapper.Map(invoiceWaitingConfirmViewModel, invoiceWaitingConfirm);
             try
             {
                 invoiceWaitingConfirmUpdate = await _ablemusicContext.InvoiceWaitingConfirm.
-                Where(i => (i.InvoiceNum == invoiceWaitingConfirm.InvoiceNum && i.IsActivate ==1 )).FirstOrDefaultAsync();
+                Where(i => (i.InvoiceNum == invoiceWaitingConfirm.InvoiceNum && i.IsActivate == 1)).FirstOrDefaultAsync();
                 activeInvoices = await _ablemusicContext.Invoice.Where(i => (i.IsActive == 1 || i.IsActive == null) && i.InvoiceNum == invoiceWaitingConfirm.InvoiceNum).ToListAsync();
             }
             catch(Exception ex)
@@ -414,36 +413,38 @@ namespace Pegasus_backend.Controllers
             invoiceWaitingConfirm.EndDate = invoiceWaitingConfirmUpdate.EndDate;
             invoiceWaitingConfirm.DueDate = invoiceWaitingConfirmUpdate.DueDate;
             //
-
-            invoice.InvoiceNum = invoiceWaitingConfirm.InvoiceNum;
-            invoice.LessonFee = invoiceWaitingConfirm.LessonFee;
-            invoice.ConcertFee = invoiceWaitingConfirm.ConcertFee;
-            invoice.NoteFee = invoiceWaitingConfirm.NoteFee;
-            invoice.Other1Fee = invoiceWaitingConfirm.Other1Fee;
-            invoice.Other2Fee = invoiceWaitingConfirm.Other2Fee;
-            invoice.Other3Fee = invoiceWaitingConfirm.Other3Fee;
-            invoice.LearnerId = invoiceWaitingConfirm.LearnerId;
-            invoice.LearnerName = invoiceWaitingConfirm.LearnerName;
-            invoice.BeginDate = invoiceWaitingConfirm.BeginDate;
-            invoice.EndDate = invoiceWaitingConfirm.EndDate;
-            invoice.TotalFee = invoiceWaitingConfirm.TotalFee;
-            invoice.DueDate = invoiceWaitingConfirm.DueDate;
-            invoice.PaidFee = invoiceWaitingConfirm.PaidFee;
-            invoice.OwingFee = invoiceWaitingConfirm.OwingFee;
-            invoice.CreatedAt = invoiceWaitingConfirm.CreatedAt;
-            invoice.IsPaid = invoiceWaitingConfirm.IsPaid;
-            invoice.TermId = invoiceWaitingConfirm.TermId;
-            invoice.CourseInstanceId = invoiceWaitingConfirm.CourseInstanceId;
-            invoice.GroupCourseInstanceId = invoiceWaitingConfirm.GroupCourseInstanceId;
-            invoice.LessonQuantity = invoiceWaitingConfirm.LessonQuantity;
-            invoice.CourseName = invoiceWaitingConfirm.CourseName;
-            invoice.ConcertFeeName = invoiceWaitingConfirm.ConcertFeeName;
-            invoice.LessonNoteFeeName = invoiceWaitingConfirm.LessonNoteFeeName;
-            invoice.Other1FeeName = invoiceWaitingConfirm.Other1FeeName;
-            invoice.Other2FeeName = invoiceWaitingConfirm.Other2FeeName;
-            invoice.Other3FeeName = invoiceWaitingConfirm.Other3FeeName;
-            invoice.Comment = invoiceWaitingConfirm.Comment;
-            invoice.IsActive = 1;
+            Invoice invoice = new Invoice
+            {
+                InvoiceNum = invoiceWaitingConfirm.InvoiceNum,
+                LessonFee = invoiceWaitingConfirm.LessonFee,
+                ConcertFee = invoiceWaitingConfirm.ConcertFee,
+                NoteFee = invoiceWaitingConfirm.NoteFee,
+                Other1Fee = invoiceWaitingConfirm.Other1Fee,
+                Other2Fee = invoiceWaitingConfirm.Other2Fee,
+                Other3Fee = invoiceWaitingConfirm.Other3Fee,
+                LearnerId = invoiceWaitingConfirm.LearnerId,
+                LearnerName = invoiceWaitingConfirm.LearnerName,
+                BeginDate = invoiceWaitingConfirm.BeginDate,
+                EndDate = invoiceWaitingConfirm.EndDate,
+                TotalFee = invoiceWaitingConfirm.TotalFee,
+                DueDate = invoiceWaitingConfirm.DueDate,
+                PaidFee = invoiceWaitingConfirm.PaidFee,
+                OwingFee = invoiceWaitingConfirm.OwingFee,
+                CreatedAt = invoiceWaitingConfirm.CreatedAt,
+                IsPaid = invoiceWaitingConfirm.IsPaid,
+                TermId = invoiceWaitingConfirm.TermId,
+                CourseInstanceId = invoiceWaitingConfirm.CourseInstanceId,
+                GroupCourseInstanceId = invoiceWaitingConfirm.GroupCourseInstanceId,
+                LessonQuantity = invoiceWaitingConfirm.LessonQuantity,
+                CourseName = invoiceWaitingConfirm.CourseName,
+                ConcertFeeName = invoiceWaitingConfirm.ConcertFeeName,
+                LessonNoteFeeName = invoiceWaitingConfirm.LessonNoteFeeName,
+                Other1FeeName = invoiceWaitingConfirm.Other1FeeName,
+                Other2FeeName = invoiceWaitingConfirm.Other2FeeName,
+                Other3FeeName = invoiceWaitingConfirm.Other3FeeName,
+                Comment = invoiceWaitingConfirm.Comment,
+                IsActive = 1
+            };
 
             if (activeInvoices.Count > 0)
             {
@@ -474,6 +475,9 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = ex.Message;
                 return BadRequest(result);
             }
+
+            var invoicePDFGeneratorService = new InvoicePDFGeneratorService(invoice, _log);
+            invoicePDFGeneratorService.SavePDF();
 
             //sending Email
             string mailTitle = "Invoice";

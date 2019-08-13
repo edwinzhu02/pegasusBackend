@@ -62,7 +62,7 @@ namespace Pegasus_backend.Controllers
             TimeSpan lessonDuration = oldLesson.EndTime.Value.Subtract(oldLesson.BeginTime.Value);
             newLesson.EndTime = newLesson.BeginTime.Value.Add(lessonDuration);
 
-            var lessonConflictCheckerService = new LessonConflictCheckerService(newLesson.BeginTime.Value, 
+            var lessonConflictCheckerService = new LessonConflictCheckerService(_ablemusicContext, newLesson.BeginTime.Value, 
                 newLesson.EndTime.Value, newLesson.RoomId.Value, newLesson.OrgId, (int)newLesson.TeacherId, oldLesson.LessonId);
             Result<List<object>> lessonConflictCheckResult;
             try

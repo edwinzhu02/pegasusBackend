@@ -79,7 +79,7 @@ namespace Pegasus_backend.pegasusContext
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseMySQL("server=gradspace.org;UserId=dbuser;Password=qwer1234;Database=ablemusic");
+                optionsBuilder.UseMySQL("Server=gradspace.org;UserId=dbuser;Password=qwer1234;Database=ablemusic");
             }
         }
 
@@ -1154,7 +1154,7 @@ namespace Pegasus_backend.pegasusContext
 
                 entity.Property(e => e.Gender)
                     .HasColumnName("gender")
-                    .HasColumnType("bit(1)");
+                    .HasColumnType("tinyint(4)");
 
                 entity.Property(e => e.IsAbrsmG5)
                     .HasColumnName("is_abrsm_g5")
@@ -1901,6 +1901,16 @@ namespace Pegasus_backend.pegasusContext
                 entity.Property(e => e.Address)
                     .HasColumnName("address")
                     .HasMaxLength(60)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.BankAccountNo)
+                    .HasColumnName("bank_account_no")
+                    .HasMaxLength(30)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.BankName)
+                    .HasColumnName("bank_name")
+                    .HasMaxLength(20)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Email)

@@ -150,7 +150,7 @@ namespace Pegasus_backend.Controllers
             }
             List<Lesson> lessonsToBeAppend = new List<Lesson>();
             int i = numOfSchedulesToBeAdd;
-            var lessonConflictCheckerService = new LessonConflictCheckerService(min, max);
+            var lessonConflictCheckerService = new LessonConflictCheckerService(_ablemusicContext, min, max);
             try
             {
                 await lessonConflictCheckerService.LoadAllProtentialConflictLessonsToMemoryAsync();

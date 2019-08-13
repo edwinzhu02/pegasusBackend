@@ -89,7 +89,7 @@ namespace Pegasus_backend.Controllers
             List<Lesson> conflictTeacherLessons = new List<Lesson>();
             DateTime beginTime = lesson.BeginTime.Value.AddMinutes(-60);
             DateTime endTime = lesson.EndTime.Value.AddMinutes(60);
-            var lessonConflictCheckerService = new LessonConflictCheckerService(lesson);
+            var lessonConflictCheckerService = new LessonConflictCheckerService(_ablemusicContext, lesson);
             Result<List<object>> lessonConflictCheckResult;
             try
             {

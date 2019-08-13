@@ -10,6 +10,7 @@ using Pegasus_backend.pegasusContext;
 using Pegasus_backend.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Pegasus_backend.Services
 {
@@ -17,15 +18,14 @@ namespace Pegasus_backend.Services
     {
         private readonly ILogger<TimedHostedService> _logger;
         private Timer _timer;
-        private readonly ablemusicContext _ablemusicContext;
+        private readonly IServiceScopeFactory _scopeFactory;
         //private readonly LessonGenerateService _lessonGenerateService;
-        private readonly GroupCourseGenerateService _groupCourseGenerateService;
+        private GroupCourseGenerateService _groupCourseGenerateService;
 
-        public TimedHostedService(ILogger<TimedHostedService> logger)
+        public TimedHostedService(ILogger<TimedHostedService> logger, IServiceScopeFactory scopeFactory)
         {
-            _ablemusicContext = new ablemusicContext();
             _logger = logger;
-            _groupCourseGenerateService = new GroupCourseGenerateService(_ablemusicContext, _logger);
+            _scopeFactory = scopeFactory;
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
@@ -41,17 +41,21 @@ namespace Pegasus_backend.Services
 
         private async void DoWork(object state)
         {
-            _logger.LogInformation("Daily Execution Start at " + DateTime.UtcNow.ToNZTimezone());
-            var arrangeLessonResult = new Result<string>();
-            try
+            using(var scope = _scopeFactory.CreateScope())
             {
-                arrangeLessonResult = await TermCheckingForArrangeLesson();
-            }
-            catch(Exception ex)
-            {
-                _logger.LogError(ex.Message);
-            }
-
+                var ablemusicContext = scope.ServiceProvider.GetRequiredService<ablemusicContext>();
+                _groupCourseGenerateService = new GroupCourseGenerateService(ablemusicContext, _logger);
+                _logger.LogInformation("Daily Execution Start at " + DateTime.UtcNow.ToNZTimezone());
+                var arrangeLessonResult = new Result<string>();
+                try
+                {
+                    arrangeLessonResult = await TermCheckingForArrangeLesson(ablemusicContext);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex.Message);
+                }
+            } 
             //run auto-generate invoive and lesson
             //await _lessonGenerateService.GetTerm(DateTime.UtcNow.ToNZTimezone(),3);
         }
@@ -69,17 +73,17 @@ namespace Pegasus_backend.Services
             _timer?.Dispose();
         }
 
-        private async Task<List<Term>> GetTerms()
-        {
-            var terms = await _ablemusicContext.Term.ToListAsync();
-            return terms;
-        }
+        //private async Task<List<Term>> GetTerms(ablemusicContext ablemusicContext)
+        //{
+        //    var terms = await ablemusicContext.Term.ToListAsync();
+        //    return terms;
+        //}
 
-        private async Task<Result<string>> TermCheckingForArrangeLesson()
+        private async Task<Result<string>> TermCheckingForArrangeLesson(ablemusicContext ablemusicContext)
         {
             var result = new Result<string>();
             _logger.LogInformation("Checking if today is the end of any term...");
-            var terms = await _ablemusicContext.Term.OrderBy(t => t.BeginDate).ToListAsync();
+            var terms = await ablemusicContext.Term.OrderBy(t => t.BeginDate).ToListAsync();
             var today = DateTime.UtcNow.ToNZTimezone();
             Term currentTerm = null;
             Term targetTerm = null;
@@ -107,7 +111,7 @@ namespace Pegasus_backend.Services
                         targetTerm = terms[targetTermIndex];
                         _logger.LogInformation("Creating lessons for the term " + targetTerm.TermName + " ...");
                         result = await ArrageLessons(targetTerm.TermId);
-
+                        _logger.LogInformation(result.Data);
                     }
                     else
                     {

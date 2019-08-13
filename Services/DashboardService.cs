@@ -25,7 +25,7 @@ namespace Pegasus_backend.Services
             _today = DateTime.UtcNow.ToNZTimezone();
         }
 
-        public async Task<Result<List<Lesson>>> getLessonsForToday()
+        public async Task<Result<List<Lesson>>> GetLessonsForToday()
         {
             var result = new Result<List<Lesson>>();
             result.Data = new List<Lesson>();
@@ -44,7 +44,7 @@ namespace Pegasus_backend.Services
             return result;
         }
 
-        public async Task<Result<List<Lesson>>> getTrialLessonsForToday()
+        public async Task<Result<List<Lesson>>> GetTrialLessonsForToday()
         {
             var result = new Result<List<Lesson>>();
             result.Data = new List<Lesson>();
@@ -63,7 +63,7 @@ namespace Pegasus_backend.Services
             return result;
         }
 
-        public async Task<Result<List<Learner>>> getNewStudentsForToday()
+        public async Task<Result<List<Learner>>> GetNewStudentsForToday()
         {
             var result = new Result<List<Learner>>();
             result.Data = new List<Learner>();
@@ -83,7 +83,7 @@ namespace Pegasus_backend.Services
             return result;
         }
 
-        public async Task<Result<List<InvoiceWaitingConfirm>>> getUnConfirmedWaitingInvoice()
+        public async Task<Result<List<InvoiceWaitingConfirm>>> GetUnConfirmedWaitingInvoice()
         {
             var result = new Result<List<InvoiceWaitingConfirm>>();
             result.Data = new List<InvoiceWaitingConfirm>();
@@ -105,7 +105,7 @@ namespace Pegasus_backend.Services
             return result;
         }
 
-        public async Task<Result<List<Lesson>>> getCanceledLessonsForToday()
+        public async Task<Result<List<Lesson>>> GetCanceledLessonsForToday()
         {
             var result = new Result<List<Lesson>>();
             result.Data = new List<Lesson>();
@@ -124,7 +124,7 @@ namespace Pegasus_backend.Services
             return result;
         }
 
-        public async Task<Result<List<Lesson>>> getRearrangedLessonsForToday()
+        public async Task<Result<List<Lesson>>> GetRearrangedLessonsForToday()
         {
             var result = new Result<List<Lesson>>();
             result.Data = new List<Lesson>();
@@ -143,7 +143,7 @@ namespace Pegasus_backend.Services
             return result;
         }
 
-        public async Task<Result<List<Amendment>>> getExpiredDayOffForToday()
+        public async Task<Result<List<Amendment>>> GetExpiredDayOffForToday()
         {
             var result = new Result<List<Amendment>>();
             result.Data = new List<Amendment>();
@@ -162,7 +162,7 @@ namespace Pegasus_backend.Services
             return result;
         }
 
-        public async Task<Result<List<Amendment>>> getExpiredRearrangedLessonsForToday()
+        public async Task<Result<List<Amendment>>> GetExpiredRearrangedLessonsForToday()
         {
             var result = new Result<List<Amendment>> ();
             result.Data = new List<Amendment>();
@@ -181,11 +181,11 @@ namespace Pegasus_backend.Services
             return result;
         }
 
-        public async Task<Result<List<Learner>>> getLearnerWithRemainLessonsForToday(int numOfRemainLesson)
+        public async Task<Result<List<Learner>>> GetLearnerWithRemainLessonsForToday(int numOfRemainLesson)
         {
             var result = new Result<List<Learner>>();
             result.Data = new List<Learner>();
-            var lessonsForToday = await getLessonsForToday();
+            var lessonsForToday = await GetLessonsForToday();
             if (!lessonsForToday.IsSuccess)
             {
                 result.IsSuccess = false;
@@ -239,7 +239,7 @@ namespace Pegasus_backend.Services
             return result;
         }
 
-        public async Task<Result<Dictionary<DateTime, List<Lesson>>>> getRecentLessons(int numOfDays, DateTime calculateDate)
+        public async Task<Result<Dictionary<DateTime, List<Lesson>>>> GetRecentLessons(int numOfDays, DateTime calculateDate)
         {
             var result = new Result<Dictionary<DateTime, List<Lesson>>>();
             result.Data = new Dictionary<DateTime, List<Lesson>>();
@@ -279,7 +279,7 @@ namespace Pegasus_backend.Services
             return result;
         }
 
-        public async Task<Result<Dictionary<string, List<Learner>>>> getRecentNewRegisteredLearner(int numOfWeeks)
+        public async Task<Result<Dictionary<string, List<Learner>>>> GetRecentNewRegisteredLearner(int numOfWeeks)
         {
             var result = new Result<Dictionary<string, List<Learner>>>();
             result.Data = new Dictionary<string, List<Learner>>();

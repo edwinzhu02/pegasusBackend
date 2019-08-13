@@ -31,6 +31,8 @@ namespace Pegasus_backend.pegasusContext
         public decimal? LocaltionX { get; set; }
         public decimal? LocaltionY { get; set; }
         public string Abbr { get; set; }
+        public string BankName { get; set; }
+        public string BankAccountNo { get; set; }
 
         public ICollection<Amendment> Amendment { get; set; }
         public ICollection<AvailableDays> AvailableDays { get; set; }
