@@ -1,0 +1,44 @@
+2019-08-14 11:07:37.580 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-08-14 11:07:37.936 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-08-14 11:11:35.658 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/rating/LearnerFeedbackRatingList/10183 application/json 72
+2019-08-14 11:11:35.688 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-08-14 11:11:35.737 +12:00 [INF] {
+	"UserId": 3,
+	"LocaltionX": -36.9128580,
+	"LocaltionY": 174.8736460
+}
+2019-08-14 11:11:35.867 +12:00 [INF] Route matched with {action = "LearnerFeedbackRatingList", controller = "Rating"}. Executing action Pegasus_backend.Controllers.RatingController.LearnerFeedbackRatingList (Pegasus_backend)
+2019-08-14 11:11:36.016 +12:00 [INF] Executing action method Pegasus_backend.Controllers.RatingController.LearnerFeedbackRatingList (Pegasus_backend) with arguments (["10183"]) - Validation state: "Valid"
+2019-08-14 11:11:36.941 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-08-14 11:11:37.968 +12:00 [INF] Executed DbCommand (68ms) [Parameters=[@__userId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`learner_id`, `s`.`address`, `s`.`comment`, `s`.`contact_num`, `s`.`created_at`, `s`.`dob`, `s`.`email`, `s`.`enroll_date`, `s`.`first_name`, `s`.`form_url`, `s`.`g5_certification`, `s`.`gender`, `s`.`is_abrsm_g5`, `s`.`is_active`, `s`.`is_under_18`, `s`.`last_name`, `s`.`learner_level`, `s`.`level_type`, `s`.`middle_name`, `s`.`note`, `s`.`org_id`, `s`.`otherfile_url`, `s`.`payment_period`, `s`.`photo`, `s`.`referrer`, `s`.`referrer_learner_id`, `s`.`user_id`
+FROM `ablemusic`.`learner` AS `s`
+WHERE `s`.`user_id` = @__userId_0
+LIMIT 1
+2019-08-14 11:11:38.089 +12:00 [WRN] The Include operation for navigation '[s].Rating' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-08-14 11:11:38.091 +12:00 [WRN] The Include operation for navigation '[s].GroupCourseInstance' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-08-14 11:11:38.109 +12:00 [WRN] The LINQ expression 'where ([s].CreatedAt >= Convert(DateTime.UtcNow.AddHours(12).AddDays(-14), Nullable`1))' could not be translated and will be evaluated locally.
+2019-08-14 11:11:38.365 +12:00 [INF] Executed DbCommand (93ms) [Parameters=[@__learnerId_0='?' (DbType = Int32), @__learnerId_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`created_at`, `s`.`teacher_id` AS `TeacherId`, CASE
+    WHEN (
+        SELECT CASE
+            WHEN EXISTS (
+                SELECT 1
+                FROM `ablemusic`.`rating` AS `r`
+                WHERE (`r`.`rate_type` = 1) AND (`s`.`lesson_id` = `r`.`lesson_id`))
+            THEN ('1') ELSE ('0')
+        END
+    ) = True
+    THEN 1 ELSE 0
+END AS `isRate`, `s`.`lesson_id` AS `LessonId`, `s`.`begin_time` AS `BeginTime`
+FROM `ablemusic`.`lesson` AS `s`
+LEFT JOIN `ablemusic`.`group_course_instance` AS `s.GroupCourseInstance` ON `s`.`group_course_instance_id` = `s.GroupCourseInstance`.`group_course_instance_id`
+WHERE ((`s`.`learner_id` = @__learnerId_0) OR EXISTS (
+    SELECT 1
+    FROM `ablemusic`.`learner_group_course` AS `l`
+    WHERE (`l`.`learner_id` = @__learnerId_1) AND (`s.GroupCourseInstance`.`group_course_instance_id` = `l`.`group_course_instance_id`))) AND (`s`.`is_confirm` = 1)
+2019-08-14 11:11:38.375 +12:00 [INF] Executed action method Pegasus_backend.Controllers.RatingController.LearnerFeedbackRatingList (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 2346.7894ms.
+2019-08-14 11:11:38.383 +12:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[<>f__AnonymousType86`4[[System.Nullable`1[[System.Int16, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Nullable`1[[System.DateTime, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2019-08-14 11:11:38.429 +12:00 [INF] Executed action Pegasus_backend.Controllers.RatingController.LearnerFeedbackRatingList (Pegasus_backend) in 2559.4042ms
+2019-08-14 11:11:38.431 +12:00 [INF] Response [{"TeacherId":275,"isRate":0,"LessonId":42607,"BeginTime":"2019-08-13T09:15:00"},{"TeacherId":275,"isRate":1,"LessonId":42608,"BeginTime":"2019-08-20T09:15:00"}]
+2019-08-14 11:11:38.436 +12:00 [INF] Request finished in 2780.0919ms 200 application/json; charset=utf-8

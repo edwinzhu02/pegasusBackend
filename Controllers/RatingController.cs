@@ -50,6 +50,7 @@ namespace Pegasus_backend.Controllers
                 return BadRequest(result);
             }
         }
+        
 
         [HttpGet("[action]/{userId}")]
         public async Task<IActionResult> LearnerGetRating(short userId)
@@ -104,6 +105,39 @@ namespace Pegasus_backend.Controllers
                     .ToListAsync();
                 result.Data = item;
                 return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+        }
+
+        [HttpGet("[action]/{userId}")]
+        public async Task<IActionResult> LearnerFeedbackRatingList(short userId)
+        {
+            var result = new Result<object>();
+            try
+            {
+                var learner = _ablemusicContext.Learner.FirstOrDefault(s => s.UserId == userId);
+                if (learner == null)
+                {
+                    throw new Exception("You are not the Learner");
+                }
+                var learnerId = learner.LearnerId;
+                var item = await _ablemusicContext.Lesson
+                    .Include(s => s.Rating)
+                    .Include(s => s.GroupCourseInstance)
+                    .Where(s => (s.LearnerId == learnerId || s.GroupCourseInstance.LearnerGroupCourse.ToList()
+                                     .Exists(e => e.LearnerId == learnerId))
+                                && s.IsConfirm == 1 && s.CreatedAt >= DateTime.UtcNow.AddHours(12).AddDays(-14))
+                    .Select(s => new
+                    {
+                        s.TeacherId, isRate = s.Rating.ToList().Exists(q=>q.RateType == 0)?1:0,s.LessonId,s.BeginTime
+                    }).ToListAsync();
+
+                return Ok(item);
             }
             catch (Exception ex)
             {
