@@ -11,6 +11,7 @@ using Pegasus_backend.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
+using AutoMapper;
 
 namespace Pegasus_backend.Services
 {
@@ -19,7 +20,7 @@ namespace Pegasus_backend.Services
         private readonly ILogger<TimedHostedService> _logger;
         private Timer _timer;
         private readonly IServiceScopeFactory _scopeFactory;
-        //private readonly LessonGenerateService _lessonGenerateService;
+        private LessonGenerateService _lessonGenerateService;
         private GroupCourseGenerateService _groupCourseGenerateService;
 
         public TimedHostedService(ILogger<TimedHostedService> logger, IServiceScopeFactory scopeFactory)
@@ -41,9 +42,14 @@ namespace Pegasus_backend.Services
 
         private async void DoWork(object state)
         {
+            _logger.LogInformation("Daily Execution Begin...");
             using(var scope = _scopeFactory.CreateScope())
             {
                 var ablemusicContext = scope.ServiceProvider.GetRequiredService<ablemusicContext>();
+                var mapper = scope.ServiceProvider.GetRequiredService<IMapper>();
+                _lessonGenerateService = new LessonGenerateService(ablemusicContext, mapper);
+                await _lessonGenerateService.GetTerm(DateTime.UtcNow.ToNZTimezone(), 3);
+
                 _groupCourseGenerateService = new GroupCourseGenerateService(ablemusicContext, _logger);
                 _logger.LogInformation("Daily Execution Start at " + DateTime.UtcNow.ToNZTimezone());
                 var arrangeLessonResult = new Result<string>();
@@ -57,7 +63,7 @@ namespace Pegasus_backend.Services
                 }
             } 
             //run auto-generate invoive and lesson
-            //await _lessonGenerateService.GetTerm(DateTime.UtcNow.ToNZTimezone(),3);
+           
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
