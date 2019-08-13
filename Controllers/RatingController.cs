@@ -137,7 +137,9 @@ namespace Pegasus_backend.Controllers
                         s.TeacherId, isRate = s.Rating.ToList().Exists(q=>q.RateType == 0)?1:0,s.LessonId,s.BeginTime
                     }).ToListAsync();
 
-                return Ok(item);
+                result.Data = item;
+
+                return Ok(result);
             }
             catch (Exception ex)
             {
