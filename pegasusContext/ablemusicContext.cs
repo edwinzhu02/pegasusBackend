@@ -2335,7 +2335,7 @@ namespace Pegasus_backend.pegasusContext
 
                 entity.Property(e => e.RateType)
                     .HasColumnName("rate_type")
-                    .HasColumnType("bit(1)");
+                    .HasColumnType("bit(2)");
 
                 entity.Property(e => e.TeacherId)
                     .HasColumnName("teacher_id")
