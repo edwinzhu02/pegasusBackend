@@ -150,7 +150,45 @@ namespace Pegasus_backend.Controllers
         }
 
         [HttpPost("[action]")]
+        public async Task<IActionResult> LearnerFeedback([FromBody] LearnerFeedbackModel model)
+        {
+            var result = new Result<string>();
+            try
+            {
+                var learner = _ablemusicContext.Learner.FirstOrDefault(s => s.UserId == model.UserId);
+                if (learner == null)
+                {
+                    throw new Exception("You are not the learner.");
+                }
 
+                var learnerId = learner.LearnerId;
+                var teacherId = _ablemusicContext.Lesson.FirstOrDefault(s => s.LessonId == model.LessonId).TeacherId;
+                
+                var LearnerToTeacherRating = new Rating
+                {
+                    RateType = 0,
+                    Comment = model.CommentToTeacher,
+                    CreateAt = DateTime.UtcNow.AddHours(12),
+                    LearnerId = learnerId,
+                    TeacherId = teacherId,
+                    LessonId = model.LessonId,
+                    RateStar = model.RateStar
+                };
+
+                _ablemusicContext.Add(LearnerToTeacherRating);
+                await _ablemusicContext.SaveChangesAsync();
+                result.Data = "Comment successfully!";
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+        }
+
+        [HttpPost("[action]")]
         public async Task<IActionResult> TeacherFeedback([FromBody] TeacherFeedbackModel model)
         {
             var result = new Result<string>();
