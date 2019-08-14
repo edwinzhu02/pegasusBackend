@@ -20,8 +20,8 @@ namespace Pegasus_backend.Controllers
     {
         public RatingController(ablemusicContext ablemusicContext, ILogger<LessonRescheduleController> log) : base(ablemusicContext, log){}
 
-        [HttpGet("[action]/{userId}")]
-        public async Task<IActionResult> TeacherGetRating(short userId)
+        [HttpGet("[action]/{userId}/{index}")]
+        public async Task<IActionResult> TeacherGetRating(short userId,int index)
         {
             var result = new Result<object>();
             try
@@ -38,7 +38,10 @@ namespace Pegasus_backend.Controllers
                     .Include(s=>s.Learner)
                     .Include(s=>s.Lesson)
                     .Where(s => s.TeacherId == teacherId && s.RateType == 0)
-                    .Select(s=>new {s.Learner.FirstName,s.Learner.LastName,s.Lesson.BeginTime,s.Comment,s.RateStar})
+                    .Select(s=>new {s.Learner.FirstName,s.Learner.LastName,s.Lesson.BeginTime,s.Comment,s.RateStar,s.CreateAt})
+                    .OrderByDescending(s=>s.CreateAt)
+                    .Skip(index*10)
+                    .Take(10)
                     .ToListAsync();
                 result.Data = ratingItem;
                 return Ok(result);
@@ -52,8 +55,8 @@ namespace Pegasus_backend.Controllers
         }
         
 
-        [HttpGet("[action]/{userId}")]
-        public async Task<IActionResult> LearnerGetRating(short userId)
+        [HttpGet("[action]/{userId}/{index}")]
+        public async Task<IActionResult> LearnerGetRating(short userId,int index)
         {
             var result = new Result<object>();
             try
@@ -69,7 +72,10 @@ namespace Pegasus_backend.Controllers
                     .Include(s=>s.Teacher)
                     .Include(s=>s.Lesson)
                     .Where(s => s.LearnerId == learnerId && s.RateType == 1)
-                    .Select(s=>new {s.Teacher.FirstName,s.Teacher.LastName,s.Lesson.BeginTime,s.Comment,s.RateStar})
+                    .Select(s=>new {s.Teacher.FirstName,s.Teacher.LastName,s.Lesson.BeginTime,s.Comment,s.RateStar,s.CreateAt})
+                    .OrderByDescending(s=>s.CreateAt)
+                    .Skip(index*10)
+                    .Take(10)
                     .ToListAsync();
                 result.Data = ratingItem;
                 return Ok(result);
@@ -81,6 +87,7 @@ namespace Pegasus_backend.Controllers
                 return BadRequest(result);
             }
         }
+        
 
         [HttpGet("[action]/{userId}")]
         public async Task<IActionResult> TeacherFeedbackRatingList(short userId)
