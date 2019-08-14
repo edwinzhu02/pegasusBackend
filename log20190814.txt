@@ -42,3 +42,43 @@ WHERE ((`s`.`learner_id` = @__learnerId_0) OR EXISTS (
 2019-08-14 11:11:38.429 +12:00 [INF] Executed action Pegasus_backend.Controllers.RatingController.LearnerFeedbackRatingList (Pegasus_backend) in 2559.4042ms
 2019-08-14 11:11:38.431 +12:00 [INF] Response [{"TeacherId":275,"isRate":0,"LessonId":42607,"BeginTime":"2019-08-13T09:15:00"},{"TeacherId":275,"isRate":1,"LessonId":42608,"BeginTime":"2019-08-20T09:15:00"}]
 2019-08-14 11:11:38.436 +12:00 [INF] Request finished in 2780.0919ms 200 application/json; charset=utf-8
+2019-08-14 13:28:18.298 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-08-14 13:28:18.611 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-08-14 13:29:03.932 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/rating/LearnerGetOneRatingHistoryById/42607/10183 application/json 72
+2019-08-14 13:29:03.961 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-08-14 13:29:04.003 +12:00 [INF] {
+	"UserId": 3,
+	"LocaltionX": -36.9128580,
+	"LocaltionY": 174.8736460
+}
+2019-08-14 13:29:04.114 +12:00 [INF] Response 
+2019-08-14 13:29:04.119 +12:00 [INF] Request finished in 188.3946ms 404 
+2019-08-14 13:29:17.131 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-08-14 13:29:17.409 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-08-14 13:29:34.365 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-08-14 13:29:34.643 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-08-14 13:29:36.977 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/rating/LearnerGetOneRatingHistoryById/42607/10183 application/json 72
+2019-08-14 13:29:37.005 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-08-14 13:29:37.047 +12:00 [INF] {
+	"UserId": 3,
+	"LocaltionX": -36.9128580,
+	"LocaltionY": 174.8736460
+}
+2019-08-14 13:29:37.176 +12:00 [INF] Route matched with {action = "LearnerGetOneRatingHistoryById", controller = "Rating"}. Executing action Pegasus_backend.Controllers.RatingController.LearnerGetOneRatingHistoryById (Pegasus_backend)
+2019-08-14 13:29:37.301 +12:00 [INF] Executing action method Pegasus_backend.Controllers.RatingController.LearnerGetOneRatingHistoryById (Pegasus_backend) with arguments (["42607","10183"]) - Validation state: "Valid"
+2019-08-14 13:29:38.223 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-08-14 13:29:39.624 +12:00 [INF] Executed DbCommand (85ms) [Parameters=[@__8__locals1_userId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`learner_id`, `s`.`address`, `s`.`comment`, `s`.`contact_num`, `s`.`created_at`, `s`.`dob`, `s`.`email`, `s`.`enroll_date`, `s`.`first_name`, `s`.`form_url`, `s`.`g5_certification`, `s`.`gender`, `s`.`is_abrsm_g5`, `s`.`is_active`, `s`.`is_under_18`, `s`.`last_name`, `s`.`learner_level`, `s`.`level_type`, `s`.`middle_name`, `s`.`note`, `s`.`org_id`, `s`.`otherfile_url`, `s`.`payment_period`, `s`.`photo`, `s`.`referrer`, `s`.`referrer_learner_id`, `s`.`user_id`
+FROM `ablemusic`.`learner` AS `s`
+WHERE `s`.`user_id` = @__8__locals1_userId_0
+LIMIT 1
+2019-08-14 13:29:40.001 +12:00 [INF] Executed DbCommand (94ms) [Parameters=[@__learnerId_0='?' (DbType = Int32), @__8__locals1_lessonId_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`rating_id`, `s`.`comment`, `s`.`create_at`, `s`.`learner_id`, `s`.`lesson_id`, `s`.`rate_star`, `s`.`rate_type`, `s`.`teacher_id`
+FROM `ablemusic`.`rating` AS `s`
+WHERE ((`s`.`rate_type` = 0) AND (`s`.`learner_id` = @__learnerId_0)) AND (`s`.`lesson_id` = @__8__locals1_lessonId_1)
+LIMIT 1
+2019-08-14 13:29:40.022 +12:00 [INF] Executed action method Pegasus_backend.Controllers.RatingController.LearnerGetOneRatingHistoryById (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 2709.81ms.
+2019-08-14 13:29:40.030 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-08-14 13:29:40.113 +12:00 [INF] Executed action Pegasus_backend.Controllers.RatingController.LearnerGetOneRatingHistoryById (Pegasus_backend) in 2935.4373ms
+2019-08-14 13:29:40.115 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":{"RatingId":39,"RateType":0,"Comment":"Asdasdaasdasdasdasdasdasdasdasdasdasds","CreateAt":"2019-08-14T13:21:49","LearnerId":10234,"TeacherId":275,"LessonId":42607,"RateStar":4,"Learner":{"LearnerId":10234,"FirstName":"OlStudent","LastName":"stu","EnrollDate":"2019-08-12T00:00:00","ContactNum":"03423423","Email":"test@email.com","Address":"","IsUnder18":0,"Dob":"2019-08-01T00:00:00","Gender":2,"IsAbrsmG5":null,"G5Certification":null,"CreatedAt":"2019-08-12T15:31:44","ReferrerLearnerId":null,"Photo":null,"Note":null,"MiddleName":"","LevelType":1,"UserId":10183,"OrgId":1,"IsActive":1,"LearnerLevel":1,"PaymentPeriod":1,"Referrer":"","FormUrl":null,"OtherfileUrl":null,"Comment":"23423","Org":null,"User":null,"Amendment":[],"AwaitMakeUpLesson":[],"Invoice":[],"InvoiceWaitingConfirm":[],"LearnerGroupCourse":[],"LearnerOthers":[],"Lesson":[],"LessonRemain":[],"One2oneCourseInstance":[],"Parent":[],"Payment":[],"Rating":[],"RemindLog":[],"SoldTransaction":[],"TodoList":[]},"Lesson":null,"Teacher":null}
+2019-08-14 13:29:40.121 +12:00 [INF] Request finished in 3144.8992ms 200 application/json; charset=utf-8

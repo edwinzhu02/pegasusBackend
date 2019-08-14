@@ -271,6 +271,33 @@ namespace Pegasus_backend.Controllers
         }
 
         [HttpGet("[action]/{lessonId}/{userId}")]
+        public async Task<IActionResult> LearnerGetOneRatingHistoryById(int lessonId, short userId)
+        {
+            var result = new Result<object>();
+            try
+            {
+                var learner = _ablemusicContext.Learner.FirstOrDefault(s => s.UserId == userId);
+                if (learner == null)
+                {
+                    throw new Exception("You are not the learner.");
+                }
+
+                var learnerId = learner.LearnerId;
+
+                var ToTeacher = await _ablemusicContext.Rating
+                    .FirstOrDefaultAsync(s => s.RateType == 0 && s.LearnerId == learnerId && s.LessonId == lessonId);
+                result.Data = ToTeacher;
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+        }
+
+        [HttpGet("[action]/{lessonId}/{userId}")]
         public async Task<IActionResult> TeacherGetOneRatingHistoryById(int lessonId, short userId)
         {
             var result = new Result<object>();
