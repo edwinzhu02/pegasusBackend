@@ -96,7 +96,13 @@ namespace Pegasus_backend.Controllers
 
                 var teacherId = teacher.TeacherId;
                 var item = await _ablemusicContext.Lesson
-                    .Include(s=>s.Rating)
+                    .Include(s => s.Rating)
+                    .Include(s => s.GroupCourseInstance)
+                    .ThenInclude(w => w.Course)
+                    .Include(s=>s.GroupCourseInstance)
+                    .ThenInclude(s=>s.LearnerGroupCourse)
+                    .Include(s => s.CourseInstance)
+                    .ThenInclude(w => w.Course)
                     .Where(s => s.IsConfirm == 1 && s.CreatedAt >= DateTime.UtcNow.AddHours(12).AddDays(-14) && s.TeacherId ==teacherId)
                     .Select(s => new
                     {
@@ -129,12 +135,18 @@ namespace Pegasus_backend.Controllers
                 var item = await _ablemusicContext.Lesson
                     .Include(s => s.Rating)
                     .Include(s => s.GroupCourseInstance)
+                    .ThenInclude(w => w.Course)
+                    .Include(s=>s.GroupCourseInstance)
+                    .ThenInclude(s=>s.LearnerGroupCourse)
+                    .Include(s => s.CourseInstance)
+                    .ThenInclude(w => w.Course)
                     .Where(s => (s.LearnerId == learnerId || s.GroupCourseInstance.LearnerGroupCourse.ToList()
                                      .Exists(e => e.LearnerId == learnerId))
                                 && s.IsConfirm == 1 && s.CreatedAt >= DateTime.UtcNow.AddHours(12).AddDays(-14))
                     .Select(s => new
                     {
-                        s.TeacherId, isRate = s.Rating.ToList().Exists(q=>q.RateType == 0)?1:0,s.LessonId,s.BeginTime
+                        s.TeacherId, isRate = s.Rating.ToList().Exists(q=>q.RateType == 0)?1:0,s.LessonId,s.BeginTime,
+                        CourseName=!IsNull(s.GroupCourseInstance)?s.GroupCourseInstance.Course.CourseName:IsNull(s.CourseInstance)?s.TrialCourse.CourseName:s.CourseInstance.Course.CourseName
                     }).ToListAsync();
 
                 result.Data = item;
