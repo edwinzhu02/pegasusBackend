@@ -106,7 +106,8 @@ namespace Pegasus_backend.Controllers
                     .Where(s => s.IsConfirm == 1 && s.CreatedAt >= DateTime.UtcNow.AddHours(12).AddDays(-14) && s.TeacherId ==teacherId)
                     .Select(s => new
                     {
-                        s.LearnerId, isRate = s.Rating.ToList().Exists(q=>q.RateType == 1)?1:0, s.LessonId,s.BeginTime
+                        s.LearnerId, isRate = s.Rating.ToList().Exists(q=>q.RateType == 1)?1:0, s.LessonId,s.BeginTime,
+                        CourseName=!IsNull(s.GroupCourseInstance)?s.GroupCourseInstance.Course.CourseName:IsNull(s.CourseInstance)?s.TrialCourse.CourseName:s.CourseInstance.Course.CourseName
                     })
                     .ToListAsync();
                 result.Data = item;
