@@ -20,6 +20,136 @@ namespace Pegasus_backend.Controllers
     {
         public RatingController(ablemusicContext ablemusicContext, ILogger<LessonRescheduleController> log) : base(ablemusicContext, log){}
 
+        [HttpGet("[action]/{userId}")]
+        public async Task<IActionResult> GetStatisticsForTeacher(short userId)
+        {
+            var result = new Result<object>();
+            try
+            {
+                var starModel = new StarStatisticModel();
+                int? total = 0;
+                var teacher = _ablemusicContext.Teacher.FirstOrDefault(s => s.UserId == userId);
+                if (teacher == null)
+                {
+                    throw new Exception("You are not the teacher");
+                }
+
+                var teacherId = teacher.TeacherId;
+                var ratingItem = _ablemusicContext.Rating
+                    .Include(s => s.Learner)
+                    .Include(s => s.Lesson)
+                    .Where(s => s.TeacherId == teacherId && s.RateType == 0)
+                    .Select(s => new
+                    {
+                        s.Learner.FirstName, s.Learner.LastName, s.Lesson.BeginTime, s.Comment, s.RateStar, s.CreateAt
+                    }).ToList();
+                
+                if (ratingItem.Count == 0)
+                {
+                    result.Data = new {average = 0, star = starModel};
+                    return Ok(result);
+                }
+                
+                ratingItem.ForEach(s =>
+                {
+                    if (s.RateStar == 1)
+                    {
+                        starModel.one += 1;
+                    }else if (s.RateStar ==2)
+                    {
+                        starModel.two += 1;
+                    }else if (s.RateStar == 3)
+                    {
+                        starModel.three += 1;
+                    }else if (s.RateStar ==4)
+                    {
+                        starModel.four += 1;
+                    }else
+                    {
+                        starModel.five += 1;
+                    }
+                });
+                ratingItem.ForEach(s => { total += s.RateStar; });
+                var average = total / ratingItem.Count;
+
+                result.Data = new {average = average, star = starModel}; 
+                return Ok(result);
+
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+        }
+        
+        [HttpGet("[action]/{userId}")]
+        public async Task<IActionResult> GetStatisticsForLearner(short userId)
+        {
+            var result = new Result<object>();
+            try
+            {
+                var starModel = new StarStatisticModel();
+                int? total = 0;
+                var learner = _ablemusicContext.Learner.FirstOrDefault(s => s.UserId == userId);
+                if (learner == null)
+                {
+                    throw new Exception("You are not the teacher");
+                }
+
+                var learnerId = learner.LearnerId;
+                var ratingItem = _ablemusicContext.Rating
+                    .Include(s => s.Learner)
+                    .Include(s => s.Lesson)
+                    .Where(s => s.LearnerId == learnerId && s.RateType == 1)
+                    .Select(s => new
+                    {
+                        s.Learner.FirstName, s.Learner.LastName, s.Lesson.BeginTime, s.Comment, s.RateStar, s.CreateAt
+                    }).ToList();
+                
+                if (ratingItem.Count == 0)
+                {
+                    result.Data = new {average = 0, star = starModel};
+                    return Ok(result);
+                }
+                
+                ratingItem.ForEach(s =>
+                {
+                    if (s.RateStar == 1)
+                    {
+                        starModel.one += 1;
+                    }else if (s.RateStar ==2)
+                    {
+                        starModel.two += 1;
+                    }else if (s.RateStar == 3)
+                    {
+                        starModel.three += 1;
+                    }else if (s.RateStar ==4)
+                    {
+                        starModel.four += 1;
+                    }else
+                    {
+                        starModel.five += 1;
+                    }
+                });
+                ratingItem.ForEach(s => { total += s.RateStar; });
+                var average = total / ratingItem.Count;
+
+                result.Data = new {average = average, star = starModel}; 
+                return Ok(result);
+
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+        }
+        
+        
+
         [HttpGet("[action]/{userId}/{index}")]
         public async Task<IActionResult> TeacherGetRating(short userId,int index)
         {
