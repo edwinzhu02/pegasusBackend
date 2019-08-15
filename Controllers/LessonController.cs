@@ -20,13 +20,77 @@ namespace Pegasus_backend.Controllers
         {
         }
 
-        [HttpGet("[action]/")]
-        public async Task<IActionResult> GetMobileLessonsForTeacherbyDate()
+        [HttpGet("[action]/{userId}/{today}")]
+        public async Task<IActionResult> GetMobileLessonsForTeacherbyDate(DateTime today, short userId)
         {
             var result = new Result<object>();
             try
             {
-                return Ok();
+                var teacher = _ablemusicContext.Teacher.FirstOrDefault(s => s.UserId == userId);
+                if (teacher == null)
+                {
+                    throw new Exception("You are not the teacher");
+                }
+                var teacherId = teacher.TeacherId;
+
+                var lessons = _ablemusicContext.Lesson
+                    .Include(s=>s.TrialCourse)
+                    .Include(s=>s.Learner)
+                    .Include(group => group.GroupCourseInstance)
+                    .ThenInclude(learnerCourse => learnerCourse.LearnerGroupCourse)
+                    .ThenInclude(learner => learner.Learner)
+                    .Include(s => s.GroupCourseInstance)
+                    .ThenInclude(w => w.Course)
+                    .Include(s => s.CourseInstance)
+                    .ThenInclude(w => w.Course)
+                    .Where(s => s.BeginTime >= today.AddMonths(-1) && s.TeacherId == teacherId)
+                    .Select(s=>new
+                    {
+                        s.BeginTime,s.LessonId,
+                        CourseName=!IsNull(s.GroupCourseInstance)?s.GroupCourseInstance.Course.CourseName:IsNull(s.CourseInstance)?s.TrialCourse.CourseName:s.CourseInstance.Course.CourseName,
+                        learner = IsNull(s.GroupCourseInstance)?new List<Object>(){new {s.Learner.FirstName,s.Learner.LastName,s.Learner.LearnerId}}:null,
+                        learners = IsNull(s.GroupCourseInstance)?null:s.GroupCourseInstance.LearnerGroupCourse.
+                            Select(w=>new{w.Learner.FirstName,w.Learner.LastName,w.Learner.LearnerId}),
+                    })
+                    .ToList();
+                var item = new Dictionary<string,List<object>>();
+                lessons.ForEach(s =>
+                {
+                    var year = s.BeginTime.Value.Year.ToString();
+                    var month = s.BeginTime.Value.Month.ToString().Length == 1
+                        ? "0" + s.BeginTime.Value.Month.ToString()
+                        : s.BeginTime.Value.Month.ToString();
+                    var day = s.BeginTime.Value.Day.ToString().Length == 1
+                        ? "0" + s.BeginTime.Value.Day.ToString()
+                        : s.BeginTime.Value.Day.ToString();
+                    var date = year + "-" + month + "-" + day;
+                    var time = s.BeginTime.Value.TimeOfDay;
+                    if (item.ContainsKey(date))
+                    {
+                        item[date].Add(new
+                        {
+                            name=s.CourseName,
+                            info=new
+                            {
+                                time,s.learner,s.learners
+                            }
+                        });
+                    }
+                    else
+                    {
+                        item.Add(date,new List<object>{new
+                        {
+                            name=s.CourseName,
+                            info=new
+                            {
+                                time,s.learner,s.learners
+                            }
+                        }});
+                    }
+                });
+                
+                result.Data = item;
+                return Ok(result);
             }
             catch (Exception ex)
             {
