@@ -227,7 +227,7 @@ namespace Pegasus_backend.Controllers
                     
                     detail.CreatedAt = toNZTimezone(DateTime.UtcNow);
                     detail.Amount = name.SellPrice * detail.SoldQuantity;
-                    //detail.DiscountedAmount = name.SellPrice * detail.SoldQuantity;
+                    detail.DiscountedAmount = name.SellPrice * detail.SoldQuantity;
                     if (detail.DiscountAmount != 0)
                     {
                         detail.DiscountedAmount -= detail.DiscountAmount;

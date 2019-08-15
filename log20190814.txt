@@ -1,3 +1,13 @@
+<<<<<<< HEAD
+2019-08-14 14:23:10.585 +12:00 [INF] Daily Execution Start at 2019/8/14 14:23:10
+2019-08-14 14:23:10.655 +12:00 [INF] Checking if today is the end of any term...
+2019-08-14 14:23:10.702 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-08-14 14:23:12.587 +12:00 [INF] Executed DbCommand (63ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `t`.`term_id`, `t`.`begin_date`, `t`.`end_date`, `t`.`term_name`, `t`.`term_type`, `t`.`week_quantity`
+FROM `ablemusic`.`term` AS `t`
+ORDER BY `t`.`begin_date`
+2019-08-14 14:23:12.692 +12:00 [INF] Current Term is 2019 Term 3. It is not the end of the term. No lesson to arrange for today.
+=======
 2019-08-14 11:07:37.580 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
 2019-08-14 11:07:37.936 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
 2019-08-14 11:11:35.658 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/rating/LearnerFeedbackRatingList/10183 application/json 72
@@ -168,3 +178,4 @@ WHERE ((`s`.`learner_id` = @__learnerId_0) OR EXISTS (
 2019-08-14 23:16:08.391 +12:00 [INF] Executed action Pegasus_backend.Controllers.RatingController.LearnerFeedbackRatingList (Pegasus_backend) in 2298.7362000000003ms
 2019-08-14 23:16:08.392 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":[{"TeacherId":275,"isRate":1,"LessonId":42607,"BeginTime":"2019-08-13T09:15:00","CourseName":"Piano-G4&G5-Internship-45 mins-OneOnOne"},{"TeacherId":275,"isRate":1,"LessonId":42608,"BeginTime":"2019-08-20T09:15:00","CourseName":"Piano-G4&G5-Internship-45 mins-OneOnOne"}]}
 2019-08-14 23:16:08.397 +12:00 [INF] Request finished in 2521.9111ms 200 application/json; charset=utf-8
+>>>>>>> 65b7abae6e8a51fb36d32ffc3765f3de543643ef
