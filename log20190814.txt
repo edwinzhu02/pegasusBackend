@@ -1,0 +1,8 @@
+2019-08-14 14:23:10.585 +12:00 [INF] Daily Execution Start at 2019/8/14 14:23:10
+2019-08-14 14:23:10.655 +12:00 [INF] Checking if today is the end of any term...
+2019-08-14 14:23:10.702 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-08-14 14:23:12.587 +12:00 [INF] Executed DbCommand (63ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `t`.`term_id`, `t`.`begin_date`, `t`.`end_date`, `t`.`term_name`, `t`.`term_type`, `t`.`week_quantity`
+FROM `ablemusic`.`term` AS `t`
+ORDER BY `t`.`begin_date`
+2019-08-14 14:23:12.692 +12:00 [INF] Current Term is 2019 Term 3. It is not the end of the term. No lesson to arrange for today.
