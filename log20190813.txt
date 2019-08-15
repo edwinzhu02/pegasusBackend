@@ -110,6 +110,7 @@ WHERE ROW_COUNT() = 1
 2019-08-13 13:55:30.394 +12:00 [INF] Executed action Pegasus_backend.Controllers.RatingController.TeacherFeedback (Pegasus_backend) in 3689.9880000000003ms
 2019-08-13 13:55:30.396 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":"Comment successfully!"}
 2019-08-13 13:55:30.402 +12:00 [INF] Request finished in 3922.6515ms 200 application/json; charset=utf-8
+<<<<<<< HEAD
 2019-08-13 14:15:42.514 +12:00 [INF] User profile is available. Using 'C:\Users\zhuyi\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
 2019-08-13 14:15:43.018 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
 2019-08-13 14:15:43.584 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
@@ -187,3 +188,122 @@ WHERE (((`l`.`lookup_type` = 1) OR (`l`.`lookup_type` = 4)) OR (`l`.`lookup_type
 2019-08-13 14:19:52.741 +12:00 [INF] Executed action Pegasus_backend.Controllers.CoursesController.GetCourses (Pegasus_backend) in 29892.773ms
 2019-08-13 14:19:52.741 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":[]}
 2019-08-13 14:19:52.741 +12:00 [INF] Request finished in 29898.8606ms 200 application/json; charset=utf-8
+=======
+2019-08-13 23:07:43.499 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-08-13 23:07:43.870 +12:00 [FTL] An error occurred starting the application
+System.AggregateException: One or more errors occurred. (Number must be either non-negative and less than or equal to Int32.MaxValue or -1.
+Parameter name: dueTm) ---> System.ArgumentOutOfRangeException: Number must be either non-negative and less than or equal to Int32.MaxValue or -1.
+Parameter name: dueTm
+   at System.Threading.Timer..ctor(TimerCallback callback, Object state, TimeSpan dueTime, TimeSpan period)
+   at Pegasus_backend.Services.TimedHostedService.StartAsync(CancellationToken cancellationToken) in /Users/oliver/Desktop/pegasusBackend/Services/TimedHostedService.cs:line 36
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.<>c__DisplayClass3_0.<StartAsync>b__0(IHostedService service)
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.ExecuteAsync(Func`2 callback)
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.ExecuteAsync(Func`2 callback)
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.StartAsync(CancellationToken token)
+---> (Inner Exception #0) System.ArgumentOutOfRangeException: Number must be either non-negative and less than or equal to Int32.MaxValue or -1.
+Parameter name: dueTm
+   at System.Threading.Timer..ctor(TimerCallback callback, Object state, TimeSpan dueTime, TimeSpan period)
+   at Pegasus_backend.Services.TimedHostedService.StartAsync(CancellationToken cancellationToken) in /Users/oliver/Desktop/pegasusBackend/Services/TimedHostedService.cs:line 36
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.<>c__DisplayClass3_0.<StartAsync>b__0(IHostedService service)
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.ExecuteAsync(Func`2 callback)<---
+
+2019-08-13 23:09:48.576 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/rating/TeacherGetOneRatingHistoryById/2/42607/10182 application/json 72
+2019-08-13 23:09:48.606 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-08-13 23:09:48.658 +12:00 [INF] {
+	"UserId": 3,
+	"LocaltionX": -36.9128580,
+	"LocaltionY": 174.8736460
+}
+2019-08-13 23:09:48.788 +12:00 [INF] Route matched with {action = "TeacherGetOneRatingHistoryById", controller = "Rating"}. Executing action Pegasus_backend.Controllers.RatingController.TeacherGetOneRatingHistoryById (Pegasus_backend)
+2019-08-13 23:09:48.919 +12:00 [INF] Executing action method Pegasus_backend.Controllers.RatingController.TeacherGetOneRatingHistoryById (Pegasus_backend) with arguments (["42607","10182","2"]) - Validation state: "Valid"
+2019-08-13 23:09:49.827 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-08-13 23:09:50.842 +12:00 [INF] Executed DbCommand (70ms) [Parameters=[@__8__locals1_userId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`teacher_id`, `s`.`ability`, `s`.`comment`, `s`.`cv_url`, `s`.`dob`, `s`.`email`, `s`.`expiry_date`, `s`.`first_name`, `s`.`form_url`, `s`.`gender`, `s`.`home_phone`, `s`.`id_number`, `s`.`id_photo`, `s`.`id_type`, `s`.`invoice_template`, `s`.`ird_number`, `s`.`is_activate`, `s`.`is_contract`, `s`.`is_left`, `s`.`last_name`, `s`.`level`, `s`.`minimum_hours`, `s`.`mobile_phone`, `s`.`otherfile_url`, `s`.`photo`, `s`.`user_id`, `s`.`visa`
+FROM `ablemusic`.`teacher` AS `s`
+WHERE `s`.`user_id` = @__8__locals1_userId_0
+LIMIT 1
+2019-08-13 23:09:51.127 +12:00 [INF] Executed DbCommand (55ms) [Parameters=[@__teacherId_0='?' (DbType = Int16), @__8__locals1_RateType_1='?' (DbType = Int16), @__8__locals1_lessonId_2='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`rating_id`, `s`.`comment`, `s`.`create_at`, `s`.`learner_id`, `s`.`lesson_id`, `s`.`rate_star`, `s`.`rate_type`, `s`.`teacher_id`
+FROM `ablemusic`.`rating` AS `s`
+WHERE ((`s`.`teacher_id` = @__teacherId_0) AND (`s`.`rate_type` = @__8__locals1_RateType_1)) AND (`s`.`lesson_id` = @__8__locals1_lessonId_2)
+LIMIT 1
+2019-08-13 23:09:51.163 +12:00 [INF] Executed action method Pegasus_backend.Controllers.RatingController.TeacherGetOneRatingHistoryById (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 2232.7698ms.
+2019-08-13 23:09:51.170 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-08-13 23:09:51.251 +12:00 [INF] Executed action Pegasus_backend.Controllers.RatingController.TeacherGetOneRatingHistoryById (Pegasus_backend) in 2460.7683ms
+2019-08-13 23:09:51.253 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":{"RatingId":35,"RateType":2,"Comment":"Qweqweqweqweqweqweqweqweqw","CreateAt":"2019-08-13T23:07:08","LearnerId":null,"TeacherId":275,"LessonId":42607,"RateStar":3,"Learner":null,"Lesson":null,"Teacher":{"TeacherId":275,"FirstName":"Teacher Oliver","LastName":"Test1","Dob":"2019-08-01T00:00:00","Gender":1,"IrdNumber":"12312344","IdType":1,"IdPhoto":null,"IdNumber":"123123233","HomePhone":"12312","MobilePhone":"0123123","Email":"orll@mail.com","Photo":null,"Visa":null,"ExpiryDate":"2019-08-30T00:00:00","IsActivate":1,"UserId":10182,"Level":1,"IsContract":1,"IsLeft":0,"InvoiceTemplate":0,"Ability":null,"Comment":null,"CvUrl":null,"FormUrl":null,"OtherfileUrl":null,"MinimumHours":null,"User":null,"Amendment":[],"AvailableDays":[],"GroupCourseInstance":[],"Lesson":[],"One2oneCourseInstance":[],"Rating":[],"RemindLog":[],"TeacherCourse":[],"TeacherLanguage":[],"TeacherQualificatiion":[],"TeacherTransaction":[],"TeacherWageRates":[],"TodoList":[]}}
+2019-08-13 23:09:51.260 +12:00 [INF] Request finished in 2684.4709ms 200 application/json; charset=utf-8
+2019-08-13 23:10:07.749 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/rating/TeacherGetOneRatingHistoryById/1/42607/10182 application/json 72
+2019-08-13 23:10:07.750 +12:00 [INF] {
+	"UserId": 3,
+	"LocaltionX": -36.9128580,
+	"LocaltionY": 174.8736460
+}
+2019-08-13 23:10:07.751 +12:00 [INF] Route matched with {action = "TeacherGetOneRatingHistoryById", controller = "Rating"}. Executing action Pegasus_backend.Controllers.RatingController.TeacherGetOneRatingHistoryById (Pegasus_backend)
+2019-08-13 23:10:07.751 +12:00 [INF] Executing action method Pegasus_backend.Controllers.RatingController.TeacherGetOneRatingHistoryById (Pegasus_backend) with arguments (["42607","10182","1"]) - Validation state: "Valid"
+2019-08-13 23:10:07.752 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-08-13 23:10:07.944 +12:00 [INF] Executed DbCommand (69ms) [Parameters=[@__8__locals1_userId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`teacher_id`, `s`.`ability`, `s`.`comment`, `s`.`cv_url`, `s`.`dob`, `s`.`email`, `s`.`expiry_date`, `s`.`first_name`, `s`.`form_url`, `s`.`gender`, `s`.`home_phone`, `s`.`id_number`, `s`.`id_photo`, `s`.`id_type`, `s`.`invoice_template`, `s`.`ird_number`, `s`.`is_activate`, `s`.`is_contract`, `s`.`is_left`, `s`.`last_name`, `s`.`level`, `s`.`minimum_hours`, `s`.`mobile_phone`, `s`.`otherfile_url`, `s`.`photo`, `s`.`user_id`, `s`.`visa`
+FROM `ablemusic`.`teacher` AS `s`
+WHERE `s`.`user_id` = @__8__locals1_userId_0
+LIMIT 1
+2019-08-13 23:10:08.106 +12:00 [INF] Executed DbCommand (60ms) [Parameters=[@__teacherId_0='?' (DbType = Int16), @__8__locals1_RateType_1='?' (DbType = Int16), @__8__locals1_lessonId_2='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`rating_id`, `s`.`comment`, `s`.`create_at`, `s`.`learner_id`, `s`.`lesson_id`, `s`.`rate_star`, `s`.`rate_type`, `s`.`teacher_id`
+FROM `ablemusic`.`rating` AS `s`
+WHERE ((`s`.`teacher_id` = @__teacherId_0) AND (`s`.`rate_type` = @__8__locals1_RateType_1)) AND (`s`.`lesson_id` = @__8__locals1_lessonId_2)
+LIMIT 1
+2019-08-13 23:10:08.107 +12:00 [INF] Executed action method Pegasus_backend.Controllers.RatingController.TeacherGetOneRatingHistoryById (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 355.26910000000004ms.
+2019-08-13 23:10:08.107 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-08-13 23:10:08.108 +12:00 [INF] Executed action Pegasus_backend.Controllers.RatingController.TeacherGetOneRatingHistoryById (Pegasus_backend) in 357.43330000000003ms
+2019-08-13 23:10:08.108 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":{"RatingId":36,"RateType":1,"Comment":"Qweqweqwewqeqweqweqweqweqweqw","CreateAt":"2019-08-13T23:07:08","LearnerId":10234,"TeacherId":275,"LessonId":42607,"RateStar":3,"Learner":null,"Lesson":null,"Teacher":{"TeacherId":275,"FirstName":"Teacher Oliver","LastName":"Test1","Dob":"2019-08-01T00:00:00","Gender":1,"IrdNumber":"12312344","IdType":1,"IdPhoto":null,"IdNumber":"123123233","HomePhone":"12312","MobilePhone":"0123123","Email":"orll@mail.com","Photo":null,"Visa":null,"ExpiryDate":"2019-08-30T00:00:00","IsActivate":1,"UserId":10182,"Level":1,"IsContract":1,"IsLeft":0,"InvoiceTemplate":0,"Ability":null,"Comment":null,"CvUrl":null,"FormUrl":null,"OtherfileUrl":null,"MinimumHours":null,"User":null,"Amendment":[],"AvailableDays":[],"GroupCourseInstance":[],"Lesson":[],"One2oneCourseInstance":[],"Rating":[],"RemindLog":[],"TeacherCourse":[],"TeacherLanguage":[],"TeacherQualificatiion":[],"TeacherTransaction":[],"TeacherWageRates":[],"TodoList":[]}}
+2019-08-13 23:10:08.109 +12:00 [INF] Request finished in 359.9518ms 200 application/json; charset=utf-8
+2019-08-13 23:22:47.315 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-08-13 23:22:47.623 +12:00 [FTL] An error occurred starting the application
+System.AggregateException: One or more errors occurred. (Number must be either non-negative and less than or equal to Int32.MaxValue or -1.
+Parameter name: dueTm) ---> System.ArgumentOutOfRangeException: Number must be either non-negative and less than or equal to Int32.MaxValue or -1.
+Parameter name: dueTm
+   at System.Threading.Timer..ctor(TimerCallback callback, Object state, TimeSpan dueTime, TimeSpan period)
+   at Pegasus_backend.Services.TimedHostedService.StartAsync(CancellationToken cancellationToken) in /Users/oliver/Desktop/pegasusBackend/Services/TimedHostedService.cs:line 36
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.<>c__DisplayClass3_0.<StartAsync>b__0(IHostedService service)
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.ExecuteAsync(Func`2 callback)
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.ExecuteAsync(Func`2 callback)
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.StartAsync(CancellationToken token)
+---> (Inner Exception #0) System.ArgumentOutOfRangeException: Number must be either non-negative and less than or equal to Int32.MaxValue or -1.
+Parameter name: dueTm
+   at System.Threading.Timer..ctor(TimerCallback callback, Object state, TimeSpan dueTime, TimeSpan period)
+   at Pegasus_backend.Services.TimedHostedService.StartAsync(CancellationToken cancellationToken) in /Users/oliver/Desktop/pegasusBackend/Services/TimedHostedService.cs:line 36
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.<>c__DisplayClass3_0.<StartAsync>b__0(IHostedService service)
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.ExecuteAsync(Func`2 callback)<---
+
+2019-08-13 23:22:52.425 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/rating/TeacherGetOneRatingHistoryById/42607/10182 application/json 72
+2019-08-13 23:22:52.457 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-08-13 23:22:52.497 +12:00 [INF] {
+	"UserId": 3,
+	"LocaltionX": -36.9128580,
+	"LocaltionY": 174.8736460
+}
+2019-08-13 23:22:52.626 +12:00 [INF] Route matched with {action = "TeacherGetOneRatingHistoryById", controller = "Rating"}. Executing action Pegasus_backend.Controllers.RatingController.TeacherGetOneRatingHistoryById (Pegasus_backend)
+2019-08-13 23:22:52.741 +12:00 [INF] Executing action method Pegasus_backend.Controllers.RatingController.TeacherGetOneRatingHistoryById (Pegasus_backend) with arguments (["42607","10182"]) - Validation state: "Valid"
+2019-08-13 23:22:53.658 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-08-13 23:22:54.735 +12:00 [INF] Executed DbCommand (73ms) [Parameters=[@__8__locals1_userId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`teacher_id`, `s`.`ability`, `s`.`comment`, `s`.`cv_url`, `s`.`dob`, `s`.`email`, `s`.`expiry_date`, `s`.`first_name`, `s`.`form_url`, `s`.`gender`, `s`.`home_phone`, `s`.`id_number`, `s`.`id_photo`, `s`.`id_type`, `s`.`invoice_template`, `s`.`ird_number`, `s`.`is_activate`, `s`.`is_contract`, `s`.`is_left`, `s`.`last_name`, `s`.`level`, `s`.`minimum_hours`, `s`.`mobile_phone`, `s`.`otherfile_url`, `s`.`photo`, `s`.`user_id`, `s`.`visa`
+FROM `ablemusic`.`teacher` AS `s`
+WHERE `s`.`user_id` = @__8__locals1_userId_0
+LIMIT 1
+2019-08-13 23:22:55.024 +12:00 [INF] Executed DbCommand (58ms) [Parameters=[@__teacherId_0='?' (DbType = Int16), @__8__locals1_lessonId_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`rating_id`, `s`.`comment`, `s`.`create_at`, `s`.`learner_id`, `s`.`lesson_id`, `s`.`rate_star`, `s`.`rate_type`, `s`.`teacher_id`
+FROM `ablemusic`.`rating` AS `s`
+WHERE ((`s`.`rate_type` = 1) AND (`s`.`teacher_id` = @__teacherId_0)) AND (`s`.`lesson_id` = @__8__locals1_lessonId_1)
+LIMIT 1
+2019-08-13 23:22:55.229 +12:00 [INF] Executed DbCommand (56ms) [Parameters=[@__teacherId_0='?' (DbType = Int16), @__8__locals1_lessonId_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`rating_id`, `s`.`comment`, `s`.`create_at`, `s`.`learner_id`, `s`.`lesson_id`, `s`.`rate_star`, `s`.`rate_type`, `s`.`teacher_id`
+FROM `ablemusic`.`rating` AS `s`
+WHERE ((`s`.`rate_type` = 2) AND (`s`.`teacher_id` = @__teacherId_0)) AND (`s`.`lesson_id` = @__8__locals1_lessonId_1)
+LIMIT 1
+2019-08-13 23:22:55.234 +12:00 [INF] Executed action method Pegasus_backend.Controllers.RatingController.TeacherGetOneRatingHistoryById (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 2481.1490000000003ms.
+2019-08-13 23:22:55.241 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-08-13 23:22:55.324 +12:00 [INF] Executed action Pegasus_backend.Controllers.RatingController.TeacherGetOneRatingHistoryById (Pegasus_backend) in 2696.0683ms
+2019-08-13 23:22:55.326 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":{"ToLearner":{"RatingId":36,"RateType":1,"Comment":"Qweqweqwewqeqweqweqweqweqweqw","CreateAt":"2019-08-13T23:07:08","LearnerId":10234,"TeacherId":275,"LessonId":42607,"RateStar":3,"Learner":null,"Lesson":null,"Teacher":{"TeacherId":275,"FirstName":"Teacher Oliver","LastName":"Test1","Dob":"2019-08-01T00:00:00","Gender":1,"IrdNumber":"12312344","IdType":1,"IdPhoto":null,"IdNumber":"123123233","HomePhone":"12312","MobilePhone":"0123123","Email":"orll@mail.com","Photo":null,"Visa":null,"ExpiryDate":"2019-08-30T00:00:00","IsActivate":1,"UserId":10182,"Level":1,"IsContract":1,"IsLeft":0,"InvoiceTemplate":0,"Ability":null,"Comment":null,"CvUrl":null,"FormUrl":null,"OtherfileUrl":null,"MinimumHours":null,"User":null,"Amendment":[],"AvailableDays":[],"GroupCourseInstance":[],"Lesson":[],"One2oneCourseInstance":[],"Rating":[{"RatingId":35,"RateType":2,"Comment":"Qweqweqweqweqweqweqweqweqw","CreateAt":"2019-08-13T23:07:08","LearnerId":null,"TeacherId":275,"LessonId":42607,"RateStar":3,"Learner":null,"Lesson":null}],"RemindLog":[],"TeacherCourse":[],"TeacherLanguage":[],"TeacherQualificatiion":[],"TeacherTransaction":[],"TeacherWageRates":[],"TodoList":[]},"ToSchool":{"RatingId":35,"RateType":2,"Comment":"Qweqweqweqweqweqweqweqweqw","CreateAt":"2019-08-13T23:07:08","LearnerId":null,"TeacherId":275,"LessonId":42607,"RateStar":3,"Learner":null,"Lesson":null,"Teacher":{"TeacherId":275,"FirstName":"Teacher Oliver","LastName":"Test1","Dob":"2019-08-01T00:00:00","Gender":1,"IrdNumber":"12312344","IdType":1,"IdPhoto":null,"IdNumber":"123123233","HomePhone":"12312","MobilePhone":"0123123","Email":"orll@mail.com","Photo":null,"Visa":null,"ExpiryDate":"2019-08-30T00:00:00","IsActivate":1,"UserId":10182,"Level":1,"IsContract":1,"IsLeft":0,"InvoiceTemplate":0,"Ability":null,"Comment":null,"CvUrl":null,"FormUrl":null,"OtherfileUrl":null,"MinimumHours":null,"User":null,"Amendment":[],"AvailableDays":[],"GroupCourseInstance":[],"Lesson":[],"One2oneCourseInstance":[],"Rating":[{"RatingId":36,"RateType":1,"Comment":"Qweqweqwewqeqweqweqweqweqweqw","CreateAt":"2019-08-13T23:07:08","LearnerId":10234,"TeacherId":275,"LessonId":42607,"RateStar":3,"Learner":null,"Lesson":null}],"RemindLog":[],"TeacherCourse":[],"TeacherLanguage":[],"TeacherQualificatiion":[],"TeacherTransaction":[],"TeacherWageRates":[],"TodoList":[]}}
+2019-08-13 23:22:55.334 +12:00 [INF] Request finished in 2909.3807ms 200 application/json; charset=utf-8
+>>>>>>> 65b7abae6e8a51fb36d32ffc3765f3de543643ef

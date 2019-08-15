@@ -19,6 +19,22 @@ namespace Pegasus_backend.Controllers
         public LessonController(ablemusicContext ablemusicContext, ILogger<LessonController> log) : base(ablemusicContext, log)
         {
         }
+
+        [HttpGet("[action]/")]
+        public async Task<IActionResult> GetMobileLessonsForTeacherbyDate()
+        {
+            var result = new Result<object>();
+            try
+            {
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+        }
         
         //GET: http://localhost:5000/api/lesson/GetLessonsForReceptionist/:userId/:date
         [HttpGet("[action]/{userId}/{date}")]
@@ -102,6 +118,8 @@ namespace Pegasus_backend.Controllers
             return Ok(result);
 
         }
+        
+        
 
         
         [HttpGet("[action]/{teacherId}/{beginDate}")]

@@ -119,7 +119,7 @@ namespace Pegasus_backend.Controllers
             {
                 Random r = new Random();
                 result.IsSuccess = true;
-                var teachers =  _ablemusicContext.Teacher
+                var teachers =  await _ablemusicContext.Teacher
                     .Include(s => s.TeacherLanguage)
                     .ThenInclude(s => s.Lang)
                     .Include(s => s.TeacherQualificatiion)
@@ -163,7 +163,7 @@ namespace Pegasus_backend.Controllers
                         q.TeacherWageRates
                         //TeacherWageRate = q.TeacherWageRates.FirstOrDefault(s => s.IsActivate == 1)
                     })
-                    .FirstOrDefault();
+                    .FirstOrDefaultAsync();
                 if (teachers == null )
                     throw new Exception("Can not find this teacher!");
                 foreach(var twr in teachers.TeacherWageRates.Reverse())
