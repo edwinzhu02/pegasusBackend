@@ -20,13 +20,47 @@ namespace Pegasus_backend.Controllers
         {
         }
 
-        [HttpGet("[action]/")]
-        public async Task<IActionResult> GetMobileLessonsForTeacherbyDate()
+        [HttpGet("[action]/{userId}/{today}")]
+        public async Task<IActionResult> GetMobileLessonsForTeacherbyDate(DateTime today, short userId)
         {
             var result = new Result<object>();
             try
             {
-                return Ok();
+                var teacher = _ablemusicContext.Teacher.FirstOrDefault(s => s.UserId == userId);
+                if (teacher == null)
+                {
+                    throw new Exception("You are not the teacher");
+                }
+                var teacherId = teacher.TeacherId;
+
+                var lessons = _ablemusicContext.Lesson
+                    .Where(s => s.BeginTime >= today.AddMonths(-1) && s.TeacherId == teacherId)
+                    .Select(s=>new {s.BeginTime,s.LessonId})
+                    .ToList();
+                var item = new Dictionary<string,List<object>>();
+                lessons.ForEach(s =>
+                {
+                    var year = s.BeginTime.Value.Year.ToString();
+                    var month = s.BeginTime.Value.Month.ToString().Length == 1
+                        ? "0" + s.BeginTime.Value.Month.ToString()
+                        : s.BeginTime.Value.Month.ToString();
+                    var day = s.BeginTime.Value.Day.ToString().Length == 1
+                        ? "0" + s.BeginTime.Value.Day.ToString()
+                        : s.BeginTime.Value.Day.ToString();
+                    var date = year + "-" + month + "-" + day;
+                    var time = s.BeginTime.Value.TimeOfDay;
+                    if (item.ContainsKey(date))
+                    {
+                        item[date].Add(new{info=new{time}});
+                    }
+                    else
+                    {
+                        item.Add(date,new List<object>{new{info=new{time}}});
+                    }
+                });
+                
+                result.Data = item;
+                return Ok(result);
             }
             catch (Exception ex)
             {
