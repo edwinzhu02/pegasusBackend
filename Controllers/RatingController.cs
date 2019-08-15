@@ -70,7 +70,7 @@ namespace Pegasus_backend.Controllers
                     }
                 });
                 ratingItem.ForEach(s => { total += s.RateStar; });
-                var average = total / ratingItem.Count;
+                var average = Math.Round(((double) total / ratingItem.Count) * 10) / 10;
 
                 result.Data = new {average = average, star = starModel}; 
                 return Ok(result);
@@ -134,7 +134,7 @@ namespace Pegasus_backend.Controllers
                     }
                 });
                 ratingItem.ForEach(s => { total += s.RateStar; });
-                var average = total / ratingItem.Count;
+                var average = Math.Round(((double) total / ratingItem.Count) * 10) / 10;
 
                 result.Data = new {average = average, star = starModel}; 
                 return Ok(result);
