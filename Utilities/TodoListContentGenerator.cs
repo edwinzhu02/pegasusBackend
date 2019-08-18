@@ -54,7 +54,7 @@ namespace Pegasus_backend.Utilities
         {
             string content;
             content = "Inform teacher " + courseSchedule.TeacherFirstName + " " + courseSchedule.TeacherLastName +
-                " the learner " + courseSchedule.LearnerFirstName + " " + courseSchedule.LearnerLastName + "'s leave for the course " +
+                " the student " + courseSchedule.LearnerFirstName + " " + courseSchedule.LearnerLastName + "'s leave for the course " +
                 courseSchedule.CourseName + " will finish soon by " + endDate;
             return content;
         }
