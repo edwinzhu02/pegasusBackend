@@ -1,0 +1,68 @@
+2019-08-19 10:59:48.399 +12:00 [INF] User profile is available. Using 'C:\Users\zhuyi\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-08-19 10:59:49.428 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-08-19 11:00:01.384 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/index.html  
+2019-08-19 11:00:01.606 +12:00 [INF] Request finished in 225.6224ms 200 text/html
+2019-08-19 11:00:01.652 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/swagger-ui.css  
+2019-08-19 11:00:01.652 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/swagger-ui-standalone-preset.js  
+2019-08-19 11:00:01.652 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/swagger-ui-bundle.js  
+2019-08-19 11:00:01.719 +12:00 [INF] Sending file. Request path: '/swagger-ui.css'. Physical path: 'N/A'
+2019-08-19 11:00:01.719 +12:00 [INF] Sending file. Request path: '/swagger-ui-standalone-preset.js'. Physical path: 'N/A'
+2019-08-19 11:00:01.727 +12:00 [INF] Request finished in 74.9749ms 200 application/javascript
+2019-08-19 11:00:01.727 +12:00 [INF] Request finished in 75.797ms 200 text/css
+2019-08-19 11:00:01.737 +12:00 [INF] Sending file. Request path: '/swagger-ui-bundle.js'. Physical path: 'N/A'
+2019-08-19 11:00:01.737 +12:00 [INF] Request finished in 86.4614ms 200 application/javascript
+2019-08-19 11:00:02.155 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/v1/swagger.json  
+2019-08-19 11:00:02.841 +12:00 [INF] Request finished in 685.6389ms 200 application/json;charset=utf-8
+2019-08-19 11:01:13.802 +12:00 [INF] Request starting HTTP/1.1 PUT http://localhost:5000/api/Payment/1 application/json-patch+json 6
+2019-08-19 11:01:13.806 +12:00 [INF] Policy execution successful.
+2019-08-19 11:01:13.814 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-08-19 11:01:13.996 +12:00 [INF] string
+2019-08-19 11:01:14.108 +12:00 [INF] Route matched with {action = "Put", controller = "Payment"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Put(Int32, System.String) on controller Pegasus_backend.Controllers.PaymentController (Pegasus_backend).
+2019-08-19 11:01:15.070 +12:00 [INF] Executing action method Pegasus_backend.Controllers.PaymentController.Put (Pegasus_backend) - Validation state: "Invalid"
+2019-08-19 11:01:16.908 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-08-19 11:01:18.573 +12:00 [INF] Executed DbCommand (70ms) [Parameters=[@__paymentId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `p`.`payment_id`, `p`.`after_balance`, `p`.`amount`, `p`.`before_balance`, `p`.`comment`, `p`.`created_at`, `p`.`invoice_id`, `p`.`is_confirmed`, `p`.`learner_id`, `p`.`payment_method`, `p`.`payment_type`, `p`.`staff_id`
+FROM `ablemusic`.`payment` AS `p`
+WHERE `p`.`payment_id` = @__paymentId_0
+LIMIT 1
+2019-08-19 11:01:18.840 +12:00 [INF] Executed action method Pegasus_backend.Controllers.PaymentController.Put (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 3755.4796ms.
+2019-08-19 11:01:18.854 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[Pegasus_backend.pegasusContext.Payment, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2019-08-19 11:01:18.875 +12:00 [INF] Executed action Pegasus_backend.Controllers.PaymentController.Put (Pegasus_backend) in 4762.5538000000006ms
+2019-08-19 11:01:18.879 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":{"PaymentId":1,"PaymentMethod":1,"LearnerId":1,"Amount":50.00,"CreatedAt":null,"StaffId":1,"InvoiceId":1,"BeforeBalance":null,"AfterBalance":null,"PaymentType":3,"IsConfirmed":1,"Comment":null,"Invoice":null,"Learner":null,"Staff":null,"SoldTransaction":[]}}
+2019-08-19 11:01:18.881 +12:00 [INF] Request finished in 5078.9663ms 200 application/json; charset=utf-8
+2019-08-19 11:01:32.298 +12:00 [INF] Request starting HTTP/1.1 PUT http://localhost:5000/api/Payment/1 application/json-patch+json 6
+2019-08-19 11:01:32.299 +12:00 [INF] Policy execution successful.
+2019-08-19 11:01:32.302 +12:00 [INF] string
+2019-08-19 11:01:32.303 +12:00 [INF] Route matched with {action = "Put", controller = "Payment"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Put(Int32, System.String) on controller Pegasus_backend.Controllers.PaymentController (Pegasus_backend).
+2019-08-19 11:01:32.313 +12:00 [INF] Executing action method Pegasus_backend.Controllers.PaymentController.Put (Pegasus_backend) - Validation state: "Invalid"
+2019-08-19 11:01:59.546 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-08-19 11:01:59.773 +12:00 [INF] Executed DbCommand (52ms) [Parameters=[@__paymentId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `p`.`payment_id`, `p`.`after_balance`, `p`.`amount`, `p`.`before_balance`, `p`.`comment`, `p`.`created_at`, `p`.`invoice_id`, `p`.`is_confirmed`, `p`.`learner_id`, `p`.`payment_method`, `p`.`payment_type`, `p`.`staff_id`
+FROM `ablemusic`.`payment` AS `p`
+WHERE `p`.`payment_id` = @__paymentId_0
+LIMIT 1
+2019-08-19 11:01:59.775 +12:00 [INF] Executed action method Pegasus_backend.Controllers.PaymentController.Put (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 27461.301600000003ms.
+2019-08-19 11:01:59.776 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[Pegasus_backend.pegasusContext.Payment, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2019-08-19 11:01:59.777 +12:00 [INF] Executed action Pegasus_backend.Controllers.PaymentController.Put (Pegasus_backend) in 27473.944ms
+2019-08-19 11:01:59.778 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":{"PaymentId":1,"PaymentMethod":1,"LearnerId":1,"Amount":50.00,"CreatedAt":null,"StaffId":1,"InvoiceId":1,"BeforeBalance":null,"AfterBalance":null,"PaymentType":3,"IsConfirmed":1,"Comment":null,"Invoice":null,"Learner":null,"Staff":null,"SoldTransaction":[]}}
+2019-08-19 11:01:59.778 +12:00 [INF] Request finished in 27479.7421ms 200 application/json; charset=utf-8
+2019-08-19 11:04:32.211 +12:00 [INF] Request starting HTTP/1.1 PUT http://localhost:5000/api/Payment/1 application/json-patch+json 8
+2019-08-19 11:04:32.211 +12:00 [INF] Policy execution successful.
+2019-08-19 11:04:32.212 +12:00 [INF] "string"
+2019-08-19 11:04:32.212 +12:00 [INF] Route matched with {action = "Put", controller = "Payment"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Put(Int32, System.String) on controller Pegasus_backend.Controllers.PaymentController (Pegasus_backend).
+2019-08-19 11:04:32.214 +12:00 [INF] Executing action method Pegasus_backend.Controllers.PaymentController.Put (Pegasus_backend) - Validation state: "Valid"
+2019-08-19 11:04:52.679 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-08-19 11:04:53.009 +12:00 [INF] Executed DbCommand (53ms) [Parameters=[@__paymentId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `p`.`payment_id`, `p`.`after_balance`, `p`.`amount`, `p`.`before_balance`, `p`.`comment`, `p`.`created_at`, `p`.`invoice_id`, `p`.`is_confirmed`, `p`.`learner_id`, `p`.`payment_method`, `p`.`payment_type`, `p`.`staff_id`
+FROM `ablemusic`.`payment` AS `p`
+WHERE `p`.`payment_id` = @__paymentId_0
+LIMIT 1
+2019-08-19 11:04:53.788 +12:00 [INF] Executed DbCommand (85ms) [Parameters=[@p1='?' (DbType = Int32), @p0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+UPDATE `ablemusic`.`payment` SET `comment` = @p0
+WHERE `payment_id` = @p1;
+SELECT ROW_COUNT();
+2019-08-19 11:04:53.875 +12:00 [INF] Executed action method Pegasus_backend.Controllers.PaymentController.Put (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 21661.2569ms.
+2019-08-19 11:04:53.876 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[Pegasus_backend.pegasusContext.Payment, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2019-08-19 11:04:53.876 +12:00 [INF] Executed action Pegasus_backend.Controllers.PaymentController.Put (Pegasus_backend) in 21663.646800000002ms
+2019-08-19 11:04:53.876 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":{"PaymentId":1,"PaymentMethod":1,"LearnerId":1,"Amount":50.00,"CreatedAt":null,"StaffId":1,"InvoiceId":1,"BeforeBalance":null,"AfterBalance":null,"PaymentType":3,"IsConfirmed":1,"Comment":"string","Invoice":null,"Learner":null,"Staff":null,"SoldTransaction":[]}}
+2019-08-19 11:04:53.877 +12:00 [INF] Request finished in 21665.9252ms 200 application/json; charset=utf-8

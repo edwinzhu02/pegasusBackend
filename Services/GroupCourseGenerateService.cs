@@ -8,6 +8,7 @@ using Pegasus_backend.Utilities;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 
+
 namespace Pegasus_backend.Services
 {
     public class GroupCourseGenerateService

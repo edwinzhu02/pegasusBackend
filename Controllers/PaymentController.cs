@@ -268,8 +268,8 @@ namespace Pegasus_backend.Controllers
 
 
 
-        [HttpPut("{paymentId}")]
-        public async Task<IActionResult> Put(int paymentId,[FromBody] string comment)
+        [HttpPut("{paymentId}/{comment}")]
+        public async Task<IActionResult> Put(int paymentId,string comment)
         {
             var result = new Result<Payment>();
             var payment = new Payment();
