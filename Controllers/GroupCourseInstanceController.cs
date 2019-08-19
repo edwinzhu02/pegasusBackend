@@ -127,11 +127,11 @@ namespace Pegasus_backend.Controllers
                 var term = await _ablemusicContext.Term.Where(t => t.BeginDate <= today.Date && t.EndDate >= today.Date)
                 .FirstOrDefaultAsync();
 
+                await _ablemusicContext.SaveChangesAsync();
                 if (term != null){
                     var resultGenerate =await  _groupCourseGenerateService.GenerateLessons(term.TermId);
                 }
                     
-                await _ablemusicContext.SaveChangesAsync();
                 result.Data = "success";
             }
             catch (Exception ex)
