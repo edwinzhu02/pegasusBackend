@@ -249,12 +249,12 @@ namespace Pegasus_backend.Controllers
 
                 }
                 await _ablemusicContext.Payment.AddAsync(payment);
-                //await _ablemusicContext.SaveChangesAsync();
-                if (amount != payment.Amount)
+                
+                if (Math.Round(amount.Value,2) != payment.Amount)
                 {
-                    throw new Exception("Amount Error!");
+                    throw new Exception("Amount Error, payment amount is not equal to product price!");
                 }
-
+                await _ablemusicContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {

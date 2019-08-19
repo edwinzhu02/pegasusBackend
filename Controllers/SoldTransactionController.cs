@@ -44,7 +44,9 @@ namespace Pegasus_backend.Controllers
                     Staff = (s.Staff.FirstName + s.Staff.LastName),
                     s.PaymentId,
                     s.PaymentMethod,
-                    SoldTransaction = s.SoldTransaction.ToArray(),
+                    SoldTransaction = s.SoldTransaction.Select(st => new { st.Product.ProductName, st.Product.ProductId,
+                    st.SoldQuantity,st.Amount,st.DiscountAmount,st.DiscountedAmount,st.DiscountRate
+                    }),
                     s.Amount,
                     s.CreatedAt}).ToListAsync();
             }
