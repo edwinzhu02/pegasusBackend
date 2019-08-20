@@ -41,21 +41,38 @@ namespace Pegasus_backend.Controllers
             string userConfirmUrlPrefix = _configuration.GetSection("UrlPrefix").Value;
             try
             {
-                lessonRemains = await _ablemusicContext.LessonRemain.Where(lr => lr.CourseInstanceId == lesson.CourseInstanceId && 
-                lr.LearnerId == lesson.LearnerId).ToListAsync();
-                course = await (from oto in _ablemusicContext.One2oneCourseInstance
-                                join c in _ablemusicContext.Course on oto.CourseId equals c.CourseId
-                                where oto.CourseInstanceId == lesson.CourseInstanceId
-                                select new Course
-                                {
-                                    CourseId = c.CourseId,
-                                    CourseName = c.CourseName,
-                                    Duration = c.Duration,
-                                }).FirstOrDefaultAsync();
-                awaitMakeUpLessons = await _ablemusicContext.AwaitMakeUpLesson.Where(a => a.IsActive == 1 && a.LearnerId == lesson.LearnerId &&
-                                          (a.CourseInstanceId.HasValue && lesson.CourseInstanceId == a.CourseInstanceId) || 
-                                          (a.GroupCourseInstanceId.HasValue && lesson.GroupCourseInstanceId == a.GroupCourseInstanceId))
-                                          .OrderBy(a => a.ExpiredDate).ToListAsync(); 
+                lessonRemains = lesson.CourseInstanceId == null ? await _ablemusicContext.LessonRemain.Where(lr => lr.GroupCourseInstanceId == lesson.GroupCourseInstanceId &&
+                                                                        lr.LearnerId == lesson.LearnerId).ToListAsync()
+                                                                : await _ablemusicContext.LessonRemain.Where(lr => lr.CourseInstanceId == lesson.CourseInstanceId &&
+                                                                        lr.LearnerId == lesson.LearnerId).ToListAsync();
+
+                course = lesson.CourseInstanceId == null ? await (from gc in _ablemusicContext.GroupCourseInstance
+                                                                  join c in _ablemusicContext.Course on gc.CourseId equals c.CourseId
+                                                                  where gc.GroupCourseInstanceId == lesson.GroupCourseInstanceId
+                                                                  select new Course
+                                                                  {
+                                                                      CourseId = c.CourseId,
+                                                                      CourseName = c.CourseName,
+                                                                      Duration = c.Duration,
+                                                                  }).FirstOrDefaultAsync()
+                                                          :
+                                                            await (from oto in _ablemusicContext.One2oneCourseInstance
+                                                                   join c in _ablemusicContext.Course on oto.CourseId equals c.CourseId
+                                                                   where oto.CourseInstanceId == lesson.CourseInstanceId
+                                                                   select new Course
+                                                                   {
+                                                                       CourseId = c.CourseId,
+                                                                       CourseName = c.CourseName,
+                                                                       Duration = c.Duration,
+                                                                   }).FirstOrDefaultAsync();
+
+                awaitMakeUpLessons = lesson.CourseInstanceId == null ? await _ablemusicContext.AwaitMakeUpLesson.Where(a => a.IsActive == 1 && a.LearnerId == lesson.LearnerId &&
+                                                                             (a.GroupCourseInstanceId.HasValue && lesson.GroupCourseInstanceId == a.GroupCourseInstanceId))
+                                                                             .OrderBy(a => a.ExpiredDate).ToListAsync()
+                                                                     : await _ablemusicContext.AwaitMakeUpLesson.Where(a => a.IsActive == 1 && a.LearnerId == lesson.LearnerId &&
+                                                                             (a.CourseInstanceId.HasValue && lesson.CourseInstanceId == a.CourseInstanceId))
+                                                                             .OrderBy(a => a.ExpiredDate).ToListAsync();
+
             }
             catch(Exception ex)
             {
@@ -134,14 +151,15 @@ namespace Pegasus_backend.Controllers
             var learner = new Learner();
             try
             {
-                invoice = await _ablemusicContext.Invoice.Where(i => i.TermId == termId && i.LearnerId == lesson.LearnerId && 
-                i.CourseInstanceId == lesson.CourseInstanceId).FirstOrDefaultAsync();
+                invoice = lesson.CourseInstanceId == null ? await _ablemusicContext.Invoice.Where(i => i.TermId == termId && i.LearnerId == lesson.LearnerId &&
+                                                                  i.GroupCourseInstanceId.HasValue && i.GroupCourseInstanceId == lesson.GroupCourseInstanceId).FirstOrDefaultAsync()
+                                                          : await _ablemusicContext.Invoice.Where(i => i.TermId == termId && i.LearnerId == lesson.LearnerId &&
+                                                                  i.CourseInstanceId == lesson.CourseInstanceId).FirstOrDefaultAsync();
                 teacher = await _ablemusicContext.Teacher.Where(t => t.TeacherId == lesson.TeacherId).FirstOrDefaultAsync();
                 org = await _ablemusicContext.Org.Where(o => o.OrgId == lesson.OrgId).FirstOrDefaultAsync();
                 room = await _ablemusicContext.Room.Where(r => r.RoomId == lesson.RoomId).FirstOrDefaultAsync();
                 learner = await _ablemusicContext.Learner.Where(l => l.LearnerId == lesson.LearnerId).FirstOrDefaultAsync();
                 holidays = await _ablemusicContext.Holiday.ToListAsync();
-
             }
             catch (Exception ex)
             {
