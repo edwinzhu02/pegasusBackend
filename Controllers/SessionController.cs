@@ -139,7 +139,7 @@ namespace Pegasus_backend.Controllers
             if(termId == 0)
             {
                 result.IsSuccess = false;
-                result.ErrorMessage = "Lesson Remain not found";
+                result.ErrorMessage = "Lesson Remaining not found";
                 return BadRequest(result);
             }
 

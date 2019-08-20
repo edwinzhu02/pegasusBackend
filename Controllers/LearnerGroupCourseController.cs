@@ -33,7 +33,6 @@ namespace Pegasus_backend.Controllers
             _mapper = mapper;
             _logger = log;
             _lessonGenerateService = new LessonGenerateService(_ablemusicContext, _mapper);
-            _groupCourseGenerateService = new GroupCourseGenerateService(_ablemusicContext, _logger);
         }
 
         [HttpPost]
@@ -99,6 +98,7 @@ namespace Pegasus_backend.Controllers
         [HttpPost("termId")]
         public async Task<IActionResult> TestGroupCourseGenerate(short termId)
         {
+            var _groupCourseGenerateService = new GroupCourseGenerateService(_ablemusicContext, _logger);
             var result =await  _groupCourseGenerateService.GenerateLessons(termId);
              return Ok(result);
         }

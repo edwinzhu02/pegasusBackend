@@ -23,17 +23,20 @@ namespace Pegasus_backend.Controllers
         {
         }
         //GET: http://localhost:5000/api/SoldTranscation
-        [HttpGet]
-        public async Task <IActionResult> GetSold()
+        [HttpGet("{staffId}/{beginDate}/{endDate}")]
+        public async Task <IActionResult> GetSold(short staffId, DateTime beginDate,DateTime endDate)
         {
             var result = new Result<Object>();
+            var orgs = await _ablemusicContext.StaffOrg.Where(o=>o.StaffId==staffId).Select(o=>o.OrgId).ToListAsync();
             try 
             {
                 result.Data = await _ablemusicContext.Payment
                 .Include(s => s.SoldTransaction)
                 .ThenInclude(p => p.Product)
                 .Include(s => s.Staff)
-                .Include(s => s.Learner)
+                .Include(s => s.Learner).Where(s => s.PaymentType==2 
+                    && s.CreatedAt.Value.Date>=beginDate.Date && s.CreatedAt.Value.Date<=endDate.Date
+                    && orgs.Contains(s.Staff.StaffOrg.FirstOrDefault().OrgId) )
                 .Select(s => new 
                 {   s.LearnerId,
                     Learn = (s.Learner.FirstName + s.Learner.LastName),
@@ -41,8 +44,11 @@ namespace Pegasus_backend.Controllers
                     Staff = (s.Staff.FirstName + s.Staff.LastName),
                     s.PaymentId,
                     s.PaymentMethod,
+                    SoldTransaction = s.SoldTransaction.Select(st => new { st.Product.ProductName, st.Product.ProductId,
+                    st.SoldQuantity,st.Amount,st.DiscountAmount,st.DiscountedAmount,st.DiscountRate
+                    }),
                     s.Amount,
-                    s.CreatedAt}).FirstOrDefaultAsync();
+                    s.CreatedAt}).ToListAsync();
             }
             catch (Exception ex)
            {

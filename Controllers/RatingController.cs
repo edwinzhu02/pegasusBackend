@@ -21,7 +21,137 @@ namespace Pegasus_backend.Controllers
         public RatingController(ablemusicContext ablemusicContext, ILogger<LessonRescheduleController> log) : base(ablemusicContext, log){}
 
         [HttpGet("[action]/{userId}")]
-        public async Task<IActionResult> TeacherGetRating(short userId)
+        public async Task<IActionResult> GetStatisticsForTeacher(short userId)
+        {
+            var result = new Result<object>();
+            try
+            {
+                var starModel = new StarStatisticModel();
+                int? total = 0;
+                var teacher = _ablemusicContext.Teacher.FirstOrDefault(s => s.UserId == userId);
+                if (teacher == null)
+                {
+                    throw new Exception("You are not the teacher");
+                }
+
+                var teacherId = teacher.TeacherId;
+                var ratingItem = _ablemusicContext.Rating
+                    .Include(s => s.Learner)
+                    .Include(s => s.Lesson)
+                    .Where(s => s.TeacherId == teacherId && s.RateType == 0)
+                    .Select(s => new
+                    {
+                        s.Learner.FirstName, s.Learner.LastName, s.Lesson.BeginTime, s.Comment, s.RateStar, s.CreateAt
+                    }).ToList();
+                
+                if (ratingItem.Count == 0)
+                {
+                    result.Data = new {average = 0, star = starModel};
+                    return Ok(result);
+                }
+                
+                ratingItem.ForEach(s =>
+                {
+                    if (s.RateStar == 1)
+                    {
+                        starModel.one += 1;
+                    }else if (s.RateStar ==2)
+                    {
+                        starModel.two += 1;
+                    }else if (s.RateStar == 3)
+                    {
+                        starModel.three += 1;
+                    }else if (s.RateStar ==4)
+                    {
+                        starModel.four += 1;
+                    }else
+                    {
+                        starModel.five += 1;
+                    }
+                });
+                ratingItem.ForEach(s => { total += s.RateStar; });
+                var average = Math.Round(((double) total / ratingItem.Count) * 10) / 10;
+
+                result.Data = new {average = average, star = starModel}; 
+                return Ok(result);
+
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+        }
+        
+        [HttpGet("[action]/{userId}")]
+        public async Task<IActionResult> GetStatisticsForLearner(short userId)
+        {
+            var result = new Result<object>();
+            try
+            {
+                var starModel = new StarStatisticModel();
+                int? total = 0;
+                var learner = _ablemusicContext.Learner.FirstOrDefault(s => s.UserId == userId);
+                if (learner == null)
+                {
+                    throw new Exception("You are not the teacher");
+                }
+
+                var learnerId = learner.LearnerId;
+                var ratingItem = _ablemusicContext.Rating
+                    .Include(s => s.Learner)
+                    .Include(s => s.Lesson)
+                    .Where(s => s.LearnerId == learnerId && s.RateType == 1)
+                    .Select(s => new
+                    {
+                        s.Learner.FirstName, s.Learner.LastName, s.Lesson.BeginTime, s.Comment, s.RateStar, s.CreateAt
+                    }).ToList();
+                
+                if (ratingItem.Count == 0)
+                {
+                    result.Data = new {average = 0, star = starModel};
+                    return Ok(result);
+                }
+                
+                ratingItem.ForEach(s =>
+                {
+                    if (s.RateStar == 1)
+                    {
+                        starModel.one += 1;
+                    }else if (s.RateStar ==2)
+                    {
+                        starModel.two += 1;
+                    }else if (s.RateStar == 3)
+                    {
+                        starModel.three += 1;
+                    }else if (s.RateStar ==4)
+                    {
+                        starModel.four += 1;
+                    }else
+                    {
+                        starModel.five += 1;
+                    }
+                });
+                ratingItem.ForEach(s => { total += s.RateStar; });
+                var average = Math.Round(((double) total / ratingItem.Count) * 10) / 10;
+
+                result.Data = new {average = average, star = starModel}; 
+                return Ok(result);
+
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+        }
+        
+        
+
+        [HttpGet("[action]/{userId}/{index}")]
+        public async Task<IActionResult> TeacherGetRating(short userId,int index)
         {
             var result = new Result<object>();
             try
@@ -38,7 +168,10 @@ namespace Pegasus_backend.Controllers
                     .Include(s=>s.Learner)
                     .Include(s=>s.Lesson)
                     .Where(s => s.TeacherId == teacherId && s.RateType == 0)
-                    .Select(s=>new {s.Learner.FirstName,s.Learner.LastName,s.Lesson.BeginTime,s.Comment,s.RateStar})
+                    .Select(s=>new {s.Learner.FirstName,s.Learner.LastName,s.Lesson.BeginTime,s.Comment,s.RateStar,s.CreateAt})
+                    .OrderByDescending(s=>s.CreateAt)
+                    .Skip(index*10)
+                    .Take(10)
                     .ToListAsync();
                 result.Data = ratingItem;
                 return Ok(result);
@@ -50,9 +183,10 @@ namespace Pegasus_backend.Controllers
                 return BadRequest(result);
             }
         }
+        
 
-        [HttpGet("[action]/{userId}")]
-        public async Task<IActionResult> LearnerGetRating(short userId)
+        [HttpGet("[action]/{userId}/{index}")]
+        public async Task<IActionResult> LearnerGetRating(short userId,int index)
         {
             var result = new Result<object>();
             try
@@ -68,7 +202,10 @@ namespace Pegasus_backend.Controllers
                     .Include(s=>s.Teacher)
                     .Include(s=>s.Lesson)
                     .Where(s => s.LearnerId == learnerId && s.RateType == 1)
-                    .Select(s=>new {s.Teacher.FirstName,s.Teacher.LastName,s.Lesson.BeginTime,s.Comment,s.RateStar})
+                    .Select(s=>new {s.Teacher.FirstName,s.Teacher.LastName,s.Lesson.BeginTime,s.Comment,s.RateStar,s.CreateAt})
+                    .OrderByDescending(s=>s.CreateAt)
+                    .Skip(index*10)
+                    .Take(10)
                     .ToListAsync();
                 result.Data = ratingItem;
                 return Ok(result);
@@ -80,6 +217,7 @@ namespace Pegasus_backend.Controllers
                 return BadRequest(result);
             }
         }
+        
 
         [HttpGet("[action]/{userId}")]
         public async Task<IActionResult> TeacherFeedbackRatingList(short userId)
@@ -95,11 +233,18 @@ namespace Pegasus_backend.Controllers
 
                 var teacherId = teacher.TeacherId;
                 var item = await _ablemusicContext.Lesson
-                    .Include(s=>s.Rating)
+                    .Include(s => s.Rating)
+                    .Include(s => s.GroupCourseInstance)
+                    .ThenInclude(w => w.Course)
+                    .Include(s=>s.GroupCourseInstance)
+                    .ThenInclude(s=>s.LearnerGroupCourse)
+                    .Include(s => s.CourseInstance)
+                    .ThenInclude(w => w.Course)
                     .Where(s => s.IsConfirm == 1 && s.CreatedAt >= DateTime.UtcNow.AddHours(12).AddDays(-14) && s.TeacherId ==teacherId)
                     .Select(s => new
                     {
-                        s.LearnerId, isRate = s.Rating.ToList().Exists(q=>q.RateType == 1)?1:0, s.LessonId,s.BeginTime
+                        s.LearnerId, isRate = s.Rating.ToList().Exists(q=>q.RateType == 1)?1:0, s.LessonId,s.BeginTime,
+                        CourseName=!IsNull(s.GroupCourseInstance)?s.GroupCourseInstance.Course.CourseName:IsNull(s.CourseInstance)?s.TrialCourse.CourseName:s.CourseInstance.Course.CourseName
                     })
                     .ToListAsync();
                 result.Data = item;
@@ -113,8 +258,87 @@ namespace Pegasus_backend.Controllers
             }
         }
 
-        [HttpPost("[action]")]
+        [HttpGet("[action]/{userId}")]
+        public async Task<IActionResult> LearnerFeedbackRatingList(short userId)
+        {
+            var result = new Result<object>();
+            try
+            {
+                var learner = _ablemusicContext.Learner.FirstOrDefault(s => s.UserId == userId);
+                if (learner == null)
+                {
+                    throw new Exception("You are not the Learner");
+                }
+                var learnerId = learner.LearnerId;
+                var item = await _ablemusicContext.Lesson
+                    .Include(s => s.Rating)
+                    .Include(s => s.GroupCourseInstance)
+                    .ThenInclude(w => w.Course)
+                    .Include(s=>s.GroupCourseInstance)
+                    .ThenInclude(s=>s.LearnerGroupCourse)
+                    .Include(s => s.CourseInstance)
+                    .ThenInclude(w => w.Course)
+                    .Where(s => (s.LearnerId == learnerId || s.GroupCourseInstance.LearnerGroupCourse.ToList()
+                                     .Exists(e => e.LearnerId == learnerId))
+                                && s.IsConfirm == 1 && s.CreatedAt >= DateTime.UtcNow.AddHours(12).AddDays(-14))
+                    .Select(s => new
+                    {
+                        s.TeacherId, isRate = s.Rating.ToList().Exists(q=>q.RateType == 0)?1:0,s.LessonId,s.BeginTime,
+                        CourseName=!IsNull(s.GroupCourseInstance)?s.GroupCourseInstance.Course.CourseName:IsNull(s.CourseInstance)?s.TrialCourse.CourseName:s.CourseInstance.Course.CourseName
+                    }).ToListAsync();
 
+                result.Data = item;
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+        }
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> LearnerFeedback([FromBody] LearnerFeedbackModel model)
+        {
+            var result = new Result<string>();
+            try
+            {
+                var learner = _ablemusicContext.Learner.FirstOrDefault(s => s.UserId == model.UserId);
+                if (learner == null)
+                {
+                    throw new Exception("You are not the learner.");
+                }
+
+                var learnerId = learner.LearnerId;
+                var teacherId = _ablemusicContext.Lesson.FirstOrDefault(s => s.LessonId == model.LessonId).TeacherId;
+                
+                var LearnerToTeacherRating = new Rating
+                {
+                    RateType = 0,
+                    Comment = model.CommentToTeacher,
+                    CreateAt = DateTime.UtcNow.AddHours(12),
+                    LearnerId = learnerId,
+                    TeacherId = teacherId,
+                    LessonId = model.LessonId,
+                    RateStar = model.RateStar
+                };
+
+                _ablemusicContext.Add(LearnerToTeacherRating);
+                await _ablemusicContext.SaveChangesAsync();
+                result.Data = "Comment successfully!";
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+        }
+
+        [HttpPost("[action]")]
         public async Task<IActionResult> TeacherFeedback([FromBody] TeacherFeedbackModel model)
         {
             var result = new Result<string>();
@@ -187,6 +411,71 @@ namespace Pegasus_backend.Controllers
                     result.Data = "Comment successfully!";
                     return Ok(result);
                 }
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+        }
+
+        [HttpGet("[action]/{lessonId}/{userId}")]
+        public async Task<IActionResult> LearnerGetOneRatingHistoryById(int lessonId, short userId)
+        {
+            var result = new Result<object>();
+            try
+            {
+                var learner = _ablemusicContext.Learner.FirstOrDefault(s => s.UserId == userId);
+                if (learner == null)
+                {
+                    throw new Exception("You are not the learner.");
+                }
+
+                var learnerId = learner.LearnerId;
+
+                var ToTeacher = await _ablemusicContext.Rating
+                    .FirstOrDefaultAsync(s => s.RateType == 0 && s.LearnerId == learnerId && s.LessonId == lessonId);
+                result.Data = ToTeacher;
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+        }
+
+        [HttpGet("[action]/{lessonId}/{userId}")]
+        public async Task<IActionResult> TeacherGetOneRatingHistoryById(int lessonId, short userId)
+        {
+            var result = new Result<object>();
+            try
+            {
+                var teacher = _ablemusicContext.Teacher.FirstOrDefault(s => s.UserId == userId);
+                if (teacher == null)
+                {
+                    throw new Exception("You are not the teacher.");
+                }
+
+                var teacherId = teacher.TeacherId;
+
+                var ToLearner = await _ablemusicContext.Rating
+                    .FirstOrDefaultAsync(s => s.RateType == 1 &&
+                        s.TeacherId == teacherId && s.LessonId == lessonId);
+                
+                var ToSchool = await _ablemusicContext.Rating
+                    .FirstOrDefaultAsync(s => s.RateType == 2 &&
+                                              s.TeacherId == teacherId && s.LessonId == lessonId);
+
+                result.Data = new
+                {
+                    ToLearner, ToSchool
+
+                };
+                
+                return Ok(result);
             }
             catch (Exception ex)
             {

@@ -227,7 +227,7 @@ namespace Pegasus_backend.Controllers
                     
                     detail.CreatedAt = toNZTimezone(DateTime.UtcNow);
                     detail.Amount = name.SellPrice * detail.SoldQuantity;
-                    //detail.DiscountedAmount = name.SellPrice * detail.SoldQuantity;
+                    detail.DiscountedAmount = name.SellPrice * detail.SoldQuantity;
                     if (detail.DiscountAmount != 0)
                     {
                         detail.DiscountedAmount -= detail.DiscountAmount;
@@ -249,12 +249,12 @@ namespace Pegasus_backend.Controllers
 
                 }
                 await _ablemusicContext.Payment.AddAsync(payment);
-                //await _ablemusicContext.SaveChangesAsync();
-                if (amount != payment.Amount)
+                
+                if (Math.Round(amount.Value,2) != payment.Amount)
                 {
-                    throw new Exception("Amount Error!");
+                    throw new Exception("Amount Error, payment amount is not equal to product price!");
                 }
-
+                await _ablemusicContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
@@ -268,8 +268,8 @@ namespace Pegasus_backend.Controllers
 
 
 
-        [HttpPut("{paymentId}")]
-        public async Task<IActionResult> Put(int paymentId,[FromBody] string comment)
+        [HttpPut("{paymentId}/{comment}")]
+        public async Task<IActionResult> Put(int paymentId,string comment)
         {
             var result = new Result<Payment>();
             var payment = new Payment();

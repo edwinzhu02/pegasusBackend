@@ -9,6 +9,8 @@ using Pegasus_backend.Models;
 using Pegasus_backend.pegasusContext;
 using AutoMapper;
 using Microsoft.Extensions.Logging;
+using Pegasus_backend.Services;
+using Pegasus_backend.Utilities;
 
 namespace Pegasus_backend.Controllers
 {
@@ -17,10 +19,14 @@ namespace Pegasus_backend.Controllers
     public class GroupCourseInstanceController : BasicController
     {
         private readonly IMapper _mapper;
+        private readonly GroupCourseGenerateService _groupCourseGenerateService;
+        private readonly ILogger<GroupCourseInstanceController> _logger;
+
 
         public GroupCourseInstanceController(ablemusicContext ablemusicContext, ILogger<GroupCourseInstanceController> log, IMapper mapper) : base(ablemusicContext, log)
         {
             _mapper = mapper;
+            _logger = log;
         }
 
         // GET: api/groupcourseinstance
@@ -115,7 +121,17 @@ namespace Pegasus_backend.Controllers
                 _mapper.Map(groupinstance, newGroupInstance);
                 newGroupInstance.IsActivate = 1;
                 _ablemusicContext.Add(newGroupInstance);
+	            var _groupCourseGenerateService = new GroupCourseGenerateService(_ablemusicContext, _logger);
+                var today = DateTime.UtcNow.ToNZTimezone();
+                
+                var term = await _ablemusicContext.Term.Where(t => t.BeginDate <= today.Date && t.EndDate >= today.Date)
+                .FirstOrDefaultAsync();
+
                 await _ablemusicContext.SaveChangesAsync();
+                if (term != null){
+                    var resultGenerate =await  _groupCourseGenerateService.GenerateLessons(term.TermId);
+                }
+                    
                 result.Data = "success";
             }
             catch (Exception ex)

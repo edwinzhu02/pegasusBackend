@@ -46,7 +46,7 @@ namespace Pegasus_backend.Utilities
         {
             string content;
             content = "Inform learner " + courseSchedule.LearnerFirstName + " " + courseSchedule.LearnerLastName +
-                " the period of dayoff for the course: " + courseSchedule.CourseName + " will finish soon by " + endDate;
+                " the period of leave for the course: " + courseSchedule.CourseName + " will finish soon by " + endDate;
             return content;
         }
 
@@ -54,7 +54,7 @@ namespace Pegasus_backend.Utilities
         {
             string content;
             content = "Inform teacher " + courseSchedule.TeacherFirstName + " " + courseSchedule.TeacherLastName +
-                " the learner " + courseSchedule.LearnerFirstName + " " + courseSchedule.LearnerLastName + "'s dayoff for the course " +
+                " the student " + courseSchedule.LearnerFirstName + " " + courseSchedule.LearnerLastName + "'s leave for the course " +
                 courseSchedule.CourseName + " will finish soon by " + endDate;
             return content;
         }
