@@ -92,3 +92,67 @@ WHERE (`s`.`to_staff_id` = @__staffId_0) AND (`s`.`is_completed` = 0)
 2019-08-21 11:02:24.613 +12:00 [INF] 
 2019-08-21 11:02:24.722 +12:00 [INF] Response 
 2019-08-21 11:02:24.727 +12:00 [INF] Request finished in 223.6314ms 404 
+2019-08-21 11:07:29.020 +12:00 [INF] User profile is available. Using 'C:\Users\zhuyi\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-08-21 11:07:29.369 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-08-21 11:07:32.302 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
+2019-08-21 11:07:32.333 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-08-21 11:07:32.394 +12:00 [INF] 
+2019-08-21 11:07:32.518 +12:00 [INF] Response 
+2019-08-21 11:07:32.522 +12:00 [INF] Request finished in 221.2398ms 404 
+2019-08-21 11:07:39.773 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/index.html  
+2019-08-21 11:07:39.864 +12:00 [INF] Request finished in 90.7355ms 200 text/html
+2019-08-21 11:07:40.028 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/v1/swagger.json  
+2019-08-21 11:07:40.314 +12:00 [INF] Request finished in 286.2058ms 200 application/json;charset=utf-8
+2019-08-21 11:07:50.116 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Notice/1  
+2019-08-21 11:07:50.118 +12:00 [INF] 
+2019-08-21 11:07:50.160 +12:00 [INF] Route matched with {action = "GetNotices", controller = "Notice"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetNotices(Int32) on controller Pegasus_backend.Controllers.NoticeController (Pegasus_backend).
+2019-08-21 11:07:50.291 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend) - Validation state: "Valid"
+2019-08-21 11:07:58.095 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-08-21 11:07:59.195 +12:00 [INF] Executed DbCommand (69ms) [Parameters=[@__staffId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `n`.`notice_id`, `n`.`created_at`, `n`.`from_staff_id`, `n`.`is_completed`, `n`.`notice`, `n`.`to_staff_id`, `n.ToStaff`.`staff_id`, `n.ToStaff`.`dob`, `n.ToStaff`.`email`, `n.ToStaff`.`expiry_date`, `n.ToStaff`.`first_name`, `n.ToStaff`.`gender`, `n.ToStaff`.`home_phone`, `n.ToStaff`.`id_number`, `n.ToStaff`.`id_photo`, `n.ToStaff`.`id_type`, `n.ToStaff`.`ird_number`, `n.ToStaff`.`is_activate`, `n.ToStaff`.`last_name`, `n.ToStaff`.`mobile_phone`, `n.ToStaff`.`photo`, `n.ToStaff`.`user_id`, `n.ToStaff`.`visa`
+FROM `ablemusic`.`notices` AS `n`
+LEFT JOIN `ablemusic`.`staff` AS `n.ToStaff` ON `n`.`to_staff_id` = `n.ToStaff`.`staff_id`
+WHERE (`n`.`to_staff_id` = @__staffId_0) AND (`n`.`is_completed` = 0)
+2019-08-21 11:07:59.312 +12:00 [INF] Executed action method Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 9012.8984ms.
+2019-08-21 11:07:59.318 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-08-21 11:07:59.334 +12:00 [INF] Executed action Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend) in 9172.0121ms
+2019-08-21 11:07:59.334 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":[{"NoticeId":4,"Notice":"2019-07-20","CreatedAt":"2019-07-20T00:00:00","IsCompleted":0,"FromStaffId":1,"ToStaffId":1,"FromStaff":{"FirstName":"Edwin","Visa":"123","LastName":"Zhu","ExpiryDate":"2019-06-07T00:00:00","Dob":"2019-06-01T00:00:00","IsActivate":0,"Gender":1,"UserId":1,"IrdNumber":"dfdfd","IdType":1,"IdPhoto":null,"IdNumber":"1221","HomePhone":null,"MobilePhone":"121221","Email":"zhu@hh.com","Photo":"images/staff/Photos/1190613092404471.jpg","StaffId":1,"User":null,"NoticesFromStaff":[],"NoticesToStaff":[],"Payment":[],"StaffOrg":[],"StockApplication":[],"StockOrder":[]},"ToStaff":{"FirstName":"Edwin","Visa":"123","LastName":"Zhu","ExpiryDate":"2019-06-07T00:00:00","Dob":"2019-06-01T00:00:00","IsActivate":0,"Gender":1,"UserId":1,"IrdNumber":"dfdfd","IdType":1,"IdPhoto":null,"IdNumber":"1221","HomePhone":null,"MobilePhone":"121221","Email":"zhu@hh.com","Photo":"images/staff/Photos/1190613092404471.jpg","StaffId":1,"User":null,"NoticesFromStaff":[],"NoticesToStaff":[],"Payment":[],"StaffOrg":[],"StockApplication":[],"StockOrder":[]}}]}
+2019-08-21 11:07:59.335 +12:00 [INF] Request finished in 9219.2999ms 200 application/json; charset=utf-8
+2019-08-21 11:08:43.448 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Notice/2  
+2019-08-21 11:08:43.449 +12:00 [INF] 
+2019-08-21 11:08:43.449 +12:00 [INF] Route matched with {action = "GetNotices", controller = "Notice"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetNotices(Int32) on controller Pegasus_backend.Controllers.NoticeController (Pegasus_backend).
+2019-08-21 11:08:43.451 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend) - Validation state: "Valid"
+2019-08-21 11:08:47.729 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-08-21 11:08:47.918 +12:00 [INF] Executed DbCommand (58ms) [Parameters=[@__staffId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `n`.`notice_id`, `n`.`created_at`, `n`.`from_staff_id`, `n`.`is_completed`, `n`.`notice`, `n`.`to_staff_id`, `n.ToStaff`.`staff_id`, `n.ToStaff`.`dob`, `n.ToStaff`.`email`, `n.ToStaff`.`expiry_date`, `n.ToStaff`.`first_name`, `n.ToStaff`.`gender`, `n.ToStaff`.`home_phone`, `n.ToStaff`.`id_number`, `n.ToStaff`.`id_photo`, `n.ToStaff`.`id_type`, `n.ToStaff`.`ird_number`, `n.ToStaff`.`is_activate`, `n.ToStaff`.`last_name`, `n.ToStaff`.`mobile_phone`, `n.ToStaff`.`photo`, `n.ToStaff`.`user_id`, `n.ToStaff`.`visa`
+FROM `ablemusic`.`notices` AS `n`
+LEFT JOIN `ablemusic`.`staff` AS `n.ToStaff` ON `n`.`to_staff_id` = `n.ToStaff`.`staff_id`
+WHERE (`n`.`to_staff_id` = @__staffId_0) AND (`n`.`is_completed` = 0)
+2019-08-21 11:08:47.920 +12:00 [INF] Executed action method Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 4468.9648000000007ms.
+2019-08-21 11:08:47.920 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-08-21 11:08:47.921 +12:00 [INF] Executed action Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend) in 4471.1379000000006ms
+2019-08-21 11:08:47.921 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":[{"NoticeId":3,"Notice":"notice_333","CreatedAt":"2019-07-20T00:00:00","IsCompleted":0,"FromStaffId":1,"ToStaffId":2,"FromStaff":null,"ToStaff":{"FirstName":"Mike","Visa":"ffff","LastName":"Lee","ExpiryDate":"2019-06-04T00:00:00","Dob":"2019-06-04T00:00:00","IsActivate":0,"Gender":1,"UserId":3,"IrdNumber":"121","IdType":1,"IdPhoto":null,"IdNumber":"1212","HomePhone":null,"MobilePhone":"1212","Email":"z@hh.com","Photo":"images/staff/Photos/2190613092457108.jpg","StaffId":2,"User":null,"NoticesFromStaff":[],"NoticesToStaff":[{"NoticeId":4,"Notice":"2019-07-20","CreatedAt":"2019-07-20T00:00:00","IsCompleted":0,"FromStaffId":1,"ToStaffId":2,"FromStaff":null}],"Payment":[],"StaffOrg":[],"StockApplication":[],"StockOrder":[]},{"NoticeId":4,"Notice":"2019-07-20","CreatedAt":"2019-07-20T00:00:00","IsCompleted":0,"FromStaffId":1,"ToStaffId":2,"FromStaff":null,"ToStaff":{"FirstName":"Mike","Visa":"ffff","LastName":"Lee","ExpiryDate":"2019-06-04T00:00:00","Dob":"2019-06-04T00:00:00","IsActivate":0,"Gender":1,"UserId":3,"IrdNumber":"121","IdType":1,"IdPhoto":null,"IdNumber":"1212","HomePhone":null,"MobilePhone":"1212","Email":"z@hh.com","Photo":"images/staff/Photos/2190613092457108.jpg","StaffId":2,"User":null,"NoticesFromStaff":[],"NoticesToStaff":[{"NoticeId":3,"Notice":"notice_333","CreatedAt":"2019-07-20T00:00:00","IsCompleted":0,"FromStaffId":1,"ToStaffId":2,"FromStaff":null}],"Payment":[],"StaffOrg":[],"StockApplication":[],"StockOrder":[]}]}
+2019-08-21 11:08:47.921 +12:00 [INF] Request finished in 4472.7149ms 200 application/json; charset=utf-8
+2019-08-21 11:12:54.769 +12:00 [INF] User profile is available. Using 'C:\Users\zhuyi\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-08-21 11:12:55.159 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-08-21 11:12:55.342 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Notice/2  
+2019-08-21 11:12:55.369 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-08-21 11:12:55.430 +12:00 [INF] 
+2019-08-21 11:12:55.572 +12:00 [INF] Route matched with {action = "GetNotices", controller = "Notice"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetNotices(Int32) on controller Pegasus_backend.Controllers.NoticeController (Pegasus_backend).
+2019-08-21 11:12:55.708 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend) - Validation state: "Valid"
+2019-08-21 11:12:59.893 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
+2019-08-21 11:12:59.904 +12:00 [INF] 
+2019-08-21 11:12:59.906 +12:00 [INF] Response 
+2019-08-21 11:12:59.921 +12:00 [INF] Request finished in 27.8328ms 404 
+2019-08-21 11:13:00.842 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-08-21 11:13:00.881 +12:00 [WRN] The Include operation for navigation '[n].FromStaff' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-08-21 11:13:01.972 +12:00 [INF] Executed DbCommand (62ms) [Parameters=[@__staffId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `n`.`notice_id` AS `NoticeId`, `n`.`created_at` AS `CreatedAt`, `n`.`notice`, `n`.`to_staff_id` AS `ToStaffId`, `n`.`is_completed` AS `IsCompleted`, `n`.`from_staff_id` AS `FromStaffId`, `n.FromStaff`.`first_name` AS `FirstName`, `n.FromStaff`.`last_name` AS `LastName`
+FROM `ablemusic`.`notices` AS `n`
+LEFT JOIN `ablemusic`.`staff` AS `n.FromStaff` ON `n`.`from_staff_id` = `n.FromStaff`.`staff_id`
+WHERE (`n`.`to_staff_id` = @__staffId_0) AND (`n`.`is_completed` = 0)
+2019-08-21 11:13:01.999 +12:00 [INF] Executed action method Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 6284.1060000000007ms.
+2019-08-21 11:13:02.006 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-08-21 11:13:02.066 +12:00 [INF] Executed action Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend) in 6491.3915000000006ms
+2019-08-21 11:13:02.066 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":[{"NoticeId":3,"CreatedAt":"2019-07-20T00:00:00","Notice":"notice_333","ToStaffId":2,"IsCompleted":0,"FromStaffId":1,"FirstName":"Edwin","LastName":"Zhu"},{"NoticeId":4,"CreatedAt":"2019-07-20T00:00:00","Notice":"2019-07-20","ToStaffId":2,"IsCompleted":0,"FromStaffId":1,"FirstName":"Edwin","LastName":"Zhu"}]}
+2019-08-21 11:13:02.069 +12:00 [INF] Request finished in 6728.8413ms 200 application/json; charset=utf-8

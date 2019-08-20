@@ -25,8 +25,12 @@ namespace Pegasus_backend.Controllers
             var result = new Result<object>();
             try
             {
-                var notices = await _ablemusicContext.Notices
-                         .Where(s => s.ToStaffId==staffId && s.IsCompleted == 0)
+                var notices = await _ablemusicContext.Notices.Include(n => n.FromStaff)
+                         .Where(s => s.ToStaffId==staffId && s.IsCompleted == 0).
+                         Select(n => new{
+                             n.NoticeId,n.CreatedAt,n.Notice,n.ToStaffId,n.IsCompleted,
+                            n.FromStaffId,n.FromStaff.FirstName,n.FromStaff.LastName
+                         })
                     .ToListAsync();
                 result.Data = notices;
                 return Ok(result);
