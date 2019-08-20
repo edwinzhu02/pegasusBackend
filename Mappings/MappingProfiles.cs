@@ -10,7 +10,7 @@ namespace Pegasus_backend.Mappings
         {
             CreateMap<TeachersRegister, Teacher>();
             CreateMap<StudentRegister, Learner>();
-            CreateMap<Models.Parent,pegasusContext.Parent>();
+            CreateMap<Models.ParentView,pegasusContext.Parent>();
             CreateMap<InvoicePay,Payment>();
             CreateMap<ProdCatModel, ProdCat>();
             CreateMap<ProdTypeModel, ProdType>();
@@ -67,6 +67,8 @@ namespace Pegasus_backend.Mappings
             CreateMap<ChatMessageModel, ChatMessage>();
             //Student update
             CreateMap<StudentUpdate, Learner>();
+            CreateMap<ParentView, Parent>();
+           
         }
     }
 }

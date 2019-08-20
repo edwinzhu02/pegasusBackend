@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace Pegasus_backend.Models
 {
-    public class Parent
+    public class ParentView
     {
         [JsonProperty(Required = Required.Always)]
         public string FirstName { get; set; }
