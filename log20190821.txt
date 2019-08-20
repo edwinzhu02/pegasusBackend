@@ -156,3 +156,180 @@ WHERE (`n`.`to_staff_id` = @__staffId_0) AND (`n`.`is_completed` = 0)
 2019-08-21 11:13:02.066 +12:00 [INF] Executed action Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend) in 6491.3915000000006ms
 2019-08-21 11:13:02.066 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":[{"NoticeId":3,"CreatedAt":"2019-07-20T00:00:00","Notice":"notice_333","ToStaffId":2,"IsCompleted":0,"FromStaffId":1,"FirstName":"Edwin","LastName":"Zhu"},{"NoticeId":4,"CreatedAt":"2019-07-20T00:00:00","Notice":"2019-07-20","ToStaffId":2,"IsCompleted":0,"FromStaffId":1,"FirstName":"Edwin","LastName":"Zhu"}]}
 2019-08-21 11:13:02.069 +12:00 [INF] Request finished in 6728.8413ms 200 application/json; charset=utf-8
+2019-08-21 11:17:01.847 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Notice/2  
+2019-08-21 11:17:01.848 +12:00 [INF] 
+2019-08-21 11:17:01.848 +12:00 [INF] Route matched with {action = "GetNotices", controller = "Notice"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetNotices(Int32) on controller Pegasus_backend.Controllers.NoticeController (Pegasus_backend).
+2019-08-21 11:17:01.849 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend) - Validation state: "Valid"
+2019-08-21 11:17:01.850 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-08-21 11:17:16.864 +12:00 [ERR] An error occurred using the connection to database 'ablemusic' on server 'gradspace.org'.
+MySql.Data.MySqlClient.MySqlException (0x80004005): Unable to connect to any of the specified MySQL hosts. ---> MySql.Data.MySqlClient.MySqlException (0x80004005): Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+   at MySql.Data.Common.StreamCreator.GetTcpStream(MySqlConnectionStringBuilder settings)
+   at MySql.Data.MySqlClient.NativeDriver.Open()
+   at MySql.Data.MySqlClient.NativeDriver.Open()
+   at MySql.Data.MySqlClient.Driver.Open()
+   at MySql.Data.MySqlClient.Driver.Create(MySqlConnectionStringBuilder settings)
+   at MySql.Data.MySqlClient.MySqlPool.CreateNewPooledConnection()
+   at MySql.Data.MySqlClient.MySqlPool.GetPooledConnection()
+   at MySql.Data.MySqlClient.MySqlPool.TryToGetDriver()
+   at MySql.Data.MySqlClient.MySqlPool.GetConnection()
+   at MySql.Data.MySqlClient.MySqlConnection.Open()
+   at System.Data.Common.DbConnection.OpenAsync(CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenDbConnectionAsync(Boolean errorsExpected, CancellationToken cancellationToken)
+2019-08-21 11:17:16.910 +12:00 [ERR] An exception occurred in the database while iterating the results of a query for context type 'Pegasus_backend.pegasusContext.ablemusicContext'.
+MySql.Data.MySqlClient.MySqlException (0x80004005): Unable to connect to any of the specified MySQL hosts. ---> MySql.Data.MySqlClient.MySqlException (0x80004005): Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+   at MySql.Data.Common.StreamCreator.GetTcpStream(MySqlConnectionStringBuilder settings)
+   at MySql.Data.MySqlClient.NativeDriver.Open()
+   at MySql.Data.MySqlClient.NativeDriver.Open()
+   at MySql.Data.MySqlClient.Driver.Open()
+   at MySql.Data.MySqlClient.Driver.Create(MySqlConnectionStringBuilder settings)
+   at MySql.Data.MySqlClient.MySqlPool.CreateNewPooledConnection()
+   at MySql.Data.MySqlClient.MySqlPool.GetPooledConnection()
+   at MySql.Data.MySqlClient.MySqlPool.TryToGetDriver()
+   at MySql.Data.MySqlClient.MySqlPool.GetConnection()
+   at MySql.Data.MySqlClient.MySqlConnection.Open()
+   at System.Data.Common.DbConnection.OpenAsync(CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenDbConnectionAsync(Boolean errorsExpected, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenAsync(CancellationToken cancellationToken, Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.BufferlessMoveNext(DbContext _, Boolean buffer, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.MoveNext(CancellationToken cancellationToken)
+   at System.Linq.AsyncEnumerable.SelectEnumerableAsyncIterator`2.MoveNextCore(CancellationToken cancellationToken)
+   at System.Linq.AsyncEnumerable.AsyncIterator`1.MoveNext(CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncLinqOperatorProvider.ExceptionInterceptor`1.EnumeratorExceptionInterceptor.MoveNext(CancellationToken cancellationToken)
+MySql.Data.MySqlClient.MySqlException (0x80004005): Unable to connect to any of the specified MySQL hosts. ---> MySql.Data.MySqlClient.MySqlException (0x80004005): Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+   at MySql.Data.Common.StreamCreator.GetTcpStream(MySqlConnectionStringBuilder settings)
+   at MySql.Data.MySqlClient.NativeDriver.Open()
+   at MySql.Data.MySqlClient.NativeDriver.Open()
+   at MySql.Data.MySqlClient.Driver.Open()
+   at MySql.Data.MySqlClient.Driver.Create(MySqlConnectionStringBuilder settings)
+   at MySql.Data.MySqlClient.MySqlPool.CreateNewPooledConnection()
+   at MySql.Data.MySqlClient.MySqlPool.GetPooledConnection()
+   at MySql.Data.MySqlClient.MySqlPool.TryToGetDriver()
+   at MySql.Data.MySqlClient.MySqlPool.GetConnection()
+   at MySql.Data.MySqlClient.MySqlConnection.Open()
+   at System.Data.Common.DbConnection.OpenAsync(CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenDbConnectionAsync(Boolean errorsExpected, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenAsync(CancellationToken cancellationToken, Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.BufferlessMoveNext(DbContext _, Boolean buffer, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.MoveNext(CancellationToken cancellationToken)
+   at System.Linq.AsyncEnumerable.SelectEnumerableAsyncIterator`2.MoveNextCore(CancellationToken cancellationToken)
+   at System.Linq.AsyncEnumerable.AsyncIterator`1.MoveNext(CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncLinqOperatorProvider.ExceptionInterceptor`1.EnumeratorExceptionInterceptor.MoveNext(CancellationToken cancellationToken)
+2019-08-21 11:17:16.956 +12:00 [INF] Executed action method Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.BadRequestObjectResult in 15106.0995ms.
+2019-08-21 11:17:16.956 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-08-21 11:17:16.956 +12:00 [INF] Executed action Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend) in 15108.2351ms
+2019-08-21 11:17:16.957 +12:00 [INF] Response {"IsSuccess":false,"ErrorCode":null,"IsFound":true,"ErrorMessage":"Unable to connect to any of the specified MySQL hosts.","Note":null,"Data":null}
+2019-08-21 11:17:16.957 +12:00 [INF] Request finished in 15109.465ms 400 application/json; charset=utf-8
+2019-08-21 11:18:25.527 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Notice/2  
+2019-08-21 11:18:25.528 +12:00 [INF] 
+2019-08-21 11:18:25.528 +12:00 [INF] Route matched with {action = "GetNotices", controller = "Notice"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetNotices(Int32) on controller Pegasus_backend.Controllers.NoticeController (Pegasus_backend).
+2019-08-21 11:18:25.528 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend) - Validation state: "Valid"
+2019-08-21 11:18:25.529 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-08-21 11:18:40.535 +12:00 [ERR] An error occurred using the connection to database 'ablemusic' on server 'gradspace.org'.
+MySql.Data.MySqlClient.MySqlException (0x80004005): Unable to connect to any of the specified MySQL hosts. ---> MySql.Data.MySqlClient.MySqlException (0x80004005): Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+   at MySql.Data.Common.StreamCreator.GetTcpStream(MySqlConnectionStringBuilder settings)
+   at MySql.Data.MySqlClient.NativeDriver.Open()
+   at MySql.Data.MySqlClient.NativeDriver.Open()
+   at MySql.Data.MySqlClient.Driver.Open()
+   at MySql.Data.MySqlClient.Driver.Create(MySqlConnectionStringBuilder settings)
+   at MySql.Data.MySqlClient.MySqlPool.CreateNewPooledConnection()
+   at MySql.Data.MySqlClient.MySqlPool.GetPooledConnection()
+   at MySql.Data.MySqlClient.MySqlPool.TryToGetDriver()
+   at MySql.Data.MySqlClient.MySqlPool.GetConnection()
+   at MySql.Data.MySqlClient.MySqlConnection.Open()
+   at System.Data.Common.DbConnection.OpenAsync(CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenDbConnectionAsync(Boolean errorsExpected, CancellationToken cancellationToken)
+2019-08-21 11:18:40.538 +12:00 [ERR] An exception occurred in the database while iterating the results of a query for context type 'Pegasus_backend.pegasusContext.ablemusicContext'.
+MySql.Data.MySqlClient.MySqlException (0x80004005): Unable to connect to any of the specified MySQL hosts. ---> MySql.Data.MySqlClient.MySqlException (0x80004005): Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+   at MySql.Data.Common.StreamCreator.GetTcpStream(MySqlConnectionStringBuilder settings)
+   at MySql.Data.MySqlClient.NativeDriver.Open()
+   at MySql.Data.MySqlClient.NativeDriver.Open()
+   at MySql.Data.MySqlClient.Driver.Open()
+   at MySql.Data.MySqlClient.Driver.Create(MySqlConnectionStringBuilder settings)
+   at MySql.Data.MySqlClient.MySqlPool.CreateNewPooledConnection()
+   at MySql.Data.MySqlClient.MySqlPool.GetPooledConnection()
+   at MySql.Data.MySqlClient.MySqlPool.TryToGetDriver()
+   at MySql.Data.MySqlClient.MySqlPool.GetConnection()
+   at MySql.Data.MySqlClient.MySqlConnection.Open()
+   at System.Data.Common.DbConnection.OpenAsync(CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenDbConnectionAsync(Boolean errorsExpected, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenAsync(CancellationToken cancellationToken, Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.BufferlessMoveNext(DbContext _, Boolean buffer, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.MoveNext(CancellationToken cancellationToken)
+   at System.Linq.AsyncEnumerable.SelectEnumerableAsyncIterator`2.MoveNextCore(CancellationToken cancellationToken)
+   at System.Linq.AsyncEnumerable.AsyncIterator`1.MoveNext(CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncLinqOperatorProvider.ExceptionInterceptor`1.EnumeratorExceptionInterceptor.MoveNext(CancellationToken cancellationToken)
+MySql.Data.MySqlClient.MySqlException (0x80004005): Unable to connect to any of the specified MySQL hosts. ---> MySql.Data.MySqlClient.MySqlException (0x80004005): Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+   at MySql.Data.Common.StreamCreator.GetTcpStream(MySqlConnectionStringBuilder settings)
+   at MySql.Data.MySqlClient.NativeDriver.Open()
+   at MySql.Data.MySqlClient.NativeDriver.Open()
+   at MySql.Data.MySqlClient.Driver.Open()
+   at MySql.Data.MySqlClient.Driver.Create(MySqlConnectionStringBuilder settings)
+   at MySql.Data.MySqlClient.MySqlPool.CreateNewPooledConnection()
+   at MySql.Data.MySqlClient.MySqlPool.GetPooledConnection()
+   at MySql.Data.MySqlClient.MySqlPool.TryToGetDriver()
+   at MySql.Data.MySqlClient.MySqlPool.GetConnection()
+   at MySql.Data.MySqlClient.MySqlConnection.Open()
+   at System.Data.Common.DbConnection.OpenAsync(CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenDbConnectionAsync(Boolean errorsExpected, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenAsync(CancellationToken cancellationToken, Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.BufferlessMoveNext(DbContext _, Boolean buffer, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.MoveNext(CancellationToken cancellationToken)
+   at System.Linq.AsyncEnumerable.SelectEnumerableAsyncIterator`2.MoveNextCore(CancellationToken cancellationToken)
+   at System.Linq.AsyncEnumerable.AsyncIterator`1.MoveNext(CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncLinqOperatorProvider.ExceptionInterceptor`1.EnumeratorExceptionInterceptor.MoveNext(CancellationToken cancellationToken)
+2019-08-21 11:18:40.578 +12:00 [INF] Executed action method Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.BadRequestObjectResult in 15049.8363ms.
+2019-08-21 11:18:40.578 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-08-21 11:18:40.579 +12:00 [INF] Executed action Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend) in 15050.6857ms
+2019-08-21 11:18:40.579 +12:00 [INF] Response {"IsSuccess":false,"ErrorCode":null,"IsFound":true,"ErrorMessage":"Unable to connect to any of the specified MySQL hosts.","Note":null,"Data":null}
+2019-08-21 11:18:40.579 +12:00 [INF] Request finished in 15051.5589ms 400 application/json; charset=utf-8
+2019-08-21 11:41:53.172 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Notice/2  
+2019-08-21 11:41:53.173 +12:00 [INF] 
+2019-08-21 11:41:53.173 +12:00 [INF] Route matched with {action = "GetNotices", controller = "Notice"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetNotices(Int32) on controller Pegasus_backend.Controllers.NoticeController (Pegasus_backend).
+2019-08-21 11:41:53.173 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend) - Validation state: "Valid"
+2019-08-21 11:41:53.174 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-08-21 11:41:59.502 +12:00 [INF] Executed DbCommand (578ms) [Parameters=[@__staffId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `n`.`notice_id` AS `NoticeId`, `n`.`created_at` AS `CreatedAt`, `n`.`notice`, `n`.`to_staff_id` AS `ToStaffId`, `n`.`is_completed` AS `IsCompleted`, `n`.`from_staff_id` AS `FromStaffId`, `n.FromStaff`.`first_name` AS `FirstName`, `n.FromStaff`.`last_name` AS `LastName`
+FROM `ablemusic`.`notices` AS `n`
+LEFT JOIN `ablemusic`.`staff` AS `n.FromStaff` ON `n`.`from_staff_id` = `n.FromStaff`.`staff_id`
+WHERE (`n`.`to_staff_id` = @__staffId_0) AND (`n`.`is_completed` = 0)
+2019-08-21 11:41:59.503 +12:00 [INF] Executed action method Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 6329.8578000000007ms.
+2019-08-21 11:41:59.504 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-08-21 11:41:59.505 +12:00 [INF] Executed action Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend) in 6331.9387000000006ms
+2019-08-21 11:41:59.506 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":[{"NoticeId":3,"CreatedAt":"2019-07-20T00:00:00","Notice":"notice_333","ToStaffId":2,"IsCompleted":0,"FromStaffId":1,"FirstName":"Edwin","LastName":"Zhu"},{"NoticeId":4,"CreatedAt":"2019-07-20T00:00:00","Notice":"2019-07-20","ToStaffId":2,"IsCompleted":0,"FromStaffId":1,"FirstName":"Edwin","LastName":"Zhu"},{"NoticeId":5,"CreatedAt":"2019-08-20T00:00:00","Notice":"The National Institute for Space Research (Inpe) said its satellite data showed an 83% increase on the same period in 2018.","ToStaffId":2,"IsCompleted":0,"FromStaffId":3,"FirstName":"Mary","LastName":"Wang"},{"NoticeId":6,"CreatedAt":"2019-08-20T00:00:00","Notice":"It comes weeks after President Jair Bolsonaro fired the head of the agency amid rows over its deforestation data.","ToStaffId":2,"IsCompleted":0,"FromStaffId":3,"FirstName":"Mary","LastName":"Wang"},{"NoticeId":7,"CreatedAt":"2019-08-20T00:00:00","Notice":"Smoke from the fires caused a blackout in the city of Sao Paulo on Monday.","ToStaffId":2,"IsCompleted":0,"FromStaffId":3,"FirstName":"Mary","LastName":"Wang"},{"NoticeId":8,"CreatedAt":"2019-08-20T00:00:00","Notice":"The daytime blackout, which lasted for about an hour, came after strong winds brought in smoke from forest fires burning in the states of Amazonas and Rondonia, more than 2,700km (1,700 miles) away.","ToStaffId":2,"IsCompleted":0,"FromStaffId":3,"FirstName":"Mary","LastName":"Wang"},{"NoticeId":9,"CreatedAt":"2019-08-20T00:00:00","Notice":"Conservationists have blamed Mr Bolsonaro, saying he has encouraged loggers and farmers to clear the land.","ToStaffId":2,"IsCompleted":0,"FromStaffId":1,"FirstName":"Edwin","LastName":"Zhu"},{"NoticeId":10,"CreatedAt":"2019-08-20T00:00:00","Notice":"Why are there fires in the Amazon?","ToStaffId":2,"IsCompleted":0,"FromStaffId":1,"FirstName":"Edwin","LastName":"Zhu"},{"NoticeId":11,"CreatedAt":"2019-08-20T00:00:00","Notice":"Inpe said it had detected more than 72,000 fires between January and August - the highest number since records began in 2013. It said it had observed more than 9,500 forest fires since Thursday, mostly in the Amazon region.","ToStaffId":2,"IsCompleted":0,"FromStaffId":1,"FirstName":"Edwin","LastName":"Zhu"}]}
+2019-08-21 11:41:59.506 +12:00 [INF] Request finished in 6333.8474ms 200 application/json; charset=utf-8
+2019-08-21 11:56:18.421 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Notice/2  
+2019-08-21 11:56:18.421 +12:00 [INF] 
+2019-08-21 11:56:18.421 +12:00 [INF] Route matched with {action = "GetNotices", controller = "Notice"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetNotices(Int32) on controller Pegasus_backend.Controllers.NoticeController (Pegasus_backend).
+2019-08-21 11:56:18.422 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend) - Validation state: "Valid"
+2019-08-21 11:56:18.422 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-08-21 11:56:19.291 +12:00 [INF] Executed DbCommand (56ms) [Parameters=[@__staffId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `n`.`notice_id` AS `NoticeId`, `n`.`created_at` AS `CreatedAt`, `n`.`notice`, `n`.`to_staff_id` AS `ToStaffId`, `n`.`is_completed` AS `IsCompleted`, `n`.`from_staff_id` AS `FromStaffId`, `n.FromStaff`.`first_name` AS `FirstName`, `n.FromStaff`.`last_name` AS `LastName`
+FROM `ablemusic`.`notices` AS `n`
+LEFT JOIN `ablemusic`.`staff` AS `n.FromStaff` ON `n`.`from_staff_id` = `n.FromStaff`.`staff_id`
+WHERE (`n`.`to_staff_id` = @__staffId_0) AND (`n`.`is_completed` = 0)
+2019-08-21 11:56:19.291 +12:00 [INF] Executed action method Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 869.36430000000007ms.
+2019-08-21 11:56:19.291 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-08-21 11:56:19.292 +12:00 [INF] Executed action Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend) in 870.3695ms
+2019-08-21 11:56:19.292 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":[{"NoticeId":3,"CreatedAt":"2019-07-20T00:00:00","Notice":"notice_333","ToStaffId":2,"IsCompleted":0,"FromStaffId":1,"FirstName":"Edwin","LastName":"Zhu"},{"NoticeId":4,"CreatedAt":"2019-07-20T00:00:00","Notice":"2019-07-20","ToStaffId":2,"IsCompleted":0,"FromStaffId":1,"FirstName":"Edwin","LastName":"Zhu"},{"NoticeId":5,"CreatedAt":"2019-08-20T00:00:00","Notice":"The National Institute for Space Research (Inpe) said its satellite data showed an 83% increase on the same period in 2018.","ToStaffId":2,"IsCompleted":0,"FromStaffId":3,"FirstName":"Mary","LastName":"Wang"},{"NoticeId":6,"CreatedAt":"2019-08-20T00:00:00","Notice":"It comes weeks after President Jair Bolsonaro fired the head of the agency amid rows over its deforestation data.","ToStaffId":2,"IsCompleted":0,"FromStaffId":3,"FirstName":"Mary","LastName":"Wang"},{"NoticeId":7,"CreatedAt":"2019-08-20T00:00:00","Notice":"Smoke from the fires caused a blackout in the city of Sao Paulo on Monday.","ToStaffId":2,"IsCompleted":0,"FromStaffId":3,"FirstName":"Mary","LastName":"Wang"},{"NoticeId":8,"CreatedAt":"2019-08-20T00:00:00","Notice":"The daytime blackout, which lasted for about an hour, came after strong winds brought in smoke from forest fires burning in the states of Amazonas and Rondonia, more than 2,700km (1,700 miles) away.","ToStaffId":2,"IsCompleted":0,"FromStaffId":3,"FirstName":"Mary","LastName":"Wang"},{"NoticeId":9,"CreatedAt":"2019-08-20T00:00:00","Notice":"Conservationists have blamed Mr Bolsonaro, saying he has encouraged loggers and farmers to clear the land.","ToStaffId":2,"IsCompleted":0,"FromStaffId":1,"FirstName":"Edwin","LastName":"Zhu"},{"NoticeId":10,"CreatedAt":"2019-08-20T00:00:00","Notice":"Why are there fires in the Amazon?","ToStaffId":2,"IsCompleted":0,"FromStaffId":1,"FirstName":"Edwin","LastName":"Zhu"},{"NoticeId":11,"CreatedAt":"2019-08-20T00:00:00","Notice":"Inpe said it had detected more than 72,000 fires between January and August - the highest number since records began in 2013. It said it had observed more than 9,500 forest fires since Thursday, mostly in the Amazon region.","ToStaffId":2,"IsCompleted":0,"FromStaffId":1,"FirstName":"Edwin","LastName":"Zhu"}]}
+2019-08-21 11:56:19.292 +12:00 [INF] Request finished in 871.3849ms 200 application/json; charset=utf-8
+2019-08-21 11:56:43.420 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Notice/2  
+2019-08-21 11:56:43.421 +12:00 [INF] 
+2019-08-21 11:56:43.421 +12:00 [INF] Route matched with {action = "GetNotices", controller = "Notice"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetNotices(Int32) on controller Pegasus_backend.Controllers.NoticeController (Pegasus_backend).
+2019-08-21 11:56:43.421 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend) - Validation state: "Valid"
+2019-08-21 11:56:43.421 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-08-21 11:56:43.589 +12:00 [INF] Executed DbCommand (55ms) [Parameters=[@__staffId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `n`.`notice_id` AS `NoticeId`, `n`.`created_at` AS `CreatedAt`, `n`.`notice`, `n`.`to_staff_id` AS `ToStaffId`, `n`.`is_completed` AS `IsCompleted`, `n`.`from_staff_id` AS `FromStaffId`, `n.FromStaff`.`first_name` AS `FirstName`, `n.FromStaff`.`last_name` AS `LastName`
+FROM `ablemusic`.`notices` AS `n`
+LEFT JOIN `ablemusic`.`staff` AS `n.FromStaff` ON `n`.`from_staff_id` = `n.FromStaff`.`staff_id`
+WHERE (`n`.`to_staff_id` = @__staffId_0) AND (`n`.`is_completed` = 0)
+2019-08-21 11:56:43.590 +12:00 [INF] Executed action method Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 168.5993ms.
+2019-08-21 11:56:43.590 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-08-21 11:56:43.590 +12:00 [INF] Executed action Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend) in 169.2456ms
+2019-08-21 11:56:43.590 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":[{"NoticeId":3,"CreatedAt":"2019-07-20T00:00:00","Notice":"notice_333","ToStaffId":2,"IsCompleted":0,"FromStaffId":1,"FirstName":"Edwin","LastName":"Zhu"},{"NoticeId":4,"CreatedAt":"2019-07-20T00:00:00","Notice":"2019-07-20","ToStaffId":2,"IsCompleted":0,"FromStaffId":1,"FirstName":"Edwin","LastName":"Zhu"},{"NoticeId":5,"CreatedAt":"2019-08-20T00:00:00","Notice":"The National Institute for Space Research (Inpe) said its satellite data showed an 83% increase on the same period in 2018.","ToStaffId":2,"IsCompleted":0,"FromStaffId":3,"FirstName":"Mary","LastName":"Wang"},{"NoticeId":6,"CreatedAt":"2019-08-20T00:00:00","Notice":"It comes weeks after President Jair Bolsonaro fired the head of the agency amid rows over its deforestation data.","ToStaffId":2,"IsCompleted":0,"FromStaffId":3,"FirstName":"Mary","LastName":"Wang"},{"NoticeId":7,"CreatedAt":"2019-08-20T00:00:00","Notice":"Smoke from the fires caused a blackout in the city of Sao Paulo on Monday.","ToStaffId":2,"IsCompleted":0,"FromStaffId":3,"FirstName":"Mary","LastName":"Wang"},{"NoticeId":8,"CreatedAt":"2019-08-20T00:00:00","Notice":"The daytime blackout, which lasted for about an hour, came after strong winds brought in smoke from forest fires burning in the states of Amazonas and Rondonia, more than 2,700km (1,700 miles) away.","ToStaffId":2,"IsCompleted":0,"FromStaffId":3,"FirstName":"Mary","LastName":"Wang"},{"NoticeId":9,"CreatedAt":"2019-08-20T00:00:00","Notice":"Conservationists have blamed Mr Bolsonaro, saying he has encouraged loggers and farmers to clear the land.","ToStaffId":2,"IsCompleted":0,"FromStaffId":1,"FirstName":"Edwin","LastName":"Zhu"},{"NoticeId":10,"CreatedAt":"2019-08-20T00:00:00","Notice":"Why are there fires in the Amazon?","ToStaffId":2,"IsCompleted":0,"FromStaffId":1,"FirstName":"Edwin","LastName":"Zhu"},{"NoticeId":11,"CreatedAt":"2019-08-20T00:00:00","Notice":"Inpe said it had detected more than 72,000 fires between January and August - the highest number since records began in 2013. It said it had observed more than 9,500 forest fires since Thursday, mostly in the Amazon region.","ToStaffId":2,"IsCompleted":0,"FromStaffId":1,"FirstName":"Edwin","LastName":"Zhu"}]}
+2019-08-21 11:56:43.591 +12:00 [INF] Request finished in 170.1353ms 200 application/json; charset=utf-8

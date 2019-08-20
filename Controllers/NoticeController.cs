@@ -16,7 +16,7 @@ namespace Pegasus_backend.Controllers
     public class NoticeController: BasicController
     {
         public NoticeController(ablemusicContext ablemusicContext, ILogger<NoticeController> log) : base(ablemusicContext, log)
-        {       
+        {        
         }
 
         [HttpGet("{staffId}")]
@@ -41,7 +41,7 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = ex.Message;
                 return BadRequest(result);
             }
-        }
+        } 
     }
   
 }
