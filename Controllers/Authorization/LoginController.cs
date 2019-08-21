@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.IO;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Http;
@@ -63,48 +64,57 @@ namespace Pegasus_backend.Controllers.Authorization
             }
             return Ok(result);
         }        
-      //  [HttpPost]
-    //     public async Task<IActionResult> UpdateImg(int userId, [FromForm(Name = "Photo")] IFormFile Photo)
-    //     {
-    //         Result<string> result = new Result<string>();
-    //         try
-    //         {
-    //             var user = await _ablemusicContext.User.Include(s => s.Learner)
-    //                 .Include(s => s.Teacher)
-    //                 .Include(s => s.Staff)
-    //                 .Include(s => s.Role)
-    //                 .Where(s => s.UserId == userId)
-    //                 .FirstOrDefaultAsync();
-    //             if (user.Role.RoleId == 1){ //teacher {
-    //                 var teacher = user.Teacher.FirstOrDefault();
-    //             }
-    //             else if (user.Role.RoleId == 4)  {//learner
-    //                 var learner = user.Learner.FirstOrDefault();
-    //             }
-    //             else   //staff
-    //             {
-    //                 var staff = user.Staff.FirstOrDefault();
-    //             }
-    //             if (Photo != null)
-    //             {
-    //                 teacher.Photo = $"images/tutor/Photos/{teacher.TeacherId + strDateTime + Path.GetExtension(Photo.FileName)}";
-    //                 _ablemusicContext.Update(teacher);
-    //                 await _ablemusicContext.SaveChangesAsync();
-    //                 var uploadResult = UploadFile(Photo, "tutor/Photos/", teacher.TeacherId, strDateTime);
-    //                 if (!uploadResult.IsUploadSuccess)
-    //                 {
-    //                     throw new Exception(uploadResult.ErrorMessage);
-    //                 }
-    //             }
-    //                         catch (Exception ex)
-    //         {
-    //             result.IsSuccess = false;
-    //             result.ErrorMessage = ex.ToString();
-    //             return StatusCode(401, result);
-    //         }
-    //     }        
-    //         return Ok(result);
-    // }
+       [HttpPost("[action]/{userId}")]
+        public async Task<IActionResult> ChangeImg(int userId, [FromForm(Name = "Photo")] IFormFile Photo)
+        {
+            Result<string> result = new Result<string>();
+            var uploadResult= new UploadFileModel();
+            string photoUrl ;
+            var strDateTime = toNZTimezone(DateTime.UtcNow).ToString("yyMMddhhmmssfff"); 
+            try
+            {
+                var user = await _ablemusicContext.User.Include(s => s.Learner)
+                    .Include(s => s.Teacher)
+                    .Include(s => s.Staff)
+                    .Include(s => s.Role)
+                    .Where(s => s.UserId == userId)
+                    .FirstOrDefaultAsync();
+                if (user.Role.RoleId == 1){ //teacher {
+                    var teacher = user.Teacher.FirstOrDefault();
+                    photoUrl = $"images/tutor/Photos/{teacher.TeacherId + strDateTime + Path.GetExtension(Photo.FileName)}";
+                    _ablemusicContext.Update(teacher);
+                    await _ablemusicContext.SaveChangesAsync();
+                    uploadResult = UploadFile(Photo, "tutor/Photos/", teacher.TeacherId, strDateTime);
+                }
+                else if (user.Role.RoleId == 4)  {//learner
+                    var learner = user.Learner.FirstOrDefault();
+                    
+                    photoUrl = $"images/learner/Photos/{learner.LearnerId + strDateTime + Path.GetExtension(Photo.FileName)}";
+                    _ablemusicContext.Update(learner);
+                    await _ablemusicContext.SaveChangesAsync();
+                    uploadResult = UploadFile(Photo, "learner/Photos/", learner.LearnerId, strDateTime);                   
+                }
+                else   //staff
+                {
+                    var staff = user.Staff.FirstOrDefault();
+                }
+       
+
+                if (!uploadResult.IsUploadSuccess)
+                {
+                    throw new Exception(uploadResult.ErrorMessage);
+                }
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.ToString();
+                return StatusCode(401, result);
+            }
+        }        
+    
         //POST: http://localhost:5000/api/login
         [CheckModelFilter]
         [HttpPost]
