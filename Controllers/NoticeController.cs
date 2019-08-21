@@ -18,7 +18,7 @@ namespace Pegasus_backend.Controllers
         public NoticeController(ablemusicContext ablemusicContext, ILogger<NoticeController> log) : base(ablemusicContext, log)
         {        
         }
-        [HttpPut("{staffId}/{noticeId}/{type}"]
+        [HttpPut("{staffId}/{noticeId}/{type}")]
         public async Task<IActionResult> ReadNotices(int staffId,int noticeId,short type){
 
             var result = new Result<object>();
