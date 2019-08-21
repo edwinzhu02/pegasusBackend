@@ -97,6 +97,11 @@ namespace Pegasus_backend.Controllers.Authorization
                 else   //staff
                 {
                     var staff = user.Staff.FirstOrDefault();
+                    photoUrl = $"images/staff/Photos/{staff.StaffId + strDateTime + Path.GetExtension(Photo.FileName)}";
+                    _ablemusicContext.Update(staff);
+                    await _ablemusicContext.SaveChangesAsync();
+                    uploadResult = UploadFile(Photo, "staff/Photos/", staff.StaffId, strDateTime);                   
+
                 }
        
 
@@ -111,7 +116,7 @@ namespace Pegasus_backend.Controllers.Authorization
             {
                 result.IsSuccess = false;
                 result.ErrorMessage = ex.ToString();
-                return StatusCode(401, result);
+                return BadRequest(result);
             }
         }        
     
