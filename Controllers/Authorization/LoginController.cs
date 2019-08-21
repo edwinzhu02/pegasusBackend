@@ -4,6 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 using Google.Protobuf.WellKnownTypes;
 using Microsoft.AspNetCore.Authorization;
@@ -30,7 +31,80 @@ namespace Pegasus_backend.Controllers.Authorization
         {
             _appSettings = appSettings.Value;
         }
-        
+       //POST: http://localhost:5000/api/login
+        [HttpGet("[action]/{userId}")]
+        public async Task<IActionResult> GetProfileImg(int userId)
+        {
+            Result<string> result = new Result<string>();
+            try
+            {
+                var user = await _ablemusicContext.User.Include(s=>s.Learner)
+                    .Include(s=>s.Teacher)
+                    .Include(s=>s.Staff)
+                    .Include(s=>s.Role)
+                    .Where(s =>s.UserId ==userId)
+                    .FirstOrDefaultAsync();
+                string photo;
+                if (user.Role.RoleId  ==1)  //teacher 
+                    photo =  user.Teacher.FirstOrDefault().Photo;
+                else if (user.Role.RoleId  ==4)  //learner
+                    photo =  user.Learner.FirstOrDefault().Photo;
+                else   //staff
+                {
+                    photo =  user.Staff.FirstOrDefault().Photo;
+                }
+                result.Data = photo;
+            }  
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.ToString();
+                return StatusCode(401, result);
+            }
+            return Ok(result);
+        }        
+      //  [HttpPost]
+    //     public async Task<IActionResult> UpdateImg(int userId, [FromForm(Name = "Photo")] IFormFile Photo)
+    //     {
+    //         Result<string> result = new Result<string>();
+    //         try
+    //         {
+    //             var user = await _ablemusicContext.User.Include(s => s.Learner)
+    //                 .Include(s => s.Teacher)
+    //                 .Include(s => s.Staff)
+    //                 .Include(s => s.Role)
+    //                 .Where(s => s.UserId == userId)
+    //                 .FirstOrDefaultAsync();
+    //             if (user.Role.RoleId == 1){ //teacher {
+    //                 var teacher = user.Teacher.FirstOrDefault();
+    //             }
+    //             else if (user.Role.RoleId == 4)  {//learner
+    //                 var learner = user.Learner.FirstOrDefault();
+    //             }
+    //             else   //staff
+    //             {
+    //                 var staff = user.Staff.FirstOrDefault();
+    //             }
+    //             if (Photo != null)
+    //             {
+    //                 teacher.Photo = $"images/tutor/Photos/{teacher.TeacherId + strDateTime + Path.GetExtension(Photo.FileName)}";
+    //                 _ablemusicContext.Update(teacher);
+    //                 await _ablemusicContext.SaveChangesAsync();
+    //                 var uploadResult = UploadFile(Photo, "tutor/Photos/", teacher.TeacherId, strDateTime);
+    //                 if (!uploadResult.IsUploadSuccess)
+    //                 {
+    //                     throw new Exception(uploadResult.ErrorMessage);
+    //                 }
+    //             }
+    //                         catch (Exception ex)
+    //         {
+    //             result.IsSuccess = false;
+    //             result.ErrorMessage = ex.ToString();
+    //             return StatusCode(401, result);
+    //         }
+    //     }        
+    //         return Ok(result);
+    // }
         //POST: http://localhost:5000/api/login
         [CheckModelFilter]
         [HttpPost]
