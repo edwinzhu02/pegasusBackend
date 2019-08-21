@@ -78,7 +78,7 @@ namespace Pegasus_backend.pegasusContext
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseMySQL("Server=gradspace.org;UserId=dbuser;Password=qwer1234;Database=ablemusic");
+                optionsBuilder.UseMySQL("server=www.gradspace.org;port=3306;user=dbuser;password=qwer1234;database=ablemusic");
             }
         }
 
@@ -1753,6 +1753,10 @@ namespace Pegasus_backend.pegasusContext
                 entity.Property(e => e.IsCompleted)
                     .HasColumnName("is_completed")
                     .HasColumnType("int(11)");
+
+                entity.Property(e => e.IsRead)
+                    .HasColumnName("is_read")
+                    .HasColumnType("bit(1)");
 
                 entity.Property(e => e.Notice)
                     .HasColumnName("notice")

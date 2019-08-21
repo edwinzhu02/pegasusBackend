@@ -18,7 +18,58 @@ namespace Pegasus_backend.Controllers
         public NoticeController(ablemusicContext ablemusicContext, ILogger<NoticeController> log) : base(ablemusicContext, log)
         {        
         }
+        [HttpPut("{staffId}/{noticeId}/{type}"]
+        public async Task<IActionResult> ReadNotices(int staffId,int noticeId,short type){
 
+            var result = new Result<object>();
+            try
+            {
+                var notice = _ablemusicContext.Notices
+                    .FirstOrDefault(n => n.NoticeId == noticeId);
+                if (notice == null) throw new Exception("This notice is not exists");
+                
+                if (type ==1 ){
+                    notice.IsCompleted=1;
+                    notice.IsRead =1 ;
+                }
+                else{
+                    notice.IsRead =1;
+                }
+
+                _ablemusicContext.Update(notice);
+                await _ablemusicContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Notices(Notices notice){
+
+            var result = new Result<object>();
+            notice.IsRead =0;
+            notice.IsCompleted =0;
+            notice.CreatedAt = toNZTimezone(DateTime.UtcNow);
+            try
+            {
+                if (notice.FromStaffId ==null|| notice.ToStaffId==null||notice.Notice==null ){
+                    throw new Exception("Notice data error!");
+                }
+                await _ablemusicContext.AddAsync(notice);
+                await _ablemusicContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
         [HttpGet("{staffId}")]
         public async Task<IActionResult> GetNotices(int staffId)
         {

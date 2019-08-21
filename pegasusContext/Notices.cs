@@ -11,6 +11,7 @@ namespace Pegasus_backend.pegasusContext
         public int? IsCompleted { get; set; }
         public short? FromStaffId { get; set; }
         public short? ToStaffId { get; set; }
+        public short? IsRead { get; set; }
 
         public Staff FromStaff { get; set; }
         public Staff ToStaff { get; set; }
