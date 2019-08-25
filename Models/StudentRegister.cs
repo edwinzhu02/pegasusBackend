@@ -31,7 +31,7 @@ namespace Pegasus_backend.Models
         public byte LearnerLevel { get; set; }
         [JsonProperty(Required = Required.Always)]
         public short OrgId { get; set; }
-        [JsonProperty(Required = Required.Always)]
+        //[JsonProperty(Required = Required.Always)]
         public string Address { get; set; }
         [JsonProperty(Required = Required.Always)]
         public short IsUnder18 { get; set; }
