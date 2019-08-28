@@ -347,6 +347,28 @@ namespace Pegasus_backend.Controllers
             return Ok(result);
         }
 
+        [HttpPut("{awaitId}/{days}")]
+        public async Task<IActionResult> ChangeExpiryDate(int awaitId,short days)
+        {
+            var result = new Result<object>();
+            try
+            {
+                var makeUpLesson = await _ablemusicContext.AwaitMakeUpLesson.
+                    FirstOrDefaultAsync(t => t.AwaitId == awaitId);
+                if ( makeUpLesson==null )
+                    throw new Exception("No such lesson!");
+                makeUpLesson.ExpiredDate = makeUpLesson.ExpiredDate.Value.AddDays(days);    
+                _ablemusicContext.Update(makeUpLesson);
+                result.Data =  makeUpLesson;      
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+            return Ok(result);;
+        }
         private bool LessonExists(int id)
         {
             return _ablemusicContext.Lesson.Any(e => e.LessonId == id);
