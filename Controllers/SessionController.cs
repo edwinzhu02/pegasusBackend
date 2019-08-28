@@ -74,41 +74,42 @@ namespace Pegasus_backend.Controllers
                                                                              .OrderBy(a => a.ExpiredDate).ToListAsync();
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 LogErrorToFile(ex.Message);
                 result.IsSuccess = false;
                 result.ErrorMessage = ex.Message;
                 return BadRequest(result);
             }
-            if(lessonRemains.Count <= 0)
+            if (lessonRemains.Count <= 0)
             {
                 result.IsSuccess = false;
                 result.ErrorMessage = "Lesson Remain not found";
                 return BadRequest(result);
             }
-            if(course == null)
+            if (course == null)
             {
                 result.IsSuccess = false;
                 result.ErrorMessage = "Course not found";
                 return BadRequest(result);
             }
-            if(awaitMakeUpLessons.Count <= 0)
+            if (awaitMakeUpLessons.Count <= 0)
             {
                 result.IsSuccess = false;
                 result.ErrorMessage = "AwaitMakeUpLesson not found";
                 return BadRequest(result);
             }
             AwaitMakeUpLesson validMakeUpLesson = null;
-            foreach(var makeUpLesson in awaitMakeUpLessons)
+            foreach (var makeUpLesson in awaitMakeUpLessons)
             {
-                if(makeUpLesson.ExpiredDate.Value.Date >= lesson.BeginTime.Value.Date)
+                if ((makeUpLesson.Remaining??0) < GetSplitCount(lesson.BeginTime.Value,lesson.EndTime.Value) ) continue;
+                if (makeUpLesson.ExpiredDate.Value.Date >= lesson.BeginTime.Value.Date)
                 {
                     validMakeUpLesson = makeUpLesson;
                     break;
                 }
             }
-            if(validMakeUpLesson == null)
+            if (validMakeUpLesson == null)
             {
                 result.IsSuccess = false;
                 result.ErrorMessage = "Your lesson all expired";
@@ -118,25 +119,29 @@ namespace Pegasus_backend.Controllers
             TimeSpan duration;
             switch (course.Duration)
             {
-                case 1: duration = TimeSpan.FromMinutes(30);
+                case 1:
+                    duration = TimeSpan.FromMinutes(30);
                     break;
-                case 2: duration = TimeSpan.FromMinutes(45);
+                case 2:
+                    duration = TimeSpan.FromMinutes(45);
                     break;
-                case 3: duration = TimeSpan.FromMinutes(60);
+                case 3:
+                    duration = TimeSpan.FromMinutes(60);
                     break;
-                default: duration = TimeSpan.FromMinutes(0);
+                default:
+                    duration = TimeSpan.FromMinutes(0);
                     break;
             }
             lesson.EndTime = lesson.BeginTime.Value.Add(duration);
             int termId = 0;
-            foreach(var lr in lessonRemains)
+            foreach (var lr in lessonRemains)
             {
-                if(lr.Quantity > 0)
+                if (lr.Quantity > 0)
                 {
                     termId = (int)lr.TermId;
                 }
             }
-            if(termId == 0)
+            if (termId == 0)
             {
                 result.IsSuccess = false;
                 result.ErrorMessage = "Lesson Remaining not found";
@@ -167,31 +172,31 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = ex.Message;
                 return BadRequest(result);
             }
-            if(learner == null)
+            if (learner == null)
             {
                 result.IsSuccess = false;
                 result.ErrorMessage = "Learner not found";
                 return BadRequest(result);
             }
-            if(room == null)
+            if (room == null)
             {
                 result.IsSuccess = false;
                 result.ErrorMessage = "Room not found";
                 return BadRequest(result);
             }
-            if(org == null)
+            if (org == null)
             {
                 result.IsSuccess = false;
                 result.ErrorMessage = "Org not found";
                 return BadRequest(result);
             }
-            if(teacher == null)
+            if (teacher == null)
             {
                 result.IsSuccess = false;
                 result.ErrorMessage = "Teacher not found";
                 return BadRequest(result);
             }
-            if(invoice == null)
+            if (invoice == null)
             {
                 result.IsSuccess = false;
                 result.ErrorMessage = "Lesson Remain not found";
@@ -350,11 +355,11 @@ namespace Pegasus_backend.Controllers
                 using (var dbContextTransaction = _ablemusicContext.Database.BeginTransaction())
                 {
                     var lesson = _ablemusicContext.Lesson
-                        .Include(s=>s.GroupCourseInstance)
-                        .ThenInclude(s=>s.Course)
-                        .Include(s=>s.GroupCourseInstance)
-                        .ThenInclude(s=>s.Course)
-                        .Include(s=>s.TrialCourse)
+                        .Include(s => s.GroupCourseInstance)
+                        .ThenInclude(s => s.Course)
+                        .Include(s => s.GroupCourseInstance)
+                        .ThenInclude(s => s.Course)
+                        .Include(s => s.TrialCourse)
                         .FirstOrDefault(s => s.LessonId == lessonId);
                     if (lesson == null)
                     {
@@ -377,7 +382,7 @@ namespace Pegasus_backend.Controllers
                         lesson.Reason = reason;
                         _ablemusicContext.Update(lesson);
                         await _ablemusicContext.SaveChangesAsync();
-                        
+
                         //fund
                         var TrailCourse = lesson.TrialCourse;
                         var fund1 = _ablemusicContext.Fund.FirstOrDefault(s => s.LearnerId == lesson.LearnerId);
@@ -385,21 +390,23 @@ namespace Pegasus_backend.Controllers
                         fund1.UpdatedAt = DateTime.Now;
                         _ablemusicContext.Update(fund1);
                         await _ablemusicContext.SaveChangesAsync();
-                        
+
                         //learner transaction
                         var learnerTransaction1 = new LearnerTransaction
                         {
-                            LessonId = lesson.LessonId,CreatedAt = toNZTimezone(DateTime.UtcNow).ToShortDateString(),
-                            Amount = TrailCourse.Price.ToString(),LearnerId = lesson.LearnerId
+                            LessonId = lesson.LessonId,
+                            CreatedAt = toNZTimezone(DateTime.UtcNow).ToShortDateString(),
+                            Amount = TrailCourse.Price.ToString(),
+                            LearnerId = lesson.LearnerId
                         };
                         _ablemusicContext.Add(learnerTransaction1);
                         await _ablemusicContext.SaveChangesAsync();
-                        
+
                         //teacher transaction
                         var teacherWageRate1 =
                             _ablemusicContext.TeacherWageRates.FirstOrDefault(s =>
                                 s.TeacherId == lesson.TeacherId && s.IsActivate == 1);
-                    
+
                         var courseCatogoryId1 = TrailCourse.CourseCategoryId;
                         if (courseCatogoryId1 == 1)
                         {
@@ -414,11 +421,12 @@ namespace Pegasus_backend.Controllers
                         {
                             houlyWage = teacherWageRate1.OthersRates;
                         }
-                        var wageAmout1 = (double) houlyWage*(lesson.EndTime.Value.Subtract(lesson.BeginTime.Value).TotalMinutes/60);
+                        var wageAmout1 = (double)houlyWage * (lesson.EndTime.Value.Subtract(lesson.BeginTime.Value).TotalMinutes / 60);
                         var teacherTransaction1 = new TeacherTransaction
                         {
-                            LessonId = lesson.LessonId,CreatedAt = toNZTimezone(DateTime.UtcNow),
-                            WageAmount = (decimal) wageAmout1,
+                            LessonId = lesson.LessonId,
+                            CreatedAt = toNZTimezone(DateTime.UtcNow),
+                            WageAmount = (decimal)wageAmout1,
                             TeacherId = lesson.TeacherId
                         };
                         _ablemusicContext.Add(teacherTransaction1);
@@ -426,23 +434,24 @@ namespace Pegasus_backend.Controllers
                         dbContextTransaction.Commit();
                         result.Data = "success";
                         return Ok(result);
-                        
+
                     }
-                    
+
                     if (!IsNull(lesson.GroupCourseInstanceId))
                     {
                         lesson.IsConfirm = 1;
                         lesson.Reason = reason;
                         _ablemusicContext.Update(lesson);
                         await _ablemusicContext.SaveChangesAsync();
-                        
+
                         var houlywage = _ablemusicContext.TeacherWageRates
                             .FirstOrDefault(s => s.TeacherId == lesson.TeacherId && s.IsActivate == 1).GroupRates;
-                        var GroupWageAmout = (double) houlywage*(lesson.EndTime.Value.Subtract(lesson.BeginTime.Value).TotalMinutes/60);
+                        var GroupWageAmout = (double)houlywage * (lesson.EndTime.Value.Subtract(lesson.BeginTime.Value).TotalMinutes / 60);
                         var teacherTransactionForGroup = new TeacherTransaction
                         {
-                            LessonId = lesson.LessonId,CreatedAt = toNZTimezone(DateTime.UtcNow),
-                            WageAmount = (decimal) GroupWageAmout,
+                            LessonId = lesson.LessonId,
+                            CreatedAt = toNZTimezone(DateTime.UtcNow),
+                            WageAmount = (decimal)GroupWageAmout,
                             TeacherId = lesson.TeacherId
                         };
                         _ablemusicContext.Add(teacherTransactionForGroup);
@@ -456,25 +465,28 @@ namespace Pegasus_backend.Controllers
                     lesson.Reason = reason;
                     _ablemusicContext.Update(lesson);
                     await _ablemusicContext.SaveChangesAsync();
-                    
+
                     //lessonRemain
                     LessonRemain lessonRemain;
                     lessonRemain = _ablemusicContext.LessonRemain.FirstOrDefault(s =>
                         s.LearnerId == lesson.LearnerId && s.CourseInstanceId == lesson.CourseInstanceId);
-                    
+
                     //
                     if (lessonRemain == null)
                     {
-                        var invoice = _ablemusicContext.InvoiceWaitingConfirm.FirstOrDefault(s => s.InvoiceNum == lesson.InvoiceNum && s.IsActivate==1);
+                        var invoice = _ablemusicContext.InvoiceWaitingConfirm.FirstOrDefault(s => s.InvoiceNum == lesson.InvoiceNum && s.IsActivate == 1);
                         var newlessonRemain = new LessonRemain
                         {
-                            Quantity = 0, TermId = invoice.TermId, ExpiryDate = invoice.EndDate.Value.AddMonths(3),
-                            CourseInstanceId = lesson.CourseInstanceId,LearnerId = lesson.LearnerId
+                            Quantity = 0,
+                            TermId = invoice.TermId,
+                            ExpiryDate = invoice.EndDate.Value.AddMonths(3),
+                            CourseInstanceId = lesson.CourseInstanceId,
+                            LearnerId = lesson.LearnerId
                         };
                         _ablemusicContext.Add(newlessonRemain);
                         await _ablemusicContext.SaveChangesAsync();
                     }
-                    
+
                     lessonRemain = _ablemusicContext.LessonRemain.FirstOrDefault(s =>
                         s.LearnerId == lesson.LearnerId && s.CourseInstanceId == lesson.CourseInstanceId);
                     //
@@ -482,7 +494,7 @@ namespace Pegasus_backend.Controllers
                     lessonRemain.Quantity -= 1;
                     _ablemusicContext.Update(lessonRemain);
                     await _ablemusicContext.SaveChangesAsync();
-                    
+
                     //fund
                     var courseInstance =
                         _ablemusicContext.One2oneCourseInstance.FirstOrDefault(s =>
@@ -492,21 +504,23 @@ namespace Pegasus_backend.Controllers
                     fund.Balance -= course.Price;
                     _ablemusicContext.Update(fund);
                     await _ablemusicContext.SaveChangesAsync();
-                    
+
                     //learner transaction
                     var learnerTransaction = new LearnerTransaction
                     {
-                        LessonId = lesson.LessonId,CreatedAt = toNZTimezone(DateTime.UtcNow).ToShortDateString(),
-                        Amount = course.Price.ToString(),LearnerId = lesson.LearnerId
+                        LessonId = lesson.LessonId,
+                        CreatedAt = toNZTimezone(DateTime.UtcNow).ToShortDateString(),
+                        Amount = course.Price.ToString(),
+                        LearnerId = lesson.LearnerId
                     };
                     _ablemusicContext.Add(learnerTransaction);
                     await _ablemusicContext.SaveChangesAsync();
-                    
+
                     //teacher transaction
                     var teacherWageRate =
                         _ablemusicContext.TeacherWageRates.FirstOrDefault(s =>
                             s.TeacherId == lesson.TeacherId && s.IsActivate == 1);
-                    
+
                     var courseCatogoryId = lesson.CourseInstance.Course.CourseCategoryId;
                     if (courseCatogoryId == 1)
                     {
@@ -521,16 +535,17 @@ namespace Pegasus_backend.Controllers
                     {
                         houlyWage = teacherWageRate.OthersRates;
                     }
-                    var wageAmout = (double) houlyWage*(lesson.EndTime.Value.Subtract(lesson.BeginTime.Value).TotalMinutes/60);
+                    var wageAmout = (double)houlyWage * (lesson.EndTime.Value.Subtract(lesson.BeginTime.Value).TotalMinutes / 60);
                     var teacherTransaction = new TeacherTransaction
                     {
-                        LessonId = lesson.LessonId,CreatedAt = toNZTimezone(DateTime.UtcNow),
-                        WageAmount = (decimal) wageAmout,
+                        LessonId = lesson.LessonId,
+                        CreatedAt = toNZTimezone(DateTime.UtcNow),
+                        WageAmount = (decimal)wageAmout,
                         TeacherId = lesson.TeacherId
                     };
                     _ablemusicContext.Add(teacherTransaction);
                     await _ablemusicContext.SaveChangesAsync();
-                    
+
                     dbContextTransaction.Commit();
                     result.Data = "Success";
                     return Ok(result);
@@ -544,7 +559,7 @@ namespace Pegasus_backend.Controllers
                 return BadRequest(result);
             }
         }
-        
+
         [Route("sessionCancelConfirm/{listId}/{remindId}")]
         [HttpGet]
         public async Task<IActionResult> CancelConfirm(int listId, int remindId)
@@ -557,13 +572,13 @@ namespace Pegasus_backend.Controllers
                 todoList = await _ablemusicContext.TodoList.Where(t => t.ListId == listId).FirstOrDefaultAsync();
                 remindLog = await _ablemusicContext.RemindLog.Where(r => r.RemindId == remindId).FirstOrDefaultAsync();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 result.IsSuccess = false;
                 result.ErrorMessage = ex.ToString();
                 return NotFound(result);
             }
-            
+
             if (todoList == null || remindLog == null)
             {
                 result.IsSuccess = false;
@@ -626,53 +641,91 @@ namespace Pegasus_backend.Controllers
 
             return Ok(result);  //Should redirect to a success page!
         }
-        [Route("MakeUpSplitLesson/CourseInstanceId/lessonId")]
-        [HttpGet]
-        public async Task<IActionResult> MakeUpSplitLesson(int CourseInstanceId,int lessonId)
+        [Route("MakeUpSplitLesson/{lessonId}/{isAfter}")]
+        [HttpPut]
+        public async Task<IActionResult> MakeUpSplitLesson( int lessonId,short isAfter)
         {
             var result = new Result<string>();
             //AwaitMakeUpLesson makeUpLesson;
             try
             {
                 var nowDate = toNZTimezone(DateTime.UtcNow);
-                var lesson = await _ablemusicContext.Lesson.Where(l => l.LessonId ==lessonId).FirstOrDefaultAsync();
-                var makeUpLesson =await _ablemusicContext.AwaitMakeUpLesson.
+                var lesson = await _ablemusicContext.Lesson.
+                    Where(l => l.LessonId == lessonId && l.IsCanceled !=1).FirstOrDefaultAsync();
+                
+                if (lesson == null) throw new Exception("It is wrong lesson inforamtion!");
+                if (lesson.CourseInstanceId==null) throw new Exception("Trial lesson and group lesson can not be made up!");
+                int CourseInstanceId = lesson.CourseInstanceId.Value;
+                var makeUpLesson = await _ablemusicContext.AwaitMakeUpLesson.
                 Where(r => r.CourseInstanceId == CourseInstanceId &&
-                     r.ExpiredDate < nowDate && r.IsActive == 1 && r.Remaining >1)
+                     r.ExpiredDate > nowDate && r.IsActive == 1 && r.Remaining > 1)
                      .OrderBy(r => r.ExpiredDate).FirstOrDefaultAsync();
 
-                if (makeUpLesson==null) throw new Exception("No Making up lesson can be splited!");
-                if (lesson==null) throw new Exception("Got wrong lesson inforamtion!");
-                lesson.EndTime = lesson.EndTime.Value.AddMinutes(15);
-                makeUpLesson.Remaining = (byte) (makeUpLesson.Remaining-1);
+                if (makeUpLesson == null) throw new Exception("No make up lesson!");
+                
+                if (isAfter==1)
+                    lesson.EndTime = lesson.EndTime.Value.AddMinutes(15);
+                else
+                    lesson.BeginTime = lesson.BeginTime.Value.AddMinutes(-15);
+                               
+                makeUpLesson.Remaining = (byte)(makeUpLesson.Remaining - 1);
+                if (makeUpLesson.Remaining ==0) makeUpLesson.IsActive = 0;
+                _ablemusicContext.Update(lesson);
+                _ablemusicContext.Update(makeUpLesson);
+
+                var lessonConflictCheckerService = new LessonConflictCheckerService(_ablemusicContext, lesson.BeginTime.Value,
+                lesson.EndTime.Value, lesson.RoomId.Value, lesson.OrgId, (int)lesson.TeacherId, lesson.LessonId);
+                Result<List<object>> lessonConflictCheckResult;
+                try
+                {
+                    lessonConflictCheckResult = await lessonConflictCheckerService.CheckBothRoomAndTeacher();
+                }
+                catch (Exception ex)
+                {
+                    result.IsSuccess = false;
+                    result.ErrorMessage = ex.Message;
+                    return BadRequest(result);
+                }
+                if (!lessonConflictCheckResult.IsSuccess)
+                {
+                    return BadRequest(lessonConflictCheckResult);
+                }
+                await _ablemusicContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
                 result.IsSuccess = false;
-                result.ErrorMessage = ex.ToString();
+                result.ErrorMessage = ex.Message;
                 return NotFound(result);
             }
             return Ok(result);  //Should redirect to a success page!
-        }        
+        }
         [HttpGet("[action]/{learnerId}")]
         //public async Task<IActionResult> GetLessonsBetweenDate(DateTime? beginDate, DateTime? endDate, int? userId)
-        public async Task<IActionResult>  GetMakeupSessions(int learnerId)
+        public async Task<IActionResult> GetMakeupSessions(int learnerId)
         //public async Task<IActionResult> CancelConfirm2(int remindId)
-      
+
         {
             var result = new Result<IEnumerable<object>>();
             try
             {
-                result.Data =await _ablemusicContext.AwaitMakeUpLesson.
+                result.Data = await _ablemusicContext.AwaitMakeUpLesson.
                     Include(a => a.CourseInstance).ThenInclude(ci => ci.Course).
                     Include(a => a.MissedLesson).
-                    Include(a => a.NewLesson).                    
-                    Where(a => a.LearnerId ==learnerId).Select(a => new {
-                        awaitId = a.AwaitId , CreateAt = a.CreateAt , SchduledAt = a.SchduledAt ,ExpiredDate = a.ExpiredDate,
-                        MissedLessonId = a.MissedLessonId ,NewLessonId = a.NewLessonId ,IsActive =a.IsActive, CourseInstanceId = a.CourseInstanceId,
-                        CourseInstance = new { CourseId = a.CourseInstance.CourseId ,CourseName = a.CourseInstance.Course.CourseName },
-                        MissedLesson = new { Org = a.MissedLesson.Org.Abbr ,Teacher= a.MissedLesson.Teacher.FirstName,  beginDate = a.MissedLesson.BeginTime },
-                        NewLesson = new { Org = a.NewLesson.Org.Abbr ,Teacher= a.NewLesson.Teacher.FirstName,  beginDate = a.NewLesson.BeginTime }
+                    Include(a => a.NewLesson).
+                    Where(a => a.LearnerId == learnerId).Select(a => new
+                    {
+                        awaitId = a.AwaitId,
+                        CreateAt = a.CreateAt,
+                        SchduledAt = a.SchduledAt,
+                        ExpiredDate = a.ExpiredDate,
+                        MissedLessonId = a.MissedLessonId,
+                        NewLessonId = a.NewLessonId,
+                        IsActive = a.IsActive,
+                        CourseInstanceId = a.CourseInstanceId,
+                        CourseInstance = new { CourseId = a.CourseInstance.CourseId, CourseName = a.CourseInstance.Course.CourseName },
+                        MissedLesson = new { Org = a.MissedLesson.Org.Abbr, Teacher = a.MissedLesson.Teacher.FirstName, beginDate = a.MissedLesson.BeginTime },
+                        NewLesson = new { Org = a.NewLesson.Org.Abbr, Teacher = a.NewLesson.Teacher.FirstName, beginDate = a.NewLesson.BeginTime }
                     })
                 .ToListAsync();
             }
@@ -702,14 +755,14 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = ex.ToString();
                 return NotFound(result);
             }
-             
+
             if (lesson == null)
             {
                 result.IsSuccess = false;
                 result.ErrorMessage = "Session not found";
                 return NotFound(result);
             }
-            if(lesson.IsCanceled == 1)
+            if (lesson.IsCanceled == 1)
             {
                 result.IsSuccess = false;
                 result.ErrorMessage = "This lesson has already been cancelled";
@@ -735,11 +788,11 @@ namespace Pegasus_backend.Controllers
             awaitMakeUpLesson.MissedLessonId = lesson.LessonId;
             awaitMakeUpLesson.LearnerId = lesson.LearnerId;
             awaitMakeUpLesson.CourseInstanceId = lesson.CourseInstanceId;
-            awaitMakeUpLesson.GroupCourseInstanceId = lesson.GroupCourseInstanceId;            
+            awaitMakeUpLesson.GroupCourseInstanceId = lesson.GroupCourseInstanceId;
             awaitMakeUpLesson.CreateAt = toNZTimezone(DateTime.UtcNow);
             awaitMakeUpLesson.IsActive = 1;
             awaitMakeUpLesson.ExpiredDate = lesson.BeginTime.Value.Date.AddMonths(3);
-            awaitMakeUpLesson.Remaining = GetSplitCount(lesson.BeginTime.Value,lesson.EndTime.Value);
+            awaitMakeUpLesson.Remaining = GetSplitCount(lesson.BeginTime.Value, lesson.EndTime.Value);
             await _ablemusicContext.AwaitMakeUpLesson.AddAsync(awaitMakeUpLesson);
 
             bool isGroupCourse = lesson.LearnerId == null;
@@ -749,10 +802,11 @@ namespace Pegasus_backend.Controllers
             try
             {
                 teacher = await _ablemusicContext.Teacher.FirstOrDefaultAsync(t => t.TeacherId == lesson.TeacherId);
-                if(lesson.IsTrial == 1)
+                if (lesson.IsTrial == 1)
                 {
                     course = await _ablemusicContext.Course.Where(c => c.CourseId == lesson.TrialCourseId).FirstOrDefaultAsync();
-                } else
+                }
+                else
                 {
                     course = isGroupCourse ? await (from c in _ablemusicContext.Course
                                                     join gc in _ablemusicContext.GroupCourseInstance on c.CourseId equals gc.CourseId
@@ -770,7 +824,7 @@ namespace Pegasus_backend.Controllers
                                                      CourseId = c.CourseId,
                                                      CourseName = c.CourseName
                                                  }).FirstOrDefaultAsync();
-                }                
+                }
                 holidays = await _ablemusicContext.Holiday.ToListAsync();
             }
             catch (Exception e)
@@ -779,7 +833,7 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = e.Message;
                 return NotFound(result);
             }
-            
+
             if (course == null)
             {
                 result.IsSuccess = false;
@@ -789,12 +843,12 @@ namespace Pegasus_backend.Controllers
             string courseName = course.CourseName;
 
             DateTime todoDate = lesson.BeginTime.Value.AddDays(-1);
-            foreach(var holiday in holidays)
+            foreach (var holiday in holidays)
             {
                 if (holiday.HolidayDate.Date == todoDate.Date)
                 {
                     todoDate = todoDate.AddDays(-1);
-                }                
+                }
             }
 
             DateTime remindScheduleDate = todoDate;
