@@ -15,6 +15,7 @@ namespace Pegasus_backend.pegasusContext
         public int? LearnerId { get; set; }
         public int? CourseInstanceId { get; set; }
         public int? GroupCourseInstanceId { get; set; }
+        public byte? Remaining { get; set; }
 
         public One2oneCourseInstance CourseInstance { get; set; }
         public GroupCourseInstance GroupCourseInstance { get; set; }

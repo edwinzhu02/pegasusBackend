@@ -405,6 +405,10 @@ namespace Pegasus_backend.pegasusContext
                     .HasColumnName("new_lesson_id")
                     .HasColumnType("int(11)");
 
+                entity.Property(e => e.Remaining)
+                    .HasColumnName("remaining")
+                    .HasColumnType("tinyint(4)");
+
                 entity.Property(e => e.SchduledAt).HasColumnName("schduled_at");
 
                 entity.HasOne(d => d.CourseInstance)

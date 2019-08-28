@@ -141,7 +141,21 @@ namespace Pegasus_backend.Controllers
                     throw new Exception("Duration type must be From 1 to 4");
             }
         }
-        
+        protected Byte GetSplitCount(DateTime beginTime, DateTime endTime)
+        {
+            var timeSpan = (short)(endTime -beginTime).TotalMinutes ;
+            switch (timeSpan)
+            {
+                case 30:
+                    return 2;
+                case 45:
+                    return 3;                
+                case 60:
+                    return 4;                
+                default:
+                    throw new Exception("Duration type must be From 1 to 4");
+            }
+        }
         protected void DeleteFile(string filePath)
         {
             var folderName = Path.Combine("wwwroot", filePath);

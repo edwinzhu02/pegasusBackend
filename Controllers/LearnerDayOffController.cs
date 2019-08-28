@@ -102,9 +102,11 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = "There is a conflict of date on your previous dayoff";
                 return BadRequest(result);
             }
+            var remaining = GetSplitCount(lessons[0].BeginTime.Value,lessons[0].EndTime.Value);
             Dictionary<string, int> invoiceNumsMapLessonQuantity = new Dictionary<string, int>();
             foreach(var lesson in lessons)
             {
+               
                 if (inputObj.IsInvoiceChange && lesson.InvoiceNum != null)
                 {
                     if (!invoiceNumsMapLessonQuantity.ContainsKey(lesson.InvoiceNum))
@@ -204,6 +206,7 @@ namespace Pegasus_backend.Controllers
                         LearnerId = l.LearnerId,
                         CourseInstanceId = l.CourseInstanceId,
                         GroupCourseInstanceId = null,
+                        Remaining = remaining
                     });
                 }
             }

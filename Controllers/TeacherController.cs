@@ -41,7 +41,7 @@ namespace Pegasus_backend.Controllers
             {
                 var availableDays = await _ablemusicContext.AvailableDays
                     .Include(s=>s.Teacher)
-                    .Where(s => s.OrgId == orgId && s.RoomId != null && s.DayOfWeek == dayofweek)
+                    .Where(s => s.OrgId == orgId && s.RoomId != null && s.DayOfWeek == dayofweek && s.Teacher.IsActivate ==1 )
                     .OrderBy(s => s.Teacher.FirstName)
                     .ToListAsync();
                 result.Data = availableDays;
@@ -55,6 +55,27 @@ namespace Pegasus_backend.Controllers
             }
         }
 
+        [HttpGet("[action]/{orgId}/{dayofweek}")]
+        public async Task<IActionResult> GetTeacherByOrgDayOfWeek(short orgId, short dayofweek)
+        {
+            var result = new Result<object>();
+            try
+            {
+                var availableDays = await _ablemusicContext.AvailableDays
+                    .Include(s=>s.Teacher)
+                    .Where(s => s.OrgId == orgId && s.DayOfWeek == dayofweek && s.Teacher.IsActivate ==1 )
+                    .OrderBy(s => s.Teacher.FirstName)
+                    .ToListAsync();
+                result.Data = availableDays;
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+        }
 
 
         [HttpGet("[action]/{teacherId}")]

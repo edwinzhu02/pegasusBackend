@@ -161,3 +161,29 @@ LIMIT 1
 2019-08-28 12:32:21.056 +12:00 [INF] Executed action Pegasus_backend.Controllers.LessonRearrangeController.ChangeExpiryDate (Pegasus_backend) in 3382.3651ms
 2019-08-28 12:32:21.057 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":{"AwaitId":17,"CreateAt":"2019-08-06T22:14:39","SchduledAt":null,"ExpiredDate":"2019-11-13T00:00:00","MissedLessonId":42462,"NewLessonId":null,"IsActive":1,"LearnerId":10207,"CourseInstanceId":10216,"GroupCourseInstanceId":null,"CourseInstance":null,"GroupCourseInstance":null,"Learner":null,"MissedLesson":null,"NewLesson":null}}
 2019-08-28 12:32:21.058 +12:00 [INF] Request finished in 3510.0141ms 200 application/json; charset=utf-8
+2019-08-28 15:00:03.842 +12:00 [INF] User profile is available. Using 'C:\Users\zhuyi\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-08-28 15:00:04.489 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-08-28 15:00:08.050 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
+2019-08-28 15:00:08.115 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-08-28 15:00:08.209 +12:00 [INF] 
+2019-08-28 15:00:08.362 +12:00 [INF] Response 
+2019-08-28 15:00:08.368 +12:00 [INF] Request finished in 320.8653ms 404 
+2019-08-28 16:42:34.093 +12:00 [INF] User profile is available. Using 'C:\Users\zhuyi\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-08-28 16:42:34.502 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-08-28 16:42:37.664 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
+2019-08-28 16:42:37.707 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-08-28 16:42:37.829 +12:00 [INF] 
+2019-08-28 16:42:38.007 +12:00 [ERR] An unhandled exception has occurred while executing the request.
+Microsoft.AspNetCore.Routing.RouteCreationException: The following errors occurred with attribute routing information:
+
+For action: 'Pegasus_backend.Controllers.SessionController.MakeUpSplitLesson (Pegasus_backend)'
+Error: The attribute route 'api/Session/api/{controller}/CourseInstanceId/lessonId' cannot contain a parameter named '{controller}'. Use '[controller]' in the route template to insert the value 'Session'.
+   at Microsoft.AspNetCore.Mvc.Internal.AttributeRoute.GetRouteInfos(IReadOnlyList`1 actions)
+   at Microsoft.AspNetCore.Mvc.Internal.AttributeRoute.AddEntries(TreeRouteBuilder builder, ActionDescriptorCollection actions)
+   at Microsoft.AspNetCore.Mvc.Internal.AttributeRoute.GetTreeRouter()
+   at Microsoft.AspNetCore.Mvc.Internal.AttributeRoute.RouteAsync(RouteContext context)
+   at Microsoft.AspNetCore.Routing.RouteCollection.RouteAsync(RouteContext context)
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddleware.Invoke(HttpContext context)
+2019-08-28 16:42:38.133 +12:00 [INF] Response {"IsSuccess":false,"ErrorCode":null,"IsFound":true,"ErrorMessage":"Global Exception was Caught: Microsoft.AspNetCore.Routing.RouteCreationException: The following errors occurred with attribute routing information:\r\n\r\nFor action: 'Pegasus_backend.Controllers.SessionController.MakeUpSplitLesson (Pegasus_backend)'\r\nError: The attribute route 'api/Session/api/{controller}/CourseInstanceId/lessonId' cannot contain a parameter named '{controller}'. Use '[controller]' in the route template to insert the value 'Session'.\r\n   at Microsoft.AspNetCore.Mvc.Internal.AttributeRoute.GetRouteInfos(IReadOnlyList`1 actions)\r\n   at Microsoft.AspNetCore.Mvc.Internal.AttributeRoute.AddEntries(TreeRouteBuilder builder, ActionDescriptorCollection actions)\r\n   at Microsoft.AspNetCore.Mvc.Internal.AttributeRoute.GetTreeRouter()\r\n   at Microsoft.AspNetCore.Mvc.Internal.AttributeRoute.RouteAsync(RouteContext context)\r\n   at Microsoft.AspNetCore.Routing.RouteCollection.RouteAsync(RouteContext context)\r\n   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)\r\n   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddleware.Invoke(HttpContext context)","Note":null,"Data":null}
+2019-08-28 16:42:38.144 +12:00 [INF] Request finished in 482.1539ms 500 application/json

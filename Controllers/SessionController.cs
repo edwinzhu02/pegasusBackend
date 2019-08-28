@@ -626,6 +626,34 @@ namespace Pegasus_backend.Controllers
 
             return Ok(result);  //Should redirect to a success page!
         }
+        [Route("api/{controller}/CourseInstanceId/lessonId")]
+        [HttpGet]
+        public async Task<IActionResult> MakeUpSplitLesson(int CourseInstanceId,int lessonId)
+        {
+            var result = new Result<string>();
+            //AwaitMakeUpLesson makeUpLesson;
+            try
+            {
+                var nowDate = toNZTimezone(DateTime.UtcNow);
+                var lesson = await _ablemusicContext.Lesson.Where(l => l.LessonId ==lessonId).FirstOrDefaultAsync();
+                var makeUpLesson =await _ablemusicContext.AwaitMakeUpLesson.
+                Where(r => r.CourseInstanceId == CourseInstanceId &&
+                     r.ExpiredDate < nowDate && r.IsActive == 1 && r.Remaining >1)
+                     .OrderBy(r => r.ExpiredDate).FirstOrDefaultAsync();
+
+                if (makeUpLesson==null) throw new Exception("No Making up lesson can be splited!");
+                if (lesson==null) throw new Exception("Got wrong lesson inforamtion!");
+                lesson.EndTime = lesson.EndTime.Value.AddMinutes(15);
+                makeUpLesson.Remaining = (byte) (makeUpLesson.Remaining-1);
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.ToString();
+                return NotFound(result);
+            }
+            return Ok(result);  //Should redirect to a success page!
+        }        
         [HttpGet("[action]/{learnerId}")]
         //public async Task<IActionResult> GetLessonsBetweenDate(DateTime? beginDate, DateTime? endDate, int? userId)
         public async Task<IActionResult>  GetMakeupSessions(int learnerId)
@@ -711,8 +739,8 @@ namespace Pegasus_backend.Controllers
             awaitMakeUpLesson.CreateAt = toNZTimezone(DateTime.UtcNow);
             awaitMakeUpLesson.IsActive = 1;
             awaitMakeUpLesson.ExpiredDate = lesson.BeginTime.Value.Date.AddMonths(3);
+            awaitMakeUpLesson.Remaining = GetSplitCount(lesson.BeginTime.Value,lesson.EndTime.Value);
             await _ablemusicContext.AwaitMakeUpLesson.AddAsync(awaitMakeUpLesson);
-
 
             bool isGroupCourse = lesson.LearnerId == null;
             Teacher teacher;
