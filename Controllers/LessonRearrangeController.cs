@@ -359,7 +359,8 @@ namespace Pegasus_backend.Controllers
                     throw new Exception("No such lesson!");
                 makeUpLesson.ExpiredDate = makeUpLesson.ExpiredDate.Value.AddDays(days);    
                 _ablemusicContext.Update(makeUpLesson);
-                result.Data =  makeUpLesson;      
+                result.Data =  makeUpLesson;   
+                await _ablemusicContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
