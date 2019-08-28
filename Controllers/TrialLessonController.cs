@@ -311,7 +311,7 @@ namespace Pegasus_backend.Controllers
 
                 try
                 {
-                    await _ablemusicContext.Lesson.AddAsync(lesson);
+                   
                     if (trialLessonViewModel.IsPayNow)
                         await _ablemusicContext.Payment.AddAsync(payment);
                     else
@@ -323,6 +323,8 @@ namespace Pegasus_backend.Controllers
                         invoice.IsActive = 1;
                         await _ablemusicContext.Invoice.AddAsync(invoice);
                     }
+                    lesson.InvoiceNum = invoiceWaiting.InvoiceNum;
+                    await _ablemusicContext.Lesson.AddAsync(lesson);
                     await _ablemusicContext.SaveChangesAsync();
                     dbContextTransaction.Commit();
                 }

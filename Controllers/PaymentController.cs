@@ -181,6 +181,7 @@ namespace Pegasus_backend.Controllers
                     if (lesson !=null){
                         lesson.IsPaid=1;
                         _ablemusicContext.Update(lesson);
+                        await _ablemusicContext.SaveChangesAsync();
                     }
                     dbContextTransaction.Commit();
                 }
