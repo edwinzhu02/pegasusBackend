@@ -454,6 +454,7 @@ namespace Pegasus_backend.Services
                     if (invoice.LessonFee <= 0) continue;
                     _ablemusicContext.InvoiceWaitingConfirm.Update(invoice);
                     invoice.InvoiceNum = invoice.WaitingId.ToString();
+                    _ablemusicContext.InvoiceWaitingConfirm.Update(invoice);                    
                     _ablemusicContext.Update(courseIns);
 
                     await _ablemusicContext.SaveChangesAsync();
