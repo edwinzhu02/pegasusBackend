@@ -176,6 +176,12 @@ namespace Pegasus_backend.Controllers
                         
 
                     }
+                    var lesson = _ablemusicContext.Lesson
+                    .Where(l => l.InvoiceNum==invoiceItem.InvoiceNum && l.IsTrial==1).FirstOrDefault();
+                    if (lesson !=null){
+                        lesson.IsPaid=1;
+                        _ablemusicContext.Update(lesson);
+                    }
                     dbContextTransaction.Commit();
                 }
             }

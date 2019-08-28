@@ -170,17 +170,20 @@ namespace Pegasus_backend.Controllers
 
             try
             {
-                await _ablemusicContext.Lesson.AddAsync(lesson);
+                
                 if (trialLessonViewModel.IsPayNow)
                     await _ablemusicContext.Payment.AddAsync(payment);
                 else
                 {
                     await _ablemusicContext.InvoiceWaitingConfirm.AddAsync(invoiceWaiting);
+                    await _ablemusicContext.SaveChangesAsync();    
                     invoiceWaiting.InvoiceNum = invoiceWaiting.WaitingId.ToString();
                     _mapper.Map(invoiceWaiting, invoice);
                     invoice.IsActive = 1;
                     await _ablemusicContext.Invoice.AddAsync(invoice);
+                    lesson.InvoiceNum = invoiceWaiting.InvoiceNum;
                 }
+                await _ablemusicContext.Lesson.AddAsync(lesson);
                 await _ablemusicContext.SaveChangesAsync();
             }
             catch (Exception ex)
@@ -314,6 +317,7 @@ namespace Pegasus_backend.Controllers
                     else
                     {
                         await _ablemusicContext.InvoiceWaitingConfirm.AddAsync(invoiceWaiting);
+                        await _ablemusicContext.SaveChangesAsync();
                         invoiceWaiting.InvoiceNum = invoiceWaiting.WaitingId.ToString();
                         _mapper.Map(invoiceWaiting, invoice);
                         invoice.IsActive = 1;
