@@ -187,3 +187,63 @@ Error: The attribute route 'api/Session/api/{controller}/CourseInstanceId/lesson
    at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddleware.Invoke(HttpContext context)
 2019-08-28 16:42:38.133 +12:00 [INF] Response {"IsSuccess":false,"ErrorCode":null,"IsFound":true,"ErrorMessage":"Global Exception was Caught: Microsoft.AspNetCore.Routing.RouteCreationException: The following errors occurred with attribute routing information:\r\n\r\nFor action: 'Pegasus_backend.Controllers.SessionController.MakeUpSplitLesson (Pegasus_backend)'\r\nError: The attribute route 'api/Session/api/{controller}/CourseInstanceId/lessonId' cannot contain a parameter named '{controller}'. Use '[controller]' in the route template to insert the value 'Session'.\r\n   at Microsoft.AspNetCore.Mvc.Internal.AttributeRoute.GetRouteInfos(IReadOnlyList`1 actions)\r\n   at Microsoft.AspNetCore.Mvc.Internal.AttributeRoute.AddEntries(TreeRouteBuilder builder, ActionDescriptorCollection actions)\r\n   at Microsoft.AspNetCore.Mvc.Internal.AttributeRoute.GetTreeRouter()\r\n   at Microsoft.AspNetCore.Mvc.Internal.AttributeRoute.RouteAsync(RouteContext context)\r\n   at Microsoft.AspNetCore.Routing.RouteCollection.RouteAsync(RouteContext context)\r\n   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)\r\n   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddleware.Invoke(HttpContext context)","Note":null,"Data":null}
 2019-08-28 16:42:38.144 +12:00 [INF] Request finished in 482.1539ms 500 application/json
+2019-08-28 16:54:11.023 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/index.html  
+2019-08-28 16:54:11.074 +12:00 [INF] Request finished in 50.4371ms 200 text/html
+2019-08-28 16:54:11.462 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/v1/swagger.json  
+2019-08-28 16:54:11.491 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/favicon-32x32.png  
+2019-08-28 16:54:11.503 +12:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+2019-08-28 16:54:11.503 +12:00 [INF] Request finished in 12.3005ms 200 image/png
+2019-08-28 16:54:11.854 +12:00 [INF] Request finished in 391.5748ms 200 application/json;charset=utf-8
+2019-08-28 16:54:34.042 +12:00 [INF] User profile is available. Using 'C:\Users\zhuyi\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-08-28 16:54:34.501 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-08-28 16:54:37.978 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
+2019-08-28 16:54:38.046 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-08-28 16:54:38.170 +12:00 [INF] 
+2019-08-28 16:54:38.313 +12:00 [ERR] An unhandled exception has occurred while executing the request.
+Microsoft.AspNetCore.Routing.RouteCreationException: The following errors occurred with attribute routing information:
+
+For action: 'Pegasus_backend.Controllers.SessionController.MakeUpSplitLesson (Pegasus_backend)'
+Error: The attribute route 'api/Session/api/{controller}/CourseInstanceId/lessonId' cannot contain a parameter named '{controller}'. Use '[controller]' in the route template to insert the value 'Session'.
+   at Microsoft.AspNetCore.Mvc.Internal.AttributeRoute.GetRouteInfos(IReadOnlyList`1 actions)
+   at Microsoft.AspNetCore.Mvc.Internal.AttributeRoute.AddEntries(TreeRouteBuilder builder, ActionDescriptorCollection actions)
+   at Microsoft.AspNetCore.Mvc.Internal.AttributeRoute.GetTreeRouter()
+   at Microsoft.AspNetCore.Mvc.Internal.AttributeRoute.RouteAsync(RouteContext context)
+   at Microsoft.AspNetCore.Routing.RouteCollection.RouteAsync(RouteContext context)
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddleware.Invoke(HttpContext context)
+2019-08-28 16:54:38.439 +12:00 [INF] Response {"IsSuccess":false,"ErrorCode":null,"IsFound":true,"ErrorMessage":"Global Exception was Caught: Microsoft.AspNetCore.Routing.RouteCreationException: The following errors occurred with attribute routing information:\r\n\r\nFor action: 'Pegasus_backend.Controllers.SessionController.MakeUpSplitLesson (Pegasus_backend)'\r\nError: The attribute route 'api/Session/api/{controller}/CourseInstanceId/lessonId' cannot contain a parameter named '{controller}'. Use '[controller]' in the route template to insert the value 'Session'.\r\n   at Microsoft.AspNetCore.Mvc.Internal.AttributeRoute.GetRouteInfos(IReadOnlyList`1 actions)\r\n   at Microsoft.AspNetCore.Mvc.Internal.AttributeRoute.AddEntries(TreeRouteBuilder builder, ActionDescriptorCollection actions)\r\n   at Microsoft.AspNetCore.Mvc.Internal.AttributeRoute.GetTreeRouter()\r\n   at Microsoft.AspNetCore.Mvc.Internal.AttributeRoute.RouteAsync(RouteContext context)\r\n   at Microsoft.AspNetCore.Routing.RouteCollection.RouteAsync(RouteContext context)\r\n   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)\r\n   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddleware.Invoke(HttpContext context)","Note":null,"Data":null}
+2019-08-28 16:54:38.449 +12:00 [INF] Request finished in 475.1623ms 500 application/json
+2019-08-28 16:54:40.737 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/index.html  
+2019-08-28 16:54:40.776 +12:00 [INF] Request finished in 38.7128ms 200 text/html
+2019-08-28 16:54:41.166 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/v1/swagger.json  
+2019-08-28 16:54:41.200 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/favicon-32x32.png  
+2019-08-28 16:54:41.210 +12:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+2019-08-28 16:54:41.210 +12:00 [INF] Request finished in 10.1683ms 200 image/png
+2019-08-28 16:54:41.644 +12:00 [INF] Request finished in 477.9009ms 200 application/json;charset=utf-8
+2019-08-28 17:05:54.001 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/index.html  
+2019-08-28 17:05:54.006 +12:00 [INF] Request finished in 9.8611ms 200 text/html
+2019-08-28 17:05:54.219 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/v1/swagger.json  
+2019-08-28 17:05:54.256 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/favicon-32x32.png  
+2019-08-28 17:05:54.257 +12:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+2019-08-28 17:05:54.257 +12:00 [INF] Request finished in 1.132ms 200 image/png
+2019-08-28 17:05:54.293 +12:00 [INF] Request finished in 73.856ms 200 application/json;charset=utf-8
+2019-08-28 17:13:05.025 +12:00 [INF] User profile is available. Using 'C:\Users\zhuyi\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-08-28 17:13:05.532 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-08-28 17:13:09.662 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
+2019-08-28 17:13:09.708 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-08-28 17:13:09.835 +12:00 [INF] 
+2019-08-28 17:13:10.081 +12:00 [INF] Response 
+2019-08-28 17:13:10.091 +12:00 [INF] Request finished in 431.3191ms 404 
+2019-08-28 17:13:30.387 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/CourseCategories  
+2019-08-28 17:13:30.409 +12:00 [INF] 
+2019-08-28 17:13:30.442 +12:00 [INF] Route matched with {action = "GetCourseCategory", controller = "CourseCategories"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetCourseCategory() on controller Pegasus_backend.Controllers.CourseCategoriesController (Pegasus_backend).
+2019-08-28 17:13:30.633 +12:00 [INF] Executing action method Pegasus_backend.Controllers.CourseCategoriesController.GetCourseCategory (Pegasus_backend) - Validation state: "Valid"
+2019-08-28 17:13:31.824 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-08-28 17:13:32.927 +12:00 [INF] Executed DbCommand (54ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `c`.`course_category_id` AS `CourseCategoryId`, `c`.`course_category_name` AS `CourseCategoryName`
+FROM `ablemusic`.`course_category` AS `c`
+2019-08-28 17:13:32.948 +12:00 [INF] Executed action method Pegasus_backend.Controllers.CourseCategoriesController.GetCourseCategory (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 2305.7977ms.
+2019-08-28 17:13:32.956 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Collections.Generic.List`1[[Pegasus_backend.pegasusContext.CourseCategory, Pegasus_backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-08-28 17:13:33.007 +12:00 [INF] Executed action Pegasus_backend.Controllers.CourseCategoriesController.GetCourseCategory (Pegasus_backend) in 2562.6358ms
+2019-08-28 17:13:33.007 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":[{"CourseCategoryId":1,"CourseCategoryName":"Piano","Course":null},{"CourseCategoryId":2,"CourseCategoryName":"Drum","Course":null},{"CourseCategoryId":3,"CourseCategoryName":"Guitar","Course":null},{"CourseCategoryId":4,"CourseCategoryName":"Violin","Course":null},{"CourseCategoryId":5,"CourseCategoryName":"Cello","Course":null},{"CourseCategoryId":6,"CourseCategoryName":"Voice","Course":null},{"CourseCategoryId":7,"CourseCategoryName":"Theory","Course":null},{"CourseCategoryId":8,"CourseCategoryName":"Aural","Course":null},{"CourseCategoryId":9,"CourseCategoryName":"Other-specify","Course":null}]}
+2019-08-28 17:13:33.010 +12:00 [INF] Request finished in 2623.5883ms 200 application/json; charset=utf-8

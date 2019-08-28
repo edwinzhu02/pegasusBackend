@@ -626,7 +626,7 @@ namespace Pegasus_backend.Controllers
 
             return Ok(result);  //Should redirect to a success page!
         }
-        [Route("api/{controller}/CourseInstanceId/lessonId")]
+        [Route("MakeUpSplitLesson/CourseInstanceId/lessonId")]
         [HttpGet]
         public async Task<IActionResult> MakeUpSplitLesson(int CourseInstanceId,int lessonId)
         {
