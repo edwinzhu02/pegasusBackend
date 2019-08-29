@@ -99,23 +99,8 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = "AwaitMakeUpLesson not found";
                 return BadRequest(result);
             }
-            AwaitMakeUpLesson validMakeUpLesson = null;
-            foreach (var makeUpLesson in awaitMakeUpLessons)
-            {
-                if ((makeUpLesson.Remaining??0) < GetSplitCount(lesson.BeginTime.Value,lesson.EndTime.Value) ) continue;
-                if (makeUpLesson.ExpiredDate.Value.Date >= lesson.BeginTime.Value.Date)
-                {
-                    validMakeUpLesson = makeUpLesson;
-                    break;
-                }
-            }
-            if (validMakeUpLesson == null)
-            {
-                result.IsSuccess = false;
-                result.ErrorMessage = "Your lesson all expired";
-                return BadRequest(result);
-            }
 
+            AwaitMakeUpLesson validMakeUpLesson = null;
             TimeSpan duration;
             switch (course.Duration)
             {
@@ -133,6 +118,23 @@ namespace Pegasus_backend.Controllers
                     break;
             }
             lesson.EndTime = lesson.BeginTime.Value.Add(duration);
+
+            foreach (var makeUpLesson in awaitMakeUpLessons)
+            {
+                if ((makeUpLesson.Remaining??0) < GetSplitCount(lesson.BeginTime.Value,lesson.EndTime.Value) ) continue;
+                if (makeUpLesson.ExpiredDate.Value.Date >= lesson.BeginTime.Value.Date)
+                {
+                    validMakeUpLesson = makeUpLesson;
+                    break;
+                }
+            }
+            if (validMakeUpLesson == null)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = "Your lesson all expired";
+                return BadRequest(result);
+            }
+
             int termId = 0;
             foreach (var lr in lessonRemains)
             {
@@ -722,6 +724,7 @@ namespace Pegasus_backend.Controllers
                         MissedLessonId = a.MissedLessonId,
                         NewLessonId = a.NewLessonId,
                         IsActive = a.IsActive,
+                        Remaining = a.Remaining,
                         CourseInstanceId = a.CourseInstanceId,
                         CourseInstance = new { CourseId = a.CourseInstance.CourseId, CourseName = a.CourseInstance.Course.CourseName },
                         MissedLesson = new { Org = a.MissedLesson.Org.Abbr, Teacher = a.MissedLesson.Teacher.FirstName, beginDate = a.MissedLesson.BeginTime },
