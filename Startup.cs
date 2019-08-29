@@ -69,7 +69,12 @@ namespace Pegasus_backend
                 );
             
             services.AddDirectoryBrowser();
-            services.AddSignalR();
+            services.AddSignalR().AddHubOptions<Chatroom>(options =>
+            {
+                //exception messages can contain sensitive information.
+                options.EnableDetailedErrors = true;
+                options.KeepAliveInterval = TimeSpan.FromSeconds(30);
+            });
             services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddDbContext<ablemusicContext>(options =>
