@@ -315,7 +315,7 @@ namespace Pegasus_backend.Controllers
             [FromForm(Name = "Form")] IFormFile Form, [FromForm(Name = "Otherfile")] IFormFile Otherfile
             , [FromForm] string details)
         {
-            Result<string> result = new Result<string>();
+            Result<object> result = new Result<object>();
             try
             {
 
@@ -466,6 +466,9 @@ namespace Pegasus_backend.Controllers
 
 
                     dbContextTransaction.Commit();
+                    
+                    result.Data = new {LearnerId=newLearner.LearnerId};
+                    return Ok(result);
                 }
             }
             catch (Exception ex)
@@ -474,9 +477,6 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = ex.Message;
                 return BadRequest(result);
             }
-
-            result.Data = "success!";
-            return Ok(result);
         }
     }
 }
