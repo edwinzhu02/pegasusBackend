@@ -69,7 +69,6 @@ namespace Pegasus_backend.Controllers.Authorization
         {
             Result<string> result = new Result<string>();
             var uploadResult= new UploadFileModel();
-            string photoUrl ;
             var strDateTime = toNZTimezone(DateTime.UtcNow).ToString("yyMMddhhmmssfff"); 
             try
             {
@@ -81,7 +80,7 @@ namespace Pegasus_backend.Controllers.Authorization
                     .FirstOrDefaultAsync();
                 if (user.Role.RoleId == 1){ //teacher {
                     var teacher = user.Teacher.FirstOrDefault();
-                    photoUrl = $"images/tutor/Photos/{teacher.TeacherId + strDateTime + Path.GetExtension(Photo.FileName)}";
+                    teacher.Photo = $"images/tutor/Photos/{teacher.TeacherId + strDateTime + Path.GetExtension(Photo.FileName)}";
                     _ablemusicContext.Update(teacher);
                     await _ablemusicContext.SaveChangesAsync();
                     uploadResult = UploadFile(Photo, "tutor/Photos/", teacher.TeacherId, strDateTime);
@@ -89,7 +88,7 @@ namespace Pegasus_backend.Controllers.Authorization
                 else if (user.Role.RoleId == 4)  {//learner
                     var learner = user.Learner.FirstOrDefault();
                     
-                    photoUrl = $"images/learner/Photos/{learner.LearnerId + strDateTime + Path.GetExtension(Photo.FileName)}";
+                    learner.Photo = $"images/learner/Photos/{learner.LearnerId + strDateTime + Path.GetExtension(Photo.FileName)}";
                     _ablemusicContext.Update(learner);
                     await _ablemusicContext.SaveChangesAsync();
                     uploadResult = UploadFile(Photo, "learner/Photos/", learner.LearnerId, strDateTime);                   
@@ -97,7 +96,7 @@ namespace Pegasus_backend.Controllers.Authorization
                 else   //staff
                 {
                     var staff = user.Staff.FirstOrDefault();
-                    photoUrl = $"images/staff/Photos/{staff.StaffId + strDateTime + Path.GetExtension(Photo.FileName)}";
+                    staff.Photo = $"images/staff/Photos/{staff.StaffId + strDateTime + Path.GetExtension(Photo.FileName)}";
                     _ablemusicContext.Update(staff);
                     await _ablemusicContext.SaveChangesAsync();
                     uploadResult = UploadFile(Photo, "staff/Photos/", staff.StaffId, strDateTime);                   
