@@ -118,7 +118,57 @@ namespace Pegasus_backend.Controllers.Authorization
                 return BadRequest(result);
             }
         }        
-    
+      [HttpPost("[action]/{userId}")]
+        public async Task<IActionResult> ChangeProfile(int userId, [FromBody] ProfileModel profile)
+        {
+            Result<string> result = new Result<string>();
+            try
+            {
+                var user = await _ablemusicContext.User.Where(s => s.UserId == userId)
+                    .Include(s => s.Learner)
+                    .Include(s => s.Learner).ThenInclude(l => l.Parent)                    
+                    .Include(s => s.Teacher)
+                    .Include(s => s.Staff)
+                    .FirstOrDefaultAsync();
+                if (user.Role.RoleId == 1){ //teacher {
+                    var teacher = user.Teacher.FirstOrDefault();
+                    // teacher.FirstName = profile.FirstName;
+                    // teacher.LastName = profile.LastName;
+                    teacher.MobilePhone = profile.ContactNum;
+                    teacher.Email = profile.Email;
+                    _ablemusicContext.Update(teacher);
+                    await _ablemusicContext.SaveChangesAsync();                  
+                }
+                else if (user.Role.RoleId == 4)  {//learner
+                    var learner = user.Learner.FirstOrDefault();
+                    
+                    learner.ContactNum = profile.ContactNum;
+                    learner.Email = profile.Email;   
+                    _ablemusicContext.Update(learner);
+                    await _ablemusicContext.SaveChangesAsync();  
+                    var parent = user.Learner.FirstOrDefault().Parent.FirstOrDefault();
+                    parent.ContactNum = profile.ContactNum;
+                    parent.Email = profile.Email;   
+                    _ablemusicContext.Update(parent);
+                    await _ablemusicContext.SaveChangesAsync();                                                                       
+                }
+                else   //staff
+                {
+                    var staff = user.Staff.FirstOrDefault();
+                    staff.MobilePhone = profile.ContactNum;
+                    staff.Email = profile.Email;  
+                    _ablemusicContext.Update(staff);
+                    await _ablemusicContext.SaveChangesAsync();                     
+                }
+                return Ok(result);
+            }
+            catch(Exception ex){
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.ToString();
+                return BadRequest(result);
+            }
+            
+        }        
         //POST: http://localhost:5000/api/login
         [CheckModelFilter]
         [HttpPost]
