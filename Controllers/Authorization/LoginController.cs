@@ -130,10 +130,9 @@ namespace Pegasus_backend.Controllers.Authorization
                     .Include(s => s.Teacher)
                     .Include(s => s.Staff)
                     .FirstOrDefaultAsync();
+                if (user == null) throw new Exception("User does not exist");
                 if (user.Role.RoleId == 1){ //teacher {
                     var teacher = user.Teacher.FirstOrDefault();
-                    // teacher.FirstName = profile.FirstName;
-                    // teacher.LastName = profile.LastName;
                     teacher.MobilePhone = profile.ContactNum;
                     teacher.Email = profile.Email;
                     _ablemusicContext.Update(teacher);
@@ -141,7 +140,6 @@ namespace Pegasus_backend.Controllers.Authorization
                 }
                 else if (user.Role.RoleId == 4)  {//learner
                     var learner = user.Learner.FirstOrDefault();
-                    
                     learner.ContactNum = profile.ContactNum;
                     learner.Email = profile.Email;   
                     _ablemusicContext.Update(learner);
