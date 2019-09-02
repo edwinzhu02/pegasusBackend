@@ -129,6 +129,7 @@ namespace Pegasus_backend.Controllers.Authorization
                     .Include(s => s.Learner).ThenInclude(l => l.Parent)                    
                     .Include(s => s.Teacher)
                     .Include(s => s.Staff)
+                    .Include(s => s.Role)
                     .FirstOrDefaultAsync();
                 if (user == null) throw new Exception("User does not exist");
                 if (user.Role.RoleId == 1){ //teacher {
@@ -178,6 +179,7 @@ namespace Pegasus_backend.Controllers.Authorization
                     .Include(s => s.Learner).ThenInclude(l => l.Parent)                    
                     .Include(s => s.Teacher)
                     .Include(s => s.Staff)
+                    .Include(s => s.Role)                    
                     .FirstOrDefaultAsync();
                 if (user == null) throw new Exception("User does not exist");
                 if (user.Role.RoleId == 1){ //teacher {
