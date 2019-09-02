@@ -167,6 +167,50 @@ namespace Pegasus_backend.Controllers.Authorization
             }
             
         }        
+      [HttpGet("[action]/{userId}")]
+        public async Task<IActionResult> GetProfile(int userId)
+        {
+            Result<object> result = new Result<object>();
+            try
+            {
+                var user = await _ablemusicContext.User.Where(s => s.UserId == userId)
+                    .Include(s => s.Learner)
+                    .Include(s => s.Learner).ThenInclude(l => l.Parent)                    
+                    .Include(s => s.Teacher)
+                    .Include(s => s.Staff)
+                    .FirstOrDefaultAsync();
+                if (user == null) throw new Exception("User does not exist");
+                if (user.Role.RoleId == 1){ //teacher {
+                    var teacher = user.Teacher.FirstOrDefault();
+                    result.Data =new  { FirstName = teacher.FirstName,
+                        LastName = teacher.LastName,
+                        ContactNum = teacher.MobilePhone,
+                        Email = teacher.Email};
+                }
+                else if (user.Role.RoleId == 4)  {//learner
+                    var learner = user.Learner.FirstOrDefault();
+                    result.Data =new  { FirstName = learner.FirstName,
+                        LastName = learner.LastName,
+                        ContactNum = learner.ContactNum,
+                        Email = learner.Email};                
+                }
+                else   //staff
+                {
+                    var staff = user.Staff.FirstOrDefault();
+                    result.Data =new  { FirstName = staff.FirstName,
+                        LastName = staff.LastName,
+                        ContactNum = staff.MobilePhone,
+                        Email = staff.Email};
+                }
+                return Ok(result);
+            }
+            catch(Exception ex){
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.ToString();
+                return BadRequest(result);
+            }
+            
+        }                
         //POST: http://localhost:5000/api/login
         [CheckModelFilter]
         [HttpPost]

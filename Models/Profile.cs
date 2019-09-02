@@ -10,9 +10,9 @@ namespace Pegasus_backend.Models
 {
     public class ProfileModel
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Address { get; set; }
+        // public string FirstName { get; set; }
+        // public string LastName { get; set; }
+        // public string Address { get; set; }
         [Required(ErrorMessage = "Contact is required")]        
         public string ContactNum { get; set; }
         [Required(ErrorMessage = "Email is required")]   
