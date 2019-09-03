@@ -60,6 +60,7 @@ namespace Pegasus_backend.Controllers.MobileControllers
             return Ok(result);
         }
 
+
         // pass in userId
         [Route("[action]/{id}")]
         [HttpGet]
@@ -183,6 +184,11 @@ namespace Pegasus_backend.Controllers.MobileControllers
                     return Ok(result);
             }
         }
+
+//        public async Task<IActionResult> GetOfflineMessage()
+//        {
+//
+//        }
        
         private async Task<IList> GetAllStaff(int? staffId)
         {
