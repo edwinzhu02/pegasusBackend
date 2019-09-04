@@ -73,22 +73,28 @@ namespace Pegasus_backend.Controllers
                             q => q.TeacherId == s.TeacherId && q.OrgId == s.OrgId &&
                                  q.DayOfWeek == s.Schedule.DayOfWeek);
                             
-
+                        short roomId;
                         if (room == null)
                         {
                             throw new Exception("This teacher is not available!");
                         }
-                        if (room.RoomId == null)
-                        {
+                        if (s.RoomId != null )
+                        {   
+                            roomId = s.RoomId.Value;
+                        }
+                        else if (room.RoomId != null){
+                            roomId = room.RoomId.Value;
+                        }
+                        else{
                             throw new Exception("This teacher has no room in this branch!");
                         }
-                        
+                                                
                         var durationType = _ablemusicContext.Course.FirstOrDefault(w => w.CourseId == s.CourseId).Duration;
                         _ablemusicContext.Add(new One2oneCourseInstance
                         {
                             CourseId = s.CourseId,TeacherId = s.TeacherId, OrgId = s.OrgId,
                             BeginDate = s.BeginDate, EndDate = s.EndDate, LearnerId = s.LearnerId,
-                            RoomId = room.RoomId,
+                            RoomId = roomId,
                             CourseSchedule = new List<CourseSchedule>()
                             {
                                 new CourseSchedule
@@ -106,10 +112,6 @@ namespace Pegasus_backend.Controllers
                     {
                         await _lessonGenerateService.GetTerm((DateTime)s.BeginDate, s.id, 1);
                     });
-
-
-
-
                     dbtransaction.Commit();
                 }
 

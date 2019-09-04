@@ -11,6 +11,7 @@ namespace Pegasus_backend.Models
         [JsonProperty(Required = Required.Always)]
         public short? TeacherId { get; set; }
         public short? OrgId { get; set; }
+        public short? RoomId { get; set; }
         public DateTime? BeginDate { get; set; }
         public DateTime? EndDate { get; set; }
         public int? LearnerId { get; set; }
