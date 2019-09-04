@@ -73,7 +73,7 @@ namespace Pegasus_backend
             {
                 //exception messages can contain sensitive information.
                 options.EnableDetailedErrors = true;
-                options.KeepAliveInterval = TimeSpan.FromSeconds(30);
+                options.KeepAliveInterval = TimeSpan.FromSeconds(15);
             });
             services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);

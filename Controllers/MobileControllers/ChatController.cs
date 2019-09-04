@@ -60,6 +60,7 @@ namespace Pegasus_backend.Controllers.MobileControllers
             return Ok(result);
         }
 
+
         // pass in userId
         [Route("[action]/{id}")]
         [HttpGet]
@@ -183,7 +184,61 @@ namespace Pegasus_backend.Controllers.MobileControllers
                     return Ok(result);
             }
         }
-       
+
+        // GET: http://localhost:5000/api/Chat/PostOfflineMessage/userId
+        [Route("[action]/{id}")]
+        [HttpGet]
+        public async Task<IActionResult> GetOfflineMessage(int id)
+        {
+            var result = new Result<List<ChatMessage>>();
+            var user = await _ablemusicContext.User.Where(x => x.UserId == id).FirstOrDefaultAsync();
+            var unreadId = user.UnreadMessageId;
+            // no unread message
+            if (unreadId == null)
+            {
+                result.Data = null;
+                return Ok(result);
+            }
+
+            var unreadList = await _ablemusicContext.ChatMessage.Take(unreadId.Value).Where(x => x.ReceiverUserId == id)
+                .ToListAsync();
+            result.Data = unreadList;
+            return Ok(result);
+        }
+
+        // POST: http://localhost:5000/api/Chat/PostOfflineMessage
+        [Route("[action]")]
+        [HttpPost]
+        public async Task<IActionResult> PostOfflineMessage(ChatMessageModel chatMessageModel)
+        {
+            Result<ChatMessageModel> result = new Result<ChatMessageModel>();
+            ChatMessage chatMessage = new ChatMessage();
+            try
+            {
+                var receiver = await _ablemusicContext.User.Where(x => x.UserId == chatMessageModel.ReceiverUserId)
+                    .FirstOrDefaultAsync();
+                if (receiver == null)
+                {
+                    result.ErrorMessage = "Can not find the message receiver.";
+                    return NotFound(result);
+                }
+                _mapper.Map(chatMessageModel, chatMessage);
+                await _ablemusicContext.ChatMessage.AddAsync(chatMessage);
+                await _ablemusicContext.SaveChangesAsync();
+                receiver.UnreadMessageId = chatMessage.ChatMessageId;
+                await _ablemusicContext.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                result.ErrorMessage = e.Message;
+                result.IsSuccess = false;
+                return BadRequest(result);
+            }
+
+            result.Data = chatMessageModel;
+            return Ok(result);
+        }
+
         private async Task<IList> GetAllStaff(int? staffId)
         {
             if (staffId == null)
