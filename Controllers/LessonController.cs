@@ -360,7 +360,9 @@ namespace Pegasus_backend.Controllers
         {
             Result<Object> result = new Result<Object>();
             try
-            {
+            {   
+                var termEndDate = await _ablemusicContext.Term.Where(t => t.EndDate>DateTime.UtcNow.AddDays(7)).OrderBy(t =>t.EndDate).
+                    Select(t => t.EndDate).FirstOrDefaultAsync();
                 var items = await _ablemusicContext.Lesson
                     .Include(s => s.Teacher)
                     .Include(s => s.Learner)
@@ -378,7 +380,9 @@ namespace Pegasus_backend.Controllers
                     .ThenInclude(s => s.Org)                    
                     .Include(s => s.NewLesson)
                     .ThenInclude(s => s.Room)                    
-                    .Where(s => s.LearnerId ==learnerId || s.GroupCourseInstance.LearnerGroupCourse.ToList().Exists(e=>e.LearnerId == learnerId) )
+                    .Where(s => (s.LearnerId ==learnerId 
+                    || s.GroupCourseInstance.LearnerGroupCourse.ToList().Exists(e=>e.LearnerId == learnerId) )
+                    && s.BeginTime <termEndDate)
                     .Select(s => new
                     {
                         CourseName=!IsNull(s.GroupCourseInstance)?s.GroupCourseInstance.Course.CourseName:IsNull(s.CourseInstance)?s.TrialCourse.CourseName:s.CourseInstance.Course.CourseName,

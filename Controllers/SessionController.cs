@@ -84,7 +84,7 @@ namespace Pegasus_backend.Controllers
             if (lessonRemains.Count <= 0)
             {
                 result.IsSuccess = false;
-                result.ErrorMessage = "Lesson Remain not found";
+                result.ErrorMessage = "Remaining Lesson not found";
                 return BadRequest(result);
             }
             if (course == null)
@@ -96,7 +96,7 @@ namespace Pegasus_backend.Controllers
             if (awaitMakeUpLessons.Count <= 0)
             {
                 result.IsSuccess = false;
-                result.ErrorMessage = "AwaitMakeUpLesson not found";
+                result.ErrorMessage = "Make Up Lesson not found";
                 return BadRequest(result);
             }
 
@@ -131,7 +131,7 @@ namespace Pegasus_backend.Controllers
             if (validMakeUpLesson == null)
             {
                 result.IsSuccess = false;
-                result.ErrorMessage = "Your lesson all expired";
+                result.ErrorMessage = "Your make up lesson all expired";
                 return BadRequest(result);
             }
 
@@ -660,7 +660,7 @@ namespace Pegasus_backend.Controllers
                 int CourseInstanceId = lesson.CourseInstanceId.Value;
                 var makeUpLesson = await _ablemusicContext.AwaitMakeUpLesson.
                 Where(r => r.CourseInstanceId == CourseInstanceId &&
-                     r.ExpiredDate > nowDate && r.IsActive == 1 && r.Remaining > 1)
+                     r.ExpiredDate > nowDate && r.IsActive == 1 && r.Remaining > 0)
                      .OrderBy(r => r.ExpiredDate).FirstOrDefaultAsync();
 
                 if (makeUpLesson == null) throw new Exception("No make up lesson!");

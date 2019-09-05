@@ -152,8 +152,12 @@ namespace Pegasus_backend.Controllers
                     return 3;                
                 case 60:
                     return 4;                
+                case 75:
+                    return 5;                
+                case 90:
+                    return 5;                
                 default:
-                    throw new Exception("Duration type must be From 1 to 4");
+                    throw new Exception("Lesson's duration is not 30m ,45m, 60m ");
             }
         }
         protected void DeleteFile(string filePath)
