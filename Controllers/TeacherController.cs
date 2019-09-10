@@ -86,6 +86,9 @@ namespace Pegasus_backend.Controllers
                 var availableDays = await _ablemusicContext.AvailableDays
                     .Include(s=>s.Teacher)
                     .Where(s => s.OrgId == orgId && s.Teacher.IsActivate ==1 )
+                    .Select(s => new {s.DayOfWeek,s.OrgId,s.RoomId ,
+                            Teacher = new  {s.Teacher.FirstName,s.Teacher.LastName}
+                        })
                     .Distinct()
                     .OrderBy(s => s.Teacher.FirstName)
                     .ToListAsync();
