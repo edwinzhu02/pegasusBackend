@@ -78,7 +78,7 @@ namespace Pegasus_backend.Controllers
         }
 
        [HttpGet("[action]/{orgId}")]
-        public async Task<IActionResult> GetTeacherByOrg(short orgId, short dayofweek)
+        public async Task<IActionResult> GetTeacherByOrg(short orgId)
         {
             var result = new Result<object>();
             try
@@ -86,8 +86,8 @@ namespace Pegasus_backend.Controllers
                 var availableDays = await _ablemusicContext.AvailableDays
                     .Include(s=>s.Teacher)
                     .Where(s => s.OrgId == orgId && s.Teacher.IsActivate ==1 )
-                    .Select(s => new {s.OrgId,s.RoomId ,
-                            Teacher = new  {s.Teacher.FirstName,s.Teacher.LastName}
+                    .Select(s => new {s.OrgId,
+                        Teacher = new  {s.Teacher.FirstName,s.Teacher.LastName}
                         })
                     .Distinct()
                     .OrderBy(s => s.Teacher.FirstName)

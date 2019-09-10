@@ -1,0 +1,58 @@
+2019-09-10 22:10:16.642 +12:00 [INF] User profile is available. Using 'C:\Users\zhuyi\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-09-10 22:10:17.139 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-09-10 22:10:18.900 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
+2019-09-10 22:10:18.935 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-10 22:10:19.026 +12:00 [INF] 
+2019-09-10 22:10:19.216 +12:00 [INF] Response 
+2019-09-10 22:10:19.228 +12:00 [INF] Request finished in 328.9142ms 404 
+2019-09-10 22:10:19.307 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Teacher/GetTeacherByOrg/6  
+2019-09-10 22:10:19.309 +12:00 [INF] 
+2019-09-10 22:10:19.425 +12:00 [INF] Route matched with {action = "GetTeacherByOrg", controller = "Teacher"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeacherByOrg(Int16, Int16) on controller Pegasus_backend.Controllers.TeacherController (Pegasus_backend).
+2019-09-10 22:10:20.564 +12:00 [INF] Executing action method Pegasus_backend.Controllers.TeacherController.GetTeacherByOrg (Pegasus_backend) - Validation state: "Valid"
+2019-09-10 22:10:27.021 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-09-10 22:10:27.127 +12:00 [WRN] The Include operation for navigation '[s].Teacher' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-09-10 22:10:27.177 +12:00 [WRN] The LINQ expression 'orderby [s]?.Teacher.FirstName asc' could not be translated and will be evaluated locally.
+2019-09-10 22:10:29.788 +12:00 [INF] Executed DbCommand (325ms) [Parameters=[@__orgId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `t`.`OrgId`, `t`.`RoomId`, `t`.`FirstName`, `t`.`LastName`
+FROM (
+    SELECT DISTINCT `s`.`org_id` AS `OrgId`, `s`.`room_id` AS `RoomId`, `s.Teacher`.`first_name` AS `FirstName`, `s.Teacher`.`last_name` AS `LastName`
+    FROM `ablemusic`.`available_days` AS `s`
+    LEFT JOIN `ablemusic`.`teacher` AS `s.Teacher` ON `s`.`teacher_id` = `s.Teacher`.`teacher_id`
+    WHERE (`s`.`org_id` = @__orgId_0) AND (`s.Teacher`.`is_activate` = 1)
+) AS `t`
+2019-09-10 22:10:57.689 +12:00 [INF] Executed action method Pegasus_backend.Controllers.TeacherController.GetTeacherByOrg (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 37108.2526ms.
+2019-09-10 22:10:57.699 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-09-10 22:10:57.761 +12:00 [INF] Executed action Pegasus_backend.Controllers.TeacherController.GetTeacherByOrg (Pegasus_backend) in 38333.4988ms
+2019-09-10 22:10:57.761 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":[]}
+2019-09-10 22:10:57.766 +12:00 [INF] Request finished in 38458.7043ms 200 application/json; charset=utf-8
+2019-09-10 22:10:58.032 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/favicon.ico  
+2019-09-10 22:10:58.036 +12:00 [INF] 
+2019-09-10 22:10:58.036 +12:00 [INF] Response 
+2019-09-10 22:10:58.037 +12:00 [INF] Request finished in 4.0442ms 404 
+2019-09-10 22:11:39.524 +12:00 [INF] User profile is available. Using 'C:\Users\zhuyi\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-09-10 22:11:39.890 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-09-10 22:11:40.703 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
+2019-09-10 22:11:40.736 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-10 22:11:40.803 +12:00 [INF] 
+2019-09-10 22:11:40.948 +12:00 [INF] Response 
+2019-09-10 22:11:40.954 +12:00 [INF] Request finished in 252.6006ms 404 
+2019-09-10 22:11:43.160 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Teacher/GetTeacherByOrg/6  
+2019-09-10 22:11:43.161 +12:00 [INF] 
+2019-09-10 22:11:43.209 +12:00 [INF] Route matched with {action = "GetTeacherByOrg", controller = "Teacher"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeacherByOrg(Int16) on controller Pegasus_backend.Controllers.TeacherController (Pegasus_backend).
+2019-09-10 22:11:43.792 +12:00 [INF] Executing action method Pegasus_backend.Controllers.TeacherController.GetTeacherByOrg (Pegasus_backend) - Validation state: "Valid"
+2019-09-10 22:11:49.008 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-09-10 22:11:49.145 +12:00 [WRN] The Include operation for navigation '[s].Teacher' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-09-10 22:11:49.229 +12:00 [WRN] The LINQ expression 'orderby [s]?.Teacher.FirstName asc' could not be translated and will be evaluated locally.
+2019-09-10 22:11:51.731 +12:00 [INF] Executed DbCommand (286ms) [Parameters=[@__orgId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `t`.`OrgId`, `t`.`FirstName`, `t`.`LastName`
+FROM (
+    SELECT DISTINCT `s`.`org_id` AS `OrgId`, `s.Teacher`.`first_name` AS `FirstName`, `s.Teacher`.`last_name` AS `LastName`
+    FROM `ablemusic`.`available_days` AS `s`
+    LEFT JOIN `ablemusic`.`teacher` AS `s.Teacher` ON `s`.`teacher_id` = `s.Teacher`.`teacher_id`
+    WHERE (`s`.`org_id` = @__orgId_0) AND (`s.Teacher`.`is_activate` = 1)
+) AS `t`
+2019-09-10 22:12:06.269 +12:00 [INF] Executed action method Pegasus_backend.Controllers.TeacherController.GetTeacherByOrg (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 22467.9124ms.
+2019-09-10 22:12:06.275 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-09-10 22:12:06.324 +12:00 [INF] Executed action Pegasus_backend.Controllers.TeacherController.GetTeacherByOrg (Pegasus_backend) in 23111.7484ms
+2019-09-10 22:12:06.324 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":[]}
+2019-09-10 22:12:06.327 +12:00 [INF] Request finished in 23166.5995ms 200 application/json; charset=utf-8
