@@ -10,6 +10,7 @@ namespace Pegasus_backend.pegasusContext
             NoticesFromStaff = new HashSet<Notices>();
             NoticesToStaff = new HashSet<Notices>();
             Payment = new HashSet<Payment>();
+            SplittedLesson = new HashSet<SplittedLesson>();
             StaffOrg = new HashSet<StaffOrg>();
             StockApplication = new HashSet<StockApplication>();
             StockOrder = new HashSet<StockOrder>();
@@ -37,6 +38,7 @@ namespace Pegasus_backend.pegasusContext
         public ICollection<Notices> NoticesFromStaff { get; set; }
         public ICollection<Notices> NoticesToStaff { get; set; }
         public ICollection<Payment> Payment { get; set; }
+        public ICollection<SplittedLesson> SplittedLesson { get; set; }
         public ICollection<StaffOrg> StaffOrg { get; set; }
         public ICollection<StockApplication> StockApplication { get; set; }
         public ICollection<StockOrder> StockOrder { get; set; }

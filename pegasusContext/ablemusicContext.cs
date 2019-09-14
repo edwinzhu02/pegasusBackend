@@ -59,6 +59,7 @@ namespace Pegasus_backend.pegasusContext
         public virtual DbSet<RoleAccess> RoleAccess { get; set; }
         public virtual DbSet<Room> Room { get; set; }
         public virtual DbSet<SoldTransaction> SoldTransaction { get; set; }
+        public virtual DbSet<SplittedLesson> SplittedLesson { get; set; }
         public virtual DbSet<Staff> Staff { get; set; }
         public virtual DbSet<StaffOrg> StaffOrg { get; set; }
         public virtual DbSet<Stock> Stock { get; set; }
@@ -2635,6 +2636,58 @@ namespace Pegasus_backend.pegasusContext
                     .WithMany(p => p.SoldTransaction)
                     .HasForeignKey(d => d.StockId)
                     .HasConstraintName("R_68");
+            });
+
+            modelBuilder.Entity<SplittedLesson>(entity =>
+            {
+                entity.HasKey(e => e.SplittedId);
+
+                entity.ToTable("splitted_lesson", "ablemusic");
+
+                entity.HasIndex(e => e.AwaitId)
+                    .HasName("await_id");
+
+                entity.HasIndex(e => e.LessonId)
+                    .HasName("lesson_id");
+
+                entity.HasIndex(e => e.StaffId)
+                    .HasName("staff_id");
+
+                entity.Property(e => e.SplittedId)
+                    .HasColumnName("splitted_id")
+                    .HasColumnType("int(11)")
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.AwaitId)
+                    .HasColumnName("await_id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.CreatedAt).HasColumnName("created_at");
+
+                entity.Property(e => e.IsAfter).HasColumnType("bit(1)");
+
+                entity.Property(e => e.LessonId)
+                    .HasColumnName("lesson_id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.StaffId)
+                    .HasColumnName("staff_id")
+                    .HasColumnType("smallint(6)");
+
+                entity.HasOne(d => d.Await)
+                    .WithMany(p => p.SplittedLesson)
+                    .HasForeignKey(d => d.AwaitId)
+                    .HasConstraintName("splitted_lesson_ibfk_1");
+
+                entity.HasOne(d => d.Lesson)
+                    .WithMany(p => p.SplittedLesson)
+                    .HasForeignKey(d => d.LessonId)
+                    .HasConstraintName("splitted_lesson_ibfk_2");
+
+                entity.HasOne(d => d.Staff)
+                    .WithMany(p => p.SplittedLesson)
+                    .HasForeignKey(d => d.StaffId)
+                    .HasConstraintName("splitted_lesson_ibfk_3");
             });
 
             modelBuilder.Entity<Staff>(entity =>

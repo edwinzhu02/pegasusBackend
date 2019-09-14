@@ -1,0 +1,106 @@
+2019-09-11 12:50:27.401 +12:00 [INF] Daily Execution Begin...
+2019-09-11 12:50:27.570 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-09-11 12:50:28.463 +12:00 [INF] Executed DbCommand (57ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`term_id`, `x`.`begin_date`, `x`.`end_date`, `x`.`term_name`, `x`.`term_type`, `x`.`week_quantity`
+FROM `ablemusic`.`term` AS `x`
+ORDER BY `x`.`begin_date`
+2019-09-11 13:07:50.066 +12:00 [INF] Executed DbCommand (89ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`prop_name`
+FROM `ablemusic`.`lookup` AS `x`
+WHERE (`x`.`lookup_type` = 15) AND (`x`.`prop_value` = 1)
+LIMIT 1
+2019-09-11 13:07:51.069 +12:00 [INF] Executed DbCommand (761ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`prop_name`
+FROM `ablemusic`.`lookup` AS `x`
+WHERE (`x`.`lookup_type` = 15) AND (`x`.`prop_value` = 2)
+LIMIT 1
+2019-09-11 13:07:51.823 +12:00 [INF] Executed DbCommand (64ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`prop_name`
+FROM `ablemusic`.`lookup` AS `x`
+WHERE (`x`.`lookup_type` = 16) AND (`x`.`prop_value` = 1)
+LIMIT 1
+2019-09-11 13:07:52.054 +12:00 [INF] Executed DbCommand (67ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`prop_name`
+FROM `ablemusic`.`lookup` AS `x`
+WHERE (`x`.`lookup_type` = 16) AND (`x`.`prop_value` = 2)
+LIMIT 1
+2019-09-11 13:07:52.301 +12:00 [INF] Executed DbCommand (72ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`prop_name`
+FROM `ablemusic`.`lookup` AS `x`
+WHERE (`x`.`lookup_type` = 17) AND (`x`.`prop_value` = 1)
+LIMIT 1
+2019-09-11 13:07:52.400 +12:00 [WRN] The Include operation for navigation '[x].Course' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-09-11 13:07:52.401 +12:00 [WRN] The Include operation for navigation '[x].Learner' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-09-11 13:07:52.890 +12:00 [INF] Executed DbCommand (110ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`learner_id` AS `LearnerId`, `x`.`course_id` AS `CourseId`, `x`.`course_instance_id` AS `CourseInstanceId`, `x`.`begin_date` AS `BeginDate`, `x`.`end_date` AS `EndDate`, `x`.`invoice_date` AS `InvoiceDate`, `x.Course`.`course_name` AS `CourseName`, `x.Course`.`price`, `x.Learner`.`first_name` AS `FirstName`, `x.Learner`.`payment_period` AS `PaymentPeriod`
+FROM `ablemusic`.`one2one_course_instance` AS `x`
+LEFT JOIN `ablemusic`.`course` AS `x.Course` ON `x`.`course_id` = `x.Course`.`course_id`
+LEFT JOIN `ablemusic`.`learner` AS `x.Learner` ON `x`.`learner_id` = `x.Learner`.`learner_id`
+WHERE `x.Learner`.`is_active` = 1
+2019-09-11 13:07:53.430 +12:00 [INF] Executed DbCommand (61ms) [Parameters=[@__term_id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`term_id`, `x`.`begin_date`, `x`.`end_date`, `x`.`term_name`, `x`.`term_type`, `x`.`week_quantity`
+FROM `ablemusic`.`term` AS `x`
+WHERE `x`.`term_id` = @__term_id_0
+LIMIT 1
+2019-09-11 13:07:53.675 +12:00 [INF] Executed DbCommand (78ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`term_id` AS `TermId`, `x`.`begin_date` AS `BeginDate`, `x`.`end_date` AS `EndDate`
+FROM `ablemusic`.`term` AS `x`
+2019-09-11 13:07:54.002 +12:00 [INF] Executed DbCommand (75ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`prop_name`
+FROM `ablemusic`.`lookup` AS `x`
+WHERE (`x`.`lookup_type` = 15) AND (`x`.`prop_value` = 1)
+LIMIT 1
+2019-09-11 13:07:54.239 +12:00 [INF] Executed DbCommand (75ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`prop_name`
+FROM `ablemusic`.`lookup` AS `x`
+WHERE (`x`.`lookup_type` = 15) AND (`x`.`prop_value` = 2)
+LIMIT 1
+2019-09-11 13:07:54.436 +12:00 [INF] Executed DbCommand (61ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`prop_name`
+FROM `ablemusic`.`lookup` AS `x`
+WHERE (`x`.`lookup_type` = 16) AND (`x`.`prop_value` = 1)
+LIMIT 1
+2019-09-11 13:07:54.657 +12:00 [INF] Executed DbCommand (77ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`prop_name`
+FROM `ablemusic`.`lookup` AS `x`
+WHERE (`x`.`lookup_type` = 16) AND (`x`.`prop_value` = 2)
+LIMIT 1
+2019-09-11 13:07:54.874 +12:00 [INF] Executed DbCommand (60ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`prop_name`
+FROM `ablemusic`.`lookup` AS `x`
+WHERE (`x`.`lookup_type` = 17) AND (`x`.`prop_value` = 1)
+LIMIT 1
+2019-09-11 13:07:54.925 +12:00 [WRN] The Include operation for navigation '[x].Course' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-09-11 13:07:54.925 +12:00 [WRN] The Include operation for navigation '[x].LearnerGroupCourse' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-09-11 13:07:55.370 +12:00 [INF] Executed DbCommand (84ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`course_id` AS `CourseId`, `x`.`group_course_instance_id` AS `GroupCourseInstanceId`, `x`.`begin_date` AS `BeginDate`, `x`.`end_date` AS `EndDate`, `x`.`is_started` AS `IsStarted`, `x.Course`.`course_name` AS `CourseName`, `x.Course`.`price`
+FROM `ablemusic`.`group_course_instance` AS `x`
+INNER JOIN `ablemusic`.`course` AS `x.Course` ON `x`.`course_id` = `x.Course`.`course_id`
+ORDER BY `x`.`group_course_instance_id`
+2019-09-11 13:07:55.552 +12:00 [INF] Executed DbCommand (128ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `t`.`group_course_instance_id`, `s.Learner`.`first_name` AS `FirstName`, `x.LearnerGroupCourse`.`learner_id` AS `LearnerId`, `x.LearnerGroupCourse`.`created_at` AS `CreatedAt`, `x.LearnerGroupCourse`.`begin_date` AS `BeginDate`, `x.LearnerGroupCourse`.`end_date` AS `EndDate`, `x.LearnerGroupCourse`.`invoice_date` AS `InvoiceDate`, `x.LearnerGroupCourse`.`learner_group_course_id` AS `LearnerGroupCourseId`, `x.LearnerGroupCourse`.`is_activate` AS `IsActivate`, `x.LearnerGroupCourse`.`group_course_instance_id`
+FROM `ablemusic`.`learner_group_course` AS `x.LearnerGroupCourse`
+LEFT JOIN `ablemusic`.`learner` AS `s.Learner` ON `x.LearnerGroupCourse`.`learner_id` = `s.Learner`.`learner_id`
+INNER JOIN (
+    SELECT `x0`.`group_course_instance_id`
+    FROM `ablemusic`.`group_course_instance` AS `x0`
+    INNER JOIN `ablemusic`.`course` AS `x.Course0` ON `x0`.`course_id` = `x.Course0`.`course_id`
+) AS `t` ON `x.LearnerGroupCourse`.`group_course_instance_id` = `t`.`group_course_instance_id`
+WHERE `x.LearnerGroupCourse`.`is_activate` = 1
+ORDER BY `t`.`group_course_instance_id`
+2019-09-11 13:07:55.842 +12:00 [INF] Executed DbCommand (72ms) [Parameters=[@__term_id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`term_id`, `x`.`begin_date`, `x`.`end_date`, `x`.`term_name`, `x`.`term_type`, `x`.`week_quantity`
+FROM `ablemusic`.`term` AS `x`
+WHERE `x`.`term_id` = @__term_id_0
+LIMIT 1
+2019-09-11 13:07:56.101 +12:00 [INF] Executed DbCommand (84ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `i`.`waiting_id`, `i`.`begin_date`, `i`.`comment`, `i`.`concert_fee`, `i`.`concert_fee_name`, `i`.`course_instance_id`, `i`.`course_name`, `i`.`created_at`, `i`.`due_date`, `i`.`end_date`, `i`.`group_course_instance_id`, `i`.`invoice_num`, `i`.`is_activate`, `i`.`is_confirmed`, `i`.`is_email_sent`, `i`.`is_paid`, `i`.`learner_id`, `i`.`learner_name`, `i`.`lesson_fee`, `i`.`lesson_note_fee_name`, `i`.`lesson_quantity`, `i`.`note_fee`, `i`.`other1_fee`, `i`.`other1_fee_name`, `i`.`other2_fee`, `i`.`other2_fee_name`, `i`.`other3_fee`, `i`.`other3_fee_name`, `i`.`owing_fee`, `i`.`paid_fee`, `i`.`term_id`, `i`.`total_fee`
+FROM `ablemusic`.`invoice_waiting_confirm` AS `i`
+WHERE `i`.`is_activate` = 3
+2019-09-11 13:07:56.209 +12:00 [INF] Daily Execution Start at 2019/9/11 13:07:56
+2019-09-11 13:07:56.214 +12:00 [INF] Checking if today is the end of any term...
+2019-09-11 13:07:56.474 +12:00 [INF] Executed DbCommand (76ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `t`.`term_id`, `t`.`begin_date`, `t`.`end_date`, `t`.`term_name`, `t`.`term_type`, `t`.`week_quantity`
+FROM `ablemusic`.`term` AS `t`
+ORDER BY `t`.`begin_date`
+2019-09-11 13:07:56.475 +12:00 [INF] Current Term is 2019 Term 3. It is not the end of the term. No lesson to arrange for today.

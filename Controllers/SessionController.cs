@@ -643,9 +643,9 @@ namespace Pegasus_backend.Controllers
 
             return Ok(result);  //Should redirect to a success page!
         }
-        [Route("MakeUpSplitLesson/{lessonId}/{isAfter}")]
+        [Route("MakeUpSplitLesson/{lessonId}/{isAfter}/{staffId}")]
         [HttpPut]
-        public async Task<IActionResult> MakeUpSplitLesson( int lessonId,short isAfter)
+        public async Task<IActionResult> MakeUpSplitLesson( int lessonId,short isAfter,int staffId)
         {
             var result = new Result<string>();
             //AwaitMakeUpLesson makeUpLesson;
@@ -654,6 +654,7 @@ namespace Pegasus_backend.Controllers
                 var nowDate = toNZTimezone(DateTime.UtcNow);
                 var lesson = await _ablemusicContext.Lesson.
                     Where(l => l.LessonId == lessonId && l.IsCanceled !=1).FirstOrDefaultAsync();
+                var splittedLesson = new SplittedLesson();
                 
                 if (lesson == null) throw new Exception("It is wrong lesson inforamtion!");
                 if (lesson.CourseInstanceId==null) throw new Exception("Trial lesson and group lesson can not be made up!");
@@ -669,9 +670,16 @@ namespace Pegasus_backend.Controllers
                     lesson.EndTime = lesson.EndTime.Value.AddMinutes(15);
                 else
                     lesson.BeginTime = lesson.BeginTime.Value.AddMinutes(-15);
-                               
+                
                 makeUpLesson.Remaining = (byte)(makeUpLesson.Remaining - 1);
                 if (makeUpLesson.Remaining ==0) makeUpLesson.IsActive = 0;
+
+                splittedLesson.AwaitId =makeUpLesson.AwaitId;
+                splittedLesson.LessonId = lesson.LessonId;
+                splittedLesson.IsAfter = isAfter;
+                splittedLesson.CreatedAt = nowDate;
+
+                await _ablemusicContext.AddAsync(splittedLesson);
                 _ablemusicContext.Update(lesson);
                 _ablemusicContext.Update(makeUpLesson);
 

@@ -5,6 +5,11 @@ namespace Pegasus_backend.pegasusContext
 {
     public partial class AwaitMakeUpLesson
     {
+        public AwaitMakeUpLesson()
+        {
+            SplittedLesson = new HashSet<SplittedLesson>();
+        }
+
         public int AwaitId { get; set; }
         public DateTime? CreateAt { get; set; }
         public DateTime? SchduledAt { get; set; }
@@ -22,5 +27,6 @@ namespace Pegasus_backend.pegasusContext
         public Learner Learner { get; set; }
         public Lesson MissedLesson { get; set; }
         public Lesson NewLesson { get; set; }
+        public ICollection<SplittedLesson> SplittedLesson { get; set; }
     }
 }
