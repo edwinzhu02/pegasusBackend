@@ -723,6 +723,8 @@ namespace Pegasus_backend.Controllers
                     Include(a => a.CourseInstance).ThenInclude(ci => ci.Course).
                     Include(a => a.MissedLesson).
                     Include(a => a.NewLesson).
+                    Include(a => a.SplittedLesson).
+                    ThenInclude(sp => sp.Lesson).
                     Where(a => a.LearnerId == learnerId).Select(a => new
                     {
                         awaitId = a.AwaitId,
@@ -736,7 +738,8 @@ namespace Pegasus_backend.Controllers
                         CourseInstanceId = a.CourseInstanceId,
                         CourseInstance = new { CourseId = a.CourseInstance.CourseId, CourseName = a.CourseInstance.Course.CourseName },
                         MissedLesson = new { Org = a.MissedLesson.Org.Abbr, Teacher = a.MissedLesson.Teacher.FirstName, beginDate = a.MissedLesson.BeginTime },
-                        NewLesson = new { Org = a.NewLesson.Org.Abbr, Teacher = a.NewLesson.Teacher.FirstName, beginDate = a.NewLesson.BeginTime }
+                        NewLesson = new { Org = a.NewLesson.Org.Abbr, Teacher = a.NewLesson.Teacher.FirstName, beginDate = a.NewLesson.BeginTime },
+                        SplittedLesson = a.SplittedLesson.Select(p => p.Lesson.BeginTime) 
                     })
                 .ToListAsync();
             }
