@@ -78,7 +78,7 @@ namespace Pegasus_backend.Controllers
                         {
                             throw new Exception("This teacher is not available!");
                         }
-                        if (s.RoomId != null )
+                        if (s.RoomId != null && s.RoomId != 0)
                         {   
                             roomId = s.RoomId.Value;
                         }
