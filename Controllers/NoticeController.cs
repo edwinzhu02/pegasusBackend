@@ -70,6 +70,28 @@ namespace Pegasus_backend.Controllers
             }
             return Ok(result);
         }
+
+        [HttpPost("[action]")]
+        
+        public async Task<IActionResult> Post(Room news)
+        {
+            Result<string> result = new Result<string>();
+            try
+            {
+                await _ablemusicContext.AddAsync(news);
+                await _ablemusicContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+            
+            return Ok(result);
+        }
+
+
         [HttpGet("{staffId}")]
         public async Task<IActionResult> GetNotices(int staffId)
         {
