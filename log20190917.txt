@@ -512,3 +512,10 @@ WHERE `l`.`org_id` IN (1)
 2019-09-17 10:54:27.851 +12:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
 2019-09-17 10:54:27.852 +12:00 [INF] Request finished in 16.0204ms 200 image/png
 2019-09-17 10:54:28.397 +12:00 [INF] Request finished in 649.2636ms 200 application/json;charset=utf-8
+2019-09-17 11:00:44.337 +12:00 [INF] User profile is available. Using 'C:\Users\zhuyi\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-09-17 11:00:45.215 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-09-17 11:00:47.232 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
+2019-09-17 11:00:47.307 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-17 11:00:47.459 +12:00 [INF] 
+2019-09-17 11:00:47.751 +12:00 [INF] Response 
+2019-09-17 11:00:47.762 +12:00 [INF] Request finished in 533.6288ms 404 
