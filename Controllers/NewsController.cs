@@ -1,14 +1,5 @@
 using System;
 using System.Collections.Generic;
-<<<<<<< HEAD
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using Pegasus_backend.Models;
-using Pegasus_backend.pegasusContext;
-=======
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
@@ -23,7 +14,6 @@ using Pegasus_backend.ActionFilter;
 using Pegasus_backend.pegasusContext;
 using Pegasus_backend.Models;
 using Microsoft.Extensions.Logging;
->>>>>>> 3655ae8eeaf7f53e4c8857a4c5ca04efce9ad8ef
 
 namespace Pegasus_backend.Controllers
 {
