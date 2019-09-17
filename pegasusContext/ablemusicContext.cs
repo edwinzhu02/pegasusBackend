@@ -1738,8 +1738,7 @@ namespace Pegasus_backend.pegasusContext
 
                 entity.Property(e => e.NewsId)
                     .HasColumnName("news_id")
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedNever();
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.Categroy)
                     .HasColumnName("categroy")
