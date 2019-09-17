@@ -40,6 +40,7 @@ namespace Pegasus_backend.pegasusContext
         public virtual DbSet<LessonRemain> LessonRemain { get; set; }
         public virtual DbSet<LoginLog> LoginLog { get; set; }
         public virtual DbSet<Lookup> Lookup { get; set; }
+        public virtual DbSet<News> News { get; set; }
         public virtual DbSet<Notices> Notices { get; set; }
         public virtual DbSet<One2oneCourseInstance> One2oneCourseInstance { get; set; }
         public virtual DbSet<OnlineUser> OnlineUser { get; set; }
@@ -79,7 +80,8 @@ namespace Pegasus_backend.pegasusContext
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseMySQL("server=www.gradspace.org;port=3306;user=dbuser;password=qwer1234;database=ablemusic");
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseMySQL("server=gradspace.org;UserId=dbuser;Password=qwer1234;Database=ablemusic");
             }
         }
 
@@ -1727,6 +1729,51 @@ namespace Pegasus_backend.pegasusContext
 
                 entity.Property(e => e.PropValue)
                     .HasColumnName("prop_value")
+                    .HasColumnType("int(11)");
+            });
+
+            modelBuilder.Entity<News>(entity =>
+            {
+                entity.ToTable("news", "ablemusic");
+
+                entity.Property(e => e.NewsId)
+                    .HasColumnName("news_id")
+                    .HasColumnType("int(11)")
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.Categroy)
+                    .HasColumnName("categroy")
+                    .HasColumnType("tinyint(4)")
+                    .HasDefaultValueSql("1");
+
+                entity.Property(e => e.CreatedAt).HasColumnName("created_at");
+
+                entity.Property(e => e.IsTop)
+                    .HasColumnName("is_top")
+                    .HasColumnType("bit(1)")
+                    .HasDefaultValueSql("b'0'");
+
+                entity.Property(e => e.NewsData)
+                    .IsRequired()
+                    .HasColumnName("news_data")
+                    .HasColumnType("mediumblob");
+
+                entity.Property(e => e.NewsTitle)
+                    .IsRequired()
+                    .HasColumnName("news_title")
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("Untitled");
+
+                entity.Property(e => e.NewsType)
+                    .IsRequired()
+                    .HasColumnName("news_type")
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("html");
+
+                entity.Property(e => e.UserId)
+                    .HasColumnName("user_id")
                     .HasColumnType("int(11)");
             });
 

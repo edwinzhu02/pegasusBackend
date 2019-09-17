@@ -1,0 +1,876 @@
+2019-09-17 11:18:19.264 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-09-17 11:18:19.563 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-09-17 13:40:44.876 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-09-17 13:40:45.149 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-09-17 13:41:55.563 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news application/json 94
+2019-09-17 13:41:55.594 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-17 13:41:55.642 +12:00 [INF] {
+	"NewsTitle": "This is Title",
+	"NewsData": "abc",
+	"Categroy": 1,
+	"UserId":1,
+	"IsTop":1
+}
+2019-09-17 13:41:55.772 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 13:41:56.241 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) with arguments ([""]) - Validation state: "Invalid"
+2019-09-17 13:41:57.134 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-09-17 13:41:58.130 +12:00 [ERR] Failed executing DbCommand (63ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = DateTime), @p2='?' (Size = -1) (DbType = Binary), @p3='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `ablemusic`.`news` (`news_id`, `created_at`, `news_data`, `user_id`)
+VALUES (@p0, @p1, @p2, @p3);
+SELECT `categroy`, `is_top`, `news_title`, `news_type`
+FROM `ablemusic`.`news`
+WHERE ROW_COUNT() = 1
+ AND `news_id` = @p0;
+MySql.Data.MySqlClient.MySqlException (0x80004005): Column 'news_data' cannot be null
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+2019-09-17 13:41:58.209 +12:00 [ERR] An exception occurred in the database while saving changes for context type 'Pegasus_backend.pegasusContext.ablemusicContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> MySql.Data.MySqlClient.MySqlException: Column 'news_data' cannot be null
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(DbContext _, ValueTuple`2 parameters, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IReadOnlyList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> MySql.Data.MySqlClient.MySqlException: Column 'news_data' cannot be null
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(DbContext _, ValueTuple`2 parameters, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IReadOnlyList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2019-09-17 13:41:58.214 +12:00 [INF] Executed action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.BadRequestObjectResult in 1961.8235000000002ms.
+2019-09-17 13:41:58.222 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-09-17 13:41:58.232 +12:00 [INF] Executed action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) in 2458.5704ms
+2019-09-17 13:41:58.235 +12:00 [INF] Response {"IsSuccess":false,"ErrorCode":null,"IsFound":true,"ErrorMessage":"An error occurred while updating the entries. See the inner exception for details.","Note":null,"Data":null}
+2019-09-17 13:41:58.240 +12:00 [INF] Request finished in 2678.738ms 400 application/json; charset=utf-8
+2019-09-17 13:42:22.203 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news application/json 74
+2019-09-17 13:42:22.204 +12:00 [INF] {
+	"NewsTitle": "This is Title",
+	"Categroy": 1,
+	"UserId":1,
+	"IsTop":1
+}
+2019-09-17 13:42:22.204 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 13:42:22.213 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) with arguments (["Pegasus_backend.Models.NewsModel"]) - Validation state: "Valid"
+2019-09-17 13:42:22.215 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-09-17 13:42:22.463 +12:00 [ERR] Failed executing DbCommand (53ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = DateTime), @p2='?' (Size = -1) (DbType = Binary), @p3='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `ablemusic`.`news` (`news_id`, `created_at`, `news_data`, `user_id`)
+VALUES (@p0, @p1, @p2, @p3);
+SELECT `categroy`, `is_top`, `news_title`, `news_type`
+FROM `ablemusic`.`news`
+WHERE ROW_COUNT() = 1
+ AND `news_id` = @p0;
+MySql.Data.MySqlClient.MySqlException (0x80004005): Column 'news_data' cannot be null
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+2019-09-17 13:42:22.514 +12:00 [ERR] An exception occurred in the database while saving changes for context type 'Pegasus_backend.pegasusContext.ablemusicContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> MySql.Data.MySqlClient.MySqlException: Column 'news_data' cannot be null
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(DbContext _, ValueTuple`2 parameters, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IReadOnlyList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> MySql.Data.MySqlClient.MySqlException: Column 'news_data' cannot be null
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(DbContext _, ValueTuple`2 parameters, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IReadOnlyList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2019-09-17 13:42:22.518 +12:00 [INF] Executed action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.BadRequestObjectResult in 304.8431ms.
+2019-09-17 13:42:22.519 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-09-17 13:42:22.520 +12:00 [INF] Executed action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) in 315.05060000000003ms
+2019-09-17 13:42:22.520 +12:00 [INF] Response {"IsSuccess":false,"ErrorCode":null,"IsFound":true,"ErrorMessage":"An error occurred while updating the entries. See the inner exception for details.","Note":null,"Data":null}
+2019-09-17 13:42:22.520 +12:00 [INF] Request finished in 317.5874ms 400 application/json; charset=utf-8
+2019-09-17 13:43:06.579 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-09-17 13:43:07.384 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-09-17 13:43:08.953 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news application/json 94
+2019-09-17 13:43:08.980 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-17 13:43:09.070 +12:00 [INF] {
+	"NewsTitle": "This is Title",
+	"NewsData": "abc",
+	"Categroy": 1,
+	"UserId":1,
+	"IsTop":1
+}
+2019-09-17 13:43:09.251 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 13:43:09.824 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) with arguments ([""]) - Validation state: "Invalid"
+2019-09-17 13:43:31.213 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-09-17 13:43:32.239 +12:00 [ERR] Failed executing DbCommand (66ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = DateTime), @p2='?' (Size = -1) (DbType = Binary), @p3='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `ablemusic`.`news` (`news_id`, `created_at`, `news_data`, `user_id`)
+VALUES (@p0, @p1, @p2, @p3);
+SELECT `categroy`, `is_top`, `news_title`, `news_type`
+FROM `ablemusic`.`news`
+WHERE ROW_COUNT() = 1
+ AND `news_id` = @p0;
+MySql.Data.MySqlClient.MySqlException (0x80004005): Column 'news_data' cannot be null
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.GetResult(Int32 statementId, Int32& affectedRows, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+2019-09-17 13:43:32.336 +12:00 [ERR] An exception occurred in the database while saving changes for context type 'Pegasus_backend.pegasusContext.ablemusicContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> MySql.Data.MySqlClient.MySqlException: Column 'news_data' cannot be null
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.GetResult(Int32 statementId, Int32& affectedRows, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(DbContext _, ValueTuple`2 parameters, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IReadOnlyList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> MySql.Data.MySqlClient.MySqlException: Column 'news_data' cannot be null
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.GetResult(Int32 statementId, Int32& affectedRows, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(DbContext _, ValueTuple`2 parameters, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IReadOnlyList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2019-09-17 13:43:32.503 +12:00 [INF] Executed action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.BadRequestObjectResult in 22672.566300000002ms.
+2019-09-17 13:43:32.508 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-09-17 13:43:32.520 +12:00 [INF] Executed action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) in 23267.493700000003ms
+2019-09-17 13:43:32.526 +12:00 [INF] Response {"IsSuccess":false,"ErrorCode":null,"IsFound":true,"ErrorMessage":"An error occurred while updating the entries. See the inner exception for details.","Note":null,"Data":null}
+2019-09-17 13:43:32.533 +12:00 [INF] Request finished in 23582.4936ms 400 application/json; charset=utf-8
+2019-09-17 13:45:22.641 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news application/json 94
+2019-09-17 13:45:22.697 +12:00 [INF] {
+	"NewsTitle": "This is Title",
+	"NewsData": "abc",
+	"Categroy": 1,
+	"UserId":1,
+	"IsTop":1
+}
+2019-09-17 13:45:22.697 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 13:45:22.703 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) with arguments ([""]) - Validation state: "Invalid"
+2019-09-17 13:45:22.704 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-09-17 13:45:22.960 +12:00 [ERR] Failed executing DbCommand (54ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = DateTime), @p2='?' (Size = -1) (DbType = Binary), @p3='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `ablemusic`.`news` (`news_id`, `created_at`, `news_data`, `user_id`)
+VALUES (@p0, @p1, @p2, @p3);
+SELECT `categroy`, `is_top`, `news_title`, `news_type`
+FROM `ablemusic`.`news`
+WHERE ROW_COUNT() = 1
+ AND `news_id` = @p0;
+MySql.Data.MySqlClient.MySqlException (0x80004005): Column 'news_data' cannot be null
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.GetResult(Int32 statementId, Int32& affectedRows, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+2019-09-17 13:45:23.013 +12:00 [ERR] An exception occurred in the database while saving changes for context type 'Pegasus_backend.pegasusContext.ablemusicContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> MySql.Data.MySqlClient.MySqlException: Column 'news_data' cannot be null
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.GetResult(Int32 statementId, Int32& affectedRows, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(DbContext _, ValueTuple`2 parameters, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IReadOnlyList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> MySql.Data.MySqlClient.MySqlException: Column 'news_data' cannot be null
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.GetResult(Int32 statementId, Int32& affectedRows, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(DbContext _, ValueTuple`2 parameters, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IReadOnlyList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2019-09-17 13:45:23.167 +12:00 [INF] Executed action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.BadRequestObjectResult in 464.4739ms.
+2019-09-17 13:45:23.168 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-09-17 13:45:23.168 +12:00 [INF] Executed action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) in 470.87100000000004ms
+2019-09-17 13:45:23.168 +12:00 [INF] Response {"IsSuccess":false,"ErrorCode":null,"IsFound":true,"ErrorMessage":"An error occurred while updating the entries. See the inner exception for details.","Note":null,"Data":null}
+2019-09-17 13:45:23.169 +12:00 [INF] Request finished in 527.8355ms 400 application/json; charset=utf-8
+2019-09-17 13:45:31.553 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news application/json 94
+2019-09-17 13:45:31.555 +12:00 [INF] {
+	"NewsTitle": "This is Title",
+	"NewsData": "abc",
+	"Categroy": 1,
+	"UserId":1,
+	"IsTop":1
+}
+2019-09-17 13:45:31.555 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 13:45:31.556 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) with arguments ([""]) - Validation state: "Invalid"
+2019-09-17 13:46:00.804 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-09-17 13:46:01.061 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-09-17 13:46:03.060 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/news application/json 94
+2019-09-17 13:46:03.086 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-17 13:46:03.121 +12:00 [INF] {
+	"NewsTitle": "This is Title",
+	"NewsData": "abc",
+	"Categroy": 1,
+	"UserId":1,
+	"IsTop":1
+}
+2019-09-17 13:46:03.234 +12:00 [INF] Route matched with {action = "GetNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.GetNews (Pegasus_backend)
+2019-09-17 13:46:03.644 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.GetNews (Pegasus_backend) - Validation state: "Valid"
+2019-09-17 13:46:04.472 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-09-17 13:46:05.315 +12:00 [INF] Executed DbCommand (63ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `n`.`news_id`, `n`.`categroy`, `n`.`created_at`, `n`.`is_top`, `n`.`news_data`, `n`.`news_title`, `n`.`news_type`, `n`.`user_id`
+FROM `ablemusic`.`news` AS `n`
+2019-09-17 13:46:05.332 +12:00 [INF] Executed action method Pegasus_backend.Controllers.NewsController.GetNews (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkResult in 1681.7933ms.
+2019-09-17 13:46:05.337 +12:00 [INF] Executing HttpStatusCodeResult, setting HTTP status code 200
+2019-09-17 13:46:05.340 +12:00 [INF] Executed action Pegasus_backend.Controllers.NewsController.GetNews (Pegasus_backend) in 2103.9071ms
+2019-09-17 13:46:05.342 +12:00 [INF] Response 
+2019-09-17 13:46:05.346 +12:00 [INF] Request finished in 2287.4815ms 200 
+2019-09-17 13:46:18.573 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-09-17 13:46:18.832 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-09-17 13:46:20.668 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/news application/json 94
+2019-09-17 13:46:20.695 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-17 13:46:20.733 +12:00 [INF] {
+	"NewsTitle": "This is Title",
+	"NewsData": "abc",
+	"Categroy": 1,
+	"UserId":1,
+	"IsTop":1
+}
+2019-09-17 13:46:20.851 +12:00 [INF] Route matched with {action = "GetNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.GetNews (Pegasus_backend)
+2019-09-17 13:46:21.298 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.GetNews (Pegasus_backend) - Validation state: "Valid"
+2019-09-17 13:46:22.141 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-09-17 13:46:22.960 +12:00 [INF] Executed DbCommand (55ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `n`.`news_id`, `n`.`categroy`, `n`.`created_at`, `n`.`is_top`, `n`.`news_data`, `n`.`news_title`, `n`.`news_type`, `n`.`user_id`
+FROM `ablemusic`.`news` AS `n`
+2019-09-17 13:46:22.977 +12:00 [INF] Executed action method Pegasus_backend.Controllers.NewsController.GetNews (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 1670.8033ms.
+2019-09-17 13:46:22.982 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-09-17 13:46:23.026 +12:00 [INF] Executed action Pegasus_backend.Controllers.NewsController.GetNews (Pegasus_backend) in 2172.3028ms
+2019-09-17 13:46:23.027 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":{"Result":[],"Id":1,"Exception":null,"Status":5,"IsCanceled":false,"IsCompleted":true,"IsCompletedSuccessfully":true,"CreationOptions":0,"AsyncState":null,"IsFaulted":false}}
+2019-09-17 13:46:23.032 +12:00 [INF] Request finished in 2365.7059ms 200 application/json; charset=utf-8
+2019-09-17 13:48:02.898 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-09-17 13:48:03.159 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-09-17 13:48:04.815 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/news application/json 94
+2019-09-17 13:48:04.845 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-17 13:48:04.886 +12:00 [INF] {
+	"NewsTitle": "This is Title",
+	"NewsData": "abc",
+	"Categroy": 1,
+	"UserId":1,
+	"IsTop":1
+}
+2019-09-17 13:48:05.002 +12:00 [INF] Route matched with {action = "GetNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.GetNews (Pegasus_backend)
+2019-09-17 13:48:05.410 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.GetNews (Pegasus_backend) - Validation state: "Valid"
+2019-09-17 13:48:06.251 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-09-17 13:48:07.070 +12:00 [INF] Executed DbCommand (55ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `n`.`news_id`, `n`.`categroy`, `n`.`created_at`, `n`.`is_top`, `n`.`news_data`, `n`.`news_title`, `n`.`news_type`, `n`.`user_id`
+FROM `ablemusic`.`news` AS `n`
+2019-09-17 13:48:07.089 +12:00 [INF] Executed action method Pegasus_backend.Controllers.NewsController.GetNews (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 1672.9995000000001ms.
+2019-09-17 13:48:07.096 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-09-17 13:48:07.130 +12:00 [INF] Executed action Pegasus_backend.Controllers.NewsController.GetNews (Pegasus_backend) in 2126.2642ms
+2019-09-17 13:48:07.132 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":[]}
+2019-09-17 13:48:07.137 +12:00 [INF] Request finished in 2323.3943ms 200 application/json; charset=utf-8
+2019-09-17 13:48:21.677 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news application/json 94
+2019-09-17 13:48:21.678 +12:00 [INF] {
+	"NewsTitle": "This is Title",
+	"NewsData": "abc",
+	"Categroy": 1,
+	"UserId":1,
+	"IsTop":1
+}
+2019-09-17 13:48:21.691 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 13:48:21.708 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) with arguments ([""]) - Validation state: "Invalid"
+2019-09-17 13:48:21.737 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-09-17 13:48:22.080 +12:00 [ERR] Failed executing DbCommand (57ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = DateTime), @p2='?' (Size = -1) (DbType = Binary), @p3='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `ablemusic`.`news` (`news_id`, `created_at`, `news_data`, `user_id`)
+VALUES (@p0, @p1, @p2, @p3);
+SELECT `categroy`, `is_top`, `news_title`, `news_type`
+FROM `ablemusic`.`news`
+WHERE ROW_COUNT() = 1
+ AND `news_id` = @p0;
+MySql.Data.MySqlClient.MySqlException (0x80004005): Column 'news_data' cannot be null
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+2019-09-17 13:48:22.148 +12:00 [ERR] An exception occurred in the database while saving changes for context type 'Pegasus_backend.pegasusContext.ablemusicContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> MySql.Data.MySqlClient.MySqlException: Column 'news_data' cannot be null
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(DbContext _, ValueTuple`2 parameters, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IReadOnlyList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> MySql.Data.MySqlClient.MySqlException: Column 'news_data' cannot be null
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(DbContext _, ValueTuple`2 parameters, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IReadOnlyList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2019-09-17 13:48:22.150 +12:00 [INF] Executed action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.BadRequestObjectResult in 437.5337ms.
+2019-09-17 13:48:22.151 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-09-17 13:48:22.153 +12:00 [INF] Executed action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) in 461.16310000000004ms
+2019-09-17 13:48:22.153 +12:00 [INF] Response {"IsSuccess":false,"ErrorCode":null,"IsFound":true,"ErrorMessage":"An error occurred while updating the entries. See the inner exception for details.","Note":null,"Data":null}
+2019-09-17 13:48:22.153 +12:00 [INF] Request finished in 475.9477ms 400 application/json; charset=utf-8
+2019-09-17 13:48:46.733 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-09-17 13:48:47.466 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-09-17 13:49:16.922 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news application/json 94
+2019-09-17 13:49:16.947 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-17 13:49:17.035 +12:00 [INF] {
+	"NewsTitle": "This is Title",
+	"NewsData": "abc",
+	"Categroy": 1,
+	"UserId":1,
+	"IsTop":1
+}
+2019-09-17 13:49:17.208 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 13:49:17.759 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) with arguments ([""]) - Validation state: "Invalid"
+2019-09-17 13:50:12.137 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-09-17 13:50:12.900 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-09-17 13:50:13.026 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news application/json 84
+2019-09-17 13:50:13.052 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-17 13:50:13.136 +12:00 [INF] {
+	NewsTitle: "This is Title",
+	NewsData: "abc",
+	Categroy: 1,
+	UserId:1,
+	IsTop:1
+}
+2019-09-17 13:50:13.307 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 13:50:13.853 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) with arguments ([""]) - Validation state: "Invalid"
+2019-09-17 13:56:16.819 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-09-17 13:56:17.576 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-09-17 13:56:20.297 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news application/json 84
+2019-09-17 13:56:20.323 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-17 13:56:20.435 +12:00 [INF] {
+	NewsTitle: "This is Title",
+	NewsData: "abc",
+	Categroy: 1,
+	UserId:1,
+	IsTop:1
+}
+2019-09-17 13:56:20.609 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 13:56:21.154 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) with arguments ([""]) - Validation state: "Invalid"
+2019-09-17 13:56:57.428 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-09-17 13:56:58.192 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-09-17 13:57:01.597 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news application/json 84
+2019-09-17 13:57:01.623 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-17 13:57:01.712 +12:00 [INF] {
+	NewsTitle: "This is Title",
+	NewsData: "abc",
+	Categroy: 1,
+	UserId:1,
+	IsTop:1
+}
+2019-09-17 13:57:01.884 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 13:57:02.428 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) with arguments ([""]) - Validation state: "Invalid"
+2019-09-17 13:59:04.919 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-09-17 13:59:05.706 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-09-17 13:59:07.896 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news text/plain 84
+2019-09-17 13:59:07.921 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-17 13:59:08.011 +12:00 [INF] {
+	NewsTitle: "This is Title",
+	NewsData: "abc",
+	Categroy: 1,
+	UserId:1,
+	IsTop:1
+}
+2019-09-17 13:59:08.185 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 13:59:08.691 +12:00 [INF] Executing HttpStatusCodeResult, setting HTTP status code 415
+2019-09-17 13:59:08.695 +12:00 [INF] Executed action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) in 507.84560000000005ms
+2019-09-17 13:59:08.704 +12:00 [INF] Response 
+2019-09-17 13:59:08.710 +12:00 [INF] Request finished in 815.4769ms 415 
+2019-09-17 13:59:22.660 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news text/plain 84
+2019-09-17 13:59:22.690 +12:00 [INF] {
+	NewsTitle: "This is Title",
+	NewsData: "abc",
+	Categroy: 1,
+	UserId:1,
+	IsTop:1
+}
+2019-09-17 13:59:22.691 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 13:59:22.700 +12:00 [INF] Executing HttpStatusCodeResult, setting HTTP status code 415
+2019-09-17 13:59:22.700 +12:00 [INF] Executed action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) in 8.9894ms
+2019-09-17 13:59:22.700 +12:00 [INF] Response 
+2019-09-17 13:59:22.701 +12:00 [INF] Request finished in 40.649ms 415 
+2019-09-17 13:59:23.955 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news text/plain 84
+2019-09-17 13:59:23.957 +12:00 [INF] {
+	NewsTitle: "This is Title",
+	NewsData: "abc",
+	Categroy: 1,
+	UserId:1,
+	IsTop:1
+}
+2019-09-17 13:59:23.958 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 13:59:23.958 +12:00 [INF] Executing HttpStatusCodeResult, setting HTTP status code 415
+2019-09-17 13:59:23.958 +12:00 [INF] Executed action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) in 0.5484ms
+2019-09-17 13:59:23.959 +12:00 [INF] Response 
+2019-09-17 13:59:23.959 +12:00 [INF] Request finished in 4.2556ms 415 
+2019-09-17 13:59:24.972 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news text/plain 84
+2019-09-17 13:59:24.974 +12:00 [INF] {
+	NewsTitle: "This is Title",
+	NewsData: "abc",
+	Categroy: 1,
+	UserId:1,
+	IsTop:1
+}
+2019-09-17 13:59:24.975 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 13:59:24.975 +12:00 [INF] Executing HttpStatusCodeResult, setting HTTP status code 415
+2019-09-17 13:59:24.975 +12:00 [INF] Executed action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) in 0.4339ms
+2019-09-17 13:59:24.975 +12:00 [INF] Response 
+2019-09-17 13:59:24.976 +12:00 [INF] Request finished in 3.5426ms 415 
+2019-09-17 13:59:49.378 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-09-17 13:59:50.118 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-09-17 13:59:51.764 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news text/plain 84
+2019-09-17 13:59:51.791 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-17 13:59:51.884 +12:00 [INF] {
+	NewsTitle: "This is Title",
+	NewsData: "abc",
+	Categroy: 1,
+	UserId:1,
+	IsTop:1
+}
+2019-09-17 13:59:52.061 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 13:59:52.576 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) with arguments ([""]) - Validation state: "Valid"
+2019-09-17 14:00:15.208 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-09-17 14:00:15.962 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-09-17 14:02:44.907 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-09-17 14:02:45.654 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-09-17 14:02:48.684 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news application/json 84
+2019-09-17 14:02:48.709 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-17 14:02:48.798 +12:00 [INF] {
+	NewsTitle: "This is Title",
+	NewsData: "abc",
+	Categroy: 1,
+	UserId:1,
+	IsTop:1
+}
+2019-09-17 14:02:48.972 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 14:02:49.519 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) with arguments ([""]) - Validation state: "Invalid"
+2019-09-17 14:04:31.650 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-09-17 14:04:32.414 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-09-17 14:04:34.494 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news multipart/form-data; boundary=--------------------------220407817042594064472379 167
+2019-09-17 14:04:34.520 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-17 14:04:34.605 +12:00 [INF] ----------------------------220407817042594064472379
+Content-Disposition: form-data; name="NewsTitle"
+
+abc
+----------------------------220407817042594064472379--
+
+2019-09-17 14:04:34.773 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 14:04:35.290 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) with arguments (["Pegasus_backend.Models.NewsModel"]) - Validation state: "Valid"
+2019-09-17 14:08:06.237 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-09-17 14:08:06.494 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-09-17 14:08:08.158 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/login application/json 40
+2019-09-17 14:08:08.188 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-17 14:08:08.231 +12:00 [INF] {
+	"userName":"abc",
+	"password":"asd"
+}
+2019-09-17 14:08:08.361 +12:00 [INF] Route matched with {action = "Login", controller = "Login"}. Executing action Pegasus_backend.Controllers.Authorization.LoginController.Login (Pegasus_backend)
+2019-09-17 14:08:08.533 +12:00 [INF] Executing action method Pegasus_backend.Controllers.Authorization.LoginController.Login (Pegasus_backend) with arguments (["Pegasus_backend.Models.UsrAndPass"]) - Validation state: "Valid"
+2019-09-17 14:08:09.433 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-09-17 14:08:10.423 +12:00 [INF] Executed DbCommand (67ms) [Parameters=[@__model_UserName_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s`.`user_id`, `s`.`created_at`, `s`.`is_activate`, `s`.`is_online`, `s`.`password`, `s`.`role_id`, `s`.`signature`, `s`.`unread_message_id`, `s`.`user_name`, `s.Role`.`role_id`, `s.Role`.`role_name`
+FROM `ablemusic`.`user` AS `s`
+LEFT JOIN `ablemusic`.`role` AS `s.Role` ON `s`.`role_id` = `s.Role`.`role_id`
+WHERE `s`.`user_name` = @__model_UserName_0
+ORDER BY `s`.`user_id`
+LIMIT 1
+2019-09-17 14:08:10.588 +12:00 [INF] Executed DbCommand (65ms) [Parameters=[@__model_UserName_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.Learner`.`learner_id`, `s.Learner`.`address`, `s.Learner`.`comment`, `s.Learner`.`contact_num`, `s.Learner`.`created_at`, `s.Learner`.`dob`, `s.Learner`.`email`, `s.Learner`.`enroll_date`, `s.Learner`.`first_name`, `s.Learner`.`form_url`, `s.Learner`.`g5_certification`, `s.Learner`.`gender`, `s.Learner`.`is_abrsm_g5`, `s.Learner`.`is_active`, `s.Learner`.`is_under_18`, `s.Learner`.`last_name`, `s.Learner`.`learner_level`, `s.Learner`.`level_type`, `s.Learner`.`middle_name`, `s.Learner`.`note`, `s.Learner`.`org_id`, `s.Learner`.`otherfile_url`, `s.Learner`.`payment_period`, `s.Learner`.`photo`, `s.Learner`.`referrer`, `s.Learner`.`referrer_learner_id`, `s.Learner`.`user_id`
+FROM `ablemusic`.`learner` AS `s.Learner`
+INNER JOIN (
+    SELECT DISTINCT `t`.*
+    FROM (
+        SELECT `s0`.`user_id`
+        FROM `ablemusic`.`user` AS `s0`
+        LEFT JOIN `ablemusic`.`role` AS `s.Role0` ON `s0`.`role_id` = `s.Role0`.`role_id`
+        WHERE `s0`.`user_name` = @__model_UserName_0
+        ORDER BY `s0`.`user_id`
+        LIMIT 1
+    ) AS `t`
+) AS `t0` ON `s.Learner`.`user_id` = `t0`.`user_id`
+ORDER BY `t0`.`user_id`
+2019-09-17 14:08:10.777 +12:00 [INF] Executed DbCommand (66ms) [Parameters=[@__model_UserName_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.Teacher`.`teacher_id`, `s.Teacher`.`ability`, `s.Teacher`.`comment`, `s.Teacher`.`cv_url`, `s.Teacher`.`dob`, `s.Teacher`.`email`, `s.Teacher`.`expiry_date`, `s.Teacher`.`first_name`, `s.Teacher`.`form_url`, `s.Teacher`.`gender`, `s.Teacher`.`home_phone`, `s.Teacher`.`id_number`, `s.Teacher`.`id_photo`, `s.Teacher`.`id_type`, `s.Teacher`.`invoice_template`, `s.Teacher`.`ird_number`, `s.Teacher`.`is_activate`, `s.Teacher`.`is_contract`, `s.Teacher`.`is_left`, `s.Teacher`.`last_name`, `s.Teacher`.`level`, `s.Teacher`.`minimum_hours`, `s.Teacher`.`mobile_phone`, `s.Teacher`.`otherfile_url`, `s.Teacher`.`photo`, `s.Teacher`.`user_id`, `s.Teacher`.`visa`
+FROM `ablemusic`.`teacher` AS `s.Teacher`
+INNER JOIN (
+    SELECT DISTINCT `t1`.*
+    FROM (
+        SELECT `s1`.`user_id`
+        FROM `ablemusic`.`user` AS `s1`
+        LEFT JOIN `ablemusic`.`role` AS `s.Role1` ON `s1`.`role_id` = `s.Role1`.`role_id`
+        WHERE `s1`.`user_name` = @__model_UserName_0
+        ORDER BY `s1`.`user_id`
+        LIMIT 1
+    ) AS `t1`
+) AS `t2` ON `s.Teacher`.`user_id` = `t2`.`user_id`
+ORDER BY `t2`.`user_id`
+2019-09-17 14:08:10.948 +12:00 [INF] Executed DbCommand (63ms) [Parameters=[@__model_UserName_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.Staff`.`staff_id`, `s.Staff`.`dob`, `s.Staff`.`email`, `s.Staff`.`expiry_date`, `s.Staff`.`first_name`, `s.Staff`.`gender`, `s.Staff`.`home_phone`, `s.Staff`.`id_number`, `s.Staff`.`id_photo`, `s.Staff`.`id_type`, `s.Staff`.`ird_number`, `s.Staff`.`is_activate`, `s.Staff`.`last_name`, `s.Staff`.`mobile_phone`, `s.Staff`.`photo`, `s.Staff`.`user_id`, `s.Staff`.`visa`
+FROM `ablemusic`.`staff` AS `s.Staff`
+INNER JOIN (
+    SELECT DISTINCT `t3`.*
+    FROM (
+        SELECT `s2`.`user_id`
+        FROM `ablemusic`.`user` AS `s2`
+        LEFT JOIN `ablemusic`.`role` AS `s.Role2` ON `s2`.`role_id` = `s.Role2`.`role_id`
+        WHERE `s2`.`user_name` = @__model_UserName_0
+        ORDER BY `s2`.`user_id`
+        LIMIT 1
+    ) AS `t3`
+) AS `t4` ON `s.Staff`.`user_id` = `t4`.`user_id`
+ORDER BY `t4`.`user_id`, `s.Staff`.`staff_id`
+2019-09-17 14:08:11.042 +12:00 [INF] Executed DbCommand (65ms) [Parameters=[@__model_UserName_0='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.Staff.StaffOrg`.`staff_org_id`, `s.Staff.StaffOrg`.`is_activate`, `s.Staff.StaffOrg`.`org_id`, `s.Staff.StaffOrg`.`staff_id`, `s.Org`.`org_id`, `s.Org`.`abbr`, `s.Org`.`address`, `s.Org`.`bank_account_no`, `s.Org`.`bank_name`, `s.Org`.`email`, `s.Org`.`is_activate`, `s.Org`.`is_headoffice`, `s.Org`.`localtion_x`, `s.Org`.`localtion_y`, `s.Org`.`org_name`, `s.Org`.`phone`
+FROM `ablemusic`.`staff_org` AS `s.Staff.StaffOrg`
+LEFT JOIN `ablemusic`.`org` AS `s.Org` ON `s.Staff.StaffOrg`.`org_id` = `s.Org`.`org_id`
+INNER JOIN (
+    SELECT DISTINCT `s.Staff0`.`staff_id`, `t6`.`user_id`
+    FROM `ablemusic`.`staff` AS `s.Staff0`
+    INNER JOIN (
+        SELECT DISTINCT `t5`.*
+        FROM (
+            SELECT `s3`.`user_id`
+            FROM `ablemusic`.`user` AS `s3`
+            LEFT JOIN `ablemusic`.`role` AS `s.Role3` ON `s3`.`role_id` = `s.Role3`.`role_id`
+            WHERE `s3`.`user_name` = @__model_UserName_0
+            ORDER BY `s3`.`user_id`
+            LIMIT 1
+        ) AS `t5`
+    ) AS `t6` ON `s.Staff0`.`user_id` = `t6`.`user_id`
+) AS `t7` ON `s.Staff.StaffOrg`.`staff_id` = `t7`.`staff_id`
+ORDER BY `t7`.`user_id`, `t7`.`staff_id`
+2019-09-17 14:08:11.087 +12:00 [INF] Executed action method Pegasus_backend.Controllers.Authorization.LoginController.Login (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 2543.6542ms.
+2019-09-17 14:08:11.095 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-09-17 14:08:11.103 +12:00 [INF] Executed action Pegasus_backend.Controllers.Authorization.LoginController.Login (Pegasus_backend) in 2740.1383ms
+2019-09-17 14:08:11.104 +12:00 [INF] Response {"IsSuccess":false,"ErrorCode":null,"IsFound":true,"ErrorMessage":"The password is incorrect.","Note":null,"Data":null}
+2019-09-17 14:08:11.109 +12:00 [INF] Request finished in 2952.8827ms 401 application/json; charset=utf-8
+2019-09-17 14:24:36.056 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news application/json 84
+2019-09-17 14:24:36.057 +12:00 [INF] {
+	NewsTitle: "This is Title",
+	NewsData: "abc",
+	Categroy: 1,
+	UserId:1,
+	IsTop:1
+}
+2019-09-17 14:24:36.062 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 14:24:36.393 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) with arguments ([""]) - Validation state: "Invalid"
+2019-09-17 14:24:36.418 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-09-17 14:24:37.208 +12:00 [ERR] Failed executing DbCommand (55ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = DateTime), @p2='?' (Size = -1) (DbType = Binary), @p3='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `ablemusic`.`news` (`news_id`, `created_at`, `news_data`, `user_id`)
+VALUES (@p0, @p1, @p2, @p3);
+SELECT `categroy`, `is_top`, `news_title`, `news_type`
+FROM `ablemusic`.`news`
+WHERE ROW_COUNT() = 1
+ AND `news_id` = @p0;
+MySql.Data.MySqlClient.MySqlException (0x80004005): Column 'news_data' cannot be null
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+2019-09-17 14:24:37.278 +12:00 [ERR] An exception occurred in the database while saving changes for context type 'Pegasus_backend.pegasusContext.ablemusicContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> MySql.Data.MySqlClient.MySqlException: Column 'news_data' cannot be null
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(DbContext _, ValueTuple`2 parameters, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IReadOnlyList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> MySql.Data.MySqlClient.MySqlException: Column 'news_data' cannot be null
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(DbContext _, ValueTuple`2 parameters, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IReadOnlyList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2019-09-17 14:24:37.280 +12:00 [INF] Executed action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.BadRequestObjectResult in 885.9563ms.
+2019-09-17 14:24:37.280 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-09-17 14:24:37.282 +12:00 [INF] Executed action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) in 1220.2857000000001ms
+2019-09-17 14:24:37.282 +12:00 [INF] Response {"IsSuccess":false,"ErrorCode":null,"IsFound":true,"ErrorMessage":"An error occurred while updating the entries. See the inner exception for details.","Note":null,"Data":null}
+2019-09-17 14:24:37.283 +12:00 [INF] Request finished in 1227.1712ms 400 application/json; charset=utf-8
+2019-09-17 14:24:49.733 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-09-17 14:24:50.512 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-09-17 14:24:53.053 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news application/json 84
+2019-09-17 14:24:53.079 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-17 14:24:53.165 +12:00 [INF] {
+	NewsTitle: "This is Title",
+	NewsData: "abc",
+	Categroy: 1,
+	UserId:1,
+	IsTop:1
+}
+2019-09-17 14:24:53.334 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 14:24:53.875 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) with arguments ([""]) - Validation state: "Invalid"
+2019-09-17 14:30:24.329 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-09-17 14:30:25.098 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-09-17 14:30:27.339 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news application/json 75
+2019-09-17 14:30:27.366 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-17 14:30:27.453 +12:00 [INF] NewsTitle: "This is Title",
+NewsData: "abc",
+Categroy: 1,
+UserId:1,
+IsTop:1
+2019-09-17 14:30:27.623 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 14:30:28.158 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) with arguments ([""]) - Validation state: "Invalid"
+2019-09-17 14:37:27.456 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-09-17 14:37:28.222 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-09-17 14:37:32.541 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news application/json;charset=utf-8 94
+2019-09-17 14:37:32.566 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-17 14:37:32.650 +12:00 [INF] {
+	"NewsTitle": "This is Title",
+	"NewsData": "abc",
+	"Categroy": 1,
+	"UserId":1,
+	"IsTop":1
+}
+2019-09-17 14:37:32.823 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 14:37:33.381 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) with arguments ([""]) - Validation state: "Invalid"
+2019-09-17 14:40:22.712 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-09-17 14:40:23.497 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-09-17 14:40:25.696 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news application/json;charset=utf-8 94
+2019-09-17 14:40:25.722 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-17 14:40:25.809 +12:00 [INF] {
+	"NewsTitle": "This is Title",
+	"NewsData": "abc",
+	"Categroy": 1,
+	"UserId":1,
+	"IsTop":1
+}
+2019-09-17 14:40:25.979 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 14:40:26.530 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) with arguments ([""]) - Validation state: "Invalid"
+2019-09-17 14:43:46.152 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-09-17 14:43:46.882 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-09-17 14:43:52.797 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news application/json;charset=utf-8 94
+2019-09-17 14:43:52.824 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-17 14:43:52.909 +12:00 [INF] {
+	"NewsTitle": "This is Title",
+	"NewsData": "abc",
+	"Categroy": 1,
+	"UserId":1,
+	"IsTop":1
+}
+2019-09-17 14:43:53.077 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 14:43:53.624 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) with arguments ([""]) - Validation state: "Invalid"
+2019-09-17 14:43:54.704 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-09-17 14:43:55.746 +12:00 [ERR] Failed executing DbCommand (67ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = DateTime), @p2='?' (Size = -1) (DbType = Binary), @p3='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `ablemusic`.`news` (`news_id`, `created_at`, `news_data`, `user_id`)
+VALUES (@p0, @p1, @p2, @p3);
+SELECT `categroy`, `is_top`, `news_title`, `news_type`
+FROM `ablemusic`.`news`
+WHERE ROW_COUNT() = 1
+ AND `news_id` = @p0;
+MySql.Data.MySqlClient.MySqlException (0x80004005): Column 'news_data' cannot be null
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.GetResult(Int32 statementId, Int32& affectedRows, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+2019-09-17 14:43:55.840 +12:00 [ERR] An exception occurred in the database while saving changes for context type 'Pegasus_backend.pegasusContext.ablemusicContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> MySql.Data.MySqlClient.MySqlException: Column 'news_data' cannot be null
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.GetResult(Int32 statementId, Int32& affectedRows, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(DbContext _, ValueTuple`2 parameters, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IReadOnlyList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> MySql.Data.MySqlClient.MySqlException: Column 'news_data' cannot be null
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.GetResult(Int32 statementId, Int32& affectedRows, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(DbContext _, ValueTuple`2 parameters, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IReadOnlyList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2019-09-17 14:43:56.423 +12:00 [INF] Executed action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.BadRequestObjectResult in 2792.5801ms.
+2019-09-17 14:43:56.428 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-09-17 14:43:56.440 +12:00 [INF] Executed action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) in 3361.1852000000003ms
+2019-09-17 14:43:56.445 +12:00 [INF] Response {"IsSuccess":false,"ErrorCode":null,"IsFound":true,"ErrorMessage":"An error occurred while updating the entries. See the inner exception for details.","Note":null,"Data":null}
+2019-09-17 14:43:56.452 +12:00 [INF] Request finished in 3657.1346ms 400 application/json; charset=utf-8
+2019-09-17 14:44:10.779 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news application/json;charset=utf-8 94
+2019-09-17 14:44:10.786 +12:00 [INF] {
+	"NewsTitle": "This is Title",
+	"NewsData": "abc",
+	"Categroy": 1,
+	"UserId":1,
+	"IsTop":1
+}
+2019-09-17 14:44:10.786 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 14:44:10.788 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) with arguments ([""]) - Validation state: "Invalid"
+2019-09-17 14:44:52.524 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-09-17 14:44:52.785 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-09-17 14:44:58.111 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/news application/json;charset=utf-8 94
+2019-09-17 14:44:58.136 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-17 14:44:58.171 +12:00 [INF] {
+	"NewsTitle": "This is Title",
+	"NewsData": "abc",
+	"Categroy": 1,
+	"UserId":1,
+	"IsTop":1
+}
+2019-09-17 14:44:58.287 +12:00 [INF] Route matched with {action = "GetNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.GetNews (Pegasus_backend)
+2019-09-17 14:44:58.705 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.GetNews (Pegasus_backend) - Validation state: "Valid"
+2019-09-17 14:44:59.535 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-09-17 14:45:00.359 +12:00 [INF] Executed DbCommand (57ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `n`.`news_id`, `n`.`categroy`, `n`.`created_at`, `n`.`is_top`, `n`.`news_data`, `n`.`news_title`, `n`.`news_type`, `n`.`user_id`
+FROM `ablemusic`.`news` AS `n`
+2019-09-17 14:45:00.376 +12:00 [INF] Executed action method Pegasus_backend.Controllers.NewsController.GetNews (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 1664.5365000000002ms.
+2019-09-17 14:45:00.381 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-09-17 14:45:00.415 +12:00 [INF] Executed action Pegasus_backend.Controllers.NewsController.GetNews (Pegasus_backend) in 2125.8365ms
+2019-09-17 14:45:00.417 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":[]}
+2019-09-17 14:45:00.422 +12:00 [INF] Request finished in 2312.1233ms 200 application/json; charset=utf-8
