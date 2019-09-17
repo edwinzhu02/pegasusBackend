@@ -12,6 +12,7 @@ using Pegasus_backend.pegasusContext;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Google.Protobuf.WellKnownTypes;
@@ -61,7 +62,8 @@ namespace Pegasus_backend.Controllers
             try
             {
                 var newItem = new News();
-                _mapper.Map(newItem, news);
+                _mapper.Map(news,newItem);
+                newItem.NewsData = Encoding.ASCII.GetBytes(news.newsData);
                 newItem.CreatedAt = DateTime.UtcNow.AddHours(12);
                 _ablemusicContext.Add(newItem);
                 await _ablemusicContext.SaveChangesAsync();

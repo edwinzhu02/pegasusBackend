@@ -1397,4 +1397,317 @@ FROM `ablemusic`.`news` AS `n`
 2019-09-17 14:45:00.415 +12:00 [INF] Executed action Pegasus_backend.Controllers.NewsController.GetNews (Pegasus_backend) in 2125.8365ms
 2019-09-17 14:45:00.417 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":[]}
 2019-09-17 14:45:00.422 +12:00 [INF] Request finished in 2312.1233ms 200 application/json; charset=utf-8
+<<<<<<< HEAD
 >>>>>>> 3655ae8eeaf7f53e4c8857a4c5ca04efce9ad8ef
+=======
+2019-09-17 15:01:58.841 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-09-17 15:01:59.583 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-09-17 15:02:02.139 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news application/json 22
+2019-09-17 15:02:02.161 +12:00 [INF] Policy execution successful.
+2019-09-17 15:02:02.164 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-17 15:02:02.245 +12:00 [INF] {
+	"NewsTitle":"abc"
+}
+2019-09-17 15:02:02.409 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 15:02:02.940 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) with arguments (["Pegasus_backend.Models.NewsModel"]) - Validation state: "Valid"
+2019-09-17 15:03:32.398 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-09-17 15:03:32.655 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-09-17 15:03:34.940 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news application/json 101
+2019-09-17 15:03:34.963 +12:00 [INF] Policy execution successful.
+2019-09-17 15:03:34.966 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-17 15:03:35.000 +12:00 [INF] {
+	"NewsTitle":"abc",
+	"NewsType": "",
+	"NewsData": "aaaaa",
+	"Categroy":1,
+	"UserId":1,
+	"IsTop":1
+}
+2019-09-17 15:03:35.115 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 15:03:35.550 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) with arguments ([""]) - Validation state: "Invalid"
+2019-09-17 15:03:36.389 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-09-17 15:03:37.409 +12:00 [ERR] Failed executing DbCommand (61ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = DateTime), @p2='?' (Size = -1) (DbType = Binary), @p3='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `ablemusic`.`news` (`news_id`, `created_at`, `news_data`, `user_id`)
+VALUES (@p0, @p1, @p2, @p3);
+SELECT `categroy`, `is_top`, `news_title`, `news_type`
+FROM `ablemusic`.`news`
+WHERE ROW_COUNT() = 1
+ AND `news_id` = @p0;
+MySql.Data.MySqlClient.MySqlException (0x80004005): Column 'news_data' cannot be null
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+2019-09-17 15:03:37.481 +12:00 [ERR] An exception occurred in the database while saving changes for context type 'Pegasus_backend.pegasusContext.ablemusicContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> MySql.Data.MySqlClient.MySqlException: Column 'news_data' cannot be null
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(DbContext _, ValueTuple`2 parameters, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IReadOnlyList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> MySql.Data.MySqlClient.MySqlException: Column 'news_data' cannot be null
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(DbContext _, ValueTuple`2 parameters, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IReadOnlyList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2019-09-17 15:03:37.486 +12:00 [INF] Executed action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.BadRequestObjectResult in 1925.8474ms.
+2019-09-17 15:03:37.493 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-09-17 15:03:37.502 +12:00 [INF] Executed action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) in 2384.4406ms
+2019-09-17 15:03:37.504 +12:00 [INF] Response {"IsSuccess":false,"ErrorCode":null,"IsFound":true,"ErrorMessage":"An error occurred while updating the entries. See the inner exception for details.","Note":null,"Data":null}
+2019-09-17 15:03:37.509 +12:00 [INF] Request finished in 2570.674ms 400 application/json; charset=utf-8
+2019-09-17 15:03:50.761 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-09-17 15:03:51.554 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-09-17 15:03:52.883 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news application/json 101
+2019-09-17 15:03:52.907 +12:00 [INF] Policy execution successful.
+2019-09-17 15:03:52.909 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-17 15:03:52.992 +12:00 [INF] {
+	"NewsTitle":"abc",
+	"NewsType": "",
+	"NewsData": "aaaaa",
+	"Categroy":1,
+	"UserId":1,
+	"IsTop":1
+}
+2019-09-17 15:03:53.154 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 15:03:53.685 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) with arguments ([""]) - Validation state: "Invalid"
+2019-09-17 15:04:26.529 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-09-17 15:04:27.276 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-09-17 15:04:28.974 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news application/json 41
+2019-09-17 15:04:28.996 +12:00 [INF] Policy execution successful.
+2019-09-17 15:04:28.999 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-17 15:04:29.086 +12:00 [INF] {
+	"NewsTitle":"abc",
+	"NewsType": "",
+
+}
+2019-09-17 15:04:29.246 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 15:04:29.763 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) with arguments (["Pegasus_backend.Models.NewsModel"]) - Validation state: "Valid"
+2019-09-17 15:04:55.814 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-09-17 15:04:56.572 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-09-17 15:05:01.433 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news application/json 63
+2019-09-17 15:05:01.455 +12:00 [INF] Policy execution successful.
+2019-09-17 15:05:01.458 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-17 15:05:01.539 +12:00 [INF] {
+	"NewsTitle":"abc",
+	"NewsType": "",
+	"NewsData": "aaaaa",
+
+}
+2019-09-17 15:05:01.699 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 15:05:02.225 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) with arguments ([""]) - Validation state: "Invalid"
+2019-09-17 15:05:28.683 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-09-17 15:05:29.426 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-09-17 15:05:30.495 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news application/json 79
+2019-09-17 15:05:30.517 +12:00 [INF] Policy execution successful.
+2019-09-17 15:05:30.520 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-17 15:05:30.601 +12:00 [INF] {
+	"NewsTitle":"abc",
+	"NewsType": "",
+	"Categroy":1,
+	"UserId":1,
+	"IsTop":1
+}
+2019-09-17 15:05:30.766 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 15:05:31.299 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) with arguments (["Pegasus_backend.Models.NewsModel"]) - Validation state: "Valid"
+2019-09-17 15:15:54.912 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-09-17 15:15:55.165 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-09-17 15:15:59.615 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news application/json 101
+2019-09-17 15:15:59.640 +12:00 [INF] Policy execution successful.
+2019-09-17 15:15:59.642 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-17 15:15:59.678 +12:00 [INF] {
+	"NewsTitle":"abc",
+	"NewsType": "",
+	"NewsData": "aaaaa",
+	"Categroy":1,
+	"UserId":1,
+	"IsTop":1
+}
+2019-09-17 15:15:59.794 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 15:16:00.236 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) with arguments (["Pegasus_backend.Models.NewsModel"]) - Validation state: "Valid"
+2019-09-17 15:16:00.270 +12:00 [INF] Executed action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.BadRequestObjectResult in 25.279400000000003ms.
+2019-09-17 15:16:00.275 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-09-17 15:16:00.283 +12:00 [INF] Executed action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) in 486.4264ms
+2019-09-17 15:16:00.284 +12:00 [INF] Response {"IsSuccess":false,"ErrorCode":null,"IsFound":true,"ErrorMessage":"String reference not set to an instance of a String.\nParameter name: s","Note":null,"Data":null}
+2019-09-17 15:16:00.288 +12:00 [INF] Request finished in 674.2828ms 400 application/json; charset=utf-8
+2019-09-17 15:16:34.586 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-09-17 15:16:35.356 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-09-17 15:16:37.161 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news application/json 101
+2019-09-17 15:16:37.183 +12:00 [INF] Policy execution successful.
+2019-09-17 15:16:37.186 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-17 15:16:37.266 +12:00 [INF] {
+	"NewsTitle":"abc",
+	"NewsType": "",
+	"NewsData": "aaaaa",
+	"Categroy":1,
+	"UserId":1,
+	"IsTop":1
+}
+2019-09-17 15:16:37.429 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 15:16:37.978 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) with arguments (["Pegasus_backend.Models.NewsModel"]) - Validation state: "Valid"
+2019-09-17 15:17:13.608 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-09-17 15:17:14.371 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-09-17 15:17:15.145 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news application/json 101
+2019-09-17 15:17:15.166 +12:00 [INF] Policy execution successful.
+2019-09-17 15:17:15.169 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-17 15:17:15.249 +12:00 [INF] {
+	"NewsTitle":"abc",
+	"NewsType": "",
+	"newsData": "aaaaa",
+	"Categroy":1,
+	"UserId":1,
+	"IsTop":1
+}
+2019-09-17 15:17:15.409 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 15:17:15.943 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) with arguments (["Pegasus_backend.Models.NewsModel"]) - Validation state: "Valid"
+2019-09-17 15:18:03.147 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-09-17 15:18:03.933 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-09-17 15:18:06.469 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news application/json 79
+2019-09-17 15:18:06.491 +12:00 [INF] Policy execution successful.
+2019-09-17 15:18:06.494 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-17 15:18:06.573 +12:00 [INF] {
+	"NewsTitle":"abc",
+	"NewsType": "",
+	"Categroy":1,
+	"UserId":1,
+	"IsTop":1
+}
+2019-09-17 15:18:06.737 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 15:18:07.262 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) with arguments (["Pegasus_backend.Models.NewsModel"]) - Validation state: "Valid"
+2019-09-17 15:19:03.116 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-09-17 15:19:03.871 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-09-17 15:19:03.960 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news application/json 63
+2019-09-17 15:19:03.982 +12:00 [INF] Policy execution successful.
+2019-09-17 15:19:03.984 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-17 15:19:04.065 +12:00 [INF] {
+	"NewsTitle":"abc",
+	"NewsType": "",
+	"newsData": "aaaaa",
+
+}
+2019-09-17 15:19:04.227 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 15:19:04.761 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) with arguments (["Pegasus_backend.Models.NewsModel"]) - Validation state: "Valid"
+2019-09-17 15:19:27.838 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-09-17 15:19:28.634 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-09-17 15:19:29.960 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news application/json 46
+2019-09-17 15:19:29.982 +12:00 [INF] Policy execution successful.
+2019-09-17 15:19:29.984 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-17 15:19:30.064 +12:00 [INF] {
+	"NewsTitle":"abc",
+	"NewsType": "ljkl",
+	
+}
+2019-09-17 15:19:30.223 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 15:19:30.755 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) with arguments (["Pegasus_backend.Models.NewsModel"]) - Validation state: "Valid"
+2019-09-17 15:19:56.477 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-09-17 15:19:57.241 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-09-17 15:20:03.559 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news application/json 23
+2019-09-17 15:20:03.581 +12:00 [INF] Policy execution successful.
+2019-09-17 15:20:03.583 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-17 15:20:03.666 +12:00 [INF] {
+	"NewsTitle":"abc",
+}
+2019-09-17 15:20:03.831 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 15:20:04.366 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) with arguments (["Pegasus_backend.Models.NewsModel"]) - Validation state: "Valid"
+2019-09-17 15:20:25.171 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-09-17 15:20:25.953 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-09-17 15:20:26.790 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news application/json 44
+2019-09-17 15:20:26.812 +12:00 [INF] Policy execution successful.
+2019-09-17 15:20:26.814 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-17 15:20:26.893 +12:00 [INF] {
+	"NewsTitle":"abc",
+	"NewsType": "ljkl",
+}
+2019-09-17 15:20:27.052 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 15:20:27.566 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) with arguments (["Pegasus_backend.Models.NewsModel"]) - Validation state: "Valid"
+2019-09-17 15:20:41.394 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-09-17 15:20:42.167 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-09-17 15:20:47.054 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news application/json 63
+2019-09-17 15:20:47.076 +12:00 [INF] Policy execution successful.
+2019-09-17 15:20:47.079 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-17 15:20:47.161 +12:00 [INF] {
+	"NewsTitle":"abc",
+	"NewsType": "ljkl",
+	"newsData": "asd"
+}
+2019-09-17 15:20:47.317 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 15:20:47.833 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) with arguments (["Pegasus_backend.Models.NewsModel"]) - Validation state: "Valid"
+2019-09-17 15:21:09.377 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-09-17 15:21:10.115 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-09-17 15:21:18.454 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news application/json 101
+2019-09-17 15:21:18.477 +12:00 [INF] Policy execution successful.
+2019-09-17 15:21:18.480 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-17 15:21:18.563 +12:00 [INF] {
+	"NewsTitle":"abc",
+	"NewsType": "",
+	"newsData": "aaaaa",
+	"Categroy":1,
+	"UserId":1,
+	"IsTop":1
+}
+2019-09-17 15:21:18.727 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 15:21:19.245 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) with arguments (["Pegasus_backend.Models.NewsModel"]) - Validation state: "Valid"
+2019-09-17 15:21:52.493 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-09-17 15:21:53.228 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-09-17 15:22:00.325 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news application/json 101
+2019-09-17 15:22:00.347 +12:00 [INF] Policy execution successful.
+2019-09-17 15:22:00.349 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-17 15:22:00.429 +12:00 [INF] {
+	"NewsTitle":"abc",
+	"NewsType": "",
+	"newsData": "aaaaa",
+	"Categroy":1,
+	"UserId":1,
+	"IsTop":1
+}
+2019-09-17 15:22:00.589 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 15:22:01.119 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) with arguments (["Pegasus_backend.Models.NewsModel"]) - Validation state: "Valid"
+2019-09-17 15:22:51.364 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-09-17 15:22:51.622 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-09-17 15:23:01.251 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news application/json 124
+2019-09-17 15:23:01.275 +12:00 [INF] Policy execution successful.
+2019-09-17 15:23:01.278 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-17 15:23:01.313 +12:00 [INF] {
+	"NewsTitle":"This is Title",
+	"NewsType": "",
+	"newsData": "aaafdsfdshterrthaa",
+	"Categroy":1,
+	"UserId":1,
+	"IsTop":1
+}
+2019-09-17 15:23:01.429 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 15:23:01.877 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) with arguments (["Pegasus_backend.Models.NewsModel"]) - Validation state: "Valid"
+2019-09-17 15:23:02.719 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-09-17 15:23:03.708 +12:00 [INF] Executed DbCommand (68ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = Byte), @p2='?' (DbType = DateTime), @p3='?' (DbType = Int16), @p4='?' (Size = 18) (DbType = Binary), @p5='?' (Size = -1), @p6='?' (Size = -1), @p7='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `ablemusic`.`news` (`news_id`, `categroy`, `created_at`, `is_top`, `news_data`, `news_title`, `news_type`, `user_id`)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7);
+2019-09-17 15:23:03.771 +12:00 [INF] Executed action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 1881.5067000000001ms.
+2019-09-17 15:23:03.777 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-09-17 15:23:03.788 +12:00 [INF] Executed action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) in 2355.0751ms
+2019-09-17 15:23:03.790 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":"news created successfully"}
+2019-09-17 15:23:03.795 +12:00 [INF] Request finished in 2543.5077ms 200 application/json; charset=utf-8
+>>>>>>> a774a8302d04b4059bd85824eb50ce6a1ac24742
