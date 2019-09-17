@@ -68,7 +68,10 @@ namespace Pegasus_backend.Mappings
             //Student update
             CreateMap<StudentUpdate, Learner>();
             CreateMap<ParentView, Parent>();
-           
+            
+            //news Mapper
+            CreateMap<NewsModel, News>();
+
         }
     }
 }

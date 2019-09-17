@@ -80,8 +80,7 @@ namespace Pegasus_backend.pegasusContext
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseMySQL("server=www.gradspace.org;port=3306;user=dbuser;password=qwer1234;database=ablemusic");
+                optionsBuilder.UseMySQL("server=gradspace.org;UserId=dbuser;Password=qwer1234;Database=ablemusic");
             }
         }
 

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+<<<<<<< HEAD
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -7,27 +8,43 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pegasus_backend.Models;
 using Pegasus_backend.pegasusContext;
+=======
+using System.IO;
+using System.Linq;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
+using AutoMapper;
+using Google.Protobuf.WellKnownTypes;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Pegasus_backend.ActionFilter;
+using Pegasus_backend.pegasusContext;
+using Pegasus_backend.Models;
+using Microsoft.Extensions.Logging;
+>>>>>>> 3655ae8eeaf7f53e4c8857a4c5ca04efce9ad8ef
 
 namespace Pegasus_backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class NewsController : BasicController
+    public class NewsController: BasicController
     {
-
-        public NewsController(ablemusicContext ablemusicContext, ILogger<LookupsController> log) : base(ablemusicContext, log)
+        private readonly IMapper _mapper;
+        public NewsController(ablemusicContext ablemusicContext, ILogger<QualificationsLanguagesOrgsController> log,IMapper mapper) : base(ablemusicContext, log)
         {
+            _mapper = mapper;
         }
-
-        [HttpPost]
         
-        public async Task<IActionResult> Post([FromBody]News news)
+        [HttpGet]
+        public async Task<IActionResult> GetNews()
         {
-            Result<string> result = new Result<string>();
+            var result = new Result<object>();
             try
             {
-                await _ablemusicContext.AddAsync(news);
-                await _ablemusicContext.SaveChangesAsync();
+                var news = await _ablemusicContext.News.ToListAsync();
+                result.Data = news;
+                return Ok(result);
             }
             catch (Exception ex)
             {
@@ -35,42 +52,28 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = ex.Message;
                 return BadRequest(result);
             }
-            
-            return Ok(result);
         }
-
-        // GET: api/Lookups/5
-        [HttpGet("{begin}/{take}")]
-        public async Task<IActionResult> GetNews(int begin, int take)
+        
+        [HttpPost]
+        public async Task<IActionResult> PostNews([FromBody] NewsModel news)
         {
-            Result<List<News>> result = new Result<List<News>>();
+            var result = new Result<string>();
             try
             {
-                result.Data = await _ablemusicContext.News.OrderByDescending(n => n.IsTop).
-                        ThenByDescending(n => n.CreatedAt).Skip(begin).Take(take).ToListAsync();
+                var newItem = new News();
+                _mapper.Map(newItem, news);
+                newItem.CreatedAt = DateTime.UtcNow.AddHours(12);
+                _ablemusicContext.Add(newItem);
+                await _ablemusicContext.SaveChangesAsync();
+                result.Data = "news created successfully";
+                return Ok(result);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 result.IsSuccess = false;
-                result.IsFound = false;
                 result.ErrorMessage = ex.Message;
-                return NotFound(result);
+                return BadRequest(result);
             }
-
-            if(result.Data == null)
-            {
-                result.IsSuccess = false;
-                result.IsFound = false;
-                result.ErrorMessage = "not found";
-                return NotFound(result);
-            }
-
-            return Ok(result);
-        }
-       
-        private bool LookupExists(int id)
-        {
-            return _ablemusicContext.Lookup.Any(e => e.LookupId == id);
         }
     }
 }
