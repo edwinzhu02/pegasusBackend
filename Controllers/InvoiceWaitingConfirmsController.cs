@@ -462,12 +462,12 @@ namespace Pegasus_backend.Controllers
                 await _ablemusicContext.SaveChangesAsync();
                 learner = await _ablemusicContext.Learner.Where(l => l.LearnerId == invoice.LearnerId).FirstOrDefaultAsync();
                 if(learner == null)
-                    {
+                {
                         result.IsSuccess = false;
                         result.IsFound = false;
                         result.ErrorMessage = "learner not found";
                         return NotFound(result);
-                    }
+                }
             }
             catch (Exception ex)
             {
@@ -478,7 +478,7 @@ namespace Pegasus_backend.Controllers
 
             var invoicePDFGeneratorService = new InvoicePDFGeneratorService(invoice, _log);
             invoicePDFGeneratorService.SavePDF();
-
+             
             //sending Email
             string mailTitle = "Invoice";
             string mailContent = MailContentGenerator(invoiceWaitingConfirmUpdate);
