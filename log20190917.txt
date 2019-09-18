@@ -1711,3 +1711,25 @@ VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7);
 2019-09-17 15:23:03.790 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":"news created successfully"}
 2019-09-17 15:23:03.795 +12:00 [INF] Request finished in 2543.5077ms 200 application/json; charset=utf-8
 >>>>>>> a774a8302d04b4059bd85824eb50ce6a1ac24742
+2019-09-17 20:33:47.801 +12:00 [INF] User profile is available. Using 'C:\Users\zhuyi\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-09-17 20:33:48.228 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-09-17 20:33:48.979 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
+2019-09-17 20:33:49.008 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-17 20:33:49.078 +12:00 [INF] 
+2019-09-17 20:33:49.196 +12:00 [INF] Response 
+2019-09-17 20:33:49.201 +12:00 [INF] Request finished in 223.7465ms 404 
+2019-09-17 20:44:43.033 +12:00 [INF] User profile is available. Using 'C:\Users\zhuyi\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-09-17 20:44:43.682 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-09-17 20:44:44.928 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
+2019-09-17 20:44:44.969 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-17 20:44:45.065 +12:00 [INF] 
+2019-09-17 20:44:45.251 +12:00 [INF] Response 
+2019-09-17 20:44:45.258 +12:00 [INF] Request finished in 331.6463ms 404 
+2019-09-17 20:44:50.355 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/index.html  
+2019-09-17 20:44:50.480 +12:00 [INF] Request finished in 125.1365ms 200 text/html
+2019-09-17 20:44:50.730 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/v1/swagger.json  
+2019-09-17 20:44:51.272 +12:00 [INF] Request finished in 541.7542ms 200 application/json;charset=utf-8
+2019-09-17 20:45:04.832 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
+2019-09-17 20:45:04.833 +12:00 [INF] 
+2019-09-17 20:45:04.833 +12:00 [INF] Response 
+2019-09-17 20:45:04.833 +12:00 [INF] Request finished in 1.1545ms 404 
