@@ -53,9 +53,10 @@ namespace Pegasus_backend.Controllers
             {
                 var newItem = new News();
                 _mapper.Map(news,newItem);
-                newItem.NewsData = Encoding.ASCII.GetBytes(news.newsData);
+                var newsData = Encoding.ASCII.GetBytes(news.newsData);
+                newItem.NewsData = newsData;
                 newItem.CreatedAt = DateTime.UtcNow.AddHours(12);
-                _ablemusicContext.Add(newItem);
+                await _ablemusicContext.AddAsync(newItem);
                 await _ablemusicContext.SaveChangesAsync();
                 result.Data = "news created successfully";
                 return Ok(result);
@@ -63,7 +64,7 @@ namespace Pegasus_backend.Controllers
             catch (Exception ex)
             {
                 result.IsSuccess = false;
-                result.ErrorMessage = ex.Message;
+                result.ErrorMessage = ex.ToString();
                 return BadRequest(result);
             }
         }

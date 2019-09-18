@@ -1710,7 +1710,808 @@ VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7);
 2019-09-17 15:23:03.788 +12:00 [INF] Executed action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) in 2355.0751ms
 2019-09-17 15:23:03.790 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":"news created successfully"}
 2019-09-17 15:23:03.795 +12:00 [INF] Request finished in 2543.5077ms 200 application/json; charset=utf-8
+<<<<<<< HEAD
+2019-09-17 23:34:12.331 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-09-17 23:34:12.595 +12:00 [FTL] An error occurred starting the application
+System.AggregateException: One or more errors occurred. (Number must be either non-negative and less than or equal to Int32.MaxValue or -1.
+Parameter name: dueTm) ---> System.ArgumentOutOfRangeException: Number must be either non-negative and less than or equal to Int32.MaxValue or -1.
+Parameter name: dueTm
+   at System.Threading.Timer..ctor(TimerCallback callback, Object state, TimeSpan dueTime, TimeSpan period)
+   at Pegasus_backend.Services.TimedHostedService.StartAsync(CancellationToken cancellationToken) in /Users/oliver/Desktop/pegasusBackend/Services/TimedHostedService.cs:line 37
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.<>c__DisplayClass3_0.<StartAsync>b__0(IHostedService service)
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.ExecuteAsync(Func`2 callback)
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.ExecuteAsync(Func`2 callback)
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.StartAsync(CancellationToken token)
+---> (Inner Exception #0) System.ArgumentOutOfRangeException: Number must be either non-negative and less than or equal to Int32.MaxValue or -1.
+Parameter name: dueTm
+   at System.Threading.Timer..ctor(TimerCallback callback, Object state, TimeSpan dueTime, TimeSpan period)
+   at Pegasus_backend.Services.TimedHostedService.StartAsync(CancellationToken cancellationToken) in /Users/oliver/Desktop/pegasusBackend/Services/TimedHostedService.cs:line 37
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.<>c__DisplayClass3_0.<StartAsync>b__0(IHostedService service)
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.ExecuteAsync(Func`2 callback)<---
+
+2019-09-17 23:34:22.514 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news application/json 124
+2019-09-17 23:34:22.544 +12:00 [INF] Policy execution successful.
+2019-09-17 23:34:22.547 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-17 23:34:22.585 +12:00 [INF] {
+	"NewsTitle":"This is Title",
+	"NewsType": "",
+	"newsData": "aaafdsfdshterrthaa",
+	"Categroy":1,
+	"UserId":1,
+	"IsTop":1
+}
+2019-09-17 23:34:22.706 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 23:34:23.169 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) with arguments (["Pegasus_backend.Models.NewsModel"]) - Validation state: "Valid"
+2019-09-17 23:34:24.005 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-09-17 23:34:25.058 +12:00 [ERR] Failed executing DbCommand (53ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = Byte), @p2='?' (DbType = DateTime), @p3='?' (DbType = Int16), @p4='?' (Size = 18) (DbType = Binary), @p5='?' (Size = -1), @p6='?' (Size = -1), @p7='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `ablemusic`.`news` (`news_id`, `categroy`, `created_at`, `is_top`, `news_data`, `news_title`, `news_type`, `user_id`)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7);
+MySql.Data.MySqlClient.MySqlException (0x80004005): Duplicate entry '0' for key 'PRIMARY'
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+2019-09-17 23:34:25.104 +12:00 [ERR] An exception occurred in the database while saving changes for context type 'Pegasus_backend.pegasusContext.ablemusicContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> MySql.Data.MySqlClient.MySqlException: Duplicate entry '0' for key 'PRIMARY'
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(DbContext _, ValueTuple`2 parameters, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IReadOnlyList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> MySql.Data.MySqlClient.MySqlException: Duplicate entry '0' for key 'PRIMARY'
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(DbContext _, ValueTuple`2 parameters, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IReadOnlyList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2019-09-17 23:34:25.109 +12:00 [INF] Executed action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.BadRequestObjectResult in 1928.7158000000002ms.
+2019-09-17 23:34:25.116 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-09-17 23:34:25.126 +12:00 [INF] Executed action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) in 2417.3034000000002ms
+2019-09-17 23:34:25.128 +12:00 [INF] Response {"IsSuccess":false,"ErrorCode":null,"IsFound":true,"ErrorMessage":"An error occurred while updating the entries. See the inner exception for details.","Note":null,"Data":null}
+2019-09-17 23:34:25.133 +12:00 [INF] Request finished in 2619.6665ms 400 application/json; charset=utf-8
+2019-09-17 23:34:45.977 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-09-17 23:34:46.900 +12:00 [FTL] An error occurred starting the application
+System.AggregateException: One or more errors occurred. (Number must be either non-negative and less than or equal to Int32.MaxValue or -1.
+Parameter name: dueTm) ---> System.ArgumentOutOfRangeException: Number must be either non-negative and less than or equal to Int32.MaxValue or -1.
+Parameter name: dueTm
+   at System.Threading.Timer..ctor(TimerCallback callback, Object state, TimeSpan dueTime, TimeSpan period)
+   at Pegasus_backend.Services.TimedHostedService.StartAsync(CancellationToken cancellationToken) in /Users/oliver/Desktop/pegasusBackend/Services/TimedHostedService.cs:line 37
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.<>c__DisplayClass3_0.<StartAsync>b__0(IHostedService service)
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.ExecuteAsync(Func`2 callback)
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.ExecuteAsync(Func`2 callback)
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.StartAsync(CancellationToken token)
+---> (Inner Exception #0) System.ArgumentOutOfRangeException: Number must be either non-negative and less than or equal to Int32.MaxValue or -1.
+Parameter name: dueTm
+   at System.Threading.Timer..ctor(TimerCallback callback, Object state, TimeSpan dueTime, TimeSpan period)
+   at Pegasus_backend.Services.TimedHostedService.StartAsync(CancellationToken cancellationToken) in /Users/oliver/Desktop/pegasusBackend/Services/TimedHostedService.cs:line 37
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.<>c__DisplayClass3_0.<StartAsync>b__0(IHostedService service)
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.ExecuteAsync(Func`2 callback)<---
+
+2019-09-17 23:35:15.575 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news application/json 124
+2019-09-17 23:35:15.596 +12:00 [INF] Policy execution successful.
+2019-09-17 23:35:15.599 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-17 23:35:15.683 +12:00 [INF] {
+	"NewsTitle":"This is Title",
+	"NewsType": "",
+	"newsData": "aaafdsfdshterrthaa",
+	"Categroy":1,
+	"UserId":1,
+	"IsTop":1
+}
+2019-09-17 23:35:15.855 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 23:35:16.460 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) with arguments (["Pegasus_backend.Models.NewsModel"]) - Validation state: "Valid"
+2019-09-17 23:36:47.725 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-09-17 23:36:48.500 +12:00 [ERR] Failed executing DbCommand (41ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = Byte), @p2='?' (DbType = DateTime), @p3='?' (DbType = Int16), @p4='?' (Size = 18) (DbType = Binary), @p5='?' (Size = -1), @p6='?' (Size = -1), @p7='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `ablemusic`.`news` (`news_id`, `categroy`, `created_at`, `is_top`, `news_data`, `news_title`, `news_type`, `user_id`)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7);
+MySql.Data.MySqlClient.MySqlException (0x80004005): Duplicate entry '0' for key 'PRIMARY'
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.GetResult(Int32 statementId, Int32& affectedRows, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+2019-09-17 23:36:48.550 +12:00 [ERR] An exception occurred in the database while saving changes for context type 'Pegasus_backend.pegasusContext.ablemusicContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> MySql.Data.MySqlClient.MySqlException: Duplicate entry '0' for key 'PRIMARY'
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.GetResult(Int32 statementId, Int32& affectedRows, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(DbContext _, ValueTuple`2 parameters, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IReadOnlyList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> MySql.Data.MySqlClient.MySqlException: Duplicate entry '0' for key 'PRIMARY'
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.GetResult(Int32 statementId, Int32& affectedRows, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(DbContext _, ValueTuple`2 parameters, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IReadOnlyList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2019-09-17 23:36:48.720 +12:00 [INF] Executed action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.BadRequestObjectResult in 92255.6314ms.
+2019-09-17 23:36:48.726 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-09-17 23:36:48.737 +12:00 [INF] Executed action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) in 92880.9274ms
+2019-09-17 23:36:48.743 +12:00 [INF] Response {"IsSuccess":false,"ErrorCode":null,"IsFound":true,"ErrorMessage":"An error occurred while updating the entries. See the inner exception for details.","Note":null,"Data":null}
+2019-09-17 23:36:48.749 +12:00 [INF] Request finished in 93177.1619ms 400 application/json; charset=utf-8
+2019-09-17 23:37:41.251 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-09-17 23:37:42.096 +12:00 [FTL] An error occurred starting the application
+System.AggregateException: One or more errors occurred. (Number must be either non-negative and less than or equal to Int32.MaxValue or -1.
+Parameter name: dueTm) ---> System.ArgumentOutOfRangeException: Number must be either non-negative and less than or equal to Int32.MaxValue or -1.
+Parameter name: dueTm
+   at System.Threading.Timer..ctor(TimerCallback callback, Object state, TimeSpan dueTime, TimeSpan period)
+   at Pegasus_backend.Services.TimedHostedService.StartAsync(CancellationToken cancellationToken) in /Users/oliver/Desktop/pegasusBackend/Services/TimedHostedService.cs:line 37
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.<>c__DisplayClass3_0.<StartAsync>b__0(IHostedService service)
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.ExecuteAsync(Func`2 callback)
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.ExecuteAsync(Func`2 callback)
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.StartAsync(CancellationToken token)
+---> (Inner Exception #0) System.ArgumentOutOfRangeException: Number must be either non-negative and less than or equal to Int32.MaxValue or -1.
+Parameter name: dueTm
+   at System.Threading.Timer..ctor(TimerCallback callback, Object state, TimeSpan dueTime, TimeSpan period)
+   at Pegasus_backend.Services.TimedHostedService.StartAsync(CancellationToken cancellationToken) in /Users/oliver/Desktop/pegasusBackend/Services/TimedHostedService.cs:line 37
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.<>c__DisplayClass3_0.<StartAsync>b__0(IHostedService service)
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.ExecuteAsync(Func`2 callback)<---
+
+2019-09-17 23:37:44.261 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news application/json 124
+2019-09-17 23:37:44.283 +12:00 [INF] Policy execution successful.
+2019-09-17 23:37:44.286 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-17 23:37:44.368 +12:00 [INF] {
+	"NewsTitle":"This is Title",
+	"NewsType": "",
+	"newsData": "aaafdsfdshterrthaa",
+	"Categroy":1,
+	"UserId":1,
+	"IsTop":1
+}
+2019-09-17 23:37:44.536 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 23:37:45.059 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) with arguments (["Pegasus_backend.Models.NewsModel"]) - Validation state: "Valid"
+2019-09-17 23:38:01.925 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-09-17 23:38:02.704 +12:00 [ERR] Failed executing DbCommand (47ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = Byte), @p2='?' (DbType = DateTime), @p3='?' (DbType = Int16), @p4='?' (Size = 18) (DbType = Binary), @p5='?' (Size = -1), @p6='?' (Size = -1), @p7='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `ablemusic`.`news` (`news_id`, `categroy`, `created_at`, `is_top`, `news_data`, `news_title`, `news_type`, `user_id`)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7);
+MySql.Data.MySqlClient.MySqlException (0x80004005): Duplicate entry '0' for key 'PRIMARY'
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.GetResult(Int32 statementId, Int32& affectedRows, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+2019-09-17 23:38:02.754 +12:00 [ERR] An exception occurred in the database while saving changes for context type 'Pegasus_backend.pegasusContext.ablemusicContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> MySql.Data.MySqlClient.MySqlException: Duplicate entry '0' for key 'PRIMARY'
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.GetResult(Int32 statementId, Int32& affectedRows, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(DbContext _, ValueTuple`2 parameters, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IReadOnlyList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> MySql.Data.MySqlClient.MySqlException: Duplicate entry '0' for key 'PRIMARY'
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.GetResult(Int32 statementId, Int32& affectedRows, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(DbContext _, ValueTuple`2 parameters, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IReadOnlyList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2019-09-17 23:38:02.932 +12:00 [INF] Executed action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.BadRequestObjectResult in 17866.7206ms.
+2019-09-17 23:38:02.937 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-09-17 23:38:02.948 +12:00 [INF] Executed action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) in 18410.728ms
+2019-09-17 23:38:02.954 +12:00 [INF] Response {"IsSuccess":false,"ErrorCode":null,"IsFound":true,"ErrorMessage":"An error occurred while updating the entries. See the inner exception for details.","Note":null,"Data":null}
+2019-09-17 23:38:02.964 +12:00 [INF] Request finished in 18704.8773ms 400 application/json; charset=utf-8
+2019-09-17 23:38:15.698 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-09-17 23:38:15.962 +12:00 [FTL] An error occurred starting the application
+System.AggregateException: One or more errors occurred. (Number must be either non-negative and less than or equal to Int32.MaxValue or -1.
+Parameter name: dueTm) ---> System.ArgumentOutOfRangeException: Number must be either non-negative and less than or equal to Int32.MaxValue or -1.
+Parameter name: dueTm
+   at System.Threading.Timer..ctor(TimerCallback callback, Object state, TimeSpan dueTime, TimeSpan period)
+   at Pegasus_backend.Services.TimedHostedService.StartAsync(CancellationToken cancellationToken) in /Users/oliver/Desktop/pegasusBackend/Services/TimedHostedService.cs:line 37
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.<>c__DisplayClass3_0.<StartAsync>b__0(IHostedService service)
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.ExecuteAsync(Func`2 callback)
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.ExecuteAsync(Func`2 callback)
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.StartAsync(CancellationToken token)
+---> (Inner Exception #0) System.ArgumentOutOfRangeException: Number must be either non-negative and less than or equal to Int32.MaxValue or -1.
+Parameter name: dueTm
+   at System.Threading.Timer..ctor(TimerCallback callback, Object state, TimeSpan dueTime, TimeSpan period)
+   at Pegasus_backend.Services.TimedHostedService.StartAsync(CancellationToken cancellationToken) in /Users/oliver/Desktop/pegasusBackend/Services/TimedHostedService.cs:line 37
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.<>c__DisplayClass3_0.<StartAsync>b__0(IHostedService service)
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.ExecuteAsync(Func`2 callback)<---
+
+2019-09-17 23:38:17.945 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news application/json 124
+2019-09-17 23:38:17.968 +12:00 [INF] Policy execution successful.
+2019-09-17 23:38:17.970 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-17 23:38:18.004 +12:00 [INF] {
+	"NewsTitle":"This is Title",
+	"NewsType": "",
+	"newsData": "aaafdsfdshterrthaa",
+	"Categroy":1,
+	"UserId":1,
+	"IsTop":1
+}
+2019-09-17 23:38:18.123 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 23:38:18.594 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) with arguments (["Pegasus_backend.Models.NewsModel"]) - Validation state: "Valid"
+2019-09-17 23:38:19.422 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-09-17 23:38:20.189 +12:00 [ERR] Failed executing DbCommand (47ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = Byte), @p2='?' (DbType = DateTime), @p3='?' (DbType = Int16), @p4='?' (Size = 18) (DbType = Binary), @p5='?' (Size = -1), @p6='?' (Size = -1), @p7='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `ablemusic`.`news` (`news_id`, `categroy`, `created_at`, `is_top`, `news_data`, `news_title`, `news_type`, `user_id`)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7);
+MySql.Data.MySqlClient.MySqlException (0x80004005): Duplicate entry '0' for key 'PRIMARY'
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+2019-09-17 23:38:20.232 +12:00 [ERR] An exception occurred in the database while saving changes for context type 'Pegasus_backend.pegasusContext.ablemusicContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> MySql.Data.MySqlClient.MySqlException: Duplicate entry '0' for key 'PRIMARY'
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(DbContext _, ValueTuple`2 parameters, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IReadOnlyList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> MySql.Data.MySqlClient.MySqlException: Duplicate entry '0' for key 'PRIMARY'
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(DbContext _, ValueTuple`2 parameters, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IReadOnlyList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2019-09-17 23:38:20.238 +12:00 [INF] Executed action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.BadRequestObjectResult in 1633.632ms.
+2019-09-17 23:38:20.244 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-09-17 23:38:20.252 +12:00 [INF] Executed action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) in 2127.7965ms
+2019-09-17 23:38:20.254 +12:00 [INF] Response {"IsSuccess":false,"ErrorCode":null,"IsFound":true,"ErrorMessage":"Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> MySql.Data.MySqlClient.MySqlException: Duplicate entry '0' for key 'PRIMARY'\n   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()\n   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)\n   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)\n   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()\n   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)\n   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)\n--- End of stack trace from previous location where exception was thrown ---\n   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)\n   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)\n   --- End of inner exception stack trace ---\n   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)\n   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(DbContext _, ValueTuple`2 parameters, CancellationToken cancellationToken)\n   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IReadOnlyList`1 entriesToSave, CancellationToken cancellationToken)\n   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)\n   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)\n   at Pegasus_backend.Controllers.NewsController.PostNews(NewsModel news) in /Users/oliver/Desktop/pegasusBackend/Controllers/NewsController.cs:line 60","Note":null,"Data":null}
+2019-09-17 23:38:20.259 +12:00 [INF] Request finished in 2315.1955ms 400 application/json; charset=utf-8
+2019-09-17 23:39:44.067 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-09-17 23:39:44.890 +12:00 [FTL] An error occurred starting the application
+System.AggregateException: One or more errors occurred. (Number must be either non-negative and less than or equal to Int32.MaxValue or -1.
+Parameter name: dueTm) ---> System.ArgumentOutOfRangeException: Number must be either non-negative and less than or equal to Int32.MaxValue or -1.
+Parameter name: dueTm
+   at System.Threading.Timer..ctor(TimerCallback callback, Object state, TimeSpan dueTime, TimeSpan period)
+   at Pegasus_backend.Services.TimedHostedService.StartAsync(CancellationToken cancellationToken) in /Users/oliver/Desktop/pegasusBackend/Services/TimedHostedService.cs:line 37
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.<>c__DisplayClass3_0.<StartAsync>b__0(IHostedService service)
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.ExecuteAsync(Func`2 callback)
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.ExecuteAsync(Func`2 callback)
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.StartAsync(CancellationToken token)
+---> (Inner Exception #0) System.ArgumentOutOfRangeException: Number must be either non-negative and less than or equal to Int32.MaxValue or -1.
+Parameter name: dueTm
+   at System.Threading.Timer..ctor(TimerCallback callback, Object state, TimeSpan dueTime, TimeSpan period)
+   at Pegasus_backend.Services.TimedHostedService.StartAsync(CancellationToken cancellationToken) in /Users/oliver/Desktop/pegasusBackend/Services/TimedHostedService.cs:line 37
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.<>c__DisplayClass3_0.<StartAsync>b__0(IHostedService service)
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.ExecuteAsync(Func`2 callback)<---
+
+2019-09-17 23:39:46.647 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news application/json 124
+2019-09-17 23:39:46.671 +12:00 [INF] Policy execution successful.
+2019-09-17 23:39:46.674 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-17 23:39:46.779 +12:00 [INF] {
+	"NewsTitle":"This is Title",
+	"NewsType": "",
+	"newsData": "aaafdsfdshterrthaa",
+	"Categroy":1,
+	"UserId":1,
+	"IsTop":1
+}
+2019-09-17 23:39:46.948 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 23:39:47.494 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) with arguments (["Pegasus_backend.Models.NewsModel"]) - Validation state: "Valid"
+2019-09-17 23:39:48.514 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-09-17 23:40:29.316 +12:00 [ERR] Failed executing DbCommand (166ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = Byte), @p2='?' (DbType = DateTime), @p3='?' (DbType = Int16), @p4='?' (Size = 18) (DbType = Binary), @p5='?' (Size = -1), @p6='?' (Size = -1), @p7='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `ablemusic`.`news` (`news_id`, `categroy`, `created_at`, `is_top`, `news_data`, `news_title`, `news_type`, `user_id`)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7);
+MySql.Data.MySqlClient.MySqlException (0x80004005): Duplicate entry '0' for key 'PRIMARY'
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.GetResult(Int32 statementId, Int32& affectedRows, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+2019-09-17 23:40:29.690 +12:00 [ERR] An exception occurred in the database while saving changes for context type 'Pegasus_backend.pegasusContext.ablemusicContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> MySql.Data.MySqlClient.MySqlException: Duplicate entry '0' for key 'PRIMARY'
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.GetResult(Int32 statementId, Int32& affectedRows, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(DbContext _, ValueTuple`2 parameters, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IReadOnlyList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> MySql.Data.MySqlClient.MySqlException: Duplicate entry '0' for key 'PRIMARY'
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.GetResult(Int32 statementId, Int32& affectedRows, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(DbContext _, ValueTuple`2 parameters, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IReadOnlyList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2019-09-17 23:40:29.864 +12:00 [INF] Executed action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.BadRequestObjectResult in 42364.1056ms.
+2019-09-17 23:40:29.869 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-09-17 23:40:29.879 +12:00 [INF] Executed action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) in 42929.9531ms
+2019-09-17 23:40:29.885 +12:00 [INF] Response {"IsSuccess":false,"ErrorCode":null,"IsFound":true,"ErrorMessage":"Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> MySql.Data.MySqlClient.MySqlException: Duplicate entry '0' for key 'PRIMARY'\n   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()\n   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)\n   at MySql.Data.MySqlClient.Driver.GetResult(Int32 statementId, Int32& affectedRows, Int64& insertedId)\n   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)\n   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()\n   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)\n   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReader(CommandBehavior behavior)\n   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)\n--- End of stack trace from previous location where exception was thrown ---\n   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)\n   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)\n   --- End of inner exception stack trace ---\n   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)\n   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(DbContext _, ValueTuple`2 parameters, CancellationToken cancellationToken)\n   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IReadOnlyList`1 entriesToSave, CancellationToken cancellationToken)\n   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)\n   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)\n   at Pegasus_backend.Controllers.NewsController.PostNews(NewsModel news) in /Users/oliver/Desktop/pegasusBackend/Controllers/NewsController.cs:line 60","Note":null,"Data":null}
+2019-09-17 23:40:29.892 +12:00 [INF] Request finished in 43247.4016ms 400 application/json; charset=utf-8
+2019-09-17 23:43:16.132 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-09-17 23:43:16.389 +12:00 [FTL] An error occurred starting the application
+System.AggregateException: One or more errors occurred. (Number must be either non-negative and less than or equal to Int32.MaxValue or -1.
+Parameter name: dueTm) ---> System.ArgumentOutOfRangeException: Number must be either non-negative and less than or equal to Int32.MaxValue or -1.
+Parameter name: dueTm
+   at System.Threading.Timer..ctor(TimerCallback callback, Object state, TimeSpan dueTime, TimeSpan period)
+   at Pegasus_backend.Services.TimedHostedService.StartAsync(CancellationToken cancellationToken) in /Users/oliver/Desktop/pegasusBackend/Services/TimedHostedService.cs:line 37
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.<>c__DisplayClass3_0.<StartAsync>b__0(IHostedService service)
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.ExecuteAsync(Func`2 callback)
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.ExecuteAsync(Func`2 callback)
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.StartAsync(CancellationToken token)
+---> (Inner Exception #0) System.ArgumentOutOfRangeException: Number must be either non-negative and less than or equal to Int32.MaxValue or -1.
+Parameter name: dueTm
+   at System.Threading.Timer..ctor(TimerCallback callback, Object state, TimeSpan dueTime, TimeSpan period)
+   at Pegasus_backend.Services.TimedHostedService.StartAsync(CancellationToken cancellationToken) in /Users/oliver/Desktop/pegasusBackend/Services/TimedHostedService.cs:line 37
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.<>c__DisplayClass3_0.<StartAsync>b__0(IHostedService service)
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.ExecuteAsync(Func`2 callback)<---
+
+2019-09-17 23:43:18.461 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news application/json 124
+2019-09-17 23:43:18.486 +12:00 [INF] Policy execution successful.
+2019-09-17 23:43:18.489 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-17 23:43:18.527 +12:00 [INF] {
+	"NewsTitle":"This is Title",
+	"NewsType": "",
+	"newsData": "aaafdsfdshterrthaa",
+	"Categroy":1,
+	"UserId":1,
+	"IsTop":1
+}
+2019-09-17 23:43:18.645 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 23:43:19.120 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) with arguments (["Pegasus_backend.Models.NewsModel"]) - Validation state: "Valid"
+2019-09-17 23:43:20.038 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-09-17 23:43:20.794 +12:00 [ERR] Failed executing DbCommand (43ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = Byte), @p2='?' (DbType = DateTime), @p3='?' (DbType = Int16), @p4='?' (Size = 18) (DbType = Binary), @p5='?' (Size = -1), @p6='?' (Size = -1), @p7='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `ablemusic`.`news` (`news_id`, `categroy`, `created_at`, `is_top`, `news_data`, `news_title`, `news_type`, `user_id`)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7);
+MySql.Data.MySqlClient.MySqlException (0x80004005): Duplicate entry '0' for key 'PRIMARY'
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+2019-09-17 23:43:20.841 +12:00 [ERR] An exception occurred in the database while saving changes for context type 'Pegasus_backend.pegasusContext.ablemusicContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> MySql.Data.MySqlClient.MySqlException: Duplicate entry '0' for key 'PRIMARY'
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(DbContext _, ValueTuple`2 parameters, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IReadOnlyList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> MySql.Data.MySqlClient.MySqlException: Duplicate entry '0' for key 'PRIMARY'
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(DbContext _, ValueTuple`2 parameters, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IReadOnlyList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2019-09-17 23:43:20.846 +12:00 [INF] Executed action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.BadRequestObjectResult in 1715.1408000000001ms.
+2019-09-17 23:43:20.853 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-09-17 23:43:20.862 +12:00 [INF] Executed action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) in 2214.3661ms
+2019-09-17 23:43:20.864 +12:00 [INF] Response {"IsSuccess":false,"ErrorCode":null,"IsFound":true,"ErrorMessage":"An error occurred while updating the entries. See the inner exception for details.","Note":null,"Data":null}
+2019-09-17 23:43:20.869 +12:00 [INF] Request finished in 2408.5164ms 400 application/json; charset=utf-8
+2019-09-17 23:43:32.305 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-09-17 23:43:32.567 +12:00 [FTL] An error occurred starting the application
+System.AggregateException: One or more errors occurred. (Number must be either non-negative and less than or equal to Int32.MaxValue or -1.
+Parameter name: dueTm) ---> System.ArgumentOutOfRangeException: Number must be either non-negative and less than or equal to Int32.MaxValue or -1.
+Parameter name: dueTm
+   at System.Threading.Timer..ctor(TimerCallback callback, Object state, TimeSpan dueTime, TimeSpan period)
+   at Pegasus_backend.Services.TimedHostedService.StartAsync(CancellationToken cancellationToken) in /Users/oliver/Desktop/pegasusBackend/Services/TimedHostedService.cs:line 37
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.<>c__DisplayClass3_0.<StartAsync>b__0(IHostedService service)
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.ExecuteAsync(Func`2 callback)
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.ExecuteAsync(Func`2 callback)
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.StartAsync(CancellationToken token)
+---> (Inner Exception #0) System.ArgumentOutOfRangeException: Number must be either non-negative and less than or equal to Int32.MaxValue or -1.
+Parameter name: dueTm
+   at System.Threading.Timer..ctor(TimerCallback callback, Object state, TimeSpan dueTime, TimeSpan period)
+   at Pegasus_backend.Services.TimedHostedService.StartAsync(CancellationToken cancellationToken) in /Users/oliver/Desktop/pegasusBackend/Services/TimedHostedService.cs:line 37
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.<>c__DisplayClass3_0.<StartAsync>b__0(IHostedService service)
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.ExecuteAsync(Func`2 callback)<---
+
+2019-09-17 23:43:36.890 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news application/json 120
+2019-09-17 23:43:36.913 +12:00 [INF] Policy execution successful.
+2019-09-17 23:43:36.916 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-17 23:43:36.952 +12:00 [INF] {
+	"NewsTitle":"This is 1",
+	"NewsType": "",
+	"newsData": "aaafdsfdshterrthaa",
+	"Categroy":1,
+	"UserId":1,
+	"IsTop":1
+}
+2019-09-17 23:43:37.072 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 23:43:37.527 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) with arguments (["Pegasus_backend.Models.NewsModel"]) - Validation state: "Valid"
+2019-09-17 23:43:38.343 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-09-17 23:43:39.157 +12:00 [ERR] Failed executing DbCommand (45ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = Byte), @p2='?' (DbType = DateTime), @p3='?' (DbType = Int16), @p4='?' (Size = 18) (DbType = Binary), @p5='?' (Size = -1), @p6='?' (Size = -1), @p7='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `ablemusic`.`news` (`news_id`, `categroy`, `created_at`, `is_top`, `news_data`, `news_title`, `news_type`, `user_id`)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7);
+MySql.Data.MySqlClient.MySqlException (0x80004005): Duplicate entry '0' for key 'PRIMARY'
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+2019-09-17 23:43:39.202 +12:00 [ERR] An exception occurred in the database while saving changes for context type 'Pegasus_backend.pegasusContext.ablemusicContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> MySql.Data.MySqlClient.MySqlException: Duplicate entry '0' for key 'PRIMARY'
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(DbContext _, ValueTuple`2 parameters, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IReadOnlyList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> MySql.Data.MySqlClient.MySqlException: Duplicate entry '0' for key 'PRIMARY'
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(DbContext _, ValueTuple`2 parameters, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IReadOnlyList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2019-09-17 23:43:39.207 +12:00 [INF] Executed action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.BadRequestObjectResult in 1670.1899ms.
+2019-09-17 23:43:39.213 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-09-17 23:43:39.222 +12:00 [INF] Executed action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) in 2147.7705ms
+2019-09-17 23:43:39.224 +12:00 [INF] Response {"IsSuccess":false,"ErrorCode":null,"IsFound":true,"ErrorMessage":"Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> MySql.Data.MySqlClient.MySqlException: Duplicate entry '0' for key 'PRIMARY'\n   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()\n   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)\n   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)\n   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()\n   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)\n   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)\n--- End of stack trace from previous location where exception was thrown ---\n   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)\n   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)\n   --- End of inner exception stack trace ---\n   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)\n   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(DbContext _, ValueTuple`2 parameters, CancellationToken cancellationToken)\n   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IReadOnlyList`1 entriesToSave, CancellationToken cancellationToken)\n   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)\n   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)\n   at Pegasus_backend.Controllers.NewsController.PostNews(NewsModel news) in /Users/oliver/Desktop/pegasusBackend/Controllers/NewsController.cs:line 60","Note":null,"Data":null}
+2019-09-17 23:43:39.229 +12:00 [INF] Request finished in 2339.5164ms 400 application/json; charset=utf-8
+2019-09-17 23:44:14.889 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-09-17 23:44:15.141 +12:00 [FTL] An error occurred starting the application
+System.AggregateException: One or more errors occurred. (Number must be either non-negative and less than or equal to Int32.MaxValue or -1.
+Parameter name: dueTm) ---> System.ArgumentOutOfRangeException: Number must be either non-negative and less than or equal to Int32.MaxValue or -1.
+Parameter name: dueTm
+   at System.Threading.Timer..ctor(TimerCallback callback, Object state, TimeSpan dueTime, TimeSpan period)
+   at Pegasus_backend.Services.TimedHostedService.StartAsync(CancellationToken cancellationToken) in /Users/oliver/Desktop/pegasusBackend/Services/TimedHostedService.cs:line 37
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.<>c__DisplayClass3_0.<StartAsync>b__0(IHostedService service)
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.ExecuteAsync(Func`2 callback)
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.ExecuteAsync(Func`2 callback)
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.StartAsync(CancellationToken token)
+---> (Inner Exception #0) System.ArgumentOutOfRangeException: Number must be either non-negative and less than or equal to Int32.MaxValue or -1.
+Parameter name: dueTm
+   at System.Threading.Timer..ctor(TimerCallback callback, Object state, TimeSpan dueTime, TimeSpan period)
+   at Pegasus_backend.Services.TimedHostedService.StartAsync(CancellationToken cancellationToken) in /Users/oliver/Desktop/pegasusBackend/Services/TimedHostedService.cs:line 37
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.<>c__DisplayClass3_0.<StartAsync>b__0(IHostedService service)
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.ExecuteAsync(Func`2 callback)<---
+
+2019-09-17 23:44:17.274 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news application/json 120
+2019-09-17 23:44:17.298 +12:00 [INF] Policy execution successful.
+2019-09-17 23:44:17.300 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-17 23:44:17.335 +12:00 [INF] {
+	"NewsTitle":"This is 1",
+	"NewsType": "",
+	"newsData": "aaafdsfdshterrthaa",
+	"Categroy":1,
+	"UserId":1,
+	"IsTop":1
+}
+2019-09-17 23:44:17.458 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 23:44:17.936 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) with arguments (["Pegasus_backend.Models.NewsModel"]) - Validation state: "Valid"
+2019-09-17 23:44:18.749 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-09-17 23:44:19.751 +12:00 [ERR] Failed executing DbCommand (44ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = Byte), @p2='?' (DbType = DateTime), @p3='?' (DbType = Int16), @p4='?' (Size = 18) (DbType = Binary), @p5='?' (Size = -1), @p6='?' (Size = -1), @p7='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `ablemusic`.`news` (`news_id`, `categroy`, `created_at`, `is_top`, `news_data`, `news_title`, `news_type`, `user_id`)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7);
+MySql.Data.MySqlClient.MySqlException (0x80004005): Duplicate entry '0' for key 'PRIMARY'
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+2019-09-17 23:44:19.794 +12:00 [ERR] An exception occurred in the database while saving changes for context type 'Pegasus_backend.pegasusContext.ablemusicContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> MySql.Data.MySqlClient.MySqlException: Duplicate entry '0' for key 'PRIMARY'
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(DbContext _, ValueTuple`2 parameters, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IReadOnlyList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> MySql.Data.MySqlClient.MySqlException: Duplicate entry '0' for key 'PRIMARY'
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(DbContext _, ValueTuple`2 parameters, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IReadOnlyList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2019-09-17 23:44:19.800 +12:00 [INF] Executed action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.BadRequestObjectResult in 1852.794ms.
+2019-09-17 23:44:19.806 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-09-17 23:44:19.815 +12:00 [INF] Executed action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) in 2354.7349ms
+2019-09-17 23:44:19.817 +12:00 [INF] Response {"IsSuccess":false,"ErrorCode":null,"IsFound":true,"ErrorMessage":"Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> MySql.Data.MySqlClient.MySqlException: Duplicate entry '0' for key 'PRIMARY'\n   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()\n   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)\n   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)\n   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()\n   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)\n   at System.Data.Common.DbCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)\n--- End of stack trace from previous location where exception was thrown ---\n   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)\n   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)\n   --- End of inner exception stack trace ---\n   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)\n   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(DbContext _, ValueTuple`2 parameters, CancellationToken cancellationToken)\n   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IReadOnlyList`1 entriesToSave, CancellationToken cancellationToken)\n   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)\n   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)\n   at Pegasus_backend.Controllers.NewsController.PostNews(NewsModel news) in /Users/oliver/Desktop/pegasusBackend/Controllers/NewsController.cs:line 60","Note":null,"Data":null}
+2019-09-17 23:44:19.822 +12:00 [INF] Request finished in 2548.1911ms 400 application/json; charset=utf-8
+2019-09-17 23:46:52.337 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news application/json 120
+2019-09-17 23:46:52.337 +12:00 [INF] Policy execution successful.
+2019-09-17 23:46:52.338 +12:00 [INF] {
+	"NewsTitle":"This is 1",
+	"NewsType": "",
+	"newsData": "aaafdsfdshterrthaa",
+	"Categroy":1,
+	"UserId":1,
+	"IsTop":1
+}
+2019-09-17 23:46:52.339 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 23:46:52.340 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) with arguments (["Pegasus_backend.Models.NewsModel"]) - Validation state: "Valid"
+2019-09-17 23:46:52.342 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-09-17 23:46:52.514 +12:00 [INF] Executed DbCommand (34ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = Byte), @p2='?' (DbType = DateTime), @p3='?' (DbType = Int16), @p4='?' (Size = 18) (DbType = Binary), @p5='?' (Size = -1), @p6='?' (Size = -1), @p7='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `ablemusic`.`news` (`news_id`, `categroy`, `created_at`, `is_top`, `news_data`, `news_title`, `news_type`, `user_id`)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7);
+2019-09-17 23:46:52.551 +12:00 [INF] Executed action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 210.673ms.
+2019-09-17 23:46:52.551 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-09-17 23:46:52.551 +12:00 [INF] Executed action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) in 212.7278ms
+2019-09-17 23:46:52.552 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":"news created successfully"}
+2019-09-17 23:46:52.552 +12:00 [INF] Request finished in 215.0993ms 200 application/json; charset=utf-8
+2019-09-17 23:48:00.910 +12:00 [INF] User profile is available. Using '/Users/oliver/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2019-09-17 23:48:01.171 +12:00 [FTL] An error occurred starting the application
+System.AggregateException: One or more errors occurred. (Number must be either non-negative and less than or equal to Int32.MaxValue or -1.
+Parameter name: dueTm) ---> System.ArgumentOutOfRangeException: Number must be either non-negative and less than or equal to Int32.MaxValue or -1.
+Parameter name: dueTm
+   at System.Threading.Timer..ctor(TimerCallback callback, Object state, TimeSpan dueTime, TimeSpan period)
+   at Pegasus_backend.Services.TimedHostedService.StartAsync(CancellationToken cancellationToken) in /Users/oliver/Desktop/pegasusBackend/Services/TimedHostedService.cs:line 37
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.<>c__DisplayClass3_0.<StartAsync>b__0(IHostedService service)
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.ExecuteAsync(Func`2 callback)
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.ExecuteAsync(Func`2 callback)
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.StartAsync(CancellationToken token)
+---> (Inner Exception #0) System.ArgumentOutOfRangeException: Number must be either non-negative and less than or equal to Int32.MaxValue or -1.
+Parameter name: dueTm
+   at System.Threading.Timer..ctor(TimerCallback callback, Object state, TimeSpan dueTime, TimeSpan period)
+   at Pegasus_backend.Services.TimedHostedService.StartAsync(CancellationToken cancellationToken) in /Users/oliver/Desktop/pegasusBackend/Services/TimedHostedService.cs:line 37
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.<>c__DisplayClass3_0.<StartAsync>b__0(IHostedService service)
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.ExecuteAsync(Func`2 callback)<---
+
+2019-09-17 23:48:03.064 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news application/json 120
+2019-09-17 23:48:03.094 +12:00 [INF] Policy execution successful.
+2019-09-17 23:48:03.097 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-17 23:48:03.138 +12:00 [INF] {
+	"NewsTitle":"This is 1",
+	"NewsType": "",
+	"newsData": "aaafdsfdshterrthaa",
+	"Categroy":1,
+	"UserId":1,
+	"IsTop":1
+}
+2019-09-17 23:48:03.276 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 23:48:03.774 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) with arguments (["Pegasus_backend.Models.NewsModel"]) - Validation state: "Valid"
+2019-09-17 23:48:04.689 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-09-17 23:48:05.417 +12:00 [INF] Executed DbCommand (44ms) [Parameters=[@p0='?' (DbType = Byte), @p1='?' (DbType = DateTime), @p2='?' (DbType = Int16), @p3='?' (Size = 18) (DbType = Binary), @p4='?' (Size = -1), @p5='?' (Size = -1), @p6='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `ablemusic`.`news` (`categroy`, `created_at`, `is_top`, `news_data`, `news_title`, `news_type`, `user_id`)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+SELECT `news_id`
+FROM `ablemusic`.`news`
+WHERE ROW_COUNT() = 1
+ AND `news_id`=LAST_INSERT_ID();
+2019-09-17 23:48:05.468 +12:00 [INF] Executed action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 1684.3405ms.
+2019-09-17 23:48:05.474 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-09-17 23:48:05.484 +12:00 [INF] Executed action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) in 2205.077ms
+2019-09-17 23:48:05.486 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":"news created successfully"}
+2019-09-17 23:48:05.492 +12:00 [INF] Request finished in 2427.8298ms 200 application/json; charset=utf-8
+2019-09-17 23:48:06.818 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news application/json 120
+2019-09-17 23:48:06.818 +12:00 [INF] Policy execution successful.
+2019-09-17 23:48:06.819 +12:00 [INF] {
+	"NewsTitle":"This is 1",
+	"NewsType": "",
+	"newsData": "aaafdsfdshterrthaa",
+	"Categroy":1,
+	"UserId":1,
+	"IsTop":1
+}
+2019-09-17 23:48:06.820 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 23:48:06.821 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) with arguments (["Pegasus_backend.Models.NewsModel"]) - Validation state: "Valid"
+2019-09-17 23:48:06.823 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-09-17 23:48:07.009 +12:00 [INF] Executed DbCommand (35ms) [Parameters=[@p0='?' (DbType = Byte), @p1='?' (DbType = DateTime), @p2='?' (DbType = Int16), @p3='?' (Size = 18) (DbType = Binary), @p4='?' (Size = -1), @p5='?' (Size = -1), @p6='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `ablemusic`.`news` (`categroy`, `created_at`, `is_top`, `news_data`, `news_title`, `news_type`, `user_id`)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+SELECT `news_id`
+FROM `ablemusic`.`news`
+WHERE ROW_COUNT() = 1
+ AND `news_id`=LAST_INSERT_ID();
+2019-09-17 23:48:07.052 +12:00 [INF] Executed action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 230.3819ms.
+2019-09-17 23:48:07.052 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-09-17 23:48:07.053 +12:00 [INF] Executed action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) in 232.6122ms
+2019-09-17 23:48:07.053 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":"news created successfully"}
+2019-09-17 23:48:07.053 +12:00 [INF] Request finished in 234.8456ms 200 application/json; charset=utf-8
+2019-09-17 23:48:08.246 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/news application/json 120
+2019-09-17 23:48:08.247 +12:00 [INF] Policy execution successful.
+2019-09-17 23:48:08.247 +12:00 [INF] {
+	"NewsTitle":"This is 1",
+	"NewsType": "",
+	"newsData": "aaafdsfdshterrthaa",
+	"Categroy":1,
+	"UserId":1,
+	"IsTop":1
+}
+2019-09-17 23:48:08.247 +12:00 [INF] Route matched with {action = "PostNews", controller = "News"}. Executing action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend)
+2019-09-17 23:48:08.247 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) with arguments (["Pegasus_backend.Models.NewsModel"]) - Validation state: "Valid"
+2019-09-17 23:48:08.248 +12:00 [INF] Entity Framework Core 2.1.8-servicing-32085 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-09-17 23:48:08.451 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[@p0='?' (DbType = Byte), @p1='?' (DbType = DateTime), @p2='?' (DbType = Int16), @p3='?' (Size = 18) (DbType = Binary), @p4='?' (Size = -1), @p5='?' (Size = -1), @p6='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `ablemusic`.`news` (`categroy`, `created_at`, `is_top`, `news_data`, `news_title`, `news_type`, `user_id`)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+SELECT `news_id`
+FROM `ablemusic`.`news`
+WHERE ROW_COUNT() = 1
+ AND `news_id`=LAST_INSERT_ID();
+2019-09-17 23:48:08.492 +12:00 [INF] Executed action method Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 244.9403ms.
+2019-09-17 23:48:08.493 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-09-17 23:48:08.493 +12:00 [INF] Executed action Pegasus_backend.Controllers.NewsController.PostNews (Pegasus_backend) in 245.78990000000002ms
+2019-09-17 23:48:08.493 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":"news created successfully"}
+2019-09-17 23:48:08.493 +12:00 [INF] Request finished in 246.8134ms 200 application/json; charset=utf-8
+=======
 >>>>>>> a774a8302d04b4059bd85824eb50ce6a1ac24742
+<<<<<<< HEAD
 2019-09-17 20:33:47.801 +12:00 [INF] User profile is available. Using 'C:\Users\zhuyi\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
 2019-09-17 20:33:48.228 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
 2019-09-17 20:33:48.979 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
@@ -1733,3 +2534,6 @@ VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7);
 2019-09-17 20:45:04.833 +12:00 [INF] 
 2019-09-17 20:45:04.833 +12:00 [INF] Response 
 2019-09-17 20:45:04.833 +12:00 [INF] Request finished in 1.1545ms 404 
+=======
+>>>>>>> df0d7de81b781dd19c014fbf1e597cd66e656e8c
+>>>>>>> 3f062b647688fccf12262a67a662f5cf5dca83c6
