@@ -33,7 +33,15 @@ namespace Pegasus_backend.Controllers
             var result = new Result<object>();
             try
             {
-                var news = await _ablemusicContext.News.ToListAsync();
+                var news = await _ablemusicContext.News
+                    .OrderBy(s=>s.IsTop)
+                    .ThenByDescending(s=>s.CreatedAt)
+                    .Select(s=>new
+                    {
+                        s.UserId,s.NewsTitle,s.NewsType,s.Categroy,s.CreatedAt,s.IsTop,
+                        NewsData = Encoding.ASCII.GetString(s.NewsData)
+                    })
+                    .ToListAsync();
                 result.Data = news;
                 return Ok(result);
             }
@@ -51,9 +59,9 @@ namespace Pegasus_backend.Controllers
             var result = new Result<string>();
             try
             {
+                var newsData = Encoding.ASCII.GetBytes(news.newsData);
                 var newItem = new News();
                 _mapper.Map(news,newItem);
-                var newsData = Encoding.ASCII.GetBytes(news.newsData);
                 newItem.NewsData = newsData;
                 newItem.CreatedAt = DateTime.UtcNow.AddHours(12);
                 await _ablemusicContext.AddAsync(newItem);
