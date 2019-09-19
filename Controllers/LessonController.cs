@@ -381,8 +381,8 @@ namespace Pegasus_backend.Controllers
                     .Include(s => s.NewLesson)
                     .ThenInclude(s => s.Room)                    
                     .Where(s => (s.LearnerId ==learnerId 
-                    || s.GroupCourseInstance.LearnerGroupCourse.ToList().Exists(e=>e.LearnerId == learnerId) )
-                    && s.BeginTime <termEndDate)
+                    || s.GroupCourseInstance.LearnerGroupCourse.ToList().Exists(e=>e.LearnerId == learnerId) ))
+                    // && s.BeginTime <termEndDate)
                     .Select(s => new
                     {
                         CourseName=!IsNull(s.GroupCourseInstance)?s.GroupCourseInstance.Course.CourseName:IsNull(s.CourseInstance)?s.TrialCourse.CourseName:s.CourseInstance.Course.CourseName,
