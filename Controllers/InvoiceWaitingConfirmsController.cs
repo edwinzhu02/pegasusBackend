@@ -136,7 +136,7 @@ namespace Pegasus_backend.Controllers
                                                         IsActive = i == null ? 0 : i.IsActive,
                                                         Comment = i == null ? string.Empty : i.Comment
                                                     },
-                                                }).OrderByDesc(re => re.InvoiceWaitingConfirm.BeginDate).ToListAsync();
+                                                }).OrderByDescending(re => re.InvoiceWaitingConfirm.BeginDate).ToListAsync();
             }
             catch (Exception ex)
             {
