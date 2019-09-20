@@ -39,13 +39,41 @@ namespace Pegasus_backend.Controllers
             try
             {
                 var item = _ablemusicContext.One2oneCourseInstance.FirstOrDefault(s => s.CourseInstanceId == instanceId);
+
                 if (item == null)
                 {
-                    throw new Exception("Course instance does not found");
+                    throw new Exception("The Booking Course wasn't found");
                 }
-
+                var course = _ablemusicContext.Course.FirstOrDefault(c =>c.CourseId ==item.CourseId );
+                if (course == null)
+                {
+                    throw new Exception("This course price wasn't found");
+                }                
                 item.EndDate = endDate;
                 _ablemusicContext.Update(item);
+                var lessons = _ablemusicContext.Lesson.Where(l =>l.BeginTime>endDate &&l.CourseInstanceId==instanceId);
+                
+                await lessons.ForEachAsync(lesson =>{
+                    lesson.IsCanceled = 1;
+                     var invoice = _ablemusicContext.Invoice.
+                     FirstOrDefault(c =>c.InvoiceNum ==lesson.InvoiceNum && c.IsActive==1);
+                     if (invoice!=null ){
+                        invoice.LessonFee -=course.Price;
+                        invoice.TotalFee -=course.Price;
+                        invoice.OwingFee -=course.Price;
+                        invoice.LessonQuantity --;
+                        _ablemusicContext.Update(invoice);
+                    }
+                     var invoiceWaiting = _ablemusicContext.InvoiceWaitingConfirm.
+                     FirstOrDefault(c =>c.InvoiceNum ==lesson.InvoiceNum && c.IsActivate==1);
+                     invoiceWaiting.LessonFee -=course.Price;
+                     invoiceWaiting.TotalFee -=course.Price;
+                     invoiceWaiting.OwingFee -=course.Price;
+                     invoiceWaiting.LessonQuantity --;
+                     _ablemusicContext.Update(invoiceWaiting);
+                    _ablemusicContext.Update(lesson);
+                });
+                
                 await _ablemusicContext.SaveChangesAsync();
             }
             catch (Exception ex)
