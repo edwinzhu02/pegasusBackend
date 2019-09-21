@@ -739,7 +739,7 @@ namespace Pegasus_backend.Controllers
                         CourseInstance = new { CourseId = a.CourseInstance.CourseId, CourseName = a.CourseInstance.Course.CourseName },
                         MissedLesson = new { Org = a.MissedLesson.Org.Abbr, Teacher = a.MissedLesson.Teacher.FirstName, beginDate = a.MissedLesson.BeginTime },
                         NewLesson = new { Org = a.NewLesson.Org.Abbr, Teacher = a.NewLesson.Teacher.FirstName, beginDate = a.NewLesson.BeginTime },
-                        SplittedLesson = a.SplittedLesson.Select(p => p.Lesson.BeginTime) 
+                        SplittedLesson =  a.SplittedLesson.Select(p => new {p.Lesson.BeginTime,p.Lesson.IsCanceled,p.Lesson.IsConfirm}) 
                     })
                 .ToListAsync();
             }

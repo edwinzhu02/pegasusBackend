@@ -396,7 +396,7 @@ namespace Pegasus_backend.Controllers
                     //add create new user for this learner
                     var newUser = new User
                     {
-                        UserName = newLearner.Email,
+                        UserName = "s"+newLearner.LearnerId.ToString(),
                         Password = "helloworld",
                         CreatedAt = toNZTimezone(DateTime.UtcNow),
                         RoleId = 4,
