@@ -73,7 +73,7 @@ namespace Pegasus_backend.Controllers
                 }
 
                
-                result.Data = "upload successfully.";
+                result.Data =  $"images/news/titlePhoto/{1 + strDateTime + Path.GetExtension(photo.FileName)}";;
                 return Ok(result);
             }
             catch (Exception ex)
