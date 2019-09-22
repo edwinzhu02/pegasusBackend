@@ -11,6 +11,7 @@
         <Folder Include="wwwroot\images\learner\Form" />
         <Folder Include="wwwroot\images\learner\Otherfile" />
         <Folder Include="wwwroot\images\learner\Photos" />
+        <Folder Include="wwwroot\images\news\titlePhoto" />
         <Folder Include="wwwroot\images\staff\IdPhotos" />
         <Folder Include="wwwroot\images\staff\Photos" />
         <Folder Include="wwwroot\images\tutor\CV" />
