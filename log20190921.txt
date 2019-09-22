@@ -3157,3 +3157,406 @@ MySql.Data.MySqlClient.MySqlException (0x80004005): Unable to connect to any of 
 2019-09-21 14:49:36.300 +12:00 [INF] Executed action Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend) in 849.8963ms
 2019-09-21 14:49:36.300 +12:00 [INF] Response {"IsSuccess":false,"ErrorCode":null,"IsFound":true,"ErrorMessage":"Unable to connect to any of the specified MySQL hosts.","Note":null,"Data":null}
 2019-09-21 14:49:36.301 +12:00 [INF] Request finished in 862.6073ms 400 application/json; charset=utf-8
+2019-09-21 22:40:11.198 +12:00 [INF] User profile is available. Using 'C:\Users\Zhuyi\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-09-21 22:40:11.248 +12:00 [INF] Creating key "64bfd6b6-743f-417b-8786-36a845756f0f" with creation date "2019-09-21T10:40:11.2456473+00:00", activation date "2019-09-21T10:40:11.2413497+00:00", and expiration date "2019-12-20T10:40:11.2413497+00:00".
+2019-09-21 22:40:11.283 +12:00 [INF] Writing data to file 'C:\Users\Zhuyi\AppData\Local\ASP.NET\DataProtection-Keys\key-64bfd6b6-743f-417b-8786-36a845756f0f.xml'.
+2019-09-21 22:40:11.582 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-09-21 22:40:12.050 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
+2019-09-21 22:40:12.081 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-21 22:40:12.207 +12:00 [INF] 
+2019-09-21 22:40:12.326 +12:00 [INF] Response 
+2019-09-21 22:40:12.330 +12:00 [INF] Request finished in 280.5877ms 404 
+2019-09-21 23:59:29.375 +12:00 [INF] Daily Execution Begin...
+2019-09-21 23:59:30.871 +12:00 [INF] Entity Framework Core 2.2.6-servicing-10079 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-09-21 23:59:31.852 +12:00 [INF] Executed DbCommand (34ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`term_id`, `x`.`begin_date`, `x`.`end_date`, `x`.`term_name`, `x`.`term_type`, `x`.`week_quantity`
+FROM `ablemusic`.`term` AS `x`
+ORDER BY `x`.`begin_date`
+2019-09-21 23:59:32.047 +12:00 [INF] Executed DbCommand (29ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`prop_name`
+FROM `ablemusic`.`lookup` AS `x`
+WHERE (`x`.`lookup_type` = 15) AND (`x`.`prop_value` = 1)
+LIMIT 1
+2019-09-21 23:59:32.168 +12:00 [INF] Executed DbCommand (40ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`prop_name`
+FROM `ablemusic`.`lookup` AS `x`
+WHERE (`x`.`lookup_type` = 15) AND (`x`.`prop_value` = 2)
+LIMIT 1
+2019-09-21 23:59:32.278 +12:00 [INF] Executed DbCommand (40ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`prop_name`
+FROM `ablemusic`.`lookup` AS `x`
+WHERE (`x`.`lookup_type` = 16) AND (`x`.`prop_value` = 1)
+LIMIT 1
+2019-09-21 23:59:32.378 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`prop_name`
+FROM `ablemusic`.`lookup` AS `x`
+WHERE (`x`.`lookup_type` = 16) AND (`x`.`prop_value` = 2)
+LIMIT 1
+2019-09-21 23:59:32.479 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`prop_name`
+FROM `ablemusic`.`lookup` AS `x`
+WHERE (`x`.`lookup_type` = 17) AND (`x`.`prop_value` = 1)
+LIMIT 1
+2019-09-21 23:59:32.502 +12:00 [WRN] The Include operation for navigation '[x].Course' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-09-21 23:59:32.504 +12:00 [WRN] The Include operation for navigation '[x].Learner' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-09-21 23:59:32.653 +12:00 [INF] Executed DbCommand (38ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`learner_id` AS `LearnerId`, `x`.`course_id` AS `CourseId`, `x`.`course_instance_id` AS `CourseInstanceId`, `x`.`begin_date` AS `BeginDate`, `x`.`end_date` AS `EndDate`, `x`.`invoice_date` AS `InvoiceDate`, `x.Course`.`course_name` AS `CourseName`, `x.Course`.`price`, `x.Learner`.`first_name` AS `FirstName`, `x.Learner`.`payment_period` AS `PaymentPeriod`
+FROM `ablemusic`.`one2one_course_instance` AS `x`
+LEFT JOIN `ablemusic`.`course` AS `x.Course` ON `x`.`course_id` = `x.Course`.`course_id`
+LEFT JOIN `ablemusic`.`learner` AS `x.Learner` ON `x`.`learner_id` = `x.Learner`.`learner_id`
+WHERE `x.Learner`.`is_active` = 1
+2019-09-21 23:59:32.951 +12:00 [INF] Executed DbCommand (40ms) [Parameters=[@__term_id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`term_id`, `x`.`begin_date`, `x`.`end_date`, `x`.`term_name`, `x`.`term_type`, `x`.`week_quantity`
+FROM `ablemusic`.`term` AS `x`
+WHERE `x`.`term_id` = @__term_id_0
+LIMIT 1
+2019-09-21 23:59:33.056 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`term_id` AS `TermId`, `x`.`begin_date` AS `BeginDate`, `x`.`end_date` AS `EndDate`
+FROM `ablemusic`.`term` AS `x`
+2019-09-21 23:59:33.202 +12:00 [INF] Executed DbCommand (62ms) [Parameters=[@__term_id_0='?' (DbType = Int32), @__learner_id_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`waiting_id`, `x`.`begin_date`, `x`.`comment`, `x`.`concert_fee`, `x`.`concert_fee_name`, `x`.`course_instance_id`, `x`.`course_name`, `x`.`created_at`, `x`.`due_date`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_num`, `x`.`is_activate`, `x`.`is_confirmed`, `x`.`is_email_sent`, `x`.`is_paid`, `x`.`learner_id`, `x`.`learner_name`, `x`.`lesson_fee`, `x`.`lesson_note_fee_name`, `x`.`lesson_quantity`, `x`.`note_fee`, `x`.`other1_fee`, `x`.`other1_fee_name`, `x`.`other2_fee`, `x`.`other2_fee_name`, `x`.`other3_fee`, `x`.`other3_fee_name`, `x`.`owing_fee`, `x`.`paid_fee`, `x`.`term_id`, `x`.`total_fee`
+FROM `ablemusic`.`invoice_waiting_confirm` AS `x`
+WHERE (`x`.`term_id` = @__term_id_0) AND (`x`.`learner_id` = @__learner_id_1)
+2019-09-21 23:59:33.361 +12:00 [INF] Executed DbCommand (35ms) [Parameters=[@__invoice_CourseInstanceId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`course_instance_id`, `x`.`begin_date`, `x`.`course_id`, `x`.`end_date`, `x`.`invoice_date`, `x`.`learner_id`, `x`.`org_id`, `x`.`room_id`, `x`.`teacher_id`
+FROM `ablemusic`.`one2one_course_instance` AS `x`
+WHERE `x`.`course_instance_id` = @__invoice_CourseInstanceId_0
+LIMIT 1
+2019-09-21 23:59:33.495 +12:00 [INF] Executed DbCommand (31ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`prop_name`
+FROM `ablemusic`.`lookup` AS `x`
+WHERE (`x`.`lookup_type` = 15) AND (`x`.`prop_value` = 1)
+LIMIT 1
+2019-09-21 23:59:33.594 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`prop_name`
+FROM `ablemusic`.`lookup` AS `x`
+WHERE (`x`.`lookup_type` = 15) AND (`x`.`prop_value` = 2)
+LIMIT 1
+2019-09-21 23:59:33.694 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`prop_name`
+FROM `ablemusic`.`lookup` AS `x`
+WHERE (`x`.`lookup_type` = 16) AND (`x`.`prop_value` = 1)
+LIMIT 1
+2019-09-21 23:59:33.810 +12:00 [INF] Executed DbCommand (40ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`prop_name`
+FROM `ablemusic`.`lookup` AS `x`
+WHERE (`x`.`lookup_type` = 16) AND (`x`.`prop_value` = 2)
+LIMIT 1
+2019-09-21 23:59:33.915 +12:00 [INF] Executed DbCommand (30ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`prop_name`
+FROM `ablemusic`.`lookup` AS `x`
+WHERE (`x`.`lookup_type` = 17) AND (`x`.`prop_value` = 1)
+LIMIT 1
+2019-09-21 23:59:33.927 +12:00 [WRN] The Include operation for navigation '[x].Course' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-09-21 23:59:33.928 +12:00 [WRN] The Include operation for navigation '[x].LearnerGroupCourse' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-09-21 23:59:34.074 +12:00 [INF] Executed DbCommand (39ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`course_id` AS `CourseId`, `x`.`group_course_instance_id` AS `GroupCourseInstanceId`, `x`.`begin_date` AS `BeginDate`, `x`.`end_date` AS `EndDate`, `x`.`is_started` AS `IsStarted`, `x.Course`.`course_name` AS `CourseName`, `x.Course`.`price`
+FROM `ablemusic`.`group_course_instance` AS `x`
+INNER JOIN `ablemusic`.`course` AS `x.Course` ON `x`.`course_id` = `x.Course`.`course_id`
+ORDER BY `x`.`group_course_instance_id`
+2019-09-21 23:59:34.131 +12:00 [INF] Executed DbCommand (38ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `t`.`group_course_instance_id`, `s.Learner`.`first_name` AS `FirstName`, `x.LearnerGroupCourse`.`learner_id` AS `LearnerId`, `x.LearnerGroupCourse`.`created_at` AS `CreatedAt`, `x.LearnerGroupCourse`.`begin_date` AS `BeginDate`, `x.LearnerGroupCourse`.`end_date` AS `EndDate`, `x.LearnerGroupCourse`.`invoice_date` AS `InvoiceDate`, `x.LearnerGroupCourse`.`learner_group_course_id` AS `LearnerGroupCourseId`, `x.LearnerGroupCourse`.`is_activate` AS `IsActivate`, `x.LearnerGroupCourse`.`group_course_instance_id`
+FROM `ablemusic`.`learner_group_course` AS `x.LearnerGroupCourse`
+LEFT JOIN `ablemusic`.`learner` AS `s.Learner` ON `x.LearnerGroupCourse`.`learner_id` = `s.Learner`.`learner_id`
+INNER JOIN (
+    SELECT `x0`.`group_course_instance_id`
+    FROM `ablemusic`.`group_course_instance` AS `x0`
+    INNER JOIN `ablemusic`.`course` AS `x.Course0` ON `x0`.`course_id` = `x.Course0`.`course_id`
+) AS `t` ON `x.LearnerGroupCourse`.`group_course_instance_id` = `t`.`group_course_instance_id`
+WHERE `x.LearnerGroupCourse`.`is_activate` = 1
+ORDER BY `t`.`group_course_instance_id`
+2019-09-21 23:59:34.659 +12:00 [INF] Executed DbCommand (36ms) [Parameters=[@__term_id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`term_id`, `x`.`begin_date`, `x`.`end_date`, `x`.`term_name`, `x`.`term_type`, `x`.`week_quantity`
+FROM `ablemusic`.`term` AS `x`
+WHERE `x`.`term_id` = @__term_id_0
+LIMIT 1
+2019-09-21 23:59:34.757 +12:00 [INF] Executed DbCommand (38ms) [Parameters=[@__term_id_0='?' (DbType = Int32), @__learner_id_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`waiting_id`, `x`.`begin_date`, `x`.`comment`, `x`.`concert_fee`, `x`.`concert_fee_name`, `x`.`course_instance_id`, `x`.`course_name`, `x`.`created_at`, `x`.`due_date`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_num`, `x`.`is_activate`, `x`.`is_confirmed`, `x`.`is_email_sent`, `x`.`is_paid`, `x`.`learner_id`, `x`.`learner_name`, `x`.`lesson_fee`, `x`.`lesson_note_fee_name`, `x`.`lesson_quantity`, `x`.`note_fee`, `x`.`other1_fee`, `x`.`other1_fee_name`, `x`.`other2_fee`, `x`.`other2_fee_name`, `x`.`other3_fee`, `x`.`other3_fee_name`, `x`.`owing_fee`, `x`.`paid_fee`, `x`.`term_id`, `x`.`total_fee`
+FROM `ablemusic`.`invoice_waiting_confirm` AS `x`
+WHERE (`x`.`term_id` = @__term_id_0) AND (`x`.`learner_id` = @__learner_id_1)
+2019-09-21 23:59:34.868 +12:00 [INF] Executed DbCommand (38ms) [Parameters=[@__learner_LearnerGroupCourseId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`learner_group_course_id`, `x`.`begin_date`, `x`.`comment`, `x`.`created_at`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_date`, `x`.`is_activate`, `x`.`learner_id`
+FROM `ablemusic`.`learner_group_course` AS `x`
+WHERE `x`.`learner_group_course_id` = @__learner_LearnerGroupCourseId_0
+LIMIT 1
+2019-09-21 23:59:34.986 +12:00 [INF] Executed DbCommand (47ms) [Parameters=[@__term_id_0='?' (DbType = Int32), @__learner_id_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`waiting_id`, `x`.`begin_date`, `x`.`comment`, `x`.`concert_fee`, `x`.`concert_fee_name`, `x`.`course_instance_id`, `x`.`course_name`, `x`.`created_at`, `x`.`due_date`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_num`, `x`.`is_activate`, `x`.`is_confirmed`, `x`.`is_email_sent`, `x`.`is_paid`, `x`.`learner_id`, `x`.`learner_name`, `x`.`lesson_fee`, `x`.`lesson_note_fee_name`, `x`.`lesson_quantity`, `x`.`note_fee`, `x`.`other1_fee`, `x`.`other1_fee_name`, `x`.`other2_fee`, `x`.`other2_fee_name`, `x`.`other3_fee`, `x`.`other3_fee_name`, `x`.`owing_fee`, `x`.`paid_fee`, `x`.`term_id`, `x`.`total_fee`
+FROM `ablemusic`.`invoice_waiting_confirm` AS `x`
+WHERE (`x`.`term_id` = @__term_id_0) AND (`x`.`learner_id` = @__learner_id_1)
+2019-09-21 23:59:35.091 +12:00 [INF] Executed DbCommand (30ms) [Parameters=[@__learner_LearnerGroupCourseId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`learner_group_course_id`, `x`.`begin_date`, `x`.`comment`, `x`.`created_at`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_date`, `x`.`is_activate`, `x`.`learner_id`
+FROM `ablemusic`.`learner_group_course` AS `x`
+WHERE `x`.`learner_group_course_id` = @__learner_LearnerGroupCourseId_0
+LIMIT 1
+2019-09-21 23:59:35.222 +12:00 [INF] Executed DbCommand (57ms) [Parameters=[@__term_id_0='?' (DbType = Int32), @__learner_id_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`waiting_id`, `x`.`begin_date`, `x`.`comment`, `x`.`concert_fee`, `x`.`concert_fee_name`, `x`.`course_instance_id`, `x`.`course_name`, `x`.`created_at`, `x`.`due_date`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_num`, `x`.`is_activate`, `x`.`is_confirmed`, `x`.`is_email_sent`, `x`.`is_paid`, `x`.`learner_id`, `x`.`learner_name`, `x`.`lesson_fee`, `x`.`lesson_note_fee_name`, `x`.`lesson_quantity`, `x`.`note_fee`, `x`.`other1_fee`, `x`.`other1_fee_name`, `x`.`other2_fee`, `x`.`other2_fee_name`, `x`.`other3_fee`, `x`.`other3_fee_name`, `x`.`owing_fee`, `x`.`paid_fee`, `x`.`term_id`, `x`.`total_fee`
+FROM `ablemusic`.`invoice_waiting_confirm` AS `x`
+WHERE (`x`.`term_id` = @__term_id_0) AND (`x`.`learner_id` = @__learner_id_1)
+2019-09-21 23:59:35.319 +12:00 [INF] Executed DbCommand (31ms) [Parameters=[@__learner_LearnerGroupCourseId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`learner_group_course_id`, `x`.`begin_date`, `x`.`comment`, `x`.`created_at`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_date`, `x`.`is_activate`, `x`.`learner_id`
+FROM `ablemusic`.`learner_group_course` AS `x`
+WHERE `x`.`learner_group_course_id` = @__learner_LearnerGroupCourseId_0
+LIMIT 1
+2019-09-21 23:59:35.428 +12:00 [INF] Executed DbCommand (46ms) [Parameters=[@__term_id_0='?' (DbType = Int32), @__learner_id_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`waiting_id`, `x`.`begin_date`, `x`.`comment`, `x`.`concert_fee`, `x`.`concert_fee_name`, `x`.`course_instance_id`, `x`.`course_name`, `x`.`created_at`, `x`.`due_date`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_num`, `x`.`is_activate`, `x`.`is_confirmed`, `x`.`is_email_sent`, `x`.`is_paid`, `x`.`learner_id`, `x`.`learner_name`, `x`.`lesson_fee`, `x`.`lesson_note_fee_name`, `x`.`lesson_quantity`, `x`.`note_fee`, `x`.`other1_fee`, `x`.`other1_fee_name`, `x`.`other2_fee`, `x`.`other2_fee_name`, `x`.`other3_fee`, `x`.`other3_fee_name`, `x`.`owing_fee`, `x`.`paid_fee`, `x`.`term_id`, `x`.`total_fee`
+FROM `ablemusic`.`invoice_waiting_confirm` AS `x`
+WHERE (`x`.`term_id` = @__term_id_0) AND (`x`.`learner_id` = @__learner_id_1)
+2019-09-21 23:59:35.540 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[@__learner_LearnerGroupCourseId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`learner_group_course_id`, `x`.`begin_date`, `x`.`comment`, `x`.`created_at`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_date`, `x`.`is_activate`, `x`.`learner_id`
+FROM `ablemusic`.`learner_group_course` AS `x`
+WHERE `x`.`learner_group_course_id` = @__learner_LearnerGroupCourseId_0
+LIMIT 1
+2019-09-21 23:59:35.650 +12:00 [INF] Executed DbCommand (48ms) [Parameters=[@__term_id_0='?' (DbType = Int32), @__learner_id_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`waiting_id`, `x`.`begin_date`, `x`.`comment`, `x`.`concert_fee`, `x`.`concert_fee_name`, `x`.`course_instance_id`, `x`.`course_name`, `x`.`created_at`, `x`.`due_date`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_num`, `x`.`is_activate`, `x`.`is_confirmed`, `x`.`is_email_sent`, `x`.`is_paid`, `x`.`learner_id`, `x`.`learner_name`, `x`.`lesson_fee`, `x`.`lesson_note_fee_name`, `x`.`lesson_quantity`, `x`.`note_fee`, `x`.`other1_fee`, `x`.`other1_fee_name`, `x`.`other2_fee`, `x`.`other2_fee_name`, `x`.`other3_fee`, `x`.`other3_fee_name`, `x`.`owing_fee`, `x`.`paid_fee`, `x`.`term_id`, `x`.`total_fee`
+FROM `ablemusic`.`invoice_waiting_confirm` AS `x`
+WHERE (`x`.`term_id` = @__term_id_0) AND (`x`.`learner_id` = @__learner_id_1)
+2019-09-21 23:59:35.748 +12:00 [INF] Executed DbCommand (34ms) [Parameters=[@__learner_LearnerGroupCourseId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`learner_group_course_id`, `x`.`begin_date`, `x`.`comment`, `x`.`created_at`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_date`, `x`.`is_activate`, `x`.`learner_id`
+FROM `ablemusic`.`learner_group_course` AS `x`
+WHERE `x`.`learner_group_course_id` = @__learner_LearnerGroupCourseId_0
+LIMIT 1
+2019-09-21 23:59:35.862 +12:00 [INF] Executed DbCommand (52ms) [Parameters=[@__term_id_0='?' (DbType = Int32), @__learner_id_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`waiting_id`, `x`.`begin_date`, `x`.`comment`, `x`.`concert_fee`, `x`.`concert_fee_name`, `x`.`course_instance_id`, `x`.`course_name`, `x`.`created_at`, `x`.`due_date`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_num`, `x`.`is_activate`, `x`.`is_confirmed`, `x`.`is_email_sent`, `x`.`is_paid`, `x`.`learner_id`, `x`.`learner_name`, `x`.`lesson_fee`, `x`.`lesson_note_fee_name`, `x`.`lesson_quantity`, `x`.`note_fee`, `x`.`other1_fee`, `x`.`other1_fee_name`, `x`.`other2_fee`, `x`.`other2_fee_name`, `x`.`other3_fee`, `x`.`other3_fee_name`, `x`.`owing_fee`, `x`.`paid_fee`, `x`.`term_id`, `x`.`total_fee`
+FROM `ablemusic`.`invoice_waiting_confirm` AS `x`
+WHERE (`x`.`term_id` = @__term_id_0) AND (`x`.`learner_id` = @__learner_id_1)
+2019-09-21 23:59:35.968 +12:00 [INF] Executed DbCommand (34ms) [Parameters=[@__learner_LearnerGroupCourseId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`learner_group_course_id`, `x`.`begin_date`, `x`.`comment`, `x`.`created_at`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_date`, `x`.`is_activate`, `x`.`learner_id`
+FROM `ablemusic`.`learner_group_course` AS `x`
+WHERE `x`.`learner_group_course_id` = @__learner_LearnerGroupCourseId_0
+LIMIT 1
+2019-09-21 23:59:36.074 +12:00 [INF] Executed DbCommand (43ms) [Parameters=[@__term_id_0='?' (DbType = Int32), @__learner_id_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`waiting_id`, `x`.`begin_date`, `x`.`comment`, `x`.`concert_fee`, `x`.`concert_fee_name`, `x`.`course_instance_id`, `x`.`course_name`, `x`.`created_at`, `x`.`due_date`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_num`, `x`.`is_activate`, `x`.`is_confirmed`, `x`.`is_email_sent`, `x`.`is_paid`, `x`.`learner_id`, `x`.`learner_name`, `x`.`lesson_fee`, `x`.`lesson_note_fee_name`, `x`.`lesson_quantity`, `x`.`note_fee`, `x`.`other1_fee`, `x`.`other1_fee_name`, `x`.`other2_fee`, `x`.`other2_fee_name`, `x`.`other3_fee`, `x`.`other3_fee_name`, `x`.`owing_fee`, `x`.`paid_fee`, `x`.`term_id`, `x`.`total_fee`
+FROM `ablemusic`.`invoice_waiting_confirm` AS `x`
+WHERE (`x`.`term_id` = @__term_id_0) AND (`x`.`learner_id` = @__learner_id_1)
+2019-09-21 23:59:36.173 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[@__learner_LearnerGroupCourseId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`learner_group_course_id`, `x`.`begin_date`, `x`.`comment`, `x`.`created_at`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_date`, `x`.`is_activate`, `x`.`learner_id`
+FROM `ablemusic`.`learner_group_course` AS `x`
+WHERE `x`.`learner_group_course_id` = @__learner_LearnerGroupCourseId_0
+LIMIT 1
+2019-09-21 23:59:36.285 +12:00 [INF] Executed DbCommand (47ms) [Parameters=[@__term_id_0='?' (DbType = Int32), @__learner_id_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`waiting_id`, `x`.`begin_date`, `x`.`comment`, `x`.`concert_fee`, `x`.`concert_fee_name`, `x`.`course_instance_id`, `x`.`course_name`, `x`.`created_at`, `x`.`due_date`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_num`, `x`.`is_activate`, `x`.`is_confirmed`, `x`.`is_email_sent`, `x`.`is_paid`, `x`.`learner_id`, `x`.`learner_name`, `x`.`lesson_fee`, `x`.`lesson_note_fee_name`, `x`.`lesson_quantity`, `x`.`note_fee`, `x`.`other1_fee`, `x`.`other1_fee_name`, `x`.`other2_fee`, `x`.`other2_fee_name`, `x`.`other3_fee`, `x`.`other3_fee_name`, `x`.`owing_fee`, `x`.`paid_fee`, `x`.`term_id`, `x`.`total_fee`
+FROM `ablemusic`.`invoice_waiting_confirm` AS `x`
+WHERE (`x`.`term_id` = @__term_id_0) AND (`x`.`learner_id` = @__learner_id_1)
+2019-09-21 23:59:36.383 +12:00 [INF] Executed DbCommand (30ms) [Parameters=[@__learner_LearnerGroupCourseId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`learner_group_course_id`, `x`.`begin_date`, `x`.`comment`, `x`.`created_at`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_date`, `x`.`is_activate`, `x`.`learner_id`
+FROM `ablemusic`.`learner_group_course` AS `x`
+WHERE `x`.`learner_group_course_id` = @__learner_LearnerGroupCourseId_0
+LIMIT 1
+2019-09-21 23:59:36.498 +12:00 [INF] Executed DbCommand (52ms) [Parameters=[@__term_id_0='?' (DbType = Int32), @__learner_id_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`waiting_id`, `x`.`begin_date`, `x`.`comment`, `x`.`concert_fee`, `x`.`concert_fee_name`, `x`.`course_instance_id`, `x`.`course_name`, `x`.`created_at`, `x`.`due_date`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_num`, `x`.`is_activate`, `x`.`is_confirmed`, `x`.`is_email_sent`, `x`.`is_paid`, `x`.`learner_id`, `x`.`learner_name`, `x`.`lesson_fee`, `x`.`lesson_note_fee_name`, `x`.`lesson_quantity`, `x`.`note_fee`, `x`.`other1_fee`, `x`.`other1_fee_name`, `x`.`other2_fee`, `x`.`other2_fee_name`, `x`.`other3_fee`, `x`.`other3_fee_name`, `x`.`owing_fee`, `x`.`paid_fee`, `x`.`term_id`, `x`.`total_fee`
+FROM `ablemusic`.`invoice_waiting_confirm` AS `x`
+WHERE (`x`.`term_id` = @__term_id_0) AND (`x`.`learner_id` = @__learner_id_1)
+2019-09-21 23:59:36.602 +12:00 [INF] Executed DbCommand (40ms) [Parameters=[@__learner_LearnerGroupCourseId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`learner_group_course_id`, `x`.`begin_date`, `x`.`comment`, `x`.`created_at`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_date`, `x`.`is_activate`, `x`.`learner_id`
+FROM `ablemusic`.`learner_group_course` AS `x`
+WHERE `x`.`learner_group_course_id` = @__learner_LearnerGroupCourseId_0
+LIMIT 1
+2019-09-21 23:59:36.711 +12:00 [INF] Executed DbCommand (42ms) [Parameters=[@__term_id_0='?' (DbType = Int32), @__learner_id_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`waiting_id`, `x`.`begin_date`, `x`.`comment`, `x`.`concert_fee`, `x`.`concert_fee_name`, `x`.`course_instance_id`, `x`.`course_name`, `x`.`created_at`, `x`.`due_date`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_num`, `x`.`is_activate`, `x`.`is_confirmed`, `x`.`is_email_sent`, `x`.`is_paid`, `x`.`learner_id`, `x`.`learner_name`, `x`.`lesson_fee`, `x`.`lesson_note_fee_name`, `x`.`lesson_quantity`, `x`.`note_fee`, `x`.`other1_fee`, `x`.`other1_fee_name`, `x`.`other2_fee`, `x`.`other2_fee_name`, `x`.`other3_fee`, `x`.`other3_fee_name`, `x`.`owing_fee`, `x`.`paid_fee`, `x`.`term_id`, `x`.`total_fee`
+FROM `ablemusic`.`invoice_waiting_confirm` AS `x`
+WHERE (`x`.`term_id` = @__term_id_0) AND (`x`.`learner_id` = @__learner_id_1)
+2019-09-21 23:59:36.838 +12:00 [INF] Executed DbCommand (47ms) [Parameters=[@__learner_LearnerGroupCourseId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`learner_group_course_id`, `x`.`begin_date`, `x`.`comment`, `x`.`created_at`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_date`, `x`.`is_activate`, `x`.`learner_id`
+FROM `ablemusic`.`learner_group_course` AS `x`
+WHERE `x`.`learner_group_course_id` = @__learner_LearnerGroupCourseId_0
+LIMIT 1
+2019-09-21 23:59:36.954 +12:00 [INF] Executed DbCommand (47ms) [Parameters=[@__term_id_0='?' (DbType = Int32), @__learner_id_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`waiting_id`, `x`.`begin_date`, `x`.`comment`, `x`.`concert_fee`, `x`.`concert_fee_name`, `x`.`course_instance_id`, `x`.`course_name`, `x`.`created_at`, `x`.`due_date`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_num`, `x`.`is_activate`, `x`.`is_confirmed`, `x`.`is_email_sent`, `x`.`is_paid`, `x`.`learner_id`, `x`.`learner_name`, `x`.`lesson_fee`, `x`.`lesson_note_fee_name`, `x`.`lesson_quantity`, `x`.`note_fee`, `x`.`other1_fee`, `x`.`other1_fee_name`, `x`.`other2_fee`, `x`.`other2_fee_name`, `x`.`other3_fee`, `x`.`other3_fee_name`, `x`.`owing_fee`, `x`.`paid_fee`, `x`.`term_id`, `x`.`total_fee`
+FROM `ablemusic`.`invoice_waiting_confirm` AS `x`
+WHERE (`x`.`term_id` = @__term_id_0) AND (`x`.`learner_id` = @__learner_id_1)
+2019-09-21 23:59:37.059 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[@__learner_LearnerGroupCourseId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`learner_group_course_id`, `x`.`begin_date`, `x`.`comment`, `x`.`created_at`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_date`, `x`.`is_activate`, `x`.`learner_id`
+FROM `ablemusic`.`learner_group_course` AS `x`
+WHERE `x`.`learner_group_course_id` = @__learner_LearnerGroupCourseId_0
+LIMIT 1
+2019-09-21 23:59:37.172 +12:00 [INF] Executed DbCommand (53ms) [Parameters=[@__term_id_0='?' (DbType = Int32), @__learner_id_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`waiting_id`, `x`.`begin_date`, `x`.`comment`, `x`.`concert_fee`, `x`.`concert_fee_name`, `x`.`course_instance_id`, `x`.`course_name`, `x`.`created_at`, `x`.`due_date`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_num`, `x`.`is_activate`, `x`.`is_confirmed`, `x`.`is_email_sent`, `x`.`is_paid`, `x`.`learner_id`, `x`.`learner_name`, `x`.`lesson_fee`, `x`.`lesson_note_fee_name`, `x`.`lesson_quantity`, `x`.`note_fee`, `x`.`other1_fee`, `x`.`other1_fee_name`, `x`.`other2_fee`, `x`.`other2_fee_name`, `x`.`other3_fee`, `x`.`other3_fee_name`, `x`.`owing_fee`, `x`.`paid_fee`, `x`.`term_id`, `x`.`total_fee`
+FROM `ablemusic`.`invoice_waiting_confirm` AS `x`
+WHERE (`x`.`term_id` = @__term_id_0) AND (`x`.`learner_id` = @__learner_id_1)
+2019-09-21 23:59:37.275 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[@__learner_LearnerGroupCourseId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`learner_group_course_id`, `x`.`begin_date`, `x`.`comment`, `x`.`created_at`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_date`, `x`.`is_activate`, `x`.`learner_id`
+FROM `ablemusic`.`learner_group_course` AS `x`
+WHERE `x`.`learner_group_course_id` = @__learner_LearnerGroupCourseId_0
+LIMIT 1
+2019-09-21 23:59:37.395 +12:00 [INF] Executed DbCommand (49ms) [Parameters=[@__term_id_0='?' (DbType = Int32), @__learner_id_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`waiting_id`, `x`.`begin_date`, `x`.`comment`, `x`.`concert_fee`, `x`.`concert_fee_name`, `x`.`course_instance_id`, `x`.`course_name`, `x`.`created_at`, `x`.`due_date`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_num`, `x`.`is_activate`, `x`.`is_confirmed`, `x`.`is_email_sent`, `x`.`is_paid`, `x`.`learner_id`, `x`.`learner_name`, `x`.`lesson_fee`, `x`.`lesson_note_fee_name`, `x`.`lesson_quantity`, `x`.`note_fee`, `x`.`other1_fee`, `x`.`other1_fee_name`, `x`.`other2_fee`, `x`.`other2_fee_name`, `x`.`other3_fee`, `x`.`other3_fee_name`, `x`.`owing_fee`, `x`.`paid_fee`, `x`.`term_id`, `x`.`total_fee`
+FROM `ablemusic`.`invoice_waiting_confirm` AS `x`
+WHERE (`x`.`term_id` = @__term_id_0) AND (`x`.`learner_id` = @__learner_id_1)
+2019-09-21 23:59:37.499 +12:00 [INF] Executed DbCommand (37ms) [Parameters=[@__learner_LearnerGroupCourseId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`learner_group_course_id`, `x`.`begin_date`, `x`.`comment`, `x`.`created_at`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_date`, `x`.`is_activate`, `x`.`learner_id`
+FROM `ablemusic`.`learner_group_course` AS `x`
+WHERE `x`.`learner_group_course_id` = @__learner_LearnerGroupCourseId_0
+LIMIT 1
+2019-09-21 23:59:37.610 +12:00 [INF] Executed DbCommand (45ms) [Parameters=[@__term_id_0='?' (DbType = Int32), @__learner_id_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`waiting_id`, `x`.`begin_date`, `x`.`comment`, `x`.`concert_fee`, `x`.`concert_fee_name`, `x`.`course_instance_id`, `x`.`course_name`, `x`.`created_at`, `x`.`due_date`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_num`, `x`.`is_activate`, `x`.`is_confirmed`, `x`.`is_email_sent`, `x`.`is_paid`, `x`.`learner_id`, `x`.`learner_name`, `x`.`lesson_fee`, `x`.`lesson_note_fee_name`, `x`.`lesson_quantity`, `x`.`note_fee`, `x`.`other1_fee`, `x`.`other1_fee_name`, `x`.`other2_fee`, `x`.`other2_fee_name`, `x`.`other3_fee`, `x`.`other3_fee_name`, `x`.`owing_fee`, `x`.`paid_fee`, `x`.`term_id`, `x`.`total_fee`
+FROM `ablemusic`.`invoice_waiting_confirm` AS `x`
+WHERE (`x`.`term_id` = @__term_id_0) AND (`x`.`learner_id` = @__learner_id_1)
+2019-09-21 23:59:37.724 +12:00 [INF] Executed DbCommand (35ms) [Parameters=[@__learner_LearnerGroupCourseId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`learner_group_course_id`, `x`.`begin_date`, `x`.`comment`, `x`.`created_at`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_date`, `x`.`is_activate`, `x`.`learner_id`
+FROM `ablemusic`.`learner_group_course` AS `x`
+WHERE `x`.`learner_group_course_id` = @__learner_LearnerGroupCourseId_0
+LIMIT 1
+2019-09-21 23:59:37.842 +12:00 [INF] Executed DbCommand (52ms) [Parameters=[@__term_id_0='?' (DbType = Int32), @__learner_id_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`waiting_id`, `x`.`begin_date`, `x`.`comment`, `x`.`concert_fee`, `x`.`concert_fee_name`, `x`.`course_instance_id`, `x`.`course_name`, `x`.`created_at`, `x`.`due_date`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_num`, `x`.`is_activate`, `x`.`is_confirmed`, `x`.`is_email_sent`, `x`.`is_paid`, `x`.`learner_id`, `x`.`learner_name`, `x`.`lesson_fee`, `x`.`lesson_note_fee_name`, `x`.`lesson_quantity`, `x`.`note_fee`, `x`.`other1_fee`, `x`.`other1_fee_name`, `x`.`other2_fee`, `x`.`other2_fee_name`, `x`.`other3_fee`, `x`.`other3_fee_name`, `x`.`owing_fee`, `x`.`paid_fee`, `x`.`term_id`, `x`.`total_fee`
+FROM `ablemusic`.`invoice_waiting_confirm` AS `x`
+WHERE (`x`.`term_id` = @__term_id_0) AND (`x`.`learner_id` = @__learner_id_1)
+2019-09-21 23:59:37.947 +12:00 [INF] Executed DbCommand (34ms) [Parameters=[@__learner_LearnerGroupCourseId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`learner_group_course_id`, `x`.`begin_date`, `x`.`comment`, `x`.`created_at`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_date`, `x`.`is_activate`, `x`.`learner_id`
+FROM `ablemusic`.`learner_group_course` AS `x`
+WHERE `x`.`learner_group_course_id` = @__learner_LearnerGroupCourseId_0
+LIMIT 1
+2019-09-21 23:59:38.064 +12:00 [INF] Executed DbCommand (47ms) [Parameters=[@__term_id_0='?' (DbType = Int32), @__learner_id_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`waiting_id`, `x`.`begin_date`, `x`.`comment`, `x`.`concert_fee`, `x`.`concert_fee_name`, `x`.`course_instance_id`, `x`.`course_name`, `x`.`created_at`, `x`.`due_date`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_num`, `x`.`is_activate`, `x`.`is_confirmed`, `x`.`is_email_sent`, `x`.`is_paid`, `x`.`learner_id`, `x`.`learner_name`, `x`.`lesson_fee`, `x`.`lesson_note_fee_name`, `x`.`lesson_quantity`, `x`.`note_fee`, `x`.`other1_fee`, `x`.`other1_fee_name`, `x`.`other2_fee`, `x`.`other2_fee_name`, `x`.`other3_fee`, `x`.`other3_fee_name`, `x`.`owing_fee`, `x`.`paid_fee`, `x`.`term_id`, `x`.`total_fee`
+FROM `ablemusic`.`invoice_waiting_confirm` AS `x`
+WHERE (`x`.`term_id` = @__term_id_0) AND (`x`.`learner_id` = @__learner_id_1)
+2019-09-21 23:59:38.183 +12:00 [INF] Executed DbCommand (34ms) [Parameters=[@__learner_LearnerGroupCourseId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`learner_group_course_id`, `x`.`begin_date`, `x`.`comment`, `x`.`created_at`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_date`, `x`.`is_activate`, `x`.`learner_id`
+FROM `ablemusic`.`learner_group_course` AS `x`
+WHERE `x`.`learner_group_course_id` = @__learner_LearnerGroupCourseId_0
+LIMIT 1
+2019-09-21 23:59:38.306 +12:00 [INF] Executed DbCommand (48ms) [Parameters=[@__term_id_0='?' (DbType = Int32), @__learner_id_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`waiting_id`, `x`.`begin_date`, `x`.`comment`, `x`.`concert_fee`, `x`.`concert_fee_name`, `x`.`course_instance_id`, `x`.`course_name`, `x`.`created_at`, `x`.`due_date`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_num`, `x`.`is_activate`, `x`.`is_confirmed`, `x`.`is_email_sent`, `x`.`is_paid`, `x`.`learner_id`, `x`.`learner_name`, `x`.`lesson_fee`, `x`.`lesson_note_fee_name`, `x`.`lesson_quantity`, `x`.`note_fee`, `x`.`other1_fee`, `x`.`other1_fee_name`, `x`.`other2_fee`, `x`.`other2_fee_name`, `x`.`other3_fee`, `x`.`other3_fee_name`, `x`.`owing_fee`, `x`.`paid_fee`, `x`.`term_id`, `x`.`total_fee`
+FROM `ablemusic`.`invoice_waiting_confirm` AS `x`
+WHERE (`x`.`term_id` = @__term_id_0) AND (`x`.`learner_id` = @__learner_id_1)
+2019-09-21 23:59:38.412 +12:00 [INF] Executed DbCommand (34ms) [Parameters=[@__learner_LearnerGroupCourseId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`learner_group_course_id`, `x`.`begin_date`, `x`.`comment`, `x`.`created_at`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_date`, `x`.`is_activate`, `x`.`learner_id`
+FROM `ablemusic`.`learner_group_course` AS `x`
+WHERE `x`.`learner_group_course_id` = @__learner_LearnerGroupCourseId_0
+LIMIT 1
+2019-09-21 23:59:38.513 +12:00 [INF] Executed DbCommand (39ms) [Parameters=[@__term_id_0='?' (DbType = Int32), @__learner_id_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`waiting_id`, `x`.`begin_date`, `x`.`comment`, `x`.`concert_fee`, `x`.`concert_fee_name`, `x`.`course_instance_id`, `x`.`course_name`, `x`.`created_at`, `x`.`due_date`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_num`, `x`.`is_activate`, `x`.`is_confirmed`, `x`.`is_email_sent`, `x`.`is_paid`, `x`.`learner_id`, `x`.`learner_name`, `x`.`lesson_fee`, `x`.`lesson_note_fee_name`, `x`.`lesson_quantity`, `x`.`note_fee`, `x`.`other1_fee`, `x`.`other1_fee_name`, `x`.`other2_fee`, `x`.`other2_fee_name`, `x`.`other3_fee`, `x`.`other3_fee_name`, `x`.`owing_fee`, `x`.`paid_fee`, `x`.`term_id`, `x`.`total_fee`
+FROM `ablemusic`.`invoice_waiting_confirm` AS `x`
+WHERE (`x`.`term_id` = @__term_id_0) AND (`x`.`learner_id` = @__learner_id_1)
+2019-09-21 23:59:38.618 +12:00 [INF] Executed DbCommand (37ms) [Parameters=[@__learner_LearnerGroupCourseId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`learner_group_course_id`, `x`.`begin_date`, `x`.`comment`, `x`.`created_at`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_date`, `x`.`is_activate`, `x`.`learner_id`
+FROM `ablemusic`.`learner_group_course` AS `x`
+WHERE `x`.`learner_group_course_id` = @__learner_LearnerGroupCourseId_0
+LIMIT 1
+2019-09-21 23:59:38.726 +12:00 [INF] Executed DbCommand (43ms) [Parameters=[@__term_id_0='?' (DbType = Int32), @__learner_id_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`waiting_id`, `x`.`begin_date`, `x`.`comment`, `x`.`concert_fee`, `x`.`concert_fee_name`, `x`.`course_instance_id`, `x`.`course_name`, `x`.`created_at`, `x`.`due_date`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_num`, `x`.`is_activate`, `x`.`is_confirmed`, `x`.`is_email_sent`, `x`.`is_paid`, `x`.`learner_id`, `x`.`learner_name`, `x`.`lesson_fee`, `x`.`lesson_note_fee_name`, `x`.`lesson_quantity`, `x`.`note_fee`, `x`.`other1_fee`, `x`.`other1_fee_name`, `x`.`other2_fee`, `x`.`other2_fee_name`, `x`.`other3_fee`, `x`.`other3_fee_name`, `x`.`owing_fee`, `x`.`paid_fee`, `x`.`term_id`, `x`.`total_fee`
+FROM `ablemusic`.`invoice_waiting_confirm` AS `x`
+WHERE (`x`.`term_id` = @__term_id_0) AND (`x`.`learner_id` = @__learner_id_1)
+2019-09-21 23:59:38.827 +12:00 [INF] Executed DbCommand (36ms) [Parameters=[@__learner_LearnerGroupCourseId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`learner_group_course_id`, `x`.`begin_date`, `x`.`comment`, `x`.`created_at`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_date`, `x`.`is_activate`, `x`.`learner_id`
+FROM `ablemusic`.`learner_group_course` AS `x`
+WHERE `x`.`learner_group_course_id` = @__learner_LearnerGroupCourseId_0
+LIMIT 1
+2019-09-21 23:59:38.927 +12:00 [INF] Executed DbCommand (37ms) [Parameters=[@__term_id_0='?' (DbType = Int32), @__learner_id_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`waiting_id`, `x`.`begin_date`, `x`.`comment`, `x`.`concert_fee`, `x`.`concert_fee_name`, `x`.`course_instance_id`, `x`.`course_name`, `x`.`created_at`, `x`.`due_date`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_num`, `x`.`is_activate`, `x`.`is_confirmed`, `x`.`is_email_sent`, `x`.`is_paid`, `x`.`learner_id`, `x`.`learner_name`, `x`.`lesson_fee`, `x`.`lesson_note_fee_name`, `x`.`lesson_quantity`, `x`.`note_fee`, `x`.`other1_fee`, `x`.`other1_fee_name`, `x`.`other2_fee`, `x`.`other2_fee_name`, `x`.`other3_fee`, `x`.`other3_fee_name`, `x`.`owing_fee`, `x`.`paid_fee`, `x`.`term_id`, `x`.`total_fee`
+FROM `ablemusic`.`invoice_waiting_confirm` AS `x`
+WHERE (`x`.`term_id` = @__term_id_0) AND (`x`.`learner_id` = @__learner_id_1)
+2019-09-21 23:59:39.031 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[@__learner_LearnerGroupCourseId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`learner_group_course_id`, `x`.`begin_date`, `x`.`comment`, `x`.`created_at`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_date`, `x`.`is_activate`, `x`.`learner_id`
+FROM `ablemusic`.`learner_group_course` AS `x`
+WHERE `x`.`learner_group_course_id` = @__learner_LearnerGroupCourseId_0
+LIMIT 1
+2019-09-21 23:59:39.130 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[@__term_id_0='?' (DbType = Int32), @__learner_id_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`waiting_id`, `x`.`begin_date`, `x`.`comment`, `x`.`concert_fee`, `x`.`concert_fee_name`, `x`.`course_instance_id`, `x`.`course_name`, `x`.`created_at`, `x`.`due_date`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_num`, `x`.`is_activate`, `x`.`is_confirmed`, `x`.`is_email_sent`, `x`.`is_paid`, `x`.`learner_id`, `x`.`learner_name`, `x`.`lesson_fee`, `x`.`lesson_note_fee_name`, `x`.`lesson_quantity`, `x`.`note_fee`, `x`.`other1_fee`, `x`.`other1_fee_name`, `x`.`other2_fee`, `x`.`other2_fee_name`, `x`.`other3_fee`, `x`.`other3_fee_name`, `x`.`owing_fee`, `x`.`paid_fee`, `x`.`term_id`, `x`.`total_fee`
+FROM `ablemusic`.`invoice_waiting_confirm` AS `x`
+WHERE (`x`.`term_id` = @__term_id_0) AND (`x`.`learner_id` = @__learner_id_1)
+2019-09-21 23:59:39.238 +12:00 [INF] Executed DbCommand (44ms) [Parameters=[@__learner_LearnerGroupCourseId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`learner_group_course_id`, `x`.`begin_date`, `x`.`comment`, `x`.`created_at`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_date`, `x`.`is_activate`, `x`.`learner_id`
+FROM `ablemusic`.`learner_group_course` AS `x`
+WHERE `x`.`learner_group_course_id` = @__learner_LearnerGroupCourseId_0
+LIMIT 1
+2019-09-21 23:59:39.335 +12:00 [INF] Executed DbCommand (30ms) [Parameters=[@__term_id_0='?' (DbType = Int32), @__learner_id_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`waiting_id`, `x`.`begin_date`, `x`.`comment`, `x`.`concert_fee`, `x`.`concert_fee_name`, `x`.`course_instance_id`, `x`.`course_name`, `x`.`created_at`, `x`.`due_date`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_num`, `x`.`is_activate`, `x`.`is_confirmed`, `x`.`is_email_sent`, `x`.`is_paid`, `x`.`learner_id`, `x`.`learner_name`, `x`.`lesson_fee`, `x`.`lesson_note_fee_name`, `x`.`lesson_quantity`, `x`.`note_fee`, `x`.`other1_fee`, `x`.`other1_fee_name`, `x`.`other2_fee`, `x`.`other2_fee_name`, `x`.`other3_fee`, `x`.`other3_fee_name`, `x`.`owing_fee`, `x`.`paid_fee`, `x`.`term_id`, `x`.`total_fee`
+FROM `ablemusic`.`invoice_waiting_confirm` AS `x`
+WHERE (`x`.`term_id` = @__term_id_0) AND (`x`.`learner_id` = @__learner_id_1)
+2019-09-21 23:59:39.444 +12:00 [INF] Executed DbCommand (30ms) [Parameters=[@__learner_LearnerGroupCourseId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`learner_group_course_id`, `x`.`begin_date`, `x`.`comment`, `x`.`created_at`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_date`, `x`.`is_activate`, `x`.`learner_id`
+FROM `ablemusic`.`learner_group_course` AS `x`
+WHERE `x`.`learner_group_course_id` = @__learner_LearnerGroupCourseId_0
+LIMIT 1
+2019-09-21 23:59:39.549 +12:00 [INF] Executed DbCommand (39ms) [Parameters=[@__term_id_0='?' (DbType = Int32), @__learner_id_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`waiting_id`, `x`.`begin_date`, `x`.`comment`, `x`.`concert_fee`, `x`.`concert_fee_name`, `x`.`course_instance_id`, `x`.`course_name`, `x`.`created_at`, `x`.`due_date`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_num`, `x`.`is_activate`, `x`.`is_confirmed`, `x`.`is_email_sent`, `x`.`is_paid`, `x`.`learner_id`, `x`.`learner_name`, `x`.`lesson_fee`, `x`.`lesson_note_fee_name`, `x`.`lesson_quantity`, `x`.`note_fee`, `x`.`other1_fee`, `x`.`other1_fee_name`, `x`.`other2_fee`, `x`.`other2_fee_name`, `x`.`other3_fee`, `x`.`other3_fee_name`, `x`.`owing_fee`, `x`.`paid_fee`, `x`.`term_id`, `x`.`total_fee`
+FROM `ablemusic`.`invoice_waiting_confirm` AS `x`
+WHERE (`x`.`term_id` = @__term_id_0) AND (`x`.`learner_id` = @__learner_id_1)
+2019-09-21 23:59:39.648 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[@__learner_LearnerGroupCourseId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`learner_group_course_id`, `x`.`begin_date`, `x`.`comment`, `x`.`created_at`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_date`, `x`.`is_activate`, `x`.`learner_id`
+FROM `ablemusic`.`learner_group_course` AS `x`
+WHERE `x`.`learner_group_course_id` = @__learner_LearnerGroupCourseId_0
+LIMIT 1
+2019-09-21 23:59:39.763 +12:00 [INF] Executed DbCommand (53ms) [Parameters=[@__term_id_0='?' (DbType = Int32), @__learner_id_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`waiting_id`, `x`.`begin_date`, `x`.`comment`, `x`.`concert_fee`, `x`.`concert_fee_name`, `x`.`course_instance_id`, `x`.`course_name`, `x`.`created_at`, `x`.`due_date`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_num`, `x`.`is_activate`, `x`.`is_confirmed`, `x`.`is_email_sent`, `x`.`is_paid`, `x`.`learner_id`, `x`.`learner_name`, `x`.`lesson_fee`, `x`.`lesson_note_fee_name`, `x`.`lesson_quantity`, `x`.`note_fee`, `x`.`other1_fee`, `x`.`other1_fee_name`, `x`.`other2_fee`, `x`.`other2_fee_name`, `x`.`other3_fee`, `x`.`other3_fee_name`, `x`.`owing_fee`, `x`.`paid_fee`, `x`.`term_id`, `x`.`total_fee`
+FROM `ablemusic`.`invoice_waiting_confirm` AS `x`
+WHERE (`x`.`term_id` = @__term_id_0) AND (`x`.`learner_id` = @__learner_id_1)
+2019-09-21 23:59:39.859 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[@__learner_LearnerGroupCourseId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`learner_group_course_id`, `x`.`begin_date`, `x`.`comment`, `x`.`created_at`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_date`, `x`.`is_activate`, `x`.`learner_id`
+FROM `ablemusic`.`learner_group_course` AS `x`
+WHERE `x`.`learner_group_course_id` = @__learner_LearnerGroupCourseId_0
+LIMIT 1
+2019-09-21 23:59:39.961 +12:00 [INF] Executed DbCommand (39ms) [Parameters=[@__term_id_0='?' (DbType = Int32), @__learner_id_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`waiting_id`, `x`.`begin_date`, `x`.`comment`, `x`.`concert_fee`, `x`.`concert_fee_name`, `x`.`course_instance_id`, `x`.`course_name`, `x`.`created_at`, `x`.`due_date`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_num`, `x`.`is_activate`, `x`.`is_confirmed`, `x`.`is_email_sent`, `x`.`is_paid`, `x`.`learner_id`, `x`.`learner_name`, `x`.`lesson_fee`, `x`.`lesson_note_fee_name`, `x`.`lesson_quantity`, `x`.`note_fee`, `x`.`other1_fee`, `x`.`other1_fee_name`, `x`.`other2_fee`, `x`.`other2_fee_name`, `x`.`other3_fee`, `x`.`other3_fee_name`, `x`.`owing_fee`, `x`.`paid_fee`, `x`.`term_id`, `x`.`total_fee`
+FROM `ablemusic`.`invoice_waiting_confirm` AS `x`
+WHERE (`x`.`term_id` = @__term_id_0) AND (`x`.`learner_id` = @__learner_id_1)
+2019-09-21 23:59:40.087 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[@__learner_LearnerGroupCourseId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`learner_group_course_id`, `x`.`begin_date`, `x`.`comment`, `x`.`created_at`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_date`, `x`.`is_activate`, `x`.`learner_id`
+FROM `ablemusic`.`learner_group_course` AS `x`
+WHERE `x`.`learner_group_course_id` = @__learner_LearnerGroupCourseId_0
+LIMIT 1
+2019-09-21 23:59:40.198 +12:00 [INF] Executed DbCommand (48ms) [Parameters=[@__term_id_0='?' (DbType = Int32), @__learner_id_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`waiting_id`, `x`.`begin_date`, `x`.`comment`, `x`.`concert_fee`, `x`.`concert_fee_name`, `x`.`course_instance_id`, `x`.`course_name`, `x`.`created_at`, `x`.`due_date`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_num`, `x`.`is_activate`, `x`.`is_confirmed`, `x`.`is_email_sent`, `x`.`is_paid`, `x`.`learner_id`, `x`.`learner_name`, `x`.`lesson_fee`, `x`.`lesson_note_fee_name`, `x`.`lesson_quantity`, `x`.`note_fee`, `x`.`other1_fee`, `x`.`other1_fee_name`, `x`.`other2_fee`, `x`.`other2_fee_name`, `x`.`other3_fee`, `x`.`other3_fee_name`, `x`.`owing_fee`, `x`.`paid_fee`, `x`.`term_id`, `x`.`total_fee`
+FROM `ablemusic`.`invoice_waiting_confirm` AS `x`
+WHERE (`x`.`term_id` = @__term_id_0) AND (`x`.`learner_id` = @__learner_id_1)
+2019-09-21 23:59:40.295 +12:00 [INF] Executed DbCommand (36ms) [Parameters=[@__learner_LearnerGroupCourseId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`learner_group_course_id`, `x`.`begin_date`, `x`.`comment`, `x`.`created_at`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_date`, `x`.`is_activate`, `x`.`learner_id`
+FROM `ablemusic`.`learner_group_course` AS `x`
+WHERE `x`.`learner_group_course_id` = @__learner_LearnerGroupCourseId_0
+LIMIT 1
+2019-09-21 23:59:40.412 +12:00 [INF] Executed DbCommand (47ms) [Parameters=[@__term_id_0='?' (DbType = Int32), @__learner_id_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`waiting_id`, `x`.`begin_date`, `x`.`comment`, `x`.`concert_fee`, `x`.`concert_fee_name`, `x`.`course_instance_id`, `x`.`course_name`, `x`.`created_at`, `x`.`due_date`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_num`, `x`.`is_activate`, `x`.`is_confirmed`, `x`.`is_email_sent`, `x`.`is_paid`, `x`.`learner_id`, `x`.`learner_name`, `x`.`lesson_fee`, `x`.`lesson_note_fee_name`, `x`.`lesson_quantity`, `x`.`note_fee`, `x`.`other1_fee`, `x`.`other1_fee_name`, `x`.`other2_fee`, `x`.`other2_fee_name`, `x`.`other3_fee`, `x`.`other3_fee_name`, `x`.`owing_fee`, `x`.`paid_fee`, `x`.`term_id`, `x`.`total_fee`
+FROM `ablemusic`.`invoice_waiting_confirm` AS `x`
+WHERE (`x`.`term_id` = @__term_id_0) AND (`x`.`learner_id` = @__learner_id_1)
+2019-09-21 23:59:40.515 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[@__learner_LearnerGroupCourseId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`learner_group_course_id`, `x`.`begin_date`, `x`.`comment`, `x`.`created_at`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_date`, `x`.`is_activate`, `x`.`learner_id`
+FROM `ablemusic`.`learner_group_course` AS `x`
+WHERE `x`.`learner_group_course_id` = @__learner_LearnerGroupCourseId_0
+LIMIT 1
+2019-09-21 23:59:40.627 +12:00 [INF] Executed DbCommand (49ms) [Parameters=[@__term_id_0='?' (DbType = Int32), @__learner_id_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`waiting_id`, `x`.`begin_date`, `x`.`comment`, `x`.`concert_fee`, `x`.`concert_fee_name`, `x`.`course_instance_id`, `x`.`course_name`, `x`.`created_at`, `x`.`due_date`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_num`, `x`.`is_activate`, `x`.`is_confirmed`, `x`.`is_email_sent`, `x`.`is_paid`, `x`.`learner_id`, `x`.`learner_name`, `x`.`lesson_fee`, `x`.`lesson_note_fee_name`, `x`.`lesson_quantity`, `x`.`note_fee`, `x`.`other1_fee`, `x`.`other1_fee_name`, `x`.`other2_fee`, `x`.`other2_fee_name`, `x`.`other3_fee`, `x`.`other3_fee_name`, `x`.`owing_fee`, `x`.`paid_fee`, `x`.`term_id`, `x`.`total_fee`
+FROM `ablemusic`.`invoice_waiting_confirm` AS `x`
+WHERE (`x`.`term_id` = @__term_id_0) AND (`x`.`learner_id` = @__learner_id_1)
+2019-09-21 23:59:40.724 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[@__learner_LearnerGroupCourseId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`learner_group_course_id`, `x`.`begin_date`, `x`.`comment`, `x`.`created_at`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_date`, `x`.`is_activate`, `x`.`learner_id`
+FROM `ablemusic`.`learner_group_course` AS `x`
+WHERE `x`.`learner_group_course_id` = @__learner_LearnerGroupCourseId_0
+LIMIT 1
+2019-09-21 23:59:40.826 +12:00 [INF] Executed DbCommand (40ms) [Parameters=[@__term_id_0='?' (DbType = Int32), @__learner_id_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`waiting_id`, `x`.`begin_date`, `x`.`comment`, `x`.`concert_fee`, `x`.`concert_fee_name`, `x`.`course_instance_id`, `x`.`course_name`, `x`.`created_at`, `x`.`due_date`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_num`, `x`.`is_activate`, `x`.`is_confirmed`, `x`.`is_email_sent`, `x`.`is_paid`, `x`.`learner_id`, `x`.`learner_name`, `x`.`lesson_fee`, `x`.`lesson_note_fee_name`, `x`.`lesson_quantity`, `x`.`note_fee`, `x`.`other1_fee`, `x`.`other1_fee_name`, `x`.`other2_fee`, `x`.`other2_fee_name`, `x`.`other3_fee`, `x`.`other3_fee_name`, `x`.`owing_fee`, `x`.`paid_fee`, `x`.`term_id`, `x`.`total_fee`
+FROM `ablemusic`.`invoice_waiting_confirm` AS `x`
+WHERE (`x`.`term_id` = @__term_id_0) AND (`x`.`learner_id` = @__learner_id_1)
+2019-09-21 23:59:40.935 +12:00 [INF] Executed DbCommand (31ms) [Parameters=[@__learner_LearnerGroupCourseId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`learner_group_course_id`, `x`.`begin_date`, `x`.`comment`, `x`.`created_at`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_date`, `x`.`is_activate`, `x`.`learner_id`
+FROM `ablemusic`.`learner_group_course` AS `x`
+WHERE `x`.`learner_group_course_id` = @__learner_LearnerGroupCourseId_0
+LIMIT 1
+2019-09-21 23:59:41.040 +12:00 [INF] Executed DbCommand (34ms) [Parameters=[@__term_id_0='?' (DbType = Int32), @__learner_id_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`waiting_id`, `x`.`begin_date`, `x`.`comment`, `x`.`concert_fee`, `x`.`concert_fee_name`, `x`.`course_instance_id`, `x`.`course_name`, `x`.`created_at`, `x`.`due_date`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_num`, `x`.`is_activate`, `x`.`is_confirmed`, `x`.`is_email_sent`, `x`.`is_paid`, `x`.`learner_id`, `x`.`learner_name`, `x`.`lesson_fee`, `x`.`lesson_note_fee_name`, `x`.`lesson_quantity`, `x`.`note_fee`, `x`.`other1_fee`, `x`.`other1_fee_name`, `x`.`other2_fee`, `x`.`other2_fee_name`, `x`.`other3_fee`, `x`.`other3_fee_name`, `x`.`owing_fee`, `x`.`paid_fee`, `x`.`term_id`, `x`.`total_fee`
+FROM `ablemusic`.`invoice_waiting_confirm` AS `x`
+WHERE (`x`.`term_id` = @__term_id_0) AND (`x`.`learner_id` = @__learner_id_1)
+2019-09-21 23:59:41.143 +12:00 [INF] Executed DbCommand (33ms) [Parameters=[@__learner_LearnerGroupCourseId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`learner_group_course_id`, `x`.`begin_date`, `x`.`comment`, `x`.`created_at`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_date`, `x`.`is_activate`, `x`.`learner_id`
+FROM `ablemusic`.`learner_group_course` AS `x`
+WHERE `x`.`learner_group_course_id` = @__learner_LearnerGroupCourseId_0
+LIMIT 1
+2019-09-21 23:59:41.258 +12:00 [INF] Executed DbCommand (51ms) [Parameters=[@__term_id_0='?' (DbType = Int32), @__learner_id_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`waiting_id`, `x`.`begin_date`, `x`.`comment`, `x`.`concert_fee`, `x`.`concert_fee_name`, `x`.`course_instance_id`, `x`.`course_name`, `x`.`created_at`, `x`.`due_date`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_num`, `x`.`is_activate`, `x`.`is_confirmed`, `x`.`is_email_sent`, `x`.`is_paid`, `x`.`learner_id`, `x`.`learner_name`, `x`.`lesson_fee`, `x`.`lesson_note_fee_name`, `x`.`lesson_quantity`, `x`.`note_fee`, `x`.`other1_fee`, `x`.`other1_fee_name`, `x`.`other2_fee`, `x`.`other2_fee_name`, `x`.`other3_fee`, `x`.`other3_fee_name`, `x`.`owing_fee`, `x`.`paid_fee`, `x`.`term_id`, `x`.`total_fee`
+FROM `ablemusic`.`invoice_waiting_confirm` AS `x`
+WHERE (`x`.`term_id` = @__term_id_0) AND (`x`.`learner_id` = @__learner_id_1)
+2019-09-21 23:59:41.372 +12:00 [INF] Executed DbCommand (31ms) [Parameters=[@__learner_LearnerGroupCourseId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `x`.`learner_group_course_id`, `x`.`begin_date`, `x`.`comment`, `x`.`created_at`, `x`.`end_date`, `x`.`group_course_instance_id`, `x`.`invoice_date`, `x`.`is_activate`, `x`.`learner_id`
+FROM `ablemusic`.`learner_group_course` AS `x`
+WHERE `x`.`learner_group_course_id` = @__learner_LearnerGroupCourseId_0
+LIMIT 1
+2019-09-21 23:59:41.494 +12:00 [INF] Executed DbCommand (48ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `i`.`waiting_id`, `i`.`begin_date`, `i`.`comment`, `i`.`concert_fee`, `i`.`concert_fee_name`, `i`.`course_instance_id`, `i`.`course_name`, `i`.`created_at`, `i`.`due_date`, `i`.`end_date`, `i`.`group_course_instance_id`, `i`.`invoice_num`, `i`.`is_activate`, `i`.`is_confirmed`, `i`.`is_email_sent`, `i`.`is_paid`, `i`.`learner_id`, `i`.`learner_name`, `i`.`lesson_fee`, `i`.`lesson_note_fee_name`, `i`.`lesson_quantity`, `i`.`note_fee`, `i`.`other1_fee`, `i`.`other1_fee_name`, `i`.`other2_fee`, `i`.`other2_fee_name`, `i`.`other3_fee`, `i`.`other3_fee_name`, `i`.`owing_fee`, `i`.`paid_fee`, `i`.`term_id`, `i`.`total_fee`
+FROM `ablemusic`.`invoice_waiting_confirm` AS `i`
+WHERE `i`.`is_activate` = 3
+2019-09-21 23:59:41.506 +12:00 [INF] Daily Execution Start at 2019/9/21 23:59:41
+2019-09-21 23:59:41.508 +12:00 [INF] Checking if today is the end of any term...
+2019-09-21 23:59:41.607 +12:00 [INF] Executed DbCommand (32ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `t`.`term_id`, `t`.`begin_date`, `t`.`end_date`, `t`.`term_name`, `t`.`term_type`, `t`.`week_quantity`
+FROM `ablemusic`.`term` AS `t`
+ORDER BY `t`.`begin_date`
+2019-09-21 23:59:41.608 +12:00 [INF] Current Term is 2019 Term 3. It is not the end of the term. No lesson to arrange for today.
