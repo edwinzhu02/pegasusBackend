@@ -739,7 +739,50 @@ namespace Pegasus_backend.Controllers
                         CourseInstance = new { CourseId = a.CourseInstance.CourseId, CourseName = a.CourseInstance.Course.CourseName },
                         MissedLesson = new { Org = a.MissedLesson.Org.Abbr, Teacher = a.MissedLesson.Teacher.FirstName, beginDate = a.MissedLesson.BeginTime },
                         NewLesson = new { Org = a.NewLesson.Org.Abbr, Teacher = a.NewLesson.Teacher.FirstName, beginDate = a.NewLesson.BeginTime },
-                        SplittedLesson = a.SplittedLesson.Select(p => p.Lesson.BeginTime) 
+                        SplittedLesson =  a.SplittedLesson.Select(p => new {p.Lesson.BeginTime,p.Lesson.IsCanceled,p.Lesson.IsConfirm}) 
+                    })
+                .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.ToString();
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+        [HttpGet("[action]/{instanceId}")]
+        //public async Task<IActionResult> GetLessonsBetweenDate(DateTime? beginDate, DateTime? endDate, int? userId)
+        public async Task<IActionResult> GetGroupMakeupSessions(int instanceId)
+        //public async Task<IActionResult> CancelConfirm2(int remindId)
+
+        {
+            var result = new Result<IEnumerable<object>>();
+            try
+            {
+                result.Data = await _ablemusicContext.AwaitMakeUpLesson.
+                    Include(a => a.GroupCourseInstance).ThenInclude(ci => ci.Course).
+                    Include(a => a.MissedLesson).
+                    Include(a => a.NewLesson).
+                    Include(a => a.SplittedLesson).
+                    ThenInclude(sp => sp.Lesson).
+                    Where(a => a.GroupCourseInstanceId == instanceId).Select(a => new
+                    {
+                        awaitId = a.AwaitId,
+                        CreateAt = a.CreateAt,
+                        SchduledAt = a.SchduledAt,
+                        ExpiredDate = a.ExpiredDate,
+                        MissedLessonId = a.MissedLessonId,
+                        NewLessonId = a.NewLessonId,
+                        IsActive = a.IsActive,
+                        Remaining = a.Remaining,
+                        CourseInstance = new { CourseId = a.GroupCourseInstance.CourseId, CourseName = a.GroupCourseInstance.Course.CourseName },
+                        MissedLesson = new { Org = a.MissedLesson.Org.Abbr, Teacher = a.MissedLesson.Teacher.FirstName, 
+                        BeginTime = a.MissedLesson.BeginTime ,EndTime = a.MissedLesson.EndTime ,CourseName  = a.GroupCourseInstance.Course.CourseName,
+                        CourseId  = a.CourseInstance.CourseId,awaitId =a.AwaitId,TeacherId = a.MissedLesson.Teacher.TeacherId,
+                                RoomId = a.MissedLesson.RoomId,OrgId = a.MissedLesson.OrgId},
+                        NewLesson = new { Org = a.NewLesson.Org.Abbr, Teacher = a.NewLesson.Teacher.FirstName, beginDate = a.NewLesson.BeginTime },
+                        SplittedLesson =  a.SplittedLesson.Select(p => new {p.Lesson.BeginTime,p.Lesson.IsCanceled,p.Lesson.IsConfirm}) 
                     })
                 .ToListAsync();
             }

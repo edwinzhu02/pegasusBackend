@@ -37,6 +37,7 @@ namespace Pegasus_backend.Controllers
                 invoiceWaitingConfirms = await (from s in _ablemusicContext.Staff
                                                 join so in _ablemusicContext.StaffOrg on s.StaffId equals so.StaffId
                                                 join l in _ablemusicContext.Learner on so.OrgId equals l.OrgId
+                                                join o in _ablemusicContext.Org on l.OrgId  equals  o.OrgId                                              
                                                 join iw in _ablemusicContext.InvoiceWaitingConfirm on l.LearnerId equals iw.LearnerId
                                                 join t in _ablemusicContext.Term on iw.TermId equals t.TermId
                                                 join iv in _ablemusicContext.Invoice on iw.InvoiceNum equals iv.InvoiceNum into f
@@ -66,7 +67,8 @@ namespace Pegasus_backend.Controllers
                                                         LevelType = iw.Learner.LevelType,
                                                         UserId = iw.Learner.UserId,
                                                         OrgId = iw.Learner.OrgId,
-                                                        Parent = iw.Learner.Parent
+                                                        Parent = iw.Learner.Parent,
+                                                        Org = iw.Learner.Org
                                                     },
                                                     InvoiceWaitingConfirm = new
                                                     {
@@ -136,7 +138,7 @@ namespace Pegasus_backend.Controllers
                                                         IsActive = i == null ? 0 : i.IsActive,
                                                         Comment = i == null ? string.Empty : i.Comment
                                                     },
-                                                }).OrderBy(re => re.InvoiceNum).ToListAsync();
+                                                }).OrderByDescending(re => re.InvoiceWaitingConfirm.BeginDate).ToListAsync();
             }
             catch (Exception ex)
             {
@@ -203,6 +205,7 @@ namespace Pegasus_backend.Controllers
                 invoiceWaitingConfirms = await (from //s in _ablemusicContext.Staff
                                                 //join so in _ablemusicContext.StaffOrg on s.StaffId equals so.StaffId
                                                 l in _ablemusicContext.Learner //on so.OrgId equals l.OrgId
+                                                join o in _ablemusicContext.Org on l.OrgId equals o.OrgId
                                                 join iw in _ablemusicContext.InvoiceWaitingConfirm on l.LearnerId equals iw.LearnerId
                                                 //join t in _ablemusicContext.Term on iw.TermId equals t.TermId
                                                 join iv in _ablemusicContext.Invoice on iw.InvoiceNum equals iv.InvoiceNum into f
@@ -232,7 +235,8 @@ namespace Pegasus_backend.Controllers
                                                         LevelType = iw.Learner.LevelType,
                                                         UserId = iw.Learner.UserId,
                                                         OrgId = iw.Learner.OrgId,
-                                                        Parent = iw.Learner.Parent
+                                                        Parent = iw.Learner.Parent,
+                                                        Org = iw.Learner.Org
                                                     },
                                                     InvoiceWaitingConfirm = new
                                                     {

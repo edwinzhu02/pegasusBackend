@@ -443,7 +443,11 @@ namespace Pegasus_backend.Services
                         //}
                         lesson_quantity = await SaveLesson(invoice.WaitingId, 1, 1);
                     }
-                    if (invoice.BeginDate != null) invoice.DueDate = Convert.ToDateTime(invoice.BeginDate).AddDays(-1);
+                    //if (invoice.BeginDate != null) invoice.DueDate = Convert.ToDateTime(invoice.BeginDate).AddDays(-1);
+                    if (invoice.BeginDate == term.BeginDate)
+                        invoice.DueDate = Convert.ToDateTime(invoice.BeginDate).AddDays(-21);
+                    else
+                        invoice.DueDate = Convert.ToDateTime(invoice.BeginDate).AddDays(7);
                     invoice.LessonFee = course_instance.Course.Price * lesson_quantity;
                     if (course_instance.Learner.PaymentPeriod == 2)
                         invoice.LessonFee = invoice.LessonFee + extraFee;
@@ -579,7 +583,10 @@ namespace Pegasus_backend.Services
                         courseIns.InvoiceDate = invoice.EndDate;
                     }
 
-                    if (invoice.BeginDate != null) invoice.DueDate = Convert.ToDateTime(invoice.BeginDate).AddDays(-1);
+                    if (invoice.BeginDate == term.BeginDate)
+                        invoice.DueDate = Convert.ToDateTime(invoice.BeginDate).AddDays(-21);
+                    else
+                        invoice.DueDate = Convert.ToDateTime(invoice.BeginDate).AddDays(7);
                     invoice.LessonFee = group_course_instance.Price * lesson_quantity;
 
                     invoice.OwingFee = invoice.LessonFee;

@@ -48,7 +48,7 @@ namespace Pegasus_backend.Services
                 var ablemusicContext = scope.ServiceProvider.GetRequiredService<ablemusicContext>();
                 var mapper = scope.ServiceProvider.GetRequiredService<IMapper>();
                 _lessonGenerateService = new LessonGenerateService(ablemusicContext, mapper);
-                await _lessonGenerateService.GetTerm(DateTime.UtcNow.ToNZTimezone(), 3);
+                await _lessonGenerateService.GetTerm(DateTime.UtcNow.ToNZTimezone(),0, 3);
 
                 _groupCourseGenerateService = new GroupCourseGenerateService(ablemusicContext, _logger);
                 _logger.LogInformation("Daily Execution Start at " + DateTime.UtcNow.ToNZTimezone());

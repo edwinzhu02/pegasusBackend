@@ -26,4 +26,17 @@ namespace Pegasus_backend.Models
         public DateTime? BeginTime { get; set; }
         public int? InvoiceId { get; set; }
     }
+    public class GroupMakeupLessonViewModel
+    {
+        [Required(ErrorMessage = "AwaitId is required")]
+        public int? AwaitId { get; set; }
+        [Required(ErrorMessage = "RoomId is required")]
+        public short? RoomId { get; set; }
+        [Required(ErrorMessage = "TeacherId is required")]
+        public short? TeacherId { get; set; }
+        [Required(ErrorMessage = "OrgId is required")]
+        public short OrgId { get; set; }
+        public DateTime? BeginTime { get; set; }
+    }
+
 }

@@ -14,6 +14,7 @@ using Pegasus_backend.ActionFilter;
 using Pegasus_backend.pegasusContext;
 using Pegasus_backend.Models;
 using Microsoft.Extensions.Logging;
+using MySqlX.XDevAPI.Common;
 
 namespace Pegasus_backend.Controllers
 {
@@ -33,8 +34,46 @@ namespace Pegasus_backend.Controllers
             var result = new Result<object>();
             try
             {
-                var news = await _ablemusicContext.News.ToListAsync();
+                var news = await _ablemusicContext.News
+                    .OrderBy(s=>s.IsTop)
+                    .ThenByDescending(s=>s.CreatedAt)
+                    .Select(s=>new
+                    {
+                        s.UserId,s.NewsTitle,s.NewsType,s.Categroy,s.CreatedAt,s.IsTop,
+                        NewsData = Encoding.ASCII.GetString(s.NewsData),s.TitleUrl
+                    })
+                    .ToListAsync();
                 result.Data = news;
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+        }
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> UploadTitlePhoto([FromForm(Name = "photo")] IFormFile photo)
+        {
+            var result = new Result<string>();
+            try
+            {
+                if (photo == null)
+                {
+                    throw new Exception("Photo is null");
+                }
+
+                var strDateTime = toNZTimezone(DateTime.UtcNow).ToString("yyMMddhhmmssfff");
+                var uploadResult = UploadFile(photo, "news/titlePhoto/", 1, strDateTime);
+                if (!uploadResult.IsUploadSuccess)
+                {
+                    throw new Exception(uploadResult.ErrorMessage);
+                }
+
+               
+                result.Data =  $"images/news/titlePhoto/{1 + strDateTime + Path.GetExtension(photo.FileName)}";;
                 return Ok(result);
             }
             catch (Exception ex)
@@ -51,9 +90,9 @@ namespace Pegasus_backend.Controllers
             var result = new Result<string>();
             try
             {
+                var newsData = Encoding.ASCII.GetBytes(news.newsData);
                 var newItem = new News();
                 _mapper.Map(news,newItem);
-                var newsData = Encoding.ASCII.GetBytes(news.newsData);
                 newItem.NewsData = newsData;
                 newItem.CreatedAt = DateTime.UtcNow.AddHours(12);
                 await _ablemusicContext.AddAsync(newItem);

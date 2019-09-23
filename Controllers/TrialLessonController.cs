@@ -132,7 +132,7 @@ namespace Pegasus_backend.Controllers
             invoiceWaiting.BeginDate = trialLessonViewModel.BeginTime.Value.Date;
             invoiceWaiting.EndDate = trialLessonViewModel.BeginTime.Value.Date;
             invoiceWaiting.TotalFee = trialLessonViewModel.Amount;
-            invoiceWaiting.DueDate = trialLessonViewModel.BeginTime.Value.Date;
+            invoiceWaiting.DueDate = trialLessonViewModel.BeginTime.Value.Date.AddDays(7);
             invoiceWaiting.PaidFee = 0;
             invoiceWaiting.OwingFee = trialLessonViewModel.Amount;
             invoiceWaiting.CreatedAt = toNZTimezone(DateTime.UtcNow);
@@ -272,7 +272,7 @@ namespace Pegasus_backend.Controllers
                 invoiceWaiting.BeginDate = trialLessonViewModel.BeginTime.Value.Date;
                 invoiceWaiting.EndDate = trialLessonViewModel.BeginTime.Value.Date;
                 invoiceWaiting.TotalFee = trialLessonViewModel.Amount;
-                invoiceWaiting.DueDate = trialLessonViewModel.BeginTime.Value.Date;
+                invoiceWaiting.DueDate = trialLessonViewModel.BeginTime.Value.Date.AddDays(7);
                 invoiceWaiting.PaidFee = 0;
                 invoiceWaiting.OwingFee = trialLessonViewModel.Amount;
                 invoiceWaiting.CreatedAt = toNZTimezone(DateTime.UtcNow);
