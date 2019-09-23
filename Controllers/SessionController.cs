@@ -761,7 +761,7 @@ namespace Pegasus_backend.Controllers
             try
             {
                 result.Data = await _ablemusicContext.AwaitMakeUpLesson.
-                    Include(a => a.CourseInstance).ThenInclude(ci => ci.Course).
+                    Include(a => a.GroupCourseInstance).ThenInclude(ci => ci.Course).
                     Include(a => a.MissedLesson).
                     Include(a => a.NewLesson).
                     Include(a => a.SplittedLesson).
@@ -776,9 +776,11 @@ namespace Pegasus_backend.Controllers
                         NewLessonId = a.NewLessonId,
                         IsActive = a.IsActive,
                         Remaining = a.Remaining,
-                        CourseInstanceId = a.CourseInstanceId,
-                        CourseInstance = new { CourseId = a.CourseInstance.CourseId, CourseName = a.CourseInstance.Course.CourseName },
-                        MissedLesson = new { Org = a.MissedLesson.Org.Abbr, Teacher = a.MissedLesson.Teacher.FirstName, beginDate = a.MissedLesson.BeginTime },
+                        CourseInstance = new { CourseId = a.GroupCourseInstance.CourseId, CourseName = a.GroupCourseInstance.Course.CourseName },
+                        MissedLesson = new { Org = a.MissedLesson.Org.Abbr, Teacher = a.MissedLesson.Teacher.FirstName, 
+                        BeginTime = a.MissedLesson.BeginTime ,EndTime = a.MissedLesson.EndTime ,CourseName  = a.GroupCourseInstance.Course.CourseName,
+                        CourseId  = a.CourseInstance.CourseId,awaitId =a.AwaitId,TeacherId = a.MissedLesson.Teacher.TeacherId,
+                                RoomId = a.MissedLesson.RoomId,OrgId = a.MissedLesson.OrgId},
                         NewLesson = new { Org = a.NewLesson.Org.Abbr, Teacher = a.NewLesson.Teacher.FirstName, beginDate = a.NewLesson.BeginTime },
                         SplittedLesson =  a.SplittedLesson.Select(p => new {p.Lesson.BeginTime,p.Lesson.IsCanceled,p.Lesson.IsConfirm}) 
                     })

@@ -346,6 +346,94 @@ namespace Pegasus_backend.Controllers
             //result.Data = newLesson;
             return Ok(result);
         }
+        [HttpPut]
+        [Route("[action]/{userId}")]
+        [CheckModelFilter]
+        public async Task<IActionResult> PutGroupMakeupLesson(short userId, [FromBody] GroupMakeupLessonViewModel lessonViewmodel)
+        {
+            var result = new Result<Lesson>();
+            var awaitMakeUpLesson = new AwaitMakeUpLesson();
+            Lesson newLesson = new Lesson();
+            Lesson oldLesson = new Lesson();
+           
+            _mapper.Map(lessonViewmodel, newLesson);
+            try
+            {
+                awaitMakeUpLesson = await _ablemusicContext.AwaitMakeUpLesson.Where(l => l.AwaitId == lessonViewmodel.AwaitId).FirstOrDefaultAsync();
+                if (awaitMakeUpLesson == null) throw new Exception("Missed Lesson id not found");
+                oldLesson =  await _ablemusicContext.Lesson.Where(l => l.LessonId == awaitMakeUpLesson.MissedLessonId).FirstOrDefaultAsync();
+                if(oldLesson == null) throw new Exception("Old Lesson not found");
+            }
+            catch(Exception ex)
+            {
+                result.IsFound = false;
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.ToString();
+                return NotFound(result);
+            }
+
+            TimeSpan lessonDuration = oldLesson.EndTime.Value.Subtract(oldLesson.BeginTime.Value);
+            newLesson.EndTime = newLesson.BeginTime.Value.Add(lessonDuration);
+
+            var lessonConflictCheckerService = new LessonConflictCheckerService(_ablemusicContext, newLesson.BeginTime.Value, 
+                newLesson.EndTime.Value, newLesson.RoomId.Value, newLesson.OrgId, (int)newLesson.TeacherId, oldLesson.LessonId);
+            Result<List<object>> lessonConflictCheckResult;
+            try
+            {
+                lessonConflictCheckResult = await lessonConflictCheckerService.CheckBothRoomAndTeacher();
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+            if (!lessonConflictCheckResult.IsSuccess)
+            {
+                return BadRequest(lessonConflictCheckResult);
+            }
+
+            newLesson.LessonId = 0;
+            newLesson.LearnerId = oldLesson.LearnerId;
+            newLesson.IsCanceled = 0;
+            newLesson.Reason = "";
+            newLesson.CreatedAt = toNZTimezone(DateTime.UtcNow);
+            newLesson.CourseInstanceId = oldLesson.CourseInstanceId;
+            newLesson.GroupCourseInstanceId = oldLesson.GroupCourseInstanceId;
+            newLesson.IsTrial = oldLesson.IsTrial;
+            newLesson.TrialCourseId = oldLesson.TrialCourseId;
+            newLesson.InvoiceNum = oldLesson.InvoiceNum;
+            newLesson.IsPaid = oldLesson.IsPaid;
+            newLesson.IsConfirm = oldLesson.IsConfirm;            
+            //newLesson.NewLessonId = oldLesson.NewLessonId;            
+            newLesson.IsChanged = 0;
+            
+
+            using (var dbContextTransaction = _ablemusicContext.Database.BeginTransaction())
+            {
+                try
+                {
+                    await _ablemusicContext.Lesson.AddAsync(newLesson);
+                    await _ablemusicContext.SaveChangesAsync();
+                    awaitMakeUpLesson.NewLessonId = newLesson.LessonId;
+                    awaitMakeUpLesson.IsActive = 0;      
+                    _ablemusicContext.Update(awaitMakeUpLesson);    
+                    await _ablemusicContext.SaveChangesAsync();                      
+                }
+                catch (Exception ex)
+                {
+                    result.IsSuccess = false;
+                    result.ErrorMessage = ex.ToString();
+                    return BadRequest(result);
+                }
+
+                dbContextTransaction.Commit();
+            }
+
+            result.IsSuccess = true;
+            //result.Data = newLesson;
+            return Ok(result);
+        }
 
         [HttpPut("{awaitId}/{days}")]
         public async Task<IActionResult> ChangeExpiryDate(int awaitId,short days)
