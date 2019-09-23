@@ -168,7 +168,26 @@ namespace Pegasus_backend.Controllers
             }
         }
 
-
+        [HttpGet]
+        [Route("[action]/{learnerId}")]
+        public async Task<IActionResult> GetOrgByLearner(int learnerId)
+        {
+            var result = new Result<object>();
+            try{
+                 var learners = await _ablemusicContext.Learner
+                    .Include(w => w.Org)
+                    .FirstOrDefaultAsync(l => l.LearnerId == learnerId);
+                learners.Org.Learner=null;
+                result.Data = learners.Org;  
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+        }
         //GET: http://localhost:5000/api/learner/:name
         [HttpGet]
         [Route("{name}")]
