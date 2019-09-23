@@ -14,6 +14,7 @@ using Pegasus_backend.ActionFilter;
 using Pegasus_backend.pegasusContext;
 using Pegasus_backend.Models;
 using Microsoft.Extensions.Logging;
+using MySqlX.XDevAPI.Common;
 
 namespace Pegasus_backend.Controllers
 {
@@ -43,6 +44,36 @@ namespace Pegasus_backend.Controllers
                     })
                     .ToListAsync();
                 result.Data = news;
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+        }
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> UploadTitlePhoto([FromForm(Name = "photo")] IFormFile photo)
+        {
+            var result = new Result<string>();
+            try
+            {
+                if (photo == null)
+                {
+                    throw new Exception("Photo is null");
+                }
+
+                var strDateTime = toNZTimezone(DateTime.UtcNow).ToString("yyMMddhhmmssfff");
+                var uploadResult = UploadFile(photo, "news/titlePhoto/", 1, strDateTime);
+                if (!uploadResult.IsUploadSuccess)
+                {
+                    throw new Exception(uploadResult.ErrorMessage);
+                }
+
+               
+                result.Data =  $"images/news/titlePhoto/{1 + strDateTime + Path.GetExtension(photo.FileName)}";;
                 return Ok(result);
             }
             catch (Exception ex)
