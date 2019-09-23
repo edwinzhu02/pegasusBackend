@@ -40,7 +40,7 @@ namespace Pegasus_backend.Controllers
                     .Select(s=>new
                     {
                         s.UserId,s.NewsTitle,s.NewsType,s.Categroy,s.CreatedAt,s.IsTop,
-                        NewsData = Encoding.ASCII.GetString(s.NewsData)
+                        NewsData = Encoding.ASCII.GetString(s.NewsData),s.TitleUrl
                     })
                     .ToListAsync();
                 result.Data = news;
