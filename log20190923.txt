@@ -1,0 +1,75 @@
+2019-09-23 16:38:17.381 +12:00 [INF] User profile is available. Using 'C:\Users\lgx95\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-09-23 16:38:19.063 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-09-23 16:38:19.504 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/values  
+2019-09-23 16:38:19.504 +12:00 [INF] Request starting HTTP/1.1 DEBUG http://localhost:5000/  0
+2019-09-23 16:38:19.561 +12:00 [INF] Request finished in 58.0611ms 200 
+2019-09-23 16:38:19.653 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-23 16:38:19.894 +12:00 [INF] 
+2019-09-23 16:38:20.235 +12:00 [INF] Route matched with {action = "Get", controller = "Values"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Get() on controller Pegasus_backend.Controllers.ValuesController (Pegasus_backend).
+2019-09-23 16:38:20.673 +12:00 [INF] Executing action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) - Validation state: "Valid"
+2019-09-23 16:38:20.690 +12:00 [INF] ValuesController LogInfoToFile: hello
+2019-09-23 16:38:20.696 +12:00 [INF] Executed action method Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 7.6538ms.
+2019-09-23 16:38:20.718 +12:00 [INF] Executing ObjectResult, writing value of type 'System.DateTime'.
+2019-09-23 16:38:20.816 +12:00 [INF] Executed action Pegasus_backend.Controllers.ValuesController.Get (Pegasus_backend) in 577.4153ms
+2019-09-23 16:38:20.823 +12:00 [INF] Response "2019-09-23T16:38:20.690174"
+2019-09-23 16:38:20.834 +12:00 [INF] Request finished in 1336.6623ms 200 application/json; charset=utf-8
+2019-09-23 16:38:21.440 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/favicon.ico  
+2019-09-23 16:38:21.444 +12:00 [INF] 
+2019-09-23 16:38:21.444 +12:00 [INF] Response 
+2019-09-23 16:38:21.444 +12:00 [INF] Request finished in 3.9207ms 404 
+2019-09-23 16:40:47.398 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/chat/negotiate?userId=107  
+2019-09-23 16:40:47.409 +12:00 [INF] Policy execution successful.
+2019-09-23 16:40:47.412 +12:00 [INF] Request finished in 14.2673ms 204 
+2019-09-23 16:40:48.032 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/chat/negotiate?userId=107 text/plain;charset=UTF-8 0
+2019-09-23 16:40:48.033 +12:00 [INF] Policy execution successful.
+2019-09-23 16:40:48.072 +12:00 [INF] Request finished in 40.1108ms 200 application/json
+2019-09-23 16:40:48.347 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/chat?userId=107&id=8jrdSQ9G2g1hTt9OClmqzg  
+2019-09-23 16:40:48.348 +12:00 [INF] Policy execution successful.
+2019-09-23 16:40:48.567 +12:00 [INF] Completed connection handshake. Using HubProtocol 'json'.
+2019-09-23 16:40:50.937 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-09-23 16:40:51.072 +12:00 [ERR] Error when dispatching 'OnConnectedAsync' on hub.
+System.InvalidOperationException: The provider for the source IQueryable doesn't implement IDbAsyncQueryProvider. Only providers that implement IDbAsyncQueryProvider can be used for Entity Framework asynchronous operations. For more details see http://go.microsoft.com/fwlink/?LinkId=287068.
+   at System.Data.Entity.QueryableExtensions.FirstOrDefaultAsync[TSource](IQueryable`1 source, CancellationToken cancellationToken)
+   at System.Data.Entity.QueryableExtensions.FirstOrDefaultAsync[TSource](IQueryable`1 source)
+   at Pegasus_backend.Controllers.MobileControllers.Chatroom.OnConnectedAsync() in C:\angular\pegasusBackend\Controllers\MobileControllers\Chatroom.cs:line 30
+   at Microsoft.AspNetCore.SignalR.Internal.DefaultHubDispatcher`1.OnConnectedAsync(HubConnectionContext connection)
+   at Microsoft.AspNetCore.SignalR.HubConnectionHandler`1.RunHubAsync(HubConnectionContext connection)
+2019-09-23 16:40:51.349 +12:00 [INF] Request finished in 3002.2176ms 101 
+2019-09-23 19:46:47.200 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/chat/negotiate?userId=107  
+2019-09-23 19:46:47.202 +12:00 [INF] Policy execution successful.
+2019-09-23 19:46:47.223 +12:00 [INF] Request finished in 12.8653ms 204 
+2019-09-23 19:46:48.184 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/chat/negotiate?userId=107 text/plain;charset=UTF-8 0
+2019-09-23 19:46:48.184 +12:00 [INF] Policy execution successful.
+2019-09-23 19:46:48.186 +12:00 [INF] Request finished in 1.9815ms 200 application/json
+2019-09-23 19:46:48.582 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/chat?userId=107&id=ztBHkLFPHL_M6MnoVKEDjA  
+2019-09-23 19:46:48.582 +12:00 [INF] Policy execution successful.
+2019-09-23 19:46:48.650 +12:00 [INF] Completed connection handshake. Using HubProtocol 'json'.
+2019-09-23 19:46:48.666 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-09-23 19:46:48.720 +12:00 [ERR] Error when dispatching 'OnConnectedAsync' on hub.
+System.InvalidOperationException: The provider for the source IQueryable doesn't implement IDbAsyncQueryProvider. Only providers that implement IDbAsyncQueryProvider can be used for Entity Framework asynchronous operations. For more details see http://go.microsoft.com/fwlink/?LinkId=287068.
+   at System.Data.Entity.QueryableExtensions.FirstOrDefaultAsync[TSource](IQueryable`1 source, CancellationToken cancellationToken)
+   at System.Data.Entity.QueryableExtensions.FirstOrDefaultAsync[TSource](IQueryable`1 source)
+   at Pegasus_backend.Controllers.MobileControllers.Chatroom.OnConnectedAsync() in C:\angular\pegasusBackend\Controllers\MobileControllers\Chatroom.cs:line 30
+   at Microsoft.AspNetCore.SignalR.Internal.DefaultHubDispatcher`1.OnConnectedAsync(HubConnectionContext connection)
+   at Microsoft.AspNetCore.SignalR.HubConnectionHandler`1.RunHubAsync(HubConnectionContext connection)
+2019-09-23 19:46:48.801 +12:00 [INF] Request finished in 219.7425ms 101 
+2019-09-23 22:16:01.700 +12:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/chat/negotiate?userId=107  
+2019-09-23 22:16:01.700 +12:00 [INF] Policy execution successful.
+2019-09-23 22:16:01.706 +12:00 [INF] Request finished in 2.5032ms 204 
+2019-09-23 22:16:01.949 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/chat/negotiate?userId=107 text/plain;charset=UTF-8 0
+2019-09-23 22:16:01.949 +12:00 [INF] Policy execution successful.
+2019-09-23 22:16:01.950 +12:00 [INF] Request finished in 0.7137ms 200 application/json
+2019-09-23 22:16:01.966 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/chat?userId=107&id=eeIGMh3aoB7imkINlgmG6Q  
+2019-09-23 22:16:01.966 +12:00 [INF] Policy execution successful.
+2019-09-23 22:16:01.975 +12:00 [INF] Completed connection handshake. Using HubProtocol 'json'.
+2019-09-23 22:16:01.977 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-09-23 22:16:02.005 +12:00 [ERR] Error when dispatching 'OnConnectedAsync' on hub.
+System.InvalidOperationException: The provider for the source IQueryable doesn't implement IDbAsyncQueryProvider. Only providers that implement IDbAsyncQueryProvider can be used for Entity Framework asynchronous operations. For more details see http://go.microsoft.com/fwlink/?LinkId=287068.
+   at System.Data.Entity.QueryableExtensions.FirstOrDefaultAsync[TSource](IQueryable`1 source, CancellationToken cancellationToken)
+   at System.Data.Entity.QueryableExtensions.FirstOrDefaultAsync[TSource](IQueryable`1 source)
+   at Pegasus_backend.Controllers.MobileControllers.Chatroom.OnConnectedAsync() in C:\angular\pegasusBackend\Controllers\MobileControllers\Chatroom.cs:line 30
+   at Microsoft.AspNetCore.SignalR.Internal.DefaultHubDispatcher`1.OnConnectedAsync(HubConnectionContext connection)
+   at Microsoft.AspNetCore.SignalR.HubConnectionHandler`1.RunHubAsync(HubConnectionContext connection)
+2019-09-23 22:16:02.026 +12:00 [INF] Request finished in 60.2558ms 101 
+2019-09-23 23:00:36.399 +12:00 [INF] Request starting HTTP/1.1 POST http://127.0.0.1:23014/iisintegration  0
+2019-09-23 23:00:36.405 +12:00 [INF] Request finished in 5.8067ms 202 
