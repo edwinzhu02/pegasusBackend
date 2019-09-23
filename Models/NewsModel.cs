@@ -11,5 +11,6 @@ namespace Pegasus_backend.Models
         public byte Categroy { get; set; }
         public int UserId { get; set; }
         public short? IsTop { get; set; }
+        public string TitleUrl { get; set; }
     }
 }

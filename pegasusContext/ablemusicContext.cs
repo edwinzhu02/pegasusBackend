@@ -72,6 +72,7 @@ namespace Pegasus_backend.pegasusContext
         public virtual DbSet<TeacherQualificatiion> TeacherQualificatiion { get; set; }
         public virtual DbSet<TeacherTransaction> TeacherTransaction { get; set; }
         public virtual DbSet<TeacherWageRates> TeacherWageRates { get; set; }
+        public virtual DbSet<TempEpsom> TempEpsom { get; set; }
         public virtual DbSet<Term> Term { get; set; }
         public virtual DbSet<TodoList> TodoList { get; set; }
         public virtual DbSet<User> User { get; set; }
@@ -80,6 +81,7 @@ namespace Pegasus_backend.pegasusContext
         {
             if (!optionsBuilder.IsConfigured)
             {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 optionsBuilder.UseMySQL("server=gradspace.org;UserId=dbuser;Password=qwer1234;Database=ablemusic");
             }
         }
@@ -1126,7 +1128,7 @@ namespace Pegasus_backend.pegasusContext
 
                 entity.Property(e => e.ContactNum)
                     .HasColumnName("contact_num")
-                    .HasMaxLength(20)
+                    .HasMaxLength(40)
                     .IsUnicode(false);
 
                 entity.Property(e => e.CreatedAt).HasColumnName("created_at");
@@ -1770,6 +1772,11 @@ namespace Pegasus_backend.pegasusContext
                     .IsUnicode(false)
                     .HasDefaultValueSql("html");
 
+                entity.Property(e => e.TitleUrl)
+                    .HasColumnName("title_url")
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.UserId)
                     .HasColumnName("user_id")
                     .HasColumnType("int(11)");
@@ -1969,6 +1976,11 @@ namespace Pegasus_backend.pegasusContext
                 entity.Property(e => e.Email)
                     .HasColumnName("email")
                     .HasMaxLength(40)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.GstNum)
+                    .HasColumnName("gst_num")
+                    .HasMaxLength(20)
                     .IsUnicode(false);
 
                 entity.Property(e => e.IsActivate)
@@ -2700,8 +2712,7 @@ namespace Pegasus_backend.pegasusContext
 
                 entity.Property(e => e.SplittedId)
                     .HasColumnName("splitted_id")
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedNever();
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.AwaitId)
                     .HasColumnName("await_id")
@@ -3375,6 +3386,54 @@ namespace Pegasus_backend.pegasusContext
                     .HasForeignKey(d => d.TeacherId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("R_126");
+            });
+
+            modelBuilder.Entity<TempEpsom>(entity =>
+            {
+                entity.ToTable("temp_epsom", "ablemusic");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.Address)
+                    .HasColumnName("address")
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Dob)
+                    .HasColumnName("DOB")
+                    .HasColumnType("date");
+
+                entity.Property(e => e.Email)
+                    .HasColumnName("email")
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.FirstName)
+                    .HasColumnName("first_name")
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.HomePhone)
+                    .HasColumnName("home_phone")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.LastName)
+                    .HasColumnName("last_name")
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.MobilePhone)
+                    .HasColumnName("mobile_phone")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.No)
+                    .HasColumnName("no")
+                    .HasMaxLength(3)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<Term>(entity =>
