@@ -87,7 +87,7 @@ namespace Pegasus_backend.Controllers
                     .Include(s=>s.Teacher)
                     .Where(s => s.OrgId == orgId && s.Teacher.IsActivate ==1 )
                     .Select(s => new {s.OrgId ,
-                            Teacher = new  {s.Teacher.FirstName,s.Teacher.LastName}
+                            Teacher = new  {s.Teacher.FirstName,s.Teacher.LastName,s.Teacher.TeacherId}
                         })
                     .Distinct()
                     .OrderBy(s => s.Teacher.FirstName)
