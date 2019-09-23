@@ -13,5 +13,6 @@ namespace Pegasus_backend.pegasusContext
         public DateTime CreatedAt { get; set; }
         public int UserId { get; set; }
         public short? IsTop { get; set; }
+        public string TitleUrl { get; set; }
     }
 }

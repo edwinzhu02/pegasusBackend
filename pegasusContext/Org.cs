@@ -33,6 +33,7 @@ namespace Pegasus_backend.pegasusContext
         public string Abbr { get; set; }
         public string BankName { get; set; }
         public string BankAccountNo { get; set; }
+        public string GstNum { get; set; }
 
         public ICollection<Amendment> Amendment { get; set; }
         public ICollection<AvailableDays> AvailableDays { get; set; }
