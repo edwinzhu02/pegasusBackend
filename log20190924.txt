@@ -1,0 +1,227 @@
+2019-09-24 12:18:38.709 +12:00 [INF] User profile is available. Using 'C:\Users\Zhuyi\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-09-24 12:18:39.180 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-09-24 12:18:39.957 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
+2019-09-24 12:18:40.020 +12:00 [WRN] Failed to determine the https port for redirect.
+2019-09-24 12:18:40.160 +12:00 [INF] 
+2019-09-24 12:18:40.584 +12:00 [INF] Response 
+2019-09-24 12:18:40.594 +12:00 [INF] Request finished in 639.2668ms 404 
+2019-09-24 12:18:57.764 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/lesson/GetLessonsForTeacher/219/2019-09-22  
+2019-09-24 12:18:57.765 +12:00 [INF] 
+2019-09-24 12:18:57.845 +12:00 [INF] Route matched with {action = "GetLessonsForTeacher", controller = "Lesson"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetLessonsForTeacher(Int16, System.DateTime) on controller Pegasus_backend.Controllers.LessonController (Pegasus_backend).
+2019-09-24 12:18:58.084 +12:00 [INF] Executing action method Pegasus_backend.Controllers.LessonController.GetLessonsForTeacher (Pegasus_backend) - Validation state: "Valid"
+2019-09-24 12:18:59.080 +12:00 [INF] Entity Framework Core 2.2.6-servicing-10079 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-09-24 12:18:59.161 +12:00 [WRN] The Include operation for navigation '[s].Room' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-09-24 12:18:59.161 +12:00 [WRN] The Include operation for navigation '[s].Learner' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-09-24 12:18:59.161 +12:00 [WRN] The Include operation for navigation '[s].Teacher.AvailableDays' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-09-24 12:18:59.161 +12:00 [WRN] The Include operation for navigation '[s].GroupCourseInstance' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-09-24 12:18:59.161 +12:00 [WRN] The Include operation for navigation '[s].CourseInstance.Course' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-09-24 12:18:59.161 +12:00 [WRN] The Include operation for navigation '[s].GroupCourseInstance.Course' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-09-24 12:18:59.161 +12:00 [WRN] The Include operation for navigation '[s].Org' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-09-24 12:18:59.270 +12:00 [WRN] The LINQ expression 'where ((__8__locals1_beginDate_Date_1 <= Convert([s].EndTime, DateTime).Date) AndAlso (Convert([s].EndTime, DateTime).Date <= __endDate_Date_2))' could not be translated and will be evaluated locally.
+2019-09-24 12:19:00.311 +12:00 [INF] Executed DbCommand (104ms) [Parameters=[@__8__locals1_teacherId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.CourseInstance`.`course_instance_id`, `s.CourseInstance`.`begin_date`, `s.CourseInstance`.`course_id`, `s.CourseInstance`.`end_date`, `s.CourseInstance`.`invoice_date`, `s.CourseInstance`.`learner_id`, `s.CourseInstance`.`org_id`, `s.CourseInstance`.`room_id`, `s.CourseInstance`.`teacher_id`, `s.GroupCourseInstance`.`group_course_instance_id`, `s.GroupCourseInstance`.`begin_date`, `s.GroupCourseInstance`.`course_id`, `s.GroupCourseInstance`.`end_date`, `s.GroupCourseInstance`.`invoice_date`, `s.GroupCourseInstance`.`is_activate`, `s.GroupCourseInstance`.`is_started`, `s.GroupCourseInstance`.`org_id`, `s.GroupCourseInstance`.`room_id`, `s.GroupCourseInstance`.`teacher_id`, `s`.`end_time` AS `end`, `s`.`begin_time` AS `BeginTime0`, `s.Learner`.`first_name`, `s.GroupCourseInstance.Course`.`course_name`, `s.TrialCourse`.`course_name`, `s.CourseInstance.Course`.`course_name`, `s.Org`.`org_name` AS `orgName0`, `s.Room`.`room_name` AS `roomName0`, `s.Org`.`abbr` AS `orgAbbr`, `s`.`org_id` AS `OrgId`, `s`.`room_id` AS `RoomId`, `s`.`is_confirm` AS `IsConfirm`, `s`.`is_changed` AS `IsChanged`, `s`.`is_canceled` AS `IsCanceled`, `s`.`reason`, `s`.`lesson_id` AS `LessonId`, `s`.`learner_id` AS `LearnerId`, (
+    SELECT `z`.`room_name`
+    FROM `ablemusic`.`room` AS `z`
+    WHERE `z`.`room_id` = (
+        SELECT `r`.`room_id`
+        FROM `ablemusic`.`lesson` AS `r`
+        WHERE `r`.`lesson_id` = `s`.`new_lesson_id`
+        LIMIT 1
+    )
+    LIMIT 1
+) AS `RoomName`, (
+    SELECT `z0`.`org_name`
+    FROM `ablemusic`.`org` AS `z0`
+    WHERE `z0`.`org_id` = (
+        SELECT `r0`.`org_id`
+        FROM `ablemusic`.`lesson` AS `r0`
+        WHERE `r0`.`lesson_id` = `s`.`new_lesson_id`
+        LIMIT 1
+    )
+    LIMIT 1
+) AS `OrgName`, (
+    SELECT `r1`.`begin_time`
+    FROM `ablemusic`.`lesson` AS `r1`
+    WHERE `r1`.`lesson_id` = `s`.`new_lesson_id`
+    LIMIT 1
+) AS `BeginTime`
+FROM `ablemusic`.`lesson` AS `s`
+LEFT JOIN `ablemusic`.`room` AS `s.Room` ON `s`.`room_id` = `s.Room`.`room_id`
+INNER JOIN `ablemusic`.`org` AS `s.Org` ON `s`.`org_id` = `s.Org`.`org_id`
+LEFT JOIN `ablemusic`.`course` AS `s.TrialCourse` ON `s`.`trial_course_id` = `s.TrialCourse`.`course_id`
+LEFT JOIN `ablemusic`.`learner` AS `s.Learner` ON `s`.`learner_id` = `s.Learner`.`learner_id`
+LEFT JOIN `ablemusic`.`one2one_course_instance` AS `s.CourseInstance` ON `s`.`course_instance_id` = `s.CourseInstance`.`course_instance_id`
+LEFT JOIN `ablemusic`.`course` AS `s.CourseInstance.Course` ON `s.CourseInstance`.`course_id` = `s.CourseInstance.Course`.`course_id`
+LEFT JOIN `ablemusic`.`group_course_instance` AS `s.GroupCourseInstance` ON `s`.`group_course_instance_id` = `s.GroupCourseInstance`.`group_course_instance_id`
+LEFT JOIN `ablemusic`.`course` AS `s.GroupCourseInstance.Course` ON `s.GroupCourseInstance`.`course_id` = `s.GroupCourseInstance.Course`.`course_id`
+WHERE `s`.`teacher_id` = @__8__locals1_teacherId_0
+2019-09-24 12:19:00.333 +12:00 [INF] Executed action method Pegasus_backend.Controllers.LessonController.GetLessonsForTeacher (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 2241.1656000000003ms.
+2019-09-24 12:19:00.340 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-09-24 12:19:00.427 +12:00 [INF] Executed action Pegasus_backend.Controllers.LessonController.GetLessonsForTeacher (Pegasus_backend) in 2578.5822000000003ms
+2019-09-24 12:19:00.427 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":[]}
+2019-09-24 12:19:00.430 +12:00 [INF] Request finished in 2666.0892ms 200 application/json; charset=utf-8
+2019-09-24 12:19:33.928 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/lesson/GetLessonsForTeacher/219/2019-09-22  
+2019-09-24 12:19:33.928 +12:00 [INF] 
+2019-09-24 12:19:33.928 +12:00 [INF] Route matched with {action = "GetLessonsForTeacher", controller = "Lesson"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetLessonsForTeacher(Int16, System.DateTime) on controller Pegasus_backend.Controllers.LessonController (Pegasus_backend).
+2019-09-24 12:19:33.935 +12:00 [INF] Executing action method Pegasus_backend.Controllers.LessonController.GetLessonsForTeacher (Pegasus_backend) - Validation state: "Valid"
+2019-09-24 12:19:50.742 +12:00 [INF] Entity Framework Core 2.2.6-servicing-10079 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-09-24 12:19:56.562 +12:00 [WRN] The Include operation for navigation '[s].Room' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-09-24 12:19:56.562 +12:00 [WRN] The Include operation for navigation '[s].Learner' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-09-24 12:19:56.562 +12:00 [WRN] The Include operation for navigation '[s].Teacher.AvailableDays' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-09-24 12:19:56.562 +12:00 [WRN] The Include operation for navigation '[s].GroupCourseInstance' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-09-24 12:19:56.563 +12:00 [WRN] The Include operation for navigation '[s].CourseInstance.Course' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-09-24 12:19:56.563 +12:00 [WRN] The Include operation for navigation '[s].GroupCourseInstance.Course' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-09-24 12:19:56.563 +12:00 [WRN] The Include operation for navigation '[s].Org' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-09-24 12:19:56.588 +12:00 [WRN] The LINQ expression 'where ((__8__locals1_beginDate_Date_1 <= Convert([s].EndTime, DateTime).Date) AndAlso (Convert([s].EndTime, DateTime).Date <= __endDate_Date_2))' could not be translated and will be evaluated locally.
+2019-09-24 12:19:56.792 +12:00 [INF] Executed DbCommand (85ms) [Parameters=[@__8__locals1_teacherId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.CourseInstance`.`course_instance_id`, `s.CourseInstance`.`begin_date`, `s.CourseInstance`.`course_id`, `s.CourseInstance`.`end_date`, `s.CourseInstance`.`invoice_date`, `s.CourseInstance`.`learner_id`, `s.CourseInstance`.`org_id`, `s.CourseInstance`.`room_id`, `s.CourseInstance`.`teacher_id`, `s.GroupCourseInstance`.`group_course_instance_id`, `s.GroupCourseInstance`.`begin_date`, `s.GroupCourseInstance`.`course_id`, `s.GroupCourseInstance`.`end_date`, `s.GroupCourseInstance`.`invoice_date`, `s.GroupCourseInstance`.`is_activate`, `s.GroupCourseInstance`.`is_started`, `s.GroupCourseInstance`.`org_id`, `s.GroupCourseInstance`.`room_id`, `s.GroupCourseInstance`.`teacher_id`, `s`.`end_time` AS `end`, `s`.`begin_time` AS `BeginTime0`, `s.Learner`.`first_name`, `s.GroupCourseInstance.Course`.`course_name`, `s.TrialCourse`.`course_name`, `s.CourseInstance.Course`.`course_name`, `s.Org`.`org_name` AS `orgName0`, `s.Room`.`room_name` AS `roomName0`, `s.Org`.`abbr` AS `orgAbbr`, `s`.`org_id` AS `OrgId`, `s`.`room_id` AS `RoomId`, `s`.`is_confirm` AS `IsConfirm`, `s`.`is_changed` AS `IsChanged`, `s`.`is_canceled` AS `IsCanceled`, `s`.`reason`, `s`.`lesson_id` AS `LessonId`, `s`.`learner_id` AS `LearnerId`, (
+    SELECT `z`.`room_name`
+    FROM `ablemusic`.`room` AS `z`
+    WHERE `z`.`room_id` = (
+        SELECT `r`.`room_id`
+        FROM `ablemusic`.`lesson` AS `r`
+        WHERE `r`.`lesson_id` = `s`.`new_lesson_id`
+        LIMIT 1
+    )
+    LIMIT 1
+) AS `RoomName`, (
+    SELECT `z0`.`org_name`
+    FROM `ablemusic`.`org` AS `z0`
+    WHERE `z0`.`org_id` = (
+        SELECT `r0`.`org_id`
+        FROM `ablemusic`.`lesson` AS `r0`
+        WHERE `r0`.`lesson_id` = `s`.`new_lesson_id`
+        LIMIT 1
+    )
+    LIMIT 1
+) AS `OrgName`, (
+    SELECT `r1`.`begin_time`
+    FROM `ablemusic`.`lesson` AS `r1`
+    WHERE `r1`.`lesson_id` = `s`.`new_lesson_id`
+    LIMIT 1
+) AS `BeginTime`
+FROM `ablemusic`.`lesson` AS `s`
+LEFT JOIN `ablemusic`.`room` AS `s.Room` ON `s`.`room_id` = `s.Room`.`room_id`
+INNER JOIN `ablemusic`.`org` AS `s.Org` ON `s`.`org_id` = `s.Org`.`org_id`
+LEFT JOIN `ablemusic`.`course` AS `s.TrialCourse` ON `s`.`trial_course_id` = `s.TrialCourse`.`course_id`
+LEFT JOIN `ablemusic`.`learner` AS `s.Learner` ON `s`.`learner_id` = `s.Learner`.`learner_id`
+LEFT JOIN `ablemusic`.`one2one_course_instance` AS `s.CourseInstance` ON `s`.`course_instance_id` = `s.CourseInstance`.`course_instance_id`
+LEFT JOIN `ablemusic`.`course` AS `s.CourseInstance.Course` ON `s.CourseInstance`.`course_id` = `s.CourseInstance.Course`.`course_id`
+LEFT JOIN `ablemusic`.`group_course_instance` AS `s.GroupCourseInstance` ON `s`.`group_course_instance_id` = `s.GroupCourseInstance`.`group_course_instance_id`
+LEFT JOIN `ablemusic`.`course` AS `s.GroupCourseInstance.Course` ON `s.GroupCourseInstance`.`course_id` = `s.GroupCourseInstance.Course`.`course_id`
+WHERE `s`.`teacher_id` = @__8__locals1_teacherId_0
+2019-09-24 12:19:56.794 +12:00 [INF] Executed action method Pegasus_backend.Controllers.LessonController.GetLessonsForTeacher (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 22858.5288ms.
+2019-09-24 12:19:56.794 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-09-24 12:19:56.794 +12:00 [INF] Executed action Pegasus_backend.Controllers.LessonController.GetLessonsForTeacher (Pegasus_backend) in 22866.0199ms
+2019-09-24 12:19:56.795 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":[]}
+2019-09-24 12:19:56.795 +12:00 [INF] Request finished in 22867.1579ms 200 application/json; charset=utf-8
+2019-09-24 12:21:07.694 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/lesson/GetLessonsForTeacher/257/2019-09-22  
+2019-09-24 12:21:07.697 +12:00 [INF] 
+2019-09-24 12:21:07.698 +12:00 [INF] Route matched with {action = "GetLessonsForTeacher", controller = "Lesson"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetLessonsForTeacher(Int16, System.DateTime) on controller Pegasus_backend.Controllers.LessonController (Pegasus_backend).
+2019-09-24 12:21:07.698 +12:00 [INF] Executing action method Pegasus_backend.Controllers.LessonController.GetLessonsForTeacher (Pegasus_backend) - Validation state: "Valid"
+2019-09-24 12:21:13.887 +12:00 [INF] Entity Framework Core 2.2.6-servicing-10079 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-09-24 12:21:13.896 +12:00 [WRN] The Include operation for navigation '[s].Room' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-09-24 12:21:13.896 +12:00 [WRN] The Include operation for navigation '[s].Learner' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-09-24 12:21:13.896 +12:00 [WRN] The Include operation for navigation '[s].Teacher.AvailableDays' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-09-24 12:21:13.896 +12:00 [WRN] The Include operation for navigation '[s].GroupCourseInstance' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-09-24 12:21:13.896 +12:00 [WRN] The Include operation for navigation '[s].CourseInstance.Course' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-09-24 12:21:13.896 +12:00 [WRN] The Include operation for navigation '[s].GroupCourseInstance.Course' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-09-24 12:21:13.896 +12:00 [WRN] The Include operation for navigation '[s].Org' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-09-24 12:21:13.919 +12:00 [WRN] The LINQ expression 'where ((__8__locals1_beginDate_Date_1 <= Convert([s].EndTime, DateTime).Date) AndAlso (Convert([s].EndTime, DateTime).Date <= __endDate_Date_2))' could not be translated and will be evaluated locally.
+2019-09-24 12:21:14.138 +12:00 [INF] Executed DbCommand (101ms) [Parameters=[@__8__locals1_teacherId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.CourseInstance`.`course_instance_id`, `s.CourseInstance`.`begin_date`, `s.CourseInstance`.`course_id`, `s.CourseInstance`.`end_date`, `s.CourseInstance`.`invoice_date`, `s.CourseInstance`.`learner_id`, `s.CourseInstance`.`org_id`, `s.CourseInstance`.`room_id`, `s.CourseInstance`.`teacher_id`, `s.GroupCourseInstance`.`group_course_instance_id`, `s.GroupCourseInstance`.`begin_date`, `s.GroupCourseInstance`.`course_id`, `s.GroupCourseInstance`.`end_date`, `s.GroupCourseInstance`.`invoice_date`, `s.GroupCourseInstance`.`is_activate`, `s.GroupCourseInstance`.`is_started`, `s.GroupCourseInstance`.`org_id`, `s.GroupCourseInstance`.`room_id`, `s.GroupCourseInstance`.`teacher_id`, `s`.`end_time` AS `end`, `s`.`begin_time` AS `BeginTime0`, `s.Learner`.`first_name`, `s.GroupCourseInstance.Course`.`course_name`, `s.TrialCourse`.`course_name`, `s.CourseInstance.Course`.`course_name`, `s.Org`.`org_name` AS `orgName0`, `s.Room`.`room_name` AS `roomName0`, `s.Org`.`abbr` AS `orgAbbr`, `s`.`org_id` AS `OrgId`, `s`.`room_id` AS `RoomId`, `s`.`is_confirm` AS `IsConfirm`, `s`.`is_changed` AS `IsChanged`, `s`.`is_canceled` AS `IsCanceled`, `s`.`reason`, `s`.`lesson_id` AS `LessonId`, `s`.`learner_id` AS `LearnerId`, (
+    SELECT `z`.`room_name`
+    FROM `ablemusic`.`room` AS `z`
+    WHERE `z`.`room_id` = (
+        SELECT `r`.`room_id`
+        FROM `ablemusic`.`lesson` AS `r`
+        WHERE `r`.`lesson_id` = `s`.`new_lesson_id`
+        LIMIT 1
+    )
+    LIMIT 1
+) AS `RoomName`, (
+    SELECT `z0`.`org_name`
+    FROM `ablemusic`.`org` AS `z0`
+    WHERE `z0`.`org_id` = (
+        SELECT `r0`.`org_id`
+        FROM `ablemusic`.`lesson` AS `r0`
+        WHERE `r0`.`lesson_id` = `s`.`new_lesson_id`
+        LIMIT 1
+    )
+    LIMIT 1
+) AS `OrgName`, (
+    SELECT `r1`.`begin_time`
+    FROM `ablemusic`.`lesson` AS `r1`
+    WHERE `r1`.`lesson_id` = `s`.`new_lesson_id`
+    LIMIT 1
+) AS `BeginTime`
+FROM `ablemusic`.`lesson` AS `s`
+LEFT JOIN `ablemusic`.`room` AS `s.Room` ON `s`.`room_id` = `s.Room`.`room_id`
+INNER JOIN `ablemusic`.`org` AS `s.Org` ON `s`.`org_id` = `s.Org`.`org_id`
+LEFT JOIN `ablemusic`.`course` AS `s.TrialCourse` ON `s`.`trial_course_id` = `s.TrialCourse`.`course_id`
+LEFT JOIN `ablemusic`.`learner` AS `s.Learner` ON `s`.`learner_id` = `s.Learner`.`learner_id`
+LEFT JOIN `ablemusic`.`one2one_course_instance` AS `s.CourseInstance` ON `s`.`course_instance_id` = `s.CourseInstance`.`course_instance_id`
+LEFT JOIN `ablemusic`.`course` AS `s.CourseInstance.Course` ON `s.CourseInstance`.`course_id` = `s.CourseInstance.Course`.`course_id`
+LEFT JOIN `ablemusic`.`group_course_instance` AS `s.GroupCourseInstance` ON `s`.`group_course_instance_id` = `s.GroupCourseInstance`.`group_course_instance_id`
+LEFT JOIN `ablemusic`.`course` AS `s.GroupCourseInstance.Course` ON `s.GroupCourseInstance`.`course_id` = `s.GroupCourseInstance.Course`.`course_id`
+WHERE `s`.`teacher_id` = @__8__locals1_teacherId_0
+2019-09-24 12:21:14.209 +12:00 [INF] Executed action method Pegasus_backend.Controllers.LessonController.GetLessonsForTeacher (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 6510.9548ms.
+2019-09-24 12:21:14.209 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-09-24 12:21:14.209 +12:00 [INF] Executed action Pegasus_backend.Controllers.LessonController.GetLessonsForTeacher (Pegasus_backend) in 6511.5921000000008ms
+2019-09-24 12:21:14.209 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":[]}
+2019-09-24 12:21:14.209 +12:00 [INF] Request finished in 6515.1257ms 200 application/json; charset=utf-8
+2019-09-24 12:21:40.464 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/lesson/GetLessonsForTeacher/257/2019-09-20  
+2019-09-24 12:21:40.464 +12:00 [INF] 
+2019-09-24 12:21:40.465 +12:00 [INF] Route matched with {action = "GetLessonsForTeacher", controller = "Lesson"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetLessonsForTeacher(Int16, System.DateTime) on controller Pegasus_backend.Controllers.LessonController (Pegasus_backend).
+2019-09-24 12:21:40.484 +12:00 [INF] Executing action method Pegasus_backend.Controllers.LessonController.GetLessonsForTeacher (Pegasus_backend) - Validation state: "Valid"
+2019-09-24 12:21:46.624 +12:00 [INF] Entity Framework Core 2.2.6-servicing-10079 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-09-24 12:21:46.633 +12:00 [WRN] The Include operation for navigation '[s].Room' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-09-24 12:21:46.633 +12:00 [WRN] The Include operation for navigation '[s].Learner' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-09-24 12:21:46.633 +12:00 [WRN] The Include operation for navigation '[s].Teacher.AvailableDays' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-09-24 12:21:46.633 +12:00 [WRN] The Include operation for navigation '[s].GroupCourseInstance' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-09-24 12:21:46.633 +12:00 [WRN] The Include operation for navigation '[s].CourseInstance.Course' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-09-24 12:21:46.633 +12:00 [WRN] The Include operation for navigation '[s].GroupCourseInstance.Course' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-09-24 12:21:46.633 +12:00 [WRN] The Include operation for navigation '[s].Org' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
+2019-09-24 12:21:46.652 +12:00 [WRN] The LINQ expression 'where ((__8__locals1_beginDate_Date_1 <= Convert([s].EndTime, DateTime).Date) AndAlso (Convert([s].EndTime, DateTime).Date <= __endDate_Date_2))' could not be translated and will be evaluated locally.
+2019-09-24 12:21:46.858 +12:00 [INF] Executed DbCommand (86ms) [Parameters=[@__8__locals1_teacherId_0='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT `s.CourseInstance`.`course_instance_id`, `s.CourseInstance`.`begin_date`, `s.CourseInstance`.`course_id`, `s.CourseInstance`.`end_date`, `s.CourseInstance`.`invoice_date`, `s.CourseInstance`.`learner_id`, `s.CourseInstance`.`org_id`, `s.CourseInstance`.`room_id`, `s.CourseInstance`.`teacher_id`, `s.GroupCourseInstance`.`group_course_instance_id`, `s.GroupCourseInstance`.`begin_date`, `s.GroupCourseInstance`.`course_id`, `s.GroupCourseInstance`.`end_date`, `s.GroupCourseInstance`.`invoice_date`, `s.GroupCourseInstance`.`is_activate`, `s.GroupCourseInstance`.`is_started`, `s.GroupCourseInstance`.`org_id`, `s.GroupCourseInstance`.`room_id`, `s.GroupCourseInstance`.`teacher_id`, `s`.`end_time` AS `end`, `s`.`begin_time` AS `BeginTime0`, `s.Learner`.`first_name`, `s.GroupCourseInstance.Course`.`course_name`, `s.TrialCourse`.`course_name`, `s.CourseInstance.Course`.`course_name`, `s.Org`.`org_name` AS `orgName0`, `s.Room`.`room_name` AS `roomName0`, `s.Org`.`abbr` AS `orgAbbr`, `s`.`org_id` AS `OrgId`, `s`.`room_id` AS `RoomId`, `s`.`is_confirm` AS `IsConfirm`, `s`.`is_changed` AS `IsChanged`, `s`.`is_canceled` AS `IsCanceled`, `s`.`reason`, `s`.`lesson_id` AS `LessonId`, `s`.`learner_id` AS `LearnerId`, (
+    SELECT `z`.`room_name`
+    FROM `ablemusic`.`room` AS `z`
+    WHERE `z`.`room_id` = (
+        SELECT `r`.`room_id`
+        FROM `ablemusic`.`lesson` AS `r`
+        WHERE `r`.`lesson_id` = `s`.`new_lesson_id`
+        LIMIT 1
+    )
+    LIMIT 1
+) AS `RoomName`, (
+    SELECT `z0`.`org_name`
+    FROM `ablemusic`.`org` AS `z0`
+    WHERE `z0`.`org_id` = (
+        SELECT `r0`.`org_id`
+        FROM `ablemusic`.`lesson` AS `r0`
+        WHERE `r0`.`lesson_id` = `s`.`new_lesson_id`
+        LIMIT 1
+    )
+    LIMIT 1
+) AS `OrgName`, (
+    SELECT `r1`.`begin_time`
+    FROM `ablemusic`.`lesson` AS `r1`
+    WHERE `r1`.`lesson_id` = `s`.`new_lesson_id`
+    LIMIT 1
+) AS `BeginTime`
+FROM `ablemusic`.`lesson` AS `s`
+LEFT JOIN `ablemusic`.`room` AS `s.Room` ON `s`.`room_id` = `s.Room`.`room_id`
+INNER JOIN `ablemusic`.`org` AS `s.Org` ON `s`.`org_id` = `s.Org`.`org_id`
+LEFT JOIN `ablemusic`.`course` AS `s.TrialCourse` ON `s`.`trial_course_id` = `s.TrialCourse`.`course_id`
+LEFT JOIN `ablemusic`.`learner` AS `s.Learner` ON `s`.`learner_id` = `s.Learner`.`learner_id`
+LEFT JOIN `ablemusic`.`one2one_course_instance` AS `s.CourseInstance` ON `s`.`course_instance_id` = `s.CourseInstance`.`course_instance_id`
+LEFT JOIN `ablemusic`.`course` AS `s.CourseInstance.Course` ON `s.CourseInstance`.`course_id` = `s.CourseInstance.Course`.`course_id`
+LEFT JOIN `ablemusic`.`group_course_instance` AS `s.GroupCourseInstance` ON `s`.`group_course_instance_id` = `s.GroupCourseInstance`.`group_course_instance_id`
+LEFT JOIN `ablemusic`.`course` AS `s.GroupCourseInstance.Course` ON `s.GroupCourseInstance`.`course_id` = `s.GroupCourseInstance.Course`.`course_id`
+WHERE `s`.`teacher_id` = @__8__locals1_teacherId_0
+2019-09-24 12:21:46.859 +12:00 [INF] Executed action method Pegasus_backend.Controllers.LessonController.GetLessonsForTeacher (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 6375.0592000000006ms.
+2019-09-24 12:21:46.860 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-09-24 12:21:46.860 +12:00 [INF] Executed action Pegasus_backend.Controllers.LessonController.GetLessonsForTeacher (Pegasus_backend) in 6375.9712ms
+2019-09-24 12:21:46.860 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":[]}
+2019-09-24 12:21:46.860 +12:00 [INF] Request finished in 6396.3478ms 200 application/json; charset=utf-8

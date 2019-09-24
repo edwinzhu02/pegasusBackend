@@ -138,7 +138,7 @@ namespace Pegasus_backend.Controllers
                                                         IsActive = i == null ? 0 : i.IsActive,
                                                         Comment = i == null ? string.Empty : i.Comment
                                                     },
-                                                }).OrderByDescending(re => re.InvoiceWaitingConfirm.BeginDate).ToListAsync();
+                                                }).ToListAsync();
             }
             catch (Exception ex)
             {
@@ -306,7 +306,7 @@ namespace Pegasus_backend.Controllers
                                                         IsActive = i == null ? 0 : i.IsActive,
                                                         Comment = i == null ? string.Empty : i.Comment
                                                     },
-                                                }).OrderBy(re => re.InvoiceNum).ToListAsync();
+                                                }).OrderByDescending(re => re.InvoiceWaitingConfirm.BeginDate).ToListAsync();
             }
             catch (Exception ex)
             {
