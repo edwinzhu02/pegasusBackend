@@ -376,7 +376,9 @@ namespace Pegasus_backend.Controllers
             {
                 invoiceWaitingConfirmUpdate = await _ablemusicContext.InvoiceWaitingConfirm.
                 Where(i => (i.InvoiceNum == invoiceWaitingConfirm.InvoiceNum && i.IsActivate == 1)).FirstOrDefaultAsync();
-                activeInvoices = await _ablemusicContext.Invoice.Where(i => (i.IsActive == 1 || i.IsActive == null) && i.InvoiceNum == invoiceWaitingConfirm.InvoiceNum).ToListAsync();
+                activeInvoices = await _ablemusicContext.Invoice.
+                    Where(i => (i.IsActive == 1 || i.IsActive == null) 
+                    && i.InvoiceNum == invoiceWaitingConfirm.InvoiceNum).ToListAsync();
             }
             catch(Exception ex)
             {
