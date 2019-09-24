@@ -27,7 +27,7 @@ namespace Pegasus_backend.Controllers.MobileControllers
             var httpContext = Context.GetHttpContext();
             _userId = int.Parse(httpContext.Request.Query["userId"]);
             // update user status to online
-            User userConnected = await _ablemusicContext.User.Where(x => x.UserId == _userId).FirstOrDefaultAsync();
+            User userConnected = _ablemusicContext.User.FirstOrDefault(x => x.UserId == _userId);
             if (userConnected == null)
             {
                 throw new HubException("UserId connected can't be found.");
@@ -35,7 +35,7 @@ namespace Pegasus_backend.Controllers.MobileControllers
             userConnected.IsOnline = 1;
             await _ablemusicContext.SaveChangesAsync();
             List<User> connectedUsers =
-                await _ablemusicContext.User.Where(x => x.IsOnline == 1 && x.IsActivate == 1).ToListAsync();
+                _ablemusicContext.User.Where(x => x.IsOnline == 1 && x.IsActivate == 1).ToList();
             await Clients.Others.SendAsync("OnlineUserUpdate", _userId + "is now online.");
             await Clients.All.SendAsync("OnlineUserList", JsonConvert.SerializeObject(connectedUsers));
             await base.OnConnectedAsync();
@@ -95,11 +95,11 @@ namespace Pegasus_backend.Controllers.MobileControllers
         {
             //            await Groups.RemoveFromGroupAsync(Context.ConnectionId, "SignalR Users");
             //            await base.OnDisconnectedAsync(exception);
-            User userDisconnected = await _ablemusicContext.User.Where(x => x.UserId == _userId).FirstOrDefaultAsync();
+            User userDisconnected = _ablemusicContext.User.FirstOrDefault(x => x.UserId == _userId);
             userDisconnected.IsOnline = 0;
-            await _ablemusicContext.SaveChangesAsync();
+            _ablemusicContext.SaveChanges();
             List<User> connectedUsers =
-                await _ablemusicContext.User.Where(x => x.IsOnline == 1 && x.IsActivate == 1).ToListAsync();
+                _ablemusicContext.User.Where(x => x.IsOnline == 1 && x.IsActivate == 1).ToList();
             await Clients.Others.SendAsync("OnlineUserUpdate", _userId + "is now offline.");
             await Clients.All.SendAsync("OnlineUserList", JsonConvert.SerializeObject(connectedUsers));
             await base.OnDisconnectedAsync(exception);
