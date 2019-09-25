@@ -378,17 +378,24 @@ namespace Pegasus_backend.Services
 
                     if (course_instance.Learner.PaymentPeriod == 1 && (course_instance.InvoiceDate == null || course_instance.InvoiceDate < term.EndDate))
                     {
-                        if (course_instance.BeginDate >= term.BeginDate)
-                        {
-                            invoice.BeginDate = course_instance.BeginDate;
-                        }
+                        // if (course_instance.BeginDate >= term.BeginDate)
+                        // {
+                        //     invoice.BeginDate = course_instance.BeginDate;
+                        // }
+                        // else
+                        // {
+                        //     invoice.BeginDate = term.BeginDate;
+                        // }
+                        //get min begin date between booked course and term;
+                        invoice.BeginDate = new DateTime(Math.Max(course_instance.BeginDate.Value.Ticks, term.BeginDate.Value.Ticks));
+
+                        //if booked course have end date, get max end date between booked course and term;
+                        if (course_instance.EndDate==null)
+                            invoice.EndDate = term.EndDate;
                         else
-                        {
-                            invoice.BeginDate = term.BeginDate;
-                        }
+                            invoice.EndDate = new DateTime(Math.Min(course_instance.EndDate.Value.Ticks,term.EndDate.Value.Ticks));
 
-                        invoice.EndDate = term.EndDate;
-
+                        // save invoice for unified generating lessons read invocie.
                         await _ablemusicContext.InvoiceWaitingConfirm.AddAsync(invoice);
                         await _ablemusicContext.SaveChangesAsync();
                         //using (var dbContextTransaction = _ablemusicContext.Database.BeginTransaction())
@@ -400,7 +407,7 @@ namespace Pegasus_backend.Services
                         lesson_quantity = await SaveLesson(invoice.WaitingId, 1, 1);
                         courseIns.InvoiceDate = invoice.EndDate;
                     }
-                    else if (course_instance.Learner.PaymentPeriod == 2)
+                    else if (course_instance.Learner.PaymentPeriod == 2)//for week billing cycle student
                     {
                         if (course_instance.InvoiceDate == null)
                         {
@@ -416,8 +423,8 @@ namespace Pegasus_backend.Services
 
                             invoice.BeginDate = Convert.ToDateTime(invoice.BeginDate).AddDays(8 - DOW);
                             invoice.EndDate = Convert.ToDateTime(invoice.BeginDate).AddDays(6);
-
-                            courseIns.InvoiceDate = invoice.EndDate;
+                            if (course_instance.EndDate!=null)
+                                invoice.EndDate = new DateTime(Math.Min(invoice.EndDate.Value.Ticks,course_instance.EndDate.Value.Ticks));
 
                         }
                         else if (course_instance.EndDate == null || (course_instance.EndDate != null && course_instance.EndDate > course_instance.InvoiceDate))
@@ -569,7 +576,9 @@ namespace Pegasus_backend.Services
                             begin_date = (DateTime)term.BeginDate;
                         }
                         invoice.BeginDate = begin_date;
-                        invoice.EndDate = term.EndDate;
+                        // invoice.EndDate = term.EndDate;
+                        //get minimum date of term's and learner's end date
+                        invoice.EndDate = new DateTime(Math.Min(learner.EndDate.Value.Ticks, term.EndDate.Value.Ticks));
 
                         await _ablemusicContext.InvoiceWaitingConfirm.AddAsync(invoice);
                         await _ablemusicContext.SaveChangesAsync();
