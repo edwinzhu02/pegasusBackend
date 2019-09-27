@@ -112,7 +112,7 @@ namespace Pegasus_backend.Controllers
                                       join l in _ablemusicContext.Learner on lgc.LearnerId equals l.LearnerId
                                       where gc.GroupCourseInstanceId == oldLesson.GroupCourseInstanceId
                                       select l
-                                      ).ToListAsync();
+                                      ).Distinct().ToListAsync();
                     course = await (from c in _ablemusicContext.Course
                                     join gc in _ablemusicContext.GroupCourseInstance on c.CourseId equals gc.CourseId
                                     join l in _ablemusicContext.Lesson on gc.GroupCourseInstanceId equals l.GroupCourseInstanceId
@@ -207,9 +207,9 @@ namespace Pegasus_backend.Controllers
                 TodoRepository todoRepository = new TodoRepository(_ablemusicContext);
                 if (oldLesson.CourseInstanceId != null)
                 {
-                    todoRepository.AddSingleTodoList("Lesson Rearrangement to Remind", TodoListContentGenerator.RearrangedSingleLessonWithOldLessonForLearner(
+                    todoRepository.AddSingleTodoList("Lesson Rescheduling to Remind", TodoListContentGenerator.RearrangedSingleLessonWithOldLessonForLearner(
                     oldLesson, newLesson, learner, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom), userId, newTodoDate, newLesson.LessonId, learner.LearnerId, null);
-                    todoRepository.AddSingleTodoList("Lesson Rearrangement to Remind", TodoListContentGenerator.RearrangedSingleLessonWithOldLessonForLearner(
+                    todoRepository.AddSingleTodoList("Lesson Rescheduling to Remind", TodoListContentGenerator.RearrangedSingleLessonWithOldLessonForLearner(
                     oldLesson, newLesson, learner, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom), userId, oldTodoDate, oldLesson.LessonId, learner.LearnerId, null);
                 }
                 else
@@ -219,17 +219,17 @@ namespace Pegasus_backend.Controllers
                     {
                         learnerIdMapContent.Add(l.LearnerId, TodoListContentGenerator.RearrangedSingleLessonWithOldLessonForLearner(oldLesson, newLesson, l, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom));
                     }
-                    todoRepository.AddMutipleTodoLists("Lesson Rearrangement to Remind", learnerIdMapContent, userId, newTodoDate, newLesson.LessonId, null);
-                    todoRepository.AddMutipleTodoLists("Lesson Rearrangement to Remind", learnerIdMapContent, userId, oldTodoDate, newLesson.LessonId, null);
+                    todoRepository.AddMutipleTodoLists("Lesson Rescheduling to Remind", learnerIdMapContent, userId, newTodoDate, newLesson.LessonId, null);
+                    todoRepository.AddMutipleTodoLists("Lesson Rescheduling to Remind", learnerIdMapContent, userId, oldTodoDate, newLesson.LessonId, null);
                 }
-                todoRepository.AddSingleTodoList("Lesson Rearrangement to Remind", TodoListContentGenerator.RearrangedSingleLessonWithOldLessonForOldTeacher(
+                todoRepository.AddSingleTodoList("Lesson Rescheduling to Remind", TodoListContentGenerator.RearrangedSingleLessonWithOldLessonForOldTeacher(
                     oldLesson, newLesson, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom), userId, newTodoDate, newLesson.LessonId, null, oldTeacher.TeacherId);
-                todoRepository.AddSingleTodoList("Lesson Rearrangement to Remind", TodoListContentGenerator.RearrangedSingleLessonWithOldLessonForNewTeacher(
+                todoRepository.AddSingleTodoList("Lesson Rescheduling to Remind", TodoListContentGenerator.RearrangedSingleLessonWithOldLessonForNewTeacher(
                     oldLesson, newLesson, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom), userId, newTodoDate, newLesson.LessonId, null, newTeacher.TeacherId);
 
-                todoRepository.AddSingleTodoList("Lesson Rearrangement to Remind", TodoListContentGenerator.RearrangedSingleLessonWithOldLessonForOldTeacher(
+                todoRepository.AddSingleTodoList("Lesson Rescheduling to Remind", TodoListContentGenerator.RearrangedSingleLessonWithOldLessonForOldTeacher(
                     oldLesson, newLesson, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom), userId, oldTodoDate, oldLesson.LessonId, null, oldTeacher.TeacherId);
-                todoRepository.AddSingleTodoList("Lesson Rearrangement to Remind", TodoListContentGenerator.RearrangedSingleLessonWithOldLessonForNewTeacher(
+                todoRepository.AddSingleTodoList("Lesson Rescheduling to Remind", TodoListContentGenerator.RearrangedSingleLessonWithOldLessonForNewTeacher(
                     oldLesson, newLesson, oldTeacher, newTeacher, oldOrg, newOrg, oldRoom, newRoom), userId, oldTodoDate, oldLesson.LessonId, null, newTeacher.TeacherId);
                 var saveTodoResult = await todoRepository.SaveTodoListsAsync();
                 if (!saveTodoResult.IsSuccess)
