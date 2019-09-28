@@ -46,7 +46,7 @@ namespace Pegasus_backend.Controllers
         protected static void InvoiceGenerator(string invoiceTitle, string invoiceName, decimal invoiceAmount, List<InvoicePdfGeneratorModel> infos,string filename)
         {
             //title
-            
+            return;//for temporary
             PdfPTable title = new PdfPTable(1);
             title.WidthPercentage = 80;
             title.DefaultCell.HorizontalAlignment = Element.ALIGN_CENTER;

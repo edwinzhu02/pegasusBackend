@@ -751,6 +751,36 @@ namespace Pegasus_backend.Controllers
             }
             return Ok(result);
         }
+        [HttpGet("[action]/{learnerId}/{courseId}")]
+        //public async Task<IActionResult> GetLessonsBetweenDate(DateTime? beginDate, DateTime? endDate, int? userId)
+        public async Task<IActionResult> GetRemainingAmount(int learnerId,int courseId)
+        //public async Task<IActionResult> CancelConfirm2(int remindId)
+
+        {
+            var result = new Result<IEnumerable<object>>();
+            try
+            {
+                result.Data = await _ablemusicContext.AwaitMakeUpLesson
+                    .Include(a => a.CourseInstance).ThenInclude(c =>c.Course.Duration)
+                    .Where(a => a.LearnerId == learnerId 
+                        && a.CourseInstance.CourseId == courseId
+                        && a.IsActive == 1 && a.Remaining>0
+                    ).Select(a => new
+                    {
+                        remaining = a.Remaining,
+                        duration = a.CourseInstance.Course.Duration
+                    })
+                .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.ToString();
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+
         [HttpGet("[action]/{instanceId}")]
         //public async Task<IActionResult> GetLessonsBetweenDate(DateTime? beginDate, DateTime? endDate, int? userId)
         public async Task<IActionResult> GetGroupMakeupSessions(int instanceId)
