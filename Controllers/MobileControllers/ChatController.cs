@@ -29,13 +29,6 @@ namespace Pegasus_backend.Controllers.MobileControllers
             _mapper = mapper;
         }
 
-        [Route("[action]")]
-        [HttpPost]
-        public IActionResult TestMessage(ChatMessageModel chatMessageModel)
-        {
-            return Ok(chatMessageModel);
-        }
-
 
         // Post new message to database
         [HttpPost]
@@ -57,53 +50,6 @@ namespace Pegasus_backend.Controllers.MobileControllers
             }
 
             result.Data = chatMessageModel;
-            return Ok(result);
-        }
-
-
-        // pass in userId
-        [Route("[action]/{id}")]
-        [HttpGet]
-        public async Task<IActionResult> GetStaffChattingList(int id)
-        {
-            //validate role
-            var staffDetial = await _ablemusicContext.Staff.Where(x => x.UserId == id).FirstOrDefaultAsync();
-            if (staffDetial == null)
-            {
-                return BadRequest("Only staff can access this list.");
-            }
-            // find org of this stuff
-            var orgIdOfStaff = await _ablemusicContext.StaffOrg.Where(x => x.StaffId == staffDetial.StaffId).Select(x=>x.OrgId)
-                .FirstOrDefaultAsync();
-            if (orgIdOfStaff == null)
-            {
-                return NotFound("Staff's orgId not found");
-            }
-
-            // all the staff except himself
-            List<Staff> staffList = new List<Staff>();
-            staffList = await _ablemusicContext.Staff.Where(x=>x.UserId != id).ToListAsync();
-            
-            // all teache teachers
-            //List<Teacher> teacherList = new List<Teacher>();
-            var teacherList = await _ablemusicContext.Teacher.Select(x => new Teacher 
-                    {TeacherId = x.TeacherId, FirstName = x.FirstName, LastName = x.LastName, Email = x.Email})
-                .ToListAsync();
-
-            // Students having lesson in his org
-            var studentsIdHavingLesson = await _ablemusicContext.Lesson.Where(x => x.OrgId == orgIdOfStaff)
-                .Include(x=>x.Learner).Select(x => new Lesson 
-                    {LessonId = x.LessonId, LearnerId = x.LearnerId, Learner = x.Learner})
-                .ToListAsync();
-
-            // students registered in his org
-            var studentsRegisteredIn = await _ablemusicContext.Learner.Where(x=>x.OrgId == orgIdOfStaff).ToListAsync();
-
-            // combine data
-            Result<Tuple<List<Staff>, List<Teacher>, List<Lesson>, List<Learner>>> result = new Result<Tuple<List<Staff>, List<Teacher>, List<Lesson>, List<Learner>>>
-            {
-                Data = Tuple.Create(staffList, teacherList, studentsIdHavingLesson, studentsRegisteredIn)
-            };
             return Ok(result);
         }
 
