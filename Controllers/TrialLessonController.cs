@@ -48,7 +48,7 @@ namespace Pegasus_backend.Controllers
                                             LastName = g.Max(l => l.LastName),
                                             diff = g.Min(l => l.diff)
                                         }).OrderBy(l => l.diff).ToListAsync();
-                if (tmpLesson1.Count > 0)
+                if (tmpLesson1.Count > 0)//find teacher match room and time
                 {
                     result.Data = tmpLesson1;
                     return Ok(result);
@@ -61,7 +61,7 @@ namespace Pegasus_backend.Controllers
                 .Where(a => a.DayOfWeek == dayOfWeek && a.OrgId == orgId && a.RoomId == roomId && a.Teacher.IsActivate == 1)
                 .Select(a => new { a.TeacherId, a.Teacher.FirstName, a.Teacher.LastName }).ToListAsync();
 
-                if (tmpLesson2.Count > 0)
+                if (tmpLesson2.Count > 0)//match teacher with day and room
                 {
                     result.Data = tmpLesson2;
                     return Ok(result);
@@ -70,9 +70,17 @@ namespace Pegasus_backend.Controllers
                 var tmpLesson3 = await _ablemusicContext.AvailableDays.Include(a => a.Teacher)
                 .Where(a => a.DayOfWeek == dayOfWeek && a.OrgId == orgId && a.Teacher.IsActivate ==1)
                 .Select(a => new { a.TeacherId, a.Teacher.FirstName, a.Teacher.LastName }).Distinct().ToListAsync();
-                if (tmpLesson3.Count > 0)
+                if (tmpLesson3.Count > 0)//match teacher with day 
                 {
                     result.Data = tmpLesson3;
+                    return Ok(result);
+                }
+                var tmpLesson4 = await _ablemusicContext.AvailableDays.Include(a => a.Teacher)
+                .Where(a => a.OrgId == orgId && a.Teacher.IsActivate ==1)
+                .Select(a => new { a.TeacherId, a.Teacher.FirstName, a.Teacher.LastName }).Distinct().ToListAsync();
+                if (tmpLesson4.Count > 0)//match teacher with org 
+                {
+                    result.Data = tmpLesson4;
                     return Ok(result);
                 }
 

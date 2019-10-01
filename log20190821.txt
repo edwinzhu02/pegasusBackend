@@ -1,802 +1,0 @@
-2019-08-21 10:56:28.173 +12:00 [INF] User profile is available. Using 'C:\Users\zhuyi\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
-2019-08-21 10:56:28.645 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
-2019-08-21 10:56:31.784 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
-2019-08-21 10:56:31.813 +12:00 [WRN] Failed to determine the https port for redirect.
-2019-08-21 10:56:31.891 +12:00 [INF] 
-2019-08-21 10:56:32.001 +12:00 [INF] Response 
-2019-08-21 10:56:32.007 +12:00 [INF] Request finished in 223.5409ms 404 
-2019-08-21 10:56:36.602 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
-2019-08-21 10:56:36.604 +12:00 [INF] 
-2019-08-21 10:56:36.604 +12:00 [INF] Response 
-2019-08-21 10:56:36.608 +12:00 [INF] Request finished in 2.5611ms 404 
-2019-08-21 10:56:54.003 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger  
-2019-08-21 10:56:54.006 +12:00 [INF] Request finished in 3.9202ms 301 
-2019-08-21 10:56:54.014 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/index.html  
-2019-08-21 10:56:54.100 +12:00 [INF] Request finished in 86.0933ms 200 text/html
-2019-08-21 10:56:54.122 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/swagger-ui.css  
-2019-08-21 10:56:54.122 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/swagger-ui-bundle.js  
-2019-08-21 10:56:54.123 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/swagger-ui-standalone-preset.js  
-2019-08-21 10:56:54.161 +12:00 [INF] Sending file. Request path: '/swagger-ui.css'. Physical path: 'N/A'
-2019-08-21 10:56:54.161 +12:00 [INF] Sending file. Request path: '/swagger-ui-standalone-preset.js'. Physical path: 'N/A'
-2019-08-21 10:56:54.164 +12:00 [INF] Request finished in 40.4451ms 200 application/javascript
-2019-08-21 10:56:54.164 +12:00 [INF] Request finished in 42.5039ms 200 text/css
-2019-08-21 10:56:54.173 +12:00 [INF] Sending file. Request path: '/swagger-ui-bundle.js'. Physical path: 'N/A'
-2019-08-21 10:56:54.173 +12:00 [INF] Request finished in 50.8495ms 200 application/javascript
-2019-08-21 10:56:55.070 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/favicon.ico  
-2019-08-21 10:56:55.071 +12:00 [INF] 
-2019-08-21 10:56:55.071 +12:00 [INF] Response 
-2019-08-21 10:56:55.072 +12:00 [INF] Request finished in 1.4011ms 404 
-2019-08-21 10:56:55.096 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/v1/swagger.json  
-2019-08-21 10:56:55.347 +12:00 [INF] Request finished in 251.1463ms 200 application/json;charset=utf-8
-2019-08-21 10:57:18.767 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Notice/1  
-2019-08-21 10:57:18.767 +12:00 [INF] 
-2019-08-21 10:57:18.809 +12:00 [INF] Route matched with {action = "GetNotices", controller = "Notice"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetNotices(Int32) on controller Pegasus_backend.Controllers.NoticeController (Pegasus_backend).
-2019-08-21 10:57:18.979 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend) - Validation state: "Valid"
-2019-08-21 10:57:19.861 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
-2019-08-21 10:57:21.057 +12:00 [INF] Executed DbCommand (84ms) [Parameters=[@__staffId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `s`.`notice_id`, `s`.`created_at`, `s`.`from_staff_id`, `s`.`is_completed`, `s`.`notice`, `s`.`to_staff_id`
-FROM `ablemusic`.`notices` AS `s`
-WHERE (`s`.`to_staff_id` = @__staffId_0) AND (`s`.`is_completed` = 0)
-2019-08-21 10:57:21.080 +12:00 [INF] Executed action method Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 2093.424ms.
-2019-08-21 10:57:21.087 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
-2019-08-21 10:57:21.095 +12:00 [INF] Executed action Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend) in 2283.5672ms
-2019-08-21 10:57:21.095 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":[]}
-2019-08-21 10:57:21.096 +12:00 [INF] Request finished in 2329.0494ms 200 application/json; charset=utf-8
-2019-08-21 10:57:53.470 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Notice/2  
-2019-08-21 10:57:53.470 +12:00 [INF] 
-2019-08-21 10:57:53.470 +12:00 [INF] Route matched with {action = "GetNotices", controller = "Notice"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetNotices(Int32) on controller Pegasus_backend.Controllers.NoticeController (Pegasus_backend).
-2019-08-21 10:57:53.479 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend) - Validation state: "Valid"
-2019-08-21 10:58:01.445 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
-2019-08-21 10:58:01.627 +12:00 [INF] Executed DbCommand (54ms) [Parameters=[@__staffId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `s`.`notice_id`, `s`.`created_at`, `s`.`from_staff_id`, `s`.`is_completed`, `s`.`notice`, `s`.`to_staff_id`
-FROM `ablemusic`.`notices` AS `s`
-WHERE (`s`.`to_staff_id` = @__staffId_0) AND (`s`.`is_completed` = 0)
-2019-08-21 10:58:02.772 +12:00 [INF] Executed action method Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 9293.2844ms.
-2019-08-21 10:58:02.773 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
-2019-08-21 10:58:02.773 +12:00 [INF] Executed action Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend) in 9302.8378000000012ms
-2019-08-21 10:58:02.774 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":[]}
-2019-08-21 10:58:02.774 +12:00 [INF] Request finished in 9304.0205ms 200 application/json; charset=utf-8
-2019-08-21 10:59:38.137 +12:00 [INF] User profile is available. Using 'C:\Users\zhuyi\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
-2019-08-21 10:59:38.466 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
-2019-08-21 10:59:39.668 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
-2019-08-21 10:59:39.713 +12:00 [WRN] Failed to determine the https port for redirect.
-2019-08-21 10:59:39.770 +12:00 [INF] 
-2019-08-21 10:59:39.881 +12:00 [INF] Response 
-2019-08-21 10:59:39.886 +12:00 [INF] Request finished in 219.3533ms 404 
-2019-08-21 11:00:42.150 +12:00 [INF] User profile is available. Using 'C:\Users\zhuyi\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
-2019-08-21 11:00:42.485 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
-2019-08-21 11:00:43.779 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
-2019-08-21 11:00:43.843 +12:00 [WRN] Failed to determine the https port for redirect.
-2019-08-21 11:00:43.909 +12:00 [INF] 
-2019-08-21 11:00:44.020 +12:00 [INF] Response 
-2019-08-21 11:00:44.025 +12:00 [INF] Request finished in 248.5504ms 404 
-2019-08-21 11:00:49.996 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/index.html  
-2019-08-21 11:00:50.062 +12:00 [INF] Request finished in 66.5787ms 200 text/html
-2019-08-21 11:00:50.351 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/swagger-ui.css  
-2019-08-21 11:00:50.358 +12:00 [INF] The file /swagger-ui.css was not modified
-2019-08-21 11:00:50.360 +12:00 [INF] Request finished in 8.6994ms 304 text/css
-2019-08-21 11:00:50.375 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/swagger-ui-bundle.js  
-2019-08-21 11:00:50.375 +12:00 [INF] The file /swagger-ui-bundle.js was not modified
-2019-08-21 11:00:50.375 +12:00 [INF] Request finished in 0.4841ms 304 application/javascript
-2019-08-21 11:00:50.497 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/swagger-ui-standalone-preset.js  
-2019-08-21 11:00:50.497 +12:00 [INF] The file /swagger-ui-standalone-preset.js was not modified
-2019-08-21 11:00:50.497 +12:00 [INF] Request finished in 0.384ms 304 application/javascript
-2019-08-21 11:00:50.549 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/favicon.ico  
-2019-08-21 11:00:50.550 +12:00 [INF] 
-2019-08-21 11:00:50.551 +12:00 [INF] Response 
-2019-08-21 11:00:50.551 +12:00 [INF] Request finished in 1.9148ms 404 
-2019-08-21 11:02:22.963 +12:00 [INF] User profile is available. Using 'C:\Users\zhuyi\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
-2019-08-21 11:02:23.296 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
-2019-08-21 11:02:24.507 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
-2019-08-21 11:02:24.552 +12:00 [WRN] Failed to determine the https port for redirect.
-2019-08-21 11:02:24.613 +12:00 [INF] 
-2019-08-21 11:02:24.722 +12:00 [INF] Response 
-2019-08-21 11:02:24.727 +12:00 [INF] Request finished in 223.6314ms 404 
-2019-08-21 11:07:29.020 +12:00 [INF] User profile is available. Using 'C:\Users\zhuyi\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
-2019-08-21 11:07:29.369 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
-2019-08-21 11:07:32.302 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
-2019-08-21 11:07:32.333 +12:00 [WRN] Failed to determine the https port for redirect.
-2019-08-21 11:07:32.394 +12:00 [INF] 
-2019-08-21 11:07:32.518 +12:00 [INF] Response 
-2019-08-21 11:07:32.522 +12:00 [INF] Request finished in 221.2398ms 404 
-2019-08-21 11:07:39.773 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/index.html  
-2019-08-21 11:07:39.864 +12:00 [INF] Request finished in 90.7355ms 200 text/html
-2019-08-21 11:07:40.028 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/v1/swagger.json  
-2019-08-21 11:07:40.314 +12:00 [INF] Request finished in 286.2058ms 200 application/json;charset=utf-8
-2019-08-21 11:07:50.116 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Notice/1  
-2019-08-21 11:07:50.118 +12:00 [INF] 
-2019-08-21 11:07:50.160 +12:00 [INF] Route matched with {action = "GetNotices", controller = "Notice"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetNotices(Int32) on controller Pegasus_backend.Controllers.NoticeController (Pegasus_backend).
-2019-08-21 11:07:50.291 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend) - Validation state: "Valid"
-2019-08-21 11:07:58.095 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
-2019-08-21 11:07:59.195 +12:00 [INF] Executed DbCommand (69ms) [Parameters=[@__staffId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `n`.`notice_id`, `n`.`created_at`, `n`.`from_staff_id`, `n`.`is_completed`, `n`.`notice`, `n`.`to_staff_id`, `n.ToStaff`.`staff_id`, `n.ToStaff`.`dob`, `n.ToStaff`.`email`, `n.ToStaff`.`expiry_date`, `n.ToStaff`.`first_name`, `n.ToStaff`.`gender`, `n.ToStaff`.`home_phone`, `n.ToStaff`.`id_number`, `n.ToStaff`.`id_photo`, `n.ToStaff`.`id_type`, `n.ToStaff`.`ird_number`, `n.ToStaff`.`is_activate`, `n.ToStaff`.`last_name`, `n.ToStaff`.`mobile_phone`, `n.ToStaff`.`photo`, `n.ToStaff`.`user_id`, `n.ToStaff`.`visa`
-FROM `ablemusic`.`notices` AS `n`
-LEFT JOIN `ablemusic`.`staff` AS `n.ToStaff` ON `n`.`to_staff_id` = `n.ToStaff`.`staff_id`
-WHERE (`n`.`to_staff_id` = @__staffId_0) AND (`n`.`is_completed` = 0)
-2019-08-21 11:07:59.312 +12:00 [INF] Executed action method Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 9012.8984ms.
-2019-08-21 11:07:59.318 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
-2019-08-21 11:07:59.334 +12:00 [INF] Executed action Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend) in 9172.0121ms
-2019-08-21 11:07:59.334 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":[{"NoticeId":4,"Notice":"2019-07-20","CreatedAt":"2019-07-20T00:00:00","IsCompleted":0,"FromStaffId":1,"ToStaffId":1,"FromStaff":{"FirstName":"Edwin","Visa":"123","LastName":"Zhu","ExpiryDate":"2019-06-07T00:00:00","Dob":"2019-06-01T00:00:00","IsActivate":0,"Gender":1,"UserId":1,"IrdNumber":"dfdfd","IdType":1,"IdPhoto":null,"IdNumber":"1221","HomePhone":null,"MobilePhone":"121221","Email":"zhu@hh.com","Photo":"images/staff/Photos/1190613092404471.jpg","StaffId":1,"User":null,"NoticesFromStaff":[],"NoticesToStaff":[],"Payment":[],"StaffOrg":[],"StockApplication":[],"StockOrder":[]},"ToStaff":{"FirstName":"Edwin","Visa":"123","LastName":"Zhu","ExpiryDate":"2019-06-07T00:00:00","Dob":"2019-06-01T00:00:00","IsActivate":0,"Gender":1,"UserId":1,"IrdNumber":"dfdfd","IdType":1,"IdPhoto":null,"IdNumber":"1221","HomePhone":null,"MobilePhone":"121221","Email":"zhu@hh.com","Photo":"images/staff/Photos/1190613092404471.jpg","StaffId":1,"User":null,"NoticesFromStaff":[],"NoticesToStaff":[],"Payment":[],"StaffOrg":[],"StockApplication":[],"StockOrder":[]}}]}
-2019-08-21 11:07:59.335 +12:00 [INF] Request finished in 9219.2999ms 200 application/json; charset=utf-8
-2019-08-21 11:08:43.448 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Notice/2  
-2019-08-21 11:08:43.449 +12:00 [INF] 
-2019-08-21 11:08:43.449 +12:00 [INF] Route matched with {action = "GetNotices", controller = "Notice"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetNotices(Int32) on controller Pegasus_backend.Controllers.NoticeController (Pegasus_backend).
-2019-08-21 11:08:43.451 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend) - Validation state: "Valid"
-2019-08-21 11:08:47.729 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
-2019-08-21 11:08:47.918 +12:00 [INF] Executed DbCommand (58ms) [Parameters=[@__staffId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `n`.`notice_id`, `n`.`created_at`, `n`.`from_staff_id`, `n`.`is_completed`, `n`.`notice`, `n`.`to_staff_id`, `n.ToStaff`.`staff_id`, `n.ToStaff`.`dob`, `n.ToStaff`.`email`, `n.ToStaff`.`expiry_date`, `n.ToStaff`.`first_name`, `n.ToStaff`.`gender`, `n.ToStaff`.`home_phone`, `n.ToStaff`.`id_number`, `n.ToStaff`.`id_photo`, `n.ToStaff`.`id_type`, `n.ToStaff`.`ird_number`, `n.ToStaff`.`is_activate`, `n.ToStaff`.`last_name`, `n.ToStaff`.`mobile_phone`, `n.ToStaff`.`photo`, `n.ToStaff`.`user_id`, `n.ToStaff`.`visa`
-FROM `ablemusic`.`notices` AS `n`
-LEFT JOIN `ablemusic`.`staff` AS `n.ToStaff` ON `n`.`to_staff_id` = `n.ToStaff`.`staff_id`
-WHERE (`n`.`to_staff_id` = @__staffId_0) AND (`n`.`is_completed` = 0)
-2019-08-21 11:08:47.920 +12:00 [INF] Executed action method Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 4468.9648000000007ms.
-2019-08-21 11:08:47.920 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
-2019-08-21 11:08:47.921 +12:00 [INF] Executed action Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend) in 4471.1379000000006ms
-2019-08-21 11:08:47.921 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":[{"NoticeId":3,"Notice":"notice_333","CreatedAt":"2019-07-20T00:00:00","IsCompleted":0,"FromStaffId":1,"ToStaffId":2,"FromStaff":null,"ToStaff":{"FirstName":"Mike","Visa":"ffff","LastName":"Lee","ExpiryDate":"2019-06-04T00:00:00","Dob":"2019-06-04T00:00:00","IsActivate":0,"Gender":1,"UserId":3,"IrdNumber":"121","IdType":1,"IdPhoto":null,"IdNumber":"1212","HomePhone":null,"MobilePhone":"1212","Email":"z@hh.com","Photo":"images/staff/Photos/2190613092457108.jpg","StaffId":2,"User":null,"NoticesFromStaff":[],"NoticesToStaff":[{"NoticeId":4,"Notice":"2019-07-20","CreatedAt":"2019-07-20T00:00:00","IsCompleted":0,"FromStaffId":1,"ToStaffId":2,"FromStaff":null}],"Payment":[],"StaffOrg":[],"StockApplication":[],"StockOrder":[]},{"NoticeId":4,"Notice":"2019-07-20","CreatedAt":"2019-07-20T00:00:00","IsCompleted":0,"FromStaffId":1,"ToStaffId":2,"FromStaff":null,"ToStaff":{"FirstName":"Mike","Visa":"ffff","LastName":"Lee","ExpiryDate":"2019-06-04T00:00:00","Dob":"2019-06-04T00:00:00","IsActivate":0,"Gender":1,"UserId":3,"IrdNumber":"121","IdType":1,"IdPhoto":null,"IdNumber":"1212","HomePhone":null,"MobilePhone":"1212","Email":"z@hh.com","Photo":"images/staff/Photos/2190613092457108.jpg","StaffId":2,"User":null,"NoticesFromStaff":[],"NoticesToStaff":[{"NoticeId":3,"Notice":"notice_333","CreatedAt":"2019-07-20T00:00:00","IsCompleted":0,"FromStaffId":1,"ToStaffId":2,"FromStaff":null}],"Payment":[],"StaffOrg":[],"StockApplication":[],"StockOrder":[]}]}
-2019-08-21 11:08:47.921 +12:00 [INF] Request finished in 4472.7149ms 200 application/json; charset=utf-8
-2019-08-21 11:12:54.769 +12:00 [INF] User profile is available. Using 'C:\Users\zhuyi\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
-2019-08-21 11:12:55.159 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
-2019-08-21 11:12:55.342 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Notice/2  
-2019-08-21 11:12:55.369 +12:00 [WRN] Failed to determine the https port for redirect.
-2019-08-21 11:12:55.430 +12:00 [INF] 
-2019-08-21 11:12:55.572 +12:00 [INF] Route matched with {action = "GetNotices", controller = "Notice"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetNotices(Int32) on controller Pegasus_backend.Controllers.NoticeController (Pegasus_backend).
-2019-08-21 11:12:55.708 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend) - Validation state: "Valid"
-2019-08-21 11:12:59.893 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
-2019-08-21 11:12:59.904 +12:00 [INF] 
-2019-08-21 11:12:59.906 +12:00 [INF] Response 
-2019-08-21 11:12:59.921 +12:00 [INF] Request finished in 27.8328ms 404 
-2019-08-21 11:13:00.842 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
-2019-08-21 11:13:00.881 +12:00 [WRN] The Include operation for navigation '[n].FromStaff' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information.
-2019-08-21 11:13:01.972 +12:00 [INF] Executed DbCommand (62ms) [Parameters=[@__staffId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `n`.`notice_id` AS `NoticeId`, `n`.`created_at` AS `CreatedAt`, `n`.`notice`, `n`.`to_staff_id` AS `ToStaffId`, `n`.`is_completed` AS `IsCompleted`, `n`.`from_staff_id` AS `FromStaffId`, `n.FromStaff`.`first_name` AS `FirstName`, `n.FromStaff`.`last_name` AS `LastName`
-FROM `ablemusic`.`notices` AS `n`
-LEFT JOIN `ablemusic`.`staff` AS `n.FromStaff` ON `n`.`from_staff_id` = `n.FromStaff`.`staff_id`
-WHERE (`n`.`to_staff_id` = @__staffId_0) AND (`n`.`is_completed` = 0)
-2019-08-21 11:13:01.999 +12:00 [INF] Executed action method Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 6284.1060000000007ms.
-2019-08-21 11:13:02.006 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
-2019-08-21 11:13:02.066 +12:00 [INF] Executed action Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend) in 6491.3915000000006ms
-2019-08-21 11:13:02.066 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":[{"NoticeId":3,"CreatedAt":"2019-07-20T00:00:00","Notice":"notice_333","ToStaffId":2,"IsCompleted":0,"FromStaffId":1,"FirstName":"Edwin","LastName":"Zhu"},{"NoticeId":4,"CreatedAt":"2019-07-20T00:00:00","Notice":"2019-07-20","ToStaffId":2,"IsCompleted":0,"FromStaffId":1,"FirstName":"Edwin","LastName":"Zhu"}]}
-2019-08-21 11:13:02.069 +12:00 [INF] Request finished in 6728.8413ms 200 application/json; charset=utf-8
-2019-08-21 11:17:01.847 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Notice/2  
-2019-08-21 11:17:01.848 +12:00 [INF] 
-2019-08-21 11:17:01.848 +12:00 [INF] Route matched with {action = "GetNotices", controller = "Notice"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetNotices(Int32) on controller Pegasus_backend.Controllers.NoticeController (Pegasus_backend).
-2019-08-21 11:17:01.849 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend) - Validation state: "Valid"
-2019-08-21 11:17:01.850 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
-2019-08-21 11:17:16.864 +12:00 [ERR] An error occurred using the connection to database 'ablemusic' on server 'gradspace.org'.
-MySql.Data.MySqlClient.MySqlException (0x80004005): Unable to connect to any of the specified MySQL hosts. ---> MySql.Data.MySqlClient.MySqlException (0x80004005): Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
-   at MySql.Data.Common.StreamCreator.GetTcpStream(MySqlConnectionStringBuilder settings)
-   at MySql.Data.MySqlClient.NativeDriver.Open()
-   at MySql.Data.MySqlClient.NativeDriver.Open()
-   at MySql.Data.MySqlClient.Driver.Open()
-   at MySql.Data.MySqlClient.Driver.Create(MySqlConnectionStringBuilder settings)
-   at MySql.Data.MySqlClient.MySqlPool.CreateNewPooledConnection()
-   at MySql.Data.MySqlClient.MySqlPool.GetPooledConnection()
-   at MySql.Data.MySqlClient.MySqlPool.TryToGetDriver()
-   at MySql.Data.MySqlClient.MySqlPool.GetConnection()
-   at MySql.Data.MySqlClient.MySqlConnection.Open()
-   at System.Data.Common.DbConnection.OpenAsync(CancellationToken cancellationToken)
---- End of stack trace from previous location where exception was thrown ---
-   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenDbConnectionAsync(Boolean errorsExpected, CancellationToken cancellationToken)
-2019-08-21 11:17:16.910 +12:00 [ERR] An exception occurred in the database while iterating the results of a query for context type 'Pegasus_backend.pegasusContext.ablemusicContext'.
-MySql.Data.MySqlClient.MySqlException (0x80004005): Unable to connect to any of the specified MySQL hosts. ---> MySql.Data.MySqlClient.MySqlException (0x80004005): Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
-   at MySql.Data.Common.StreamCreator.GetTcpStream(MySqlConnectionStringBuilder settings)
-   at MySql.Data.MySqlClient.NativeDriver.Open()
-   at MySql.Data.MySqlClient.NativeDriver.Open()
-   at MySql.Data.MySqlClient.Driver.Open()
-   at MySql.Data.MySqlClient.Driver.Create(MySqlConnectionStringBuilder settings)
-   at MySql.Data.MySqlClient.MySqlPool.CreateNewPooledConnection()
-   at MySql.Data.MySqlClient.MySqlPool.GetPooledConnection()
-   at MySql.Data.MySqlClient.MySqlPool.TryToGetDriver()
-   at MySql.Data.MySqlClient.MySqlPool.GetConnection()
-   at MySql.Data.MySqlClient.MySqlConnection.Open()
-   at System.Data.Common.DbConnection.OpenAsync(CancellationToken cancellationToken)
---- End of stack trace from previous location where exception was thrown ---
-   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenDbConnectionAsync(Boolean errorsExpected, CancellationToken cancellationToken)
-   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenAsync(CancellationToken cancellationToken, Boolean errorsExpected)
-   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.BufferlessMoveNext(DbContext _, Boolean buffer, CancellationToken cancellationToken)
-   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.MoveNext(CancellationToken cancellationToken)
-   at System.Linq.AsyncEnumerable.SelectEnumerableAsyncIterator`2.MoveNextCore(CancellationToken cancellationToken)
-   at System.Linq.AsyncEnumerable.AsyncIterator`1.MoveNext(CancellationToken cancellationToken)
-   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncLinqOperatorProvider.ExceptionInterceptor`1.EnumeratorExceptionInterceptor.MoveNext(CancellationToken cancellationToken)
-MySql.Data.MySqlClient.MySqlException (0x80004005): Unable to connect to any of the specified MySQL hosts. ---> MySql.Data.MySqlClient.MySqlException (0x80004005): Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
-   at MySql.Data.Common.StreamCreator.GetTcpStream(MySqlConnectionStringBuilder settings)
-   at MySql.Data.MySqlClient.NativeDriver.Open()
-   at MySql.Data.MySqlClient.NativeDriver.Open()
-   at MySql.Data.MySqlClient.Driver.Open()
-   at MySql.Data.MySqlClient.Driver.Create(MySqlConnectionStringBuilder settings)
-   at MySql.Data.MySqlClient.MySqlPool.CreateNewPooledConnection()
-   at MySql.Data.MySqlClient.MySqlPool.GetPooledConnection()
-   at MySql.Data.MySqlClient.MySqlPool.TryToGetDriver()
-   at MySql.Data.MySqlClient.MySqlPool.GetConnection()
-   at MySql.Data.MySqlClient.MySqlConnection.Open()
-   at System.Data.Common.DbConnection.OpenAsync(CancellationToken cancellationToken)
---- End of stack trace from previous location where exception was thrown ---
-   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenDbConnectionAsync(Boolean errorsExpected, CancellationToken cancellationToken)
-   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenAsync(CancellationToken cancellationToken, Boolean errorsExpected)
-   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.BufferlessMoveNext(DbContext _, Boolean buffer, CancellationToken cancellationToken)
-   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.MoveNext(CancellationToken cancellationToken)
-   at System.Linq.AsyncEnumerable.SelectEnumerableAsyncIterator`2.MoveNextCore(CancellationToken cancellationToken)
-   at System.Linq.AsyncEnumerable.AsyncIterator`1.MoveNext(CancellationToken cancellationToken)
-   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncLinqOperatorProvider.ExceptionInterceptor`1.EnumeratorExceptionInterceptor.MoveNext(CancellationToken cancellationToken)
-2019-08-21 11:17:16.956 +12:00 [INF] Executed action method Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.BadRequestObjectResult in 15106.0995ms.
-2019-08-21 11:17:16.956 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
-2019-08-21 11:17:16.956 +12:00 [INF] Executed action Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend) in 15108.2351ms
-2019-08-21 11:17:16.957 +12:00 [INF] Response {"IsSuccess":false,"ErrorCode":null,"IsFound":true,"ErrorMessage":"Unable to connect to any of the specified MySQL hosts.","Note":null,"Data":null}
-2019-08-21 11:17:16.957 +12:00 [INF] Request finished in 15109.465ms 400 application/json; charset=utf-8
-2019-08-21 11:18:25.527 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Notice/2  
-2019-08-21 11:18:25.528 +12:00 [INF] 
-2019-08-21 11:18:25.528 +12:00 [INF] Route matched with {action = "GetNotices", controller = "Notice"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetNotices(Int32) on controller Pegasus_backend.Controllers.NoticeController (Pegasus_backend).
-2019-08-21 11:18:25.528 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend) - Validation state: "Valid"
-2019-08-21 11:18:25.529 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
-2019-08-21 11:18:40.535 +12:00 [ERR] An error occurred using the connection to database 'ablemusic' on server 'gradspace.org'.
-MySql.Data.MySqlClient.MySqlException (0x80004005): Unable to connect to any of the specified MySQL hosts. ---> MySql.Data.MySqlClient.MySqlException (0x80004005): Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
-   at MySql.Data.Common.StreamCreator.GetTcpStream(MySqlConnectionStringBuilder settings)
-   at MySql.Data.MySqlClient.NativeDriver.Open()
-   at MySql.Data.MySqlClient.NativeDriver.Open()
-   at MySql.Data.MySqlClient.Driver.Open()
-   at MySql.Data.MySqlClient.Driver.Create(MySqlConnectionStringBuilder settings)
-   at MySql.Data.MySqlClient.MySqlPool.CreateNewPooledConnection()
-   at MySql.Data.MySqlClient.MySqlPool.GetPooledConnection()
-   at MySql.Data.MySqlClient.MySqlPool.TryToGetDriver()
-   at MySql.Data.MySqlClient.MySqlPool.GetConnection()
-   at MySql.Data.MySqlClient.MySqlConnection.Open()
-   at System.Data.Common.DbConnection.OpenAsync(CancellationToken cancellationToken)
---- End of stack trace from previous location where exception was thrown ---
-   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenDbConnectionAsync(Boolean errorsExpected, CancellationToken cancellationToken)
-2019-08-21 11:18:40.538 +12:00 [ERR] An exception occurred in the database while iterating the results of a query for context type 'Pegasus_backend.pegasusContext.ablemusicContext'.
-MySql.Data.MySqlClient.MySqlException (0x80004005): Unable to connect to any of the specified MySQL hosts. ---> MySql.Data.MySqlClient.MySqlException (0x80004005): Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
-   at MySql.Data.Common.StreamCreator.GetTcpStream(MySqlConnectionStringBuilder settings)
-   at MySql.Data.MySqlClient.NativeDriver.Open()
-   at MySql.Data.MySqlClient.NativeDriver.Open()
-   at MySql.Data.MySqlClient.Driver.Open()
-   at MySql.Data.MySqlClient.Driver.Create(MySqlConnectionStringBuilder settings)
-   at MySql.Data.MySqlClient.MySqlPool.CreateNewPooledConnection()
-   at MySql.Data.MySqlClient.MySqlPool.GetPooledConnection()
-   at MySql.Data.MySqlClient.MySqlPool.TryToGetDriver()
-   at MySql.Data.MySqlClient.MySqlPool.GetConnection()
-   at MySql.Data.MySqlClient.MySqlConnection.Open()
-   at System.Data.Common.DbConnection.OpenAsync(CancellationToken cancellationToken)
---- End of stack trace from previous location where exception was thrown ---
-   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenDbConnectionAsync(Boolean errorsExpected, CancellationToken cancellationToken)
-   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenAsync(CancellationToken cancellationToken, Boolean errorsExpected)
-   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.BufferlessMoveNext(DbContext _, Boolean buffer, CancellationToken cancellationToken)
-   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.MoveNext(CancellationToken cancellationToken)
-   at System.Linq.AsyncEnumerable.SelectEnumerableAsyncIterator`2.MoveNextCore(CancellationToken cancellationToken)
-   at System.Linq.AsyncEnumerable.AsyncIterator`1.MoveNext(CancellationToken cancellationToken)
-   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncLinqOperatorProvider.ExceptionInterceptor`1.EnumeratorExceptionInterceptor.MoveNext(CancellationToken cancellationToken)
-MySql.Data.MySqlClient.MySqlException (0x80004005): Unable to connect to any of the specified MySQL hosts. ---> MySql.Data.MySqlClient.MySqlException (0x80004005): Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
-   at MySql.Data.Common.StreamCreator.GetTcpStream(MySqlConnectionStringBuilder settings)
-   at MySql.Data.MySqlClient.NativeDriver.Open()
-   at MySql.Data.MySqlClient.NativeDriver.Open()
-   at MySql.Data.MySqlClient.Driver.Open()
-   at MySql.Data.MySqlClient.Driver.Create(MySqlConnectionStringBuilder settings)
-   at MySql.Data.MySqlClient.MySqlPool.CreateNewPooledConnection()
-   at MySql.Data.MySqlClient.MySqlPool.GetPooledConnection()
-   at MySql.Data.MySqlClient.MySqlPool.TryToGetDriver()
-   at MySql.Data.MySqlClient.MySqlPool.GetConnection()
-   at MySql.Data.MySqlClient.MySqlConnection.Open()
-   at System.Data.Common.DbConnection.OpenAsync(CancellationToken cancellationToken)
---- End of stack trace from previous location where exception was thrown ---
-   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenDbConnectionAsync(Boolean errorsExpected, CancellationToken cancellationToken)
-   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenAsync(CancellationToken cancellationToken, Boolean errorsExpected)
-   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.BufferlessMoveNext(DbContext _, Boolean buffer, CancellationToken cancellationToken)
-   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.MoveNext(CancellationToken cancellationToken)
-   at System.Linq.AsyncEnumerable.SelectEnumerableAsyncIterator`2.MoveNextCore(CancellationToken cancellationToken)
-   at System.Linq.AsyncEnumerable.AsyncIterator`1.MoveNext(CancellationToken cancellationToken)
-   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncLinqOperatorProvider.ExceptionInterceptor`1.EnumeratorExceptionInterceptor.MoveNext(CancellationToken cancellationToken)
-2019-08-21 11:18:40.578 +12:00 [INF] Executed action method Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.BadRequestObjectResult in 15049.8363ms.
-2019-08-21 11:18:40.578 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
-2019-08-21 11:18:40.579 +12:00 [INF] Executed action Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend) in 15050.6857ms
-2019-08-21 11:18:40.579 +12:00 [INF] Response {"IsSuccess":false,"ErrorCode":null,"IsFound":true,"ErrorMessage":"Unable to connect to any of the specified MySQL hosts.","Note":null,"Data":null}
-2019-08-21 11:18:40.579 +12:00 [INF] Request finished in 15051.5589ms 400 application/json; charset=utf-8
-2019-08-21 11:41:53.172 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Notice/2  
-2019-08-21 11:41:53.173 +12:00 [INF] 
-2019-08-21 11:41:53.173 +12:00 [INF] Route matched with {action = "GetNotices", controller = "Notice"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetNotices(Int32) on controller Pegasus_backend.Controllers.NoticeController (Pegasus_backend).
-2019-08-21 11:41:53.173 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend) - Validation state: "Valid"
-2019-08-21 11:41:53.174 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
-2019-08-21 11:41:59.502 +12:00 [INF] Executed DbCommand (578ms) [Parameters=[@__staffId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `n`.`notice_id` AS `NoticeId`, `n`.`created_at` AS `CreatedAt`, `n`.`notice`, `n`.`to_staff_id` AS `ToStaffId`, `n`.`is_completed` AS `IsCompleted`, `n`.`from_staff_id` AS `FromStaffId`, `n.FromStaff`.`first_name` AS `FirstName`, `n.FromStaff`.`last_name` AS `LastName`
-FROM `ablemusic`.`notices` AS `n`
-LEFT JOIN `ablemusic`.`staff` AS `n.FromStaff` ON `n`.`from_staff_id` = `n.FromStaff`.`staff_id`
-WHERE (`n`.`to_staff_id` = @__staffId_0) AND (`n`.`is_completed` = 0)
-2019-08-21 11:41:59.503 +12:00 [INF] Executed action method Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 6329.8578000000007ms.
-2019-08-21 11:41:59.504 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
-2019-08-21 11:41:59.505 +12:00 [INF] Executed action Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend) in 6331.9387000000006ms
-2019-08-21 11:41:59.506 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":[{"NoticeId":3,"CreatedAt":"2019-07-20T00:00:00","Notice":"notice_333","ToStaffId":2,"IsCompleted":0,"FromStaffId":1,"FirstName":"Edwin","LastName":"Zhu"},{"NoticeId":4,"CreatedAt":"2019-07-20T00:00:00","Notice":"2019-07-20","ToStaffId":2,"IsCompleted":0,"FromStaffId":1,"FirstName":"Edwin","LastName":"Zhu"},{"NoticeId":5,"CreatedAt":"2019-08-20T00:00:00","Notice":"The National Institute for Space Research (Inpe) said its satellite data showed an 83% increase on the same period in 2018.","ToStaffId":2,"IsCompleted":0,"FromStaffId":3,"FirstName":"Mary","LastName":"Wang"},{"NoticeId":6,"CreatedAt":"2019-08-20T00:00:00","Notice":"It comes weeks after President Jair Bolsonaro fired the head of the agency amid rows over its deforestation data.","ToStaffId":2,"IsCompleted":0,"FromStaffId":3,"FirstName":"Mary","LastName":"Wang"},{"NoticeId":7,"CreatedAt":"2019-08-20T00:00:00","Notice":"Smoke from the fires caused a blackout in the city of Sao Paulo on Monday.","ToStaffId":2,"IsCompleted":0,"FromStaffId":3,"FirstName":"Mary","LastName":"Wang"},{"NoticeId":8,"CreatedAt":"2019-08-20T00:00:00","Notice":"The daytime blackout, which lasted for about an hour, came after strong winds brought in smoke from forest fires burning in the states of Amazonas and Rondonia, more than 2,700km (1,700 miles) away.","ToStaffId":2,"IsCompleted":0,"FromStaffId":3,"FirstName":"Mary","LastName":"Wang"},{"NoticeId":9,"CreatedAt":"2019-08-20T00:00:00","Notice":"Conservationists have blamed Mr Bolsonaro, saying he has encouraged loggers and farmers to clear the land.","ToStaffId":2,"IsCompleted":0,"FromStaffId":1,"FirstName":"Edwin","LastName":"Zhu"},{"NoticeId":10,"CreatedAt":"2019-08-20T00:00:00","Notice":"Why are there fires in the Amazon?","ToStaffId":2,"IsCompleted":0,"FromStaffId":1,"FirstName":"Edwin","LastName":"Zhu"},{"NoticeId":11,"CreatedAt":"2019-08-20T00:00:00","Notice":"Inpe said it had detected more than 72,000 fires between January and August - the highest number since records began in 2013. It said it had observed more than 9,500 forest fires since Thursday, mostly in the Amazon region.","ToStaffId":2,"IsCompleted":0,"FromStaffId":1,"FirstName":"Edwin","LastName":"Zhu"}]}
-2019-08-21 11:41:59.506 +12:00 [INF] Request finished in 6333.8474ms 200 application/json; charset=utf-8
-2019-08-21 11:56:18.421 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Notice/2  
-2019-08-21 11:56:18.421 +12:00 [INF] 
-2019-08-21 11:56:18.421 +12:00 [INF] Route matched with {action = "GetNotices", controller = "Notice"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetNotices(Int32) on controller Pegasus_backend.Controllers.NoticeController (Pegasus_backend).
-2019-08-21 11:56:18.422 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend) - Validation state: "Valid"
-2019-08-21 11:56:18.422 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
-2019-08-21 11:56:19.291 +12:00 [INF] Executed DbCommand (56ms) [Parameters=[@__staffId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `n`.`notice_id` AS `NoticeId`, `n`.`created_at` AS `CreatedAt`, `n`.`notice`, `n`.`to_staff_id` AS `ToStaffId`, `n`.`is_completed` AS `IsCompleted`, `n`.`from_staff_id` AS `FromStaffId`, `n.FromStaff`.`first_name` AS `FirstName`, `n.FromStaff`.`last_name` AS `LastName`
-FROM `ablemusic`.`notices` AS `n`
-LEFT JOIN `ablemusic`.`staff` AS `n.FromStaff` ON `n`.`from_staff_id` = `n.FromStaff`.`staff_id`
-WHERE (`n`.`to_staff_id` = @__staffId_0) AND (`n`.`is_completed` = 0)
-2019-08-21 11:56:19.291 +12:00 [INF] Executed action method Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 869.36430000000007ms.
-2019-08-21 11:56:19.291 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
-2019-08-21 11:56:19.292 +12:00 [INF] Executed action Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend) in 870.3695ms
-2019-08-21 11:56:19.292 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":[{"NoticeId":3,"CreatedAt":"2019-07-20T00:00:00","Notice":"notice_333","ToStaffId":2,"IsCompleted":0,"FromStaffId":1,"FirstName":"Edwin","LastName":"Zhu"},{"NoticeId":4,"CreatedAt":"2019-07-20T00:00:00","Notice":"2019-07-20","ToStaffId":2,"IsCompleted":0,"FromStaffId":1,"FirstName":"Edwin","LastName":"Zhu"},{"NoticeId":5,"CreatedAt":"2019-08-20T00:00:00","Notice":"The National Institute for Space Research (Inpe) said its satellite data showed an 83% increase on the same period in 2018.","ToStaffId":2,"IsCompleted":0,"FromStaffId":3,"FirstName":"Mary","LastName":"Wang"},{"NoticeId":6,"CreatedAt":"2019-08-20T00:00:00","Notice":"It comes weeks after President Jair Bolsonaro fired the head of the agency amid rows over its deforestation data.","ToStaffId":2,"IsCompleted":0,"FromStaffId":3,"FirstName":"Mary","LastName":"Wang"},{"NoticeId":7,"CreatedAt":"2019-08-20T00:00:00","Notice":"Smoke from the fires caused a blackout in the city of Sao Paulo on Monday.","ToStaffId":2,"IsCompleted":0,"FromStaffId":3,"FirstName":"Mary","LastName":"Wang"},{"NoticeId":8,"CreatedAt":"2019-08-20T00:00:00","Notice":"The daytime blackout, which lasted for about an hour, came after strong winds brought in smoke from forest fires burning in the states of Amazonas and Rondonia, more than 2,700km (1,700 miles) away.","ToStaffId":2,"IsCompleted":0,"FromStaffId":3,"FirstName":"Mary","LastName":"Wang"},{"NoticeId":9,"CreatedAt":"2019-08-20T00:00:00","Notice":"Conservationists have blamed Mr Bolsonaro, saying he has encouraged loggers and farmers to clear the land.","ToStaffId":2,"IsCompleted":0,"FromStaffId":1,"FirstName":"Edwin","LastName":"Zhu"},{"NoticeId":10,"CreatedAt":"2019-08-20T00:00:00","Notice":"Why are there fires in the Amazon?","ToStaffId":2,"IsCompleted":0,"FromStaffId":1,"FirstName":"Edwin","LastName":"Zhu"},{"NoticeId":11,"CreatedAt":"2019-08-20T00:00:00","Notice":"Inpe said it had detected more than 72,000 fires between January and August - the highest number since records began in 2013. It said it had observed more than 9,500 forest fires since Thursday, mostly in the Amazon region.","ToStaffId":2,"IsCompleted":0,"FromStaffId":1,"FirstName":"Edwin","LastName":"Zhu"}]}
-2019-08-21 11:56:19.292 +12:00 [INF] Request finished in 871.3849ms 200 application/json; charset=utf-8
-2019-08-21 11:56:43.420 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Notice/2  
-2019-08-21 11:56:43.421 +12:00 [INF] 
-2019-08-21 11:56:43.421 +12:00 [INF] Route matched with {action = "GetNotices", controller = "Notice"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetNotices(Int32) on controller Pegasus_backend.Controllers.NoticeController (Pegasus_backend).
-2019-08-21 11:56:43.421 +12:00 [INF] Executing action method Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend) - Validation state: "Valid"
-2019-08-21 11:56:43.421 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
-2019-08-21 11:56:43.589 +12:00 [INF] Executed DbCommand (55ms) [Parameters=[@__staffId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `n`.`notice_id` AS `NoticeId`, `n`.`created_at` AS `CreatedAt`, `n`.`notice`, `n`.`to_staff_id` AS `ToStaffId`, `n`.`is_completed` AS `IsCompleted`, `n`.`from_staff_id` AS `FromStaffId`, `n.FromStaff`.`first_name` AS `FirstName`, `n.FromStaff`.`last_name` AS `LastName`
-FROM `ablemusic`.`notices` AS `n`
-LEFT JOIN `ablemusic`.`staff` AS `n.FromStaff` ON `n`.`from_staff_id` = `n.FromStaff`.`staff_id`
-WHERE (`n`.`to_staff_id` = @__staffId_0) AND (`n`.`is_completed` = 0)
-2019-08-21 11:56:43.590 +12:00 [INF] Executed action method Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 168.5993ms.
-2019-08-21 11:56:43.590 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
-2019-08-21 11:56:43.590 +12:00 [INF] Executed action Pegasus_backend.Controllers.NoticeController.GetNotices (Pegasus_backend) in 169.2456ms
-2019-08-21 11:56:43.590 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":[{"NoticeId":3,"CreatedAt":"2019-07-20T00:00:00","Notice":"notice_333","ToStaffId":2,"IsCompleted":0,"FromStaffId":1,"FirstName":"Edwin","LastName":"Zhu"},{"NoticeId":4,"CreatedAt":"2019-07-20T00:00:00","Notice":"2019-07-20","ToStaffId":2,"IsCompleted":0,"FromStaffId":1,"FirstName":"Edwin","LastName":"Zhu"},{"NoticeId":5,"CreatedAt":"2019-08-20T00:00:00","Notice":"The National Institute for Space Research (Inpe) said its satellite data showed an 83% increase on the same period in 2018.","ToStaffId":2,"IsCompleted":0,"FromStaffId":3,"FirstName":"Mary","LastName":"Wang"},{"NoticeId":6,"CreatedAt":"2019-08-20T00:00:00","Notice":"It comes weeks after President Jair Bolsonaro fired the head of the agency amid rows over its deforestation data.","ToStaffId":2,"IsCompleted":0,"FromStaffId":3,"FirstName":"Mary","LastName":"Wang"},{"NoticeId":7,"CreatedAt":"2019-08-20T00:00:00","Notice":"Smoke from the fires caused a blackout in the city of Sao Paulo on Monday.","ToStaffId":2,"IsCompleted":0,"FromStaffId":3,"FirstName":"Mary","LastName":"Wang"},{"NoticeId":8,"CreatedAt":"2019-08-20T00:00:00","Notice":"The daytime blackout, which lasted for about an hour, came after strong winds brought in smoke from forest fires burning in the states of Amazonas and Rondonia, more than 2,700km (1,700 miles) away.","ToStaffId":2,"IsCompleted":0,"FromStaffId":3,"FirstName":"Mary","LastName":"Wang"},{"NoticeId":9,"CreatedAt":"2019-08-20T00:00:00","Notice":"Conservationists have blamed Mr Bolsonaro, saying he has encouraged loggers and farmers to clear the land.","ToStaffId":2,"IsCompleted":0,"FromStaffId":1,"FirstName":"Edwin","LastName":"Zhu"},{"NoticeId":10,"CreatedAt":"2019-08-20T00:00:00","Notice":"Why are there fires in the Amazon?","ToStaffId":2,"IsCompleted":0,"FromStaffId":1,"FirstName":"Edwin","LastName":"Zhu"},{"NoticeId":11,"CreatedAt":"2019-08-20T00:00:00","Notice":"Inpe said it had detected more than 72,000 fires between January and August - the highest number since records began in 2013. It said it had observed more than 9,500 forest fires since Thursday, mostly in the Amazon region.","ToStaffId":2,"IsCompleted":0,"FromStaffId":1,"FirstName":"Edwin","LastName":"Zhu"}]}
-2019-08-21 11:56:43.591 +12:00 [INF] Request finished in 170.1353ms 200 application/json; charset=utf-8
-2019-08-21 14:30:06.496 +12:00 [INF] User profile is available. Using 'C:\Users\zhuyi\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
-2019-08-21 14:30:06.844 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
-2019-08-21 14:30:09.752 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
-2019-08-21 14:30:09.783 +12:00 [WRN] Failed to determine the https port for redirect.
-2019-08-21 14:30:09.842 +12:00 [INF] 
-2019-08-21 14:30:09.949 +12:00 [INF] Response 
-2019-08-21 14:30:09.954 +12:00 [INF] Request finished in 204.4803ms 404 
-2019-08-21 14:30:47.372 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/index.html  
-2019-08-21 14:30:47.442 +12:00 [INF] Request finished in 70.7271ms 200 text/html
-2019-08-21 14:30:47.731 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/v1/swagger.json  
-2019-08-21 14:30:47.735 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/favicon-32x32.png  
-2019-08-21 14:30:47.746 +12:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
-2019-08-21 14:30:47.746 +12:00 [INF] Request finished in 11.1132ms 200 image/png
-2019-08-21 14:30:48.013 +12:00 [INF] Request finished in 281.6728ms 200 application/json;charset=utf-8
-2019-08-21 14:32:07.480 +12:00 [INF] User profile is available. Using 'C:\Users\zhuyi\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
-2019-08-21 14:32:07.911 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
-2019-08-21 14:32:08.162 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/index.html  
-2019-08-21 14:32:08.278 +12:00 [INF] Request finished in 118.1349ms 200 text/html
-2019-08-21 14:32:08.578 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/v1/swagger.json  
-2019-08-21 14:32:08.585 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/favicon-32x32.png  
-2019-08-21 14:32:08.597 +12:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
-2019-08-21 14:32:08.597 +12:00 [INF] Request finished in 12.6828ms 200 image/png
-2019-08-21 14:32:09.015 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
-2019-08-21 14:32:09.020 +12:00 [WRN] Failed to determine the https port for redirect.
-2019-08-21 14:32:09.094 +12:00 [INF] 
-2019-08-21 14:32:09.163 +12:00 [INF] Request finished in 585.009ms 200 application/json;charset=utf-8
-2019-08-21 14:32:09.164 +12:00 [INF] Response 
-2019-08-21 14:32:09.166 +12:00 [INF] Request finished in 151.4029ms 404 
-2019-08-21 14:32:12.245 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/index.html  
-2019-08-21 14:32:12.246 +12:00 [INF] Request finished in 0.6701ms 200 text/html
-2019-08-21 14:32:12.326 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/v1/swagger.json  
-2019-08-21 14:32:12.331 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/favicon-32x32.png  
-2019-08-21 14:32:12.332 +12:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
-2019-08-21 14:32:12.332 +12:00 [INF] Request finished in 0.9716ms 200 image/png
-2019-08-21 14:32:12.369 +12:00 [INF] Request finished in 42.8174ms 200 application/json;charset=utf-8
-2019-08-21 14:32:28.697 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Login/GetImgIcon/1  
-2019-08-21 14:32:28.699 +12:00 [INF] 
-2019-08-21 14:32:28.729 +12:00 [INF] Route matched with {action = "GetImgIcon", controller = "Login"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetImgIcon(Int32) on controller Pegasus_backend.Controllers.Authorization.LoginController (Pegasus_backend).
-2019-08-21 14:32:28.857 +12:00 [INF] Executing action method Pegasus_backend.Controllers.Authorization.LoginController.GetImgIcon (Pegasus_backend) - Validation state: "Valid"
-2019-08-21 14:32:29.683 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
-2019-08-21 14:32:32.694 +12:00 [INF] Executed DbCommand (107ms) [Parameters=[@__userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `s`.`user_id`, `s`.`created_at`, `s`.`is_activate`, `s`.`is_online`, `s`.`password`, `s`.`role_id`, `s`.`signature`, `s`.`unread_message_id`, `s`.`user_name`
-FROM `ablemusic`.`user` AS `s`
-WHERE `s`.`user_id` = @__userId_0
-ORDER BY `s`.`user_id`
-LIMIT 1
-2019-08-21 14:32:32.870 +12:00 [INF] Executed DbCommand (90ms) [Parameters=[@__userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `s.Learner`.`learner_id`, `s.Learner`.`address`, `s.Learner`.`comment`, `s.Learner`.`contact_num`, `s.Learner`.`created_at`, `s.Learner`.`dob`, `s.Learner`.`email`, `s.Learner`.`enroll_date`, `s.Learner`.`first_name`, `s.Learner`.`form_url`, `s.Learner`.`g5_certification`, `s.Learner`.`gender`, `s.Learner`.`is_abrsm_g5`, `s.Learner`.`is_active`, `s.Learner`.`is_under_18`, `s.Learner`.`last_name`, `s.Learner`.`learner_level`, `s.Learner`.`level_type`, `s.Learner`.`middle_name`, `s.Learner`.`note`, `s.Learner`.`org_id`, `s.Learner`.`otherfile_url`, `s.Learner`.`payment_period`, `s.Learner`.`photo`, `s.Learner`.`referrer`, `s.Learner`.`referrer_learner_id`, `s.Learner`.`user_id`
-FROM `ablemusic`.`learner` AS `s.Learner`
-INNER JOIN (
-    SELECT `s0`.`user_id`
-    FROM `ablemusic`.`user` AS `s0`
-    WHERE `s0`.`user_id` = @__userId_0
-    ORDER BY `s0`.`user_id`
-    LIMIT 1
-) AS `t` ON `s.Learner`.`user_id` = `t`.`user_id`
-ORDER BY `t`.`user_id`
-2019-08-21 14:32:33.373 +12:00 [INF] Executed DbCommand (147ms) [Parameters=[@__userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `s.Teacher`.`teacher_id`, `s.Teacher`.`ability`, `s.Teacher`.`comment`, `s.Teacher`.`cv_url`, `s.Teacher`.`dob`, `s.Teacher`.`email`, `s.Teacher`.`expiry_date`, `s.Teacher`.`first_name`, `s.Teacher`.`form_url`, `s.Teacher`.`gender`, `s.Teacher`.`home_phone`, `s.Teacher`.`id_number`, `s.Teacher`.`id_photo`, `s.Teacher`.`id_type`, `s.Teacher`.`invoice_template`, `s.Teacher`.`ird_number`, `s.Teacher`.`is_activate`, `s.Teacher`.`is_contract`, `s.Teacher`.`is_left`, `s.Teacher`.`last_name`, `s.Teacher`.`level`, `s.Teacher`.`minimum_hours`, `s.Teacher`.`mobile_phone`, `s.Teacher`.`otherfile_url`, `s.Teacher`.`photo`, `s.Teacher`.`user_id`, `s.Teacher`.`visa`
-FROM `ablemusic`.`teacher` AS `s.Teacher`
-INNER JOIN (
-    SELECT `s1`.`user_id`
-    FROM `ablemusic`.`user` AS `s1`
-    WHERE `s1`.`user_id` = @__userId_0
-    ORDER BY `s1`.`user_id`
-    LIMIT 1
-) AS `t0` ON `s.Teacher`.`user_id` = `t0`.`user_id`
-ORDER BY `t0`.`user_id`
-2019-08-21 14:32:33.686 +12:00 [INF] Executed DbCommand (65ms) [Parameters=[@__userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `s.Staff`.`staff_id`, `s.Staff`.`dob`, `s.Staff`.`email`, `s.Staff`.`expiry_date`, `s.Staff`.`first_name`, `s.Staff`.`gender`, `s.Staff`.`home_phone`, `s.Staff`.`id_number`, `s.Staff`.`id_photo`, `s.Staff`.`id_type`, `s.Staff`.`ird_number`, `s.Staff`.`is_activate`, `s.Staff`.`last_name`, `s.Staff`.`mobile_phone`, `s.Staff`.`photo`, `s.Staff`.`user_id`, `s.Staff`.`visa`
-FROM `ablemusic`.`staff` AS `s.Staff`
-INNER JOIN (
-    SELECT `s2`.`user_id`
-    FROM `ablemusic`.`user` AS `s2`
-    WHERE `s2`.`user_id` = @__userId_0
-    ORDER BY `s2`.`user_id`
-    LIMIT 1
-) AS `t1` ON `s.Staff`.`user_id` = `t1`.`user_id`
-ORDER BY `t1`.`user_id`
-2019-08-21 14:32:33.859 +12:00 [INF] Executed action method Pegasus_backend.Controllers.Authorization.LoginController.GetImgIcon (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 4995.7071000000005ms.
-2019-08-21 14:32:33.867 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
-2019-08-21 14:32:33.874 +12:00 [INF] Executed action Pegasus_backend.Controllers.Authorization.LoginController.GetImgIcon (Pegasus_backend) in 5142.2478ms
-2019-08-21 14:32:33.874 +12:00 [INF] Response {"IsSuccess":false,"ErrorCode":null,"IsFound":true,"ErrorMessage":"System.NullReferenceException: Object reference not set to an instance of an object.\r\n   at Pegasus_backend.Controllers.Authorization.LoginController.GetImgIcon(Int32 userId) in c:\\source\\pegasusBackend\\Controllers\\Authorization\\LoginController.cs:line 47","Note":null,"Data":null}
-2019-08-21 14:32:33.875 +12:00 [INF] Request finished in 5177.9172ms 401 application/json; charset=utf-8
-2019-08-21 14:33:00.193 +12:00 [INF] User profile is available. Using 'C:\Users\zhuyi\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
-2019-08-21 14:33:00.525 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
-2019-08-21 14:33:01.581 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
-2019-08-21 14:33:01.626 +12:00 [WRN] Failed to determine the https port for redirect.
-2019-08-21 14:33:01.687 +12:00 [INF] 
-2019-08-21 14:33:01.808 +12:00 [INF] Response 
-2019-08-21 14:33:01.813 +12:00 [INF] Request finished in 235.3471ms 404 
-2019-08-21 14:33:40.668 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Login/GetImgIcon/1  
-2019-08-21 14:33:40.692 +12:00 [INF] 
-2019-08-21 14:33:40.726 +12:00 [INF] Route matched with {action = "GetImgIcon", controller = "Login"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetImgIcon(Int32) on controller Pegasus_backend.Controllers.Authorization.LoginController (Pegasus_backend).
-2019-08-21 14:33:40.922 +12:00 [INF] Executing action method Pegasus_backend.Controllers.Authorization.LoginController.GetImgIcon (Pegasus_backend) - Validation state: "Valid"
-2019-08-21 14:34:22.947 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
-2019-08-21 14:34:24.290 +12:00 [INF] Executed DbCommand (57ms) [Parameters=[@__userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `s`.`user_id`, `s`.`created_at`, `s`.`is_activate`, `s`.`is_online`, `s`.`password`, `s`.`role_id`, `s`.`signature`, `s`.`unread_message_id`, `s`.`user_name`
-FROM `ablemusic`.`user` AS `s`
-WHERE `s`.`user_id` = @__userId_0
-ORDER BY `s`.`user_id`
-LIMIT 1
-2019-08-21 14:34:24.436 +12:00 [INF] Executed DbCommand (62ms) [Parameters=[@__userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `s.Learner`.`learner_id`, `s.Learner`.`address`, `s.Learner`.`comment`, `s.Learner`.`contact_num`, `s.Learner`.`created_at`, `s.Learner`.`dob`, `s.Learner`.`email`, `s.Learner`.`enroll_date`, `s.Learner`.`first_name`, `s.Learner`.`form_url`, `s.Learner`.`g5_certification`, `s.Learner`.`gender`, `s.Learner`.`is_abrsm_g5`, `s.Learner`.`is_active`, `s.Learner`.`is_under_18`, `s.Learner`.`last_name`, `s.Learner`.`learner_level`, `s.Learner`.`level_type`, `s.Learner`.`middle_name`, `s.Learner`.`note`, `s.Learner`.`org_id`, `s.Learner`.`otherfile_url`, `s.Learner`.`payment_period`, `s.Learner`.`photo`, `s.Learner`.`referrer`, `s.Learner`.`referrer_learner_id`, `s.Learner`.`user_id`
-FROM `ablemusic`.`learner` AS `s.Learner`
-INNER JOIN (
-    SELECT `s0`.`user_id`
-    FROM `ablemusic`.`user` AS `s0`
-    WHERE `s0`.`user_id` = @__userId_0
-    ORDER BY `s0`.`user_id`
-    LIMIT 1
-) AS `t` ON `s.Learner`.`user_id` = `t`.`user_id`
-ORDER BY `t`.`user_id`
-2019-08-21 14:34:24.646 +12:00 [INF] Executed DbCommand (61ms) [Parameters=[@__userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `s.Teacher`.`teacher_id`, `s.Teacher`.`ability`, `s.Teacher`.`comment`, `s.Teacher`.`cv_url`, `s.Teacher`.`dob`, `s.Teacher`.`email`, `s.Teacher`.`expiry_date`, `s.Teacher`.`first_name`, `s.Teacher`.`form_url`, `s.Teacher`.`gender`, `s.Teacher`.`home_phone`, `s.Teacher`.`id_number`, `s.Teacher`.`id_photo`, `s.Teacher`.`id_type`, `s.Teacher`.`invoice_template`, `s.Teacher`.`ird_number`, `s.Teacher`.`is_activate`, `s.Teacher`.`is_contract`, `s.Teacher`.`is_left`, `s.Teacher`.`last_name`, `s.Teacher`.`level`, `s.Teacher`.`minimum_hours`, `s.Teacher`.`mobile_phone`, `s.Teacher`.`otherfile_url`, `s.Teacher`.`photo`, `s.Teacher`.`user_id`, `s.Teacher`.`visa`
-FROM `ablemusic`.`teacher` AS `s.Teacher`
-INNER JOIN (
-    SELECT `s1`.`user_id`
-    FROM `ablemusic`.`user` AS `s1`
-    WHERE `s1`.`user_id` = @__userId_0
-    ORDER BY `s1`.`user_id`
-    LIMIT 1
-) AS `t0` ON `s.Teacher`.`user_id` = `t0`.`user_id`
-ORDER BY `t0`.`user_id`
-2019-08-21 14:34:24.863 +12:00 [INF] Executed DbCommand (58ms) [Parameters=[@__userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `s.Staff`.`staff_id`, `s.Staff`.`dob`, `s.Staff`.`email`, `s.Staff`.`expiry_date`, `s.Staff`.`first_name`, `s.Staff`.`gender`, `s.Staff`.`home_phone`, `s.Staff`.`id_number`, `s.Staff`.`id_photo`, `s.Staff`.`id_type`, `s.Staff`.`ird_number`, `s.Staff`.`is_activate`, `s.Staff`.`last_name`, `s.Staff`.`mobile_phone`, `s.Staff`.`photo`, `s.Staff`.`user_id`, `s.Staff`.`visa`
-FROM `ablemusic`.`staff` AS `s.Staff`
-INNER JOIN (
-    SELECT `s2`.`user_id`
-    FROM `ablemusic`.`user` AS `s2`
-    WHERE `s2`.`user_id` = @__userId_0
-    ORDER BY `s2`.`user_id`
-    LIMIT 1
-) AS `t1` ON `s.Staff`.`user_id` = `t1`.`user_id`
-ORDER BY `t1`.`user_id`
-2019-08-21 14:35:10.795 +12:00 [INF] User profile is available. Using 'C:\Users\zhuyi\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
-2019-08-21 14:35:11.124 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
-2019-08-21 14:35:12.154 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
-2019-08-21 14:35:12.196 +12:00 [WRN] Failed to determine the https port for redirect.
-2019-08-21 14:35:12.252 +12:00 [INF] 
-2019-08-21 14:35:12.368 +12:00 [INF] Response 
-2019-08-21 14:35:12.376 +12:00 [INF] Request finished in 223.7412ms 404 
-2019-08-21 14:35:15.849 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Login/GetImgIcon/1  
-2019-08-21 14:35:15.851 +12:00 [INF] 
-2019-08-21 14:35:15.892 +12:00 [INF] Route matched with {action = "GetImgIcon", controller = "Login"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetImgIcon(Int32) on controller Pegasus_backend.Controllers.Authorization.LoginController (Pegasus_backend).
-2019-08-21 14:35:16.026 +12:00 [INF] Executing action method Pegasus_backend.Controllers.Authorization.LoginController.GetImgIcon (Pegasus_backend) - Validation state: "Valid"
-2019-08-21 14:35:20.188 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
-2019-08-21 14:35:21.351 +12:00 [INF] Executed DbCommand (60ms) [Parameters=[@__userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `s`.`user_id`, `s`.`created_at`, `s`.`is_activate`, `s`.`is_online`, `s`.`password`, `s`.`role_id`, `s`.`signature`, `s`.`unread_message_id`, `s`.`user_name`, `s.Role`.`role_id`, `s.Role`.`role_name`
-FROM `ablemusic`.`user` AS `s`
-LEFT JOIN `ablemusic`.`role` AS `s.Role` ON `s`.`role_id` = `s.Role`.`role_id`
-WHERE `s`.`user_id` = @__userId_0
-ORDER BY `s`.`user_id`
-LIMIT 1
-2019-08-21 14:35:21.524 +12:00 [INF] Executed DbCommand (65ms) [Parameters=[@__userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `s.Learner`.`learner_id`, `s.Learner`.`address`, `s.Learner`.`comment`, `s.Learner`.`contact_num`, `s.Learner`.`created_at`, `s.Learner`.`dob`, `s.Learner`.`email`, `s.Learner`.`enroll_date`, `s.Learner`.`first_name`, `s.Learner`.`form_url`, `s.Learner`.`g5_certification`, `s.Learner`.`gender`, `s.Learner`.`is_abrsm_g5`, `s.Learner`.`is_active`, `s.Learner`.`is_under_18`, `s.Learner`.`last_name`, `s.Learner`.`learner_level`, `s.Learner`.`level_type`, `s.Learner`.`middle_name`, `s.Learner`.`note`, `s.Learner`.`org_id`, `s.Learner`.`otherfile_url`, `s.Learner`.`payment_period`, `s.Learner`.`photo`, `s.Learner`.`referrer`, `s.Learner`.`referrer_learner_id`, `s.Learner`.`user_id`
-FROM `ablemusic`.`learner` AS `s.Learner`
-INNER JOIN (
-    SELECT DISTINCT `t`.*
-    FROM (
-        SELECT `s0`.`user_id`
-        FROM `ablemusic`.`user` AS `s0`
-        LEFT JOIN `ablemusic`.`role` AS `s.Role0` ON `s0`.`role_id` = `s.Role0`.`role_id`
-        WHERE `s0`.`user_id` = @__userId_0
-        ORDER BY `s0`.`user_id`
-        LIMIT 1
-    ) AS `t`
-) AS `t0` ON `s.Learner`.`user_id` = `t0`.`user_id`
-ORDER BY `t0`.`user_id`
-2019-08-21 14:35:21.750 +12:00 [INF] Executed DbCommand (64ms) [Parameters=[@__userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `s.Teacher`.`teacher_id`, `s.Teacher`.`ability`, `s.Teacher`.`comment`, `s.Teacher`.`cv_url`, `s.Teacher`.`dob`, `s.Teacher`.`email`, `s.Teacher`.`expiry_date`, `s.Teacher`.`first_name`, `s.Teacher`.`form_url`, `s.Teacher`.`gender`, `s.Teacher`.`home_phone`, `s.Teacher`.`id_number`, `s.Teacher`.`id_photo`, `s.Teacher`.`id_type`, `s.Teacher`.`invoice_template`, `s.Teacher`.`ird_number`, `s.Teacher`.`is_activate`, `s.Teacher`.`is_contract`, `s.Teacher`.`is_left`, `s.Teacher`.`last_name`, `s.Teacher`.`level`, `s.Teacher`.`minimum_hours`, `s.Teacher`.`mobile_phone`, `s.Teacher`.`otherfile_url`, `s.Teacher`.`photo`, `s.Teacher`.`user_id`, `s.Teacher`.`visa`
-FROM `ablemusic`.`teacher` AS `s.Teacher`
-INNER JOIN (
-    SELECT DISTINCT `t1`.*
-    FROM (
-        SELECT `s1`.`user_id`
-        FROM `ablemusic`.`user` AS `s1`
-        LEFT JOIN `ablemusic`.`role` AS `s.Role1` ON `s1`.`role_id` = `s.Role1`.`role_id`
-        WHERE `s1`.`user_id` = @__userId_0
-        ORDER BY `s1`.`user_id`
-        LIMIT 1
-    ) AS `t1`
-) AS `t2` ON `s.Teacher`.`user_id` = `t2`.`user_id`
-ORDER BY `t2`.`user_id`
-2019-08-21 14:35:21.943 +12:00 [INF] Executed DbCommand (58ms) [Parameters=[@__userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `s.Staff`.`staff_id`, `s.Staff`.`dob`, `s.Staff`.`email`, `s.Staff`.`expiry_date`, `s.Staff`.`first_name`, `s.Staff`.`gender`, `s.Staff`.`home_phone`, `s.Staff`.`id_number`, `s.Staff`.`id_photo`, `s.Staff`.`id_type`, `s.Staff`.`ird_number`, `s.Staff`.`is_activate`, `s.Staff`.`last_name`, `s.Staff`.`mobile_phone`, `s.Staff`.`photo`, `s.Staff`.`user_id`, `s.Staff`.`visa`
-FROM `ablemusic`.`staff` AS `s.Staff`
-INNER JOIN (
-    SELECT DISTINCT `t3`.*
-    FROM (
-        SELECT `s2`.`user_id`
-        FROM `ablemusic`.`user` AS `s2`
-        LEFT JOIN `ablemusic`.`role` AS `s.Role2` ON `s2`.`role_id` = `s.Role2`.`role_id`
-        WHERE `s2`.`user_id` = @__userId_0
-        ORDER BY `s2`.`user_id`
-        LIMIT 1
-    ) AS `t3`
-) AS `t4` ON `s.Staff`.`user_id` = `t4`.`user_id`
-ORDER BY `t4`.`user_id`
-2019-08-21 14:35:34.703 +12:00 [INF] Executed action method Pegasus_backend.Controllers.Authorization.LoginController.GetImgIcon (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 18670.389600000002ms.
-2019-08-21 14:35:34.711 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
-2019-08-21 14:35:34.760 +12:00 [INF] Executed action Pegasus_backend.Controllers.Authorization.LoginController.GetImgIcon (Pegasus_backend) in 18865.3564ms
-2019-08-21 14:35:34.760 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":"images/staff/Photos/1190613092404471.jpg"}
-2019-08-21 14:35:34.764 +12:00 [INF] Request finished in 18914.897ms 200 application/json; charset=utf-8
-2019-08-21 17:26:16.385 +12:00 [INF] User profile is available. Using 'C:\Users\zhuyi\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
-2019-08-21 17:26:17.324 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
-2019-08-21 17:26:18.195 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
-2019-08-21 17:26:18.268 +12:00 [WRN] Failed to determine the https port for redirect.
-2019-08-21 17:26:18.412 +12:00 [INF] 
-2019-08-21 17:26:18.658 +12:00 [INF] Response 
-2019-08-21 17:26:18.668 +12:00 [INF] Request finished in 478.9476ms 404 
-2019-08-21 17:27:07.777 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger  
-2019-08-21 17:27:07.787 +12:00 [INF] Request finished in 9.4555ms 301 
-2019-08-21 17:27:07.844 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/index.html  
-2019-08-21 17:27:08.064 +12:00 [INF] Request finished in 220.5918ms 200 text/html
-2019-08-21 17:27:08.144 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/swagger-ui.css  
-2019-08-21 17:27:08.151 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/swagger-ui-bundle.js  
-2019-08-21 17:27:08.155 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/swagger-ui-standalone-preset.js  
-2019-08-21 17:27:08.200 +12:00 [INF] Sending file. Request path: '/swagger-ui.css'. Physical path: 'N/A'
-2019-08-21 17:27:08.200 +12:00 [INF] Sending file. Request path: '/swagger-ui-standalone-preset.js'. Physical path: 'N/A'
-2019-08-21 17:27:08.209 +12:00 [INF] Request finished in 65.1139ms 200 text/css
-2019-08-21 17:27:08.209 +12:00 [INF] Request finished in 53.5421ms 200 application/javascript
-2019-08-21 17:27:08.222 +12:00 [INF] Sending file. Request path: '/swagger-ui-bundle.js'. Physical path: 'N/A'
-2019-08-21 17:27:08.222 +12:00 [INF] Request finished in 71.8876ms 200 application/javascript
-2019-08-21 17:27:09.390 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/v1/swagger.json  
-2019-08-21 17:27:10.128 +12:00 [INF] Request finished in 737.6266ms 200 application/json;charset=utf-8
-2019-08-21 17:32:46.175 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/ChangeImg/3 multipart/form-data; boundary=--------------------------677903214493327286017442 5560
-2019-08-21 17:32:46.208 +12:00 [INF] ----------------------------677903214493327286017442
-Content-Disposition: form-data; name="Photo"; filename="download.jpg"
-Content-Type: image/jpeg
-
-���� JFIF      �� � 	( %!1!%)+...383-7(-.+
-
-
-----+-----+---+--------------+----+-+-7--777-.7-+-+��  � �" ��              �� 9     !1AQaq������"�2��BRbr#����              �� "         !1A2"QB��   ? �! B�! B�J% vQ))���I�/#KGe���LS��NEI��ڪO�h_	?XqU/�-9��f����^�*_��=vU�x��Fi������r�U�v�H�Hm������a��D�D��T�p���g�LB � B � B � B 7`�{�����Tm���B��&	�'@9���� �]��uUϨ�~և֏����S�"����v���U���}
-�V��+�-����Ð�ٻj�8�N_c̜x��q�d�������	��ٝ�mPZpp�z��\��\�F��+��k�Y�+Nҹ9*�Q)�ޭl�}��$J��16�"�Y��2L���$B��f��m|{F+�zmpZ{��pB��t�;���]�Bu�5�⻾2T��`���K�Z�$I���Wj9�}�R���ܴ�R�Z2L�XB!@� !@�PS��5l�1B��Ath�$�Aa��Y�0^'�_����s�r]"��ȍ�Jڍ~���Ӽ��f��#P��5�o�#3ܵ������� 1�������5��i��3�i�#�*��T�\!�H�[��,�޻�#@{���C�Z�#�Gq��oz4;=�N#x��qZ[{�k�L�u�rs#1�k�h�np�}�FFp��s��Ke|�#C��ʿ�����޶ ��Z�1��Vޮ1�{&�y���t�yw�=�-�U�^��pR��T!u�jÞ/���#��P�v~sW�v�Q��hY{��O��ΜY�	&���5�Ę�^j�ب #3��O�$�u�^�$�t�'�1z�$�N18��an/�5�-����C�G?�>â�؟ԭ�pù0\�wy�ą�sH��O�
-5��=pV��}
-Uţ�+[��c^�5�9�A"���{@��Z���7����D���˾/V�2X��-� B k��r�]�*���﷊�V�rf[��w���'& �U��y����s�;'W�%���|@�DC��ǹy{놌K�x>g ��Gmk:-�\�01�!V�ڏo�M���x��U5�p�u[�zU�F�_���G��y�����	���[:�;����#G�3�i�"�G��&�|G��	�Q��8�, 矯~�C��ұ#�X��%W���#���op�c����ah�;`�P��_�f��j��J���iֹ ���r��Q�X��g<c�[R�{L�`w���;��ҕK���;���
-�H�s�� 
-�i4�f������%r��Z)�qϧ�!ԁ�D����� ��&	�g�z�f�K�0c@�� gy+F�7Чdb��"�kYӋ����z"��]�e��n=�{+��Zj8�)�ޠB�
-B��J�f�q\7���T�Tl��H�!�ws*��䧮*���:�:r�vB8����䱝�쁓^ݳ8����,�[f�rQv���VS��!rL��N�gPfHU��q�9�'��|V�k1�yv��
-���[<�{Gz�m4�EF�G��n̎�g�Ͷhśǿt�Ց�:nw8�m\si�BG�|��g0b�� I凸V�.�>dzʮ{\?P��6<�Sv}`� �XA�01YhZ\�޴6L�p�l��E�rO�~y,Gki�����`�;�>���mѤ�S�������kb?��!N�!;1����w����Wg_�A�ӳ��V�3')�1���Ǣ����=������% 9sytҢm[aR���|1O��f��̶�O��"g>$�,e�;�wF<�����<gY�U�u:l��@�n�1��=;�N�'�Hn`Lx�OUC�Ӣ��?������Mwj�%��bc���u� �9/�,A@��ò�PU�ф���@�M��N�{/���@�� &����U�N��vόt�#�Uk����7	����v������k8�~��/f�G�T�^V�,UF�M�2���O��*��O?��Ʇ�@u�<<ǲ�+�?��;NȻ"��\���g�go��uZM�xP�l�9��Ǻ��h!��p�'oOf�q�	�v'/od��a���c�Q��ỗ&`�`��eM�v,��t�� �fG?E�W�����I�DOwKk�<f�＜�5��H�wWjKY��Pv
-����@$� �1�qÊ�]�D����Vvw��� �C.�?}dd��˗X$� �-�0J�\q�6�Ji ��٭����D`��;gb=��'	���N�Uţ^	?��IJ��Xj���hA��k{��F� =|T�͈�>J��B�����\�eܓ��f �*n�^o�h9¹���NF����qTwn�J��t�+���_�^�Gr�r�	�(׏�q��Ҋ���Jƪ6�������ǜ5�Uw����A���w3��-1"����q#�+[m�ў|�n�I��� �Y�cF��S��]A���vm��m���9M�L|�~�G!�[c���L�fq�S��$���w,�	��Dfl���56��[��G���j����NRd�T��R�tM��wT�V;EDdtT���44�p#�9�����L�K�[Hc����r���i[�1Ǌ �:&��;EGd�F�:��9t��C��]ʅ���b��F�� ��([�g ���S� E�q
-�țA�*J����Vz������T�E�� �mPp���G2��"�<��LDǄ 8���� �sx�=WZBm��:ZB�Þ���J�x��u�z��:ݠ����uA��=����Y���H�(�T$t���\����w��N��0��ur���qJ�<G���OO_d�� :�ϚX{�����<���i� q)����0<9�b��������(��%�{}3��S�k5�8;��e#/y��� �:�c���g��1����˒p����R�m�i�.d�����ٵ�㚹�R~���c�h��!p���^F�2B}0��V���7��=ĜV�f�%ѩx%�vP�L��J�T�i/Ĵ��ZfW��T�:�r���P�BEI+��*Cy��;0��a%���`c�ǀHy�	D��� �hAE���w�S���3�5��>AN��'�tV�L�:�.Bz���\�����K���8O\� mC��(0�Gr�c_,��\ &]K��U���
-K�S��Q�I�iND����+%�l��23#P�7 �T[F�����/\���O{ZC�0p'8�N�hy$g&�9�L٭�$��^ɻ؀	�N$�5ڜ)�g,���SUG㜘�^>{j�� i�5��f�?'�chAv�M�f��������!t�iY��֢�����~�>J�Ί}��rr 䚦tM4�{+�kE_E]�qM.��*�$3M���<�7�`��S�
-eS��M��g�V���$
-������xe�M#.�X|�
-7���Sh�+�6iC2WeAcD�k��#&Wg�L}U���CĦ�9wy!�	��p�W{NrVw,a̅ ��w�;��R)��.q�8º�V%�HS������*F�A�Y�
-h��禪�
--K��d���4*���|�3^�9��q�r�HĶ�m�`���tX]�K�D-�!�U��Ţ��]$@���l8�"�یP�bV��Ǹ�Rm�*=V�]*�0�\1�,zኽ��Y��
-�S�c���tuF���n+�
-f��F%G�:�\SɂR�� ��Ԏ��*����z�R[w��U[��N���[��2���;�Ϋ?N� >�M;�k�2��l�:�낇R�>tLׯ#�89V��J�
-GH�M�Zbz �ܐ�벫?���|1��I�D��g�C���^��Ω�\��eT7>g��S֕1�*��S��G��:ʖ��5�m�/e��G�ZƅQ��%��p�Tr'޳�B�Ky�YMUxY�Ճ�L�^ӂ���_�J ���H\��i"�R�@OV
-���w'57���q�7��f�T�9F��p�z6�$�L?�S�$ofVU:&j����9M�q��i�ĥ���|>��� �}u*`�լ !4��7>��.ӯ�w��uq�O�}i܅h�r�jn>��܇�樀y.��D�W"�m����5p�x&[�� %ԭ#皅Z��k����O_OuQ}��#�
-̣��\��nf<���'��jg�EĮ�֔��[N�쩇�;,I���M�Kv�µ0�F�aeF��\J��!.
-�
-��Z�Z4���\��E�+�*ۂ��6cN�R�������,dH8�*�h�:�̅跛��%A��^I�>
-.�tB��e����7R���*�^ǚn�ޕni���î�JKz+�35��)75q�Vպ
-.�6�(OT�܆�ӎ���	q!������þ`s�C�k�������{}G��#�)�Q������kL�M���7��q��}� �c�L�y��U���X'G0�Oh��T�25��
-��;S18說�U7�D��1����\bp�Ӕjc�=8�\1�pZ�R�;G-&��������)�o�O�hG��j<�UH�>��Ti�H^�D���s�/i����T���u��/NٻU�Ӂ�
-�b草�Dǧ�];�%��Bd��(Q���P�D& �B�"n�/�J�BX��k�Z�.U�"qA�R�aN�����!ow>�Yu�\��� ��n{%SI^�h��l](c<Z׳��?x� ����Ư�X�A������d�	�l֝_I���x/j\�D�1����#%W�jD6�\����#%�S�C�2��L�<�_#���{j.$����SG��$�q2��f)�o�a���tj>����G��sHe�x��]تGA�� C��<� 	�H��ݕ~���ʥ27鼍KZ]�r�#��#��;�#��? ���u�Ϊڻ��s��s�V�+i�=��|�#u͟�{ �#��oe�� �ɸo�����h�t�6�m����В콞�pl�Xˏ�x-=��K��wx#��D�Մ4�tԶZ�s譨��.����`h���� !@� !@� !@� !@� !@� !@� !@��
-----------------------------677903214493327286017442--
-
-2019-08-21 17:32:46.211 +12:00 [INF] Response 
-2019-08-21 17:32:46.211 +12:00 [INF] Request finished in 36.0954ms 404 
-2019-08-21 17:33:31.042 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/index.html  
-2019-08-21 17:33:31.057 +12:00 [INF] Request finished in 14.5578ms 200 text/html
-2019-08-21 17:33:52.915 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/login/ChangeImg/3 multipart/form-data; boundary=--------------------------672571413946624460911145 5560
-2019-08-21 17:33:52.918 +12:00 [INF] ----------------------------672571413946624460911145
-Content-Disposition: form-data; name="Photo"; filename="download.jpg"
-Content-Type: image/jpeg
-
-���� JFIF      �� � 	( %!1!%)+...383-7(-.+
-
-
-----+-----+---+--------------+----+-+-7--777-.7-+-+��  � �" ��              �� 9     !1AQaq������"�2��BRbr#����              �� "         !1A2"QB��   ? �! B�! B�J% vQ))���I�/#KGe���LS��NEI��ڪO�h_	?XqU/�-9��f����^�*_��=vU�x��Fi������r�U�v�H�Hm������a��D�D��T�p���g�LB � B � B � B 7`�{�����Tm���B��&	�'@9���� �]��uUϨ�~և֏����S�"����v���U���}
-�V��+�-����Ð�ٻj�8�N_c̜x��q�d�������	��ٝ�mPZpp�z��\��\�F��+��k�Y�+Nҹ9*�Q)�ޭl�}��$J��16�"�Y��2L���$B��f��m|{F+�zmpZ{��pB��t�;���]�Bu�5�⻾2T��`���K�Z�$I���Wj9�}�R���ܴ�R�Z2L�XB!@� !@�PS��5l�1B��Ath�$�Aa��Y�0^'�_����s�r]"��ȍ�Jڍ~���Ӽ��f��#P��5�o�#3ܵ������� 1�������5��i��3�i�#�*��T�\!�H�[��,�޻�#@{���C�Z�#�Gq��oz4;=�N#x��qZ[{�k�L�u�rs#1�k�h�np�}�FFp��s��Ke|�#C��ʿ�����޶ ��Z�1��Vޮ1�{&�y���t�yw�=�-�U�^��pR��T!u�jÞ/���#��P�v~sW�v�Q��hY{��O��ΜY�	&���5�Ę�^j�ب #3��O�$�u�^�$�t�'�1z�$�N18��an/�5�-����C�G?�>â�؟ԭ�pù0\�wy�ą�sH��O�
-5��=pV��}
-Uţ�+[��c^�5�9�A"���{@��Z���7����D���˾/V�2X��-� B k��r�]�*���﷊�V�rf[��w���'& �U��y����s�;'W�%���|@�DC��ǹy{놌K�x>g ��Gmk:-�\�01�!V�ڏo�M���x��U5�p�u[�zU�F�_���G��y�����	���[:�;����#G�3�i�"�G��&�|G��	�Q��8�, 矯~�C��ұ#�X��%W���#���op�c����ah�;`�P��_�f��j��J���iֹ ���r��Q�X��g<c�[R�{L�`w���;��ҕK���;���
-�H�s�� 
-�i4�f������%r��Z)�qϧ�!ԁ�D����� ��&	�g�z�f�K�0c@�� gy+F�7Чdb��"�kYӋ����z"��]�e��n=�{+��Zj8�)�ޠB�
-B��J�f�q\7���T�Tl��H�!�ws*��䧮*���:�:r�vB8����䱝�쁓^ݳ8����,�[f�rQv���VS��!rL��N�gPfHU��q�9�'��|V�k1�yv��
-���[<�{Gz�m4�EF�G��n̎�g�Ͷhśǿt�Ց�:nw8�m\si�BG�|��g0b�� I凸V�.�>dzʮ{\?P��6<�Sv}`� �XA�01YhZ\�޴6L�p�l��E�rO�~y,Gki�����`�;�>���mѤ�S�������kb?��!N�!;1����w����Wg_�A�ӳ��V�3')�1���Ǣ����=������% 9sytҢm[aR���|1O��f��̶�O��"g>$�,e�;�wF<�����<gY�U�u:l��@�n�1��=;�N�'�Hn`Lx�OUC�Ӣ��?������Mwj�%��bc���u� �9/�,A@��ò�PU�ф���@�M��N�{/���@�� &����U�N��vόt�#�Uk����7	����v������k8�~��/f�G�T�^V�,UF�M�2���O��*��O?��Ʇ�@u�<<ǲ�+�?��;NȻ"��\���g�go��uZM�xP�l�9��Ǻ��h!��p�'oOf�q�	�v'/od��a���c�Q��ỗ&`�`��eM�v,��t�� �fG?E�W�����I�DOwKk�<f�＜�5��H�wWjKY��Pv
-����@$� �1�qÊ�]�D����Vvw��� �C.�?}dd��˗X$� �-�0J�\q�6�Ji ��٭����D`��;gb=��'	���N�Uţ^	?��IJ��Xj���hA��k{��F� =|T�͈�>J��B�����\�eܓ��f �*n�^o�h9¹���NF����qTwn�J��t�+���_�^�Gr�r�	�(׏�q��Ҋ���Jƪ6�������ǜ5�Uw����A���w3��-1"����q#�+[m�ў|�n�I��� �Y�cF��S��]A���vm��m���9M�L|�~�G!�[c���L�fq�S��$���w,�	��Dfl���56��[��G���j����NRd�T��R�tM��wT�V;EDdtT���44�p#�9�����L�K�[Hc����r���i[�1Ǌ �:&��;EGd�F�:��9t��C��]ʅ���b��F�� ��([�g ���S� E�q
-�țA�*J����Vz������T�E�� �mPp���G2��"�<��LDǄ 8���� �sx�=WZBm��:ZB�Þ���J�x��u�z��:ݠ����uA��=����Y���H�(�T$t���\����w��N��0��ur���qJ�<G���OO_d�� :�ϚX{�����<���i� q)����0<9�b��������(��%�{}3��S�k5�8;��e#/y��� �:�c���g��1����˒p����R�m�i�.d�����ٵ�㚹�R~���c�h��!p���^F�2B}0��V���7��=ĜV�f�%ѩx%�vP�L��J�T�i/Ĵ��ZfW��T�:�r���P�BEI+��*Cy��;0��a%���`c�ǀHy�	D��� �hAE���w�S���3�5��>AN��'�tV�L�:�.Bz���\�����K���8O\� mC��(0�Gr�c_,��\ &]K��U���
-K�S��Q�I�iND����+%�l��23#P�7 �T[F�����/\���O{ZC�0p'8�N�hy$g&�9�L٭�$��^ɻ؀	�N$�5ڜ)�g,���SUG㜘�^>{j�� i�5��f�?'�chAv�M�f��������!t�iY��֢�����~�>J�Ί}��rr 䚦tM4�{+�kE_E]�qM.��*�$3M���<�7�`��S�
-eS��M��g�V���$
-������xe�M#.�X|�
-7���Sh�+�6iC2WeAcD�k��#&Wg�L}U���CĦ�9wy!�	��p�W{NrVw,a̅ ��w�;��R)��.q�8º�V%�HS������*F�A�Y�
-h��禪�
--K��d���4*���|�3^�9��q�r�HĶ�m�`���tX]�K�D-�!�U��Ţ��]$@���l8�"�یP�bV��Ǹ�Rm�*=V�]*�0�\1�,zኽ��Y��
-�S�c���tuF���n+�
-f��F%G�:�\SɂR�� ��Ԏ��*����z�R[w��U[��N���[��2���;�Ϋ?N� >�M;�k�2��l�:�낇R�>tLׯ#�89V��J�
-GH�M�Zbz �ܐ�벫?���|1��I�D��g�C���^��Ω�\��eT7>g��S֕1�*��S��G��:ʖ��5�m�/e��G�ZƅQ��%��p�Tr'޳�B�Ky�YMUxY�Ճ�L�^ӂ���_�J ���H\��i"�R�@OV
-���w'57���q�7��f�T�9F��p�z6�$�L?�S�$ofVU:&j����9M�q��i�ĥ���|>��� �}u*`�լ !4��7>��.ӯ�w��uq�O�}i܅h�r�jn>��܇�樀y.��D�W"�m����5p�x&[�� %ԭ#皅Z��k����O_OuQ}��#�
-̣��\��nf<���'��jg�EĮ�֔��[N�쩇�;,I���M�Kv�µ0�F�aeF��\J��!.
-�
-��Z�Z4���\��E�+�*ۂ��6cN�R�������,dH8�*�h�:�̅跛��%A��^I�>
-.�tB��e����7R���*�^ǚn�ޕni���î�JKz+�35��)75q�Vպ
-.�6�(OT�܆�ӎ���	q!������þ`s�C�k�������{}G��#�)�Q������kL�M���7��q��}� �c�L�y��U���X'G0�Oh��T�25��
-��;S18說�U7�D��1����\bp�Ӕjc�=8�\1�pZ�R�;G-&��������)�o�O�hG��j<�UH�>��Ti�H^�D���s�/i����T���u��/NٻU�Ӂ�
-�b草�Dǧ�];�%��Bd��(Q���P�D& �B�"n�/�J�BX��k�Z�.U�"qA�R�aN�����!ow>�Yu�\��� ��n{%SI^�h��l](c<Z׳��?x� ����Ư�X�A������d�	�l֝_I���x/j\�D�1����#%W�jD6�\����#%�S�C�2��L�<�_#���{j.$����SG��$�q2��f)�o�a���tj>����G��sHe�x��]تGA�� C��<� 	�H��ݕ~���ʥ27鼍KZ]�r�#��#��;�#��? ���u�Ϊڻ��s��s�V�+i�=��|�#u͟�{ �#��oe�� �ɸo�����h�t�6�m����В콞�pl�Xˏ�x-=��K��wx#��D�Մ4�tԶZ�s譨��.����`h���� !@� !@� !@� !@� !@� !@� !@��
-----------------------------672571413946624460911145--
-
-2019-08-21 17:33:52.996 +12:00 [INF] Route matched with {action = "ChangeImg", controller = "Login"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] ChangeImg(Int32, Microsoft.AspNetCore.Http.IFormFile) on controller Pegasus_backend.Controllers.Authorization.LoginController (Pegasus_backend).
-2019-08-21 17:33:53.427 +12:00 [INF] Executing action method Pegasus_backend.Controllers.Authorization.LoginController.ChangeImg (Pegasus_backend) - Validation state: "Valid"
-2019-08-21 17:34:19.069 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
-2019-08-21 17:34:21.072 +12:00 [INF] Executed DbCommand (66ms) [Parameters=[@__userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `s`.`user_id`, `s`.`created_at`, `s`.`is_activate`, `s`.`is_online`, `s`.`password`, `s`.`role_id`, `s`.`signature`, `s`.`unread_message_id`, `s`.`user_name`, `s.Role`.`role_id`, `s.Role`.`role_name`
-FROM `ablemusic`.`user` AS `s`
-LEFT JOIN `ablemusic`.`role` AS `s.Role` ON `s`.`role_id` = `s.Role`.`role_id`
-WHERE `s`.`user_id` = @__userId_0
-ORDER BY `s`.`user_id`
-LIMIT 1
-2019-08-21 17:34:21.353 +12:00 [INF] Executed DbCommand (64ms) [Parameters=[@__userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `s.Learner`.`learner_id`, `s.Learner`.`address`, `s.Learner`.`comment`, `s.Learner`.`contact_num`, `s.Learner`.`created_at`, `s.Learner`.`dob`, `s.Learner`.`email`, `s.Learner`.`enroll_date`, `s.Learner`.`first_name`, `s.Learner`.`form_url`, `s.Learner`.`g5_certification`, `s.Learner`.`gender`, `s.Learner`.`is_abrsm_g5`, `s.Learner`.`is_active`, `s.Learner`.`is_under_18`, `s.Learner`.`last_name`, `s.Learner`.`learner_level`, `s.Learner`.`level_type`, `s.Learner`.`middle_name`, `s.Learner`.`note`, `s.Learner`.`org_id`, `s.Learner`.`otherfile_url`, `s.Learner`.`payment_period`, `s.Learner`.`photo`, `s.Learner`.`referrer`, `s.Learner`.`referrer_learner_id`, `s.Learner`.`user_id`
-FROM `ablemusic`.`learner` AS `s.Learner`
-INNER JOIN (
-    SELECT DISTINCT `t`.*
-    FROM (
-        SELECT `s0`.`user_id`
-        FROM `ablemusic`.`user` AS `s0`
-        LEFT JOIN `ablemusic`.`role` AS `s.Role0` ON `s0`.`role_id` = `s.Role0`.`role_id`
-        WHERE `s0`.`user_id` = @__userId_0
-        ORDER BY `s0`.`user_id`
-        LIMIT 1
-    ) AS `t`
-) AS `t0` ON `s.Learner`.`user_id` = `t0`.`user_id`
-ORDER BY `t0`.`user_id`
-2019-08-21 17:34:21.563 +12:00 [INF] Executed DbCommand (64ms) [Parameters=[@__userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `s.Teacher`.`teacher_id`, `s.Teacher`.`ability`, `s.Teacher`.`comment`, `s.Teacher`.`cv_url`, `s.Teacher`.`dob`, `s.Teacher`.`email`, `s.Teacher`.`expiry_date`, `s.Teacher`.`first_name`, `s.Teacher`.`form_url`, `s.Teacher`.`gender`, `s.Teacher`.`home_phone`, `s.Teacher`.`id_number`, `s.Teacher`.`id_photo`, `s.Teacher`.`id_type`, `s.Teacher`.`invoice_template`, `s.Teacher`.`ird_number`, `s.Teacher`.`is_activate`, `s.Teacher`.`is_contract`, `s.Teacher`.`is_left`, `s.Teacher`.`last_name`, `s.Teacher`.`level`, `s.Teacher`.`minimum_hours`, `s.Teacher`.`mobile_phone`, `s.Teacher`.`otherfile_url`, `s.Teacher`.`photo`, `s.Teacher`.`user_id`, `s.Teacher`.`visa`
-FROM `ablemusic`.`teacher` AS `s.Teacher`
-INNER JOIN (
-    SELECT DISTINCT `t1`.*
-    FROM (
-        SELECT `s1`.`user_id`
-        FROM `ablemusic`.`user` AS `s1`
-        LEFT JOIN `ablemusic`.`role` AS `s.Role1` ON `s1`.`role_id` = `s.Role1`.`role_id`
-        WHERE `s1`.`user_id` = @__userId_0
-        ORDER BY `s1`.`user_id`
-        LIMIT 1
-    ) AS `t1`
-) AS `t2` ON `s.Teacher`.`user_id` = `t2`.`user_id`
-ORDER BY `t2`.`user_id`
-2019-08-21 17:34:21.772 +12:00 [INF] Executed DbCommand (60ms) [Parameters=[@__userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `s.Staff`.`staff_id`, `s.Staff`.`dob`, `s.Staff`.`email`, `s.Staff`.`expiry_date`, `s.Staff`.`first_name`, `s.Staff`.`gender`, `s.Staff`.`home_phone`, `s.Staff`.`id_number`, `s.Staff`.`id_photo`, `s.Staff`.`id_type`, `s.Staff`.`ird_number`, `s.Staff`.`is_activate`, `s.Staff`.`last_name`, `s.Staff`.`mobile_phone`, `s.Staff`.`photo`, `s.Staff`.`user_id`, `s.Staff`.`visa`
-FROM `ablemusic`.`staff` AS `s.Staff`
-INNER JOIN (
-    SELECT DISTINCT `t3`.*
-    FROM (
-        SELECT `s2`.`user_id`
-        FROM `ablemusic`.`user` AS `s2`
-        LEFT JOIN `ablemusic`.`role` AS `s.Role2` ON `s2`.`role_id` = `s.Role2`.`role_id`
-        WHERE `s2`.`user_id` = @__userId_0
-        ORDER BY `s2`.`user_id`
-        LIMIT 1
-    ) AS `t3`
-) AS `t4` ON `s.Staff`.`user_id` = `t4`.`user_id`
-ORDER BY `t4`.`user_id`
-2019-08-21 17:35:56.110 +12:00 [INF] User profile is available. Using 'C:\Users\zhuyi\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
-2019-08-21 17:35:57.003 +12:00 [INF] Setting up the time host service. Everyday run at 23pm
-2019-08-21 17:35:59.330 +12:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
-2019-08-21 17:35:59.417 +12:00 [WRN] Failed to determine the https port for redirect.
-2019-08-21 17:35:59.567 +12:00 [INF] 
-2019-08-21 17:35:59.881 +12:00 [INF] Response 
-2019-08-21 17:35:59.891 +12:00 [INF] Request finished in 564.2048ms 404 
-2019-08-21 17:36:06.907 +12:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/login/ChangeImg/3 multipart/form-data; boundary=--------------------------156155203144974227235862 5560
-2019-08-21 17:36:06.961 +12:00 [INF] ----------------------------156155203144974227235862
-Content-Disposition: form-data; name="Photo"; filename="download.jpg"
-Content-Type: image/jpeg
-
-���� JFIF      �� � 	( %!1!%)+...383-7(-.+
-
-
-----+-----+---+--------------+----+-+-7--777-.7-+-+��  � �" ��              �� 9     !1AQaq������"�2��BRbr#����              �� "         !1A2"QB��   ? �! B�! B�J% vQ))���I�/#KGe���LS��NEI��ڪO�h_	?XqU/�-9��f����^�*_��=vU�x��Fi������r�U�v�H�Hm������a��D�D��T�p���g�LB � B � B � B 7`�{�����Tm���B��&	�'@9���� �]��uUϨ�~և֏����S�"����v���U���}
-�V��+�-����Ð�ٻj�8�N_c̜x��q�d�������	��ٝ�mPZpp�z��\��\�F��+��k�Y�+Nҹ9*�Q)�ޭl�}��$J��16�"�Y��2L���$B��f��m|{F+�zmpZ{��pB��t�;���]�Bu�5�⻾2T��`���K�Z�$I���Wj9�}�R���ܴ�R�Z2L�XB!@� !@�PS��5l�1B��Ath�$�Aa��Y�0^'�_����s�r]"��ȍ�Jڍ~���Ӽ��f��#P��5�o�#3ܵ������� 1�������5��i��3�i�#�*��T�\!�H�[��,�޻�#@{���C�Z�#�Gq��oz4;=�N#x��qZ[{�k�L�u�rs#1�k�h�np�}�FFp��s��Ke|�#C��ʿ�����޶ ��Z�1��Vޮ1�{&�y���t�yw�=�-�U�^��pR��T!u�jÞ/���#��P�v~sW�v�Q��hY{��O��ΜY�	&���5�Ę�^j�ب #3��O�$�u�^�$�t�'�1z�$�N18��an/�5�-����C�G?�>â�؟ԭ�pù0\�wy�ą�sH��O�
-5��=pV��}
-Uţ�+[��c^�5�9�A"���{@��Z���7����D���˾/V�2X��-� B k��r�]�*���﷊�V�rf[��w���'& �U��y����s�;'W�%���|@�DC��ǹy{놌K�x>g ��Gmk:-�\�01�!V�ڏo�M���x��U5�p�u[�zU�F�_���G��y�����	���[:�;����#G�3�i�"�G��&�|G��	�Q��8�, 矯~�C��ұ#�X��%W���#���op�c����ah�;`�P��_�f��j��J���iֹ ���r��Q�X��g<c�[R�{L�`w���;��ҕK���;���
-�H�s�� 
-�i4�f������%r��Z)�qϧ�!ԁ�D����� ��&	�g�z�f�K�0c@�� gy+F�7Чdb��"�kYӋ����z"��]�e��n=�{+��Zj8�)�ޠB�
-B��J�f�q\7���T�Tl��H�!�ws*��䧮*���:�:r�vB8����䱝�쁓^ݳ8����,�[f�rQv���VS��!rL��N�gPfHU��q�9�'��|V�k1�yv��
-���[<�{Gz�m4�EF�G��n̎�g�Ͷhśǿt�Ց�:nw8�m\si�BG�|��g0b�� I凸V�.�>dzʮ{\?P��6<�Sv}`� �XA�01YhZ\�޴6L�p�l��E�rO�~y,Gki�����`�;�>���mѤ�S�������kb?��!N�!;1����w����Wg_�A�ӳ��V�3')�1���Ǣ����=������% 9sytҢm[aR���|1O��f��̶�O��"g>$�,e�;�wF<�����<gY�U�u:l��@�n�1��=;�N�'�Hn`Lx�OUC�Ӣ��?������Mwj�%��bc���u� �9/�,A@��ò�PU�ф���@�M��N�{/���@�� &����U�N��vόt�#�Uk����7	����v������k8�~��/f�G�T�^V�,UF�M�2���O��*��O?��Ʇ�@u�<<ǲ�+�?��;NȻ"��\���g�go��uZM�xP�l�9��Ǻ��h!��p�'oOf�q�	�v'/od��a���c�Q��ỗ&`�`��eM�v,��t�� �fG?E�W�����I�DOwKk�<f�＜�5��H�wWjKY��Pv
-����@$� �1�qÊ�]�D����Vvw��� �C.�?}dd��˗X$� �-�0J�\q�6�Ji ��٭����D`��;gb=��'	���N�Uţ^	?��IJ��Xj���hA��k{��F� =|T�͈�>J��B�����\�eܓ��f �*n�^o�h9¹���NF����qTwn�J��t�+���_�^�Gr�r�	�(׏�q��Ҋ���Jƪ6�������ǜ5�Uw����A���w3��-1"����q#�+[m�ў|�n�I��� �Y�cF��S��]A���vm��m���9M�L|�~�G!�[c���L�fq�S��$���w,�	��Dfl���56��[��G���j����NRd�T��R�tM��wT�V;EDdtT���44�p#�9�����L�K�[Hc����r���i[�1Ǌ �:&��;EGd�F�:��9t��C��]ʅ���b��F�� ��([�g ���S� E�q
-�țA�*J����Vz������T�E�� �mPp���G2��"�<��LDǄ 8���� �sx�=WZBm��:ZB�Þ���J�x��u�z��:ݠ����uA��=����Y���H�(�T$t���\����w��N��0��ur���qJ�<G���OO_d�� :�ϚX{�����<���i� q)����0<9�b��������(��%�{}3��S�k5�8;��e#/y��� �:�c���g��1����˒p����R�m�i�.d�����ٵ�㚹�R~���c�h��!p���^F�2B}0��V���7��=ĜV�f�%ѩx%�vP�L��J�T�i/Ĵ��ZfW��T�:�r���P�BEI+��*Cy��;0��a%���`c�ǀHy�	D��� �hAE���w�S���3�5��>AN��'�tV�L�:�.Bz���\�����K���8O\� mC��(0�Gr�c_,��\ &]K��U���
-K�S��Q�I�iND����+%�l��23#P�7 �T[F�����/\���O{ZC�0p'8�N�hy$g&�9�L٭�$��^ɻ؀	�N$�5ڜ)�g,���SUG㜘�^>{j�� i�5��f�?'�chAv�M�f��������!t�iY��֢�����~�>J�Ί}��rr 䚦tM4�{+�kE_E]�qM.��*�$3M���<�7�`��S�
-eS��M��g�V���$
-������xe�M#.�X|�
-7���Sh�+�6iC2WeAcD�k��#&Wg�L}U���CĦ�9wy!�	��p�W{NrVw,a̅ ��w�;��R)��.q�8º�V%�HS������*F�A�Y�
-h��禪�
--K��d���4*���|�3^�9��q�r�HĶ�m�`���tX]�K�D-�!�U��Ţ��]$@���l8�"�یP�bV��Ǹ�Rm�*=V�]*�0�\1�,zኽ��Y��
-�S�c���tuF���n+�
-f��F%G�:�\SɂR�� ��Ԏ��*����z�R[w��U[��N���[��2���;�Ϋ?N� >�M;�k�2��l�:�낇R�>tLׯ#�89V��J�
-GH�M�Zbz �ܐ�벫?���|1��I�D��g�C���^��Ω�\��eT7>g��S֕1�*��S��G��:ʖ��5�m�/e��G�ZƅQ��%��p�Tr'޳�B�Ky�YMUxY�Ճ�L�^ӂ���_�J ���H\��i"�R�@OV
-���w'57���q�7��f�T�9F��p�z6�$�L?�S�$ofVU:&j����9M�q��i�ĥ���|>��� �}u*`�լ !4��7>��.ӯ�w��uq�O�}i܅h�r�jn>��܇�樀y.��D�W"�m����5p�x&[�� %ԭ#皅Z��k����O_OuQ}��#�
-̣��\��nf<���'��jg�EĮ�֔��[N�쩇�;,I���M�Kv�µ0�F�aeF��\J��!.
-�
-��Z�Z4���\��E�+�*ۂ��6cN�R�������,dH8�*�h�:�̅跛��%A��^I�>
-.�tB��e����7R���*�^ǚn�ޕni���î�JKz+�35��)75q�Vպ
-.�6�(OT�܆�ӎ���	q!������þ`s�C�k�������{}G��#�)�Q������kL�M���7��q��}� �c�L�y��U���X'G0�Oh��T�25��
-��;S18說�U7�D��1����\bp�Ӕjc�=8�\1�pZ�R�;G-&��������)�o�O�hG��j<�UH�>��Ti�H^�D���s�/i����T���u��/NٻU�Ӂ�
-�b草�Dǧ�];�%��Bd��(Q���P�D& �B�"n�/�J�BX��k�Z�.U�"qA�R�aN�����!ow>�Yu�\��� ��n{%SI^�h��l](c<Z׳��?x� ����Ư�X�A������d�	�l֝_I���x/j\�D�1����#%W�jD6�\����#%�S�C�2��L�<�_#���{j.$����SG��$�q2��f)�o�a���tj>����G��sHe�x��]تGA�� C��<� 	�H��ݕ~���ʥ27鼍KZ]�r�#��#��;�#��? ���u�Ϊڻ��s��s�V�+i�=��|�#u͟�{ �#��oe�� �ɸo�����h�t�6�m����В콞�pl�Xˏ�x-=��K��wx#��D�Մ4�tԶZ�s譨��.����`h���� !@� !@� !@� !@� !@� !@� !@��
-----------------------------156155203144974227235862--
-
-2019-08-21 17:36:07.028 +12:00 [INF] Route matched with {action = "ChangeImg", controller = "Login"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] ChangeImg(Int32, Microsoft.AspNetCore.Http.IFormFile) on controller Pegasus_backend.Controllers.Authorization.LoginController (Pegasus_backend).
-2019-08-21 17:36:07.386 +12:00 [INF] Executing action method Pegasus_backend.Controllers.Authorization.LoginController.ChangeImg (Pegasus_backend) - Validation state: "Valid"
-2019-08-21 17:36:16.720 +12:00 [INF] Entity Framework Core 2.1.11-servicing-32099 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
-2019-08-21 17:36:18.742 +12:00 [INF] Executed DbCommand (78ms) [Parameters=[@__userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `s`.`user_id`, `s`.`created_at`, `s`.`is_activate`, `s`.`is_online`, `s`.`password`, `s`.`role_id`, `s`.`signature`, `s`.`unread_message_id`, `s`.`user_name`, `s.Role`.`role_id`, `s.Role`.`role_name`
-FROM `ablemusic`.`user` AS `s`
-LEFT JOIN `ablemusic`.`role` AS `s.Role` ON `s`.`role_id` = `s.Role`.`role_id`
-WHERE `s`.`user_id` = @__userId_0
-ORDER BY `s`.`user_id`
-LIMIT 1
-2019-08-21 17:36:19.044 +12:00 [INF] Executed DbCommand (63ms) [Parameters=[@__userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `s.Learner`.`learner_id`, `s.Learner`.`address`, `s.Learner`.`comment`, `s.Learner`.`contact_num`, `s.Learner`.`created_at`, `s.Learner`.`dob`, `s.Learner`.`email`, `s.Learner`.`enroll_date`, `s.Learner`.`first_name`, `s.Learner`.`form_url`, `s.Learner`.`g5_certification`, `s.Learner`.`gender`, `s.Learner`.`is_abrsm_g5`, `s.Learner`.`is_active`, `s.Learner`.`is_under_18`, `s.Learner`.`last_name`, `s.Learner`.`learner_level`, `s.Learner`.`level_type`, `s.Learner`.`middle_name`, `s.Learner`.`note`, `s.Learner`.`org_id`, `s.Learner`.`otherfile_url`, `s.Learner`.`payment_period`, `s.Learner`.`photo`, `s.Learner`.`referrer`, `s.Learner`.`referrer_learner_id`, `s.Learner`.`user_id`
-FROM `ablemusic`.`learner` AS `s.Learner`
-INNER JOIN (
-    SELECT DISTINCT `t`.*
-    FROM (
-        SELECT `s0`.`user_id`
-        FROM `ablemusic`.`user` AS `s0`
-        LEFT JOIN `ablemusic`.`role` AS `s.Role0` ON `s0`.`role_id` = `s.Role0`.`role_id`
-        WHERE `s0`.`user_id` = @__userId_0
-        ORDER BY `s0`.`user_id`
-        LIMIT 1
-    ) AS `t`
-) AS `t0` ON `s.Learner`.`user_id` = `t0`.`user_id`
-ORDER BY `t0`.`user_id`
-2019-08-21 17:36:19.266 +12:00 [INF] Executed DbCommand (65ms) [Parameters=[@__userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `s.Teacher`.`teacher_id`, `s.Teacher`.`ability`, `s.Teacher`.`comment`, `s.Teacher`.`cv_url`, `s.Teacher`.`dob`, `s.Teacher`.`email`, `s.Teacher`.`expiry_date`, `s.Teacher`.`first_name`, `s.Teacher`.`form_url`, `s.Teacher`.`gender`, `s.Teacher`.`home_phone`, `s.Teacher`.`id_number`, `s.Teacher`.`id_photo`, `s.Teacher`.`id_type`, `s.Teacher`.`invoice_template`, `s.Teacher`.`ird_number`, `s.Teacher`.`is_activate`, `s.Teacher`.`is_contract`, `s.Teacher`.`is_left`, `s.Teacher`.`last_name`, `s.Teacher`.`level`, `s.Teacher`.`minimum_hours`, `s.Teacher`.`mobile_phone`, `s.Teacher`.`otherfile_url`, `s.Teacher`.`photo`, `s.Teacher`.`user_id`, `s.Teacher`.`visa`
-FROM `ablemusic`.`teacher` AS `s.Teacher`
-INNER JOIN (
-    SELECT DISTINCT `t1`.*
-    FROM (
-        SELECT `s1`.`user_id`
-        FROM `ablemusic`.`user` AS `s1`
-        LEFT JOIN `ablemusic`.`role` AS `s.Role1` ON `s1`.`role_id` = `s.Role1`.`role_id`
-        WHERE `s1`.`user_id` = @__userId_0
-        ORDER BY `s1`.`user_id`
-        LIMIT 1
-    ) AS `t1`
-) AS `t2` ON `s.Teacher`.`user_id` = `t2`.`user_id`
-ORDER BY `t2`.`user_id`
-2019-08-21 17:36:19.469 +12:00 [INF] Executed DbCommand (58ms) [Parameters=[@__userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT `s.Staff`.`staff_id`, `s.Staff`.`dob`, `s.Staff`.`email`, `s.Staff`.`expiry_date`, `s.Staff`.`first_name`, `s.Staff`.`gender`, `s.Staff`.`home_phone`, `s.Staff`.`id_number`, `s.Staff`.`id_photo`, `s.Staff`.`id_type`, `s.Staff`.`ird_number`, `s.Staff`.`is_activate`, `s.Staff`.`last_name`, `s.Staff`.`mobile_phone`, `s.Staff`.`photo`, `s.Staff`.`user_id`, `s.Staff`.`visa`
-FROM `ablemusic`.`staff` AS `s.Staff`
-INNER JOIN (
-    SELECT DISTINCT `t3`.*
-    FROM (
-        SELECT `s2`.`user_id`
-        FROM `ablemusic`.`user` AS `s2`
-        LEFT JOIN `ablemusic`.`role` AS `s.Role2` ON `s2`.`role_id` = `s.Role2`.`role_id`
-        WHERE `s2`.`user_id` = @__userId_0
-        ORDER BY `s2`.`user_id`
-        LIMIT 1
-    ) AS `t3`
-) AS `t4` ON `s.Staff`.`user_id` = `t4`.`user_id`
-ORDER BY `t4`.`user_id`
-2019-08-21 17:36:45.798 +12:00 [INF] Executed DbCommand (87ms) [Parameters=[@p16='?' (DbType = Int16), @p0='?' (DbType = DateTime), @p1='?' (Size = -1), @p2='?' (DbType = DateTime), @p3='?' (Size = -1), @p4='?' (DbType = Int16), @p5='?' (Size = -1), @p6='?' (Size = -1), @p7='?' (Size = -1), @p8='?' (DbType = Int16), @p9='?' (Size = -1), @p10='?' (DbType = Int16), @p11='?' (Size = -1), @p12='?' (Size = -1), @p13='?' (Size = -1), @p14='?' (DbType = Int16), @p15='?' (Size = -1)], CommandType='"Text"', CommandTimeout='30']
-UPDATE `ablemusic`.`staff` SET `dob` = @p0, `email` = @p1, `expiry_date` = @p2, `first_name` = @p3, `gender` = @p4, `home_phone` = @p5, `id_number` = @p6, `id_photo` = @p7, `id_type` = @p8, `ird_number` = @p9, `is_activate` = @p10, `last_name` = @p11, `mobile_phone` = @p12, `photo` = @p13, `user_id` = @p14, `visa` = @p15
-WHERE `staff_id` = @p16;
-SELECT ROW_COUNT();
-2019-08-21 17:37:02.586 +12:00 [INF] Executed action method Pegasus_backend.Controllers.Authorization.LoginController.ChangeImg (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 55173.8542ms.
-2019-08-21 17:37:02.622 +12:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
-2019-08-21 17:37:02.742 +12:00 [INF] Executed action Pegasus_backend.Controllers.Authorization.LoginController.ChangeImg (Pegasus_backend) in 55708.1474ms
-2019-08-21 17:37:02.742 +12:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":null}
-2019-08-21 17:37:02.748 +12:00 [INF] Request finished in 55841.4699ms 200 application/json; charset=utf-8

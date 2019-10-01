@@ -86,7 +86,7 @@ namespace Pegasus_backend.Controllers
                 var availableDays = await _ablemusicContext.AvailableDays
                     .Include(s=>s.Teacher)
                     .Where(s => s.OrgId == orgId && s.Teacher.IsActivate ==1 )
-                    .Select(s => new {s.OrgId ,
+                    .Select(s => new {s.OrgId ,s.TeacherId,
                             Teacher = new  {s.Teacher.FirstName,s.Teacher.LastName,s.Teacher.TeacherId}
                         })
                     .Distinct()

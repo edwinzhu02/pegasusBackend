@@ -656,7 +656,7 @@ namespace Pegasus_backend.Controllers
                     Where(l => l.LessonId == lessonId && l.IsCanceled !=1).FirstOrDefaultAsync();
                 var splittedLesson = new SplittedLesson();
                 
-                if (lesson == null) throw new Exception("It is wrong lesson inforamtion!");
+                if (lesson == null) throw new Exception("You selected a wrong lesson to make up!");
                 if (lesson.CourseInstanceId==null) throw new Exception("Trial lesson and group lesson can not be made up!");
                 int CourseInstanceId = lesson.CourseInstanceId.Value;
                 var makeUpLesson = await _ablemusicContext.AwaitMakeUpLesson.

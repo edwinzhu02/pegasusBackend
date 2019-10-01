@@ -400,6 +400,9 @@ namespace Pegasus_backend.Controllers
                             BeginTime = s.NewLesson.BeginTime,
                             EndTime = s.NewLesson.EndTime
                         }
+                        ,IsPaid =_ablemusicContext.Invoice.Where(i => i.InvoiceNum==s.InvoiceNum
+                        && i.IsActive==1 && i.InvoiceNum != null)
+                            .Select(i =>i.IsPaid).FirstOrDefault()??0
                     }).ToListAsync();
                 
 
@@ -414,6 +417,7 @@ namespace Pegasus_backend.Controllers
             
             return Ok(result);
         }
+
         private static bool FindGroup(Lesson s,int? learnerId){
             if (s.GroupCourseInstance == null)
             {
