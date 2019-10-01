@@ -13,13 +13,14 @@ namespace Pegasus_backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class NoticeController: BasicController
+    public class NoticeController : BasicController
     {
         public NoticeController(ablemusicContext ablemusicContext, ILogger<NoticeController> log) : base(ablemusicContext, log)
-        {        
+        {
         }
         [HttpPut("{staffId}/{noticeId}/{type}")]
-        public async Task<IActionResult> ReadNotices(int staffId,int noticeId,short type){
+        public async Task<IActionResult> ReadNotices(int staffId, int noticeId, short type)
+        {
 
             var result = new Result<object>();
             try
@@ -27,13 +28,15 @@ namespace Pegasus_backend.Controllers
                 var notice = _ablemusicContext.Notices
                     .FirstOrDefault(n => n.NoticeId == noticeId);
                 if (notice == null) throw new Exception("This notice is not exists");
-                
-                if (type ==1 ){
-                    notice.IsCompleted=1;
-                    notice.IsRead =1 ;
+
+                if (type == 1)
+                {
+                    notice.IsCompleted = 1;
+                    notice.IsRead = 1;
                 }
-                else{
-                    notice.IsRead =1;
+                else
+                {
+                    notice.IsRead = 1;
                 }
 
                 _ablemusicContext.Update(notice);
@@ -48,19 +51,28 @@ namespace Pegasus_backend.Controllers
             return Ok(result);
         }
         [HttpPost]
-        public async Task<IActionResult> Notices(Notices notice){
+        public async Task<IActionResult> Notices(NoticeModel noticeModel)
+        {
 
             var result = new Result<object>();
-            notice.IsRead =0;
-            notice.IsCompleted =0;
-            notice.CreatedAt = toNZTimezone(DateTime.UtcNow);
+
             try
             {
-                if (notice.FromStaffId ==null|| notice.ToStaffId==null||notice.Notice==null ){
-                    throw new Exception("Notice data error!");
+                foreach (var toStaffId in noticeModel.ToStaffId)
+                {
+                    var notice = new Notices();
+                    //notice.NoticeId = null;
+                    notice.IsRead = 0;
+                    notice.IsCompleted = 0;
+                    notice.CreatedAt = toNZTimezone(DateTime.UtcNow);
+                    notice.Notice = noticeModel.Notice;
+                    notice.FromStaffId = noticeModel.FromStaffId;
+                    notice.ToStaffId = toStaffId;
+                    await _ablemusicContext.Notices.AddAsync(notice);
+                     await _ablemusicContext.SaveChangesAsync();
+                   
                 }
-                await _ablemusicContext.AddAsync(notice);
-                await _ablemusicContext.SaveChangesAsync();
+                
             }
             catch (Exception ex)
             {
@@ -71,7 +83,7 @@ namespace Pegasus_backend.Controllers
             return Ok(result);
         }
 
- 
+
         [HttpGet("{staffId}")]
         public async Task<IActionResult> GetNotices(int staffId)
         {
@@ -79,10 +91,18 @@ namespace Pegasus_backend.Controllers
             try
             {
                 var notices = await _ablemusicContext.Notices.Include(n => n.FromStaff)
-                         .Where(s => s.ToStaffId==staffId && s.IsCompleted == 0).
-                         Select(n => new{
-                             n.NoticeId,n.CreatedAt,n.Notice,n.ToStaffId,n.IsCompleted,n.IsRead,
-                            n.FromStaffId,n.FromStaff.FirstName,n.FromStaff.LastName
+                         .Where(s => s.ToStaffId == staffId && s.IsCompleted == 0).
+                         Select(n => new
+                         {
+                             n.NoticeId,
+                             n.CreatedAt,
+                             n.Notice,
+                             n.ToStaffId,
+                             n.IsCompleted,
+                             n.IsRead,
+                             n.FromStaffId,
+                             n.FromStaff.FirstName,
+                             n.FromStaff.LastName
                          })
                     .ToListAsync();
                 result.Data = notices;
@@ -94,7 +114,7 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = ex.Message;
                 return BadRequest(result);
             }
-        } 
+        }
     }
-  
+
 }
