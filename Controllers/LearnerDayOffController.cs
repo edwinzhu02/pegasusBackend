@@ -99,7 +99,7 @@ namespace Pegasus_backend.Controllers
             if(exsitsAmendment.Count > 0)
             {
                 result.IsSuccess = false;
-                result.ErrorMessage = "There is a conflict of date on your previous dayoff";
+                result.ErrorMessage = "There is a conflict of date on your previous asking leave";
                 return BadRequest(result);
             }
             byte remaining=0;
@@ -272,9 +272,9 @@ namespace Pegasus_backend.Controllers
             using (var dbContextTransaction = _ablemusicContext.Database.BeginTransaction())
             {
                 TodoRepository todoRepository = new TodoRepository(_ablemusicContext);
-                todoRepository.AddSingleTodoList("Period Dayoff Remind", TodoListContentGenerator.DayOffForLearner(courseSchedules[0],
+                todoRepository.AddSingleTodoList("Student Ask Leave Reminder", TodoListContentGenerator.DayOffForLearner(courseSchedules[0],
                     inputObj.EndDate.ToString()), inputObj.UserId, todoDate, null, courseSchedules[0].LearnerId, null);
-                todoRepository.AddMutipleTodoLists("Period Dayoff Remind", teacherIdMapTodoContent, inputObj.UserId, todoDate, null, null);
+                todoRepository.AddMutipleTodoLists("Student Ask Leave Reminder", teacherIdMapTodoContent, inputObj.UserId, todoDate, null, null);
                 var saveTodoResult = await todoRepository.SaveTodoListsAsync();
                 if (!saveTodoResult.IsSuccess)
                 {
@@ -283,8 +283,8 @@ namespace Pegasus_backend.Controllers
 
                 RemindLogRepository remindLogRepository = new RemindLogRepository(_ablemusicContext);
                 remindLogRepository.AddSingleRemindLog(courseSchedules[0].LearnerId, courseSchedules[0].LearnerEmail,
-                    RemindLogContentGenerator.DayOffForLearner(courseSchedules[0], inputObj.EndDate.ToString()), null, "Period Dayoff Remind", null, remindScheduledDate);
-                remindLogRepository.AddMultipleRemindLogs(teacherMapRemindLogContent, null, "Period Dayoff Remind", null, remindScheduledDate);
+                    RemindLogContentGenerator.DayOffForLearner(courseSchedules[0], inputObj.EndDate.ToString()), null, "Student Ask Leave Reminder", null, remindScheduledDate);
+                remindLogRepository.AddMultipleRemindLogs(teacherMapRemindLogContent, null, "Student Ask Leave Reminder", null, remindScheduledDate);
                 var saveRemindLogResult = await remindLogRepository.SaveRemindLogAsync();
                 if (!saveRemindLogResult.IsSuccess)
                 {
