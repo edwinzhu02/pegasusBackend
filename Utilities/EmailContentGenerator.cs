@@ -32,7 +32,7 @@ namespace Pegasus_backend.Utilities
         public static string Dayoff(string name, dynamic courseSchedule, LearnerDayoffViewModel inputObj, string confirmURL)
         {
             string mailContent = "<div><p>Dear " + name + "</p>" + "<p>This is to inform you that the student " + courseSchedule.LearnerFirstName +
-                " " + courseSchedule.LearnerLastName + " has been taken the dayoff from " + inputObj.BeginDate.ToString() + " to " +
+                " " + courseSchedule.LearnerLastName + " has been taken the leave from " + inputObj.BeginDate.ToString() + " to " +
                 inputObj.EndDate.ToString() + ". The course " + courseSchedule.CourseName + " in the period is canceled. </p>";
 
             mailContent += "<p> Please click the following button to confirm. </p>" +
