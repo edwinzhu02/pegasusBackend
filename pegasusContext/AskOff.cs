@@ -16,6 +16,6 @@ namespace Pegasus_backend.pegasusContext
         public string Note { get; set; }
         public short? UserId { get; set; }
 
-        public User User { get; set; }
+        public virtual User User { get; set; }
     }
 }

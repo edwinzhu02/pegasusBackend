@@ -28,16 +28,16 @@ namespace Pegasus_backend.pegasusContext
         public string Signature { get; set; }
         public short? IsOnline { get; set; }
 
-        public Role Role { get; set; }
-        public OnlineUser OnlineUser { get; set; }
-        public ICollection<AskOff> AskOff { get; set; }
-        public ICollection<ChatGroup> ChatGroup { get; set; }
-        public ICollection<ChatMessage> ChatMessageReceiverUser { get; set; }
-        public ICollection<ChatMessage> ChatMessageSenderUser { get; set; }
-        public ICollection<Learner> Learner { get; set; }
-        public ICollection<LoginLog> LoginLog { get; set; }
-        public ICollection<Staff> Staff { get; set; }
-        public ICollection<Teacher> Teacher { get; set; }
-        public ICollection<TodoList> TodoList { get; set; }
+        public virtual Role Role { get; set; }
+        public virtual OnlineUser OnlineUser { get; set; }
+        public virtual ICollection<AskOff> AskOff { get; set; }
+        public virtual ICollection<ChatGroup> ChatGroup { get; set; }
+        public virtual ICollection<ChatMessage> ChatMessageReceiverUser { get; set; }
+        public virtual ICollection<ChatMessage> ChatMessageSenderUser { get; set; }
+        public virtual ICollection<Learner> Learner { get; set; }
+        public virtual ICollection<LoginLog> LoginLog { get; set; }
+        public virtual ICollection<Staff> Staff { get; set; }
+        public virtual ICollection<Teacher> Teacher { get; set; }
+        public virtual ICollection<TodoList> TodoList { get; set; }
     }
 }

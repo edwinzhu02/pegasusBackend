@@ -16,9 +16,9 @@ namespace Pegasus_backend.pegasusContext
         public short? StaffId { get; set; }
         public DateTime? CreatedAt { get; set; }
 
-        public Org Org { get; set; }
-        public Product Product { get; set; }
-        public Staff Staff { get; set; }
-        public Stock Stock { get; set; }
+        public virtual Org Org { get; set; }
+        public virtual Product Product { get; set; }
+        public virtual Staff Staff { get; set; }
+        public virtual Stock Stock { get; set; }
     }
 }

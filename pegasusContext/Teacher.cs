@@ -50,19 +50,19 @@ namespace Pegasus_backend.pegasusContext
         public string OtherfileUrl { get; set; }
         public byte? MinimumHours { get; set; }
 
-        public User User { get; set; }
-        public ICollection<Amendment> Amendment { get; set; }
-        public ICollection<AvailableDays> AvailableDays { get; set; }
-        public ICollection<GroupCourseInstance> GroupCourseInstance { get; set; }
-        public ICollection<Lesson> Lesson { get; set; }
-        public ICollection<One2oneCourseInstance> One2oneCourseInstance { get; set; }
-        public ICollection<Rating> Rating { get; set; }
-        public ICollection<RemindLog> RemindLog { get; set; }
-        public ICollection<TeacherCourse> TeacherCourse { get; set; }
-        public ICollection<TeacherLanguage> TeacherLanguage { get; set; }
-        public ICollection<TeacherQualificatiion> TeacherQualificatiion { get; set; }
-        public ICollection<TeacherTransaction> TeacherTransaction { get; set; }
-        public ICollection<TeacherWageRates> TeacherWageRates { get; set; }
-        public ICollection<TodoList> TodoList { get; set; }
+        public virtual User User { get; set; }
+        public virtual ICollection<Amendment> Amendment { get; set; }
+        public virtual ICollection<AvailableDays> AvailableDays { get; set; }
+        public virtual ICollection<GroupCourseInstance> GroupCourseInstance { get; set; }
+        public virtual ICollection<Lesson> Lesson { get; set; }
+        public virtual ICollection<One2oneCourseInstance> One2oneCourseInstance { get; set; }
+        public virtual ICollection<Rating> Rating { get; set; }
+        public virtual ICollection<RemindLog> RemindLog { get; set; }
+        public virtual ICollection<TeacherCourse> TeacherCourse { get; set; }
+        public virtual ICollection<TeacherLanguage> TeacherLanguage { get; set; }
+        public virtual ICollection<TeacherQualificatiion> TeacherQualificatiion { get; set; }
+        public virtual ICollection<TeacherTransaction> TeacherTransaction { get; set; }
+        public virtual ICollection<TeacherWageRates> TeacherWageRates { get; set; }
+        public virtual ICollection<TodoList> TodoList { get; set; }
     }
 }

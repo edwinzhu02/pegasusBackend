@@ -10,7 +10,7 @@ namespace Pegasus_backend.pegasusContext
         public short RoleAccessId { get; set; }
         public short? IsMobile { get; set; }
 
-        public Page Page { get; set; }
-        public Role Role { get; set; }
+        public virtual Page Page { get; set; }
+        public virtual Role Role { get; set; }
     }
 }

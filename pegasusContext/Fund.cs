@@ -15,7 +15,7 @@ namespace Pegasus_backend.pegasusContext
         public int LearnerId { get; set; }
         public DateTime? UpdatedAt { get; set; }
 
-        public ICollection<LearnerTransaction> LearnerTransaction { get; set; }
-        public ICollection<SoldTransaction> SoldTransaction { get; set; }
+        public virtual ICollection<LearnerTransaction> LearnerTransaction { get; set; }
+        public virtual ICollection<SoldTransaction> SoldTransaction { get; set; }
     }
 }

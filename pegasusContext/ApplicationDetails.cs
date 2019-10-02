@@ -12,7 +12,7 @@ namespace Pegasus_backend.pegasusContext
         public int? DeliveredQty { get; set; }
         public int? ReceivedQty { get; set; }
 
-        public StockApplication Application { get; set; }
-        public Product Product { get; set; }
+        public virtual StockApplication Application { get; set; }
+        public virtual Product Product { get; set; }
     }
 }

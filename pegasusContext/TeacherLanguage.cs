@@ -9,7 +9,7 @@ namespace Pegasus_backend.pegasusContext
         public short TeacherLangId { get; set; }
         public byte? LangId { get; set; }
 
-        public Language Lang { get; set; }
-        public Teacher Teacher { get; set; }
+        public virtual Language Lang { get; set; }
+        public virtual Teacher Teacher { get; set; }
     }
 }

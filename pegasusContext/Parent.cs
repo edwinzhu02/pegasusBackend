@@ -14,6 +14,6 @@ namespace Pegasus_backend.pegasusContext
         public int? LearnerId { get; set; }
         public DateTime? CreatedAt { get; set; }
 
-        public Learner Learner { get; set; }
+        public virtual Learner Learner { get; set; }
     }
 }

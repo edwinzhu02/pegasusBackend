@@ -263,9 +263,9 @@ namespace Pegasus_backend.Controllers
                 }
 
                 TodoRepository todoRepository = new TodoRepository(_ablemusicContext);
-                todoRepository.AddSingleTodoList("Lesson Rearranged", TodoListContentGenerator.RearrangedSingleLessonWithoutOldLessonForLearner(
+                todoRepository.AddSingleTodoList("Lesson Rescheduled", TodoListContentGenerator.RearrangedSingleLessonWithoutOldLessonForLearner(
                     learner, lesson, org, room, teacher), (short)userId, todoDate, lesson.LessonId, lesson.LearnerId, null);
-                todoRepository.AddSingleTodoList("Lesson Rearranged", TodoListContentGenerator.RearrangedSingleLessonWithoutOldLessonForTeacher(
+                todoRepository.AddSingleTodoList("Lesson Rescheduled", TodoListContentGenerator.RearrangedSingleLessonWithoutOldLessonForTeacher(
                     learner, lesson, org, room, teacher), (short)userId, todoDate, lesson.LessonId, null, teacher.TeacherId);
                 var saveTodoResult = await todoRepository.SaveTodoListsAsync();
                 if (!saveTodoResult.IsSuccess)
@@ -285,9 +285,9 @@ namespace Pegasus_backend.Controllers
 
                 RemindLogRepository remindLogRepository = new RemindLogRepository(_ablemusicContext);
                 remindLogRepository.AddSingleRemindLog(learner.LearnerId, learner.Email, RemindLogContentGenerator.RearrangedSingleLessonWithoutOldLessonForLearner(
-                    learner, lesson, org, room, teacher), null, "Lesson Rearranged", lesson.LessonId, remindScheduleDate);
+                    learner, lesson, org, room, teacher), null, "Lesson Rescheduled", lesson.LessonId, remindScheduleDate);
                 remindLogRepository.AddSingleRemindLog(null, teacher.Email, RemindLogContentGenerator.RearrangedSingleLessonWithoutOldLessonForTeacher(
-                    learner, lesson, org, room, teacher), teacher.TeacherId, "Lesson Rearranged", lesson.LessonId, remindScheduleDate);
+                    learner, lesson, org, room, teacher), teacher.TeacherId, "Lesson Rescheduled", lesson.LessonId, remindScheduleDate);
 
                 var saveRemindResult = await remindLogRepository.SaveRemindLogAsync();
                 if (!saveRemindResult.IsSuccess)

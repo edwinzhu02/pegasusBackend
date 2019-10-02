@@ -14,6 +14,6 @@ namespace Pegasus_backend.pegasusContext
         public DateTime? CreateAt { get; set; }
         public short? IsActivate { get; set; }
 
-        public Teacher Teacher { get; set; }
+        public virtual Teacher Teacher { get; set; }
     }
 }

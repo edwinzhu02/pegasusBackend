@@ -22,8 +22,8 @@ namespace Pegasus_backend.pegasusContext
         public DateTime? RecieveAt { get; set; }
         public DateTime? DeliverAt { get; set; }
 
-        public Staff ApplyStaff { get; set; }
-        public Org Org { get; set; }
-        public ICollection<ApplicationDetails> ApplicationDetails { get; set; }
+        public virtual Staff ApplyStaff { get; set; }
+        public virtual Org Org { get; set; }
+        public virtual ICollection<ApplicationDetails> ApplicationDetails { get; set; }
     }
 }

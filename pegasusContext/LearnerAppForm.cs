@@ -29,6 +29,6 @@ namespace Pegasus_backend.pegasusContext
         public string MiddleName { get; set; }
         public int AppFormId { get; set; }
 
-        public ICollection<ParentAppForm> ParentAppForm { get; set; }
+        public virtual ICollection<ParentAppForm> ParentAppForm { get; set; }
     }
 }

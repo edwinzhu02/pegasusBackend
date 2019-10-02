@@ -15,7 +15,7 @@ namespace Pegasus_backend.pegasusContext
         public DateTime? EndDate { get; set; }
         public DateTime? InvoiceDate { get; set; }
 
-        public GroupCourseInstance GroupCourseInstance { get; set; }
-        public Learner Learner { get; set; }
+        public virtual GroupCourseInstance GroupCourseInstance { get; set; }
+        public virtual Learner Learner { get; set; }
     }
 }

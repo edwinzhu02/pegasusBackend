@@ -13,6 +13,6 @@ namespace Pegasus_backend.pegasusContext
         public short ProdCatId { get; set; }
         public string ProdCatName { get; set; }
 
-        public ICollection<ProdType> ProdType { get; set; }
+        public virtual ICollection<ProdType> ProdType { get; set; }
     }
 }

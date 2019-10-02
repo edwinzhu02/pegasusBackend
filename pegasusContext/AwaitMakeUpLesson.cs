@@ -22,11 +22,11 @@ namespace Pegasus_backend.pegasusContext
         public int? GroupCourseInstanceId { get; set; }
         public byte? Remaining { get; set; }
 
-        public One2oneCourseInstance CourseInstance { get; set; }
-        public GroupCourseInstance GroupCourseInstance { get; set; }
-        public Learner Learner { get; set; }
-        public Lesson MissedLesson { get; set; }
-        public Lesson NewLesson { get; set; }
-        public ICollection<SplittedLesson> SplittedLesson { get; set; }
+        public virtual One2oneCourseInstance CourseInstance { get; set; }
+        public virtual GroupCourseInstance GroupCourseInstance { get; set; }
+        public virtual Learner Learner { get; set; }
+        public virtual Lesson MissedLesson { get; set; }
+        public virtual Lesson NewLesson { get; set; }
+        public virtual ICollection<SplittedLesson> SplittedLesson { get; set; }
     }
 }

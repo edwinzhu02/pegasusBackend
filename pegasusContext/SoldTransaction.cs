@@ -21,10 +21,10 @@ namespace Pegasus_backend.pegasusContext
         public decimal? DiscountRate { get; set; }
         public decimal? DiscountedAmount { get; set; }
 
-        public Fund Learner { get; set; }
-        public Learner LearnerNavigation { get; set; }
-        public Payment Payment { get; set; }
-        public Product Product { get; set; }
-        public Stock Stock { get; set; }
+        public virtual Fund Learner { get; set; }
+        public virtual Learner LearnerNavigation { get; set; }
+        public virtual Payment Payment { get; set; }
+        public virtual Product Product { get; set; }
+        public virtual Stock Stock { get; set; }
     }
 }

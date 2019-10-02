@@ -82,12 +82,14 @@ namespace Pegasus_backend.pegasusContext
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseMySQL("server=gradspace.org;UserId=dbuser;Password=qwer1234;Database=ablemusic");
+                optionsBuilder.UseMySQL("server=www.gradspace.org;port=3306;user=dbuser;password=qwer1234;database=ablemusic");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
+
             modelBuilder.Entity<Amendment>(entity =>
             {
                 entity.ToTable("amendment", "ablemusic");
@@ -1774,7 +1776,7 @@ namespace Pegasus_backend.pegasusContext
 
                 entity.Property(e => e.TitleUrl)
                     .HasColumnName("title_url")
-                    .HasMaxLength(60)
+                    .HasMaxLength(100)
                     .IsUnicode(false);
 
                 entity.Property(e => e.UserId)
@@ -1796,8 +1798,7 @@ namespace Pegasus_backend.pegasusContext
 
                 entity.Property(e => e.NoticeId)
                     .HasColumnName("notice_id")
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedNever();
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.CreatedAt)
                     .HasColumnName("created_at")

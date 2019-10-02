@@ -15,7 +15,7 @@ namespace Pegasus_backend.pegasusContext
         public DateTime? CreatedAt { get; set; }
         public short? IsActive { get; set; }
 
-        public User User { get; set; }
-        public ICollection<ChatMessage> ChatMessage { get; set; }
+        public virtual User User { get; set; }
+        public virtual ICollection<ChatMessage> ChatMessage { get; set; }
     }
 }

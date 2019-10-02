@@ -34,13 +34,13 @@ namespace Pegasus_backend.pegasusContext
         public string Photo { get; set; }
         public short StaffId { get; set; }
 
-        public User User { get; set; }
-        public ICollection<Notices> NoticesFromStaff { get; set; }
-        public ICollection<Notices> NoticesToStaff { get; set; }
-        public ICollection<Payment> Payment { get; set; }
-        public ICollection<SplittedLesson> SplittedLesson { get; set; }
-        public ICollection<StaffOrg> StaffOrg { get; set; }
-        public ICollection<StockApplication> StockApplication { get; set; }
-        public ICollection<StockOrder> StockOrder { get; set; }
+        public virtual User User { get; set; }
+        public virtual ICollection<Notices> NoticesFromStaff { get; set; }
+        public virtual ICollection<Notices> NoticesToStaff { get; set; }
+        public virtual ICollection<Payment> Payment { get; set; }
+        public virtual ICollection<SplittedLesson> SplittedLesson { get; set; }
+        public virtual ICollection<StaffOrg> StaffOrg { get; set; }
+        public virtual ICollection<StockApplication> StockApplication { get; set; }
+        public virtual ICollection<StockOrder> StockOrder { get; set; }
     }
 }

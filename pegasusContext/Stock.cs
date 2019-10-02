@@ -16,9 +16,9 @@ namespace Pegasus_backend.pegasusContext
         public int? ProductId { get; set; }
         public int? Quantity { get; set; }
 
-        public Org Org { get; set; }
-        public Product Product { get; set; }
-        public ICollection<SoldTransaction> SoldTransaction { get; set; }
-        public ICollection<StockOrder> StockOrder { get; set; }
+        public virtual Org Org { get; set; }
+        public virtual Product Product { get; set; }
+        public virtual ICollection<SoldTransaction> SoldTransaction { get; set; }
+        public virtual ICollection<StockOrder> StockOrder { get; set; }
     }
 }

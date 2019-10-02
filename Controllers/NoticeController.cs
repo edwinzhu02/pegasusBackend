@@ -69,10 +69,9 @@ namespace Pegasus_backend.Controllers
                     notice.FromStaffId = noticeModel.FromStaffId;
                     notice.ToStaffId = toStaffId;
                     await _ablemusicContext.Notices.AddAsync(notice);
-                     await _ablemusicContext.SaveChangesAsync();
-                   
+                  
                 }
-                
+                await _ablemusicContext.SaveChangesAsync();                
             }
             catch (Exception ex)
             {

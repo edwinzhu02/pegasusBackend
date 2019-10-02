@@ -27,16 +27,16 @@ namespace Pegasus_backend.pegasusContext
         public short? IsStarted { get; set; }
         public DateTime? InvoiceDate { get; set; }
 
-        public Course Course { get; set; }
-        public Org Org { get; set; }
-        public Room Room { get; set; }
-        public Teacher Teacher { get; set; }
-        public ICollection<AwaitMakeUpLesson> AwaitMakeUpLesson { get; set; }
-        public ICollection<CourseSchedule> CourseSchedule { get; set; }
-        public ICollection<Invoice> Invoice { get; set; }
-        public ICollection<InvoiceWaitingConfirm> InvoiceWaitingConfirm { get; set; }
-        public ICollection<LearnerGroupCourse> LearnerGroupCourse { get; set; }
-        public ICollection<Lesson> Lesson { get; set; }
-        public ICollection<LessonRemain> LessonRemain { get; set; }
+        public virtual Course Course { get; set; }
+        public virtual Org Org { get; set; }
+        public virtual Room Room { get; set; }
+        public virtual Teacher Teacher { get; set; }
+        public virtual ICollection<AwaitMakeUpLesson> AwaitMakeUpLesson { get; set; }
+        public virtual ICollection<CourseSchedule> CourseSchedule { get; set; }
+        public virtual ICollection<Invoice> Invoice { get; set; }
+        public virtual ICollection<InvoiceWaitingConfirm> InvoiceWaitingConfirm { get; set; }
+        public virtual ICollection<LearnerGroupCourse> LearnerGroupCourse { get; set; }
+        public virtual ICollection<Lesson> Lesson { get; set; }
+        public virtual ICollection<LessonRemain> LessonRemain { get; set; }
     }
 }

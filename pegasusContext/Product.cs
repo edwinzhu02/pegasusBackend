@@ -21,10 +21,10 @@ namespace Pegasus_backend.pegasusContext
         public decimal? WholesalePrice { get; set; }
         public short? ProdTypeId { get; set; }
 
-        public ProdType ProdType { get; set; }
-        public ICollection<ApplicationDetails> ApplicationDetails { get; set; }
-        public ICollection<SoldTransaction> SoldTransaction { get; set; }
-        public ICollection<Stock> Stock { get; set; }
-        public ICollection<StockOrder> StockOrder { get; set; }
+        public virtual ProdType ProdType { get; set; }
+        public virtual ICollection<ApplicationDetails> ApplicationDetails { get; set; }
+        public virtual ICollection<SoldTransaction> SoldTransaction { get; set; }
+        public virtual ICollection<Stock> Stock { get; set; }
+        public virtual ICollection<StockOrder> StockOrder { get; set; }
     }
 }

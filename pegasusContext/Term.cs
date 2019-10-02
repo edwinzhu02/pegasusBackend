@@ -19,8 +19,8 @@ namespace Pegasus_backend.pegasusContext
         public byte? TermType { get; set; }
         public string TermName { get; set; }
 
-        public ICollection<Invoice> Invoice { get; set; }
-        public ICollection<InvoiceWaitingConfirm> InvoiceWaitingConfirm { get; set; }
-        public ICollection<LessonRemain> LessonRemain { get; set; }
+        public virtual ICollection<Invoice> Invoice { get; set; }
+        public virtual ICollection<InvoiceWaitingConfirm> InvoiceWaitingConfirm { get; set; }
+        public virtual ICollection<LessonRemain> LessonRemain { get; set; }
     }
 }

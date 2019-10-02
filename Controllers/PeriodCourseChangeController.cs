@@ -359,15 +359,15 @@ namespace Pegasus_backend.Controllers
             using (var dbContextTransaction = _ablemusicContext.Database.BeginTransaction())
             {
                 TodoRepository todoRepository = new TodoRepository(_ablemusicContext);
-                todoRepository.AddSingleTodoList("Period Course Change Remind", TodoListContentGenerator.PeriodCourseChangeForLearner(courseInfo,
+                todoRepository.AddSingleTodoList("Course schedule Changing Reminder", TodoListContentGenerator.PeriodCourseChangeForLearner(courseInfo,
                     newCourseInfo, inputObj, todoDateBegin), inputObj.UserId, todoDateBegin, null, inputObj.LearnerId, null);
-                todoRepository.AddSingleTodoList("Period Course Change Remind", TodoListContentGenerator.PeriodCourseChangeForTeacher(courseInfo,
+                todoRepository.AddSingleTodoList("Course schedule Changing Reminder", TodoListContentGenerator.PeriodCourseChangeForTeacher(courseInfo,
                     newCourseInfo, inputObj, todoDateBegin), inputObj.UserId, todoDateBegin, null, null, courseInfo.TeacherId);
                 if (inputObj.EndDate.HasValue && inputObj.IsTemporary == 1)
                 {
-                    todoRepository.AddSingleTodoList("Period Course Change Remind", TodoListContentGenerator.PeriodCourseChangeForLearner(courseInfo,
+                    todoRepository.AddSingleTodoList("Course schedule Changing Reminder", TodoListContentGenerator.PeriodCourseChangeForLearner(courseInfo,
                         newCourseInfo, inputObj, todoDateEnd.Value), inputObj.UserId, todoDateEnd.Value, null, inputObj.LearnerId, null);
-                    todoRepository.AddSingleTodoList("Period Course Change Remind", TodoListContentGenerator.PeriodCourseChangeForTeacher(courseInfo,
+                    todoRepository.AddSingleTodoList("Course schedule Changing Reminder", TodoListContentGenerator.PeriodCourseChangeForTeacher(courseInfo,
                         newCourseInfo, inputObj, todoDateEnd.Value), inputObj.UserId, todoDateEnd.Value, null, null, courseInfo.TeacherId);
                 }
                 var saveTodoResult = await todoRepository.SaveTodoListsAsync();
@@ -378,9 +378,9 @@ namespace Pegasus_backend.Controllers
 
                 RemindLogRepository remindLogRepository = new RemindLogRepository(_ablemusicContext);
                 remindLogRepository.AddSingleRemindLog(courseInfo.LearnerId, courseInfo.LearnerEmail, RemindLogContentGenerator.PeriodCourseChangeForLearner(
-                    courseInfo, newCourseInfo, inputObj), null, "Period Course Change Remind", null, remindScheduleDateBegin);
+                    courseInfo, newCourseInfo, inputObj), null, "Course schedule Changing Reminder", null, remindScheduleDateBegin);
                 remindLogRepository.AddSingleRemindLog(null, courseInfo.TeacherEmail, RemindLogContentGenerator.PeriodCourseChangeForTeacher(courseInfo,
-                    newCourseInfo, inputObj), courseInfo.TeacherId, "Period Course Change Remind", null, remindScheduleDateBegin);
+                    newCourseInfo, inputObj), courseInfo.TeacherId, "Course schedule Changing Reminder", null, remindScheduleDateBegin);
 
                 var saveRemindLogResult = await remindLogRepository.SaveRemindLogAsync();
                 if (!saveRemindLogResult.IsSuccess)
@@ -430,7 +430,7 @@ namespace Pegasus_backend.Controllers
                     }
                     string mailContent = EmailContentGenerator.PeriodCourseChange(currentPersonName, courseInfo, newCourseInfo, inputObj);
                     remindLogRepository.UpdateContent(remind.RemindId, mailContent);
-                    //notifications.Add(new NotificationEventArgs(remind.Email, "Period Course Change Remind", mailContent, remind.RemindId));
+                    //notifications.Add(new NotificationEventArgs(remind.Email, "Course schedule Changing Reminder", mailContent, remind.RemindId));
                 }
                 var remindLogUpdateContentResult = await remindLogRepository.SaveUpdatedContentAsync();
                 if (!remindLogUpdateContentResult.IsSuccess)

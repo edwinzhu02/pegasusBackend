@@ -12,8 +12,8 @@ namespace Pegasus_backend.pegasusContext
         public short? StaffId { get; set; }
         public short? IsAfter { get; set; }
 
-        public AwaitMakeUpLesson Await { get; set; }
-        public Lesson Lesson { get; set; }
-        public Staff Staff { get; set; }
+        public virtual AwaitMakeUpLesson Await { get; set; }
+        public virtual Lesson Lesson { get; set; }
+        public virtual Staff Staff { get; set; }
     }
 }

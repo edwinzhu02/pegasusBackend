@@ -13,6 +13,6 @@ namespace Pegasus_backend.pegasusContext
         public short CourseCategoryId { get; set; }
         public string CourseCategoryName { get; set; }
 
-        public ICollection<Course> Course { get; set; }
+        public virtual ICollection<Course> Course { get; set; }
     }
 }

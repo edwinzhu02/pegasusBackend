@@ -10,7 +10,7 @@ namespace Pegasus_backend.pegasusContext
         public short StaffOrgId { get; set; }
         public short? IsActivate { get; set; }
 
-        public Org Org { get; set; }
-        public Staff Staff { get; set; }
+        public virtual Org Org { get; set; }
+        public virtual Staff Staff { get; set; }
     }
 }

@@ -20,11 +20,11 @@ namespace Pegasus_backend.pegasusContext
         public short? IsActivate { get; set; }
         public DateTime? CreatedAt { get; set; }
 
-        public Org Org { get; set; }
-        public ICollection<Amendment> Amendment { get; set; }
-        public ICollection<AvailableDays> AvailableDays { get; set; }
-        public ICollection<GroupCourseInstance> GroupCourseInstance { get; set; }
-        public ICollection<Lesson> Lesson { get; set; }
-        public ICollection<One2oneCourseInstance> One2oneCourseInstance { get; set; }
+        public virtual Org Org { get; set; }
+        public virtual ICollection<Amendment> Amendment { get; set; }
+        public virtual ICollection<AvailableDays> AvailableDays { get; set; }
+        public virtual ICollection<GroupCourseInstance> GroupCourseInstance { get; set; }
+        public virtual ICollection<Lesson> Lesson { get; set; }
+        public virtual ICollection<One2oneCourseInstance> One2oneCourseInstance { get; set; }
     }
 }
