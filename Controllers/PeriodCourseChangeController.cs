@@ -359,9 +359,9 @@ namespace Pegasus_backend.Controllers
             using (var dbContextTransaction = _ablemusicContext.Database.BeginTransaction())
             {
                 TodoRepository todoRepository = new TodoRepository(_ablemusicContext);
-                todoRepository.AddSingleTodoList("Course schedule Changing Reminder", TodoListContentGenerator.PeriodCourseChangeForLearner(courseInfo,
+                todoRepository.AddSingleTodoList("Course Schedule Changing Reminder", TodoListContentGenerator.PeriodCourseChangeForLearner(courseInfo,
                     newCourseInfo, inputObj, todoDateBegin), inputObj.UserId, todoDateBegin, null, inputObj.LearnerId, null);
-                todoRepository.AddSingleTodoList("Course schedule Changing Reminder", TodoListContentGenerator.PeriodCourseChangeForTeacher(courseInfo,
+                todoRepository.AddSingleTodoList("Course Schedule Changing Reminder", TodoListContentGenerator.PeriodCourseChangeForTeacher(courseInfo,
                     newCourseInfo, inputObj, todoDateBegin), inputObj.UserId, todoDateBegin, null, null, courseInfo.TeacherId);
                 if (inputObj.EndDate.HasValue && inputObj.IsTemporary == 1)
                 {
