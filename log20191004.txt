@@ -1,0 +1,7 @@
+2019-10-04 12:31:24.262 +13:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/index.html  
+2019-10-04 12:31:24.853 +13:00 [INF] Request finished in 611.8985ms 200 text/html
+2019-10-04 12:31:25.610 +13:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/v1/swagger.json  
+2019-10-04 12:31:25.627 +13:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/favicon-32x32.png  
+2019-10-04 12:31:25.720 +13:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+2019-10-04 12:31:25.720 +13:00 [INF] Request finished in 93.4904ms 200 image/png
+2019-10-04 12:31:26.638 +13:00 [INF] Request finished in 1028.4441ms 200 application/json;charset=utf-8

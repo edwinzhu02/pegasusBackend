@@ -28,7 +28,10 @@ namespace Pegasus_backend.Controllers
             List<TodoList> todos = new List<TodoList>();
             try
             {
-                todos = await _ablemusicContext.TodoList.Where(t => t.UserId == userId && t.TodoDate == toNZTimezone(DateTime.UtcNow).Date).ToListAsync();
+                todos = await _ablemusicContext.TodoList.
+                Where(t => t.UserId == userId && t.ProcessFlag==0
+                && t.TodoDate == toNZTimezone(DateTime.UtcNow).Date).
+                ToListAsync();
             }
             catch(Exception ex)
             {
