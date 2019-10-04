@@ -41,7 +41,7 @@ namespace Pegasus_backend.Controllers.MobileControllers
             await base.OnConnectedAsync();
         }
 
-        public async Task SendMessage(string groupId, string message)
+        public async Task SendGroupMessage(string groupId, string message)
         {
             // receive the message from the client and then broadcast that same message to
             // all the clients that listen on the Broadcastchatdata event
@@ -55,17 +55,14 @@ namespace Pegasus_backend.Controllers.MobileControllers
 //            await Clients.All.SendAsync("SendMessage", groupId, message);
 
             // add user into group
-//            await Groups.AddToGroupAsync(Context.ConnectionId, groupId);
-//            await Clients.Group(groupId).SendAsync("SendMessage", $"Hello {groupId}");
+            await Groups.AddToGroupAsync(Context.ConnectionId, groupId);
+            await Clients.Group(groupId).SendAsync("SendMessage", $"Hello {groupId}");
 
         }
 
 
         public async Task<string> SendMessageOneToOne(ChatMessageModel chatMessageModel)
         {
-//            TimeZoneInfo timeInfo = TimeZoneInfo.FindSystemTimeZoneById("New Zealand Standard Time");
-//            var returnedMessageTime = TimeZoneInfo.ConvertTimeFromUtc(chatMessageModel.CreateAt ?? DateTime.Now, timeInfo);
-
             //var connectionId = Context.ConnectionId;
             var returnedMessageTime = chatMessageModel.CreateAt ?? DateTime.Now;
             try
