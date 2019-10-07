@@ -90,6 +90,31 @@ namespace Pegasus_backend.Controllers
 
             return Ok(result);
         }
+        [HttpGet("[action]/{teacherId}")]
+        public async Task<ActionResult<IEnumerable<Course>>> GetCoursesForTeacher(int teacherId)
+        {
+            Result<List<Object>> result = new Result<List<Object>>();
+            result.Data = new List<Object>();
+            List<Course> courses = new List<Course>();
+            try
+            {
+                courses = await (from tc in _ablemusicContext.TeacherCourse
+                                join c in _ablemusicContext.Course on tc.CourseId equals c.CourseId
+                                where tc.TeacherId==teacherId
+                                select new Course {
+                                        CourseId =c.CourseId,
+                                        CourseName =c.CourseName}
+                                        ).ToListAsync();
+                return Ok(result);
+            }
+             catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+        }
+
         [HttpGet("{Id}")]
         public async Task<ActionResult<IEnumerable<Course>>> GetCourses(int Id)
         {

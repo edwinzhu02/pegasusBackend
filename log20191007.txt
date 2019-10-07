@@ -1,0 +1,22 @@
+2019-10-07 20:03:37.855 +13:00 [INF] User profile is available. Using 'C:\Users\Zhuyi\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-10-07 20:03:38.911 +13:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-10-07 20:03:40.528 +13:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
+2019-10-07 20:03:40.642 +13:00 [WRN] Failed to determine the https port for redirect.
+2019-10-07 20:03:41.087 +13:00 [INF] 
+2019-10-07 20:03:41.426 +13:00 [INF] Response 
+2019-10-07 20:03:41.439 +13:00 [INF] Request finished in 923.058ms 404 
+2019-10-07 20:05:32.818 +13:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger  
+2019-10-07 20:05:32.823 +13:00 [INF] Request finished in 4.9706ms 301 
+2019-10-07 20:05:32.831 +13:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/index.html  
+2019-10-07 20:05:33.207 +13:00 [INF] Request finished in 376.0354ms 200 text/html
+2019-10-07 20:05:33.224 +13:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/swagger-ui-bundle.js  
+2019-10-07 20:05:33.227 +13:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/swagger-ui-standalone-preset.js  
+2019-10-07 20:05:33.227 +13:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/swagger-ui.css  
+2019-10-07 20:05:33.308 +13:00 [INF] Sending file. Request path: '/swagger-ui-standalone-preset.js'. Physical path: 'N/A'
+2019-10-07 20:05:33.308 +13:00 [INF] Sending file. Request path: '/swagger-ui.css'. Physical path: 'N/A'
+2019-10-07 20:05:33.314 +13:00 [INF] Sending file. Request path: '/swagger-ui-bundle.js'. Physical path: 'N/A'
+2019-10-07 20:05:33.317 +13:00 [INF] Request finished in 89.3985ms 200 application/javascript
+2019-10-07 20:05:33.317 +13:00 [INF] Request finished in 89.4297ms 200 text/css
+2019-10-07 20:05:33.317 +13:00 [INF] Request finished in 93.1421ms 200 application/javascript
+2019-10-07 20:05:34.586 +13:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/v1/swagger.json  
+2019-10-07 20:05:35.319 +13:00 [INF] Request finished in 733.517ms 200 application/json;charset=utf-8
