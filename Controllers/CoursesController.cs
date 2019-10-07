@@ -93,8 +93,8 @@ namespace Pegasus_backend.Controllers
         [HttpGet("[action]/{teacherId}")]
         public async Task<ActionResult<IEnumerable<Course>>> GetCoursesForTeacher(int teacherId)
         {
-            Result<List<Object>> result = new Result<List<Object>>();
-            result.Data = new List<Object>();
+            Result<Object> result = new Result<Object>();
+            //result.Data = new List<Object>();
             List<Course> courses = new List<Course>();
             try
             {
@@ -105,6 +105,7 @@ namespace Pegasus_backend.Controllers
                                         CourseId =c.CourseId,
                                         CourseName =c.CourseName}
                                         ).ToListAsync();
+                result.Data = courses;
                 return Ok(result);
             }
              catch (Exception ex)

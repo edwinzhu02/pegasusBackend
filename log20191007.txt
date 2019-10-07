@@ -20,3 +20,13 @@
 2019-10-07 20:05:33.317 +13:00 [INF] Request finished in 93.1421ms 200 application/javascript
 2019-10-07 20:05:34.586 +13:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/v1/swagger.json  
 2019-10-07 20:05:35.319 +13:00 [INF] Request finished in 733.517ms 200 application/json;charset=utf-8
+2019-10-07 21:32:09.558 +13:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Courses/GetCoursesForTeacher/274  
+2019-10-07 21:32:09.693 +13:00 [INF] 
+2019-10-07 21:32:09.911 +13:00 [INF] Route matched with {action = "GetCoursesForTeacher", controller = "Courses"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Pegasus_backend.pegasusContext.Course]]] GetCoursesForTeacher(Int32) on controller Pegasus_backend.Controllers.CoursesController (Pegasus_backend).
+2019-10-07 21:32:11.509 +13:00 [INF] Executing action method Pegasus_backend.Controllers.CoursesController.GetCoursesForTeacher (Pegasus_backend) - Validation state: "Valid"
+2019-10-07 21:32:33.530 +13:00 [INF] Entity Framework Core 2.2.6-servicing-10079 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-10-07 21:32:35.207 +13:00 [INF] Executed DbCommand (62ms) [Parameters=[@__teacherId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `c`.`course_id` AS `CourseId`, `c`.`course_name` AS `CourseName`
+FROM `ablemusic`.`teacher_course` AS `tc`
+INNER JOIN `ablemusic`.`course` AS `c` ON `tc`.`course_id` = `c`.`course_id`
+WHERE `tc`.`teacher_id` = @__teacherId_0
