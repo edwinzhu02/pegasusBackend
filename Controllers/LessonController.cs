@@ -363,7 +363,7 @@ namespace Pegasus_backend.Controllers
             {   
                 var termEndDate = await _ablemusicContext.Term.Where(t => t.EndDate>DateTime.UtcNow.AddDays(21)).OrderBy(t =>t.EndDate).
                     Select(t => t.EndDate).FirstOrDefaultAsync();
-                var items = await _ablemusicContext.Lesson
+                dynamic  items = await _ablemusicContext.Lesson
                     .Include(s => s.Teacher)
                     .Include(s => s.Learner)
                     .Include(s => s.Room)
@@ -400,9 +400,12 @@ namespace Pegasus_backend.Controllers
                             BeginTime = s.NewLesson.BeginTime,
                             EndTime = s.NewLesson.EndTime
                         }
-                        ,IsPaid =_ablemusicContext.Invoice.Where(i => i.InvoiceNum==s.InvoiceNum
+                        ,InvoiceNum = s.InvoiceNum
+                        
+                        ,IsPaid =_ablemusicContext.Invoice.
+                            Where(i => i.InvoiceNum==s.InvoiceNum
                         && i.IsActive==1 && i.InvoiceNum != null)
-                            .Select(i =>i.IsPaid).FirstOrDefault()??0
+                            .Select(i => i.IsPaid+0).FirstOrDefault()??((short)0)
                     }).ToListAsync();
                 
 
