@@ -100,7 +100,7 @@ namespace Pegasus_backend.Controllers
             {
                 courses = await (from tc in _ablemusicContext.TeacherCourse
                                 join c in _ablemusicContext.Course on tc.CourseId equals c.CourseId
-                                where tc.TeacherId==teacherId
+                                where tc.TeacherId==teacherId && c.CourseType==1
                                 select new Course {
                                         CourseId =c.CourseId,
                                         CourseName =c.CourseName}
