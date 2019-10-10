@@ -645,7 +645,7 @@ namespace Pegasus_backend.Controllers
         }
         [Route("MakeUpSplitLesson/{lessonId}/{isAfter}/{staffId}")]
         [HttpPut]
-        public async Task<IActionResult> MakeUpSplitLesson( int lessonId,short isAfter,int staffId)
+        public async Task<IActionResult> MakeUpSplitLesson( int lessonId,short isAfter,short staffId)
         {
             var result = new Result<string>();
             //AwaitMakeUpLesson makeUpLesson;
@@ -678,6 +678,7 @@ namespace Pegasus_backend.Controllers
                 splittedLesson.LessonId = lesson.LessonId;
                 splittedLesson.IsAfter = isAfter;
                 splittedLesson.CreatedAt = nowDate;
+                splittedLesson.StaffId = staffId;
 
                 await _ablemusicContext.AddAsync(splittedLesson);
                 _ablemusicContext.Update(lesson);
