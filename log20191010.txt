@@ -1,0 +1,7 @@
+2019-10-10 22:51:07.596 +13:00 [INF] User profile is available. Using 'C:\Users\Zhuyi\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-10-10 22:51:08.167 +13:00 [INF] Setting up the time host service. Everyday run at 23pm
+2019-10-10 22:51:09.013 +13:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
+2019-10-10 22:51:09.108 +13:00 [WRN] Failed to determine the https port for redirect.
+2019-10-10 22:51:09.280 +13:00 [INF] 
+2019-10-10 22:51:09.477 +13:00 [INF] Response 
+2019-10-10 22:51:09.486 +13:00 [INF] Request finished in 475.1454ms 404 

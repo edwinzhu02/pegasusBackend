@@ -400,7 +400,7 @@ namespace Pegasus_backend.Controllers
                             BeginTime = s.NewLesson.BeginTime,
                             EndTime = s.NewLesson.EndTime
                         }
-                        ,IsPaid =s.IsTrial ?s.IsPaid:
+                        ,IsPaid =s.IsTrial==1?s.IsPaid+0:
                             _ablemusicContext.Invoice.
                             Where(i => i.InvoiceNum==s.InvoiceNum
                         && i.IsActive==1 && i.InvoiceNum != null)
