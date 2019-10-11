@@ -51,6 +51,7 @@ namespace Pegasus_backend.pegasusContext
         public string FormUrl { get; set; }
         public string OtherfileUrl { get; set; }
         public string Comment { get; set; }
+        public decimal? Credit { get; set; }
 
         public virtual Org Org { get; set; }
         public virtual User User { get; set; }

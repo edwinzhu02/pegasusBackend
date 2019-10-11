@@ -32,6 +32,7 @@ namespace Pegasus_backend.Models
         public string Comment { get; set; }
         public string FormUrl { get; set; }
         public string OtherfileUrl { get; set; }
+        public decimal Credit { get; set; }
         public List<GetLearnerParentModel> Parent { get; set; }
         public List<GetLearnerLearnerOthers> LearnerOthers { get; set; }
         public List<GetLearnerOnetoOneCourseInstance> One2oneCourseInstance { get; set; }

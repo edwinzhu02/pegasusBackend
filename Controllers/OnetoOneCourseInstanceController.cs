@@ -39,15 +39,16 @@ namespace Pegasus_backend.Controllers
             try
             {
                 var item = _ablemusicContext.One2oneCourseInstance.FirstOrDefault(s => s.CourseInstanceId == instanceId);
+                decimal credit=0;
 
                 if (item == null)
                 {
                     throw new Exception("The Booking Course wasn't found");
                 }
-                var course = _ablemusicContext.Course.FirstOrDefault(c =>c.CourseId ==item.CourseId );
-                if (course == null)
+                var learner = _ablemusicContext.Learner.FirstOrDefault(c =>c.LearnerId ==item.LearnerId );
+                if (learner == null)
                 {
-                    throw new Exception("This course price wasn't found");
+                    throw new Exception("This student wasn't found");
                 }                
                 item.EndDate = endDate;
                 _ablemusicContext.Update(item);
@@ -58,22 +59,25 @@ namespace Pegasus_backend.Controllers
                      var invoice = _ablemusicContext.Invoice.
                      FirstOrDefault(c =>c.InvoiceNum ==lesson.InvoiceNum && c.IsActive==1);
                      if (invoice!=null ){
-                        invoice.LessonFee -=course.Price;
-                        invoice.TotalFee -=course.Price;
-                        invoice.OwingFee -=course.Price;
+                        invoice.LessonFee -=invoice.LessonFee/invoice.LessonQuantity;
+                        invoice.TotalFee -=invoice.LessonFee/invoice.LessonQuantity;
+                        invoice.OwingFee -=invoice.LessonFee/invoice.LessonQuantity;
                         invoice.LessonQuantity --;
+                        if (invoice.IsPaid==1)
+                            credit += (invoice.LessonFee/invoice.LessonQuantity).Value;
                         _ablemusicContext.Update(invoice);
                     }
                      var invoiceWaiting = _ablemusicContext.InvoiceWaitingConfirm.
                      FirstOrDefault(c =>c.InvoiceNum ==lesson.InvoiceNum && c.IsActivate==1);
-                     invoiceWaiting.LessonFee -=course.Price;
-                     invoiceWaiting.TotalFee -=course.Price;
-                     invoiceWaiting.OwingFee -=course.Price;
+                     invoiceWaiting.LessonFee -=invoiceWaiting.LessonFee/invoiceWaiting.LessonQuantity;
+                     invoiceWaiting.TotalFee -=invoiceWaiting.LessonFee/invoiceWaiting.LessonQuantity;
+                     invoiceWaiting.OwingFee -=invoiceWaiting.LessonFee/invoiceWaiting.LessonQuantity;
                      invoiceWaiting.LessonQuantity --;
                      _ablemusicContext.Update(invoiceWaiting);
                     _ablemusicContext.Update(lesson);
                 });
-                
+                learner.Credit +=credit;
+                _ablemusicContext.Update(learner);
                 await _ablemusicContext.SaveChangesAsync();
             }
             catch (Exception ex)

@@ -1135,6 +1135,11 @@ namespace Pegasus_backend.pegasusContext
 
                 entity.Property(e => e.CreatedAt).HasColumnName("created_at");
 
+                entity.Property(e => e.Credit)
+                    .HasColumnName("credit")
+                    .HasColumnType("decimal(8,2)")
+                    .HasDefaultValueSql("0.00");
+
                 entity.Property(e => e.Dob)
                     .HasColumnName("dob")
                     .HasColumnType("date");
@@ -1800,9 +1805,7 @@ namespace Pegasus_backend.pegasusContext
                     .HasColumnName("notice_id")
                     .HasColumnType("int(11)");
 
-                entity.Property(e => e.CreatedAt)
-                    .HasColumnName("created_at")
-                    .HasColumnType("date");
+                entity.Property(e => e.CreatedAt).HasColumnName("created_at");
 
                 entity.Property(e => e.FromStaffId)
                     .HasColumnName("from_staff_id")
