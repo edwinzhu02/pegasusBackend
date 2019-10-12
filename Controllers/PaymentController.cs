@@ -90,19 +90,26 @@ namespace Pegasus_backend.Controllers
                 {
                     var invoiceItem =
                         await _ablemusicContext.Invoice.FirstOrDefaultAsync(s => s.InvoiceId == details.InvoiceId);
+                    var learner =await _ablemusicContext.Learner.FirstOrDefaultAsync(s => s.LearnerId == details.LearnerId);
                     if (invoiceItem == null)
                     {
                         throw new Exception("Invoice does not found.");
                     }
-
-                    //the owing fee for invoice cannot be negative.
-                    if (invoiceItem.OwingFee - details.Amount < 0)
+                    if (learner == null)
                     {
-                        throw new Exception("You only need to pay " + invoiceItem.OwingFee + " dollar. No more than it");
+                        throw new Exception("Student does not found.");
+                    }
+                    decimal creditAmt = (details.UseCredit?learner.Credit:0).Value;
+                    //the owing fee for invoice cannot be negative.
+
+                    if (invoiceItem.OwingFee - details.Amount - creditAmt < 0)
+                    {
+                        throw new Exception("You only need to pay " + (invoiceItem.OwingFee-creditAmt) + " dollar. No more than it");
                     }
 
                     invoiceItem.PaidFee = invoiceItem.PaidFee + details.Amount;
-                    invoiceItem.OwingFee = invoiceItem.OwingFee - details.Amount;
+                    invoiceItem.OwingFee = invoiceItem.OwingFee - details.Amount - creditAmt;
+                    invoiceItem.Credit = creditAmt;
                     if (invoiceItem.OwingFee > 0)
                     {
                         invoiceItem.IsPaid = 0;

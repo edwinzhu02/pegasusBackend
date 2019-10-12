@@ -1,0 +1,51 @@
+2019-10-12 23:19:04.083 +13:00 [INF] User profile is available. Using 'C:\Users\Zhuyi\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-10-12 23:19:23.056 +13:00 [FTL] An error occurred starting the application
+System.AggregateException: One or more errors occurred. (Number must be either non-negative and less than or equal to Int32.MaxValue or -1.
+Parameter name: dueTm) ---> System.ArgumentOutOfRangeException: Number must be either non-negative and less than or equal to Int32.MaxValue or -1.
+Parameter name: dueTm
+   at System.Threading.Timer..ctor(TimerCallback callback, Object state, TimeSpan dueTime, TimeSpan period)
+   at Pegasus_backend.Services.TimedHostedService.StartAsync(CancellationToken cancellationToken) in c:\source\pegasusBackend\Services\TimedHostedService.cs:line 37
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.<>c__DisplayClass3_0.<StartAsync>b__0(IHostedService service)
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.ExecuteAsync(Func`2 callback)
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.ExecuteAsync(Func`2 callback)
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.StartAsync(CancellationToken token)
+---> (Inner Exception #0) System.ArgumentOutOfRangeException: Number must be either non-negative and less than or equal to Int32.MaxValue or -1.
+Parameter name: dueTm
+   at System.Threading.Timer..ctor(TimerCallback callback, Object state, TimeSpan dueTime, TimeSpan period)
+   at Pegasus_backend.Services.TimedHostedService.StartAsync(CancellationToken cancellationToken) in c:\source\pegasusBackend\Services\TimedHostedService.cs:line 37
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.<>c__DisplayClass3_0.<StartAsync>b__0(IHostedService service)
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.ExecuteAsync(Func`2 callback)<---
+
+2019-10-12 23:19:24.988 +13:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
+2019-10-12 23:19:25.055 +13:00 [WRN] Failed to determine the https port for redirect.
+2019-10-12 23:19:25.288 +13:00 [INF] 
+2019-10-12 23:19:25.629 +13:00 [INF] Response 
+2019-10-12 23:19:25.641 +13:00 [INF] Request finished in 654.1277ms 404 
+2019-10-12 23:19:43.925 +13:00 [INF] User profile is available. Using 'C:\Users\Zhuyi\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-10-12 23:20:30.358 +13:00 [FTL] An error occurred starting the application
+System.AggregateException: One or more errors occurred. (Number must be either non-negative and less than or equal to Int32.MaxValue or -1.
+Parameter name: dueTm) ---> System.ArgumentOutOfRangeException: Number must be either non-negative and less than or equal to Int32.MaxValue or -1.
+Parameter name: dueTm
+   at System.Threading.Timer..ctor(TimerCallback callback, Object state, TimeSpan dueTime, TimeSpan period)
+   at Pegasus_backend.Services.TimedHostedService.StartAsync(CancellationToken cancellationToken) in c:\source\pegasusBackend\Services\TimedHostedService.cs:line 37
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.<>c__DisplayClass3_0.<StartAsync>b__0(IHostedService service)
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.ExecuteAsync(Func`2 callback)
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.ExecuteAsync(Func`2 callback)
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.StartAsync(CancellationToken token)
+---> (Inner Exception #0) System.ArgumentOutOfRangeException: Number must be either non-negative and less than or equal to Int32.MaxValue or -1.
+Parameter name: dueTm
+   at System.Threading.Timer..ctor(TimerCallback callback, Object state, TimeSpan dueTime, TimeSpan period)
+   at Pegasus_backend.Services.TimedHostedService.StartAsync(CancellationToken cancellationToken) in c:\source\pegasusBackend\Services\TimedHostedService.cs:line 37
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.<>c__DisplayClass3_0.<StartAsync>b__0(IHostedService service)
+   at Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor.ExecuteAsync(Func`2 callback)<---
+
+2019-10-12 23:20:31.413 +13:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
+2019-10-12 23:20:31.478 +13:00 [WRN] Failed to determine the https port for redirect.
+2019-10-12 23:20:31.582 +13:00 [INF] 
+2019-10-12 23:20:31.916 +13:00 [INF] Response 
+2019-10-12 23:20:31.928 +13:00 [INF] Request finished in 516.6713ms 404 
+2019-10-12 23:20:47.836 +13:00 [INF] User profile is available. Using 'C:\Users\Zhuyi\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-10-12 23:23:09.907 +13:00 [INF] User profile is available. Using 'C:\Users\Zhuyi\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-10-12 23:24:25.181 +13:00 [INF] User profile is available. Using 'C:\Users\Zhuyi\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.

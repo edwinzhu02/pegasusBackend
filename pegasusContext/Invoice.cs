@@ -40,6 +40,7 @@ namespace Pegasus_backend.pegasusContext
         public string Other3FeeName { get; set; }
         public short? IsActive { get; set; }
         public string Comment { get; set; }
+        public decimal? Credit { get; set; }
 
         public virtual One2oneCourseInstance CourseInstance { get; set; }
         public virtual GroupCourseInstance GroupCourseInstance { get; set; }

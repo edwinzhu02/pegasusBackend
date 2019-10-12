@@ -792,6 +792,11 @@ namespace Pegasus_backend.pegasusContext
 
                 entity.Property(e => e.CreatedAt).HasColumnName("created_at");
 
+                entity.Property(e => e.Credit)
+                    .HasColumnName("credit")
+                    .HasColumnType("decimal(8,2)")
+                    .HasDefaultValueSql("0.00");
+
                 entity.Property(e => e.DueDate)
                     .HasColumnName("due_date")
                     .HasColumnType("date");
