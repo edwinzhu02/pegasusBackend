@@ -121,14 +121,19 @@ namespace Pegasus_backend.Controllers
                     }
                     _ablemusicContext.Update(invoiceItem);
                     await _ablemusicContext.SaveChangesAsync();
-
+                    if (creditAmt>0){
+                        learner.Credit -= creditAmt;
+                        _ablemusicContext.Update(learner);
+                        await _ablemusicContext.SaveChangesAsync();
+                    }
                     //save the Invoice payment to Payment table
                     var paymentItem = new Payment();
                     _mapper.Map(details, paymentItem);
                     paymentItem.CreatedAt = toNZTimezone(DateTime.UtcNow);
                     paymentItem.PaymentType = 1;
                     paymentItem.IsConfirmed = 0;
-                    _ablemusicContext.Add(paymentItem);
+                    if (paymentItem.Amount>=0)
+                        _ablemusicContext.Add(paymentItem);
                     await _ablemusicContext.SaveChangesAsync();
 
                     var fundItem =

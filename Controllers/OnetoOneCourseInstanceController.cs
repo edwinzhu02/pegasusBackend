@@ -56,15 +56,29 @@ namespace Pegasus_backend.Controllers
                 
                 await lessons.ForEachAsync(lesson =>{
                     lesson.IsCanceled = 1;
+                    decimal originalFee = 0;
                      var invoice = _ablemusicContext.Invoice.
                      FirstOrDefault(c =>c.InvoiceNum ==lesson.InvoiceNum && c.IsActive==1);
                      if (invoice!=null ){
+                        originalFee = invoice.TotalFee.Value;
                         invoice.LessonFee -=invoice.LessonFee/invoice.LessonQuantity;
                         invoice.TotalFee -=invoice.LessonFee/invoice.LessonQuantity;
                         invoice.OwingFee -=invoice.LessonFee/invoice.LessonQuantity;
                         invoice.LessonQuantity --;
-                        if (invoice.IsPaid==1)
-                            credit += (invoice.LessonFee/invoice.LessonQuantity).Value;
+
+
+                        if (invoice.LessonFee==0){
+                            invoice.NoteFee=0;
+                            invoice.ConcertFee=0;
+                            invoice.Other1Fee=0;
+                            invoice.Other2Fee=0;   
+                            invoice.Other3Fee=0; 
+                            invoice.TotalFee =0;
+                            invoice.OwingFee =0;                                                   
+                        }
+                         if (invoice.IsPaid==1){
+                            credit += (originalFee - invoice.TotalFee.Value);
+                        }
                         _ablemusicContext.Update(invoice);
                     }
                      var invoiceWaiting = _ablemusicContext.InvoiceWaitingConfirm.
@@ -73,6 +87,15 @@ namespace Pegasus_backend.Controllers
                      invoiceWaiting.TotalFee -=invoiceWaiting.LessonFee/invoiceWaiting.LessonQuantity;
                      invoiceWaiting.OwingFee -=invoiceWaiting.LessonFee/invoiceWaiting.LessonQuantity;
                      invoiceWaiting.LessonQuantity --;
+                    if (invoiceWaiting.LessonFee==0){
+                            invoiceWaiting.NoteFee=0;
+                            invoiceWaiting.ConcertFee=0;
+                            invoiceWaiting.Other1Fee=0;
+                            invoiceWaiting.Other2Fee=0;   
+                            invoiceWaiting.Other3Fee=0; 
+                            invoiceWaiting.TotalFee =0;
+                            invoiceWaiting.OwingFee =0;                                                   
+                        }
                      _ablemusicContext.Update(invoiceWaiting);
                     _ablemusicContext.Update(lesson);
                 });

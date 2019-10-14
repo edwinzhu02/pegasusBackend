@@ -129,6 +129,7 @@ namespace Pegasus_backend.Controllers
                         s.IsConfirm,
                         s.IsChanged,
                         s.OrgId,
+                        s.InvoiceNum,
                         newLesson= new
                         {
                             TeacherFirstName = _ablemusicContext.Teacher.FirstOrDefault(z=>z.TeacherId==_ablemusicContext.Lesson
@@ -152,12 +153,12 @@ namespace Pegasus_backend.Controllers
                             _ablemusicContext.LessonRemain.FirstOrDefault(q=>q.LearnerId==s.LearnerId && q.CourseInstanceId==s.CourseInstanceId).Quantity<=3?
                             1:0
                             :0,*/
-                        isReadyToOwn = IsNull(s.GroupCourseInstance)?IsNull(s.CourseInstance)?s.IsPaid==1?0:1:
-                                _ablemusicContext.LessonRemain.FirstOrDefault(q=>q.LearnerId==s.LearnerId && q.CourseInstanceId==s.CourseInstanceId)==null?
-                                1: _ablemusicContext.LessonRemain.FirstOrDefault(q=>q.LearnerId==s.LearnerId && q.CourseInstanceId==s.CourseInstanceId).Quantity<=3?
-                                    1:0
-                            :0,
-                        
+                        // isReadyToOwn = IsNull(s.GroupCourseInstance)?IsNull(s.CourseInstance)?s.IsPaid==1?0:1:
+                        //         _ablemusicContext.LessonRemain.FirstOrDefault(q=>q.LearnerId==s.LearnerId && q.CourseInstanceId==s.CourseInstanceId)==null?
+                        //         1: _ablemusicContext.LessonRemain.FirstOrDefault(q=>q.LearnerId==s.LearnerId && q.CourseInstanceId==s.CourseInstanceId).Quantity<=3?
+                        //             1:0
+                        //     :0,
+                        IsPaid = s.IsPaid,
                         learner = IsNull(s.GroupCourseInstance)?new List<Object>(){new {s.Learner.FirstName,s.Learner.LearnerId}}:null,
                         learners = IsNull(s.GroupCourseInstance)?null:s.GroupCourseInstance.LearnerGroupCourse.
                                 Select(w=>new{w.Learner.FirstName,w.Learner.LearnerId}),
@@ -168,9 +169,18 @@ namespace Pegasus_backend.Controllers
                             CourseName=!IsNull(s.GroupCourseInstance)?s.GroupCourseInstance.Course.CourseName:IsNull(s.CourseInstance)?s.TrialCourse.CourseName:s.CourseInstance.Course.CourseName,
                             s.LessonId,courseId=!IsNull(s.GroupCourseInstance)?s.GroupCourseInstance.Course.CourseId:IsNull(s.CourseInstance)?s.TrialCourseId:s.CourseInstance.Course.CourseId,s.LearnerId
                         }
-                    });
-                    
-                result.Data = await details.ToListAsync();
+                    }).ToList();
+                //var preDetails =new List<object>() ;
+                // foreach(var ele in details){
+                //     ele.isReadyToOwn = 1;
+                // }
+                
+                var preDetail = details.Select(e=>new {e.id,e.resourceId,e.start,e.end,e.title,
+                            e.description,e.teacher,e.IsCanceled,e.IsConfirm,
+                            e.IsChanged,e.OrgId,e.InvoiceNum,
+                            e.newLesson,e.Reason,e.learner,e.learners,e.IsGroup,e.info,
+                            isReadyToOwn=e.IsPaid==0?1:isReadyOwe(e.InvoiceNum)});
+                result.Data = preDetail;
             }
             catch (Exception ex)
             {
@@ -419,7 +429,22 @@ namespace Pegasus_backend.Controllers
             
             return Ok(result);
         }
+        private short isReadyOwe(string invoiceNum){
+            var invoice = _ablemusicContext.Invoice.
+                Where(i => i.InvoiceNum  == invoiceNum 
+                    && i.IsActive==1).FirstOrDefault();
 
+            if (invoice == null) return 1;
+            if (invoice.IsPaid == 0) return 1;
+            if (invoice.CourseInstanceId==null) return 0;
+            
+             var unpaidInvoice = _ablemusicContext.Invoice.
+                Where(i => i.LearnerId == invoice.LearnerId 
+                    && i.IsActive==1 && i.IsPaid==0
+                    && i.DueDate<toNZTimezone( DateTime.UtcNow) ).FirstOrDefault();
+            if (unpaidInvoice !=null ) return 1;
+            return 0;
+        }
         private static bool FindGroup(Lesson s,int? learnerId){
             if (s.GroupCourseInstance == null)
             {
