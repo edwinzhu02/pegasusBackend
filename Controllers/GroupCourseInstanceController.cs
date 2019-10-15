@@ -44,10 +44,12 @@ namespace Pegasus_backend.Controllers
                     .Include(s => s.Org)
                     .Include(s => s.Room)
                     .Include(s => s.Teacher)
+                    .Include(s => s.Promotion)
                     .Where(s=>s.IsActivate == 1)
                     .Select(s => new
                     {
                         s.CourseId, s.GroupCourseInstanceId, s.BeginDate, s.EndDate,
+                        Promotion= new {s.Promotion.PromotionId,s.Promotion.PromotionName},
                         schedule = s.CourseSchedule,  //.Where(w=>w.GroupCourseInstanceId==s.GroupCourseInstanceId),
                         Course = new
                         {
@@ -71,6 +73,27 @@ namespace Pegasus_backend.Controllers
                 return BadRequest(result);
             }
         }
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetPromotion()
+        {
+            Result<Object> result = new Result<Object>();
+            try
+            {
+                var promotion =await _ablemusicContext.Promotion
+                    .Select(p =>new {p.PromotionId,p.PromotionName,p.PromotionExp}).ToListAsync();
+                
+                result.Data = promotion;
+                // result.IsSuccess = true;
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+        }
+        
         
         //Delete api/groupcourseinstance
         [HttpDelete("{id}")]

@@ -19,6 +19,8 @@ namespace Pegasus_backend.Models
         public short? RoomId { get; set; }
         [Required(ErrorMessage = "OrgId is required")]
         public short? OrgId { get; set; }
+        public short? PromotionId { get; set; }
+                
         [Required(ErrorMessage = "CourseSchedule is required")]
         public List<CourseSchedule> CourseSchedule { get; set; }
     }

@@ -1,0 +1,31 @@
+2019-10-16 09:45:14.901 +13:00 [INF] User profile is available. Using 'C:\Users\Zhuyi\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-10-16 09:45:15.349 +13:00 [INF] Setting up the time host service. Everyday run at 24pm
+2019-10-16 09:45:16.100 +13:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
+2019-10-16 09:45:16.150 +13:00 [WRN] Failed to determine the https port for redirect.
+2019-10-16 09:45:16.255 +13:00 [INF] 
+2019-10-16 09:45:16.396 +13:00 [INF] Response 
+2019-10-16 09:45:16.401 +13:00 [INF] Request finished in 301.5964ms 404 
+2019-10-16 09:45:31.614 +13:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/index.html  
+2019-10-16 09:45:31.741 +13:00 [INF] Request finished in 126.7828ms 200 text/html
+2019-10-16 09:45:31.867 +13:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/v1/swagger.json  
+2019-10-16 09:45:32.160 +13:00 [INF] Request finished in 292.7915ms 200 application/json;charset=utf-8
+2019-10-16 09:45:57.380 +13:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/GroupCourseInstance/GetPromotion  
+2019-10-16 09:45:57.381 +13:00 [INF] 
+2019-10-16 09:45:57.408 +13:00 [INF] Route matched with {action = "GetPromotion", controller = "GroupCourseInstance"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetPromotion() on controller Pegasus_backend.Controllers.GroupCourseInstanceController (Pegasus_backend).
+2019-10-16 09:45:57.924 +13:00 [INF] Executing action method Pegasus_backend.Controllers.GroupCourseInstanceController.GetPromotion (Pegasus_backend) - Validation state: "Valid"
+2019-10-16 09:45:58.883 +13:00 [INF] Entity Framework Core 2.2.6-servicing-10079 initialized 'ablemusicContext' using provider 'MySql.Data.EntityFrameworkCore' with options: None
+2019-10-16 09:45:59.636 +13:00 [INF] Executed DbCommand (40ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `p`.`promotion_id` AS `PromotionId`, `p`.`promotion_name` AS `PromotionName`, `p`.`promotion_exp` AS `PromotionExp`
+FROM `ablemusic`.`promotion` AS `p`
+2019-10-16 09:45:59.652 +13:00 [INF] Executed action method Pegasus_backend.Controllers.GroupCourseInstanceController.GetPromotion (Pegasus_backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 1720.1194ms.
+2019-10-16 09:45:59.658 +13:00 [INF] Executing ObjectResult, writing value of type 'Pegasus_backend.Models.Result`1[[System.Object, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2019-10-16 09:45:59.669 +13:00 [INF] Executed action Pegasus_backend.Controllers.GroupCourseInstanceController.GetPromotion (Pegasus_backend) in 2259.3464ms
+2019-10-16 09:45:59.669 +13:00 [INF] Response {"IsSuccess":true,"ErrorCode":null,"IsFound":true,"ErrorMessage":null,"Note":null,"Data":[{"PromotionId":1,"PromotionName":"GrabOne","PromotionExp":"[{\"Amt\":0,\"Item\":[{\"Name\":\"Term 1\", \"Amount\":180},{\"Name\":\"Term 2\",\"Amount\":180}]},{\"Amt\":0},{\"Amt\":0}]"}]}
+2019-10-16 09:45:59.670 +13:00 [INF] Request finished in 2290.275ms 200 application/json; charset=utf-8
+2019-10-16 09:48:59.204 +13:00 [INF] User profile is available. Using 'C:\Users\Zhuyi\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-10-16 09:48:59.479 +13:00 [INF] Setting up the time host service. Everyday run at 24pm
+2019-10-16 09:48:59.890 +13:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/  
+2019-10-16 09:48:59.916 +13:00 [WRN] Failed to determine the https port for redirect.
+2019-10-16 09:48:59.965 +13:00 [INF] 
+2019-10-16 09:49:00.096 +13:00 [INF] Response 
+2019-10-16 09:49:00.101 +13:00 [INF] Request finished in 211.6818ms 404 
