@@ -49,7 +49,7 @@ namespace Pegasus_backend.Controllers
                     .Select(s => new
                     {
                         s.CourseId, s.GroupCourseInstanceId, s.BeginDate, s.EndDate,
-                        Promotion= new {s.Promotion.PromotionId,s.Promotion.PromotionName},
+                        PromotionName= s.Promotion.PromotionName,
                         schedule = s.CourseSchedule,  //.Where(w=>w.GroupCourseInstanceId==s.GroupCourseInstanceId),
                         Course = new
                         {
