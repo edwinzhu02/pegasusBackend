@@ -53,6 +53,7 @@ namespace Pegasus_backend.pegasusContext
         public virtual DbSet<ProdCat> ProdCat { get; set; }
         public virtual DbSet<ProdType> ProdType { get; set; }
         public virtual DbSet<Product> Product { get; set; }
+        public virtual DbSet<Promotion> Promotion { get; set; }
         public virtual DbSet<Qualification> Qualification { get; set; }
         public virtual DbSet<Rating> Rating { get; set; }
         public virtual DbSet<RemindLog> RemindLog { get; set; }
@@ -654,6 +655,9 @@ namespace Pegasus_backend.pegasusContext
                 entity.HasIndex(e => e.OrgId)
                     .HasName("R_63");
 
+                entity.HasIndex(e => e.PromotionId)
+                    .HasName("FK_gourp_course_instance_promotion");
+
                 entity.HasIndex(e => e.RoomId)
                     .HasName("R_22");
 
@@ -692,6 +696,10 @@ namespace Pegasus_backend.pegasusContext
                     .HasColumnName("org_id")
                     .HasColumnType("smallint(6)");
 
+                entity.Property(e => e.PromotionId)
+                    .HasColumnName("promotion_id")
+                    .HasColumnType("tinyint(4)");
+
                 entity.Property(e => e.RoomId)
                     .HasColumnName("room_id")
                     .HasColumnType("smallint(6)");
@@ -710,6 +718,11 @@ namespace Pegasus_backend.pegasusContext
                     .WithMany(p => p.GroupCourseInstance)
                     .HasForeignKey(d => d.OrgId)
                     .HasConstraintName("R_63");
+
+                entity.HasOne(d => d.Promotion)
+                    .WithMany(p => p.GroupCourseInstance)
+                    .HasForeignKey(d => d.PromotionId)
+                    .HasConstraintName("FK_gourp_course_instance_promotion");
 
                 entity.HasOne(d => d.Room)
                     .WithMany(p => p.GroupCourseInstance)
@@ -2353,6 +2366,26 @@ namespace Pegasus_backend.pegasusContext
                     .WithMany(p => p.Product)
                     .HasForeignKey(d => d.ProdTypeId)
                     .HasConstraintName("R_69");
+            });
+
+            modelBuilder.Entity<Promotion>(entity =>
+            {
+                entity.ToTable("promotion", "ablemusic");
+
+                entity.Property(e => e.PromotionId)
+                    .HasColumnName("promotion_id")
+                    .HasColumnType("tinyint(4)")
+                    .ValueGeneratedOnAdd();
+
+                entity.Property(e => e.PromotionExp)
+                    .HasColumnName("promotion_exp")
+                    .HasMaxLength(1000)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PromotionName)
+                    .HasColumnName("promotion_name")
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<Qualification>(entity =>

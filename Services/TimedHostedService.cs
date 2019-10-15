@@ -31,12 +31,12 @@ namespace Pegasus_backend.Services
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            TimeSpan scheduleTime = new TimeSpan(23, 0, 0);
+            TimeSpan scheduleTime = new TimeSpan(23, 59, 59);
             TimeSpan currentTime = DateTime.UtcNow.ToNZTimezone().TimeOfDay;
             TimeSpan dueTime = scheduleTime.Subtract(currentTime);
             _timer = new Timer(DoWork, null, dueTime,
                 TimeSpan.FromHours(24));
-            _logger.LogInformation("Setting up the time host service. Everyday run at 23pm");
+            _logger.LogInformation("Setting up the time host service. Everyday run at 24pm");
             return Task.CompletedTask;
         }
 

@@ -26,9 +26,11 @@ namespace Pegasus_backend.pegasusContext
         public short? IsActivate { get; set; }
         public short? IsStarted { get; set; }
         public DateTime? InvoiceDate { get; set; }
+        public byte? PromotionId { get; set; }
 
         public virtual Course Course { get; set; }
         public virtual Org Org { get; set; }
+        public virtual Promotion Promotion { get; set; }
         public virtual Room Room { get; set; }
         public virtual Teacher Teacher { get; set; }
         public virtual ICollection<AwaitMakeUpLesson> AwaitMakeUpLesson { get; set; }

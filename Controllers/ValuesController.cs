@@ -17,8 +17,11 @@ namespace Pegasus_backend.Controllers
     [ApiController]
     public class ValuesController : BasicController
     {
+        // private readonly ablemusicContext _ablemusicContext;
+        // public LearnerController(ablemusicContext ablemusicContext, ILogger<LearnerController> log, IMapper mapper) : base(ablemusicContext, log)
         public ValuesController(ablemusicContext ablemusicContext, ILogger<ValuesController> log) : base(ablemusicContext, log)
         {
+           
         }
 
         // GET api/values
@@ -37,7 +40,15 @@ namespace Pegasus_backend.Controllers
         [HttpGet("{id}")]
         public ActionResult<string> Get(int id)
         {
-            return Ok();
+            var result = new Result<Object>();
+            IPromotionService _promotionService;
+            _promotionService = new PromotionService(_ablemusicContext);
+            var invoice = _ablemusicContext.InvoiceWaitingConfirm.
+                FirstOrDefault(x=>x.GroupCourseInstanceId==50);
+            _promotionService.PromotionInvoice(ref invoice);
+            result.Data = invoice;
+           
+            return Ok(result);
         }
 
         // POST api/values

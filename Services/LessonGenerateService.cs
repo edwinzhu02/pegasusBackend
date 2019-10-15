@@ -504,6 +504,9 @@ namespace Pegasus_backend.Services
                     Where(x => x.LookupType == 17 && x.PropValue == 1).Select(x => x.PropName).FirstOrDefault();
             int extraFee = Int32.Parse(extraFeeStr);
 
+            IPromotionService _promotionService;
+            _promotionService = new PromotionService(_ablemusicContext);
+
             var result = new Result<IActionResult>();
             var group_course_instances = await _ablemusicContext.GroupCourseInstance
                 .Include(x => x.Course)
@@ -578,7 +581,12 @@ namespace Pegasus_backend.Services
                         invoice.BeginDate = begin_date;
                         // invoice.EndDate = term.EndDate;
                         //get minimum date of term's and learner's end date
-                        invoice.EndDate = new DateTime(Math.Min(learner.EndDate.Value.Ticks, term.EndDate.Value.Ticks));
+                        if (learner.EndDate !=null)
+                            invoice.EndDate = new DateTime(Math.Min(learner.EndDate.Value.Ticks, term.EndDate.Value.Ticks));
+                        else
+                            invoice.EndDate = term.EndDate;
+                        
+
 
                         await _ablemusicContext.InvoiceWaitingConfirm.AddAsync(invoice);
                         await _ablemusicContext.SaveChangesAsync();
@@ -604,6 +612,9 @@ namespace Pegasus_backend.Services
                     if (invoice.LessonFee <= 0) continue;
 
                     invoice.InvoiceNum = invoice.WaitingId.ToString();
+                    //process promotion invoice
+                    _promotionService.PromotionInvoice(ref invoice);
+
                     _ablemusicContext.InvoiceWaitingConfirm.Update(invoice);
                     _ablemusicContext.Update(courseIns);
 
