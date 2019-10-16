@@ -83,9 +83,9 @@ namespace Pegasus_backend.Controllers
                     }
                      var invoiceWaiting = _ablemusicContext.InvoiceWaitingConfirm.
                      FirstOrDefault(c =>c.InvoiceNum ==lesson.InvoiceNum && c.IsActivate==1);
-                     invoiceWaiting.LessonFee -=invoiceWaiting.LessonFee/invoiceWaiting.LessonQuantity;
                      invoiceWaiting.TotalFee -=invoiceWaiting.LessonFee/invoiceWaiting.LessonQuantity;
                      invoiceWaiting.OwingFee -=invoiceWaiting.LessonFee/invoiceWaiting.LessonQuantity;
+                     invoiceWaiting.LessonFee -=invoiceWaiting.LessonFee/invoiceWaiting.LessonQuantity;
                      invoiceWaiting.LessonQuantity --;
                     if (invoiceWaiting.LessonFee==0){
                             invoiceWaiting.NoteFee=0;
