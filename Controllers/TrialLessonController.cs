@@ -236,7 +236,7 @@ namespace Pegasus_backend.Controllers
                 
                 _ablemusicContext.Add( new User
                 {
-                    UserName = learner.Email,
+                    UserName = "S"+learner.LearnerId.ToString(),
                     Password = "helloworld",
                     CreatedAt = toNZTimezone(DateTime.UtcNow),
                     RoleId = 4,

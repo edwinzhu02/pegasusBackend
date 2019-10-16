@@ -61,9 +61,9 @@ namespace Pegasus_backend.Controllers
                      FirstOrDefault(c =>c.InvoiceNum ==lesson.InvoiceNum && c.IsActive==1);
                      if (invoice!=null ){
                         originalFee = invoice.TotalFee.Value;
-                        invoice.LessonFee -=invoice.LessonFee/invoice.LessonQuantity;
                         invoice.TotalFee -=invoice.LessonFee/invoice.LessonQuantity;
                         invoice.OwingFee -=invoice.LessonFee/invoice.LessonQuantity;
+                        invoice.LessonFee -=invoice.LessonFee/invoice.LessonQuantity;                        
                         invoice.LessonQuantity --;
 
 
