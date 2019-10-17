@@ -110,7 +110,7 @@ namespace Pegasus_backend.Controllers
             {
                 var staff = _ablemusicContext.Staff.FirstOrDefault(s => s.UserId == userId);
                 var orgId = _ablemusicContext.StaffOrg.FirstOrDefault(s => s.StaffId == staff.StaffId).OrgId;
-                var details = _ablemusicContext.Lesson
+                var details =await  _ablemusicContext.Lesson
                     .Where(s=>s.OrgId==orgId&&s.BeginTime.Value.Year == date.Year && s.BeginTime.Value.Month == date.Month && s.BeginTime.Value.Day == date.Day)
                     .Include(s=>s.CourseInstance)
                     .Include(s=>s.Learner)
@@ -158,7 +158,7 @@ namespace Pegasus_backend.Controllers
                         //         1: _ablemusicContext.LessonRemain.FirstOrDefault(q=>q.LearnerId==s.LearnerId && q.CourseInstanceId==s.CourseInstanceId).Quantity<=3?
                         //             1:0
                         //     :0,
-                        IsPaid = s.IsPaid,
+                        IsPaid = s.IsPaid,IsTrial = s.IsTrial,
                         learner = IsNull(s.GroupCourseInstance)?new List<Object>(){new {s.Learner.FirstName,s.Learner.LearnerId}}:null,
                         learners = IsNull(s.GroupCourseInstance)?null:s.GroupCourseInstance.LearnerGroupCourse.
                                 Select(w=>new{w.Learner.FirstName,w.Learner.LearnerId}),
@@ -169,7 +169,7 @@ namespace Pegasus_backend.Controllers
                             CourseName=!IsNull(s.GroupCourseInstance)?s.GroupCourseInstance.Course.CourseName:IsNull(s.CourseInstance)?s.TrialCourse.CourseName:s.CourseInstance.Course.CourseName,
                             s.LessonId,courseId=!IsNull(s.GroupCourseInstance)?s.GroupCourseInstance.Course.CourseId:IsNull(s.CourseInstance)?s.TrialCourseId:s.CourseInstance.Course.CourseId,s.LearnerId
                         }
-                    }).ToList();
+                    }).ToListAsync();
                 //var preDetails =new List<object>() ;
                 // foreach(var ele in details){
                 //     ele.isReadyToOwn = 1;
@@ -179,7 +179,7 @@ namespace Pegasus_backend.Controllers
                             e.description,e.teacher,e.IsCanceled,e.IsConfirm,
                             e.IsChanged,e.OrgId,e.InvoiceNum,
                             e.newLesson,e.Reason,e.learner,e.learners,e.IsGroup,e.info,
-                            isReadyToOwn=e.IsPaid==0?1:isReadyOwe(e.InvoiceNum)});
+                            isReadyToOwn=e.IsTrial==1?e.IsPaid:isReadyOwe(e.InvoiceNum)});
                 result.Data = preDetail;
             }
             catch (Exception ex)
