@@ -463,6 +463,7 @@ namespace Pegasus_backend.Services
                     invoice.TotalFee = invoice.OwingFee;
                     invoice.LessonQuantity = lesson_quantity;
                     if (invoice.LessonFee <= 0) continue;
+                    UpdateInvoiceRegistFee(ref invoice);
                     _ablemusicContext.InvoiceWaitingConfirm.Update(invoice);
                     invoice.InvoiceNum = invoice.WaitingId.ToString();
                     _ablemusicContext.InvoiceWaitingConfirm.Update(invoice);                    
@@ -587,7 +588,6 @@ namespace Pegasus_backend.Services
                             invoice.EndDate = term.EndDate;
                         
 
-
                         await _ablemusicContext.InvoiceWaitingConfirm.AddAsync(invoice);
                         await _ablemusicContext.SaveChangesAsync();
                         //using (var dbContextTransaction = _ablemusicContext.Database.BeginTransaction())
@@ -614,7 +614,7 @@ namespace Pegasus_backend.Services
                     invoice.InvoiceNum = invoice.WaitingId.ToString();
                     //process promotion invoice
                     _promotionService.PromotionInvoice(ref invoice);
-
+                    UpdateInvoiceRegistFee(ref invoice);
                     _ablemusicContext.InvoiceWaitingConfirm.Update(invoice);
                     _ablemusicContext.Update(courseIns);
 
@@ -651,8 +651,27 @@ namespace Pegasus_backend.Services
             }
 
         }
+        private void UpdateInvoiceRegistFee(ref InvoiceWaitingConfirm invoiceWaitingConfirm)
+        {
+            int learnerId = invoiceWaitingConfirm.LearnerId.Value;
 
-        public int IsLearnerHasPayExtreFee(int term_id, int learner_id)
+            var learner = _ablemusicContext.Learner.
+                            Where(i => i.LearnerId == learnerId).FirstOrDefault();
+            if (learner==null||learner.EnrollDate==null) return;
+             if ((invoiceWaitingConfirm.BeginDate - learner.EnrollDate).Value.Days>=60){
+                 return;
+             }
+
+            //find if exist a not trial invoice 
+            var invoice = _ablemusicContext.InvoiceWaitingConfirm.
+                            Where(i => i.LearnerId == learnerId 
+                            && i.BeginDate!=i.EndDate).FirstOrDefault();
+            if (invoice==null ){
+                invoiceWaitingConfirm.Other1Fee=20;
+                invoiceWaitingConfirm.Other1FeeName="Registration Fees";                
+            }
+        }
+        private int IsLearnerHasPayExtreFee(int term_id, int learner_id)
         {
             //var term = _ablemusicContext.Term.Where(x => x.TermId == term_id).FirstOrDefault();
             var learnerWaitingInvoice = _ablemusicContext.InvoiceWaitingConfirm.Where(x => x.TermId==term_id && x.LearnerId == learner_id).ToList();

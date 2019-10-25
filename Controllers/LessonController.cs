@@ -179,7 +179,7 @@ namespace Pegasus_backend.Controllers
                             e.description,e.teacher,e.IsCanceled,e.IsConfirm,
                             e.IsChanged,e.OrgId,e.InvoiceNum,
                             e.newLesson,e.Reason,e.learner,e.learners,e.IsGroup,e.info,
-                            isReadyToOwn=e.IsTrial==1?e.IsPaid:isReadyOwe(e.InvoiceNum)});
+                            isReadyToOwn=e.IsTrial==1?(e.IsPaid==1?0:1):isReadyOwe(e.InvoiceNum)});
                 result.Data = preDetail;
             }
             catch (Exception ex)

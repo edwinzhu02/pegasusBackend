@@ -18,10 +18,60 @@ namespace Pegasus_backend.Controllers
         public TeacherAvailableCheckController(ablemusicContext ablemusicContext, ILogger<TeacherAvailableCheckController> log) : base(ablemusicContext, log)
         {
         }
- 
+
         // GET: api/TeacherAvailableCheck/5
+        [HttpGet("Available/{orgId}/{StartDate}")]
+        public async Task<IActionResult> GetOrgAvailableTeacher(short orgId, string StartDate)
+        {
+            Result<List<Object>> result = new Result<List<Object>>();
+            DateTime beginDate = DateTime.Parse(StartDate);
+            short dayOfWeek = DayofWeekToInt(beginDate.DayOfWeek);
+            List<short?> teacherList = await _ablemusicContext.AvailableDays.Where(t => t.OrgId == orgId || t.DayOfWeek == dayOfWeek).
+                    Select(t => t.TeacherId).ToListAsync();
+            // var lesson = await _ablemusicContext.Lesson.
+            //                     Where(l => teacherList.Contains(l.TeacherId));
+            if (result.Data.Count>=1)
+                return Ok(result);
+            else{
+                result.IsSuccess = false;
+                return NotFound(result);
+            }
+        } 
+        // GET: api/TeacherAvailableCheck/5
+        [HttpGet("[action]/{orgId}/{StartDate}")]
+        public async Task<IActionResult> GetOrgTeacher(short orgId, string StartDate)
+        {
+            Result<List<Object>> result = new Result<List<Object>>();
+            DateTime beginDate = DateTime.Parse(StartDate);
+            short dayOfWeek = DayofWeekToInt(beginDate.DayOfWeek);
+            List<short?> teacherList = await _ablemusicContext.AvailableDays.Where(t => t.OrgId == orgId || t.DayOfWeek == dayOfWeek).
+                    Select(t => t.TeacherId).ToListAsync();
+            foreach(short teacher in teacherList){
+                var res = await GetTeacherAvailableTime(teacher,StartDate);
+                if (res.IsSuccess==true)
+                    result.Data.Add( new {
+                        teacherId = teacher,
+                        data = res.Data
+                        });
+            }
+            if (result.Data.Count>=1)
+                return Ok(result);
+            else{
+                result.IsSuccess = false;
+                return NotFound(result);
+            }
+        }
         [HttpGet("{teacherId}/{StartDate}")]
-        public async Task<IActionResult> Get(int teacherId, string StartDate)
+        public async Task<IActionResult> GetTeacher(int teacherId, string StartDate)
+        {
+            Result<Object> result = new Result<Object>();
+            result =await GetTeacherAvailableTime(teacherId,StartDate);
+            if (result.IsSuccess==true)
+                return Ok(result);
+            else    
+                return NotFound(result);
+        }
+        private async Task<Result<Object>> GetTeacherAvailableTime(int teacherId, string StartDate)
         {
             Result<Object> result = new Result<Object>();
             Teacher teacher;
@@ -123,14 +173,16 @@ namespace Pegasus_backend.Controllers
             {
                 result.IsSuccess = false;
                 result.ErrorMessage = ex.ToString();
-                return BadRequest(result);
+                // return BadRequest(result);
+                return result;
             }
             if (teacher == null)
             {
                 result.IsSuccess = false;
                 result.IsFound = false;
                 result.ErrorMessage = "Teacher id not found";
-                return NotFound(result);
+                // return NotFound(result);
+                return result;
             }
 
             customisedAvailableDays = new List<Object>();
@@ -295,7 +347,8 @@ namespace Pegasus_backend.Controllers
                 TempChange = customisedTempChange,
             };
 
-            return Ok(result);
+            // return Ok(result);
+            return result;
         }
     }
 }

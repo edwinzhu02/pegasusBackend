@@ -20,6 +20,7 @@ namespace Pegasus_backend.pegasusContext
         public virtual DbSet<AskOff> AskOff { get; set; }
         public virtual DbSet<AvailableDays> AvailableDays { get; set; }
         public virtual DbSet<AwaitMakeUpLesson> AwaitMakeUpLesson { get; set; }
+        public virtual DbSet<CashBox> CashBox { get; set; }
         public virtual DbSet<ChatGroup> ChatGroup { get; set; }
         public virtual DbSet<ChatMessage> ChatMessage { get; set; }
         public virtual DbSet<Course> Course { get; set; }
@@ -442,6 +443,65 @@ namespace Pegasus_backend.pegasusContext
                     .WithMany(p => p.AwaitMakeUpLessonNewLesson)
                     .HasForeignKey(d => d.NewLessonId)
                     .HasConstraintName("R_136");
+            });
+
+            modelBuilder.Entity<CashBox>(entity =>
+            {
+                entity.ToTable("cash_box", "ablemusic");
+
+                entity.HasIndex(e => e.OrgId)
+                    .HasName("org_id");
+
+                entity.Property(e => e.CashBoxId)
+                    .HasColumnName("cash_box_id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.BankDepoist)
+                    .HasColumnName("bank_depoist")
+                    .HasColumnType("decimal(8,2)");
+
+                entity.Property(e => e.CashBoxDate)
+                    .HasColumnName("cash_box_date")
+                    .HasColumnType("date");
+
+                entity.Property(e => e.Cheque)
+                    .HasColumnName("cheque")
+                    .HasColumnType("decimal(8,2)");
+
+                entity.Property(e => e.CloseTime).HasColumnName("close_time");
+
+                entity.Property(e => e.Eftpos)
+                    .HasColumnName("eftpos")
+                    .HasColumnType("decimal(8,2)");
+
+                entity.Property(e => e.InCash)
+                    .HasColumnName("in_cash")
+                    .HasColumnType("decimal(8,2)");
+
+                entity.Property(e => e.OrgId)
+                    .HasColumnName("org_id")
+                    .HasColumnType("smallint(6)");
+
+                entity.Property(e => e.OutCash)
+                    .HasColumnName("out_cash")
+                    .HasColumnType("decimal(8,2)");
+
+                entity.Property(e => e.StaffId)
+                    .HasColumnName("staff_id")
+                    .HasColumnType("smallint(6)");
+
+                entity.Property(e => e.TodayCash)
+                    .HasColumnName("today_cash")
+                    .HasColumnType("decimal(8,2)");
+
+                entity.Property(e => e.YesterdayCash)
+                    .HasColumnName("yesterday_cash")
+                    .HasColumnType("decimal(8,2)");
+
+                entity.HasOne(d => d.Org)
+                    .WithMany(p => p.CashBox)
+                    .HasForeignKey(d => d.OrgId)
+                    .HasConstraintName("cash_box_ibfk_1");
             });
 
             modelBuilder.Entity<ChatGroup>(entity =>

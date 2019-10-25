@@ -163,7 +163,12 @@ namespace Pegasus_backend.Controllers
 
                     });
                     await _ablemusicContext.SaveChangesAsync();
-                    model.OnetoOneCourses.ForEach(async s =>
+
+                    var newModel = _ablemusicContext.One2oneCourseInstance.
+                            Where(o => o.LearnerId==model.OnetoOneCourses[0].LearnerId).
+                            Select(o => new {o.BeginDate ,id= o.CourseInstanceId}).ToList();
+
+                    newModel.ForEach(async s =>
                     {
                         await _lessonGenerateService.GetTerm((DateTime)s.BeginDate, s.id, 1);
                     });

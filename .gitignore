@@ -11,6 +11,7 @@
 *.userosscache
 *.sln.docstates
 *.log
+log*.txt
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
@@ -274,3 +275,5 @@ __pycache__/
 
 # End of https://www.gitignore.io/api/aspnetcore
 Pegasus_backend.sln
+log20191025.txt
+log20191017.txt

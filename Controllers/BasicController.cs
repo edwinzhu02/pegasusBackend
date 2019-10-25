@@ -177,7 +177,11 @@ namespace Pegasus_backend.Controllers
         {
             return item == null;
         }
-
+        protected short DayofWeekToInt(DayOfWeek day)
+        {
+            if (day ==0 ) return 7;
+            return (short) day;
+        }
         protected Object UserInfoFilter(User user, string positionToClient)
         {
             if (user.Teacher.Count != 0)
