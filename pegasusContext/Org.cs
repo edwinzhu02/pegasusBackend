@@ -15,6 +15,7 @@ namespace Pegasus_backend.pegasusContext
             Lesson = new HashSet<Lesson>();
             LoginLog = new HashSet<LoginLog>();
             One2oneCourseInstance = new HashSet<One2oneCourseInstance>();
+            Payment = new HashSet<Payment>();
             Room = new HashSet<Room>();
             StaffOrg = new HashSet<StaffOrg>();
             Stock = new HashSet<Stock>();
@@ -44,6 +45,7 @@ namespace Pegasus_backend.pegasusContext
         public virtual ICollection<Lesson> Lesson { get; set; }
         public virtual ICollection<LoginLog> LoginLog { get; set; }
         public virtual ICollection<One2oneCourseInstance> One2oneCourseInstance { get; set; }
+        public virtual ICollection<Payment> Payment { get; set; }
         public virtual ICollection<Room> Room { get; set; }
         public virtual ICollection<StaffOrg> StaffOrg { get; set; }
         public virtual ICollection<Stock> Stock { get; set; }

@@ -58,17 +58,17 @@ namespace Pegasus_backend.Controllers
         }
 
         //GET: http://localhost:5000/api/room/forCalendar
-        [Route("forCalendar")]
+        [Route("forCalendar/{orgId}")]
         [Authorize]
         [HttpGet]
-        public async Task<IActionResult> GetRoom()
+        public async Task<IActionResult> GetRoom(short orgId)
         {
             Result<IEnumerable<Object>> result = new Result<IEnumerable<Object>>();
             try
             {
-                var userId = int.Parse(User.Claims.First(s=>s.Type=="UserID").Value);
-                var staff = _ablemusicContext.Staff.FirstOrDefault(s => s.UserId == userId);
-                var orgId = _ablemusicContext.StaffOrg.FirstOrDefault(s => s.StaffId == staff.StaffId).OrgId;
+                // var userId = int.Parse(User.Claims.First(s=>s.Type=="UserID").Value);
+                // var staff = _ablemusicContext.Staff.FirstOrDefault(s => s.UserId == userId);
+                // var orgId = _ablemusicContext.StaffOrg.FirstOrDefault(s => s.StaffId == staff.StaffId).OrgId;
                 var rooms = _ablemusicContext.Room.Where(s => s.OrgId == orgId);
                 var data = rooms.Select(s =>  new {id=s.RoomId, title=s.RoomName });
                 result.Data = await data.ToListAsync();

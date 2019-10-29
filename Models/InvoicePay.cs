@@ -14,6 +14,7 @@ namespace Pegasus_backend.Models
         public int LearnerId { get; set; }
         [Required(ErrorMessage = "staffId is required")]
         public short? StaffId { get; set; }
+        public short? OrgId { get; set; }
         public bool UseCredit { get; set; }
     }
 }

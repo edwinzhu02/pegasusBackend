@@ -50,6 +50,33 @@ namespace Pegasus_backend.Controllers
                 return BadRequest(result);
             }
         }
+        [HttpGet("id")]
+        public async Task<IActionResult> GetStaff(short id)
+        {
+            var result = new Result<Object>();
+            try
+            {
+                result.Data = await _ablemusicContext.Staff
+                    .Include(s=>s.User)
+                    .ThenInclude(s=>s.Role)
+                    .Include(s=>s.StaffOrg)
+                    .Where(s=>s.StaffId==id)
+                    .Select(s=>new
+                    {
+                        s.Dob,s.Visa,s.Email,s.Photo,s.Gender,s.IdType,
+                        s.IdPhoto,s.StaffId,s.IdNumber,s.LastName,s.FirstName,s.HomePhone,s.IrdNumber,
+                        s.StaffOrg,s.ExpiryDate,s.MobilePhone,s.User.Role.RoleName,s.User.Role.RoleId
+                    })
+                    .FirstOrDefaultAsync();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+        }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteStaff(short id)

@@ -101,15 +101,15 @@ namespace Pegasus_backend.Controllers
         }
         
         //GET: http://localhost:5000/api/lesson/GetLessonsForReceptionist/:userId/:date
-        [HttpGet("[action]/{userId}/{date}")]
+        [HttpGet("[action]/{orgId}/{date}")]
         //for receptionist
-        public async Task<IActionResult> GetLessonsForReceptionist(int userId,DateTime date)
+        public async Task<IActionResult> GetLessonsForReceptionist(short orgId,DateTime date)
         {
             Result<Object> result = new Result<Object>();
             try
             {
-                var staff = _ablemusicContext.Staff.FirstOrDefault(s => s.UserId == userId);
-                var orgId = _ablemusicContext.StaffOrg.FirstOrDefault(s => s.StaffId == staff.StaffId).OrgId;
+                // var staff = _ablemusicContext.Staff.FirstOrDefault(s => s.UserId == userId);
+                // var orgId = _ablemusicContext.StaffOrg.FirstOrDefault(s => s.StaffId == staff.StaffId).OrgId;
                 var details =await  _ablemusicContext.Lesson
                     .Where(s=>s.OrgId==orgId&&s.BeginTime.Value.Year == date.Year && s.BeginTime.Value.Month == date.Month && s.BeginTime.Value.Day == date.Day)
                     .Include(s=>s.CourseInstance)

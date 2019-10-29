@@ -2278,6 +2278,9 @@ namespace Pegasus_backend.pegasusContext
                 entity.HasIndex(e => e.LearnerId)
                     .HasName("R_38");
 
+                entity.HasIndex(e => e.OrgId)
+                    .HasName("FK_payment_org");
+
                 entity.HasIndex(e => e.StaffId)
                     .HasName("R_39");
 
@@ -2316,6 +2319,10 @@ namespace Pegasus_backend.pegasusContext
                     .HasColumnName("learner_id")
                     .HasColumnType("int(11)");
 
+                entity.Property(e => e.OrgId)
+                    .HasColumnName("org_id")
+                    .HasColumnType("smallint(6)");
+
                 entity.Property(e => e.PaymentMethod)
                     .HasColumnName("payment_method")
                     .HasColumnType("tinyint(4)");
@@ -2337,6 +2344,11 @@ namespace Pegasus_backend.pegasusContext
                     .WithMany(p => p.Payment)
                     .HasForeignKey(d => d.LearnerId)
                     .HasConstraintName("R_38");
+
+                entity.HasOne(d => d.Org)
+                    .WithMany(p => p.Payment)
+                    .HasForeignKey(d => d.OrgId)
+                    .HasConstraintName("FK_payment_org");
 
                 entity.HasOne(d => d.Staff)
                     .WithMany(p => p.Payment)

@@ -68,7 +68,7 @@ namespace Pegasus_backend.Controllers
                 var cashBoxCheck =await _ablemusicContext.CashBox.Where(p => orgId == p.OrgId
                              && p.CloseTime.Value.Date == date.Date).FirstOrDefaultAsync();                             
                 if (cashBoxCheck!= null){
-                    throw new Exception("Daily Log Has Already Submitted");
+                    throw new Exception("Today's Daily Log Has Already Been Submitted");
                 }
                 decimal yestodayCashBox ;
                 yestodayCashBox = getLastCashBox(orgId, staffOrg,date);
@@ -116,7 +116,7 @@ namespace Pegasus_backend.Controllers
             var yestodayCashBox = _ablemusicContext.CashBox.Where(c => c.OrgId == orgId
                        && c.CashBoxDate == paymentDate.Value.Date).FirstOrDefault();
             if (yestodayCashBox == null)
-                throw new Exception("Exists No Completed Dailylog Data!");
+                throw new Exception("Please Check If You Have Submited Dailylog Yesterday!");
 
             return yestodayCashBox.TodayCash.Value;
         }

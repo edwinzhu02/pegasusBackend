@@ -346,6 +346,7 @@ namespace Pegasus_backend.Services
                 foreach (var course_instance in course_instances)
                 {
                     if (course_instance.InvoiceDate >= Convert.ToDateTime(term.EndDate)) continue;
+                    if (course_instance.EndDate >= course_instance.InvoiceDate) continue;  //fix bug duplicated lessons
                     InvoiceWaitingConfirm invoice = new InvoiceWaitingConfirm();
 
                     invoice.LearnerId = course_instance.LearnerId;
@@ -361,10 +362,10 @@ namespace Pegasus_backend.Services
                     invoice.PaidFee = 0;
                     invoice.CreatedAt = _today;
                     invoice.IsConfirmed = 0;
-                    invoice.IsActivate = 3;
+                    invoice.IsActivate = 1;
                     invoice.IsEmailSent = 0;
 
-                    int isExist = IsLearnerHasPayExtreFee((int)invoice.TermId, (int)course_instance.LearnerId);
+                    int isExist = IsLearnerHasPayExtreFee(invoice.TermId, course_instance.LearnerId);
                     if (isExist == 1)
                     {
                         //invoice.ConcertFeeName = concertFeeName;
@@ -538,6 +539,7 @@ namespace Pegasus_backend.Services
                 foreach (var learner in group_course_instance.Learners)
                 {
                     if (learner.InvoiceDate >= Convert.ToDateTime(term.EndDate)) continue;
+                    if (learner.InvoiceDate >= learner.EndDate) continue;                    
                     DateTime begin_date;
                     InvoiceWaitingConfirm invoice = new InvoiceWaitingConfirm();
 
@@ -550,7 +552,7 @@ namespace Pegasus_backend.Services
                     invoice.PaidFee = 0;
                     invoice.CreatedAt = _today;
                     invoice.IsConfirmed = 0;
-                    invoice.IsActivate = 3;
+                    invoice.IsActivate = 1;
                     invoice.IsEmailSent = 0;
                     invoice.ConcertFeeName = concertFeeName;
                     invoice.ConcertFee = concertFee;
@@ -671,8 +673,9 @@ namespace Pegasus_backend.Services
                 invoiceWaitingConfirm.Other1FeeName="Registration Fees";                
             }
         }
-        private int IsLearnerHasPayExtreFee(int term_id, int learner_id)
+        private int IsLearnerHasPayExtreFee(int? term_id, int? learner_id)
         {
+            if (term_id==null || learner_id==null) return 0;
             //var term = _ablemusicContext.Term.Where(x => x.TermId == term_id).FirstOrDefault();
             var learnerWaitingInvoice = _ablemusicContext.InvoiceWaitingConfirm.Where(x => x.TermId==term_id && x.LearnerId == learner_id).ToList();
             if (learnerWaitingInvoice.Count == 0)
