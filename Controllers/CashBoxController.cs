@@ -109,12 +109,15 @@ namespace Pegasus_backend.Controllers
         }
         private decimal getLastCashBox(short orgId, short?[] staffOrg,DateTime date)
         {
-            //find last cash payment date
-            DateTime? paymentDate = _ablemusicContext.Payment.Where(p => staffOrg.Contains(p.StaffId)
-                       && p.CreatedAt.Value.Date < date.Date
-                       && p.PaymentMethod == 1).Max(p => p.CreatedAt);
+            //find last cash box close date
+  
             var yestodayCashBox = _ablemusicContext.CashBox.Where(c => c.OrgId == orgId
-                       && c.CashBoxDate == paymentDate.Value.Date).FirstOrDefault();
+                       ).OrderByDescending(c =>c.CashBoxDate).FirstOrDefault();
+
+            var paymentDate = _ablemusicContext.Payment.Where(p => staffOrg.Contains(p.StaffId)
+                       && p.CreatedAt.Value.Date < date.Date && p.CreatedAt.Value.Date > yestodayCashBox.CashBoxDate
+                       && p.PaymentMethod == 1);
+
             if (yestodayCashBox == null)
                 throw new Exception("Please Check If You Have Submited Dailylog Yesterday!");
 

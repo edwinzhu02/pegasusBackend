@@ -470,11 +470,9 @@ namespace Pegasus_backend.Services
                     _ablemusicContext.InvoiceWaitingConfirm.Update(invoice);                    
                     _ablemusicContext.Update(courseIns);
 
+                    if (invoice.TotalFee==0)
+                        _ablemusicContext.InvoiceWaitingConfirm.Remove(invoice);  
                     await _ablemusicContext.SaveChangesAsync();
-
-                    //i++;
-                    //if (i == 4) break;
-
                 }
                 //result.Data = i;
             }
