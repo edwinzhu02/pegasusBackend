@@ -159,7 +159,7 @@ namespace Pegasus_backend.Controllers
                         //             1:0
                         //     :0,
                         IsPaid = s.IsPaid,IsTrial = s.IsTrial,
-                        learner = IsNull(s.GroupCourseInstance)?new List<Object>(){new {s.Learner.FirstName,s.Learner.LearnerId}}:null,
+                        learner = IsNull(s.GroupCourseInstance)?new List<Object>(){new {s.Learner.FirstName,s.Learner.LastName,s.Learner.LearnerId}}:null,
                         learners = IsNull(s.GroupCourseInstance)?null:s.GroupCourseInstance.LearnerGroupCourse.
                                 Select(w=>new{w.Learner.FirstName,w.Learner.LearnerId}),
                         IsGroup=!IsNull(s.GroupCourseInstance),
