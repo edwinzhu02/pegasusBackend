@@ -15,6 +15,7 @@ using Pegasus_backend.pegasusContext;
 using Pegasus_backend.Models;
 using Microsoft.Extensions.Logging;
 using Pegasus_backend.Services;
+using Pegasus_backend.Utilities;
 
 
 namespace Pegasus_backend.Controllers
@@ -152,6 +153,8 @@ namespace Pegasus_backend.Controllers
         {
             var result = new Result<string>();
             List<int> courseInstanceIds = new List<int>();
+            int? learnerId = model.OnetoOneCourses[0].LearnerId;
+
             One2oneCourseInstance one2oneCourseInstance =  new One2oneCourseInstance();
             try
             {
@@ -159,6 +162,7 @@ namespace Pegasus_backend.Controllers
                 {
                     model.OnetoOneCourses.ForEach(s =>
                     {
+                        
                         var room = _ablemusicContext.AvailableDays.FirstOrDefault(
                             q => q.TeacherId == s.TeacherId && q.OrgId == s.OrgId &&
                                  q.DayOfWeek == s.Schedule.DayOfWeek);
@@ -206,10 +210,13 @@ namespace Pegasus_backend.Controllers
 
                     newModel.ForEach(async s =>
                     {
-                    
                         await _lessonGenerateService.GetTerm((DateTime)s.BeginDate, s.id, 1);
                     });
-                    if (!_invoicePatchService.InvoicePatch(courseInstanceIds)) throw new Exception("Invoice save error!");
+                    if (isNewStudent(learnerId)){
+                        if (!_invoicePatchService.InvoicePatch(courseInstanceIds)) 
+                        throw new Exception("Invoice save error!");
+                    }
+                    
                     await _ablemusicContext.SaveChangesAsync();
                     dbtransaction.Commit();
                 }
@@ -225,6 +232,15 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = ex.Message;
                 return BadRequest(result);
             }
+        }
+        private bool isNewStudent(int? learnerId)
+        {
+            DateTime dateNow = DateTime.UtcNow.ToNZTimezone();
+            DateTime? enrollDate =  _ablemusicContext.Learner.Where(l => l.LearnerId ==learnerId)
+                                .Select(l =>l.EnrollDate).FirstOrDefault();
+            if (enrollDate==null) return false;
+            if  ((dateNow - enrollDate.Value ).TotalDays <7*14) return true;                 
+            return false;
         }
     }
 }
