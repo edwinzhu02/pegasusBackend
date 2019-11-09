@@ -26,7 +26,7 @@ namespace Pegasus_backend.Controllers
             var result = new Result<object>();
             try
             {
-                var teacher = _ablemusicContext.Teacher.FirstOrDefault(s => s.UserId == userId);
+                var teacher =await _ablemusicContext.Teacher.FirstOrDefaultAsync(s => s.UserId == userId);
                 if (teacher == null)
                 {
                     throw new Exception("You are not the teacher");

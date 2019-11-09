@@ -34,6 +34,36 @@ namespace Pegasus_backend.Models
         public string Other1FeeName { get; set; }
         public string Other2FeeName { get; set; }
         public string Other3FeeName { get; set; }
+        public decimal? Other4Fee { get; set; }
+        public string Other4FeeName { get; set; }    
+        public decimal? Other5Fee { get; set; }
+        public string Other5FeeName { get; set; }    
+        public decimal? Other6Fee { get; set; }
+        public string Other6FeeName { get; set; }    
+        public decimal? Other7Fee { get; set; }
+        public string Other7FeeName { get; set; }    
+        public decimal? Other8Fee { get; set; }
+        public string Other8FeeName { get; set; }    
+        public decimal? Other9Fee { get; set; }
+        public string Other9FeeName { get; set; }    
+        public decimal? Other10Fee { get; set; }
+        public string Other10FeeName { get; set; }    
+        public decimal? Other11Fee { get; set; }
+        public string Other11FeeName { get; set; }    
+        public decimal? Other12Fee { get; set; }
+        public string Other12FeeName { get; set; }    
+        public decimal? Other13Fee { get; set; }
+        public string Other13FeeName { get; set; }    
+        public decimal? Other14Fee { get; set; }
+        public string Other14FeeName { get; set; }    
+        public decimal? Other15Fee { get; set; }
+        public string Other15FeeName { get; set; }    
+        public decimal? Other16Fee { get; set; }
+        public string Other16FeeName { get; set; }    
+        public decimal? Other17Fee { get; set; }
+        public string Other17FeeName { get; set; }    
+        public decimal? Other18Fee { get; set; }
+        public string Other18FeeName { get; set; }          
         public short? IsActivate { get; set; }
         public short? IsEmailSent { get; set; }
         public short? IsConfirmed { get; set; }

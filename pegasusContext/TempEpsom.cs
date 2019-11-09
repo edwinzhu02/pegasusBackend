@@ -14,5 +14,9 @@ namespace Pegasus_backend.pegasusContext
         public string MobilePhone { get; set; }
         public string HomePhone { get; set; }
         public string Email { get; set; }
+        public string ParentName { get; set; }
+        public string ClassDate { get; set; }
+        public string Tutor { get; set; }
+        public string StartDate { get; set; }
     }
 }

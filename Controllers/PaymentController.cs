@@ -12,6 +12,7 @@ using Pegasus_backend.ActionFilter;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.Extensions.Logging;
+using Pegasus_backend.Utilities;
 
 namespace Pegasus_backend.Controllers
 {
@@ -25,22 +26,22 @@ namespace Pegasus_backend.Controllers
             _mapper = mapper;
         }
 
-      [HttpGet("[action]/{learnerId}")]
+        [HttpGet("[action]/{learnerId}")]
         public async Task<IActionResult> PaymentByLearner(int learnerId)
         {
             Result<Object> result = new Result<object>();
             try
-             {
-                                var payments = await _ablemusicContext.Payment
-                    .Where(d => d.LearnerId == learnerId )
-                     .Include(p => p.Invoice)
-                     .Include(p => p.Learner)                     
-                     .Include(p => p.SoldTransaction ).ThenInclude(p => p.Product)
-                     .Include(t => t.Staff ).OrderByDescending(p => p.CreatedAt).ToListAsync();
- //&& orgs.Contains(d.Staff.StaffOrg.FirstOrDefault().OrgId)
+            {
+                var payments = await _ablemusicContext.Payment
+    .Where(d => d.LearnerId == learnerId)
+     .Include(p => p.Invoice)
+     .Include(p => p.Learner)
+     .Include(p => p.SoldTransaction).ThenInclude(p => p.Product)
+     .Include(t => t.Staff).OrderByDescending(p => p.CreatedAt).ToListAsync();
+                //&& orgs.Contains(d.Staff.StaffOrg.FirstOrDefault().OrgId)
                 result.Data = _mapper.Map<List<GetPaymentModel>>(payments);
 
-              }
+            }
             catch (Exception ex)
             {
                 result.IsSuccess = false;
@@ -50,25 +51,25 @@ namespace Pegasus_backend.Controllers
             return Ok(result);
         }
         [HttpGet("[action]/{staffId}/{beginDate}/{endDate}")]
-        public async Task<IActionResult> PaymentByDate(short staffId,DateTime beginDate, DateTime endDate)
+        public async Task<IActionResult> PaymentByDate(short staffId, DateTime beginDate, DateTime endDate)
         {
             Result<Object> result = new Result<object>();
             endDate = endDate.AddDays(1);
             try
-             {
-                var orgs = await _ablemusicContext.StaffOrg.Where(o=>o.StaffId==staffId).Select(o=>o.OrgId).ToListAsync();
+            {
+                var orgs = await _ablemusicContext.StaffOrg.Where(o => o.StaffId == staffId).Select(o => o.OrgId).ToListAsync();
                 var payments = await _ablemusicContext.Payment
-                    .Where(d => d.CreatedAt >beginDate && d.CreatedAt <endDate
+                    .Where(d => d.CreatedAt > beginDate && d.CreatedAt < endDate
                         && orgs.Contains(d.Staff.StaffOrg.FirstOrDefault().OrgId))
                      .Include(p => p.Invoice)
-                     .Include(p => p.Learner)                     
-                     .Include(p => p.SoldTransaction ).ThenInclude(p => p.Product)
+                     .Include(p => p.Learner)
+                     .Include(p => p.SoldTransaction).ThenInclude(p => p.Product)
                      .Include(p => p.Staff).ThenInclude(s => s.StaffOrg)
-                     .Include(t => t.Staff ).OrderByDescending(p => p.CreatedAt).ToListAsync();
- //&& orgs.Contains(d.Staff.StaffOrg.FirstOrDefault().OrgId)
+                     .Include(t => t.Staff).OrderByDescending(p => p.CreatedAt).ToListAsync();
+                //&& orgs.Contains(d.Staff.StaffOrg.FirstOrDefault().OrgId)
                 result.Data = _mapper.Map<List<GetPaymentModel>>(payments);
 
-              }
+            }
             catch (Exception ex)
             {
                 result.IsSuccess = false;
@@ -80,7 +81,7 @@ namespace Pegasus_backend.Controllers
         [CheckModelFilter]
         [HttpPost]
         [Route("payInvoice")]
-        
+
         public async Task<IActionResult> SavePaymentDetails([FromBody] InvoicePay details)
         {
             Result<string> result = new Result<string>();
@@ -90,7 +91,7 @@ namespace Pegasus_backend.Controllers
                 {
                     var invoiceItem =
                         await _ablemusicContext.Invoice.FirstOrDefaultAsync(s => s.InvoiceId == details.InvoiceId);
-                    var learner =await _ablemusicContext.Learner.FirstOrDefaultAsync(s => s.LearnerId == details.LearnerId);
+                    var learner = await _ablemusicContext.Learner.FirstOrDefaultAsync(s => s.LearnerId == details.LearnerId);
                     if (invoiceItem == null)
                     {
                         throw new Exception("Invoice does not found.");
@@ -99,12 +100,12 @@ namespace Pegasus_backend.Controllers
                     {
                         throw new Exception("Student does not found.");
                     }
-                    decimal creditAmt = (details.UseCredit?learner.Credit:0).Value;
+                    decimal creditAmt = (details.UseCredit ? learner.Credit : 0).Value;
                     //the owing fee for invoice cannot be negative.
 
                     if (invoiceItem.OwingFee - details.Amount - creditAmt < 0)
                     {
-                        throw new Exception("You only need to pay " + (invoiceItem.OwingFee-creditAmt) + " dollar. No more than it");
+                        throw new Exception("You only need to pay " + (invoiceItem.OwingFee - creditAmt) + " dollar. No more than it");
                     }
 
                     invoiceItem.PaidFee = invoiceItem.PaidFee + details.Amount;
@@ -121,7 +122,8 @@ namespace Pegasus_backend.Controllers
                     }
                     _ablemusicContext.Update(invoiceItem);
                     await _ablemusicContext.SaveChangesAsync();
-                    if (creditAmt>0){
+                    if (creditAmt > 0)
+                    {
                         learner.Credit -= creditAmt;
                         _ablemusicContext.Update(learner);
                         await _ablemusicContext.SaveChangesAsync();
@@ -132,22 +134,23 @@ namespace Pegasus_backend.Controllers
                     paymentItem.CreatedAt = toNZTimezone(DateTime.UtcNow);
                     paymentItem.PaymentType = 1;
                     paymentItem.IsConfirmed = 0;
-                    if (paymentItem.Amount>=0)
+                    if (paymentItem.Amount >= 0)
                         _ablemusicContext.Add(paymentItem);
                     await _ablemusicContext.SaveChangesAsync();
 
                     var fundItem =
                         await _ablemusicContext.Fund.FirstOrDefaultAsync(s => s.LearnerId == details.LearnerId);
-                    if (fundItem == null )
+                    if (fundItem == null)
                     {
-                        var fundNewItem =  new  Fund();
+                        var fundNewItem = new Fund();
                         fundNewItem.LearnerId = details.LearnerId;
-                        fundNewItem.Balance =details.Amount;
-                        fundNewItem.Balance =details.Amount;
+                        fundNewItem.Balance = details.Amount;
+                        fundNewItem.Balance = details.Amount;
                         fundNewItem.UpdatedAt = toNZTimezone(DateTime.UtcNow);
                         _ablemusicContext.Add(fundNewItem);
                     }
-                    else{
+                    else
+                    {
                         fundItem.Balance = fundItem.Balance + details.Amount;
                         fundItem.UpdatedAt = toNZTimezone(DateTime.UtcNow);
                         _ablemusicContext.Update(fundItem);
@@ -156,7 +159,8 @@ namespace Pegasus_backend.Controllers
 
                     if (invoiceItem.IsPaid == 1)
                     {
-                        if (invoiceItem.CourseInstanceId!=null) { //if this is a one on one session 
+                        if (invoiceItem.CourseInstanceId != null)
+                        { //if this is a one on one session 
                             //
                             var invoiceLessonRemain =
                                 _ablemusicContext.LessonRemain.FirstOrDefault(s =>
@@ -181,17 +185,18 @@ namespace Pegasus_backend.Controllers
                                 _ablemusicContext.Add(lessonRemain);
                                 await _ablemusicContext.SaveChangesAsync();
                             }
-                           
+
                         }
                         //if  (invoiceItem.CourseInstanceId != null)
-                            //await SaveLesson(details.InvoiceId,0,1);
-                        
+                        //await SaveLesson(details.InvoiceId,0,1);
+
 
                     }
                     var lesson = _ablemusicContext.Lesson
-                    .Where(l => l.InvoiceNum==invoiceItem.InvoiceNum && l.IsTrial==1).FirstOrDefault();
-                    if (lesson !=null){
-                        lesson.IsPaid=1;
+                    .Where(l => l.InvoiceNum == invoiceItem.InvoiceNum && l.IsTrial == 1).FirstOrDefault();
+                    if (lesson != null)
+                    {
+                        lesson.IsPaid = 1;
                         _ablemusicContext.Update(lesson);
                         await _ablemusicContext.SaveChangesAsync();
                     }
@@ -243,7 +248,7 @@ namespace Pegasus_backend.Controllers
                         throw new Exception(name.ProductName + " has not enough stock, only " + stock.Quantity + " left");
                     }
                     detail.StockId = stock.StockId;
-                    
+
                     detail.CreatedAt = toNZTimezone(DateTime.UtcNow);
                     detail.Amount = name.SellPrice * detail.SoldQuantity;
                     detail.DiscountedAmount = name.SellPrice * detail.SoldQuantity;
@@ -268,10 +273,14 @@ namespace Pegasus_backend.Controllers
 
                 }
                 await _ablemusicContext.Payment.AddAsync(payment);
-                
-                if (Math.Round(amount.Value,2) != payment.Amount)
+
+                if (Math.Round(amount.Value, 2) != payment.Amount)
                 {
                     throw new Exception("Amount Error, payment amount is not equal to product price!");
+                }
+                if (payment.PaymentMethod == 4)
+                {
+                    AddToInvoice(payment);
                 }
                 await _ablemusicContext.SaveChangesAsync();
             }
@@ -285,10 +294,57 @@ namespace Pegasus_backend.Controllers
             return Ok(result);
         }
 
+        private void AddToInvoice(Payment payment)
+        {
+            long  ii = 0;
+            var today = DateTime.UtcNow.ToNZTimezone();
+            var termIds = _ablemusicContext.Term.
+                Where(t => t.EndDate > today.Date).Select(t => t.TermId).ToList();
 
+            if (termIds.Count == 0) throw new Exception("Sorry, Can not find a term");
+
+            var invoice = _ablemusicContext.InvoiceWaitingConfirm.Where(i => termIds.Contains(i.TermId.Value)).
+                FirstOrDefault(i => i.LearnerId == payment.LearnerId
+                    && i.IsActivate == 1 && i.IsConfirmed == 0);
+
+            if (invoice == null) throw new Exception("Sorry, Can not find a draft invoice");
+
+            foreach (var tran in payment.SoldTransaction)
+            {
+                ii++;
+                invoice.TotalFee += tran.DiscountedAmount;
+                invoice.OwingFee += tran.DiscountedAmount;
+                switch (ii)
+                {
+                    case 1:
+                        invoice.Other9Fee = tran.DiscountedAmount;
+                        invoice.Other9FeeName = tran.Product.ProductName;
+                        break;
+                    case 2:
+                        invoice.Other10Fee = tran.DiscountedAmount;
+                        invoice.Other10FeeName = tran.Product.ProductName;
+                        break;
+                    case 3:
+                        invoice.Other11Fee = tran.DiscountedAmount;
+                        invoice.Other11FeeName = tran.Product.ProductName;
+                        break;
+                    case 4:
+                        invoice.Other12Fee = tran.DiscountedAmount;
+                        invoice.Other12FeeName = tran.Product.ProductName;
+                        break;
+                    case 5:
+                        invoice.Other13Fee = tran.DiscountedAmount;
+                        invoice.Other13FeeName = tran.Product.ProductName;
+                        break;
+                    default:
+                        throw new Exception("You Can Buy More Than 5 Books at a Time");
+                }
+                _ablemusicContext.InvoiceWaitingConfirm.Update(invoice);
+            }
+        }
 
         [HttpPut("{paymentId}/{comment}")]
-        public async Task<IActionResult> Put(int paymentId,string comment)
+        public async Task<IActionResult> Put(int paymentId, string comment)
         {
             var result = new Result<Payment>();
             var payment = new Payment();
@@ -296,13 +352,13 @@ namespace Pegasus_backend.Controllers
             {
                 payment = await _ablemusicContext.Payment.Where(p => p.PaymentId == paymentId).FirstOrDefaultAsync();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 result.IsSuccess = false;
                 result.ErrorMessage = ex.Message;
                 return BadRequest(result);
             }
-            if(payment == null)
+            if (payment == null)
             {
                 result.IsSuccess = false;
                 result.ErrorMessage = "payment not found";
@@ -314,7 +370,7 @@ namespace Pegasus_backend.Controllers
             {
                 await _ablemusicContext.SaveChangesAsync();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 result.IsSuccess = false;
                 result.ErrorMessage = ex.Message;

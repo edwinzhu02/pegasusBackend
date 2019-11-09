@@ -557,7 +557,7 @@ namespace Pegasus_backend.Services
                     invoice.LessonNoteFeeName = noteFeeName;
                     invoice.NoteFee = noteFee;
 
-                    int isExist = IsLearnerHasPayExtreFee((int)invoice.TermId, (int)learner.LearnerId);
+                    int isExist = IsLearnerHasPayExtreFee(invoice.TermId, learner.LearnerId);
                     if (isExist == 1)
                     {
                         //invoice.ConcertFeeName = concertFeeName;
@@ -642,7 +642,7 @@ namespace Pegasus_backend.Services
                 TimeSpan ts = (DateTime)InvoiceWaitingConfirm.BeginDate - _today;
                 int days = ts.Days;
 
-                if (days <= 30)
+                if (days <= 7*14)
                 {
                     InvoiceWaitingConfirm.IsActivate = 1;
                     _ablemusicContext.Update(InvoiceWaitingConfirm);
@@ -666,9 +666,11 @@ namespace Pegasus_backend.Services
             var invoice = _ablemusicContext.InvoiceWaitingConfirm.
                             Where(i => i.LearnerId == learnerId 
                             && i.BeginDate!=i.EndDate).FirstOrDefault();
-            if (invoice==null ){
+            if (invoice == null ){
                 invoiceWaitingConfirm.Other1Fee=20;
-                invoiceWaitingConfirm.Other1FeeName="Registration Fees";                
+                invoiceWaitingConfirm.Other1FeeName="Enrolment Fee";  
+                invoiceWaitingConfirm.TotalFee +=20;              
+                invoiceWaitingConfirm.OwingFee +=20;
             }
         }
         private int IsLearnerHasPayExtreFee(int? term_id, int? learner_id)
@@ -687,7 +689,7 @@ namespace Pegasus_backend.Services
         public async Task GetTerm(DateTime date, int instance_id=0,int isone2one=3)
         {
             //string time DateTime time
-            var terms = _ablemusicContext.Term.OrderBy(x => x.BeginDate).ToArray();
+            var terms = _ablemusicContext.Term.Where(x=>x.EndDate > date).OrderBy(x => x.BeginDate).ToArray();
             DateTime start_date = new DateTime();
 
             //learn course_instance begin_date
@@ -703,7 +705,7 @@ namespace Pegasus_backend.Services
                 int day = ts.Days;
                 if (isone2one == 3)
                 {
-                    if (day >= 0 && day <= 30)
+                    if (day >= 0 && day < 14*7)
                     {
 
                         int next_term = term.TermId;
@@ -720,7 +722,7 @@ namespace Pegasus_backend.Services
                 }
                 if (isone2one == 0)
                 {
-                    if (day >= 0 && day <= 30)
+                    if (day >= 0 && day <= 14*7) //next term
                     {
 
                         int next_term = term.TermId;
@@ -735,7 +737,7 @@ namespace Pegasus_backend.Services
                 }
                 if (isone2one == 1)
                 {
-                    if (day >= 0 && day <= 30)
+                    if (day >= 0 && day <= 14*7)
                     {
 
                         int next_term = term.TermId;

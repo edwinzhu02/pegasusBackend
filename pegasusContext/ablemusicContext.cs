@@ -83,8 +83,8 @@ namespace Pegasus_backend.pegasusContext
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseMySQL("server=www.gradspace.org;port=3306;user=dbuser;password=qwer1234;database=ablemusic");
+// #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+//                 optionsBuilder.UseMySQL("server=www.gradspace.org;port=3306;user=dbuser;password=qwer1234;database=ablemusic");
             }
         }
 
@@ -921,6 +921,87 @@ namespace Pegasus_backend.pegasusContext
                     .HasColumnName("note_fee")
                     .HasColumnType("decimal(8,2)");
 
+                entity.Property(e => e.Other10Fee)
+                    .HasColumnName("other10_fee")
+                    .HasColumnType("decimal(8,2)");
+
+                entity.Property(e => e.Other10FeeName)
+                    .HasColumnName("other10_fee_name")
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Other11Fee)
+                    .HasColumnName("other11_fee")
+                    .HasColumnType("decimal(8,2)");
+
+                entity.Property(e => e.Other11FeeName)
+                    .HasColumnName("other11_fee_name")
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Other12Fee)
+                    .HasColumnName("other12_fee")
+                    .HasColumnType("decimal(8,2)");
+
+                entity.Property(e => e.Other12FeeName)
+                    .HasColumnName("other12_fee_name")
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Other13Fee)
+                    .HasColumnName("other13_fee")
+                    .HasColumnType("decimal(8,2)");
+
+                entity.Property(e => e.Other13FeeName)
+                    .HasColumnName("other13_fee_name")
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Other14Fee)
+                    .HasColumnName("other14_fee")
+                    .HasColumnType("decimal(8,2)");
+
+                entity.Property(e => e.Other14FeeName)
+                    .HasColumnName("other14_fee_name")
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Other15Fee)
+                    .HasColumnName("other15_fee")
+                    .HasColumnType("decimal(8,2)");
+
+                entity.Property(e => e.Other15FeeName)
+                    .HasColumnName("other15_fee_name")
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Other16Fee)
+                    .HasColumnName("other16_fee")
+                    .HasColumnType("decimal(8,2)");
+
+                entity.Property(e => e.Other16FeeName)
+                    .HasColumnName("other16_fee_name")
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Other17Fee)
+                    .HasColumnName("other17_fee")
+                    .HasColumnType("decimal(8,2)");
+
+                entity.Property(e => e.Other17FeeName)
+                    .HasColumnName("other17_fee_name")
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Other18Fee)
+                    .HasColumnName("other18_fee")
+                    .HasColumnType("decimal(8,2)");
+
+                entity.Property(e => e.Other18FeeName)
+                    .HasColumnName("other18_fee_name")
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.Other1Fee)
                     .HasColumnName("other1_fee")
                     .HasColumnType("decimal(8,2)");
@@ -946,6 +1027,60 @@ namespace Pegasus_backend.pegasusContext
                 entity.Property(e => e.Other3FeeName)
                     .HasColumnName("other3_fee_name")
                     .HasMaxLength(40)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Other4Fee)
+                    .HasColumnName("other4_fee")
+                    .HasColumnType("decimal(8,2)");
+
+                entity.Property(e => e.Other4FeeName)
+                    .HasColumnName("other4_fee_name")
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Other5Fee)
+                    .HasColumnName("other5_fee")
+                    .HasColumnType("decimal(8,2)");
+
+                entity.Property(e => e.Other5FeeName)
+                    .HasColumnName("other5_fee_name")
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Other6Fee)
+                    .HasColumnName("other6_fee")
+                    .HasColumnType("decimal(8,2)");
+
+                entity.Property(e => e.Other6FeeName)
+                    .HasColumnName("other6_fee_name")
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Other7Fee)
+                    .HasColumnName("other7_fee")
+                    .HasColumnType("decimal(8,2)");
+
+                entity.Property(e => e.Other7FeeName)
+                    .HasColumnName("other7_fee_name")
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Other8Fee)
+                    .HasColumnName("other8_fee")
+                    .HasColumnType("decimal(8,2)");
+
+                entity.Property(e => e.Other8FeeName)
+                    .HasColumnName("other8_fee_name")
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Other9Fee)
+                    .HasColumnName("other9_fee")
+                    .HasColumnType("decimal(8,2)");
+
+                entity.Property(e => e.Other9FeeName)
+                    .HasColumnName("other9_fee_name")
+                    .HasMaxLength(60)
                     .IsUnicode(false);
 
                 entity.Property(e => e.OwingFee)
@@ -1098,6 +1233,87 @@ namespace Pegasus_backend.pegasusContext
                     .HasColumnName("note_fee")
                     .HasColumnType("decimal(8,2)");
 
+                entity.Property(e => e.Other10Fee)
+                    .HasColumnName("other10_fee")
+                    .HasColumnType("decimal(8,2)");
+
+                entity.Property(e => e.Other10FeeName)
+                    .HasColumnName("other10_fee_name")
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Other11Fee)
+                    .HasColumnName("other11_fee")
+                    .HasColumnType("decimal(8,2)");
+
+                entity.Property(e => e.Other11FeeName)
+                    .HasColumnName("other11_fee_name")
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Other12Fee)
+                    .HasColumnName("other12_fee")
+                    .HasColumnType("decimal(8,2)");
+
+                entity.Property(e => e.Other12FeeName)
+                    .HasColumnName("other12_fee_name")
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Other13Fee)
+                    .HasColumnName("other13_fee")
+                    .HasColumnType("decimal(8,2)");
+
+                entity.Property(e => e.Other13FeeName)
+                    .HasColumnName("other13_fee_name")
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Other14Fee)
+                    .HasColumnName("other14_fee")
+                    .HasColumnType("decimal(8,2)");
+
+                entity.Property(e => e.Other14FeeName)
+                    .HasColumnName("other14_fee_name")
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Other15Fee)
+                    .HasColumnName("other15_fee")
+                    .HasColumnType("decimal(8,2)");
+
+                entity.Property(e => e.Other15FeeName)
+                    .HasColumnName("other15_fee_name")
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Other16Fee)
+                    .HasColumnName("other16_fee")
+                    .HasColumnType("decimal(8,2)");
+
+                entity.Property(e => e.Other16FeeName)
+                    .HasColumnName("other16_fee_name")
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Other17Fee)
+                    .HasColumnName("other17_fee")
+                    .HasColumnType("decimal(8,2)");
+
+                entity.Property(e => e.Other17FeeName)
+                    .HasColumnName("other17_fee_name")
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Other18Fee)
+                    .HasColumnName("other18_fee")
+                    .HasColumnType("decimal(8,2)");
+
+                entity.Property(e => e.Other18FeeName)
+                    .HasColumnName("other18_fee_name")
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.Other1Fee)
                     .HasColumnName("other1_fee")
                     .HasColumnType("decimal(8,2)");
@@ -1123,6 +1339,60 @@ namespace Pegasus_backend.pegasusContext
                 entity.Property(e => e.Other3FeeName)
                     .HasColumnName("other3_fee_name")
                     .HasMaxLength(40)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Other4Fee)
+                    .HasColumnName("other4_fee")
+                    .HasColumnType("decimal(8,2)");
+
+                entity.Property(e => e.Other4FeeName)
+                    .HasColumnName("other4_fee_name")
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Other5Fee)
+                    .HasColumnName("other5_fee")
+                    .HasColumnType("decimal(8,2)");
+
+                entity.Property(e => e.Other5FeeName)
+                    .HasColumnName("other5_fee_name")
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Other6Fee)
+                    .HasColumnName("other6_fee")
+                    .HasColumnType("decimal(8,2)");
+
+                entity.Property(e => e.Other6FeeName)
+                    .HasColumnName("other6_fee_name")
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Other7Fee)
+                    .HasColumnName("other7_fee")
+                    .HasColumnType("decimal(8,2)");
+
+                entity.Property(e => e.Other7FeeName)
+                    .HasColumnName("other7_fee_name")
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Other8Fee)
+                    .HasColumnName("other8_fee")
+                    .HasColumnType("decimal(8,2)");
+
+                entity.Property(e => e.Other8FeeName)
+                    .HasColumnName("other8_fee_name")
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Other9Fee)
+                    .HasColumnName("other9_fee")
+                    .HasColumnType("decimal(8,2)");
+
+                entity.Property(e => e.Other9FeeName)
+                    .HasColumnName("other9_fee_name")
+                    .HasMaxLength(60)
                     .IsUnicode(false);
 
                 entity.Property(e => e.OwingFee)
@@ -3515,6 +3785,11 @@ namespace Pegasus_backend.pegasusContext
                     .HasMaxLength(100)
                     .IsUnicode(false);
 
+                entity.Property(e => e.ClassDate)
+                    .HasColumnName("class_date")
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.Dob)
                     .HasColumnName("DOB")
                     .HasColumnType("date");
@@ -3547,6 +3822,21 @@ namespace Pegasus_backend.pegasusContext
                 entity.Property(e => e.No)
                     .HasColumnName("no")
                     .HasMaxLength(3)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ParentName)
+                    .HasColumnName("parent_name")
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.StartDate)
+                    .HasColumnName("start_date")
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Tutor)
+                    .HasColumnName("tutor")
+                    .HasMaxLength(100)
                     .IsUnicode(false);
             });
 

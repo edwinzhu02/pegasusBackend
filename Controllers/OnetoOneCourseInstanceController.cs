@@ -16,6 +16,7 @@ using Pegasus_backend.Models;
 using Microsoft.Extensions.Logging;
 using Pegasus_backend.Services;
 
+
 namespace Pegasus_backend.Controllers
 {
     [Route("api/[controller]")]
@@ -25,11 +26,13 @@ namespace Pegasus_backend.Controllers
     {
         private readonly IMapper _mapper;
         private readonly LessonGenerateService _lessonGenerateService;
+        private readonly IInvoicePatchService _invoicePatchService;
 
         public OnetoOneCourseInstanceController(ablemusicContext ablemusicContext, ILogger<OnetoOneCourseInstanceController> log, IMapper mapper) : base(ablemusicContext, log)
         {
             _mapper = mapper;
             _lessonGenerateService = new LessonGenerateService(_ablemusicContext, _mapper);
+            _invoicePatchService = new InvoicePatchService(_ablemusicContext);
         }
 
         [HttpPut("{instanceId}/{endDate}")]
@@ -73,6 +76,21 @@ namespace Pegasus_backend.Controllers
                             invoice.Other1Fee=0;
                             invoice.Other2Fee=0;   
                             invoice.Other3Fee=0; 
+                            invoice.Other4Fee=0;
+                            invoice.Other5Fee=0;   
+                            invoice.Other6Fee=0; 
+                            invoice.Other7Fee=0;
+                            invoice.Other8Fee=0;   
+                            invoice.Other9Fee=0; 
+                            invoice.Other10Fee=0;
+                            invoice.Other11Fee=0;   
+                            invoice.Other12Fee=0;
+                            invoice.Other13Fee=0;
+                            invoice.Other14Fee=0;   
+                            invoice.Other15Fee=0; 
+                            invoice.Other16Fee=0;
+                            invoice.Other17Fee=0;   
+                            invoice.Other18Fee=0;                                                                                                                                             
                             invoice.TotalFee =0;
                             invoice.OwingFee =0;                                                   
                         }
@@ -93,11 +111,26 @@ namespace Pegasus_backend.Controllers
                             invoiceWaiting.Other1Fee=0;
                             invoiceWaiting.Other2Fee=0;   
                             invoiceWaiting.Other3Fee=0; 
+                            invoiceWaiting.Other4Fee=0;
+                            invoiceWaiting.Other5Fee=0;   
+                            invoiceWaiting.Other6Fee=0; 
+                            invoiceWaiting.Other7Fee=0;
+                            invoiceWaiting.Other8Fee=0;   
+                            invoiceWaiting.Other9Fee=0; 
+                            invoiceWaiting.Other10Fee=0;
+                            invoiceWaiting.Other11Fee=0;   
+                            invoiceWaiting.Other12Fee=0;    
+                            invoiceWaiting.Other13Fee=0;
+                            invoiceWaiting.Other14Fee=0;   
+                            invoiceWaiting.Other15Fee=0;  
+                            invoiceWaiting.Other16Fee=0;
+                            invoiceWaiting.Other17Fee=0;   
+                            invoiceWaiting.Other18Fee=0;                                                                                                                                           
                             invoiceWaiting.TotalFee =0;
                             invoiceWaiting.OwingFee =0;                                                   
                         }
                      _ablemusicContext.Update(invoiceWaiting);
-                    _ablemusicContext.Update(lesson);
+                    _ablemusicContext.Remove(lesson);
                 });
                 learner.Credit +=credit;
                 _ablemusicContext.Update(learner);
@@ -118,6 +151,8 @@ namespace Pegasus_backend.Controllers
         public async Task<IActionResult> AddOnetoOneCourseInstance([FromBody] OnetoOneCourseInstancesModel model)
         {
             var result = new Result<string>();
+            List<int> courseInstanceIds = new List<int>();
+            One2oneCourseInstance one2oneCourseInstance =  new One2oneCourseInstance();
             try
             {
                 using (var dbtransaction =await _ablemusicContext.Database.BeginTransactionAsync())
@@ -143,9 +178,9 @@ namespace Pegasus_backend.Controllers
                         else{
                             throw new Exception("This teacher has no room in this branch!");
                         }
-                                                
+                                              
                         var durationType = _ablemusicContext.Course.FirstOrDefault(w => w.CourseId == s.CourseId).Duration;
-                        _ablemusicContext.Add(new One2oneCourseInstance
+                        one2oneCourseInstance = new One2oneCourseInstance
                         {
                             CourseId = s.CourseId,TeacherId = s.TeacherId, OrgId = s.OrgId,
                             BeginDate = s.BeginDate, EndDate = s.EndDate, LearnerId = s.LearnerId,
@@ -159,19 +194,23 @@ namespace Pegasus_backend.Controllers
                                     EndTime = GetEndTimeForOnetoOneCourseSchedule(s.Schedule.BeginTime,durationType)
                                 }
                             }
-                        });
-
+                        };
+                        _ablemusicContext.Add(one2oneCourseInstance);
                     });
                     await _ablemusicContext.SaveChangesAsync();
-
+                    courseInstanceIds.Add(one2oneCourseInstance.CourseInstanceId);                    
+ 
                     var newModel = _ablemusicContext.One2oneCourseInstance.
                             Where(o => o.LearnerId==model.OnetoOneCourses[0].LearnerId).
                             Select(o => new {o.BeginDate ,id= o.CourseInstanceId}).ToList();
 
                     newModel.ForEach(async s =>
                     {
+                    
                         await _lessonGenerateService.GetTerm((DateTime)s.BeginDate, s.id, 1);
                     });
+                    if (!_invoicePatchService.InvoicePatch(courseInstanceIds)) throw new Exception("Invoice save error!");
+                    await _ablemusicContext.SaveChangesAsync();
                     dbtransaction.Commit();
                 }
 

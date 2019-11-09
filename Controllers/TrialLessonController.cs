@@ -29,52 +29,52 @@ namespace Pegasus_backend.Controllers
             var result = new Result<object>();
             try
             {
-                var lessons = _ablemusicContext.Lesson.Include(l => l.Teacher)
-                    .Where(st => st.BeginTime.Value.Date == startTime.Date && st.OrgId == orgId && st.RoomId == roomId && st.IsCanceled != 1)
-                    .Select(l => new
-                    {
-                        l.TeacherId,
-                        l.Teacher.FirstName,
-                        l.Teacher.LastName,
-                        l.BeginTime,
-                        diff = Math.Abs(l.BeginTime.Value.Subtract(startTime).TotalMinutes)
-                    }).OrderBy(l => l.diff);
-                var tmpLesson1 = await (from l in lessons
-                                        group l by l.TeacherId into g
-                                        select new
-                                        {
-                                            TeacherId = g.Key,
-                                            FirstName = g.Max(l => l.FirstName),
-                                            LastName = g.Max(l => l.LastName),
-                                            diff = g.Min(l => l.diff)
-                                        }).OrderBy(l => l.diff).ToListAsync();
-                if (tmpLesson1.Count > 0)//find teacher match room and time
-                {
-                    result.Data = tmpLesson1;
-                    return Ok(result);
-                }
+                // var lessons = _ablemusicContext.Lesson.Include(l => l.Teacher)
+                //     .Where(st => st.BeginTime.Value.Date == startTime.Date && st.OrgId == orgId && st.RoomId == roomId && st.IsCanceled != 1)
+                //     .Select(l => new
+                //     {
+                //         l.TeacherId,
+                //         l.Teacher.FirstName,
+                //         l.Teacher.LastName,
+                //         l.BeginTime,
+                //         diff = Math.Abs(l.BeginTime.Value.Subtract(startTime).TotalMinutes)
+                //     }).OrderBy(l => l.diff);
+                // var tmpLesson1 = await (from l in lessons
+                //                         group l by l.TeacherId into g
+                //                         select new
+                //                         {
+                //                             TeacherId = g.Key,
+                //                             FirstName = g.Max(l => l.FirstName),
+                //                             LastName = g.Max(l => l.LastName),
+                //                             diff = g.Min(l => l.diff)
+                //                         }).OrderBy(l => l.diff).ToListAsync();
+                // if (tmpLesson1.Count > 0)//find teacher match room and time
+                // {
+                //     result.Data = tmpLesson1;
+                //     return Ok(result);
+                // }
 
 
-                short dayOfWeek = (short)startTime.DayOfWeek;
-                if (dayOfWeek == 0) dayOfWeek = 7;
-                var tmpLesson2 = await _ablemusicContext.AvailableDays.Include(a => a.Teacher)
-                .Where(a => a.DayOfWeek == dayOfWeek && a.OrgId == orgId && a.RoomId == roomId && a.Teacher.IsActivate == 1)
-                .Select(a => new { a.TeacherId, a.Teacher.FirstName, a.Teacher.LastName }).ToListAsync();
+                // short dayOfWeek = (short)startTime.DayOfWeek;
+                // if (dayOfWeek == 0) dayOfWeek = 7;
+                // var tmpLesson2 = await _ablemusicContext.AvailableDays.Include(a => a.Teacher)
+                // .Where(a => a.DayOfWeek == dayOfWeek && a.OrgId == orgId && a.RoomId == roomId && a.Teacher.IsActivate == 1)
+                // .Select(a => new { a.TeacherId, a.Teacher.FirstName, a.Teacher.LastName }).ToListAsync();
 
-                if (tmpLesson2.Count > 0)//match teacher with day and room
-                {
-                    result.Data = tmpLesson2;
-                    return Ok(result);
-                }
+                // if (tmpLesson2.Count > 0)//match teacher with day and room
+                // {
+                //     result.Data = tmpLesson2;
+                //     return Ok(result);
+                // }
 
-                var tmpLesson3 = await _ablemusicContext.AvailableDays.Include(a => a.Teacher)
-                .Where(a => a.DayOfWeek == dayOfWeek && a.OrgId == orgId && a.Teacher.IsActivate ==1)
-                .Select(a => new { a.TeacherId, a.Teacher.FirstName, a.Teacher.LastName }).Distinct().ToListAsync();
-                if (tmpLesson3.Count > 0)//match teacher with day 
-                {
-                    result.Data = tmpLesson3;
-                    return Ok(result);
-                }
+                // var tmpLesson3 = await _ablemusicContext.AvailableDays.Include(a => a.Teacher)
+                // .Where(a => a.DayOfWeek == dayOfWeek && a.OrgId == orgId && a.Teacher.IsActivate ==1)
+                // .Select(a => new { a.TeacherId, a.Teacher.FirstName, a.Teacher.LastName }).Distinct().ToListAsync();
+                // if (tmpLesson3.Count > 0)//match teacher with day 
+                // {
+                //     result.Data = tmpLesson3;
+                //     return Ok(result);
+                // }
                 var tmpLesson4 = await _ablemusicContext.AvailableDays.Include(a => a.Teacher)
                 .Where(a => a.OrgId == orgId && a.Teacher.IsActivate ==1)
                 .Select(a => new { a.TeacherId, a.Teacher.FirstName, a.Teacher.LastName }).Distinct().ToListAsync();

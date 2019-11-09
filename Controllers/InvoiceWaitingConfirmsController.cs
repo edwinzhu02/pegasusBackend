@@ -10,6 +10,7 @@ using Pegasus_backend.ActionFilter;
 using Pegasus_backend.Models;
 using Pegasus_backend.pegasusContext;
 using Pegasus_backend.Services;
+using Pegasus_backend.Utilities;
 
 namespace Pegasus_backend.Controllers
 {
@@ -103,7 +104,37 @@ namespace Pegasus_backend.Controllers
                                                         IsActivate = iw.IsActivate,
                                                         IsEmailSent = iw.IsEmailSent,
                                                         IsConfirmed = iw.IsConfirmed,
-                                                        Comment = iw.Comment
+                                                        Comment = iw.Comment,
+                                                        Other4Fee = iw.Other4Fee,
+                                                        Other4FeeName = iw.Other4FeeName,
+                                                        Other5Fee = iw.Other5Fee,
+                                                        Other5FeeName = iw.Other5FeeName,  
+                                                        Other6Fee = iw.Other6Fee,
+                                                        Other6FeeName = iw.Other6FeeName,
+                                                        Other7Fee = iw.Other7Fee,
+                                                        Other7FeeName = iw.Other7FeeName,   
+                                                        Other8Fee = iw.Other8Fee,
+                                                        Other8FeeName = iw.Other8FeeName,
+                                                        Other9Fee = iw.Other9Fee,
+                                                        Other9FeeName = iw.Other9FeeName,  
+                                                        Other10Fee = iw.Other10Fee,
+                                                        Other10FeeName = iw.Other10FeeName,
+                                                        Other11Fee = iw.Other11Fee,
+                                                        Other11FeeName = iw.Other11FeeName,                                                                                                             
+                                                        Other12Fee = iw.Other12Fee,
+                                                        Other12FeeName = iw.Other12FeeName,
+                                                        Other13Fee = iw.Other13Fee,
+                                                        Other13FeeName = iw.Other13FeeName,  
+                                                        Other14Fee = iw.Other14Fee,
+                                                        Other14FeeName = iw.Other14FeeName,
+                                                        Other15Fee = iw.Other15Fee,
+                                                        Other15FeeName = iw.Other15FeeName,                                                                                                             
+                                                        Other16Fee = iw.Other16Fee,
+                                                        Other16FeeName = iw.Other16FeeName,  
+                                                        Other17Fee = iw.Other17Fee,
+                                                        Other17FeeName = iw.Other17FeeName,
+                                                        Other18Fee = iw.Other18Fee,
+                                                        Other18FeeName = iw.Other18FeeName,   
                                                     },
                                                     Invoice = new 
                                                     {
@@ -115,6 +146,21 @@ namespace Pegasus_backend.Controllers
                                                         Other1Fee = i == null ? 0 : i.Other1Fee,
                                                         Other2Fee = i == null ? 0 : i.Other2Fee,
                                                         Other3Fee = i == null ? 0 : i.Other3Fee,
+                                                        Other4Fee = i == null ? 0 : i.Other4Fee,
+                                                        Other5Fee = i == null ? 0 : i.Other5Fee,
+                                                        Other6Fee = i == null ? 0 : i.Other6Fee,
+                                                        Other7Fee = i == null ? 0 : i.Other7Fee,
+                                                        Other8Fee = i == null ? 0 : i.Other8Fee,
+                                                        Other9Fee = i == null ? 0 : i.Other9Fee,
+                                                        Other10Fee = i == null ? 0 : i.Other10Fee,
+                                                        Other11Fee = i == null ? 0 : i.Other11Fee,
+                                                        Other12Fee = i == null ? 0 : i.Other12Fee,
+                                                        Other13Fee = i == null ? 0 : i.Other13Fee,
+                                                        Other14Fee = i == null ? 0 : i.Other14Fee,
+                                                        Other15Fee = i == null ? 0 : i.Other15Fee,
+                                                        Other16Fee = i == null ? 0 : i.Other16Fee,
+                                                        Other17Fee = i == null ? 0 : i.Other17Fee,
+                                                        Other18Fee = i == null ? 0 : i.Other18Fee,                                                                                                                                                                                                                                                                                        
                                                         LearnerId = i == null ? 0 : i.LearnerId,
                                                         LearnerName = i == null ? string.Empty : i.LearnerName,
                                                         BeginDate = i == null ? null : i.BeginDate,
@@ -135,6 +181,22 @@ namespace Pegasus_backend.Controllers
                                                         Other1FeeName = i == null ? string.Empty : i.Other1FeeName,
                                                         Other2FeeName = i == null ? string.Empty : i.Other2FeeName,
                                                         Other3FeeName = i == null ? string.Empty : i.Other3FeeName,
+                                                        Other4FeeName = i == null ? string.Empty : i.Other4FeeName,
+                                                        Other5FeeName = i == null ? string.Empty : i.Other5FeeName,
+                                                        Other6FeeName = i == null ? string.Empty : i.Other6FeeName,
+                                                        Other7FeeName = i == null ? string.Empty : i.Other7FeeName,
+                                                        Other8FeeName = i == null ? string.Empty : i.Other8FeeName,
+                                                        Other9FeeName = i == null ? string.Empty : i.Other9FeeName,
+                                                        Other10FeeName = i == null ? string.Empty : i.Other10FeeName,
+                                                        Other11FeeName = i == null ? string.Empty : i.Other11FeeName,
+                                                        Other12FeeName = i == null ? string.Empty : i.Other12FeeName,
+                                                        Other13FeeName = i == null ? string.Empty : i.Other13FeeName,
+                                                        Other14FeeName = i == null ? string.Empty : i.Other14FeeName,
+                                                        Other15FeeName = i == null ? string.Empty : i.Other15FeeName,
+                                                        Other16FeeName = i == null ? string.Empty : i.Other16FeeName,
+                                                        Other17FeeName = i == null ? string.Empty : i.Other17FeeName,
+                                                        Other18FeeName = i == null ? string.Empty : i.Other18FeeName,
+
                                                         IsActive = i == null ? 0 : i.IsActive,
                                                         Comment = i == null ? string.Empty : i.Comment
                                                     },
@@ -271,7 +333,37 @@ namespace Pegasus_backend.Controllers
                                                         IsActivate = iw.IsActivate,
                                                         IsEmailSent = iw.IsEmailSent,
                                                         IsConfirmed = iw.IsConfirmed,
-                                                        Comment = iw.Comment
+                                                        Comment = iw.Comment,
+                                                        Other4Fee = iw.Other4Fee,
+                                                        Other4FeeName = iw.Other4FeeName,
+                                                        Other5Fee = iw.Other5Fee,
+                                                        Other5FeeName = iw.Other5FeeName,  
+                                                        Other6Fee = iw.Other6Fee,
+                                                        Other6FeeName = iw.Other6FeeName,
+                                                        Other7Fee = iw.Other7Fee,
+                                                        Other7FeeName = iw.Other7FeeName,   
+                                                        Other8Fee = iw.Other8Fee,
+                                                        Other8FeeName = iw.Other8FeeName,
+                                                        Other9Fee = iw.Other9Fee,
+                                                        Other9FeeName = iw.Other9FeeName,  
+                                                        Other10Fee = iw.Other10Fee,
+                                                        Other10FeeName = iw.Other10FeeName,
+                                                        Other11Fee = iw.Other11Fee,
+                                                        Other11FeeName = iw.Other11FeeName,                                                                                                             
+                                                        Other12Fee = iw.Other12Fee,
+                                                        Other12FeeName = iw.Other12FeeName,
+                                                        Other13Fee = iw.Other13Fee,
+                                                        Other13FeeName = iw.Other13FeeName,  
+                                                        Other14Fee = iw.Other14Fee,
+                                                        Other14FeeName = iw.Other14FeeName,
+                                                        Other15Fee = iw.Other15Fee,
+                                                        Other15FeeName = iw.Other15FeeName,                                                                                                             
+                                                        Other16Fee = iw.Other16Fee,
+                                                        Other16FeeName = iw.Other16FeeName,  
+                                                        Other17Fee = iw.Other17Fee,
+                                                        Other17FeeName = iw.Other17FeeName,
+                                                        Other18Fee = iw.Other18Fee,
+                                                        Other18FeeName = iw.Other18FeeName,                                                           
                                                     },
                                                     Invoice = new 
                                                     {
@@ -283,6 +375,22 @@ namespace Pegasus_backend.Controllers
                                                         Other1Fee = i == null ? 0 : i.Other1Fee,
                                                         Other2Fee = i == null ? 0 : i.Other2Fee,
                                                         Other3Fee = i == null ? 0 : i.Other3Fee,
+                                                        Other4Fee = i == null ? 0 : i.Other4Fee,
+                                                        Other5Fee = i == null ? 0 : i.Other5Fee,
+                                                        Other6Fee = i == null ? 0 : i.Other6Fee,
+                                                        Other7Fee = i == null ? 0 : i.Other7Fee,
+                                                        Other8Fee = i == null ? 0 : i.Other8Fee,
+                                                        Other9Fee = i == null ? 0 : i.Other9Fee,
+                                                        Other10Fee = i == null ? 0 : i.Other10Fee,
+                                                        Other11Fee = i == null ? 0 : i.Other11Fee,
+                                                        Other12Fee = i == null ? 0 : i.Other12Fee,
+                                                        Other13Fee = i == null ? 0 : i.Other13Fee,
+                                                        Other14Fee = i == null ? 0 : i.Other14Fee,
+                                                        Other15Fee = i == null ? 0 : i.Other15Fee,
+                                                        Other16Fee = i == null ? 0 : i.Other16Fee,
+                                                        Other17Fee = i == null ? 0 : i.Other17Fee,
+                                                        Other18Fee = i == null ? 0 : i.Other18Fee,                                                                                                                                                                                                                                                                                        
+                                                        
                                                         LearnerId = i == null ? 0 : i.LearnerId,
                                                         LearnerName = i == null ? string.Empty : i.LearnerName,
                                                         BeginDate = i == null ? null : i.BeginDate,
@@ -303,10 +411,27 @@ namespace Pegasus_backend.Controllers
                                                         Other1FeeName = i == null ? string.Empty : i.Other1FeeName,
                                                         Other2FeeName = i == null ? string.Empty : i.Other2FeeName,
                                                         Other3FeeName = i == null ? string.Empty : i.Other3FeeName,
+                                                        Other4FeeName = i == null ? string.Empty : i.Other4FeeName,
+                                                        Other5FeeName = i == null ? string.Empty : i.Other5FeeName,
+                                                        Other6FeeName = i == null ? string.Empty : i.Other6FeeName,
+                                                        Other7FeeName = i == null ? string.Empty : i.Other7FeeName,
+                                                        Other8FeeName = i == null ? string.Empty : i.Other8FeeName,
+                                                        Other9FeeName = i == null ? string.Empty : i.Other9FeeName,
+                                                        Other10FeeName = i == null ? string.Empty : i.Other10FeeName,
+                                                        Other11FeeName = i == null ? string.Empty : i.Other11FeeName,
+                                                        Other12FeeName = i == null ? string.Empty : i.Other12FeeName,
+                                                        Other13FeeName = i == null ? string.Empty : i.Other13FeeName,
+                                                        Other14FeeName = i == null ? string.Empty : i.Other14FeeName,
+                                                        Other15FeeName = i == null ? string.Empty : i.Other15FeeName,
+                                                        Other16FeeName = i == null ? string.Empty : i.Other16FeeName,
+                                                        Other17FeeName = i == null ? string.Empty : i.Other17FeeName,
+                                                        Other18FeeName = i == null ? string.Empty : i.Other18FeeName,
+
                                                         IsActive = i == null ? 0 : i.IsActive,
                                                         Comment = i == null ? string.Empty : i.Comment
                                                     },
                                                 }).OrderByDescending(re => re.InvoiceWaitingConfirm.InvoiceNum).ToListAsync();
+
             }
             catch (Exception ex)
             {
@@ -314,11 +439,17 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = ex.ToString();
                 return BadRequest(result);
             }
-
+        
             string preInvoiceNum = "";
+            DateTime dateNow = DateTime.UtcNow.ToNZTimezone();
             foreach(var i in invoiceWaitingConfirms)
             {
                 string currentInvoiceNum = i.InvoiceWaitingConfirm.InvoiceNum;
+                DateTime InvoiceBeginDate =i.InvoiceWaitingConfirm.BeginDate;
+                TimeSpan ts = InvoiceBeginDate.Subtract(dateNow);
+                int totalWeeks = (int)(ts.Days / 7);
+                if (totalWeeks>6) continue; //if invoice date more than 6 week, don't list to user.
+
                 if (preInvoiceNum != currentInvoiceNum) 
                 {
                     dynamic currentInvoices = new List<object>();
@@ -428,6 +559,21 @@ namespace Pegasus_backend.Controllers
                 Other1Fee = invoiceWaitingConfirm.Other1Fee,
                 Other2Fee = invoiceWaitingConfirm.Other2Fee,
                 Other3Fee = invoiceWaitingConfirm.Other3Fee,
+                Other4Fee = invoiceWaitingConfirm.Other4Fee,
+                Other5Fee = invoiceWaitingConfirm.Other5Fee,
+                Other6Fee = invoiceWaitingConfirm.Other6Fee,
+                Other7Fee = invoiceWaitingConfirm.Other7Fee,
+                Other8Fee = invoiceWaitingConfirm.Other8Fee,
+                Other9Fee = invoiceWaitingConfirm.Other9Fee,
+                Other10Fee = invoiceWaitingConfirm.Other10Fee,
+                Other11Fee = invoiceWaitingConfirm.Other11Fee,
+                Other12Fee = invoiceWaitingConfirm.Other12Fee,
+                Other13Fee = invoiceWaitingConfirm.Other13Fee,
+                Other14Fee = invoiceWaitingConfirm.Other14Fee,
+                Other15Fee = invoiceWaitingConfirm.Other15Fee,    
+                Other16Fee = invoiceWaitingConfirm.Other16Fee,
+                Other17Fee = invoiceWaitingConfirm.Other17Fee,
+                Other18Fee = invoiceWaitingConfirm.Other18Fee,                                                                              
                 LearnerId = invoiceWaitingConfirm.LearnerId,
                 LearnerName = invoiceWaitingConfirm.LearnerName,
                 BeginDate = invoiceWaitingConfirm.BeginDate,
@@ -448,6 +594,21 @@ namespace Pegasus_backend.Controllers
                 Other1FeeName = invoiceWaitingConfirm.Other1FeeName,
                 Other2FeeName = invoiceWaitingConfirm.Other2FeeName,
                 Other3FeeName = invoiceWaitingConfirm.Other3FeeName,
+                Other4FeeName = invoiceWaitingConfirm.Other4FeeName,
+                Other5FeeName = invoiceWaitingConfirm.Other5FeeName,
+                Other6FeeName = invoiceWaitingConfirm.Other6FeeName,
+                Other7FeeName = invoiceWaitingConfirm.Other7FeeName,
+                Other8FeeName = invoiceWaitingConfirm.Other8FeeName,
+                Other9FeeName = invoiceWaitingConfirm.Other9FeeName,
+                Other10FeeName = invoiceWaitingConfirm.Other10FeeName,
+                Other11FeeName = invoiceWaitingConfirm.Other11FeeName,
+                Other12FeeName = invoiceWaitingConfirm.Other12FeeName,
+                Other13FeeName = invoiceWaitingConfirm.Other13FeeName,
+                Other14FeeName = invoiceWaitingConfirm.Other14FeeName,
+                Other15FeeName = invoiceWaitingConfirm.Other15FeeName,
+                Other16FeeName = invoiceWaitingConfirm.Other16FeeName,
+                Other17FeeName = invoiceWaitingConfirm.Other17FeeName,
+                Other18FeeName = invoiceWaitingConfirm.Other18FeeName,                                                                                
                 Comment = invoiceWaitingConfirm.Comment,
                 IsActive = 1
             };
