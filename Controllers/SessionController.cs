@@ -22,11 +22,13 @@ namespace Pegasus_backend.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
+         private readonly IInvoiceUpdateService _invoiceUpdateService;
 
         public SessionController(ablemusicContext ablemusicContext, ILogger<SessionController> log, IMapper mapper, IConfiguration configuration) : base(ablemusicContext, log)
         {
             _mapper = mapper;
             _configuration = configuration;
+            _invoiceUpdateService = new InvoiceUpdateService(ablemusicContext);
         }
 
         [CheckModelFilter]
@@ -121,7 +123,7 @@ namespace Pegasus_backend.Controllers
 
             foreach (var makeUpLesson in awaitMakeUpLessons)
             {
-                if ((makeUpLesson.Remaining??0) < GetSplitCount(lesson.BeginTime.Value,lesson.EndTime.Value) ) continue;
+                if ((makeUpLesson.Remaining ?? 0) < GetSplitCount(lesson.BeginTime.Value, lesson.EndTime.Value)) continue;
                 if (makeUpLesson.ExpiredDate.Value.Date >= lesson.BeginTime.Value.Date)
                 {
                     validMakeUpLesson = makeUpLesson;
@@ -645,7 +647,7 @@ namespace Pegasus_backend.Controllers
         }
         [Route("MakeUpSplitLesson/{lessonId}/{isAfter}/{staffId}")]
         [HttpPut]
-        public async Task<IActionResult> MakeUpSplitLesson( int lessonId,short isAfter,short staffId)
+        public async Task<IActionResult> MakeUpSplitLesson(int lessonId, short isAfter, short staffId)
         {
             var result = new Result<string>();
             //AwaitMakeUpLesson makeUpLesson;
@@ -653,11 +655,11 @@ namespace Pegasus_backend.Controllers
             {
                 var nowDate = toNZTimezone(DateTime.UtcNow);
                 var lesson = await _ablemusicContext.Lesson.
-                    Where(l => l.LessonId == lessonId && l.IsCanceled !=1).FirstOrDefaultAsync();
+                    Where(l => l.LessonId == lessonId && l.IsCanceled != 1).FirstOrDefaultAsync();
                 var splittedLesson = new SplittedLesson();
-                
+
                 if (lesson == null) throw new Exception("You selected a wrong lesson to make up!");
-                if (lesson.CourseInstanceId==null) throw new Exception("Trial lesson and group lesson can not be made up!");
+                if (lesson.CourseInstanceId == null) throw new Exception("Trial lesson and group lesson can not be made up!");
                 int CourseInstanceId = lesson.CourseInstanceId.Value;
                 var makeUpLesson = await _ablemusicContext.AwaitMakeUpLesson.
                 Where(r => r.CourseInstanceId == CourseInstanceId &&
@@ -665,16 +667,16 @@ namespace Pegasus_backend.Controllers
                      .OrderBy(r => r.ExpiredDate).FirstOrDefaultAsync();
 
                 if (makeUpLesson == null) throw new Exception("No make up lesson!");
-                
-                if (isAfter==1)
+
+                if (isAfter == 1)
                     lesson.EndTime = lesson.EndTime.Value.AddMinutes(15);
                 else
                     lesson.BeginTime = lesson.BeginTime.Value.AddMinutes(-15);
-                
-                makeUpLesson.Remaining = (byte)(makeUpLesson.Remaining - 1);
-                if (makeUpLesson.Remaining ==0) makeUpLesson.IsActive = 0;
 
-                splittedLesson.AwaitId =makeUpLesson.AwaitId;
+                makeUpLesson.Remaining = (byte)(makeUpLesson.Remaining - 1);
+                if (makeUpLesson.Remaining == 0) makeUpLesson.IsActive = 0;
+
+                splittedLesson.AwaitId = makeUpLesson.AwaitId;
                 splittedLesson.LessonId = lesson.LessonId;
                 splittedLesson.IsAfter = isAfter;
                 splittedLesson.CreatedAt = nowDate;
@@ -740,7 +742,7 @@ namespace Pegasus_backend.Controllers
                         CourseInstance = new { CourseId = a.CourseInstance.CourseId, CourseName = a.CourseInstance.Course.CourseName },
                         MissedLesson = new { Org = a.MissedLesson.Org.Abbr, Teacher = a.MissedLesson.Teacher.FirstName, beginDate = a.MissedLesson.BeginTime },
                         NewLesson = new { Org = a.NewLesson.Org.Abbr, Teacher = a.NewLesson.Teacher.FirstName, beginDate = a.NewLesson.BeginTime },
-                        SplittedLesson =  a.SplittedLesson.Select(p => new {p.Lesson.BeginTime,p.Lesson.IsCanceled,p.Lesson.IsConfirm}) 
+                        SplittedLesson = a.SplittedLesson.Select(p => new { p.Lesson.BeginTime, p.Lesson.IsCanceled, p.Lesson.IsConfirm })
                     })
                 .ToListAsync();
             }
@@ -754,7 +756,7 @@ namespace Pegasus_backend.Controllers
         }
         [HttpGet("[action]/{learnerId}/{courseId}")]
         //public async Task<IActionResult> GetLessonsBetweenDate(DateTime? beginDate, DateTime? endDate, int? userId)
-        public async Task<IActionResult> GetRemainingAmount(int learnerId,int courseId)
+        public async Task<IActionResult> GetRemainingAmount(int learnerId, int courseId)
         //public async Task<IActionResult> CancelConfirm2(int remindId)
 
         {
@@ -762,10 +764,10 @@ namespace Pegasus_backend.Controllers
             try
             {
                 result.Data = await _ablemusicContext.AwaitMakeUpLesson
-                    .Include(a => a.CourseInstance).ThenInclude(c =>c.Course.Duration)
-                    .Where(a => a.LearnerId == learnerId 
+                    .Include(a => a.CourseInstance).ThenInclude(c => c.Course.Duration)
+                    .Where(a => a.LearnerId == learnerId
                         && a.CourseInstance.CourseId == courseId
-                        && a.IsActive == 1 && a.Remaining>0
+                        && a.IsActive == 1 && a.Remaining > 0
                     ).Select(a => new
                     {
                         remaining = a.Remaining,
@@ -808,12 +810,21 @@ namespace Pegasus_backend.Controllers
                         IsActive = a.IsActive,
                         Remaining = a.Remaining,
                         CourseInstance = new { CourseId = a.GroupCourseInstance.CourseId, CourseName = a.GroupCourseInstance.Course.CourseName },
-                        MissedLesson = new { Org = a.MissedLesson.Org.Abbr, Teacher = a.MissedLesson.Teacher.FirstName, 
-                        BeginTime = a.MissedLesson.BeginTime ,EndTime = a.MissedLesson.EndTime ,CourseName  = a.GroupCourseInstance.Course.CourseName,
-                        CourseId  = a.CourseInstance.CourseId,awaitId =a.AwaitId,TeacherId = a.MissedLesson.Teacher.TeacherId,
-                                RoomId = a.MissedLesson.RoomId,OrgId = a.MissedLesson.OrgId},
+                        MissedLesson = new
+                        {
+                            Org = a.MissedLesson.Org.Abbr,
+                            Teacher = a.MissedLesson.Teacher.FirstName,
+                            BeginTime = a.MissedLesson.BeginTime,
+                            EndTime = a.MissedLesson.EndTime,
+                            CourseName = a.GroupCourseInstance.Course.CourseName,
+                            CourseId = a.CourseInstance.CourseId,
+                            awaitId = a.AwaitId,
+                            TeacherId = a.MissedLesson.Teacher.TeacherId,
+                            RoomId = a.MissedLesson.RoomId,
+                            OrgId = a.MissedLesson.OrgId
+                        },
                         NewLesson = new { Org = a.NewLesson.Org.Abbr, Teacher = a.NewLesson.Teacher.FirstName, beginDate = a.NewLesson.BeginTime },
-                        SplittedLesson =  a.SplittedLesson.Select(p => new {p.Lesson.BeginTime,p.Lesson.IsCanceled,p.Lesson.IsConfirm}) 
+                        SplittedLesson = a.SplittedLesson.Select(p => new { p.Lesson.BeginTime, p.Lesson.IsCanceled, p.Lesson.IsConfirm })
                     })
                 .ToListAsync();
             }
@@ -826,9 +837,67 @@ namespace Pegasus_backend.Controllers
             return Ok(result);
         }
 
+        [HttpPut]
+        public async Task<IActionResult> CancelSessons([FromBody] CancelSessionsViewModel cancelSessions)
+        {
+            Result<string> result = new Result<string>();
+            string reason = cancelSessions.Reason;
+            short userId = cancelSessions.UserId;
+            Boolean isInvoiceChange = cancelSessions.IsInvoiceChange;
+            using (var dbContextTransaction = _ablemusicContext.Database.BeginTransaction())
+            {
+                try
+                {
+                    foreach (var lessonId in cancelSessions.LessonIds)
+                    {
+                        result = await CancelSesson(lessonId, reason, userId,isInvoiceChange);
+                        if (result.IsSuccess == false)
+                        {
+                            dbContextTransaction.Rollback();
+                            throw new Exception(result.ErrorMessage);
+                        }
+                    }
+                    if (cancelSessions.IsInvoiceChange == true)
+                        _invoiceUpdateService.InvoiceUpdate(cancelSessions.LessonIds);                    
+                    dbContextTransaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    result.IsSuccess = false;
+                    result.ErrorMessage = ex.Message;
+                    return BadRequest(result);
+                }
+            }
+
+            return Ok(result);
+        }
         // PUT: api/Session/5
         [HttpPut("{sessionId}/{reason}/{userId}")]
         public async Task<IActionResult> PutSesson(int sessionId, string reason, short userId)
+        {
+            // var result = new Result<string>();
+            Result<string> result = new Result<string>();
+            using (var dbContextTransaction = _ablemusicContext.Database.BeginTransaction())
+            {
+
+                try
+                {
+                    result = await CancelSesson(sessionId, reason, userId,false);
+                    dbContextTransaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    dbContextTransaction.Rollback();
+                    result.IsSuccess = false;
+                    result.ErrorMessage = ex.Message;
+                    return BadRequest(result);
+                }
+            }
+
+            return Ok(result);
+        }
+
+        private async Task<Result<String>> CancelSesson(int sessionId, string reason, short userId,bool isInvoiceChange)
         {
             var result = new Result<string>();
             var awaitMakeUpLesson = new AwaitMakeUpLesson();
@@ -841,47 +910,49 @@ namespace Pegasus_backend.Controllers
             {
                 result.IsSuccess = false;
                 result.ErrorMessage = ex.ToString();
-                return NotFound(result);
+                return result;
             }
 
             if (lesson == null)
             {
                 result.IsSuccess = false;
                 result.ErrorMessage = "Session not found";
-                return NotFound(result);
+                return result;
             }
             if (lesson.IsCanceled == 1)
             {
                 result.IsSuccess = false;
                 result.ErrorMessage = "This lesson has already been cancelled";
-                return BadRequest(result);
+                return result;
             }
             if (string.IsNullOrEmpty(reason))
             {
                 result.IsSuccess = false;
                 result.ErrorMessage = "Reason is required";
-                return NotFound(result);
+                return result;
             }
             var user = await _ablemusicContext.User.Where(u => u.UserId == userId).FirstOrDefaultAsync();
             if (user == null)
             {
                 result.IsSuccess = false;
                 result.ErrorMessage = "User id not found";
-                return NotFound(result);
+                return result;
             }
 
             lesson.IsCanceled = 1;
             lesson.Reason = reason;
-            //save to making up lessones to save
-            awaitMakeUpLesson.MissedLessonId = lesson.LessonId;
-            awaitMakeUpLesson.LearnerId = lesson.LearnerId;
-            awaitMakeUpLesson.CourseInstanceId = lesson.CourseInstanceId;
-            awaitMakeUpLesson.GroupCourseInstanceId = lesson.GroupCourseInstanceId;
-            awaitMakeUpLesson.CreateAt = toNZTimezone(DateTime.UtcNow);
-            awaitMakeUpLesson.IsActive = 1;
-            awaitMakeUpLesson.ExpiredDate = lesson.BeginTime.Value.Date.AddMonths(3);
-            awaitMakeUpLesson.Remaining = GetSplitCount(lesson.BeginTime.Value, lesson.EndTime.Value);
-            await _ablemusicContext.AwaitMakeUpLesson.AddAsync(awaitMakeUpLesson);
+            //if don't change invoice, should save  makeup lessones
+            if (isInvoiceChange==false){
+                awaitMakeUpLesson.MissedLessonId = lesson.LessonId;
+                awaitMakeUpLesson.LearnerId = lesson.LearnerId;
+                awaitMakeUpLesson.CourseInstanceId = lesson.CourseInstanceId;
+                awaitMakeUpLesson.GroupCourseInstanceId = lesson.GroupCourseInstanceId;
+                awaitMakeUpLesson.CreateAt = toNZTimezone(DateTime.UtcNow);
+                awaitMakeUpLesson.IsActive = 1;
+                awaitMakeUpLesson.ExpiredDate = lesson.BeginTime.Value.Date.AddMonths(3);
+                awaitMakeUpLesson.Remaining = GetSplitCount(lesson.BeginTime.Value, lesson.EndTime.Value);
+                await _ablemusicContext.AwaitMakeUpLesson.AddAsync(awaitMakeUpLesson);
+            }
 
             bool isGroupCourse = lesson.LearnerId == null;
             Teacher teacher;
@@ -919,14 +990,14 @@ namespace Pegasus_backend.Controllers
             {
                 result.IsSuccess = false;
                 result.ErrorMessage = e.Message;
-                return NotFound(result);
+                return result;
             }
 
             if (course == null)
             {
                 result.IsSuccess = false;
                 result.ErrorMessage = "Fail to found course name under this lesson";
-                return NotFound(result);
+                return result;
             }
             string courseName = course.CourseName;
 
@@ -944,177 +1015,194 @@ namespace Pegasus_backend.Controllers
             //string userConfirmUrlPrefix = "https://localhost:44304/api/session/sessioncancelconfirm/"; 
             string userConfirmUrlPrefix = _configuration.GetSection("UrlPrefix").Value;
 
-            using (var dbContextTransaction = _ablemusicContext.Database.BeginTransaction())
+
+            if (!isGroupCourse)
+            // Case of one to one course
             {
-                if (!isGroupCourse)
-                // Case of one to one course
+                Learner learner;
+                try
                 {
-                    Learner learner;
-                    try
-                    {
-                        learner = await _ablemusicContext.Learner.FirstOrDefaultAsync(l => l.LearnerId == lesson.LearnerId);
-                    }
-                    catch (Exception ex)
-                    {
-                        result.IsSuccess = false;
-                        result.ErrorMessage = ex.ToString();
-                        return NotFound(result);
-                    }
-
-                    TodoRepository todoRepository = new TodoRepository(_ablemusicContext);
-                    todoRepository.AddSingleTodoList("Cancellation to Remind", TodoListContentGenerator.CancelSingleLessonForTeacher(teacher,
-                        lesson, reason), userId, todoDate, lesson.LessonId, null, teacher.TeacherId);
-                    todoRepository.AddSingleTodoList("Cancellation to Remind", TodoListContentGenerator.CancelSingleLessonForLearner(learner,
-                        lesson, reason), userId, todoDate, lesson.LessonId, learner.LearnerId, null);
-                    var saveTodoResult = await todoRepository.SaveTodoListsAsync();
-                    if (!saveTodoResult.IsSuccess) return BadRequest(saveTodoResult);
-
-                    RemindLogRepository remindLogRepository = new RemindLogRepository(_ablemusicContext);
-                    remindLogRepository.AddSingleRemindLog(null, teacher.Email, RemindLogContentGenerator.CancelSingleLessonForTeacher(courseName,
-                        lesson, reason), teacher.TeacherId, "Lesson Cancellation Remind", lesson.LessonId, remindScheduleDate);
-                    remindLogRepository.AddSingleRemindLog(learner.LearnerId, learner.Email, RemindLogContentGenerator.CancelSingleLessonForLearner(courseName,
-                        lesson, reason), null, "Lesson Cancellation Remind", lesson.LessonId, remindScheduleDate);
-                    var saveRemindLogResult = await remindLogRepository.SaveRemindLogAsync();
-                    if (!saveRemindLogResult.IsSuccess) return BadRequest(saveRemindLogResult);
-
-                    try
-                    {
-                        await _ablemusicContext.SaveChangesAsync();
-                    }
-                    catch (Exception e)
-                    {
-                        result.ErrorMessage = e.Message;
-                        result.IsSuccess = false;
-                        return BadRequest(result);
-                    }
-
-                    //sending Email
-                    //List<NotificationEventArgs> notifications = new List<NotificationEventArgs>();
-                    foreach (var todo in saveTodoResult.Data)
-                    {
-                        var remind = saveRemindLogResult.Data.Find(r => r.LearnerId == todo.LearnerId && r.TeacherId == todo.TeacherId);
-                        string currentPersonName;
-                        if (todo.TeacherId == null)
-                        {
-                            currentPersonName = learner.FirstName + " " + learner.LastName;
-                        }
-                        else
-                        {
-                            currentPersonName = teacher.FirstName + " " + teacher.LastName;
-                        }
-                        string confirmURL = userConfirmUrlPrefix + todo.ListId + "/" + remind.RemindId;
-                        string mailContent = EmailContentGenerator.CancelLesson(currentPersonName, courseName, lesson, reason, confirmURL);
-                        remindLogRepository.UpdateContent(remind.RemindId, mailContent);
-                        //notifications.Add(new NotificationEventArgs(remind.Email, "Lesson Cancellation Confirm", mailContent, remind.RemindId));
-                    }
-                    var remindLogUpdateContentResult = await remindLogRepository.SaveUpdatedContentAsync();
-                    if (!remindLogUpdateContentResult.IsSuccess)
-                    {
-                        result.IsSuccess = false;
-                        result.ErrorMessage = remindLogUpdateContentResult.ErrorMessage;
-                        return BadRequest(result);
-                    }
-                    //foreach (var mail in notifications)
-                    //{
-                    //    _notificationObservable.send(mail);
-                    //}
+                    learner = await _ablemusicContext.Learner.FirstOrDefaultAsync(l => l.LearnerId == lesson.LearnerId);
                 }
-                else
-                //Case of group course
+                catch (Exception ex)
                 {
-                    List<Learner> learners;
-                    try
-                    {
-                        learners = (from lgc in _ablemusicContext.LearnerGroupCourse
-                                    join l in _ablemusicContext.Learner on lgc.LearnerId equals l.LearnerId
-                                    where lgc.GroupCourseInstanceId == lesson.GroupCourseInstanceId
-                                    select new Learner()
-                                    {
-                                        LearnerId = l.LearnerId,
-                                        FirstName = l.FirstName,
-                                        LastName = l.LastName,
-                                        Email = l.Email
-                                    }).ToList();
-                    }
-                    catch (Exception ex)
-                    {
-                        result.IsSuccess = false;
-                        result.ErrorMessage = ex.ToString();
-                        return NotFound(result);
-                    }
-
-                    var todoForLearnersIdMapContent = new Dictionary<int, string>();
-                    var remindLogForLearnersMapContent = new Dictionary<Learner, string>();
-                    foreach (var l in learners)
-                    {
-                        todoForLearnersIdMapContent.Add(l.LearnerId, TodoListContentGenerator.CancelSingleLessonForLearner(l, lesson, reason));
-                        remindLogForLearnersMapContent.Add(l, RemindLogContentGenerator.CancelSingleLessonForLearner(courseName, lesson, reason));
-                    }
-
-                    TodoRepository todoRepository = new TodoRepository(_ablemusicContext);
-                    todoRepository.AddSingleTodoList("Cancellation to Remind", TodoListContentGenerator.CancelSingleLessonForTeacher(teacher,
-                        lesson, reason), userId, todoDate, lesson.LessonId, null, teacher.TeacherId);
-                    todoRepository.AddMutipleTodoLists("Cancellation to Remind", todoForLearnersIdMapContent, userId, todoDate, lesson.LessonId, null);
-                    var saveTodoListsResult = await todoRepository.SaveTodoListsAsync();
-                    if (!saveTodoListsResult.IsSuccess) return BadRequest(saveTodoListsResult);
-
-                    RemindLogRepository remindLogRepository = new RemindLogRepository(_ablemusicContext);
-                    remindLogRepository.AddSingleRemindLog(null, teacher.Email, RemindLogContentGenerator.CancelSingleLessonForTeacher(courseName,
-                        lesson, reason), teacher.TeacherId, "Lesson Cancellation Remind", lesson.LessonId, remindScheduleDate);
-                    remindLogRepository.AddMultipleRemindLogs(remindLogForLearnersMapContent, null, "Lesson Cancellation Remind", lesson.LessonId, remindScheduleDate);
-                    var saveRemindLogResult = await remindLogRepository.SaveRemindLogAsync();
-                    if (!saveRemindLogResult.IsSuccess) return BadRequest(saveRemindLogResult);
-
-                    try
-                    {
-                        await _ablemusicContext.SaveChangesAsync();
-                    }
-                    catch (Exception e)
-                    {
-                        result.ErrorMessage = e.Message;
-                        result.IsSuccess = false;
-                        return BadRequest(result);
-                    }
-
-                    //sending Email
-                    //List<NotificationEventArgs> notifications = new List<NotificationEventArgs>();
-                    foreach (var todo in saveTodoListsResult.Data)
-                    {
-                        var remind = saveRemindLogResult.Data.Find(r => r.LearnerId == todo.LearnerId && r.TeacherId == todo.TeacherId);
-                        string currentPersonName;
-                        if (todo.TeacherId == null)
-                        {
-                            currentPersonName = learners.Find(l => l.LearnerId == todo.LearnerId).FirstName + " " + learners.Find(l => l.LearnerId == todo.LearnerId).LastName;
-                        }
-                        else
-                        {
-                            currentPersonName = teacher.FirstName + " " + teacher.LastName;
-                        }
-                        string confirmURL = userConfirmUrlPrefix + todo.ListId + "/" + remind.RemindId;
-                        string mailContent = EmailContentGenerator.CancelLesson(currentPersonName, courseName, lesson, reason, confirmURL);
-                        remindLogRepository.UpdateContent(remind.RemindId, mailContent);
-                        //notifications.Add(new NotificationEventArgs(remind.Email, "Lesson Cancellation Confirm", mailContent, remind.RemindId));
-                    }
-                    var remindLogUpdateContentResult = await remindLogRepository.SaveUpdatedContentAsync();
-                    if (!remindLogUpdateContentResult.IsSuccess)
-                    {
-                        result.IsSuccess = false;
-                        result.ErrorMessage = remindLogUpdateContentResult.ErrorMessage;
-                        return BadRequest(result);
-                    }
-                    //foreach (var mail in notifications)
-                    //{
-                    //    _notificationObservable.send(mail);
-                    //}
+                    result.IsSuccess = false;
+                    result.ErrorMessage = ex.ToString();
+                    return result;
                 }
-                dbContextTransaction.Commit();
+
+                TodoRepository todoRepository = new TodoRepository(_ablemusicContext);
+                todoRepository.AddSingleTodoList("Cancellation to Remind", TodoListContentGenerator.CancelSingleLessonForTeacher(teacher,
+                    lesson, reason), userId, todoDate, lesson.LessonId, null, teacher.TeacherId);
+                todoRepository.AddSingleTodoList("Cancellation to Remind", TodoListContentGenerator.CancelSingleLessonForLearner(learner,
+                    lesson, reason), userId, todoDate, lesson.LessonId, learner.LearnerId, null);
+                var saveTodoResult = await todoRepository.SaveTodoListsAsync();
+                if (!saveTodoResult.IsSuccess)
+                {
+                    result.IsSuccess = false;
+                    result.ErrorMessage = saveTodoResult.ErrorMessage;
+                    return result;
+                }
+                RemindLogRepository remindLogRepository = new RemindLogRepository(_ablemusicContext);
+                remindLogRepository.AddSingleRemindLog(null, teacher.Email, RemindLogContentGenerator.CancelSingleLessonForTeacher(courseName,
+                    lesson, reason), teacher.TeacherId, "Lesson Cancellation Remind", lesson.LessonId, remindScheduleDate);
+                remindLogRepository.AddSingleRemindLog(learner.LearnerId, learner.Email, RemindLogContentGenerator.CancelSingleLessonForLearner(courseName,
+                    lesson, reason), null, "Lesson Cancellation Remind", lesson.LessonId, remindScheduleDate);
+                var saveRemindLogResult = await remindLogRepository.SaveRemindLogAsync();
+                if (!saveRemindLogResult.IsSuccess)
+                {
+                    result.IsSuccess = false;
+                    result.ErrorMessage = saveRemindLogResult.ErrorMessage;
+                    return result;
+                }
+                try
+                {
+                    await _ablemusicContext.SaveChangesAsync();
+                }
+                catch (Exception e)
+                {
+                    result.ErrorMessage = e.Message;
+                    result.IsSuccess = false;
+                    return result;
+                }
+
+                //sending Email
+                //List<NotificationEventArgs> notifications = new List<NotificationEventArgs>();
+                foreach (var todo in saveTodoResult.Data)
+                {
+                    var remind = saveRemindLogResult.Data.Find(r => r.LearnerId == todo.LearnerId && r.TeacherId == todo.TeacherId);
+                    string currentPersonName;
+                    if (todo.TeacherId == null)
+                    {
+                        currentPersonName = learner.FirstName + " " + learner.LastName;
+                    }
+                    else
+                    {
+                        currentPersonName = teacher.FirstName + " " + teacher.LastName;
+                    }
+                    string confirmURL = userConfirmUrlPrefix + todo.ListId + "/" + remind.RemindId;
+                    string mailContent = EmailContentGenerator.CancelLesson(currentPersonName, courseName, lesson, reason, confirmURL);
+                    remindLogRepository.UpdateContent(remind.RemindId, mailContent);
+                    //notifications.Add(new NotificationEventArgs(remind.Email, "Lesson Cancellation Confirm", mailContent, remind.RemindId));
+                }
+                var remindLogUpdateContentResult = await remindLogRepository.SaveUpdatedContentAsync();
+                if (!remindLogUpdateContentResult.IsSuccess)
+                {
+                    result.IsSuccess = false;
+                    result.ErrorMessage = remindLogUpdateContentResult.ErrorMessage;
+                    return result;
+                }
+                //foreach (var mail in notifications)
+                //{
+                //    _notificationObservable.send(mail);
+                //}
             }
-            return Ok(result);
+            else
+            //Case of group course
+            {
+                List<Learner> learners;
+                try
+                {
+                    learners = (from lgc in _ablemusicContext.LearnerGroupCourse
+                                join l in _ablemusicContext.Learner on lgc.LearnerId equals l.LearnerId
+                                where lgc.GroupCourseInstanceId == lesson.GroupCourseInstanceId
+                                select new Learner()
+                                {
+                                    LearnerId = l.LearnerId,
+                                    FirstName = l.FirstName,
+                                    LastName = l.LastName,
+                                    Email = l.Email
+                                }).ToList();
+                }
+                catch (Exception ex)
+                {
+                    result.IsSuccess = false;
+                    result.ErrorMessage = ex.ToString();
+                    return result;
+                }
+
+                var todoForLearnersIdMapContent = new Dictionary<int, string>();
+                var remindLogForLearnersMapContent = new Dictionary<Learner, string>();
+                foreach (var l in learners)
+                {
+                    todoForLearnersIdMapContent.Add(l.LearnerId, TodoListContentGenerator.CancelSingleLessonForLearner(l, lesson, reason));
+                    remindLogForLearnersMapContent.Add(l, RemindLogContentGenerator.CancelSingleLessonForLearner(courseName, lesson, reason));
+                }
+
+                TodoRepository todoRepository = new TodoRepository(_ablemusicContext);
+                todoRepository.AddSingleTodoList("Cancellation to Remind", TodoListContentGenerator.CancelSingleLessonForTeacher(teacher,
+                    lesson, reason), userId, todoDate, lesson.LessonId, null, teacher.TeacherId);
+                todoRepository.AddMutipleTodoLists("Cancellation to Remind", todoForLearnersIdMapContent, userId, todoDate, lesson.LessonId, null);
+                var saveTodoListsResult = await todoRepository.SaveTodoListsAsync();
+                if (!saveTodoListsResult.IsSuccess)
+                {
+                    result.IsSuccess = false;
+                    result.ErrorMessage = saveTodoListsResult.ErrorMessage;
+                    return result;
+                }
+
+
+                RemindLogRepository remindLogRepository = new RemindLogRepository(_ablemusicContext);
+                remindLogRepository.AddSingleRemindLog(null, teacher.Email, RemindLogContentGenerator.CancelSingleLessonForTeacher(courseName,
+                    lesson, reason), teacher.TeacherId, "Lesson Cancellation Remind", lesson.LessonId, remindScheduleDate);
+                remindLogRepository.AddMultipleRemindLogs(remindLogForLearnersMapContent, null, "Lesson Cancellation Remind", lesson.LessonId, remindScheduleDate);
+                var saveRemindLogResult = await remindLogRepository.SaveRemindLogAsync();
+                if (!saveRemindLogResult.IsSuccess)
+                {
+                    result.IsSuccess = false;
+                    result.ErrorMessage = saveRemindLogResult.ErrorMessage;
+                    return result;
+                }
+
+                try
+                {
+                    await _ablemusicContext.SaveChangesAsync();
+                }
+                catch (Exception e)
+                {
+                    result.ErrorMessage = e.Message;
+                    result.IsSuccess = false;
+                    return result;
+                }
+
+                //sending Email
+                //List<NotificationEventArgs> notifications = new List<NotificationEventArgs>();
+                foreach (var todo in saveTodoListsResult.Data)
+                {
+                    var remind = saveRemindLogResult.Data.Find(r => r.LearnerId == todo.LearnerId && r.TeacherId == todo.TeacherId);
+                    string currentPersonName;
+                    if (todo.TeacherId == null)
+                    {
+                        currentPersonName = learners.Find(l => l.LearnerId == todo.LearnerId).FirstName + " " + learners.Find(l => l.LearnerId == todo.LearnerId).LastName;
+                    }
+                    else
+                    {
+                        currentPersonName = teacher.FirstName + " " + teacher.LastName;
+                    }
+                    string confirmURL = userConfirmUrlPrefix + todo.ListId + "/" + remind.RemindId;
+                    string mailContent = EmailContentGenerator.CancelLesson(currentPersonName, courseName, lesson, reason, confirmURL);
+                    remindLogRepository.UpdateContent(remind.RemindId, mailContent);
+                    //notifications.Add(new NotificationEventArgs(remind.Email, "Lesson Cancellation Confirm", mailContent, remind.RemindId));
+                }
+                var remindLogUpdateContentResult = await remindLogRepository.SaveUpdatedContentAsync();
+                if (!remindLogUpdateContentResult.IsSuccess)
+                {
+                    result.IsSuccess = false;
+                    result.ErrorMessage = remindLogUpdateContentResult.ErrorMessage;
+                    return result;
+                }
+                //foreach (var mail in notifications)
+                //{
+                //    _notificationObservable.send(mail);
+                //}
+
+            }
+            return result;
         }
 
         private bool LessonExists(int id)
         {
             return _ablemusicContext.Lesson.Any(e => e.LessonId == id);
-        }
+        }     
     }
 }

@@ -365,7 +365,6 @@ namespace Pegasus_backend.Controllers
             return Ok(result);
         }
         [HttpGet("[action]/{learnerId}")]
-
         public async Task<IActionResult> GetLessonsForLearner(int? learnerId)
         {
             Result<Object> result = new Result<Object>();
@@ -429,6 +428,26 @@ namespace Pegasus_backend.Controllers
             
             return Ok(result);
         }
+        [HttpGet("[action]/{courseInstanceId}")]
+        public async Task<IActionResult> GetLessonsByCourseInstance(int? courseInstanceId)
+        {
+            Result<Object> result = new Result<Object>();
+            try
+            {   
+                result.Data = await _ablemusicContext.Lesson
+                    .Where(s => s.CourseInstanceId == courseInstanceId && s.BeginTime>DateTime.UtcNow && s.IsCanceled!=1)
+                    .Select(s =>new {s.LessonId,s.BeginTime,s.InvoiceNum,s.CourseInstanceId}).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.ToString();
+                return BadRequest(result);
+            }
+            
+            return Ok(result);
+        }
+
         private short isReadyOwe(string invoiceNum){
             var invoice = _ablemusicContext.Invoice.
                 Where(i => i.InvoiceNum  == invoiceNum 

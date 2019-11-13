@@ -21,4 +21,14 @@ namespace Pegasus_backend.Models
         public List<int> InstanceIds { get; set; }
         public bool IsInvoiceChange { get; set; } = false;
     }
+    public class CancelSessionsViewModel
+    {
+        [Required(ErrorMessage = "UserId is required")]
+        public short UserId { get; set; }
+        public List<int> LessonIds { get; set; }
+        public string Reason { get; set; }
+        [Required(ErrorMessage = "IsInvoiceChange is required")]
+        public bool IsInvoiceChange { get; set; } = false;
+    }
+
 }
