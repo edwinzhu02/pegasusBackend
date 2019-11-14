@@ -25,7 +25,7 @@ namespace Pegasus_backend.Services
         }
         public bool InvoicePatch(List<int> courseInstanceIds)
         {
-
+            return true;
             foreach (var courseInstanceId in courseInstanceIds)
             {
                 List<InvoiceWaitingConfirm> invoices = new List<InvoiceWaitingConfirm>();
