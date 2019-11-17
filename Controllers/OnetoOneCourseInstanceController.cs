@@ -213,8 +213,9 @@ namespace Pegasus_backend.Controllers
                         await _lessonGenerateService.GetTerm((DateTime)s.BeginDate, s.id, 1);
                     });
                     if (isNewStudent(learnerId)){
-                        if (!_invoicePatchService.InvoicePatch(courseInstanceIds)) 
-                        throw new Exception("Invoice save error!");
+                        // if (!_invoicePatchService.InvoicePatch(courseInstanceIds)) 
+                        //throw new Exception("Invoice save error!");
+                        _invoicePatchService.InvoicePatch(courseInstanceIds);
                     }
                     
                     await _ablemusicContext.SaveChangesAsync();

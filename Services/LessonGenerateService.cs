@@ -666,7 +666,7 @@ namespace Pegasus_backend.Services
             var invoice = _ablemusicContext.InvoiceWaitingConfirm.
                             Where(i => i.LearnerId == learnerId 
                             && i.BeginDate!=i.EndDate).FirstOrDefault();
-            if (invoice == null ){
+            if (invoice != null ){
                 invoiceWaitingConfirm.Other1Fee=20;
                 invoiceWaitingConfirm.Other1FeeName="Enrolment Fee";  
                 invoiceWaitingConfirm.TotalFee +=20;              
