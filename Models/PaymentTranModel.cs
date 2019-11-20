@@ -20,6 +20,7 @@ namespace Pegasus_backend.Models
         public short StaffId { get; set; }
 
         public int? InvoiceId { get; set; }
+        public string InvoiceNum { get; set; }
 
         [JsonProperty(Required = Required.Always)]
         public int OrgId { get; set; }

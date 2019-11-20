@@ -280,7 +280,7 @@ namespace Pegasus_backend.Controllers
                 }
                 if (payment.PaymentMethod == 4)
                 {
-                    AddToInvoice(payment);
+                    AddToInvoice(payment,paymentTranListJson.InvoiceNum);
                 }
                 await _ablemusicContext.SaveChangesAsync();
             }
@@ -294,7 +294,7 @@ namespace Pegasus_backend.Controllers
             return Ok(result);
         }
 
-        private void AddToInvoice(Payment payment)
+        private void AddToInvoice(Payment payment,string InvoiceNum)
         {
             long  ii = 0;
             var today = DateTime.UtcNow.ToNZTimezone();
@@ -303,7 +303,13 @@ namespace Pegasus_backend.Controllers
 
             if (termIds.Count == 0) throw new Exception("Sorry, Can not find a term");
 
-            var invoice = _ablemusicContext.InvoiceWaitingConfirm.Where(i => termIds.Contains(i.TermId.Value)).
+            var invoice = new InvoiceWaitingConfirm();
+            if (InvoiceNum!=null)
+                invoice = _ablemusicContext.InvoiceWaitingConfirm.
+                FirstOrDefault(i => i.InvoiceNum == InvoiceNum
+                    && i.IsActivate == 1 && i.IsConfirmed == 0);
+            else 
+                invoice = _ablemusicContext.InvoiceWaitingConfirm.Where(i => termIds.Contains(i.TermId.Value)).
                 FirstOrDefault(i => i.LearnerId == payment.LearnerId
                     && i.IsActivate == 1 && i.IsConfirmed == 0);
 
@@ -311,6 +317,7 @@ namespace Pegasus_backend.Controllers
 
             foreach (var tran in payment.SoldTransaction)
             {
+                ii = getInvoiceItem(invoice);
                 ii++;
                 invoice.TotalFee += tran.DiscountedAmount;
                 invoice.OwingFee += tran.DiscountedAmount;
@@ -342,7 +349,14 @@ namespace Pegasus_backend.Controllers
                 _ablemusicContext.InvoiceWaitingConfirm.Update(invoice);
             }
         }
-
+        private short getInvoiceItem(InvoiceWaitingConfirm invoice){
+            if (invoice.Other13Fee!= null && invoice.Other13Fee!= 0 ) return 5;
+            if (invoice.Other12Fee!= null && invoice.Other12Fee!= 0 ) return 4;
+            if (invoice.Other11Fee!= null && invoice.Other11Fee!= 0 ) return 3;
+            if (invoice.Other10Fee!= null && invoice.Other10Fee!= 0 ) return 2;
+            if (invoice.Other9Fee!= null && invoice.Other9Fee!= 0 ) return 1;            
+            return 0;
+        }
         [HttpPut("{paymentId}/{comment}")]
         public async Task<IActionResult> Put(int paymentId, string comment)
         {
