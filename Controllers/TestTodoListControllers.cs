@@ -70,7 +70,7 @@ namespace Pegasus_backend.Controllers
         }
 
         //PUT: api/Product/5
-        [HttpPut("{id}")]
+        [HttpPut()]
         public async Task<IActionResult> PutProduct( TestTodoList testTodoList)
         {
             var result = new Result<object>();
