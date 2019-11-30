@@ -103,7 +103,7 @@ namespace Pegasus_backend.Controllers
 
         [HttpPost]
         [CheckModelFilter]
-        public async Task<ActionResult<Product>> PostProduct(TestTodoList testTodoList)
+        public async Task<ActionResult<TestTodoList>> PostProduct(TestTodoList testTodoList)
         {
             //Result<List<Product>> result = new Result<List<Product>>();
             var result = new Result<object>();
