@@ -15,6 +15,6 @@ namespace Pegasus_backend.pegasusContext
         public int? DisplayOrder { get; set; }
         public string Icon { get; set; }
 
-        public virtual ICollection<Page> Page { get; set; }
+        public ICollection<Page> Page { get; set; }
     }
 }

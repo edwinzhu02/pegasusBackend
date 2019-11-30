@@ -76,6 +76,7 @@ namespace Pegasus_backend.pegasusContext
         public virtual DbSet<TeacherWageRates> TeacherWageRates { get; set; }
         public virtual DbSet<TempEpsom> TempEpsom { get; set; }
         public virtual DbSet<Term> Term { get; set; }
+        public virtual DbSet<TestTodoList> TestTodoList { get; set; }
         public virtual DbSet<TodoList> TodoList { get; set; }
         public virtual DbSet<User> User { get; set; }
 
@@ -90,8 +91,6 @@ namespace Pegasus_backend.pegasusContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
-
             modelBuilder.Entity<Amendment>(entity =>
             {
                 entity.ToTable("amendment", "ablemusic");
@@ -201,7 +200,7 @@ namespace Pegasus_backend.pegasusContext
                 entity.HasOne(d => d.Teacher)
                     .WithMany(p => p.Amendment)
                     .HasForeignKey(d => d.TeacherId)
-                    .HasConstraintName("R_111");
+                    .HasConstraintName("amendment_ibfk_1");
             });
 
             modelBuilder.Entity<ApplicationDetails>(entity =>
@@ -243,13 +242,13 @@ namespace Pegasus_backend.pegasusContext
                 entity.HasOne(d => d.Application)
                     .WithMany(p => p.ApplicationDetails)
                     .HasForeignKey(d => d.ApplicationId)
-                    .HasConstraintName("R_133");
+                    .HasConstraintName("application_details_ibfk_1");
 
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.ApplicationDetails)
                     .HasForeignKey(d => d.ProductId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("R_134");
+                    .HasConstraintName("application_details_ibfk_2");
             });
 
             modelBuilder.Entity<AskOff>(entity =>
@@ -350,7 +349,7 @@ namespace Pegasus_backend.pegasusContext
                 entity.HasOne(d => d.Room)
                     .WithMany(p => p.AvailableDays)
                     .HasForeignKey(d => d.RoomId)
-                    .HasConstraintName("R_146");
+                    .HasConstraintName("available_days_ibfk_1");
 
                 entity.HasOne(d => d.Teacher)
                     .WithMany(p => p.AvailableDays)
@@ -422,27 +421,27 @@ namespace Pegasus_backend.pegasusContext
                 entity.HasOne(d => d.CourseInstance)
                     .WithMany(p => p.AwaitMakeUpLesson)
                     .HasForeignKey(d => d.CourseInstanceId)
-                    .HasConstraintName("R_142");
+                    .HasConstraintName("await_make_up_lesson_ibfk_4");
 
                 entity.HasOne(d => d.GroupCourseInstance)
                     .WithMany(p => p.AwaitMakeUpLesson)
                     .HasForeignKey(d => d.GroupCourseInstanceId)
-                    .HasConstraintName("R_143");
+                    .HasConstraintName("await_make_up_lesson_ibfk_5");
 
                 entity.HasOne(d => d.Learner)
                     .WithMany(p => p.AwaitMakeUpLesson)
                     .HasForeignKey(d => d.LearnerId)
-                    .HasConstraintName("R_141");
+                    .HasConstraintName("await_make_up_lesson_ibfk_3");
 
                 entity.HasOne(d => d.MissedLesson)
                     .WithMany(p => p.AwaitMakeUpLessonMissedLesson)
                     .HasForeignKey(d => d.MissedLessonId)
-                    .HasConstraintName("R_135");
+                    .HasConstraintName("await_make_up_lesson_ibfk_1");
 
                 entity.HasOne(d => d.NewLesson)
                     .WithMany(p => p.AwaitMakeUpLessonNewLesson)
                     .HasForeignKey(d => d.NewLessonId)
-                    .HasConstraintName("R_136");
+                    .HasConstraintName("await_make_up_lesson_ibfk_2");
             });
 
             modelBuilder.Entity<CashBox>(entity =>
@@ -509,7 +508,7 @@ namespace Pegasus_backend.pegasusContext
                 entity.ToTable("chat_group", "ablemusic");
 
                 entity.HasIndex(e => e.UserId)
-                    .HasName("R_121");
+                    .HasName("user_id");
 
                 entity.Property(e => e.ChatGroupId)
                     .HasColumnName("chat_group_id")
@@ -530,7 +529,7 @@ namespace Pegasus_backend.pegasusContext
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.ChatGroup)
                     .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("R_121");
+                    .HasConstraintName("chat_group_ibfk_1");
             });
 
             modelBuilder.Entity<ChatMessage>(entity =>
@@ -3868,6 +3867,28 @@ namespace Pegasus_backend.pegasusContext
                 entity.Property(e => e.WeekQuantity)
                     .HasColumnName("week_quantity")
                     .HasColumnType("smallint(6)");
+            });
+
+            modelBuilder.Entity<TestTodoList>(entity =>
+            {
+                entity.ToTable("test_todo_list", "ablemusic");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.Comments)
+                    .HasColumnName("comments")
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CreateAt).HasColumnName("createAt");
+
+                entity.Property(e => e.Todo)
+                    .IsRequired()
+                    .HasColumnName("todo")
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<TodoList>(entity =>

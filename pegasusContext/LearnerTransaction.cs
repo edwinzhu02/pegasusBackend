@@ -11,7 +11,7 @@ namespace Pegasus_backend.pegasusContext
         public string Amount { get; set; }
         public int? LearnerId { get; set; }
 
-        public virtual Fund Learner { get; set; }
-        public virtual Lesson Lesson { get; set; }
+        public Fund Learner { get; set; }
+        public Lesson Lesson { get; set; }
     }
 }

@@ -22,11 +22,11 @@ namespace Pegasus_backend.pegasusContext
         public int? CourseScheduleId { get; set; }
         public short? TeacherId { get; set; }
 
-        public virtual One2oneCourseInstance CourseInstance { get; set; }
-        public virtual CourseSchedule CourseSchedule { get; set; }
-        public virtual Learner Learner { get; set; }
-        public virtual Org Org { get; set; }
-        public virtual Room Room { get; set; }
-        public virtual Teacher Teacher { get; set; }
+        public One2oneCourseInstance CourseInstance { get; set; }
+        public CourseSchedule CourseSchedule { get; set; }
+        public Learner Learner { get; set; }
+        public Org Org { get; set; }
+        public Room Room { get; set; }
+        public Teacher Teacher { get; set; }
     }
 }

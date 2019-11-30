@@ -20,8 +20,8 @@ namespace Pegasus_backend.pegasusContext
         public int? LessonId { get; set; }
         public DateTime? ScheduledDate { get; set; }
 
-        public virtual Learner Learner { get; set; }
-        public virtual Lesson Lesson { get; set; }
-        public virtual Teacher Teacher { get; set; }
+        public Learner Learner { get; set; }
+        public Lesson Lesson { get; set; }
+        public Teacher Teacher { get; set; }
     }
 }

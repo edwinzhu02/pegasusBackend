@@ -10,6 +10,6 @@ namespace Pegasus_backend.pegasusContext
         public DateTime? LogoutTime { get; set; }
         public string Token { get; set; }
 
-        public virtual User User { get; set; }
+        public User User { get; set; }
     }
 }

@@ -38,22 +38,22 @@ namespace Pegasus_backend.pegasusContext
         public short? IsPaid { get; set; }
         public int? NewLessonId { get; set; }
 
-        public virtual One2oneCourseInstance CourseInstance { get; set; }
-        public virtual GroupCourseInstance GroupCourseInstance { get; set; }
-        public virtual Learner Learner { get; set; }
-        public virtual Lesson NewLesson { get; set; }
-        public virtual Org Org { get; set; }
-        public virtual Room Room { get; set; }
-        public virtual Teacher Teacher { get; set; }
-        public virtual Course TrialCourse { get; set; }
-        public virtual ICollection<AwaitMakeUpLesson> AwaitMakeUpLessonMissedLesson { get; set; }
-        public virtual ICollection<AwaitMakeUpLesson> AwaitMakeUpLessonNewLesson { get; set; }
-        public virtual ICollection<Lesson> InverseNewLesson { get; set; }
-        public virtual ICollection<LearnerTransaction> LearnerTransaction { get; set; }
-        public virtual ICollection<Rating> Rating { get; set; }
-        public virtual ICollection<RemindLog> RemindLog { get; set; }
-        public virtual ICollection<SplittedLesson> SplittedLesson { get; set; }
-        public virtual ICollection<TeacherTransaction> TeacherTransaction { get; set; }
-        public virtual ICollection<TodoList> TodoList { get; set; }
+        public One2oneCourseInstance CourseInstance { get; set; }
+        public GroupCourseInstance GroupCourseInstance { get; set; }
+        public Learner Learner { get; set; }
+        public Lesson NewLesson { get; set; }
+        public Org Org { get; set; }
+        public Room Room { get; set; }
+        public Teacher Teacher { get; set; }
+        public Course TrialCourse { get; set; }
+        public ICollection<AwaitMakeUpLesson> AwaitMakeUpLessonMissedLesson { get; set; }
+        public ICollection<AwaitMakeUpLesson> AwaitMakeUpLessonNewLesson { get; set; }
+        public ICollection<Lesson> InverseNewLesson { get; set; }
+        public ICollection<LearnerTransaction> LearnerTransaction { get; set; }
+        public ICollection<Rating> Rating { get; set; }
+        public ICollection<RemindLog> RemindLog { get; set; }
+        public ICollection<SplittedLesson> SplittedLesson { get; set; }
+        public ICollection<TeacherTransaction> TeacherTransaction { get; set; }
+        public ICollection<TodoList> TodoList { get; set; }
     }
 }

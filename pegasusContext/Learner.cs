@@ -53,22 +53,22 @@ namespace Pegasus_backend.pegasusContext
         public string Comment { get; set; }
         public decimal? Credit { get; set; }
 
-        public virtual Org Org { get; set; }
-        public virtual User User { get; set; }
-        public virtual ICollection<Amendment> Amendment { get; set; }
-        public virtual ICollection<AwaitMakeUpLesson> AwaitMakeUpLesson { get; set; }
-        public virtual ICollection<Invoice> Invoice { get; set; }
-        public virtual ICollection<InvoiceWaitingConfirm> InvoiceWaitingConfirm { get; set; }
-        public virtual ICollection<LearnerGroupCourse> LearnerGroupCourse { get; set; }
-        public virtual ICollection<LearnerOthers> LearnerOthers { get; set; }
-        public virtual ICollection<Lesson> Lesson { get; set; }
-        public virtual ICollection<LessonRemain> LessonRemain { get; set; }
-        public virtual ICollection<One2oneCourseInstance> One2oneCourseInstance { get; set; }
-        public virtual ICollection<Parent> Parent { get; set; }
-        public virtual ICollection<Payment> Payment { get; set; }
-        public virtual ICollection<Rating> Rating { get; set; }
-        public virtual ICollection<RemindLog> RemindLog { get; set; }
-        public virtual ICollection<SoldTransaction> SoldTransaction { get; set; }
-        public virtual ICollection<TodoList> TodoList { get; set; }
+        public Org Org { get; set; }
+        public User User { get; set; }
+        public ICollection<Amendment> Amendment { get; set; }
+        public ICollection<AwaitMakeUpLesson> AwaitMakeUpLesson { get; set; }
+        public ICollection<Invoice> Invoice { get; set; }
+        public ICollection<InvoiceWaitingConfirm> InvoiceWaitingConfirm { get; set; }
+        public ICollection<LearnerGroupCourse> LearnerGroupCourse { get; set; }
+        public ICollection<LearnerOthers> LearnerOthers { get; set; }
+        public ICollection<Lesson> Lesson { get; set; }
+        public ICollection<LessonRemain> LessonRemain { get; set; }
+        public ICollection<One2oneCourseInstance> One2oneCourseInstance { get; set; }
+        public ICollection<Parent> Parent { get; set; }
+        public ICollection<Payment> Payment { get; set; }
+        public ICollection<Rating> Rating { get; set; }
+        public ICollection<RemindLog> RemindLog { get; set; }
+        public ICollection<SoldTransaction> SoldTransaction { get; set; }
+        public ICollection<TodoList> TodoList { get; set; }
     }
 }

@@ -103,7 +103,7 @@ namespace Pegasus_backend.Controllers
         //GET: http://localhost:5000/api/lesson/GetLessonsForReceptionist/:userId/:date
         [HttpGet("[action]/{orgId}/{date}")]
         //for receptionist
-        public async Task<IActionResult> GetLessonsForReceptionist(short orgId,DateTime date)
+        public async Task<IActionResult> GetLessonsForReceptionist(short? orgId,DateTime date)
         {
             Result<Object> result = new Result<Object>();
             try
@@ -111,7 +111,8 @@ namespace Pegasus_backend.Controllers
                 // var staff = _ablemusicContext.Staff.FirstOrDefault(s => s.UserId == userId);
                 // var orgId = _ablemusicContext.StaffOrg.FirstOrDefault(s => s.StaffId == staff.StaffId).OrgId;
                 var details =await  _ablemusicContext.Lesson
-                    .Where(s=>s.OrgId==orgId&&s.BeginTime.Value.Year == date.Year && s.BeginTime.Value.Month == date.Month && s.BeginTime.Value.Day == date.Day)
+                    .Where(s=>((s.OrgId==orgId)||(orgId == null))
+                        &&s.BeginTime.Value.Date == date.Date)
                     .Include(s=>s.CourseInstance)
                     .Include(s=>s.Learner)
                     .Include(s => s.Teacher)
@@ -122,6 +123,7 @@ namespace Pegasus_backend.Controllers
                     .ThenInclude(learnerCourse => learnerCourse.LearnerGroupCourse)
                     .ThenInclude(learner => learner.Learner)
                     .Include(s=>s.AwaitMakeUpLessonNewLesson)
+                    // .ThenInclude(am=>am.l)                    
                     .Select(s =>new {id = s.LessonId, resourceId = s.RoomId, start = s.BeginTime,end=s.EndTime,
                         title=IsNull(s.GroupCourseInstance)?IsNull(s.CourseInstance)?"T":"1":"G",description="",
                         teacher=s.Teacher.FirstName.ToString(),
@@ -447,7 +449,44 @@ namespace Pegasus_backend.Controllers
             
             return Ok(result);
         }
-
+         [HttpGet("[action]/{date}")]
+        public async Task<IActionResult> GetGroupLessons(DateTime date)
+        {
+            Result<Object> result = new Result<Object>();
+            
+            try
+            {   
+                result.Data = await _ablemusicContext.Lesson
+                        .Include(l =>l.GroupCourseInstance)
+                        .Include(l =>l.Org)
+                        .Include(l =>l.Room)
+                         .Include(l =>l.GroupCourseInstance)
+                         .ThenInclude(ci =>ci.Course)
+                        // .Include(l =>l.GroupCourseInstance)
+                        // .ThenInclude(ci =>ci.Course)
+                         .ThenInclude(c => c.CourseName)
+                    .Where(l =>l.GroupCourseInstance !=null && l.BeginTime.Value.Date == date)
+                    .Select(s =>new {s.LessonId,
+                        s.BeginTime,
+                        s.EndTime,
+                         s.Org.OrgId,s.Org.OrgName,s.Room.RoomId,s.Room.RoomName,
+                        s.GroupCourseInstance.Course.CourseId,
+                        s.GroupCourseInstance.Course.CourseCategory.CourseCategoryName,
+                        s.GroupCourseInstance.Course.CourseName,
+                        s.Teacher.FirstName,s.Teacher.LastName,
+                        learners = s.GroupCourseInstance.LearnerGroupCourse
+                                .Select(l =>new {l.Learner.FirstName,l.Learner.LastName})
+                        }).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.ToString();
+                return BadRequest(result);
+            }
+            
+            return Ok(result);
+        }
         private short isReadyOwe(string invoiceNum){
             var invoice = _ablemusicContext.Invoice.
                 Where(i => i.InvoiceNum  == invoiceNum 

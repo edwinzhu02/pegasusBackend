@@ -72,10 +72,10 @@ namespace Pegasus_backend.pegasusContext
         public string Other18FeeName { get; set; }
         public decimal? Other18Fee { get; set; }
 
-        public virtual One2oneCourseInstance CourseInstance { get; set; }
-        public virtual GroupCourseInstance GroupCourseInstance { get; set; }
-        public virtual Learner Learner { get; set; }
-        public virtual Term Term { get; set; }
-        public virtual ICollection<Payment> Payment { get; set; }
+        public One2oneCourseInstance CourseInstance { get; set; }
+        public GroupCourseInstance GroupCourseInstance { get; set; }
+        public Learner Learner { get; set; }
+        public Term Term { get; set; }
+        public ICollection<Payment> Payment { get; set; }
     }
 }

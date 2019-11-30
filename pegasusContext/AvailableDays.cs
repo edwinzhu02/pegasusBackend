@@ -12,8 +12,8 @@ namespace Pegasus_backend.pegasusContext
         public short? OrgId { get; set; }
         public short? RoomId { get; set; }
 
-        public virtual Org Org { get; set; }
-        public virtual Room Room { get; set; }
-        public virtual Teacher Teacher { get; set; }
+        public Org Org { get; set; }
+        public Room Room { get; set; }
+        public Teacher Teacher { get; set; }
     }
 }

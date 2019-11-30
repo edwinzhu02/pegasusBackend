@@ -10,7 +10,7 @@ namespace Pegasus_backend.pegasusContext
         public string Description { get; set; }
         public byte? QualiId { get; set; }
 
-        public virtual Qualification Quali { get; set; }
-        public virtual Teacher Teacher { get; set; }
+        public Qualification Quali { get; set; }
+        public Teacher Teacher { get; set; }
     }
 }

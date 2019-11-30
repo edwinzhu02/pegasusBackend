@@ -11,6 +11,6 @@ namespace Pegasus_backend.pegasusContext
         public int LearnerOthersId { get; set; }
         public short? LearnerLevel { get; set; }
 
-        public virtual Learner Learner { get; set; }
+        public Learner Learner { get; set; }
     }
 }

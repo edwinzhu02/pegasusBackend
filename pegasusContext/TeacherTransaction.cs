@@ -11,7 +11,7 @@ namespace Pegasus_backend.pegasusContext
         public decimal? WageAmount { get; set; }
         public short? TeacherId { get; set; }
 
-        public virtual Lesson Lesson { get; set; }
-        public virtual Teacher Teacher { get; set; }
+        public Lesson Lesson { get; set; }
+        public Teacher Teacher { get; set; }
     }
 }

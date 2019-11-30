@@ -12,8 +12,8 @@ namespace Pegasus_backend.pegasusContext
         public DateTime? CreateAt { get; set; }
         public short? ReceiverUserId { get; set; }
 
-        public virtual ChatGroup ChatGroup { get; set; }
-        public virtual User ReceiverUser { get; set; }
-        public virtual User SenderUser { get; set; }
+        public ChatGroup ChatGroup { get; set; }
+        public User ReceiverUser { get; set; }
+        public User SenderUser { get; set; }
     }
 }

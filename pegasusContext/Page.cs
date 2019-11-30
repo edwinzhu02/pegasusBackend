@@ -20,7 +20,7 @@ namespace Pegasus_backend.pegasusContext
         public string Url { get; set; }
         public string Icon { get; set; }
 
-        public virtual PageGroup PageGroup { get; set; }
-        public virtual ICollection<RoleAccess> RoleAccess { get; set; }
+        public PageGroup PageGroup { get; set; }
+        public ICollection<RoleAccess> RoleAccess { get; set; }
     }
 }

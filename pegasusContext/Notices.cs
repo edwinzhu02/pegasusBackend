@@ -13,7 +13,7 @@ namespace Pegasus_backend.pegasusContext
         public short? ToStaffId { get; set; }
         public short? IsRead { get; set; }
 
-        public virtual Staff FromStaff { get; set; }
-        public virtual Staff ToStaff { get; set; }
+        public Staff FromStaff { get; set; }
+        public Staff ToStaff { get; set; }
     }
 }

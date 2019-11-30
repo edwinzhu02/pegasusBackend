@@ -15,6 +15,6 @@ namespace Pegasus_backend.pegasusContext
         public int ParentFormId { get; set; }
         public int? AppFormId { get; set; }
 
-        public virtual LearnerAppForm AppForm { get; set; }
+        public LearnerAppForm AppForm { get; set; }
     }
 }

@@ -24,10 +24,10 @@ namespace Pegasus_backend.pegasusContext
         public string Comment { get; set; }
         public short? OrgId { get; set; }
 
-        public virtual Invoice Invoice { get; set; }
-        public virtual Learner Learner { get; set; }
-        public virtual Org Org { get; set; }
-        public virtual Staff Staff { get; set; }
-        public virtual ICollection<SoldTransaction> SoldTransaction { get; set; }
+        public Invoice Invoice { get; set; }
+        public Learner Learner { get; set; }
+        public Org Org { get; set; }
+        public Staff Staff { get; set; }
+        public ICollection<SoldTransaction> SoldTransaction { get; set; }
     }
 }

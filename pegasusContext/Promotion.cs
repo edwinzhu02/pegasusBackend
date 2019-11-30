@@ -14,6 +14,6 @@ namespace Pegasus_backend.pegasusContext
         public string PromotionName { get; set; }
         public string PromotionExp { get; set; }
 
-        public virtual ICollection<GroupCourseInstance> GroupCourseInstance { get; set; }
+        public ICollection<GroupCourseInstance> GroupCourseInstance { get; set; }
     }
 }

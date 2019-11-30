@@ -13,6 +13,6 @@ namespace Pegasus_backend.pegasusContext
         public byte QualiId { get; set; }
         public string QualiName { get; set; }
 
-        public virtual ICollection<TeacherQualificatiion> TeacherQualificatiion { get; set; }
+        public ICollection<TeacherQualificatiion> TeacherQualificatiion { get; set; }
     }
 }

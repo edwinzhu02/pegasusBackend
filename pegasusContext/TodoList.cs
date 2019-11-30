@@ -17,9 +17,9 @@ namespace Pegasus_backend.pegasusContext
         public int? LearnerId { get; set; }
         public short? TeacherId { get; set; }
 
-        public virtual Learner Learner { get; set; }
-        public virtual Lesson Lesson { get; set; }
-        public virtual Teacher Teacher { get; set; }
-        public virtual User User { get; set; }
+        public Learner Learner { get; set; }
+        public Lesson Lesson { get; set; }
+        public Teacher Teacher { get; set; }
+        public User User { get; set; }
     }
 }

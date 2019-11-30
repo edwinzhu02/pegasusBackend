@@ -14,7 +14,7 @@ namespace Pegasus_backend.pegasusContext
         public short RoleId { get; set; }
         public string RoleName { get; set; }
 
-        public virtual ICollection<RoleAccess> RoleAccess { get; set; }
-        public virtual ICollection<User> User { get; set; }
+        public ICollection<RoleAccess> RoleAccess { get; set; }
+        public ICollection<User> User { get; set; }
     }
 }

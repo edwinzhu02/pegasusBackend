@@ -37,19 +37,19 @@ namespace Pegasus_backend.pegasusContext
         public string BankAccountNo { get; set; }
         public string GstNum { get; set; }
 
-        public virtual ICollection<Amendment> Amendment { get; set; }
-        public virtual ICollection<AvailableDays> AvailableDays { get; set; }
-        public virtual ICollection<CashBox> CashBox { get; set; }
-        public virtual ICollection<GroupCourseInstance> GroupCourseInstance { get; set; }
-        public virtual ICollection<Learner> Learner { get; set; }
-        public virtual ICollection<Lesson> Lesson { get; set; }
-        public virtual ICollection<LoginLog> LoginLog { get; set; }
-        public virtual ICollection<One2oneCourseInstance> One2oneCourseInstance { get; set; }
-        public virtual ICollection<Payment> Payment { get; set; }
-        public virtual ICollection<Room> Room { get; set; }
-        public virtual ICollection<StaffOrg> StaffOrg { get; set; }
-        public virtual ICollection<Stock> Stock { get; set; }
-        public virtual ICollection<StockApplication> StockApplication { get; set; }
-        public virtual ICollection<StockOrder> StockOrder { get; set; }
+        public ICollection<Amendment> Amendment { get; set; }
+        public ICollection<AvailableDays> AvailableDays { get; set; }
+        public ICollection<CashBox> CashBox { get; set; }
+        public ICollection<GroupCourseInstance> GroupCourseInstance { get; set; }
+        public ICollection<Learner> Learner { get; set; }
+        public ICollection<Lesson> Lesson { get; set; }
+        public ICollection<LoginLog> LoginLog { get; set; }
+        public ICollection<One2oneCourseInstance> One2oneCourseInstance { get; set; }
+        public ICollection<Payment> Payment { get; set; }
+        public ICollection<Room> Room { get; set; }
+        public ICollection<StaffOrg> StaffOrg { get; set; }
+        public ICollection<Stock> Stock { get; set; }
+        public ICollection<StockApplication> StockApplication { get; set; }
+        public ICollection<StockOrder> StockOrder { get; set; }
     }
 }

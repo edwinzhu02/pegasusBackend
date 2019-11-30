@@ -22,10 +22,10 @@ namespace Pegasus_backend.pegasusContext
         public short? CourseCategoryId { get; set; }
         public byte? TeacherLevel { get; set; }
 
-        public virtual CourseCategory CourseCategory { get; set; }
-        public virtual ICollection<GroupCourseInstance> GroupCourseInstance { get; set; }
-        public virtual ICollection<Lesson> Lesson { get; set; }
-        public virtual ICollection<One2oneCourseInstance> One2oneCourseInstance { get; set; }
-        public virtual ICollection<TeacherCourse> TeacherCourse { get; set; }
+        public CourseCategory CourseCategory { get; set; }
+        public ICollection<GroupCourseInstance> GroupCourseInstance { get; set; }
+        public ICollection<Lesson> Lesson { get; set; }
+        public ICollection<One2oneCourseInstance> One2oneCourseInstance { get; set; }
+        public ICollection<TeacherCourse> TeacherCourse { get; set; }
     }
 }

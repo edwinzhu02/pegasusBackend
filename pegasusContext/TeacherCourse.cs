@@ -10,7 +10,7 @@ namespace Pegasus_backend.pegasusContext
         public int TeacherCourseId { get; set; }
         public decimal? HourlyWage { get; set; }
 
-        public virtual Course Course { get; set; }
-        public virtual Teacher Teacher { get; set; }
+        public Course Course { get; set; }
+        public Teacher Teacher { get; set; }
     }
 }
