@@ -128,5 +128,33 @@ namespace Pegasus_backend.Controllers
             return Ok(result);
 
         }
-    }
+    
+        [HttpDelete("id")]
+        public async Task<ActionResult<TestTodoList>> DeleteTodoList(int id)
+        {
+            //Result<List<Product>> result = new Result<List<Product>>();
+            var result = new Result<object>();
+            try
+            {   
+                var todo =await _ablemusicContext.TestTodoList.FirstOrDefaultAsync(t =>t.Id==id);
+                _ablemusicContext.TestTodoList.Remove(todo);
+                await _ablemusicContext.SaveChangesAsync();
+
+                //retrieve the new data with the ProductType and ProductCategory detail
+                result.Data = "success";
+
+            }
+            catch (Exception e)
+            {
+                result.ErrorMessage = e.Message;
+                result.IsSuccess = false;
+                result.IsFound = false;
+                // _ablemusicContext.Remove(product);
+                return BadRequest(result);
+            }
+
+            return Ok(result);
+        
+        }
+    }    
 }
