@@ -40,7 +40,6 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = ex.Message;
                 return BadRequest(result);
             }
-          
         }
     }
 }
