@@ -70,8 +70,8 @@ namespace Pegasus_backend.Controllers
         }
 
         //PUT: api/Product/5
-        [HttpPut()]
-        public async Task<IActionResult> PutProduct( TestTodoList testTodoList)
+        [HttpPut]
+        public async Task<IActionResult> PutTodoList( TestTodoList testTodoList)
         {
             var result = new Result<object>();
             Type modelType = typeof(TestTodoList);
@@ -103,7 +103,7 @@ namespace Pegasus_backend.Controllers
 
         [HttpPost]
         [CheckModelFilter]
-        public async Task<ActionResult<TestTodoList>> PostProduct(TestTodoList testTodoList)
+        public async Task<ActionResult<TestTodoList>> PostTodoList(TestTodoList testTodoList)
         {
             //Result<List<Product>> result = new Result<List<Product>>();
             var result = new Result<object>();
