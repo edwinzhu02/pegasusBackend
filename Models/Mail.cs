@@ -10,6 +10,7 @@ namespace Pegasus_backend.Models
         public string MailTitle { get; set; }
         [Required(ErrorMessage = "MailContent  is Required.")]        
         public string MailContent { get; set; }
+        public byte[] Attachment { get; set; }
            
     }
 }

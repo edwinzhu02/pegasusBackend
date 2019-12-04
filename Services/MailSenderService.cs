@@ -48,7 +48,7 @@ namespace Pegasus_backend.Services
             });
         }
 
-        public static bool SendMailWithAttach(string mailTo, string mailTitle, string mailContent,IFormFile file)
+        public static bool SendMailWithAttach(string mailTo, string mailTitle, string mailContent,byte[] file)
         {
             try
             {
@@ -62,9 +62,10 @@ namespace Pegasus_backend.Services
 
                 using (var ms = new MemoryStream())
                 {
-                    file.CopyTo(ms);
-                    var fileBytes = ms.ToArray();
-                    Attachment att = new Attachment(new MemoryStream(fileBytes), file.FileName);
+                    //file.CopyTo(ms);
+                    // var fileBytes = ms.ToArray();
+                    var fileBytes =file;
+                    Attachment att = new Attachment(new MemoryStream(fileBytes), "invoice.pdf");
                     builder.Attachments.Add("Invoice.pdf", fileBytes);
                 }
                 // builder.Attachments.Add(attachment);

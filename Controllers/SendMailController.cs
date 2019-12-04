@@ -25,12 +25,12 @@ namespace Pegasus_backend.Controllers
         // GET: api/Orgs
         [HttpPost]
         [CheckModelFilter]        
-        public async Task<IActionResult> SendMail([FromForm] string Mail,[FromForm(Name="Attachment")] IFormFile Attachment)
+        public async Task<IActionResult> SendMail(Mail mail)
         {
             Result<string> result = new Result<string>();
             try {
-                var mail = JsonConvert.DeserializeObject<Mail>(Mail);
-                MailSenderService.SendMailWithAttach(mail.MailTo,mail.MailTitle,mail.MailContent,Attachment);
+                // var mail = JsonConvert.DeserializeObject<Mail>(Mail);
+                MailSenderService.SendMailWithAttach(mail.MailTo,mail.MailTitle,mail.MailContent,mail.Attachment);
                 result.Data = "sucess";
                 return Ok(result);
             }
