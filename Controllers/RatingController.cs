@@ -280,7 +280,7 @@ namespace Pegasus_backend.Controllers
                     .ThenInclude(w => w.Course)
                     .Where(s => (s.LearnerId == learnerId || s.GroupCourseInstance.LearnerGroupCourse.ToList()
                                      .Exists(e => e.LearnerId == learnerId))
-                                && s.IsConfirm == 1 && s.CreatedAt >= DateTime.UtcNow.AddHours(12).AddDays(-14))
+                                && s.IsConfirm == 1 && s.CreatedAt >= DateTime.UtcNow.AddHours(12).AddDays(-30*6))
                     .Select(s => new
                     {
                         s.TeacherId, isRate = s.Rating.ToList().Exists(q=>q.RateType == 0)?1:0,s.LessonId,s.BeginTime,
