@@ -290,7 +290,7 @@ namespace Pegasus_backend.Controllers
                     }
                 }
                 
-                result.Data = teachers;
+                result.Data = teachers.OrderBy(t => t.FirstName);
             }
             catch (Exception ex)
             {
