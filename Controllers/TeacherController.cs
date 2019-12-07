@@ -277,7 +277,8 @@ namespace Pegasus_backend.Controllers
                         q.AvailableDays,
                         q.TeacherLanguage,
                         q.TeacherQualificatiion,
-                        q.TeacherWageRates
+                        q.TeacherWageRates,
+                        TeacherName=q.FirstName+" "+q.LastName
                         //TeacherWageRate = q.TeacherWageRates.FirstOrDefault(s => s.IsActivate == 1)
                     })
                     .ToListAsync();
