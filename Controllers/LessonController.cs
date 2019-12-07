@@ -287,6 +287,62 @@ namespace Pegasus_backend.Controllers
 
             return Ok(result);
         }
+        [HttpGet("[action]/{beginDate}")]
+        public async Task<IActionResult> GetLessonsForSchool(DateTime beginDate){
+            Result<List<Object>> result = new Result<List<Object>>();
+            result.Data = new List<Object>();
+            try
+            {
+                var details = _ablemusicContext.Lesson.
+                    Where(s => s.BeginTime >= beginDate.Date 
+                        && s.BeginTime <= beginDate.Date.AddDays(1)
+                        && s.IsCanceled ==0)
+                    .Select(s =>new {s.OrgId ,s.BeginTime,s.EndTime}  );
+                var orgs = _ablemusicContext.Org.Select(o => new{ o.OrgId,o.OrgName});
+                foreach (var org in orgs){
+                    DateTime? minTime =await details.Where(d =>d.OrgId==org.OrgId)
+                        .Select(d =>d.BeginTime).MinAsync();
+                    DateTime? maxTime =await details.Where(d =>d.OrgId==org.OrgId)
+                                            .Select(d =>d.EndTime).MaxAsync(); 
+                    result.Data.Add( new {
+                        org = org,
+                        beginTime = minTime,
+                        endTime = maxTime,
+                    });
+                }
+            }
+            catch(Exception ex){
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+        [HttpGet("[action]/{beginDate}")]
+        public async Task<IActionResult> GetGroupLessonsForSchool(DateTime beginDate){
+            Result<Object> result = new Result<Object>();
+            // result.Data = new List<Object>();
+            try
+            {
+                var details = _ablemusicContext.Lesson.
+                    Where(s => s.BeginTime >= beginDate.Date 
+                        && s.BeginTime <= beginDate.Date.AddDays(1)
+                        && s.IsCanceled ==0 
+                        && s.GroupCourseInstanceId >0)
+                    .Include(s =>s.GroupCourseInstance)
+                    .ThenInclude(g =>g.Course)
+                    .Include(s => s.Org)
+                    .Select(s =>new {s.Org.OrgId ,s.Org.OrgName,s.GroupCourseInstance.Course,s.BeginTime,s.EndTime});
+                result.Data = details;
+            }
+            catch(Exception ex){
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+
         [HttpGet("[action]/{learnerId}")]
         public async Task<IActionResult> GetArrangedLessonsByLearner(int learnerId)
         {
