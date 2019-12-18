@@ -445,10 +445,10 @@ namespace Pegasus_backend.Controllers
             foreach(var i in invoiceWaitingConfirms)
             {
                 string currentInvoiceNum = i.InvoiceWaitingConfirm.InvoiceNum;
-                DateTime InvoiceBeginDate =i.InvoiceWaitingConfirm.BeginDate;
-                TimeSpan ts = InvoiceBeginDate.Subtract(dateNow);
+                DateTime InvoiceEndDate =i.InvoiceWaitingConfirm.EndDate;
+                TimeSpan ts = InvoiceEndDate.Subtract(dateNow);
                 int totalWeeks = (int)(ts.Days / 7);
-                if (totalWeeks>6) continue; //if invoice date more than 6 week, don't list to user.
+                if (totalWeeks>14+6) continue; //if invoice date more than 6 week, don't list to user.
 
                 if (preInvoiceNum != currentInvoiceNum) 
                 {

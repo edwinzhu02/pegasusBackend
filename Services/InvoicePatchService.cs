@@ -75,6 +75,8 @@ namespace Pegasus_backend.Services
             DateTime invoiceDate = new DateTime();
             foreach (var lesson in nextLessons)
             {
+                if (isAtTermBegin)
+                    if (++lessonCounter >= firstInvoiceLessonQTY) break;                
                 lesson.InvoiceNum = invoices[0].InvoiceNum;
                 invoices[0].LessonQuantity = invoices[0].LessonQuantity + 1;
                 invoices[0].LessonFee = invoices[0].LessonFee + unitPrice;
@@ -87,8 +89,7 @@ namespace Pegasus_backend.Services
                 invoices[1].OwingFee = invoices[1].OwingFee - unitPrice;
                 _ablemusicContext.Update(lesson);
                 invoiceDate = lesson.BeginTime.Value.Date;
-                if (isAtTermBegin)
-                    if (++lessonCounter >= firstInvoiceLessonQTY) break;
+
             }
                 invoices[0].EndDate = invoiceDate;
                 invoices[1].BeginDate = invoiceDate.AddDays(1);

@@ -33,7 +33,8 @@ namespace Pegasus_backend.Controllers
             //var payments =  new List<Payment>();
             try
             {
-                var cashBox = await _ablemusicContext.CashBox.Where(s => s.OrgId == orgId).
+                var cashBox = await _ablemusicContext.CashBox.
+                            Where(s => s.OrgId == orgId)
                             .ToArrayAsync();
                 result.Data =  cashBox; 
                 return Ok(result);

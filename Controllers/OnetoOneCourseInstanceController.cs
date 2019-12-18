@@ -240,7 +240,7 @@ namespace Pegasus_backend.Controllers
             DateTime? enrollDate =  _ablemusicContext.Learner.Where(l => l.LearnerId ==learnerId)
                                 .Select(l =>l.EnrollDate).FirstOrDefault();
             if (enrollDate==null) return false;
-            if  ((dateNow - enrollDate.Value ).TotalDays <7*14) return true;                 
+            if  ((dateNow - enrollDate.Value ).TotalDays <7*2) return true;                 
             return false;
         }
     }
