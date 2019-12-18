@@ -26,7 +26,25 @@ namespace Pegasus_backend.Controllers
             _mapper = mapper;
         }
 
-
+        [HttpGet("{orgId}")]
+        public async Task<ActionResult> GetCashBox(short orgId)
+        {
+            Result<Object> result = new Result<object>();
+            //var payments =  new List<Payment>();
+            try
+            {
+                var cashBox = await _ablemusicContext.CashBox.Where(s => s.OrgId == orgId).
+                            .ToArrayAsync();
+                result.Data =  cashBox; 
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+        }
         //GET: http://localhost:5000/api/product
         [HttpGet("{orgId}/{date}")]
         public async Task<ActionResult> GetLastCashBox(short orgId,DateTime date)

@@ -305,6 +305,18 @@ namespace Pegasus_backend.Services
                 string noteFeeStr = _ablemusicContext.Lookup.
                         Where(x => x.LookupType == 16 && x.PropValue == 2).Select(x => x.PropName).FirstOrDefault();
                 int noteFee = Int32.Parse(noteFeeStr);
+                //Aural Fee
+                string auralFeeName = _ablemusicContext.Lookup.
+                        Where(x => x.LookupType == 19 && x.PropValue == 1).Select(x => x.PropName).FirstOrDefault();
+                string auralFeeStr = _ablemusicContext.Lookup.
+                        Where(x => x.LookupType == 19 && x.PropValue == 2).Select(x => x.PropName).FirstOrDefault();
+                int auralFee = Int32.Parse(auralFeeStr);  
+                //Theory Fee
+                string theoryFeeName = _ablemusicContext.Lookup.
+                        Where(x => x.LookupType == 20 && x.PropValue == 1).Select(x => x.PropName).FirstOrDefault();
+                string theoryFeeStr = _ablemusicContext.Lookup.
+                        Where(x => x.LookupType == 20 && x.PropValue == 2).Select(x => x.PropName).FirstOrDefault();
+                int theoryFee = Int32.Parse(theoryFeeStr);                               
                 //get extra fee configuraton
                 string extraFeeStr = _ablemusicContext.Lookup.
                         Where(x => x.LookupType == 17 && x.PropValue == 1).Select(x => x.PropName).FirstOrDefault();
@@ -357,6 +369,10 @@ namespace Pegasus_backend.Services
                     invoice.ConcertFee = concertFee;
                     invoice.LessonNoteFeeName = noteFeeName;
                     invoice.NoteFee = noteFee;
+                    invoice.Other2FeeName = auralFeeName;
+                    invoice.Other2Fee = auralFee;
+                    invoice.Other3FeeName = theoryFeeName;
+                    invoice.Other3Fee = theoryFee;                                        
                     invoice.TermId = (short)term_id;
                     invoice.IsPaid = 0;
                     invoice.PaidFee = 0;

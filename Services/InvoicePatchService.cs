@@ -29,7 +29,7 @@ namespace Pegasus_backend.Services
             {
                 List<InvoiceWaitingConfirm> invoices = new List<InvoiceWaitingConfirm>();
                 if (!findInvoice(courseInstanceId, ref invoices)) return false;
-                if (!tranInvoice(invoices)) return false;
+                if (!tranInvoice(invoices,courseInstanceId)) return false;
             }
             return true;
         }
@@ -42,14 +42,16 @@ namespace Pegasus_backend.Services
 
             return true;
         }
-        private bool isAtTermBegining(short? termId)
+        private bool isAtTermBegining(int courseInstanceId,short? termId)
         {
-            DateTime dateNow = DateTime.UtcNow.ToNZTimezone();
-
+            // DateTime dateNow = DateTime.UtcNow.ToNZTimezone();
+            DateTime? dateNow = _ablemusicContext.One2oneCourseInstance.
+                    Where(o =>o.CourseInstanceId==courseInstanceId).
+                    Select(o =>o.BeginDate).FirstOrDefault();
             var term = _ablemusicContext.Term
                 .Where(i => i.TermId == termId).FirstOrDefault();
 
-            TimeSpan ts = term.EndDate.Value.Subtract(dateNow);
+            TimeSpan ts = term.EndDate.Value.Subtract(dateNow.Value);
 
             int totalWeeks = (int)(ts.Days / 7);
 
@@ -58,7 +60,7 @@ namespace Pegasus_backend.Services
         }
         /*if today is at the begin 8 weeks of this term , the first invoice is 12 lessons ,the second invoice is remaining lessons*/
         /*if today is at the back 4 weeks of this term , combine two invoice to one invoice*/
-        private bool tranInvoice(List<InvoiceWaitingConfirm> invoices)
+        private bool tranInvoice(List<InvoiceWaitingConfirm> invoices,int courseInstanceId)
         {
             short? termId = invoices[0].TermId;
             short? nextTermId = invoices[1].TermId;
@@ -69,7 +71,7 @@ namespace Pegasus_backend.Services
             if (lessons == null && nextLessons == null)
                 return false;
             int lessonCounter = lessons.Count();
-            Boolean isAtTermBegin = isAtTermBegining(termId);
+            Boolean isAtTermBegin = isAtTermBegining(courseInstanceId,termId);
             DateTime invoiceDate = new DateTime();
             foreach (var lesson in nextLessons)
             {
