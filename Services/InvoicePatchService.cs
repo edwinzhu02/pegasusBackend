@@ -76,7 +76,7 @@ namespace Pegasus_backend.Services
             foreach (var lesson in nextLessons)
             {
                 if (isAtTermBegin)
-                    if (++lessonCounter >= firstInvoiceLessonQTY) break;                
+                    if (++lessonCounter > firstInvoiceLessonQTY) break;                
                 lesson.InvoiceNum = invoices[0].InvoiceNum;
                 invoices[0].LessonQuantity = invoices[0].LessonQuantity + 1;
                 invoices[0].LessonFee = invoices[0].LessonFee + unitPrice;
