@@ -100,7 +100,7 @@ namespace Pegasus_backend.Controllers
                     .ThenInclude(s => s.GroupCourseInstance)
                     .ThenInclude(s => s.Room)//
 
-                    .Where(s => s.IsActive == 1)
+                    .Where(s => s.IsActive == 1).OrderBy(s=>s.FirstName)
                     .ToListAsync();
 
                 var mapperItem = _mapper.Map<List<GetLearnerModel>>(learners);
