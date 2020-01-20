@@ -37,20 +37,35 @@ namespace Pegasus_backend.Controllers
                 return NotFound(result);
             }
         } 
+
         // GET: api/TeacherAvailableCheck/5
         [HttpGet("[action]/{orgId}/{StartDate}")]
         public async Task<IActionResult> GetOrgTeacher(short orgId, string StartDate)
         {
             Result<List<Object>> result = new Result<List<Object>>();
+            result.Data = new List<object>();
             DateTime beginDate = DateTime.Parse(StartDate);
             short dayOfWeek = DayofWeekToInt(beginDate.DayOfWeek);
-            List<short?> teacherList = await _ablemusicContext.AvailableDays.Where(t => t.OrgId == orgId || t.DayOfWeek == dayOfWeek).
-                    Select(t => t.TeacherId).ToListAsync();
-            foreach(short teacher in teacherList){
-                var res = await GetTeacherAvailableTime(teacher,StartDate);
+
+            var teacherList = await _ablemusicContext.AvailableDays
+                .Include(s => s.Teacher)
+                .Where(s => s.OrgId == orgId && s.Teacher.IsActivate == 1)
+                .Select(s => new
+                {
+                    s.Teacher.TeacherId,
+                    s.Teacher.FirstName,
+                    s.Teacher.LastName
+                })
+                .Distinct()
+                .ToListAsync();
+
+            foreach (var teacher in teacherList){
+                var res = await GetTeacherAvailableTime((int)teacher.TeacherId, StartDate);
                 if (res.IsSuccess==true)
                     result.Data.Add( new {
-                        teacherId = teacher,
+                        teacherId = teacher.TeacherId,
+                        FirstName = teacher.FirstName,
+                        LastName = teacher.LastName,
                         data = res.Data
                         });
             }
@@ -61,6 +76,7 @@ namespace Pegasus_backend.Controllers
                 return NotFound(result);
             }
         }
+
         [HttpGet("{teacherId}/{StartDate}")]
         public async Task<IActionResult> GetTeacher(int teacherId, string StartDate)
         {

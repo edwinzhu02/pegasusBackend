@@ -102,6 +102,38 @@ namespace Pegasus_backend.Controllers
                 return BadRequest(result);
             }
         }
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetAllAvailableTeacher()
+        {
+            var result = new Result<object>();
+            try
+            {
+                var availableDays = await _ablemusicContext.AvailableDays
+                    .Include(s => s.Teacher)
+                    .Where(s => s.Teacher.IsActivate == 1)
+                    .Select(s => new {
+                        s.OrgId,
+                        s.TeacherId,
+                        Teacher = new { s.Teacher.FirstName, s.Teacher.LastName, s.Teacher.TeacherId }
+                    })
+                    .Distinct()
+                    .OrderBy(s => s.Teacher.FirstName)
+                    .ToListAsync();
+
+                availableDays = availableDays.Where((x, i) => availableDays.FindIndex(z => z.TeacherId == x.TeacherId) == i).ToList();
+
+                result.Data = availableDays;
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+        }
+
         [HttpGet("[action]/{teacherId}")]
         public async Task<IActionResult> GetTeacherAvailableDaysDayById(int teacherId)
         {
