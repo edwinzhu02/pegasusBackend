@@ -38,7 +38,7 @@ namespace Pegasus_backend.Controllers
             }
         } 
 
-        // GET: api/TeacherAvailableCheck/5
+        // GET: api/TeacherAvailableCheck/5    --new
         [HttpGet("[action]/{orgId}/{StartDate}")]
         public async Task<IActionResult> GetOrgTeacher(short orgId, string StartDate)
         {
