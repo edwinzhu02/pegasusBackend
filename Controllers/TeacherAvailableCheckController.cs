@@ -39,17 +39,19 @@ namespace Pegasus_backend.Controllers
         } 
 
         // GET: api/TeacherAvailableCheck/5    --new
-        [HttpGet("[action]/{orgId}/{StartDate}")]
-        public async Task<IActionResult> GetOrgTeacher(short orgId, string StartDate)
+        [HttpGet("[action]/{orgId}/{StartDate}/{dayOfWeek}")]
+        public async Task<IActionResult> GetOrgTeacher(short orgId, string StartDate,short dayOfWeek)
         {
             Result<List<Object>> result = new Result<List<Object>>();
             result.Data = new List<object>();
             DateTime beginDate = DateTime.Parse(StartDate);
-            short dayOfWeek = DayofWeekToInt(beginDate.DayOfWeek);
+            // short dayOfWeek = DayofWeekToInt(beginDate.DayOfWeek);
 
             var teacherList = await _ablemusicContext.AvailableDays
                 .Include(s => s.Teacher)
-                .Where(s => s.OrgId == orgId && s.Teacher.IsActivate == 1)
+                .Where(s => s.OrgId == orgId && 
+                    s.Teacher.IsActivate == 1 && s.DayOfWeek == dayOfWeek
+                    )
                 .Select(s => new
                 {
                     s.Teacher.TeacherId,
