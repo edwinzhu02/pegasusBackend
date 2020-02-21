@@ -323,14 +323,14 @@ namespace Pegasus_backend.Controllers
                 {
                     new { ArrangedLessonFound = exsitingLessons.Count }
                 };
-                foreach(var conflictResult in lessonIdMapConflictCheckResult)
-                {
-                    result.Data.Add(new
-                    {
-                        LessonWithConflict = conflictResult.Key,
-                        ConflictDetail = conflictResult.Value
-                    });
-                }
+                // foreach(var conflictResult in lessonIdMapConflictCheckResult)
+                // {
+                //     result.Data.Add(new
+                //     {
+                //         LessonWithConflict = conflictResult.Key,
+                //         ConflictDetail = conflictResult.Value
+                //     });
+                // }
                 return BadRequest(result);
             }
 
