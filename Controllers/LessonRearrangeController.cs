@@ -187,7 +187,7 @@ namespace Pegasus_backend.Controllers
             newLesson.InvoiceNum = oldLesson.InvoiceNum;
             newLesson.IsPaid = oldLesson.IsPaid;
             //newLesson.NewLessonId = oldLesson.NewLessonId;            
-            newLesson.IsChanged = 0;
+            newLesson.IsChanged = 2;
 
             using (var dbContextTransaction = _ablemusicContext.Database.BeginTransaction())
             {
@@ -406,7 +406,7 @@ namespace Pegasus_backend.Controllers
             newLesson.IsPaid = oldLesson.IsPaid;
             newLesson.IsConfirm = oldLesson.IsConfirm;            
             //newLesson.NewLessonId = oldLesson.NewLessonId;            
-            newLesson.IsChanged = 0;
+            newLesson.IsChanged = 2;
             
 
             using (var dbContextTransaction = _ablemusicContext.Database.BeginTransaction())

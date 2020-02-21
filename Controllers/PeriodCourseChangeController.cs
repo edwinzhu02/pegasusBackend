@@ -54,7 +54,8 @@ namespace Pegasus_backend.Controllers
                 } else
                 {
                     exsitingLessons = await _ablemusicContext.Lesson.Where(l => l.LearnerId == inputObj.LearnerId && l.IsCanceled != 1 &&
-                    l.BeginTime.Value.Date >= inputObj.BeginDate.Date).ToListAsync();
+                    l.BeginTime.Value.Date >= inputObj.BeginDate.Date &&
+                    l.CourseInstanceId == inputObj.InstanceId).ToListAsync();
                 }
                 terms = await _ablemusicContext.Term.ToListAsync();
                 courseInfo = await (from i in _ablemusicContext.One2oneCourseInstance
@@ -158,11 +159,12 @@ namespace Pegasus_backend.Controllers
                     inputObj.EndTime = inputObj.BeginTime.Add(TimeSpan.FromMinutes(60));
                     break;
             }
-
+           
             foreach (var lesson in exsitingLessons.Reverse<Lesson>())
             {
-                if (courseInfo.DayOfWeek != lesson.BeginTime.Value.ToDayOfWeek() || lesson.IsChanged == 1 ||
-                    lesson.BeginTime.Value.TimeOfDay != courseInfo.BeginTime)
+                // if (courseInfo.DayOfWeek != lesson.BeginTime.Value.ToDayOfWeek() || lesson.IsChanged == 1 ||
+                //     lesson.BeginTime.Value.TimeOfDay != courseInfo.BeginTime)
+                if ( lesson.IsChanged == 1||lesson.IsChanged == 2 )
                 {
                     exsitingLessons.Remove(lesson);
                 }
@@ -174,11 +176,11 @@ namespace Pegasus_backend.Controllers
             {
                 DateTime beginTime = lesson.BeginTime.Value;
                 DateTime endTime = lesson.EndTime.Value;
-                if (inputObj.DayOfWeek != courseInfo.DayOfWeek)
-                {
+                // if (inputObj.DayOfWeek != courseInfo.DayOfWeek)
+                // {
                     beginTime = beginTime.SetDateByDayOfWeekInWeek(inputObj.DayOfWeek);
                     endTime = endTime.SetDateByDayOfWeekInWeek(inputObj.DayOfWeek);
-                }
+                // }
                 beginTime = beginTime.Date + inputObj.BeginTime;
                 endTime = endTime.Date + inputObj.EndTime;
                 newLessonsMapOldLesson.Add(new Lesson
