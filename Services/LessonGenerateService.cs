@@ -358,7 +358,7 @@ namespace Pegasus_backend.Services
                 foreach (var course_instance in course_instances)
                 {
                     if (course_instance.InvoiceDate >= Convert.ToDateTime(term.EndDate)) continue;
-                    if (course_instance.EndDate >= course_instance.InvoiceDate) continue;  //fix bug duplicated lessons
+                    if (course_instance.EndDate <= course_instance.InvoiceDate) continue;  //fix bug duplicated lessons
                     InvoiceWaitingConfirm invoice = new InvoiceWaitingConfirm();
 
                     invoice.LearnerId = course_instance.LearnerId;
@@ -476,7 +476,8 @@ namespace Pegasus_backend.Services
                     if (course_instance.Learner.PaymentPeriod == 2)
                         invoice.LessonFee = invoice.LessonFee + extraFee;
                     invoice.LessonFee = course_instance.Course.Price * lesson_quantity;
-                    invoice.OwingFee = invoice.LessonFee+invoice.NoteFee+invoice.ConcertFee;
+                    invoice.OwingFee = invoice.LessonFee+invoice.NoteFee+invoice.ConcertFee
+                                    +invoice.Other2Fee + invoice.Other3Fee; //Aural and Theory
                     invoice.TotalFee = invoice.OwingFee;
                     invoice.LessonQuantity = lesson_quantity;
                     if (invoice.LessonFee <= 0) continue;
