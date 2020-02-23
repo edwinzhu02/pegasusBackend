@@ -493,7 +493,7 @@ namespace Pegasus_backend.Controllers
             try
             {   
                 result.Data = await _ablemusicContext.Lesson
-                    .Where(s => s.CourseInstanceId == courseInstanceId && s.BeginTime>DateTime.UtcNow && s.IsCanceled!=1)
+                    .Where(s => s.CourseInstanceId == courseInstanceId && s.BeginTime>DateTime.UtcNow.AddDays(-60) && s.IsCanceled!=1)
                     .Select(s =>new {s.LessonId,s.BeginTime,s.InvoiceNum,s.CourseInstanceId}).ToListAsync();
             }
             catch (Exception ex)
