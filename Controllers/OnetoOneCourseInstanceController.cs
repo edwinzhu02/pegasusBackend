@@ -131,6 +131,9 @@ namespace Pegasus_backend.Controllers
                             invoiceWaiting.OwingFee =0;                                                   
                         }
                      _ablemusicContext.Update(invoiceWaiting);
+                     if (invoiceWaiting.LessonFee==0){
+                        _ablemusicContext.Remove(invoiceWaiting);
+                     }
                     _ablemusicContext.Remove(lesson);
                 });
                 learner.Credit +=credit;
