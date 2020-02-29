@@ -28,7 +28,36 @@ namespace Pegasus_backend.Controllers
             _mapper = mapper;
             _configuration = configuration;
         }
+        //Batch Change Lessons
+        // [HttpPut("BatchChange/{userId}")]
+        // [CheckModelFilter]
+        // public async Task<IActionResult> PutLessons(short userId, [FromBody] LessonViewModel lessonViewmodel)
+        // {
+        //     var result = new Result<int>();
+        //     var invoice = await _ablemusicContext.Lesson.
+        //         FirstOrDefaultAsync(i =>i.LessonId ==lessonViewmodel.LessonId );
 
+        //     var termId = await _ablemusicContext.InvoiceWaitingConfirm.
+        //         FirstOrDefaultAsync(i =>i.InvoiceNum ==invoice.InvoiceNum );
+                
+        //     DateTime monday = lessonViewmodel.BeginTime.Value.Date.AddDays(-(int)lessonViewmodel.BeginTime.Value.DayOfWeek + (int)DayOfWeek.Monday);
+        //     short dayOfWeek = (short) lessonViewmodel.BeginTime.Value.DayOfWeek;
+        //     TimeSpan time= lessonViewmodel.BeginTime.Value.TimeOfDay;
+        //     var lessons = _ablemusicContext.Lesson.
+        //                  Where(l => l.InvoiceNum == invoice.InvoiceNum &&
+        //                 l.BeginTime>=monday );
+        //     int count=0;
+        //     foreach (var l in lessons)
+        //     {
+        //         DateTime thisMonday = l.BeginTime.Value.Date.AddDays(-(int)l.BeginTime.Value.DayOfWeek + (int)DayOfWeek.Monday);
+        //         var date= thisMonday.AddDays(dayOfWeek)+time;
+        //         lessonViewmodel.BeginTime = date;
+        //         await PutLesson(userId,lessonViewmodel);
+        //         count++;
+        //     }
+
+        //     return Ok(result);
+        // }
         // PUT: api/LessonRearrange/5
         [HttpPut("{userId}")]
         [CheckModelFilter]

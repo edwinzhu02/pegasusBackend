@@ -31,7 +31,64 @@ namespace Pegasus_backend.Controllers
         [CheckModelFilter]
         public async Task<IActionResult> PostPeriodCourseChange([FromBody] PeriodCourseChangeViewModel inputObj)
         {
-            var result = new Result<List<object>>();
+            return await PostPeriodCourseChangeService(inputObj);
+        }
+        [HttpPost("[action]")]
+        [CheckModelFilter]
+        public async Task<IActionResult> DragAndDropCourseChange([FromBody] DragDropCourseChangeViewModel DragDropCourseObj)
+        {
+            var result = new Result<object>();
+            PeriodCourseChangeViewModel periodCourseChangeViewModel = new PeriodCourseChangeViewModel();
+            
+            periodCourseChangeViewModel.UserId = DragDropCourseObj.UserId;
+            periodCourseChangeViewModel.TeacherId = DragDropCourseObj.TeacherId;
+            periodCourseChangeViewModel.LearnerId = DragDropCourseObj.LearnerId;
+            periodCourseChangeViewModel.OrgId = DragDropCourseObj.OrgId;
+            // periodCourseChangeViewModel.BeginDate = DragDropCourseObj.BeginDate;
+            periodCourseChangeViewModel.BeginTime = DragDropCourseObj.ChangedDate.TimeOfDay;
+            periodCourseChangeViewModel.Reason = DragDropCourseObj.Reason;
+
+            var lesson = await _ablemusicContext.Lesson.Include(l =>l.CourseInstance).
+                Include(l =>l.CourseInstance).ThenInclude(c =>c.CourseSchedule).
+                Where(l => l.LessonId == DragDropCourseObj.LessonId).FirstOrDefaultAsync();
+            if (lesson == null) {
+                result.IsSuccess = false;
+                result.ErrorMessage = "Can not find this lesson!";
+                return BadRequest(result);
+            }
+            if (lesson.CourseInstanceId == null) {
+                result.IsSuccess = false;
+                result.ErrorMessage = "Group Lesson can not be changed!";
+                return BadRequest(result);
+            }
+            //get day of week
+            short dayOfWeek = DayofWeekToInt(DragDropCourseObj.ChangedDate.DayOfWeek);
+            periodCourseChangeViewModel.DayOfWeek = dayOfWeek;
+            periodCourseChangeViewModel.BeginDate = lesson.BeginTime.Value;
+
+            periodCourseChangeViewModel.InstanceId =(int) lesson.CourseInstanceId;
+            periodCourseChangeViewModel.CourseScheduleId =(int) lesson.CourseInstance.CourseSchedule.FirstOrDefault().CourseScheduleId;
+            //if IsPermanent
+            if (DragDropCourseObj.IsPermanent == 1){
+                periodCourseChangeViewModel.IsTemporary = 0;
+            }else {
+                
+                var invoice = await _ablemusicContext.InvoiceWaitingConfirm.
+                    FirstOrDefaultAsync(i =>i.InvoiceNum == lesson.InvoiceNum);
+                var term = await _ablemusicContext.Term.FirstOrDefaultAsync(l => l.TermId == invoice.TermId);
+                if (term == null) {
+                    result.IsSuccess = false;
+                    result.ErrorMessage = "Term not found!";
+                    return BadRequest(result);
+                }
+                periodCourseChangeViewModel.EndDate = term.EndDate;
+                periodCourseChangeViewModel.IsTemporary = 1;
+            }
+ 
+            return await PostPeriodCourseChangeService(periodCourseChangeViewModel);
+        }        
+        private async Task<IActionResult> PostPeriodCourseChangeService(PeriodCourseChangeViewModel inputObj){
+                        var result = new Result<List<object>>();
             List<Lesson> exsitingLessons;
             Learner learner;
             List<Holiday> holidays;

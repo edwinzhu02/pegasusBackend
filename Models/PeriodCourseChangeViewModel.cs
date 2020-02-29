@@ -33,5 +33,26 @@ namespace Pegasus_backend.Models
         public int? CourseScheduleId { get; set; }
         
         public short IsInvoiceChange { get; set; }
-    }
+    };
+    public class DragDropCourseChangeViewModel
+    {
+        [Required(ErrorMessage = "UserId is required")]
+        public short UserId { get; set; }
+        [Required(ErrorMessage = "TeacherId is required")]
+        public short? TeacherId { get; set; }
+        [Required(ErrorMessage = "LearnerId is required")]
+        public int LearnerId { get; set; }
+        [Required(ErrorMessage = "LessonId is required")]
+        public int LessonId { get; set; }
+        
+        [Required(ErrorMessage = "OrgId is required")]
+        public short OrgId { get; set; }
+
+        [Required(ErrorMessage = "ChangedDate is required")]        
+        public DateTime ChangedDate { get; set; }
+        [Required(ErrorMessage = "IsPermanent is required")]
+        public short IsPermanent { get; set; }
+        [Required(ErrorMessage = "Reason is required")]
+        public string Reason { get; set; }
+    }    
 }

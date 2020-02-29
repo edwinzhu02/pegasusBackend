@@ -158,6 +158,32 @@ namespace Pegasus_backend.Controllers
             }
         }
         
+        [HttpGet("[action]/{orgId}/{roomId}/{dayOfWeek}")]
+        public async Task<IActionResult> GetTeacherByRoomDay(short orgId,short roomId,short dayOfWeek)
+        {
+            var result = new Result<object>();
+            try
+            {
+                result.Data = await _ablemusicContext.AvailableDays
+                    .Include(t=>t.Teacher)
+                    .Where(s => s.OrgId == orgId &&
+                        s.RoomId==roomId &&
+                        s.DayOfWeek == dayOfWeek)
+                    .Select(s=> new
+                    {
+                        s.TeacherId,TeacherName = s.Teacher.FirstName
+                    })
+                    .ToListAsync();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+        }
+        
         
         //DELETE http://localhost:5000/api/teacher/:id
         [HttpDelete("{id}")]

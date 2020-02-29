@@ -243,8 +243,8 @@ namespace Pegasus_backend.Controllers
                 customisedArranged.Add(new
                 {
                     oto.DayOfWeek,
-                    TimeBegin = oto.BeginTime,
-                    TimeEnd = oto.EndTime,
+                    TimeBegin = "2020-01-01T"+oto.BeginTime,
+                    TimeEnd = "2020-01-01T"+oto.EndTime,
                     LearnerName = oto.LearnerFirstName + " " + oto.LearnerLastName,
                     oto.CourseScheduleId,
                     oto.OrgId,
