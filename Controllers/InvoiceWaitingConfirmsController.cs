@@ -449,6 +449,7 @@ namespace Pegasus_backend.Controllers
                 TimeSpan ts = InvoiceEndDate.Subtract(dateNow);
                 int totalWeeks = (int)(ts.Days / 7);
                 if (totalWeeks>14+6) continue; //if invoice date more than 6 week, don't list to user.
+                if (i.InvoiceWaitingConfirm.TotalFee == 0 ) continue; //if invoice date more than 6 week, don't list to user.
 
                 if (preInvoiceNum != currentInvoiceNum) 
                 {
