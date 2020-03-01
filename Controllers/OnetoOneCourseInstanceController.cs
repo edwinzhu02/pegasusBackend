@@ -69,43 +69,76 @@ namespace Pegasus_backend.Controllers
                 return Ok(result);
         }
         // [HttpPut]
-        [HttpPut("{instanceId}/{beginDate}/{duration}")]
-        public async Task<IActionResult> ChangeOnetoOneCourseInstance(int instanceId,DateTime beginDate,short duration)
+        [HttpPut("[action]/{lessonId}/{duration}")]
+        public async Task<IActionResult> ChangeOnetoOneCourseInstance(int lessonId,short duration)
         {
-            
+            var result = new Result<dynamic>();
             OnetoOneCourseInstancesModel model = new OnetoOneCourseInstancesModel();
-            var courseInstance =  _ablemusicContext.One2oneCourseInstance.
-                                Where(l => l.CourseInstanceId ==instanceId)
-                                .FirstOrDefault();
-                                
-            var result  = quitCourse(instanceId, beginDate);
 
-            if (result.IsSuccess==false)
-                 return BadRequest(result);
+            try {
+                var lesson =  _ablemusicContext.Lesson.
+                            Where(l => l.LessonId ==lessonId)
+                        .FirstOrDefault();
+                var courseInstance =  _ablemusicContext.One2oneCourseInstance.Include(c =>c.CourseSchedule).
+                                    Where(l => l.CourseInstanceId ==lesson.CourseInstanceId)
+                                    .FirstOrDefault();
+                var orginalCourse =  _ablemusicContext.Course.
+                                    Where(l => l.CourseId ==courseInstance.CourseId)
+                                    .FirstOrDefault();
 
-            model.OnetoOneCourses.Add(
-                new OnetoOneCourseInstanceModel
-                {
-                    id = courseInstance.CourseInstanceId,
-                    CourseId =courseInstance.CourseId,
-                    TeacherId  =courseInstance.TeacherId,
-                    OrgId  =courseInstance.OrgId,
-                    RoomId  =courseInstance.RoomId,
-                    BeginDate  =courseInstance.BeginDate,
-                    EndDate  =courseInstance.EndDate,
-                    LearnerId  =courseInstance.LearnerId,
-                    Schedule =  new CourseScheduleModel
-                        {
-                            DayOfWeek = courseInstance.CourseSchedule.FirstOrDefault().DayOfWeek,
-                            BeginTime = courseInstance.CourseSchedule.FirstOrDefault().BeginTime.Value,
-                        }
-                }   
-            );
-            result  = addCourse(model);
-            if (result.IsSuccess==false)
-                 return BadRequest(result);
+                var newCourse =  _ablemusicContext.Course.
+                                    Where(l => l.CourseType==orginalCourse.CourseType &&
+                                    l.Level==orginalCourse.Level &&
+                                    l.TeacherLevel==orginalCourse.TeacherLevel &&
+                                    l.CourseCategoryId==orginalCourse.CourseCategoryId &&
+                                    l.Duration==duration)
+                                    .FirstOrDefault();
+
+                if (newCourse ==null ||courseInstance ==null ||
+                    orginalCourse ==null || lesson==null){
+                        result.IsSuccess=false;
+                        result.ErrorMessage = "This lesson can not be changed!";
+                        return BadRequest(result);
+                    }
+                model.OnetoOneCourses = new List<OnetoOneCourseInstanceModel>();
+                model.OnetoOneCourses.Add(
+                    new OnetoOneCourseInstanceModel
+                    {
+                        id = courseInstance.CourseInstanceId,
+                        CourseId =newCourse.CourseId,
+                        TeacherId  =courseInstance.TeacherId,
+                        OrgId  =courseInstance.OrgId,
+                        RoomId  =courseInstance.RoomId,
+                        BeginDate  = lesson.BeginTime,
+                        EndDate  =courseInstance.EndDate,
+                        LearnerId  =courseInstance.LearnerId,
+                        Schedule =  new CourseScheduleModel
+                            {
+                                DayOfWeek = courseInstance.CourseSchedule.FirstOrDefault().DayOfWeek,
+                                BeginTime = courseInstance.CourseSchedule.FirstOrDefault().BeginTime.Value,
+                            }
+                    }   
+                );
+            var resultQuit  = quitCourse(courseInstance.CourseInstanceId, lesson.BeginTime.Value.AddDays(-1));
+
+            if (resultQuit.IsSuccess==false)
+                 return BadRequest(resultQuit);
+
+
+            var resultAdd  = addCourse(model);
+            if (resultAdd.IsSuccess==false)
+                 return BadRequest(resultAdd);
             else
-                return Ok(result);
+                return Ok(resultAdd);
+
+            }
+            catch(Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+            
         }        
         private bool isNewStudent(int? learnerId)
         {
