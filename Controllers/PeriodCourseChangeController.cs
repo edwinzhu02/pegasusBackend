@@ -271,7 +271,7 @@ namespace Pegasus_backend.Controllers
             amendment.EndTime = inputObj.EndTime;
             amendment.LearnerId = inputObj.LearnerId;
             amendment.RoomId = availableDay.RoomId;
-            amendment.BeginDate = inputObj.BeginDate;
+            amendment.BeginDate = inputObj.BeginDate.Date;
             amendment.EndDate = inputObj.IsTemporary == 1 ? inputObj.EndDate : null;
             amendment.CreatedAt = toNZTimezone(DateTime.UtcNow);
             amendment.Reason = inputObj.Reason;
