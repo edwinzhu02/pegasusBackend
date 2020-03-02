@@ -114,7 +114,7 @@ namespace Pegasus_backend.Controllers
                         LearnerId  =courseInstance.LearnerId,
                         Schedule =  new CourseScheduleModel
                             {
-                                DayOfWeek = courseInstance.CourseSchedule.FirstOrDefault().DayOfWeek,
+                                DayOfWeek = (byte) DayofWeekToInt(lesson.BeginTime.Value.DayOfWeek),
                                 BeginTime = courseInstance.CourseSchedule.FirstOrDefault().BeginTime.Value,
                             }
                     }   

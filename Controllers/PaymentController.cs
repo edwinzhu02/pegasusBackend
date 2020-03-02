@@ -102,15 +102,19 @@ namespace Pegasus_backend.Controllers
                     }
                     decimal creditAmt = (details.UseCredit ? learner.Credit : 0).Value;
                     //the owing fee for invoice cannot be negative.
-
-                    if (invoiceItem.OwingFee - details.Amount - creditAmt < 0)
-                    {
-                        throw new Exception("You only need to pay " + (invoiceItem.OwingFee - creditAmt) + " dollar. No more than it");
+                    decimal thisTimeCreditAmt = creditAmt;
+                    if (details.Amount>0){
+                        if (invoiceItem.OwingFee - details.Amount - creditAmt < 0)
+                        {
+                            throw new Exception("You only need to pay " + (invoiceItem.OwingFee - creditAmt) + " dollar. No more than it");
+                        }
                     }
-
+                    if (details.Amount==0){
+                        thisTimeCreditAmt = invoiceItem.OwingFee.Value ;
+                    }
                     invoiceItem.PaidFee = invoiceItem.PaidFee + details.Amount;
-                    invoiceItem.OwingFee = invoiceItem.OwingFee - details.Amount - creditAmt;
-                    invoiceItem.Credit = creditAmt;
+                    invoiceItem.OwingFee = invoiceItem.OwingFee - details.Amount - thisTimeCreditAmt;
+                    invoiceItem.Credit = thisTimeCreditAmt;
                     if (invoiceItem.OwingFee > 0)
                     {
                         invoiceItem.IsPaid = 0;
@@ -124,7 +128,7 @@ namespace Pegasus_backend.Controllers
                     await _ablemusicContext.SaveChangesAsync();
                     if (creditAmt > 0)
                     {
-                        learner.Credit -= creditAmt;
+                        learner.Credit -= thisTimeCreditAmt;
                         _ablemusicContext.Update(learner);
                         await _ablemusicContext.SaveChangesAsync();
                     }
