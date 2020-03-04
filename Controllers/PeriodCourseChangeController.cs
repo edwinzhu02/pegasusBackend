@@ -351,7 +351,7 @@ namespace Pegasus_backend.Controllers
                 currentDayOfWeek = currentDate.DayOfWeek == 0 ? 7 : (int)currentDate.DayOfWeek;
             }
 
-            var lessonConflictCheckerService = new LessonConflictCheckerService(_ablemusicContext, inputObj.BeginDate, endDate);
+        var lessonConflictCheckerService = new LessonConflictCheckerService(_ablemusicContext, inputObj.BeginDate, endDate , inputObj.InstanceId);
             try
             {
                 await lessonConflictCheckerService.LoadAllProtentialConflictLessonsToMemoryAsync();

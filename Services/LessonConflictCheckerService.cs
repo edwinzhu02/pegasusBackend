@@ -20,15 +20,17 @@ namespace Pegasus_backend.Services
         private DateTime _endTime;
         private DateTime _protentialMinTime;
         private DateTime _protentialMaxTime;
+        private int _courseInstanceId;
         private int _teacherId;
         private List<Lesson> _totalProtentialConflictLessons;
         private List<ConflictInfo> _totalProtentialConflictRoomForOTO;
         private List<ConflictInfo> _totalProtentialConflictRoomForGC;
 
-        public LessonConflictCheckerService(ablemusicContext ablemusicContext, DateTime min, DateTime max)
+        public LessonConflictCheckerService(ablemusicContext ablemusicContext, DateTime min, DateTime max,int courseInstanceId)
         {
             _protentialMinTime = min;
             _protentialMaxTime = max;
+            _courseInstanceId =courseInstanceId;
             _ablemusicContext = ablemusicContext;
         }
 
@@ -66,7 +68,9 @@ namespace Pegasus_backend.Services
 
         public async Task LoadAllProtentialConflictLessonsToMemoryAsync()
         {
-            _totalProtentialConflictLessons = await _ablemusicContext.Lesson.Where(l => l.BeginTime >= _protentialMinTime && l.BeginTime <= _protentialMaxTime && l.IsCanceled != 1).ToListAsync();
+            _totalProtentialConflictLessons = await _ablemusicContext.Lesson.Where(l => l.BeginTime >= _protentialMinTime 
+                && l.BeginTime <= _protentialMaxTime && l.IsCanceled != 1
+                && l.CourseInstanceId != _courseInstanceId).ToListAsync();
             _totalProtentialConflictRoomForOTO = await (from cs in _ablemusicContext.CourseSchedule
                                                         join oto in _ablemusicContext.One2oneCourseInstance on cs.CourseInstanceId equals oto.CourseInstanceId
                                                         join c in _ablemusicContext.Course on oto.CourseId equals c.CourseId
