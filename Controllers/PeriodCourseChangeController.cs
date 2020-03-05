@@ -161,7 +161,7 @@ namespace Pegasus_backend.Controllers
             if(availableDay == null || availableDay.RoomId == null)
             {
                 result.IsSuccess = false;
-                result.ErrorMessage = "Room Id not found";
+                result.ErrorMessage = "Teacher don't have available room or time!";
                 return BadRequest(result);
             }
             
