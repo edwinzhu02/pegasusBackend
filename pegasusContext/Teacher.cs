@@ -11,6 +11,7 @@ namespace Pegasus_backend.pegasusContext
             AvailableDays = new HashSet<AvailableDays>();
             GroupCourseInstance = new HashSet<GroupCourseInstance>();
             Lesson = new HashSet<Lesson>();
+            LessonMessage = new HashSet<LessonMessage>();
             One2oneCourseInstance = new HashSet<One2oneCourseInstance>();
             Rating = new HashSet<Rating>();
             RemindLog = new HashSet<RemindLog>();
@@ -55,6 +56,7 @@ namespace Pegasus_backend.pegasusContext
         public ICollection<AvailableDays> AvailableDays { get; set; }
         public ICollection<GroupCourseInstance> GroupCourseInstance { get; set; }
         public ICollection<Lesson> Lesson { get; set; }
+        public ICollection<LessonMessage> LessonMessage { get; set; }
         public ICollection<One2oneCourseInstance> One2oneCourseInstance { get; set; }
         public ICollection<Rating> Rating { get; set; }
         public ICollection<RemindLog> RemindLog { get; set; }

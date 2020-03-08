@@ -11,6 +11,7 @@ namespace Pegasus_backend.pegasusContext
             AwaitMakeUpLessonNewLesson = new HashSet<AwaitMakeUpLesson>();
             InverseNewLesson = new HashSet<Lesson>();
             LearnerTransaction = new HashSet<LearnerTransaction>();
+            LessonMessage = new HashSet<LessonMessage>();
             Rating = new HashSet<Rating>();
             RemindLog = new HashSet<RemindLog>();
             SplittedLesson = new HashSet<SplittedLesson>();
@@ -50,6 +51,7 @@ namespace Pegasus_backend.pegasusContext
         public ICollection<AwaitMakeUpLesson> AwaitMakeUpLessonNewLesson { get; set; }
         public ICollection<Lesson> InverseNewLesson { get; set; }
         public ICollection<LearnerTransaction> LearnerTransaction { get; set; }
+        public ICollection<LessonMessage> LessonMessage { get; set; }
         public ICollection<Rating> Rating { get; set; }
         public ICollection<RemindLog> RemindLog { get; set; }
         public ICollection<SplittedLesson> SplittedLesson { get; set; }

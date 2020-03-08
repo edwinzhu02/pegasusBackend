@@ -14,6 +14,7 @@ namespace Pegasus_backend.pegasusContext
             LearnerGroupCourse = new HashSet<LearnerGroupCourse>();
             LearnerOthers = new HashSet<LearnerOthers>();
             Lesson = new HashSet<Lesson>();
+            LessonMessage = new HashSet<LessonMessage>();
             LessonRemain = new HashSet<LessonRemain>();
             One2oneCourseInstance = new HashSet<One2oneCourseInstance>();
             Parent = new HashSet<Parent>();
@@ -62,6 +63,7 @@ namespace Pegasus_backend.pegasusContext
         public ICollection<LearnerGroupCourse> LearnerGroupCourse { get; set; }
         public ICollection<LearnerOthers> LearnerOthers { get; set; }
         public ICollection<Lesson> Lesson { get; set; }
+        public ICollection<LessonMessage> LessonMessage { get; set; }
         public ICollection<LessonRemain> LessonRemain { get; set; }
         public ICollection<One2oneCourseInstance> One2oneCourseInstance { get; set; }
         public ICollection<Parent> Parent { get; set; }
