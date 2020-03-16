@@ -54,6 +54,44 @@ namespace Pegasus_backend.Controllers
                 return BadRequest(result);
             }
         }
+        [HttpGet]
+        [Route("{orgId}/{beginDate}/{endDate}")]
+        public async Task<ActionResult> GetMessagesByDate(short orgId,DateTime beginDate,DateTime endDate)
+        {
+            Result<Object> result = new Result<object>();
+            try
+            {
+                result.IsSuccess = true;
+                result.Data = await _ablemusicContext.Lesson.
+                    Include(l => l.LessonMessage)
+                    .Where(l =>l.OrgId==orgId && l.LessonMessage.Count()>0 &&
+                    (( l.BeginTime >beginDate &&  l.BeginTime >beginDate) ||
+                    (l.LessonMessage.FirstOrDefault( lm=>lm.CreatedAt>beginDate && lm.CreatedAt<endDate )!=null)))
+                    .Select(l =>
+                        new {
+                            TeacherId = l.TeacherId,
+                            TeacherName = l.Teacher.FirstName,
+                            LearnerId =  l.LearnerId,
+                            LearnerFirstName =  l.Learner.FirstName,
+                            LearnerLastName =  l.Learner.LastName,
+                            BeginTime = l.BeginTime,
+                            EndTime = l.EndTime,
+                            LessonId = l.LessonId,
+                            MessageCount = l.LessonMessage.Count(),
+                            MessageLastestDate = l.LessonMessage
+                                            .OrderByDescending(lm =>lm.CreatedAt)
+                                            .FirstOrDefault().CreatedAt,
+                        }
+                    ).ToArrayAsync();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = ex.Message;
+                return BadRequest(result);
+            }
+        }
 
         [HttpPost]
         [CheckModelFilter]

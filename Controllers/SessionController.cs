@@ -33,6 +33,7 @@ namespace Pegasus_backend.Controllers
 
         [CheckModelFilter]
         [HttpPost("{userId}")]
+        //补一节课
         public async Task<IActionResult> Post(int userId, [FromBody] LessonViewModel lessonViewModel)
         {
             var result = new Result<Lesson>();
@@ -647,6 +648,7 @@ namespace Pegasus_backend.Controllers
         }
         [Route("MakeUpSplitLesson/{lessonId}/{isAfter}/{staffId}")]
         [HttpPut]
+        //补15分钟课
         public async Task<IActionResult> MakeUpSplitLesson(int lessonId, short isAfter, short staffId)
         {
             var result = new Result<string>();

@@ -58,6 +58,7 @@ namespace Pegasus_backend.Controllers
 
         //     return Ok(result);
         // }
+        //改一节课
         // PUT: api/LessonRearrange/5
         [HttpPut("{userId}")]
         [CheckModelFilter]
@@ -378,6 +379,7 @@ namespace Pegasus_backend.Controllers
         [HttpPut]
         [Route("[action]/{userId}")]
         [CheckModelFilter]
+        //补一节课
         public async Task<IActionResult> PutGroupMakeupLesson(short userId, [FromBody] GroupMakeupLessonViewModel lessonViewmodel)
         {
             var result = new Result<Lesson>();
