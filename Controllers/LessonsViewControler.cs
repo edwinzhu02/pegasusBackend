@@ -30,20 +30,30 @@ namespace Pegasus_backend.Controllers
         public async Task<IActionResult> GetLessonsView(int orgId, short termId)
         {
             Result<Object> result = new Result<object>();
-            var term = await _ablemusicContext.Term.FirstOrDefaultAsync();
+            List<LearnersLessonViewModel> LearnersLesson =  new List<LearnersLessonViewModel>();
+            var term = await _ablemusicContext.Term.FirstOrDefaultAsync(t =>t.TermId ==termId);
             try
             {
                 var courseInstances = await _ablemusicContext.One2oneCourseInstance
+                    .Include(o =>o.Learner)
+                    .Include(o =>o.Course)
                     .Where(d => d.OrgId == orgId
                     && (d.EndDate == null || d.EndDate > term.BeginDate)
                     ).ToArrayAsync();
 
+
                 foreach (var courseInstance in courseInstances)
                 {
-                    var lessons = await _ablemusicContext.Lesson
-                    .Where(d => d.CourseInstanceId == courseInstance.CourseId
-                    ).ToArrayAsync();
-
+                    var lessonView = await GetOne2OneLessons(courseInstance,term);
+                    LearnersLesson.Add(
+                        new LearnersLessonViewModel
+                        {
+                            LearnerId = courseInstance.LearnerId.Value,
+                            FirstName = courseInstance.Learner.FirstName,
+                            LastName = courseInstance.Learner.LastName,
+                            Course = courseInstance.Course.CourseName,
+                            LessonsViewModel = lessonView
+                        });
                 }
             }
             catch (Exception ex)
@@ -55,30 +65,32 @@ namespace Pegasus_backend.Controllers
             return Ok(result);
         }
 
-        private async Task<Result<object>> GetOne2OneLessons(One2oneCourseInstance courseInstance,DateTime beginDate)
+        private async Task<List<LessonsViewModel>> GetOne2OneLessons(One2oneCourseInstance courseInstance,Term term)
         {
-            Result<Object> result = new Result<object>();
+            List<LessonsViewModel> lessonsViewModel =  new List<LessonsViewModel>();
             try
             {
+                List<Lesson> allLessons = _ablemusicContext.Lesson.Where(l => 
+                        l.LearnerId==courseInstance.LearnerId).ToList();
                 var lessons = await _ablemusicContext.Lesson
-                .Where(d => d.CourseInstanceId == courseInstance.CourseId
+                 .Where(d => d.CourseInstanceId == courseInstance.CourseInstanceId && 
+                 d.BeginTime>term.BeginDate && d.BeginTime>term.EndDate
                 ).ToArrayAsync();
+
                 foreach (var lesson in lessons)
                 {
-                    var isExist = lessons.FirstOrDefault(l => l.NewLessonId == lesson.LessonId);
+                    var isExist =  allLessons.FirstOrDefault(l => l.NewLessonId == lesson.LessonId);
                     if (isExist != null) continue;
-                    var lessonsViewModel =  GetLessonInfo(lesson,beginDate);
+                    lessonsViewModel.Add(GetLessonInfo(lesson,term.BeginDate.Value,allLessons));
                 }
             }
             catch (Exception ex)
             {
-                result.IsSuccess = false;
-                result.ErrorCode = ex.Message;
-                return result;
+                return lessonsViewModel;
             }
-            return result;
+            return lessonsViewModel;
         }
-        private LessonsViewModel GetLessonInfo(Lesson lesson,DateTime beginDate)
+        private LessonsViewModel GetLessonInfo(Lesson lesson,DateTime beginDate, List<Lesson> allLessons)
         {
             LessonsViewModel lessonsViewModel = new LessonsViewModel();
 
@@ -119,7 +131,7 @@ namespace Pegasus_backend.Controllers
                     else{
                         Lesson tmpLesson =  new Lesson();
                         while(true){
-                             tmpLesson = _ablemusicContext.Lesson
+                             tmpLesson = allLessons
                                 .FirstOrDefault(i => i.LessonId == tmpLessonId); 
                             if (tmpLesson.NewLessonId != null){
                                 tmpLessonId = tmpLesson.NewLessonId;
@@ -145,9 +157,14 @@ namespace Pegasus_backend.Controllers
                             lessonsViewModel.IsMadeup = 1;
                             lessonsViewModel.MakeUpDetail = tmpLesson.BeginTime.Value.ToString();
                             }
-
                         }
+                    }else{
+                        lessonsViewModel.IsCompleted =0;
+                        lessonsViewModel.IsCanceled =0;
+                        lessonsViewModel.IsMadeup =0; 
+                        lessonsViewModel.MakeUpDetail= lesson.BeginTime.Value.ToString();                
                     }
+                
                 //get makeup info
             }
             catch (Exception ex)
