@@ -26,7 +26,7 @@ namespace Pegasus_backend
 
             var hostUrl = configuration["hosturl"];
             if (string.IsNullOrEmpty(hostUrl))
-                hostUrl = "http://*:5003";
+                hostUrl = "http://*:5000";
 
             //var host = new WebHostBuilder()
              var host = WebHost.CreateDefaultBuilder()
