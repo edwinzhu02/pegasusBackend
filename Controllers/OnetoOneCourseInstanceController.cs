@@ -68,6 +68,18 @@ namespace Pegasus_backend.Controllers
             else
                 return Ok(result);
         }
+       [HttpPost("[action]")]
+        public async Task<IActionResult> AddAllOnetoOneCourseInstance()
+        {
+            var result = new Result<dynamic>();
+            // _lessonGenerateService = new LessonGenerateService(ablemusicContext, mapper);
+                await _lessonGenerateService.GetTerm(DateTime.UtcNow.ToNZTimezone(),0, 3);
+            if (result.IsSuccess==false)
+                 return BadRequest(result);
+            else
+                return Ok(result);
+        }
+
         // [HttpPut]
         [HttpPut("[action]/{lessonId}/{duration}")]
         public async Task<IActionResult> ChangeOnetoOneCourseInstance(int lessonId,short duration)
