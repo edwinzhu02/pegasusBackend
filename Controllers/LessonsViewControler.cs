@@ -45,6 +45,7 @@ namespace Pegasus_backend.Controllers
                 foreach (var courseInstance in courseInstances)
                 {
                     var lessonView = await GetOne2OneLessons(courseInstance,term);
+                    if (lessonView.Count >0) {
                     LearnersLesson.Add(
                         new LearnersLessonViewModel
                         {
@@ -52,9 +53,13 @@ namespace Pegasus_backend.Controllers
                             FirstName = courseInstance.Learner.FirstName,
                             LastName = courseInstance.Learner.LastName,
                             Course = courseInstance.Course.CourseName,
+                            DayOfWeek = (short) lessonView.FirstOrDefault().OriginalDate.DayOfWeek,
                             LessonsViewModel = lessonView
                         });
+
+                    }
                 }
+                result.Data = LearnersLesson;
             }
             catch (Exception ex)
             {
@@ -71,17 +76,22 @@ namespace Pegasus_backend.Controllers
             try
             {
                 List<Lesson> allLessons = _ablemusicContext.Lesson.Where(l => 
-                        l.LearnerId==courseInstance.LearnerId).ToList();
+                        l.LearnerId==courseInstance.LearnerId
+                        && l.BeginTime>term.BeginDate.Value.AddDays(-60)).ToList();
+
                 var lessons = await _ablemusicContext.Lesson
                  .Where(d => d.CourseInstanceId == courseInstance.CourseInstanceId && 
-                 d.BeginTime>term.BeginDate && d.BeginTime>term.EndDate
+                 (d.BeginTime>term.BeginDate && d.BeginTime<term.EndDate)
                 ).ToArrayAsync();
-
+                //get all orginal lessons
                 foreach (var lesson in lessons)
                 {
-                    var isExist =  allLessons.FirstOrDefault(l => l.NewLessonId == lesson.LessonId);
-                    if (isExist != null) continue;
-                    lessonsViewModel.Add(GetLessonInfo(lesson,term.BeginDate.Value,allLessons));
+                    if (lesson.IsCanceled ==1){
+                        var isExist =  allLessons.FirstOrDefault(l => l.NewLessonId == lesson.LessonId);
+                        if (isExist != null) continue;
+                    }
+                    var invoice = new Invoice();
+                    lessonsViewModel.Add(GetLessonInfo(lesson,term.BeginDate.Value,allLessons,ref invoice));
                 }
             }
             catch (Exception ex)
@@ -90,81 +100,59 @@ namespace Pegasus_backend.Controllers
             }
             return lessonsViewModel;
         }
-        private LessonsViewModel GetLessonInfo(Lesson lesson,DateTime beginDate, List<Lesson> allLessons)
+        private LessonsViewModel GetLessonInfo(Lesson lesson,DateTime beginDate, List<Lesson> allLessons,ref Invoice invoice)
         {
             LessonsViewModel lessonsViewModel = new LessonsViewModel();
-
+            lessonsViewModel.LessonId = lesson.LessonId;
             lessonsViewModel.WeekNo =(short) ((lesson.BeginTime - beginDate).Value.Days/7);
             try
             {
                 //get payment info
-                var invoice = _ablemusicContext.Invoice
-                    .FirstOrDefault(i => i.InvoiceNum == lesson.InvoiceNum
-                    && i.IsActive == 1);
+                if (invoice == null || invoice.InvoiceNum!=lesson.InvoiceNum){
+                    invoice = _ablemusicContext.Invoice
+                        .FirstOrDefault(i => i.InvoiceNum == lesson.InvoiceNum
+                        && i.IsActive == 1);
+                }
                 if ((invoice == null))
                 {
                     lessonsViewModel.IsPaid = 0;
                 }
-                else if (invoice.PaidFee > 0)
-                {
-                    lessonsViewModel.IsPaid = 2;
-                }
-                else if (invoice.PaidFee == 0)
-                {
-                    lessonsViewModel.IsPaid = 0;
-                }
-                else
+                else if (invoice.OwingFee == 0)
                 {
                     lessonsViewModel.IsPaid = 1;
                 }
-                if (lesson.IsConfirm==1) {
-                    lessonsViewModel.IsCompleted =1;
-                    lessonsViewModel.IsCanceled =0;
-                    lessonsViewModel.IsMadeup =0;
-                };
-                if (lesson.IsCanceled==1) {
-                    int? tmpLessonId = lesson.NewLessonId;
-
-                    if (tmpLessonId ==null) {
-                        lessonsViewModel.IsCanceled = 0;
+                else if (invoice.PaidFee >= 0 && invoice.OwingFee > 0)
+                {
+                    lessonsViewModel.IsPaid = 2;
+                }
+                else
+                {
+                    lessonsViewModel.IsPaid = 0;
+                }
+                lessonsViewModel.OriginalDate = lesson.BeginTime.Value;
+                // var actLesson = lesson;
+                var newLesson = lesson;
+                while (true){
+                    if (newLesson.NewLessonId != null ){
+                        var findLesson = allLessons.FirstOrDefault(l => l.LessonId == newLesson.NewLessonId); 
+                        newLesson = findLesson;
                     }
-                    else{
-                        Lesson tmpLesson =  new Lesson();
-                        while(true){
-                             tmpLesson = allLessons
-                                .FirstOrDefault(i => i.LessonId == tmpLessonId); 
-                            if (tmpLesson.NewLessonId != null){
-                                tmpLessonId = tmpLesson.NewLessonId;
-                                continue;
-                            }
-                            break;
-                        }
-                        if (lesson.IsCanceled !=1 ) {
-                            lessonsViewModel.IsCompleted =tmpLesson.IsConfirm.Value;
-                            lessonsViewModel.IsCanceled =1;
-                            lessonsViewModel.IsMadeup =1;
-                            lessonsViewModel.MakeUpDetail = tmpLesson.BeginTime.Value.ToString();
-                        }else{
-                            var awaitMakeUpLesson = _ablemusicContext.AwaitMakeUpLesson
-                                .FirstOrDefault(i => i.MissedLessonId == tmpLessonId); 
-     
-                            if (awaitMakeUpLesson.Remaining==0){
-                                lessonsViewModel.IsCompleted = 1;
-                            }else{
-                                lessonsViewModel.IsCompleted = 0;
-                            }
-                            lessonsViewModel.IsCanceled = 1;
-                            lessonsViewModel.IsMadeup = 1;
-                            lessonsViewModel.MakeUpDetail = tmpLesson.BeginTime.Value.ToString();
-                            }
-                        }
-                    }else{
-                        lessonsViewModel.IsCompleted =0;
-                        lessonsViewModel.IsCanceled =0;
-                        lessonsViewModel.IsMadeup =0; 
-                        lessonsViewModel.MakeUpDetail= lesson.BeginTime.Value.ToString();                
-                    }
-                
+                    else
+                        break;
+                     
+                }
+                lessonsViewModel.IsCompleted = newLesson.IsConfirm??0;
+                lessonsViewModel.IsCanceled = newLesson.IsCanceled.Value;
+                if (lessonsViewModel.IsCanceled ==1){
+                    var awaitMakeUpLesson = _ablemusicContext.AwaitMakeUpLesson.
+                    FirstOrDefault(a => a.MissedLessonId == newLesson.LessonId);
+                    if (awaitMakeUpLesson== null)
+                        lessonsViewModel.Remaining =0;
+                    else
+                        lessonsViewModel.Remaining= awaitMakeUpLesson.Remaining.Value;
+                }
+                if (lesson.BeginTime.Value.Date != newLesson.BeginTime.Value.Date)
+                    lessonsViewModel.MakeUpDetail = newLesson.BeginTime.Value.ToString("MMMM dd, yyyy");
                 //get makeup info
             }
             catch (Exception ex)
