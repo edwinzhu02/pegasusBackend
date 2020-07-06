@@ -36,6 +36,7 @@ namespace Pegasus_backend.Controllers
             {
                 var courseInstances = await _ablemusicContext.One2oneCourseInstance
                     .Include(o =>o.Learner)
+                    .Include(o =>o.Teacher)
                     .Include(o =>o.Course)
                     .Where(d => d.OrgId == orgId
                     && (d.EndDate == null || d.EndDate > term.BeginDate)
@@ -52,6 +53,7 @@ namespace Pegasus_backend.Controllers
                             LearnerId = courseInstance.LearnerId.Value,
                             FirstName = courseInstance.Learner.FirstName,
                             LastName = courseInstance.Learner.LastName,
+                            Teacher = courseInstance.Teacher.FirstName,
                             Course = courseInstance.Course.CourseName,
                             DayOfWeek = (short) lessonView.FirstOrDefault().OriginalDate.DayOfWeek,
                             LessonsViewModel = lessonView
