@@ -86,10 +86,10 @@ namespace Pegasus_backend.Controllers
                 //get all orginal lessons
                 foreach (var lesson in lessons)
                 {
-                    if (lesson.IsCanceled ==1){
+                    // if (lesson.IsCanceled ==0){
                         var isExist =  allLessons.FirstOrDefault(l => l.NewLessonId == lesson.LessonId);
                         if (isExist != null) continue;
-                    }
+                    // }
                     var invoice = new Invoice();
                     lessonsViewModel.Add(GetLessonInfo(lesson,term.BeginDate.Value,allLessons,ref invoice));
                 }
