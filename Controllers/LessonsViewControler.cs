@@ -79,6 +79,9 @@ namespace Pegasus_backend.Controllers
                         l.LearnerId==courseInstance.LearnerId
                         && l.BeginTime>term.BeginDate.Value.AddDays(-60)).ToList();
 
+                List<AwaitMakeUpLesson> awaitMakeUpLessons = _ablemusicContext.AwaitMakeUpLesson.Where(l => 
+                        l.LearnerId==courseInstance.LearnerId && l.CreateAt >term.BeginDate.Value.AddDays(-60)).ToList();
+
                 var lessons = await _ablemusicContext.Lesson
                  .Where(d => d.CourseInstanceId == courseInstance.CourseInstanceId && 
                  (d.BeginTime>term.BeginDate && d.BeginTime<term.EndDate)
@@ -87,8 +90,10 @@ namespace Pegasus_backend.Controllers
                 foreach (var lesson in lessons)
                 {
                     // if (lesson.IsCanceled ==0){
-                        var isExist =  allLessons.FirstOrDefault(l => l.NewLessonId == lesson.LessonId);
-                        if (isExist != null) continue;
+                    var isExist =  allLessons.FirstOrDefault(l => l.NewLessonId == lesson.LessonId);
+                    if (isExist != null) continue;
+                    var isExistMakeup = awaitMakeUpLessons.FirstOrDefault(a => a.NewLessonId==lesson.LessonId);
+                    if (isExistMakeup != null) continue;
                     // }
                     var invoice = new Invoice();
                     lessonsViewModel.Add(GetLessonInfo(lesson,term.BeginDate.Value,allLessons,ref invoice));
