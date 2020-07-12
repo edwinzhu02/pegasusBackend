@@ -554,7 +554,7 @@ namespace Pegasus_backend.Controllers
             
              var unpaidInvoice = _ablemusicContext.Invoice.
                 Where(i => i.LearnerId == invoice.LearnerId 
-                    && i.IsActive==1 && i.IsPaid==0
+                    && i.IsActive==1 && i.IsPaid==0 && i.OwingFee >0
                     && i.DueDate<toNZTimezone( DateTime.UtcNow) ).FirstOrDefault();
             if (unpaidInvoice !=null ) return 1;
             return 0;
