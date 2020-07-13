@@ -268,6 +268,11 @@ namespace Pegasus_backend.Controllers
                                 l.IsCanceled !=1 );
                 
                 lessons.ForEachAsync(lesson =>{
+                    if (lesson.IsConfirm ==1 )
+                        throw new Exception("Lesson has already completed!");
+                    if (lesson.IsCanceled ==1 )
+                        throw new Exception("Lesson has already cancelled!");
+
                     lesson.IsCanceled = 1;
                     decimal originalFee = 0;
                      var invoice = _ablemusicContext.Invoice.

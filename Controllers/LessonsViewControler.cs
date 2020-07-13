@@ -38,7 +38,7 @@ namespace Pegasus_backend.Controllers
                     .Include(o =>o.Learner)
                     .Include(o =>o.Teacher)
                     .Include(o =>o.Course)
-                    .Where(d => d.OrgId == orgId 
+                    .Where(d => d.OrgId == orgId //&& d.LearnerId == 147
                     && (d.EndDate == null || d.EndDate > term.BeginDate)
                     ).ToArrayAsync();
  
@@ -128,7 +128,7 @@ namespace Pegasus_backend.Controllers
                 {
                     lessonsViewModel.IsPaid = 1;
                 }
-                else if (invoice.PaidFee >= 0 && invoice.OwingFee > 0)
+                else if (invoice.PaidFee > 0 && invoice.OwingFee > 0)
                 {
                     lessonsViewModel.IsPaid = 2;
                 }
