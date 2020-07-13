@@ -38,7 +38,7 @@ namespace Pegasus_backend.Controllers
                     .Include(o =>o.Learner)
                     .Include(o =>o.Teacher)
                     .Include(o =>o.Course)
-                    .Where(d => d.OrgId == orgId && d.LearnerId == 184
+                    .Where(d => d.OrgId == orgId 
                     && (d.EndDate == null || d.EndDate > term.BeginDate)
                     ).ToArrayAsync();
  
