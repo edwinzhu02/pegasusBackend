@@ -160,6 +160,7 @@ namespace Pegasus_backend.Controllers
                 }
                 if (lesson.BeginTime.Value.Date != newLesson.BeginTime.Value.Date)
                     lessonsViewModel.MakeUpDetail = newLesson.BeginTime.Value.ToString("MMM dd");
+                if (lessonsViewModel.Remaining>0) lessonsViewModel.MakeUpDetail = null;
                 //get makeup info
             }
             catch (Exception ex)
