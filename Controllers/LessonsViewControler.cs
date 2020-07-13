@@ -38,10 +38,10 @@ namespace Pegasus_backend.Controllers
                     .Include(o =>o.Learner)
                     .Include(o =>o.Teacher)
                     .Include(o =>o.Course)
-                    .Where(d => d.OrgId == orgId
+                    .Where(d => d.OrgId == orgId && d.LearnerId == 184
                     && (d.EndDate == null || d.EndDate > term.BeginDate)
                     ).ToArrayAsync();
-
+ 
 
                 foreach (var courseInstance in courseInstances)
                 {
@@ -159,7 +159,7 @@ namespace Pegasus_backend.Controllers
                         lessonsViewModel.Remaining= awaitMakeUpLesson.Remaining.Value;
                 }
                 if (lesson.BeginTime.Value.Date != newLesson.BeginTime.Value.Date)
-                    lessonsViewModel.MakeUpDetail = newLesson.BeginTime.Value.ToString("MMMM dd, yyyy");
+                    lessonsViewModel.MakeUpDetail = newLesson.BeginTime.Value.ToString("MMMM dd");
                 //get makeup info
             }
             catch (Exception ex)
