@@ -128,7 +128,7 @@ namespace Pegasus_backend.Controllers
                 {
                     lessonsViewModel.IsPaid = 1;
                 }
-                else if (invoice.PaidFee >= 0 && invoice.OwingFee > 0)
+                else if (invoice.PaidFee > 0 && invoice.OwingFee > 0)
                 {
                     lessonsViewModel.IsPaid = 2;
                 }
