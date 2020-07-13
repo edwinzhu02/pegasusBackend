@@ -159,7 +159,7 @@ namespace Pegasus_backend.Controllers
                         lessonsViewModel.Remaining= awaitMakeUpLesson.Remaining.Value;
                 }
                 if (lesson.BeginTime.Value.Date != newLesson.BeginTime.Value.Date)
-                    lessonsViewModel.MakeUpDetail = newLesson.BeginTime.Value.ToString("MMMM dd");
+                    lessonsViewModel.MakeUpDetail = newLesson.BeginTime.Value.ToString("MMM dd");
                 //get makeup info
             }
             catch (Exception ex)
