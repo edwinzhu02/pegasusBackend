@@ -200,7 +200,7 @@ namespace Pegasus_backend.Controllers
                                                         IsActive = i == null ? 0 : i.IsActive,
                                                         Comment = i == null ? string.Empty : i.Comment
                                                     },
-                                                }).ToListAsync();
+                                                }).Distinct().ToListAsync();
             }
             catch (Exception ex)
             {
