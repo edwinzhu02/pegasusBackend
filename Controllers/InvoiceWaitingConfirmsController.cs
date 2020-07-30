@@ -43,7 +43,7 @@ namespace Pegasus_backend.Controllers
                                                 join t in _ablemusicContext.Term on iw.TermId equals t.TermId
                                                 join iv in _ablemusicContext.Invoice on iw.InvoiceNum equals iv.InvoiceNum into f
                                                 from i in f.DefaultIfEmpty()
-                                                where s.UserId == userId && t.TermId == termId
+                                                where s.UserId == userId && t.TermId == termId && iw.IsActivate==1 && i.IsActive==1
                                                 select new
                                                 {
                                                     InvoiceNum = iw.InvoiceNum,
@@ -200,7 +200,8 @@ namespace Pegasus_backend.Controllers
                                                         IsActive = i == null ? 0 : i.IsActive,
                                                         Comment = i == null ? string.Empty : i.Comment
                                                     },
-                                                }).Distinct().ToListAsync();
+                                                }).ToListAsync();
+
             }
             catch (Exception ex)
             {
