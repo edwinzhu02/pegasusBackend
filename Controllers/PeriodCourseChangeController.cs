@@ -75,13 +75,8 @@ namespace Pegasus_backend.Controllers
                 
                 var invoice = await _ablemusicContext.InvoiceWaitingConfirm.
                     FirstOrDefaultAsync(i =>i.InvoiceNum == lesson.InvoiceNum);
-                var term = await _ablemusicContext.Term.FirstOrDefaultAsync(l => l.TermId == invoice.TermId);
-                if (term == null) {
-                    result.IsSuccess = false;
-                    result.ErrorMessage = "Term not found!";
-                    return BadRequest(result);
-                }
-                periodCourseChangeViewModel.EndDate = term.EndDate;
+
+                periodCourseChangeViewModel.EndDate = invoice.EndDate;
                 periodCourseChangeViewModel.IsTemporary = 1;
             }
  
@@ -164,7 +159,13 @@ namespace Pegasus_backend.Controllers
                 result.ErrorMessage = "Teacher don't have available room or time!";
                 return BadRequest(result);
             }
-            
+            if(exsitingLessons.Where(e => e.IsConfirm==1).Count()>0 )
+            {
+                result.IsSuccess = false;
+                result.ErrorMessage = "Some lessons have aleardy completed!";
+                return BadRequest(result);
+            }
+
             try
             {
                 newCourseInfo = new

@@ -16,6 +16,7 @@ using Pegasus_backend.Models;
 using Microsoft.Extensions.Logging;
 using Pegasus_backend.Services;
 using Pegasus_backend.Utilities;
+using System.Collections.Concurrent;
 
 
 namespace Pegasus_backend.Controllers
@@ -247,6 +248,8 @@ namespace Pegasus_backend.Controllers
         private  Result<string> quitCourse(int instanceId, DateTime endDate)
         {
             var result = new Result<string>();
+            var exceptions = new ConcurrentQueue<Exception>();
+
             try
             {
                 var item = _ablemusicContext.One2oneCourseInstance.FirstOrDefault(s => s.CourseInstanceId == instanceId);
@@ -260,7 +263,14 @@ namespace Pegasus_backend.Controllers
                 if (learner == null)
                 {
                     throw new Exception("This student wasn't found");
-                }                
+                }  
+                // int lessonCount = _ablemusicContext.Lesson.Where(l =>l.BeginTime>endDate &&
+                //                 l.CourseInstanceId==instanceId &&
+                //                 (l.IsCanceled ==1 || l.IsConfirm==1)).Count();
+                // if ( lessonCount > 0 )
+                // {
+                //     throw new Exception("This student wasn't found");
+                // }
                 item.EndDate = endDate;
                 _ablemusicContext.Update(item);
                 var lessons = _ablemusicContext.Lesson.Where(l =>l.BeginTime>endDate &&
@@ -268,88 +278,97 @@ namespace Pegasus_backend.Controllers
                                 l.IsCanceled !=1 );
                 
                 lessons.ForEachAsync(lesson =>{
-                    if (lesson.IsConfirm ==1 )
-                        throw new Exception("Lesson has already completed!");
-                    if (lesson.IsCanceled ==1 )
-                        throw new Exception("Lesson has already cancelled!");
+                    try{
+                        if (lesson.IsConfirm ==1 )
+                            throw new Exception("Lesson has already completed!");
+                        if (lesson.IsCanceled ==1 )
+                            throw new Exception("Lesson has already cancelled!");
 
-                    lesson.IsCanceled = 1;
-                    decimal originalFee = 0;
-                     var invoice = _ablemusicContext.Invoice.
-                     FirstOrDefault(c =>c.InvoiceNum ==lesson.InvoiceNum && c.IsActive==1); 
-                     if (invoice!=null ){
-                        originalFee = invoice.TotalFee.Value;
-                        invoice.TotalFee -=invoice.LessonFee/invoice.LessonQuantity;
-                        invoice.OwingFee -=invoice.LessonFee/invoice.LessonQuantity;
-                        invoice.LessonFee -=invoice.LessonFee/invoice.LessonQuantity;                        
-                        invoice.LessonQuantity --;
+                        lesson.IsCanceled = 1;
+                        decimal originalFee = 0;
+                        var invoice = _ablemusicContext.Invoice.
+                        FirstOrDefault(c =>c.InvoiceNum ==lesson.InvoiceNum && c.IsActive==1); 
+                        if (invoice!=null ){
+                            originalFee = invoice.TotalFee.Value;
+                            invoice.TotalFee -=invoice.LessonFee/invoice.LessonQuantity;
+                            invoice.OwingFee -=invoice.LessonFee/invoice.LessonQuantity;
+                            invoice.LessonFee -=invoice.LessonFee/invoice.LessonQuantity;                        
+                            invoice.LessonQuantity --;
 
 
-                        if (invoice.LessonFee==0){
-                            invoice.NoteFee=0;
-                            invoice.ConcertFee=0;
-                            invoice.Other1Fee=0;
-                            invoice.Other2Fee=0;   
-                            invoice.Other3Fee=0; 
-                            invoice.Other4Fee=0;
-                            invoice.Other5Fee=0;   
-                            invoice.Other6Fee=0; 
-                            invoice.Other7Fee=0;
-                            invoice.Other8Fee=0;   
-                            invoice.Other9Fee=0; 
-                            invoice.Other10Fee=0;
-                            invoice.Other11Fee=0;   
-                            invoice.Other12Fee=0;
-                            invoice.Other13Fee=0;
-                            invoice.Other14Fee=0;   
-                            invoice.Other15Fee=0; 
-                            invoice.Other16Fee=0;
-                            invoice.Other17Fee=0;   
-                            invoice.Other18Fee=0;                                                                                                                                             
-                            invoice.TotalFee =0;
-                            invoice.OwingFee =0;                                                   
+                            if (invoice.LessonFee==0){
+                                invoice.NoteFee=0;
+                                invoice.ConcertFee=0;
+                                invoice.Other1Fee=0;
+                                invoice.Other2Fee=0;   
+                                invoice.Other3Fee=0; 
+                                invoice.Other4Fee=0;
+                                invoice.Other5Fee=0;   
+                                invoice.Other6Fee=0; 
+                                invoice.Other7Fee=0;
+                                invoice.Other8Fee=0;   
+                                invoice.Other9Fee=0; 
+                                invoice.Other10Fee=0;
+                                invoice.Other11Fee=0;   
+                                invoice.Other12Fee=0;
+                                invoice.Other13Fee=0;
+                                invoice.Other14Fee=0;   
+                                invoice.Other15Fee=0; 
+                                invoice.Other16Fee=0;
+                                invoice.Other17Fee=0;   
+                                invoice.Other18Fee=0;                                                                                                                                             
+                                invoice.TotalFee =0;
+                                invoice.OwingFee =0;                                                   
+                            }
+                            if (invoice.IsPaid==1){
+                                credit += (originalFee - invoice.TotalFee.Value);
+                            }
+                            _ablemusicContext.Update(invoice);
                         }
-                         if (invoice.IsPaid==1){
-                            credit += (originalFee - invoice.TotalFee.Value);
-                        }
-                        _ablemusicContext.Update(invoice);
+                        var invoiceWaiting = _ablemusicContext.InvoiceWaitingConfirm.
+                        FirstOrDefault(c =>c.InvoiceNum ==lesson.InvoiceNum && c.IsActivate==1);
+                        invoiceWaiting.TotalFee -=invoiceWaiting.LessonFee/invoiceWaiting.LessonQuantity;
+                        invoiceWaiting.OwingFee -=invoiceWaiting.LessonFee/invoiceWaiting.LessonQuantity;
+                        invoiceWaiting.LessonFee -=invoiceWaiting.LessonFee/invoiceWaiting.LessonQuantity;
+                        invoiceWaiting.LessonQuantity --;
+                        if (invoiceWaiting.LessonFee==0){
+                                invoiceWaiting.NoteFee=0;
+                                invoiceWaiting.ConcertFee=0;
+                                invoiceWaiting.Other1Fee=0;
+                                invoiceWaiting.Other2Fee=0;   
+                                invoiceWaiting.Other3Fee=0; 
+                                invoiceWaiting.Other4Fee=0;
+                                invoiceWaiting.Other5Fee=0;   
+                                invoiceWaiting.Other6Fee=0; 
+                                invoiceWaiting.Other7Fee=0;
+                                invoiceWaiting.Other8Fee=0;   
+                                invoiceWaiting.Other9Fee=0; 
+                                invoiceWaiting.Other10Fee=0;
+                                invoiceWaiting.Other11Fee=0;   
+                                invoiceWaiting.Other12Fee=0;    
+                                invoiceWaiting.Other13Fee=0;
+                                invoiceWaiting.Other14Fee=0;   
+                                invoiceWaiting.Other15Fee=0;  
+                                invoiceWaiting.Other16Fee=0;
+                                invoiceWaiting.Other17Fee=0;   
+                                invoiceWaiting.Other18Fee=0;                                                                                                                                           
+                                invoiceWaiting.TotalFee =0;
+                                invoiceWaiting.OwingFee =0;                                                   
+                            }
+                        _ablemusicContext.Update(invoiceWaiting);
+                        //  if (invoiceWaiting.LessonFee==0){
+                        //     _ablemusicContext.Remove(invoiceWaiting);
+                        //  }
+                        // //_ablemusicContext.Remove(lesson);
                     }
-                     var invoiceWaiting = _ablemusicContext.InvoiceWaitingConfirm.
-                     FirstOrDefault(c =>c.InvoiceNum ==lesson.InvoiceNum && c.IsActivate==1);
-                     invoiceWaiting.TotalFee -=invoiceWaiting.LessonFee/invoiceWaiting.LessonQuantity;
-                     invoiceWaiting.OwingFee -=invoiceWaiting.LessonFee/invoiceWaiting.LessonQuantity;
-                     invoiceWaiting.LessonFee -=invoiceWaiting.LessonFee/invoiceWaiting.LessonQuantity;
-                     invoiceWaiting.LessonQuantity --;
-                    if (invoiceWaiting.LessonFee==0){
-                            invoiceWaiting.NoteFee=0;
-                            invoiceWaiting.ConcertFee=0;
-                            invoiceWaiting.Other1Fee=0;
-                            invoiceWaiting.Other2Fee=0;   
-                            invoiceWaiting.Other3Fee=0; 
-                            invoiceWaiting.Other4Fee=0;
-                            invoiceWaiting.Other5Fee=0;   
-                            invoiceWaiting.Other6Fee=0; 
-                            invoiceWaiting.Other7Fee=0;
-                            invoiceWaiting.Other8Fee=0;   
-                            invoiceWaiting.Other9Fee=0; 
-                            invoiceWaiting.Other10Fee=0;
-                            invoiceWaiting.Other11Fee=0;   
-                            invoiceWaiting.Other12Fee=0;    
-                            invoiceWaiting.Other13Fee=0;
-                            invoiceWaiting.Other14Fee=0;   
-                            invoiceWaiting.Other15Fee=0;  
-                            invoiceWaiting.Other16Fee=0;
-                            invoiceWaiting.Other17Fee=0;   
-                            invoiceWaiting.Other18Fee=0;                                                                                                                                           
-                            invoiceWaiting.TotalFee =0;
-                            invoiceWaiting.OwingFee =0;                                                   
-                        }
-                     _ablemusicContext.Update(invoiceWaiting);
-                    //  if (invoiceWaiting.LessonFee==0){
-                    //     _ablemusicContext.Remove(invoiceWaiting);
-                    //  }
-                    // //_ablemusicContext.Remove(lesson);
+                    catch (Exception ex)
+                    {
+                        exceptions.Enqueue(ex);
+                    }
                 });
+
+            if (exceptions.Count() > 0) throw new AggregateException(exceptions); 
+
                 learner.Credit +=credit;
                 _ablemusicContext.Update(learner);
                 _ablemusicContext.SaveChangesAsync();
