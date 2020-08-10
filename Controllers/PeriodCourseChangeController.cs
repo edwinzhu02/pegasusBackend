@@ -162,7 +162,7 @@ namespace Pegasus_backend.Controllers
             if(exsitingLessons.Where(e => e.IsConfirm==1).Count()>0 )
             {
                 result.IsSuccess = false;
-                result.ErrorMessage = "Some lessons have aleardy completed!";
+                result.ErrorMessage = "Some lessons have already completed!";
                 return BadRequest(result);
             }
 
